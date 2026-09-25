@@ -20,34 +20,23 @@
 | Possible collection form | A yellow-green selection such as 'Aurea'; no cultivar label is available      |
 | Important distinction    | “Dwarf jade” is a resemblance name; this is not _Crassula ovata_              |
 
-Opposite pairs of small round leaves on flexible reddish stems make the species
-ID strong. The collection plant's chartreuse tips could be genetics, strong
-light response, or young growth. A named golden cultivar should not be assigned
-from color alone. SANBI describes 'Aurea' as a cultivated form whose small
-round leaves turn yellow in sun and notes that most named forms originated at
-the Karoo Desert National Botanical Garden. That confirms the cultivar exists,
-but it does not establish that this unlabeled plant is that clone.
+Small round leaves grow in opposite pairs on reddish shoots. SANBI describes the cultivated 'Aurea' form as turning yellow in sun; chartreuse tips can also reflect leaf age and growing conditions.
 
 ## Origin, ecology, and unusual physiology
 
 Spekboom is native to southern Africa and is especially characteristic of dry
 thicket in South Africa's Eastern Cape. In habitat it becomes a densely
-branched shrub or small tree several metres high. Tiny starry pink flowers can
-cover mature plants after favorable conditions, although indoor pot plants may
-rarely bloom.
+branched shrub or small tree several metres high. Tiny starry pink flowers can cover mature plants after favorable conditions, although flowering is uncommon indoors. Each flower has five pointed petals and prominent stamens; pollinated flowers produce small dry fruits with one seed.
 
 It is unusually flexible in how it fixes carbon. Under favorable water
 conditions it can behave mainly as a C3 plant; under drought stress it can
 increase crassulacean acid metabolism (CAM), opening stomata more at night to
-conserve water. That does not mean it wants permanent drought—only that it can
-change strategy.
+conserve water. This flexibility helps it conserve water when its surroundings dry.
 
 Elephants browse from above, breaking stems that can root where they land and
 helping maintain spekboom thicket. Heavy goat browsing from below can prevent
 regeneration. This interaction made the species important in landscape
-restoration. Claims that one potted spekboom is a magical carbon cure are
-overstated: meaningful carbon storage depends on hectares of surviving,
-well-managed vegetation and local conditions.
+restoration.
 
 The sour leaves have a history of culinary use. Do not taste the collection
 plant unless the ID is certain and it has had no systemic pesticide or unsafe
@@ -57,13 +46,13 @@ top-dressing exposure.
 
 The square wooden planter has a plastic liner and an approximately one-inch drainage hole through both the bottom and liner, documented September 20, 2026. Keep the opening clear and let the shared root zone dry before watering.
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Rear right, toward window · Mixed.** September 15 rear wooden tables, facing the window. Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
-| Water               | Water thoroughly once the shared planter dries. During warm active growth it may use water sooner than the cacti, but its leaves store a useful buffer.                                                                                                                                           |
-| Pruning             | Pinch or cut long stems above a leaf pair to keep the echeveria unshaded and encourage branching.                                                                                                                                                                                                 |
-| Temperature         | Warm growth is fastest; protect this African succulent from frost.                                                                                                                                                                                                                                |
-| Feeding             | Sparse balanced fertilizer during active growth. Too much produces long, fragile internodes.                                                                                                                                                                                                      |
+| Topic               | Practical approach                                                                                                                                                                                                                                             |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Rear right, toward window · Mixed.** September 15 rear wooden tables, facing the window. Keep the low Echeveria exposed beneath the taller Portulacaria and Kalanchoe foliage. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | Water thoroughly once the shared planter dries. During warm active growth it may use water sooner than the cacti, but its leaves store a useful buffer.                                                                                                        |
+| Pruning             | Pinch or cut long stems above a leaf pair to keep the echeveria unshaded and encourage branching.                                                                                                                                                              |
+| Temperature         | Warm growth is fastest; protect this African succulent from frost.                                                                                                                                                                                             |
+| Feeding             | Sparse balanced fertilizer during active growth. Too much produces long, fragile internodes.                                                                                                                                                                   |
 
 Strong compact growth has short gaps between leaf pairs. Long bare reaches and
 small widely spaced leaves point to inadequate light. A little red edging or

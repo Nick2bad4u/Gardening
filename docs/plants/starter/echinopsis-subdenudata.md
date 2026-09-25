@@ -27,32 +27,26 @@ areoles, so “spineless” should not be taken literally.
 
 Plants circulated as _E. subdenudata_ come from the _E. ancistrophora_ complex.
 Horticultural references often associate the form with Bolivia and Paraguay;
-Kew gives the accepted _E. ancistrophora_ a native range from Bolivia into
+Kew gives the accepted _E. ancistrophora_ a native range in
 northwestern Argentina. Martín Cárdenas described _E. subdenudata_ in 1956,
 but Kew now treats it as a synonym rather than a separate accepted species.
-Keeping the familiar name on a collection label is useful as long as that
-taxonomic status is documented.
 
 The body stays globular to short-columnar and often makes basal pups with age.
 Its main performance is the flower: a long woolly tube rises dramatically
-above the body and opens into a very large, white, fragrant trumpet at night.
-An individual bloom is short-lived, but a healthy plant can make several buds
-in a growing season. In habitat, large nocturnal flowers advertise to nighttime
-pollinators rather than relying on a colorful daytime display.
+above the body and opens into a very large, white, fragrant trumpet.
+NParks records an individual flower lifespan of about one day. A healthy plant
+can make several buds in a growing season, extending the display across
+successive flowers.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                    |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Photo-matched R2C6 · Bright.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Preserve clear bright exposure; a photo position is not a measured light level. See the [current placement guide](../../layouts/table-placement-research.md). |
-| Water               | Deep soak and full drainage after the pot dries. A plant in active growth or carrying buds may use water sooner than a dormant one.                                                                                                                                                   |
-| Winter              | Cooler, bright, and dry conditions encourage a clean rest; do not force growth with warmth, water, and weak light.                                                                                                                                                                    |
-| Pot and mix         | The current drained pot works. Repot when pups crowd the rim or roots have replaced much of the mix.                                                                                                                                                                                  |
-| Feeding             | Modest dilute fertilizer during warm growth can support flowering; avoid high-nitrogen feeding.                                                                                                                                                                                       |
-
-Do not rotate a swelling bud into a completely different light environment every
-day. Routine minor rotation is fine, but stable conditions reduce avoidable bud
-stress. The flower tube may lean toward open space before the bloom opens.
+| Topic               | Practical approach                                                                                                                                                                                                        |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **R2C6 · Bright.** September 15, 2026 photo layout, facing the window (six columns, four rows). Keep a clear light path to the growing tip. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | Deep soak and full drainage after the pot dries. A plant in active growth or carrying buds may use water sooner than a dormant one.                                                                                       |
+| Winter              | Cooler, bright, and dry conditions encourage a clean rest; do not force growth with warmth, water, and weak light.                                                                                                        |
+| Pot and mix         | The current drained pot works. Repot when pups crowd the rim or roots have replaced much of the mix.                                                                                                                      |
+| Feeding             | Modest dilute fertilizer during warm growth can support flowering; avoid high-nitrogen feeding.                                                                                                                           |
 
 ## Propagation and watch points
 

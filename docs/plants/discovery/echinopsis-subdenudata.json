@@ -1,6 +1,6 @@
 {
     "anatomy": {
-        "intro": "The white dots are areoles on a green stem, not attached decorations.",
+        "intro": "White woolly areoles form the domino pattern across the rounded green ribs.",
         "parts": [
             {
                 "function": "The broad green ridge forms part of the photosynthetic stem.",
@@ -30,12 +30,13 @@
     ],
     "flowers": {
         "sourceIds": [
-            "llifle"
+            "llifle",
+            "nparks"
         ],
-        "text": "Large white funnels are borne on tubes around 15–22 cm long. The fragrant display is brief and can extend through the night. Watching an enlarging bud is more useful than expecting a flower on a fixed date."
+        "text": "Fragrant white funnels rise on tubes around 15–22 cm long. Each flower is short-lived, with its main display lasting about a day; the bloom can dwarf the compact body beneath it."
     },
     "growth": {
-        "note": "A photographed offset or bud is a useful milestone; neither is guaranteed by a particular birthday.",
+        "note": "Basal offsets repeat the parent’s rounded ribs and white areoles, gradually turning a single globe into a cluster.",
         "sourceIds": [
             "llifle"
         ],
@@ -59,7 +60,7 @@
             "kew",
             "nparks"
         ],
-        "text": "This familiar horticultural name carries a taxonomic wrinkle: NParks describes Echinopsis subdenudata from Bolivia and Paraguay, while Kew includes it within Echinopsis ancistrophora and gives that accepted species a northwestern Argentine range. These are different treatments, not evidence of this nursery plant’s exact origin. The collection retains its recognizable labeled name."
+        "text": "NParks describes the horticultural Echinopsis subdenudata from Bolivia and Paraguay. Kew places it within Echinopsis ancistrophora, whose accepted range is northwestern Argentina. The familiar nursery name and the broader taxonomic treatment remain in use side by side."
     },
     "image": {
         "alt": "Domino cactus with numbered rounded rib, white woolly areole, tiny dark spine and basal offset.",
@@ -80,7 +81,7 @@
             "llifle",
             "kew"
         ],
-        "text": "The horticultural subdenudata form stays compact: LLIFLE describes individual bodies around 7–12 cm across, with clumps becoming wider through offsets. A collection plant need not reach the dimensions of every form included under ancistrophora."
+        "text": "Individual bodies are around 7–12 cm across in the specialist description. Basal offsets increase the width of the clump while preserving its low, rounded outline."
     },
     "milestones": [
         {
@@ -94,7 +95,7 @@
         "sourceIds": [
             "kew"
         ],
-        "text": "Subdenudata remains useful on nursery labels even though Kew treats it as a synonym. Keeping both names visible makes the plant easier to recognize across horticultural and taxonomic references."
+        "text": "Martín Cárdenas published Echinopsis subdenudata in 1956. The name persists in horticulture, while Kew includes it as a synonym of Echinopsis ancistrophora."
     },
     "slug": "echinopsis-subdenudata",
     "sources": [

@@ -110,13 +110,11 @@ view and fan paths. Enjoyable viewing and ordinary access are design requirement
 
 - [VIVOSUN AeroLight manual][manual] — exact VSAW400 specifications,
   dimensions, connection method, adjustable wings, and tent guidance; checked
-  September 10, 2026. Manufacturer guidance is not a survey of this room.
+  September 10, 2026.
 - [VIVOSUN AeroLight SE manual][se-manual] — canceled model's dimensions,
   weight, and far-red specification for comparison; checked September 10, 2026.
 - [LED Grow Lights Depot: selected AW400 listing][listing] — Samsung 301H EVO,
   tunable spectrum, 395 nm UVA, and 730 nm far-red; checked September 10, 2026.
-  Seller specifications describe the advertised unit, not an inspection of the
-  delivered fixture or independent evidence of plant-growth benefits.
 - Owner's September 9–10 corrections — installed AW200 identity and program,
   AW400SE cancellation, AW400 selection and reported EVO diodes, approximate
   price difference, intended coverage, north window, and removal of the end panel.

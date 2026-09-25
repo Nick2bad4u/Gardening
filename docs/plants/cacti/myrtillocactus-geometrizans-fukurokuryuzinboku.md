@@ -20,7 +20,7 @@
 | Growth form     | Knobby monstrose column with rounded lobes         |
 | Cultivar origin | Horticultural; no wild range                       |
 
-The lobed shape is the cultivar's normal monstrose growth, not damage. The
+The cultivar's monstrose growth turns the ribs into rounded lobes. The
 underlying species is a blue-green Mexican tree cactus.
 
 ## Origin, form, and publication
@@ -46,8 +46,7 @@ unknown, so its fruit or tissue should not be used as food.
 ## Rotation, propagation, and watch points
 
 - Rotate 90° clockwise on the normal Sunday schedule.
-- Stem cuttings can root after a cut surface calluses, but the compact plant
-  does not need to be cut merely for propagation.
+- Stem cuttings can root after the cut surface calluses.
 - Inspect folds for scale, mealybugs, or trapped damp debris.
 - The 3-inch pot and short plant may need a riser after its actual
   tabletop-to-tip height is measured.

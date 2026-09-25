@@ -22,7 +22,7 @@
 The golden-spined young globe becomes a tall column with age. Mature plants
 can produce repeated bursts of pale-yellow flowers around the crown.
 
-The identification is strongly supported by observations from August 11, 2026:
+Observations from August 11, 2026 recorded
 numerous narrow ribs, fine golden radial spines, longer flexible golden central
 spines, and denser golden growth at the crown. The close photographs used for
 that assessment are no longer available.
@@ -41,7 +41,7 @@ the familiar horticultural spelling _leninghausii_.
 | Grow-light position | **Photo-matched R4C5 · Bright.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Back-right taller cactus; compare its tip separately from the short F1 beside it. See the [current placement guide](../../layouts/table-placement-research.md). |
 | Water               | Soak and drain, then let the 4-inch pot dry. Reduce watering when cool or growth slows.                                                                                                                                                                                                 |
 | Pot and mix         | A stable, mineral-heavy pot becomes important as the body changes from globe to column.                                                                                                                                                                                                 |
-| Flowers             | Flowering normally requires maturity; absence of flowers on a young plant is not a care failure.                                                                                                                                                                                        |
+| Flowers             | Mature columns carry bowl-shaped lemon-yellow flowers above the golden spine coat.                                                                                                                                                                                                      |
 
 ## Rotation, propagation, and watch points
 
@@ -56,3 +56,4 @@ the familiar horticultural spelling _leninghausii_.
 - [International Plant Names Index: current combination](https://www.ipni.org/n/183414-2)
 - [International Plant Names Index: 1895 basionym](https://www.ipni.org/n/137708-1)
 - [GBIF Backbone Taxonomy record](https://www.gbif.org/species/8565818)
+- [RHS: Parodia leninghausii growth and flowers](https://www.rhs.org.uk/plants/117769/parodia-leninghausii/details)

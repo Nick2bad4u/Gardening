@@ -28,12 +28,11 @@ usually spineless _A. myriostigma_ that also gets called bishop's cap.
 The species is endemic to Mexico, occurring from the northeast toward Veracruz
 in dry valleys, canyon walls, and rocky limestone country. It is the largest
 and eventually tallest _Astrophytum_: a young globe slowly develops into a
-substantial column with usually six to eight ribs.
+substantial column with usually six to eight ribs. These may run straight or
+spiral gently around the stem.
 
 Bright yellow flowers emerge from the woolly crown on mature plants. The RHS
-gives 10–20 years to maturity, not a guaranteed age for the first flower.
-That is normal for a slow species rather than evidence that a small plant is
-being cared for incorrectly.
+gives 10–20 years to maturity; flowering begins as the plant develops.
 
 Augustin de Candolle described it as _Echinocactus ornatus_ in 1828. Britton
 and Rose published the accepted _Astrophytum_ combination in 1922. Kew reports
@@ -42,14 +41,14 @@ nursery-documented plants.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                    |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Photo-matched R2C5 · Bright.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Preserve clear bright exposure; a photo position is not a measured light level. See the [current placement guide](../../layouts/table-placement-research.md). |
-| Outdoor light       | Gradually increase direct sun. Flecking provides some shade but does not make a nursery plant burn-proof.                                                                                                                                                                             |
-| Water               | Thorough soak followed by a complete dry-down during warm growth; keep cool winter roots nearly dry.                                                                                                                                                                                  |
-| Mix                 | Very free-draining and mineral. A slightly alkaline component is compatible with its limestone habitat, but drainage matters more than chasing an exact pH.                                                                                                                           |
-| Pot                 | It develops a substantial root system; use enough depth without surrounding a small root ball with a huge wet volume.                                                                                                                                                                 |
-| Feeding             | Low-strength cactus fertilizer during active growth only.                                                                                                                                                                                                                             |
+| Topic               | Practical approach                                                                                                                                                                                                        |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **R2C5 · Bright.** September 15, 2026 photo layout, facing the window (six columns, four rows). Keep a clear light path to the growing tip. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Outdoor light       | Gradually increase direct sun, watching exposed green skin for bleaching.                                                                                                                                                 |
+| Water               | Thorough soak followed by a complete dry-down during warm growth; keep cool winter roots nearly dry.                                                                                                                      |
+| Mix                 | Very free-draining and mineral. A slightly alkaline component is compatible with its limestone habitat, but drainage matters more than chasing an exact pH.                                                               |
+| Pot                 | It develops a substantial root system; use enough depth without surrounding a small root ball with a huge wet volume.                                                                                                     |
+| Feeding             | Low-strength cactus fertilizer during active growth only.                                                                                                                                                                 |
 
 Compact growth keeps the gaps between areoles short and the crown well armed.
 Elongation cannot be reversed, so tune the lamp based on the next band of

@@ -32,12 +32,13 @@
         "sourceIds": [
             "llifle"
         ],
-        "text": "The usual species description gives small yellowish-white flowers with a reddish-brown throat. Pink- or violet-striped plants sold under this name can involve other forms or species, making a clear future flower photograph especially useful."
+        "text": "Small yellowish-white flowers with a reddish-brown throat appear near the crown. Flower color and the flattened central spines help distinguish this species from other wavy-ribbed Stenocactus."
     },
     "growth": {
-        "note": "Spine and flower characters should be considered together; a species label is stronger evidence than a common name, but it is still not proof.",
+        "note": "Folded cactus ribs allow the stem to expand and contract as its water stores change, without stretching the outer surface evenly.",
         "sourceIds": [
-            "llifle"
+            "llifle",
+            "edinburgh"
         ],
         "stages": [
             {
@@ -59,7 +60,7 @@
             "kew",
             "llifle"
         ],
-        "text": "Kew records this species from Mexico in desert and dry shrubland. The profile’s nursery label is retained, but Stenocactus identification is not settled by a wavy outline alone: specialist descriptions emphasize variation and uncertain boundaries among closely related forms. Its unusual combination of narrow ribs and broad central spines is more useful than a single rib count."
+        "text": "This Mexican species grows in dry shrubland and grassland. Its low body combines many narrow, wavy ribs with sparse areoles and long, flattened central spines."
     },
     "image": {
         "alt": "Grass blade cactus with numbered narrow wavy rib, areole, long flattened central spine and shorter radial spines.",
@@ -79,7 +80,7 @@
         "sourceIds": [
             "llifle"
         ],
-        "text": "Specialist descriptions give bodies around 3–15 cm tall and 4–10 cm wide, usually solitary. Rib counts vary considerably; a compact pot specimen is not expected to match every published extreme."
+        "text": "Bodies are usually solitary, around 3–15 cm tall and 4–10 cm wide. Many narrow ribs crowd the small stem, while only a few areoles sit along each rib."
     },
     "milestones": [
         {
@@ -120,6 +121,12 @@
             "id": "saglionis-comparison",
             "title": "RHS — Gymnocalycium saglionis",
             "url": "https://www.rhs.org.uk/plants/8153/gymnocalycium-saglionis/details"
+        },
+        {
+            "accessed": "2026-09-25",
+            "id": "edinburgh",
+            "title": "University of Edinburgh — Cacti and other succulents",
+            "url": "https://archive.bio.ed.ac.uk/jdeacon/desertecology/cacti.htm"
         }
     ]
 }

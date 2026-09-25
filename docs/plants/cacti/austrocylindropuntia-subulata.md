@@ -21,14 +21,14 @@
 | Seller name             | _Austrocylindropuntia subulata_ — Eve's Needle |
 | Other common name       | Eve's pin cactus                               |
 
-The long, awl-shaped leaves on young green growth are normal for the species;
-they are not a sign that the plant is becoming a leafy houseplant.
+The long, awl-shaped leaves are carried on young green branches; older stems
+develop a woody trunk with dark brown bark.
 
 ## Collection history
 
 Ordered from Mountain Crest Gardens on August 25, 2026, this plant arrived
-rooted on August 28 in a 2-inch nursery pot; its original pot shape was not
-recorded. It was inspected and repotted that day into a **4 × 4 × 3.7-inch
+rooted on August 28 in a 2-inch nursery pot. It was inspected and repotted
+that day into a **4 × 4 × 3.7-inch
 round pot**, with approximately 95% of the nursery soil removed according to
 the owner. The substrate was slightly moist at inspection.
 
@@ -37,14 +37,12 @@ The August 29 measurements were **357.5 g** for the potted plant and
 and ruler. Collection photographs include side and overview views.
 
 The mix is Molly's Succulent Mix with added perlite. On September 20, the owner
-estimated the blend as approximately **80% Molly's / 20% added perlite**; the
-ratio was recalled rather than measured. See the [current placement guide](../../layouts/table-placement-research.md)
+estimated the blend as approximately **80% Molly's / 20% added perlite**. See the [current placement guide](../../layouts/table-placement-research.md)
 for the indoor arrangement. Individual lamp clearance has not been measured.
 
 ## Nursery description
 
-Mountain Crest Gardens' listing, recorded August 26, 2026, describes the
-nursery offering. Pot size and hardiness below are seller specifications.
+Mountain Crest Gardens' specifications, recorded August 26, 2026:
 
 | Seller field            | Listing value                               |
 | ----------------------- | ------------------------------------------- |
@@ -59,9 +57,8 @@ nursery offering. Pot size and hardiness below are seller specifications.
 
 The seller describes a tree-like cactus that can reach about 13 feet in the
 wild, with tubercled stems, spined areoles, awl-shaped leaves up to about 5
-inches on mature growth, red-to-orange flowers, and reddish fruit. It also
-reports historical cultivation in ancient Peru for fencing and needles. Treat
-those as seller-supplied background until supported by the botanical sources.
+inches on mature growth, red-to-orange flowers, and reddish fruit. NC State Extension also records its historical use in Peru for
+fencing and for needles made from the spines.
 
 ## Origin, form, and growth
 
@@ -88,8 +85,7 @@ _Cylindropuntia_.
 
 - When rotating the pot, use the `H3` label as an orientation reference and
   keep its spines clear of neighboring plants.
-- Detached healthy stem segments can root, but do not cut the plant
-  merely to make it fit the current layout.
+- Healthy stem segments can be rooted after the cut surface calluses.
 - Treat the glochids and longer spines as hazardous even when the green leaves
   make the plant look soft.
 - Watch for mealybugs or scale around tubercles and stem joints.

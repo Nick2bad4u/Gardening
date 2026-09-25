@@ -6,13 +6,13 @@
 - Physical-label allocation: none — withdrawn
 - Tracker allocation: none — withdrawn
 - Status: **Archived — never received; canceled 2026-09-21**
-- Visual description: Reference plants have fleshy pointed leaves around spreading stems, with yellow-green foliage that can become orange or copper in stronger light; no individual plant was received.
+- Visual description: Reference plants have fleshy pointed leaves around spreading stems, with yellow-green foliage that can become orange or copper in stronger light.
 - Interesting fact: Coppertone describes the familiar foliage color, but orange color alone does not establish a particular cultivar or species identification.
 - Identification: **seller-labeled Coppertone sedum; _Sedum adolphi_ is a probable working identification, not independently confirmed**
 - Ordered from: The Succulent Cult through Amazon; order screenshot supplied 2026-09-19
 - Order status: **Seller cancellation confirmed 2026-09-21; no charge. Former estimated delivery: October 1, 2026.**
-- Advertised container: Seller lists a rooted starter in a 2-inch nursery pot; plant never received; root condition unknown
-- Former proposed pot: Owner-designated shared decorated Amazon Basics 8-inch white polypropylene pot with drainage, in Molly's Succulent Mix; arrangement never planted
+- Advertised container: Seller lists a rooted starter in a 2-inch nursery pot
+- Former proposed pot: Owner-designated shared decorated Amazon Basics 8-inch white polypropylene pot with drainage, in Molly's Succulent Mix
 
 The decorated pot was a separate purchase. Its later use is described in the [equipment inventory](../../equipment/inventory.md).
 
@@ -30,9 +30,7 @@ Singapore's National Parks Board treats Coppertone stonecrop under _Sedum adolph
 
 ## Former shared-container plan
 
-The September 19 order described a two-inch rooted starter. The five-plant plan was abandoned September 20 after a review of seller feedback; Amazon confirmed all five seller cancellations on September 21, with no charge. None of the plants was received or planted.
-
-The abandoned shared-pot plan grouped [Cubic Frost](./echeveria-cubic-frost.md), [Coppertone](./sedum-adolphi-coppertone.md), [Deminuta](./echeveria-setosa-deminuta.md), and [Ruby Slippers](./echeveria-harmsii-ruby-slippers.md) in one decorated eight-inch pot. [Nanouk](./tradescantia-nanouk.md) was planned separately. The four succulents would have shared one container, but the arrangement was never planted. The former research IDs remain archived without physical labels or tracker IDs.
+The abandoned shared-pot plan grouped [Cubic Frost](./echeveria-cubic-frost.md), [Coppertone](./sedum-adolphi-coppertone.md), [Deminuta](./echeveria-setosa-deminuta.md), and [Ruby Slippers](./echeveria-harmsii-ruby-slippers.md) in one decorated eight-inch pot. [Nanouk](./tradescantia-nanouk.md) was planned separately.
 
 ## Proposed care — archived research
 

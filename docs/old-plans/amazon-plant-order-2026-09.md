@@ -2,7 +2,7 @@
 
 Status: **Archived September 20, 2026 · Plants unreceived · All five seller cancellations confirmed in Amazon September 21; no charge.**
 
-This abandoned plan grouped four succulents in a decorated eight-inch pot and Nanouk in a separate four-inch pot. The order was canceled after a review of seller feedback. Amazon confirmed all five seller cancellations on September 21, with no charge. None of these plants was received or planted.
+This abandoned plan grouped four succulents in a decorated eight-inch pot and Nanouk in a separate four-inch pot. The order was canceled after a review of seller feedback. None of these plants was received or planted.
 
 ## Preserved plant research
 

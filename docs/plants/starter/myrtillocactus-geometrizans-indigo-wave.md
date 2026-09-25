@@ -3,7 +3,7 @@
 - Inventory: Starter-09 — _Myrtillocactus geometrizans_ 'Indigo Wave'
 - Label ID: `B3`
 - Tracker ID: `P06`
-- Visual description: A blue-green monstrose mass of rippled ridges, folded fans, and irregular knobby growth, with no clean central column; seller descriptions may call the same ambiguous form crested.
+- Visual description: A blue-green monstrose mass of rippled ridges, folded fans, and irregular knobby growth, with no clean central column.
 - Interesting fact: The sculptural growth is a cultivated mutation of a useful species: normal _Myrtillocactus geometrizans_ bears sweet edible berries called garambullos in Mexico.
 - Identification: **labeled trade selection**
 - Acquired from: Altman Reserve
@@ -19,10 +19,8 @@
 | Species common names        | Garambullo, bilberry cactus, whortleberry cactus, blue myrtle cactus, blue candle       |
 | Growth form                 | Monstrose: the growing points make irregular waves and knobs instead of a normal column |
 
-'Indigo Wave' is a horticultural selection, not the normal wild architecture of
-the species. Monstrose growth is a stable or semi-stable change in meristem
-behavior. Its ridges, folds, and asymmetric bumps are expected; they are not
-evidence of a virus or neglect by themselves.
+'Indigo Wave' is a horticultural selection with altered growth points. Its
+ridges, folds, and asymmetric bumps form the plant's characteristic shape.
 
 ## The normal species behind the cultivar
 
@@ -33,29 +31,26 @@ for its blue cast also helps reduce water loss and excessive light at the stem
 surface.
 
 Small greenish-white flowers are followed by dark purple edible berries called
-garambullos. They have a long history as a seasonal food in Mexico and explain
+garambullos, about 8–20 mm across. They have a long history as a seasonal food
+in Mexico and explain
 the genus name: _Myrtillocactus_ compares the fruits with bilberries or small
 myrtle berries. _geometrizans_ alludes to the geometric regularity of the normal
 ribs—the opposite of this cultivar's chaotic-looking folds.
 
 The species was published as _Cereus geometrizans_ in 1837. Michelangelo
-Console made the accepted _Myrtillocactus_ combination in 1897. Reliable
-published history for the particular 'Indigo Wave' trade clone is scarce.
-Current retailer records confirm it as an Altman Reserve _Myrtillocactus_
-selection, and sellers frequently describe it as crested or `f. cristata`, but
-its breeder and release year remain undocumented. 'Indigo Wave' is the
-collection's nursery trade name; a formal crested rank was not supplied on its label.
+Console made the accepted _Myrtillocactus_ combination in 1897. 'Indigo Wave'
+is the Altman Reserve trade selection in this collection.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                      |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Photo-matched R1C5 · High.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Front row near the right. Keep the folded growing tips exposed without crowding neighboring plants. See the [current placement guide](../../layouts/table-placement-research.md). |
-| Outdoor light       | Acclimate toward substantial sun. Preserve the natural blue wax by handling the body as little as possible.                                                                                                                                                                                             |
-| Water               | Deep soak followed by a full dry-down. It may use water a little faster than the tiny globular species while actively growing.                                                                                                                                                                          |
-| Temperature         | Favor warmth; protect from frost and especially from cold wet soil.                                                                                                                                                                                                                                     |
-| Pot and mix         | Free drainage and a stable pot. Increase pot size gradually as the branched top gains leverage.                                                                                                                                                                                                         |
-| Feeding             | Light feeding in the warm growing season; excessive nitrogen encourages vulnerable soft growth.                                                                                                                                                                                                         |
+| Topic               | Practical approach                                                                                                                                                                                                                                                              |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **R1C5 · High.** September 15, 2026 photo layout, facing the window (six columns, four rows). Front row near the right. Keep the folded growing tips exposed without crowding neighboring plants. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Outdoor light       | Acclimate toward substantial sun. Preserve the natural blue wax by handling the body as little as possible.                                                                                                                                                                     |
+| Water               | Deep soak followed by a full dry-down. It may use water a little faster than the tiny globular species while actively growing.                                                                                                                                                  |
+| Temperature         | Favor warmth; protect from frost and especially from cold wet soil.                                                                                                                                                                                                             |
+| Pot and mix         | Free drainage and a stable pot. Increase pot size gradually as the branched top gains leverage.                                                                                                                                                                                 |
+| Feeding             | Light feeding in the warm growing season; excessive nitrogen encourages vulnerable soft growth.                                                                                                                                                                                 |
 
 Uneven surfaces receive uneven light. Watch the highest pale ridges for the
 first hint of bleaching, and check deep shaded folds for pests or retained
@@ -72,8 +67,6 @@ colored even though it is not symmetrical.
   repeatedly poking between growing points.
 - The glaucous wax rubs off and does not quickly return on old tissue; finger
   marks are cosmetic but permanent-looking.
-- Do not expect the flower and fruit timing or mature tree scale of the normal
-  species from a small monstrose clone.
 
 ## Sources
 

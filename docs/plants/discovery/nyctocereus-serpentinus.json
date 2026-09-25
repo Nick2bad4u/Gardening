@@ -1,6 +1,6 @@
 {
     "anatomy": {
-        "intro": "A branching, flexible outline explains why a young upright pot can eventually need more room.",
+        "intro": "Slender ribbed stems branch and lengthen into a scrambling plant.",
         "parts": [
             {
                 "function": "The green cylindrical stem carries a series of low ribs.",
@@ -31,10 +31,10 @@
         "sourceIds": [
             "britton-rose"
         ],
-        "text": "The classical description records white flowers roughly 15–19 cm long, emerging near the upper areoles, followed by red fruit. A potential bloom is much broader than the thin stem that bears it; flowering has not been recorded for this collection specimen."
+        "text": "White flowers roughly 15–19 cm long emerge near the upper areoles and are followed by red fruits. The fruit’s spines are deciduous: they fall away as the fruit develops."
     },
     "growth": {
-        "note": "A leaning mature stem can be consistent with its habit; sudden softness or a damaged base is a separate observation.",
+        "note": "The long, narrow stems eventually lean and scramble, giving an established plant its serpentine outline.",
         "sourceIds": [
             "britton-rose"
         ],
@@ -71,14 +71,14 @@
         {
             "name": "Ming Thing",
             "profileSlug": "cereus-forbesii-ming-thing",
-            "text": "Both are cacti, but Ming Thing grows in thick irregular clubs. Serpent cactus develops long, comparatively slender ribbed stems and a scrambling habit; its branches are not flat cactus pads."
+            "text": "Ming Thing grows in thick irregular clubs. Serpent cactus develops long, narrow ribbed stems that lean and scramble."
         }
     ],
     "mature": {
         "sourceIds": [
             "britton-rose"
         ],
-        "text": "Stems in the botanical description can reach around 3 m long while remaining only about 2–5 cm thick. Those dimensions describe developed plants, not a growth promise for the indoor pot."
+        "text": "Developed stems can reach around 3 m long while remaining only about 2–5 cm thick, producing a slender, sprawling plant."
     },
     "milestones": [
         {
@@ -92,7 +92,7 @@
         "sourceIds": [
             "kew"
         ],
-        "text": "Kew currently accepts Nyctocereus serpentinus and lists Peniocereus serpentinus as a synonym. Finding either name in a reference does not by itself indicate a different plant."
+        "text": "Kew accepts Nyctocereus serpentinus and lists Peniocereus serpentinus as a synonym. Both names are common in cactus references."
     },
     "slug": "nyctocereus-serpentinus",
     "sources": [

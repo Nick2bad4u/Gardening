@@ -28,6 +28,7 @@ import { siteUrl } from "../routes.mjs";
  */
 
 const speciesObservationScope = "Species observations";
+const speciesComparisonScope = "Species comparisons";
 const planterReferenceScopes = new Map([
     [
         "lithops-shared-planter",
@@ -109,7 +110,7 @@ const inaturalistBySlug = new Map([
     [
         "aeonium-haworthii-dream-color",
         {
-            scope: "Underlying species; Dream Color is horticultural",
+            scope: "Species forms behind Dream Color",
             taxon: "Aeonium haworthii",
         },
     ],
@@ -127,14 +128,14 @@ const inaturalistBySlug = new Map([
     [
         "cereus-forbesii-ming-thing",
         {
-            scope: "Underlying species; Ming Thing is horticultural",
+            scope: "Species forms behind Ming Thing",
             taxon: "Cereus forbesii",
         },
     ],
     [
         "chamaelobivia-hybrid",
         {
-            scope: "Peanut-cactus ancestry; hybrid flowers can differ",
+            scope: "Peanut-cactus ancestry comparisons",
             taxon: "Echinopsis chamaecereus",
         },
     ],
@@ -148,14 +149,14 @@ const inaturalistBySlug = new Map([
     [
         "echeveria-pulidonis",
         {
-            scope: "Working species; the shared-planter ID remains probable",
+            scope: speciesComparisonScope,
             taxon: "Echeveria pulidonis",
         },
     ],
     [
         "echeveria-raindrops",
         {
-            scope: "Genus observations; Raindrops has no wild population",
+            scope: "Echeveria genus comparisons",
             taxon: "Echeveria",
         },
     ],
@@ -169,7 +170,7 @@ const inaturalistBySlug = new Map([
     [
         "echinopsis-spachiana",
         {
-            scope: "Working species; compare cautiously",
+            scope: speciesComparisonScope,
             taxon: "Echinopsis spachiana",
         },
     ],
@@ -183,35 +184,35 @@ const inaturalistBySlug = new Map([
     [
         "espostoa-melanostele-nana",
         {
-            scope: "Working species; this collection ID remains probable",
+            scope: speciesComparisonScope,
             taxon: "Espostoa melanostele",
         },
     ],
     [
         "euphorbia-obesa-hybrid",
         {
-            scope: "Reference species only; the collection plant may be a hybrid",
+            scope: "Euphorbia obesa species comparisons",
             taxon: "Euphorbia obesa",
         },
     ],
     [
         "faucaria-tuberculosa",
         {
-            scope: "Working species; this collection ID remains probable",
+            scope: speciesComparisonScope,
             taxon: "Faucaria tuberculosa",
         },
     ],
     [
         "gymnocalycium-mihanovichii-black-widow",
         {
-            scope: "Underlying species; cultivar colors are not separated",
+            scope: "Species and cultivated color forms",
             taxon: "Gymnocalycium mihanovichii",
         },
     ],
     [
         "gymnocalycium-mihanovichii-variegated",
         {
-            scope: "Underlying species; variegated selections are not separated",
+            scope: "Species and cultivated color forms",
             taxon: "Gymnocalycium mihanovichii",
         },
     ],
@@ -222,7 +223,7 @@ const inaturalistBySlug = new Map([
     [
         "kalanchoe-bracteata",
         {
-            scope: "Working species; the shared-planter ID remains probable",
+            scope: speciesComparisonScope,
             taxon: "Kalanchoe bracteata",
         },
     ],
@@ -240,7 +241,7 @@ const inaturalistBySlug = new Map([
     [
         "mammillaria-mammillaris",
         {
-            scope: "Working species; this collection ID remains probable",
+            scope: speciesComparisonScope,
             taxon: "Mammillaria mammillaris",
         },
     ],
@@ -251,21 +252,21 @@ const inaturalistBySlug = new Map([
     [
         "mammillaria-rekoi",
         {
-            scope: "Working species; compare cautiously with this cf. ID",
+            scope: "Mammillaria rekoi comparisons",
             taxon: "Mammillaria rekoi",
         },
     ],
     [
         "myrtillocactus-geometrizans-fukurokuryuzinboku",
         {
-            scope: "Underlying species; monstrose cultivars are not separated",
+            scope: "Myrtillocactus species forms",
             taxon: "Myrtillocactus geometrizans",
         },
     ],
     [
         "myrtillocactus-geometrizans-indigo-wave",
         {
-            scope: "Underlying species; crested trade forms are not separated",
+            scope: "Myrtillocactus species forms",
             taxon: "Myrtillocactus geometrizans",
         },
     ],
@@ -283,7 +284,7 @@ const inaturalistBySlug = new Map([
     [
         "pachira-glabra",
         {
-            scope: "Working species; the nursery tag names only Pachira",
+            scope: "Pachira glabra comparisons",
             taxon: "Pachira glabra",
         },
     ],
@@ -294,14 +295,14 @@ const inaturalistBySlug = new Map([
     [
         "pilosocereus-pachycladus-variegated",
         {
-            scope: "Working species; variegated forms are not separated",
+            scope: "Pilosocereus species forms",
             taxon: "Pilosocereus pachycladus",
         },
     ],
     [
         "pleiospilos-nelii-royal-flush",
         {
-            scope: "Underlying species; Royal Flush is horticultural",
+            scope: "Pleiospilos nelii species forms",
             taxon: "Pleiospilos nelii",
         },
     ],
@@ -312,7 +313,7 @@ const inaturalistBySlug = new Map([
     [
         "sempervivum-coconut-crystal",
         {
-            scope: "Genus observations; Coconut Crystal has no wild population",
+            scope: "Sempervivum genus comparisons",
             taxon: "Sempervivum",
         },
     ],
@@ -330,7 +331,7 @@ const inaturalistBySlug = new Map([
     [
         "tiny-mixed-succulent-planter",
         {
-            scope: "Genus-level comparison for one component; this is not an ID for the whole planter",
+            scope: "Echeveria component comparisons",
             taxon: "Echeveria",
         },
     ],

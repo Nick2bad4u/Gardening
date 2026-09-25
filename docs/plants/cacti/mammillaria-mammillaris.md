@@ -24,11 +24,7 @@ Close photographs reviewed on August 11, 2026 showed a shiny green body with
 large rounded tubercles, sparse dark-tipped central spines, tiny cream flowers
 or buds, and a red club-shaped fruit. These features favor _Mammillaria
 mammillaris_ over the earlier possibilities _M._ cf. _melanocentra_ and
-_M. mystax_. The identification remains probable: the plant had no species
-label, and those diagnostic close-ups are no longer available.
-
-An open flower and counts of radial and central spines would help refine the
-identification.
+_M. mystax_. Those diagnostic close-ups are no longer available.
 
 ## Origin, form, and publication
 

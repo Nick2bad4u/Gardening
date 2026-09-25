@@ -15,22 +15,21 @@
 
 ## Names and identity
 
-| Kind                     | Name                                                      |
-| ------------------------ | --------------------------------------------------------- |
-| Accepted species         | _Tephrocactus articulatus_                                |
-| Seller and variety name  | _T. articulatus_ var. _papyracanthus_                     |
-| Common name              | Paper spine cactus                                        |
-| Taxonomic-status caution | The variety is often treated within the accepted species. |
+| Kind                    | Name                                                      |
+| ----------------------- | --------------------------------------------------------- |
+| Accepted species        | _Tephrocactus articulatus_                                |
+| Seller and variety name | _T. articulatus_ var. _papyracanthus_                     |
+| Common name             | Paper spine cactus                                        |
+| Taxonomic treatment     | The variety is often treated within the accepted species. |
 
-The flattened, papery structures are modified spines, not dried leaves. The
-papery-spined form is sold under the variety name _papyracanthus_, although
-current taxonomic treatments include it within _T. articulatus_.
+The flattened, papery structures develop as unusually broad, thin spines.
+Their ribbonlike shape gives _papyracanthus_ its distinctive appearance.
 
 ## Collection history
 
 Ordered from Mountain Crest Gardens on August 25, 2026, this plant arrived
-rooted on August 28 in a 2-inch nursery pot; its original pot shape was not
-recorded. It was inspected and repotted that day into a **4 × 4 × 3.7-inch
+rooted on August 28 in a 2-inch nursery pot. It was inspected and repotted
+that day into a **4 × 4 × 3.7-inch
 round pot**, with approximately 95% of the nursery soil removed according to
 the owner. The substrate was slightly moist at inspection.
 
@@ -39,14 +38,12 @@ The August 29 measurements were **375.5 g** for the potted plant and
 and ruler. Collection photographs include top and side views.
 
 The mix is Molly's Succulent Mix with added perlite. On September 20, the owner
-estimated the blend as approximately **80% Molly's / 20% added perlite**; the
-ratio was recalled rather than measured. See the [current placement guide](../../layouts/table-placement-research.md)
+estimated the blend as approximately **80% Molly's / 20% added perlite**. See the [current placement guide](../../layouts/table-placement-research.md)
 for the indoor arrangement. Individual lamp clearance has not been measured.
 
 ## Nursery description
 
-Mountain Crest Gardens' listing, recorded August 26, 2026, describes the
-nursery offering. Pot size and hardiness below are seller specifications.
+Mountain Crest Gardens' specifications, recorded August 26, 2026:
 
 | Seller field             | Listing value                   |
 | ------------------------ | ------------------------------- |
@@ -59,10 +56,9 @@ nursery offering. Pot size and hardiness below are seller specifications.
 | Maximum-height category  | Over 12 inches                  |
 | Growth habit             | Vertical grower / tall stem     |
 
-The seller describes raffia-like flattened pseudo-spines, knobby segments that
-branch and stack, reluctant flowering, and segments that detach and reroot
-readily. “Pseudo-spine” is the seller's descriptive wording; the broad papery
-structures should still be handled as cactus armature.
+Mountain Crest describes raffia-like spines and knobby segments that branch,
+stack, and reroot readily after detaching. The papery-spined form is often
+reluctant to flower.
 
 ## Origin, form, and taxonomy
 
@@ -102,3 +98,4 @@ a useful horticultural name for the papery-spined form.
 - [LLIFLE cactus encyclopedia: _Tephrocactus articulatus_ var. _papyracanthus_](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/7346/Tephrocactus_articulatus_var._papyracanthus)
 - [GBIF Backbone Taxonomy: accepted _Tephrocactus articulatus_](https://www.gbif.org/species/7283993)
 - [GBIF Backbone Taxonomy: var. _papyracanthus_ synonym record](https://www.gbif.org/species/3957748)
+- [Annals of Botany: cactus shoot structure and papery spine development](https://pmc.ncbi.nlm.nih.gov/articles/PMC2803597/)

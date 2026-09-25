@@ -2,13 +2,13 @@
 
 For everyday care, start with the [watering quick guide](./watering-quick-guide.md): drying targets, plant groups, and the collection's exceptions. This longer reference explains the measurement and reporting rules behind those decisions.
 
-Updated: 2026-09-23. This guide explains how plant checks, measured weights and the daily report support care decisions. It is a strategy reference, not a recommendation to water particular pots today.
+Updated: 2026-09-23. This guide explains how plant checks, measured weights and the daily report support care decisions. Use the latest daily report for today's pot-by-pot review.
 
 Read alongside the [weighing strategy](./weighing-strategy.md), [logger action guide](./logger-actions.md), and [daily task prompt](./daily-weighing-watering-prompt.md).
 
 ## What We Are Trying to Learn
 
-The aim is to recognize each container's normal dry-down, notice when that pattern changes, and water when the plant and root zone are ready. More data should eventually make care easier. It should not create a requirement to weigh everything daily or keep a plant dry until an arbitrary number is reached.
+The aim is to recognize each container's normal dry-down, notice when that pattern changes, and water when the plant and root zone are ready. More data should eventually make care easier. As a pattern becomes reliable, fewer well-timed readings should be needed.
 
 The scale measures the entire weighing assembly: plant, roots, medium, pot, labels, and any accessories included on the scale. A falling number records a change in that assembly's mass. It does not identify exactly where moisture remains, prove that roots are healthy, or measure a watering dose.
 
@@ -101,7 +101,7 @@ Do not copy the source publications' regional seasons or illustrative watering i
 | Partial              | A deliberately incomplete watering.                                                                            | Full-cycle forecasting is withheld for that cycle.                                |
 | Spot                 | A localized watering.                                                                                          | Full-cycle forecasting is withheld for that cycle.                                |
 
-These are descriptions of what happened, not prescriptions to use a particular method. A Partial or Spot event still records real watering and changes the current cycle; do not omit it to preserve an attractive forecast. Historical blank application values remain legacy/unspecified evidence; the implementation accepts them for compatibility without pretending the method was measured.
+Record the application that actually occurred. A Partial or Spot event still changes the current watering cycle. Historical blank application values remain legacy/unspecified and are accepted for compatibility.
 
 **Water amount (mL)** is optional measured liquid volume. Leave it blank if unknown. It is different from the pot's gram increase and from **Nutrient amount**, which describes the product quantity or concentration with units. The model does not convert “grams above dry” into a required number of milliliters.
 
@@ -109,7 +109,7 @@ These are descriptions of what happened, not prescriptions to use a particular m
 
 | Situation                                          | Interpretation and response                                                                                                                                                                                              |
 | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| No wet reference or completed dry cycle            | The model lacks an anchor. Keep honest observations during normal care; do not water or prolong drought merely to manufacture one.                                                                                       |
+| No wet reference or completed dry cycle            | The model lacks an anchor. Build the missing history during normal care, without changing watering just to obtain an anchor.                                                                                             |
 | Undated Water or Repot in the current setup        | The boundary cannot be placed reliably. Forecasts and recent-cycle metrics are withheld until the record issue is resolved.                                                                                              |
 | Unexpected gain, poor fit, or incompatible anchors | Check whether observations are comparable and obtain a useful repeat measurement if needed. A guessed date is not a repair.                                                                                              |
 | Partial or Spot watering                           | Preserve the event and accept that a full-cycle estimate is not appropriate.                                                                                                                                             |

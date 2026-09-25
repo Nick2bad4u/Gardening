@@ -20,8 +20,8 @@ const research = await getEquipmentDocs();
     <section class="equipment-research">
         <h2>Operating Guides and Model Research</h2>
         <p>
-            Each record keeps its own dates and status. A research page or historical purchase is
-            not proof that equipment is currently installed.
+            Each record includes its dates, specifications, and status: installed, stored, planned,
+            or historical.
         </p>
         <div class="card-grid">
             {research.map((item) => (

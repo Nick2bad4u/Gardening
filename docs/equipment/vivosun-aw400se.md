@@ -1,6 +1,6 @@
 # VIVOSUN AeroLight Wing AW400SE — Canceled Order
 
-> Historical equipment/arrangement record. The September 15 display uses [four wooden tables with the installed AW200 + AeroLight 240 W](../layouts/table-placement-research.md). Table placement and coverage drawings below do not describe that current arrangement.
+> Historical equipment/arrangement record. The September 15 display uses [four wooden tables with the installed AW200 + AeroLight 240 W](../layouts/table-placement-research.md).
 
 Updated September 13, 2026. The owner canceled the Amazon AW400SE order,
 then selected the [AW400](./vivosun-aw400.md), which was subsequently reported

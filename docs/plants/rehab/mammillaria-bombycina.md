@@ -21,8 +21,7 @@
 An older photograph, no longer available, showed
 a clustered green _Mammillaria_ with white radial spines,
 wool around the areoles, and longer reddish-brown central spines. That is a good
-match for _M. bombycina_, but the final almost-black shrunken plant no longer
-showed enough living diagnostic tissue for a confident identification.
+match for _M. bombycina_.
 
 ## Species background
 
@@ -39,21 +38,17 @@ form a ring near the crown.
 
 This plant formerly grew in the shared cactus planter. Its acquisition source
 and date were not recorded. It was removed on **July 24, 2026**, after final
-inspection found only a tiny patch of green flesh near the top and too little
-viable tissue to salvage. No offset or cutting was retained. The identification
-remains a probable match based on its earlier appearance; no photograph of the
-final inspection is available.
+inspection of the almost-black, shrunken plant found only a tiny patch of green
+flesh near the top and too little
+viable tissue to salvage. No offset or cutting was retained, and no photograph
+of the final inspection is available.
 
-The removal assessment focused on firmness, the condition of the base, and
-whether a healthy crown or offset could survive independently. The isolated
-green patch did not provide a viable cutting. The remaining three plants
-continue in the shared planter; this historical record has no active pot or
-watering schedule.
+The remaining three plants continue in the shared planter. This historical
+record has no active pot or watering schedule.
 
 ## Reference care for a future replacement
 
-The following notes apply only to living replacement material, not to the
-removed plant:
+For a future replacement or a healthy cutting:
 
 | Topic     | Practical approach                                                                                          |
 | --------- | ----------------------------------------------------------------------------------------------------------- |

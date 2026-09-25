@@ -1,6 +1,6 @@
 {
     "anatomy": {
-        "intro": "The numbered illustration explains the probable golden torch; it is a botanical guide, not a measured portrait.",
+        "intro": "Vertical ribs support rows of golden spine clusters, while basal shoots build new columns.",
         "parts": [
             {
                 "function": "The long fold gives the water-storing stem room to expand.",
@@ -32,10 +32,10 @@
         "sourceIds": [
             "form"
         ],
-        "text": "The species opens large white flowers at night. This helps distinguish its flowering behavior from the red-flowered monkey tail nearby, but the record does not establish that this particular plant has bloomed."
+        "text": "Large white flowers open at night on mature stems, contrasting with the side-borne red flowers of the monkey tail nearby."
     },
     "growth": {
-        "note": "The new growth can become sturdier, but existing scars and stretched sections do not reverse.",
+        "note": "Young areoles are yellow and fade toward gray with age, creating a visible contrast between fresh and older stem sections.",
         "sourceIds": [
             "form"
         ],
@@ -58,7 +58,7 @@
         "sourceIds": [
             "range"
         ],
-        "text": "Echinopsis spachiana is native to Bolivia and northwestern Argentina, in desert and dry shrubland. Its upright branching framework differs from the trailing monkey tail that shares this pot. The collection identification remains probable, based on green ribbed columns and golden spines; older leaning or stretched growth is a cultivation history, not a species trait."
+        "text": "Echinopsis spachiana comes from Bolivia and northwestern Argentina, in desert and dry shrubland. It grows as an upright branching cactus with green ribbed stems."
     },
     "image": {
         "alt": "Botanical anatomy of the probable golden torch, showing rib, areole, golden spines, basal offset with numbered markers.",
@@ -78,7 +78,7 @@
         "sourceIds": [
             "form"
         ],
-        "text": "RHS describes a multi-stemmed cactus reaching roughly 2 m, with branches arising at the base. That is a species-scale reference rather than a target for this recovering shared-pot specimen."
+        "text": "A mature plant forms a multi-stemmed shrub reaching roughly 2 m, with new columns arising from the base."
     },
     "milestones": [
         {

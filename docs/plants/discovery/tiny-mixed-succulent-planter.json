@@ -1,6 +1,6 @@
 {
     "anatomy": {
-        "intro": "The drawing compares three foliage groups above one shared potting volume; it does not identify individual root connections.",
+        "intro": "Low rosettes, branching shoots and upright paddles build three layers within one shared planter.",
         "parts": [
             {
                 "function": "Overlapping fleshy leaves form the low Echeveria-type crown.",
@@ -35,10 +35,10 @@
             "sedum",
             "flapjacks"
         ],
-        "text": "There is no single flower for this planter: Echeveria-type stalks, white sedum stars and paddle-kalanchoe flower spikes would belong to different components. None is documented here."
+        "text": "Each component brings a different display: Echeveria flowers stand above the rosettes, sedum carries white stars in clusters, and paddle kalanchoe sends up a tall flowering spike."
     },
     "growth": {
-        "note": "Use photographs to watch for shade and crowding; these are possibilities, not dated predictions or instructions to separate healthy plants.",
+        "note": "Compare photographs as the plants expand, watching where neighboring leaves begin to overlap or cast shade.",
         "sourceIds": [
             "echeveria",
             "sedum",
@@ -65,10 +65,10 @@
             "sedum",
             "flapjacks"
         ],
-        "text": "This is a nursery composition rather than a natural plant community. Its working matches bring American Echeveria and Mexican coppertone sedum together with South African paddle kalanchoe. Similar fleshy foliage makes a pleasing display, but does not prove identical growth rates, final sizes or watering needs."
+        "text": "This nursery composition brings together American Echeveria, Mexican coppertone sedum and South African paddle kalanchoe. All three working groups belong to Crassulaceae, the stonecrop family, yet their contrasting leaf arrangements give the planter its varied shape."
     },
     "image": {
-        "alt": "Terracotta mixed-planter schematic with numbered pale rosette, copper stem, green paddle and shared medium.",
+        "alt": "Terracotta mixed-planter illustration with numbered pale rosette, copper stem, green paddle and shared medium.",
         "file": "assets/plant-explainers/tiny-mixed-succulent-planter.webp",
         "generatedOn": "2026-09-24",
         "prompt": "Create a square 1024px botanical educational illustration on warm ivory. Clean botanically accurate pen-and-watercolor, muted forest-green, sage and ochre palette, generous whitespace, large central specimen. Exactly four large numbered circular markers 1, 2, 3, 4 with thin clear noncrossing leader lines to the specified features. Numerals legible at 350px display. No title, words, paragraphs, watering icons, calendar, border or logo. Schematic anatomy, not a photograph of an owned plant. Show one shallow terracotta shared planter viewed slightly from above, containing pale powdery Echeveria rosettes at front left, narrow copper-orange Sedum rosettes on short branching stems at front right, and upright broad green red-edged Kalanchoe paddles behind them. Group types distinct, five small crowns total, not species proof. No roots, flowers or cutaway. Marker1 to a powdery Echeveria fleshy rosette leaf; marker2 to a copper Sedum branching stem; marker3 to a broad Kalanchoe paddle leaf; marker4 to the visible shared gritty potting-medium surface between them. All four leaders unambiguous.\nFinal refinement: Edit the supplied illustration. Preserve pot, plant arrangement, pale echeveria, copper sedum, all four numbered markers and leader lines. Change ONLY the margins of every broad green red-edged Kalanchoe paddle leaf at the back: they must be SMOOTH entire rounded edges, no scalloping, teeth or serrations. Keep red margins, broad oval paddle forms and everything else exactly as shown.",
@@ -107,25 +107,25 @@
     "slug": "tiny-mixed-succulent-planter",
     "sources": [
         {
-            "accessed": "2026-09-24",
+            "accessed": "2026-09-25",
             "id": "echeveria",
             "title": "NC State Extension: Echeveria",
             "url": "https://plants.ces.ncsu.edu/plants/echeveria/"
         },
         {
-            "accessed": "2026-09-24",
+            "accessed": "2026-09-25",
             "id": "sedum",
             "title": "NParks: Sedum adolphi",
             "url": "https://www.nparks.gov.sg/florafaunaweb/flora/6/1/6141"
         },
         {
-            "accessed": "2026-09-24",
+            "accessed": "2026-09-25",
             "id": "flapjacks",
             "title": "Wisconsin Extension: Flapjacks",
             "url": "https://hort.extension.wisc.edu/articles/flapjacks-kalanchoe-spp/"
         },
         {
-            "accessed": "2026-09-24",
+            "accessed": "2026-09-25",
             "id": "lithops",
             "title": "Wisconsin Extension: Living stones",
             "url": "https://hort.extension.wisc.edu/articles/living-stones-lithops/"

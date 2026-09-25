@@ -1,6 +1,6 @@
 {
     "anatomy": {
-        "intro": "The diagram explains an irregular blue stem rather than a normal candelabra-shaped tree.",
+        "intro": "Irregular folds and ridges reshape the blue-green stem into a sculptural mass.",
         "parts": [
             {
                 "function": "The folded surface is part of the succulent cactus stem.",
@@ -31,14 +31,16 @@
     ],
     "flowers": {
         "sourceIds": [
-            "arizona"
+            "arizona",
+            "rbge"
         ],
-        "text": "The normal species produces small greenish-white flowers followed by dark fruits. Those species traits do not establish how often this distorted nursery form will flower, and this collection has no flowering milestone recorded for it."
+        "text": "The normal species bears small greenish-white flowers followed by sweet blue-purple garambullo fruits. Royal Botanic Garden Edinburgh describes the berries as 8–20 mm across, about blueberry size, and records their sale in Mexican markets."
     },
     "growth": {
-        "note": "These are form-based expectations, not a proven cultivar growth schedule; a crest is a growth pattern rather than a separate botanical species.",
+        "note": "Monstrose growth makes irregular knobs and branching points; crested growth spreads a growing tip into a line, producing broad fans.",
         "sourceIds": [
-            "rhs-mutations"
+            "rhs-mutations",
+            "ming-comparison"
         ],
         "stages": [
             {
@@ -58,10 +60,9 @@
     "habitat": {
         "sourceIds": [
             "kew",
-            "arizona",
-            "rhs-mutations"
+            "rbge"
         ],
-        "text": "The ordinary species is a Mexican cactus tree from desert and dry shrubland. Indigo Wave is a nursery selection with distorted growth, not a separate wild population with its own mapped habitat. Its blue stem connects it visually to that ancestry, while the folded and sometimes fan-shaped outline is the cultivated feature documented in this collection."
+        "text": "The wild species grows on stony and sandy soils in Mexico’s seasonally dry tropical woodland. Indigo Wave is a cultivated selection with irregular, folded growth."
     },
     "image": {
         "alt": "Indigo Wave cactus with numbered wavy stem fold, spine-bearing areole, blue-grey surface and broad growth crest.",
@@ -74,14 +75,14 @@
         {
             "name": "Ming Thing",
             "profileSlug": "cereus-forbesii-ming-thing",
-            "text": "Ming Thing forms predominantly rounded blue-green clubs; Indigo Wave is documented here with more folded or fan-like growth. Both are variable cultivated forms, so silhouette alone cannot prove their labels."
+            "text": "Ming Thing makes thick rounded clubs, while Indigo Wave has blue-green folded ridges and broader fan-like areas."
         }
     ],
     "mature": {
         "sourceIds": [
             "arizona"
         ],
-        "text": "Ordinary Myrtillocactus geometrizans can become a candelabra-like tree around 3.4–4.6 m tall. That outdoor species size is not a credible indoor size prediction for Indigo Wave; no verified cultivar maximum is supplied here."
+        "text": "Ordinary Myrtillocactus geometrizans forms a candelabra-like tree around 3.4–4.6 m tall. Indigo Wave retains a folded, irregular outline as its stems expand."
     },
     "milestones": [
         {
@@ -95,7 +96,7 @@
         "sourceIds": [
             "kew"
         ],
-        "text": "The species appeared as Cereus geometrizans in 1837 and moved to Myrtillocactus in 1897. Indigo Wave is a trade selection name and does not replace that underlying botanical name."
+        "text": "The species appeared as Cereus geometrizans in 1837 and moved to Myrtillocactus in 1897. The nursery selection is sold as Indigo Wave."
     },
     "slug": "myrtillocactus-geometrizans-indigo-wave",
     "sources": [
@@ -128,6 +129,12 @@
             "id": "ming-comparison",
             "title": "NC State Extension — Ming Thing",
             "url": "https://plants.ces.ncsu.edu/plants/cereus-forbesii-ming-thing/"
+        },
+        {
+            "accessed": "2026-09-25",
+            "id": "rbge",
+            "title": "Royal Botanic Garden Edinburgh — Myrtillocactus geometrizans",
+            "url": "https://stories.rbge.org.uk/archives/9827"
         }
     ]
 }

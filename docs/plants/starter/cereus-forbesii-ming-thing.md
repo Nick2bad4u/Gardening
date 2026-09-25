@@ -21,10 +21,9 @@
 
 The original _Opuntia_ label does not fit. _Opuntia_ relatives show jointed
 segments and distinctive glochid-bearing areoles; this plant makes dense,
-knobby, rib fragments characteristic of the clone sold as 'Ming Thing'. The ID
-is strongly supported by its growth form, although nursery provenance is incomplete.
+knobby rib fragments characteristic of 'Ming Thing'.
 
-## Species background and cultivar uncertainty
+## Species background
 
 Normal _Cereus forbesii_ is a branching columnar cactus native from Bolivia
 through Paraguay into north-central Argentina. It grows in seasonally dry
@@ -36,35 +35,27 @@ Charles Förster published the species in 1846. Kew accepts it and includes
 _Cereus hankeanus_, another name common in older horticulture, in its synonymy.
 The normal species is assessed as Least Concern.
 
-NC State Extension confirms 'Ming Thing' as a monstrose _Cereus forbesii_
-cultivar and describes the form as a naturally occurring mutation. Its breeder,
-first nursery, and release year are not documented in the botanical and
-extension sources checked. Sellers and collector pages repeat conflicting
-origin stories, and some plants under the name may not be one genetically
-identical clone. It is best described as a monstrose _Cereus forbesii_-type cultivar widely
-traded as 'Ming Thing'. Reference photos of the ordinary species show its
-botanical background rather than this cultivar's irregular shape.
+NC State Extension describes 'Ming Thing' as a naturally occurring monstrose
+mutation with multiple growing points. It rarely flowers. In the normal species,
+the large night-opening flowers produce a sweet fragrance that attracts moths
+and other nighttime pollinators.
 
 ## What monstrose growth means
 
-Ordinary apical dominance has broken into many irregular growing regions. That
+Growth is distributed among many irregular growing points. That
 creates miniature towers, fans, and lumps. Shape changes are normal from one
 season to the next. Health is better judged by firmness, color, roots, and
 compact new growth than by symmetry.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                                 |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Grow-light position | **Photo-matched R1C1 · Gentler.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Front-left, where a gentler edge is plausible. Mylar can still return substantial light; this is not shade. See the [current placement guide](../../layouts/table-placement-research.md). |
-| Water               | Soak and drain, then wait until the full pot is dry. Deep folds and slow growth give overwatering more downside than slight delay.                                                                                                                                                                                 |
-| Light acclimation   | Increase gradually; high ridges can bleach while shaded valleys still look dark green.                                                                                                                                                                                                                             |
-| Pot and mix         | A small breathable root volume and fast drainage are useful. Keep grit out of crevices at the body base.                                                                                                                                                                                                           |
-| Feeding             | Dilute feed during obvious warm-season growth only.                                                                                                                                                                                                                                                                |
-
-This plant does not need maximum output just because the normal species grows
-in sun. The irregular surface and nursery-grown epidermis make a conservative
-ramp sensible.
+| Topic               | Practical approach                                                                                                                                                                                                                                       |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **R1C1 · Gentler.** September 15, 2026 photo layout, facing the window (six columns, four rows). Front-left; acclimate the exposed ridges to overhead and reflected light. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | Soak and drain, then wait until the full pot is dry. Deep folds and slow growth give overwatering more downside than slight delay.                                                                                                                       |
+| Light acclimation   | Increase gradually; high ridges can bleach while shaded valleys still look dark green.                                                                                                                                                                   |
+| Pot and mix         | A small breathable root volume and fast drainage are useful. Keep grit out of crevices at the body base.                                                                                                                                                 |
+| Feeding             | Dilute feed during obvious warm-season growth only.                                                                                                                                                                                                      |
 
 ## Propagation and watch points
 

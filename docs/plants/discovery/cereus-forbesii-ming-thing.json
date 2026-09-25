@@ -32,10 +32,10 @@
         "sourceIds": [
             "ncsu"
         ],
-        "text": "The underlying species has large, white, night-opening funnels, sometimes tinged purple. NC State specifically notes that Ming Thing rarely flowers, so its changing stem architecture is a more realistic everyday attraction than an expected bloom schedule."
+        "text": "Ming Thing rarely flowers. The underlying species opens large white funnels, sometimes tinged purple, at night; their sweet fragrance attracts moths and other night-flying insects."
     },
     "growth": {
-        "note": "Record changes in shape over time; there is no reliable age or height at which this cultivar must flower.",
+        "note": "Multiple growing points produce the knobby outline, with woolly areoles and short black spines at the tops of the clubs.",
         "sourceIds": [
             "ncsu",
             "kew"
@@ -60,7 +60,7 @@
             "kew",
             "ncsu"
         ],
-        "text": "The wild species comes from Bolivia through Paraguay into northern Argentina, where it grows in dry shrubland and can become a tree. Ming Thing is a cultivated monstrose form: its miniature club-shaped stems are not the normal outline of a wild Cereus forest. Think of the species range as ancestry, not the cultivar’s own natural habitat."
+        "text": "The wild species grows in dry shrubland from Bolivia through Paraguay into northern Argentina, eventually becoming a branching cactus tree. Ming Thing is its compact cultivated monstrose form."
     },
     "image": {
         "alt": "Ming Thing cactus with numbered club-shaped stem, woolly areole, short dark spines and rounded growing tip.",
@@ -73,7 +73,7 @@
         {
             "name": "Normal Cereus forbesii",
             "profileSlug": null,
-            "text": "The ordinary species forms a ribbed, tree-like cactus; Ming Thing repeatedly interrupts that columnar pattern with clubs and knobs. A single unusually shaped shoot does not prove a different species."
+            "text": "The ordinary species forms a ribbed, tree-like cactus. Ming Thing develops many short clubs and knobs where the normal species extends long columns."
         }
     ],
     "mature": {
@@ -81,7 +81,7 @@
             "ncsu",
             "kew"
         ],
-        "text": "NC State describes the cultivar at about 15–30 cm tall and 8–15 cm wide. The tree habit recorded for wild Cereus forbesii should not be substituted for those cultivated expectations."
+        "text": "NC State describes this slow-growing cultivar at about 15–30 cm tall and 8–15 cm wide, forming a dense collection of blue-green clubs."
     },
     "milestones": [
         {

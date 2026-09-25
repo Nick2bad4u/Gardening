@@ -93,7 +93,7 @@ The [illustration notes and limits](../../assets/layouts/2026-09-16-illustrated/
 
 ## Reading the Light Map
 
-The illustrated map is the **earlier qualitative comparison hypothesis**, not measured lux, PPFD, a simulation, or proof of adequate coverage. The later owner reading set is summarized above; the illustration has not been regenerated from those readings. Two panels can light the new block, but the larger wooden footprint does not create more light. Exact fixture alignment over it is not established by these cropped photographs.
+The illustrated map shows an **earlier qualitative light estimate**. For the later 48 app-derived readings, use the measurement summary above; those values are not plotted on this illustration. Two panels can light the new block, but the larger wooden footprint does not create more light. Exact fixture alignment over it is not established by these cropped photographs.
 
 | Area                       | Working Expectation                                                                         | What to Compare                                                                           |
 | -------------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
@@ -107,13 +107,13 @@ The illustrated map is the **earlier qualitative comparison hypothesis**, not me
 
 Keep the confirmed windowsill position for #3 and the A3/F1 exchange. The following comparison questions record the earlier reasoning; they are not additional move recommendations. The strongest placement question is whether **B3 Indigo Wave at the front** has sufficient clear light and whether **H1 Coconut Crystal in the interior** is shaded. Do not automatically exchange them: they have different heights and both need useful exposure. D3 and F2 occupy opposite front corners, rather than the two left corners of the old drawing. Their benefit is an inference to test.
 
-Six nominal 4-inch rims span about 24 inches across the nominal 26-inch front width. Four rows span about 16 inches of nominal front-table depth, leaving little margin for rails, larger rims and foliage. Keep bases fully supported and access possible; a diagram cannot certify the fit. The larger rear pot dimensions are not newly measured.
+Six nominal 4-inch rims span about 24 inches across the nominal 26-inch front width. Four rows span about 16 inches of nominal front-table depth, leaving little margin for rails, larger rims and foliage. Check that bases are fully supported and leave room to lift each pot without catching neighboring plants. The larger rear pot dimensions are not newly measured.
 
 ## Whole Display
 
 ![Earlier arrangement before the A3/F1 exchange with 29 pots on four wooden tables and #3 Money Tree on a separate north windowsill](../../assets/layouts/2026-09-15-four-tables/combined-plan.png)
 
-Except for the owner-confirmed #3 windowsill position and A3/F1 exchange, positions below are **matched visually from the owner's photographs**, not a new botanical identification or a claim that every printed label was legible. The owner confirms rearranging the display; the label-to-slot transcription and nominal table orientation remain to be checked. Existing P-IDs and identity qualifiers are preserved.
+Positions below are **matched visually from the owner's photographs**, with the later owner-confirmed #3 windowsill move and A3/F1 exchange included. Check the label-to-slot transcription against the physical pots when using the grid.
 
 ## Front Tables: Six Columns, Four Rows
 
@@ -187,13 +187,13 @@ Shared cactus #1 retains probable variegated Pilosocereus pachycladus, Cleistoca
 
 **#3 / P21 remains the same tracked pot**, with the working identification _Pachira_ cf. _glabra_ and its previously recorded white round 6-inch pot. The owner confirmed on September 16 that it is on the north-facing windowsill, outside the wooden display; the exact move time was not supplied. The drawing locates it schematically; it does not establish the sill's size, exact horizontal position, support or clearance. #4 Kiwi stays in its current rear-left spot; no replacement pot is assigned to the space #3 leaves.
 
-The goal is useful indirect light with less direct fixture exposure. North-facing daylight and any remaining LED spill must be assessed at the actual leaves; the table heatmap does not predict the windowsill's light or prove that it will be sufficient. Keep foliage clear of cold glass and drafts, and keep the pot and drainage saucer fully supported.
+The goal is useful indirect light with less direct fixture exposure. Assess daylight and any LED spill at the actual leaves on the windowsill. Keep foliage clear of cold glass and drafts, and keep the pot and drainage saucer fully supported.
 
 Downward-pointing leaves are the owner's September 15 observation. Excess light is a possibility, not a confirmed cause. [NC State's money-tree guidance](https://plants.ces.ncsu.edu/plants/pachira-aquatica/) supports indirect light but describes _P. aquatica_, so it is a comparison rather than a new identification. [University of Maryland Extension](https://extension.umd.edu/resource/watering-indoor-plants) notes that both too little and too much water can cause wilting; leaf angle alone cannot distinguish these causes or establish that watering is due. Preserve the existing money-tree watering rules and observation history.
 
 ## Compare the Plan With a Phone Meter
 
-For an optional future comparison, use the [blank reading sheet](../../assets/layouts/2026-09-15-four-tables/relative-readings.csv). It contains **24 front coordinates, five rear-container points and one separate windowsill point**, with no invented measurements. Record **four rows of six values**, with **row 1 nearest the room**, plus five rear points and the windowsill reading for #3. This is a useful setup comparison, not a new daily chore.
+For an optional future comparison, use the [blank reading sheet](../../assets/layouts/2026-09-15-four-tables/relative-readings.csv). It contains **24 front coordinates, five rear-container points and one separate windowsill point**. Record **four rows of six values**, with **row 1 nearest the room**, plus five rear points and the windowsill reading for #3. Repeat this comparison when a placement or lighting question needs answering.
 
 1. Use both fixtures at their usual steady settings, outside the sunrise/sunset ramps. Record which light is on which side, each spectrum mode, and the actual fixture positions. Keep blinds and daylight consistent, ideally with little daylight contribution.
 2. Use the same phone, app, upward sensor orientation and any diffuser required by that app. Avoid shading it with your body. Let readings settle and repeat several positions; clipping or erratic values invalidate a ranking.
@@ -216,11 +216,11 @@ This is a physical placement change, not a repot or watering event. **Keep the e
 - [Iowa State Extension: supplemental-light considerations](https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants): generic foliage DLI bands, PPFD conversion, and distance/coverage tradeoffs.
 - [University of Minnesota Extension: lighting for indoor plants](https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/lighting-for-indoor-plants): foliage-houseplant light duration and the distinction between wattage and light received.
 
-- **Move evidence:** September 15 owner report of downward-pointing money-tree leaves and a planned move to the north-facing windowsill, followed by owner confirmation on September 16 that the move is complete. The exact completion time was not supplied. No cause diagnosis was supplied. The later approximate table readings do not diagnose the money tree or establish its windowsill exposure. The only subsequent table exchange confirmed here is A3/F1.
+- **Move evidence:** September 15 owner report of downward-pointing money-tree leaves and a planned move to the north-facing windowsill, followed by owner confirmation on September 16 that the move is complete. The exact completion time and cause of the downward leaves were not established. The later confirmed table exchange was A3/F1.
 - **Owner evidence:** September 15 purchase of two additional 16 × 13-inch tables and three supplied setup photographs. The 2 × 2 orientation, nominal 26 × 32-inch block and label matching are photo-based inferences; current gaps, heights and exact fixture centers remain unmeasured. Later light evidence is the owner's approximate 48-reading comparison above, not a calibrated PAR map.
 - **Later owner evidence, measurement date not supplied:** 48 app-converted readings at individual plant heights, whole mapped rectangle range 145–677 estimated PPFD and 13-hour app DLI 6.8–31.7; includes the intentionally unlit far edge. Owner confirmed only the A3/F1 exchange.
-- **Operating record:** September 13 installed lights, AW200 45%, AeroLight 240 W 38%, 18-inch tip reference and the shared 13 h 15 m cycle. See the [equipment record](../equipment/aw200-and-aerolight-240w.md), [AW200 manual][aw200] and [AeroLight manual][aerolight-240]. These settings are carried forward as last reported, not reread from the controllers.
-- **Plant evidence:** the [source-by-source review](../two-light-placement-review.md), [plant profiles](../plants/), [inventory](../collection.md), [NC State Ming Thing][ming], [RHS Feather Cactus][feather], [RHS Rainbow Hedgehog][rainbow], [RHS Monk's Hood][monks-hood], [NC State Sempervivum][sempervivum] and [SANBI split rock][split-rock]. No identity or species-specific light requirement was changed from a layout photo.
+- **Operating record:** September 13 installed lights, AW200 45%, AeroLight 240 W 38%, 18-inch tip reference and the shared 13 h 15 m cycle. See the [equipment record](../equipment/aw200-and-aerolight-240w.md), [AW200 manual][aw200] and [AeroLight manual][aerolight-240]. These are the last reported settings.
+- **Plant evidence:** the [source-by-source review](../two-light-placement-review.md), [plant profiles](../plants/), [inventory](../collection.md), [NC State Ming Thing][ming], [RHS Feather Cactus][feather], [RHS Rainbow Hedgehog][rainbow], [RHS Monk's Hood][monks-hood], [NC State Sempervivum][sempervivum] and [SANBI split rock][split-rock].
 - **Illustrations:** [generation prompts and evidence limits](../../assets/layouts/2026-09-15-four-tables/image-prompts.md). The [September 14 image set](../../assets/layouts/2026-09-14-relative-light/image-prompts.md) is historical and does not represent this new furniture arrangement.
 
 [rainbow]: https://www.rhs.org.uk/plants/115504/echinocereus-rigidissimus/details

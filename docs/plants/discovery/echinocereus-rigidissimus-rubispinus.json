@@ -32,10 +32,10 @@
         "sourceIds": [
             "rhs"
         ],
-        "text": "Bright pink flowers with a pale throat emerge near the top. They provide a dramatic contrast with the dense spine covering, but their presence and timing depend on the individual plant and conditions; no bloom is claimed for this specimen."
+        "text": "Bright pink flowers with a white throat grow from younger areoles near the top of the plant, standing above the closely packed spines."
     },
     "growth": {
-        "note": "The sequence describes development, not annual deadlines; the crown’s colors can change without every band marking exactly one year.",
+        "note": "New spines are reddish pink; as they mature, they fade toward yellow or pale pink, creating bands of changing color down the stem.",
         "sourceIds": [
             "rhs"
         ],
@@ -58,7 +58,7 @@
         "sourceIds": [
             "kew"
         ],
-        "text": "Kew places this subspecies in the Sierra Oscura of western Chihuahua, Mexico, within desert and dry shrubland. That is a much narrower origin than the range of rainbow cacti as a whole. The nursery label names the subspecies; its bright spine coat alone cannot establish the locality of the particular plant in this collection."
+        "text": "This subspecies comes from the Sierra Oscura of western Chihuahua, Mexico, within desert and dry shrubland. Its recorded range is much narrower than that of rainbow cacti as a whole."
     },
     "image": {
         "alt": "Rainbow hedgehog cactus with numbered green rib, areole, comb of pink radial spines and newer crown growth.",
@@ -71,14 +71,14 @@
         {
             "name": "Echinocereus rigidissimus without a subspecies label",
             "profileSlug": null,
-            "text": "The broader species also has closely pressed colored spines. Pink intensity is therefore not enough to separate rubispinus reliably; retain the nursery evidence rather than identifying by color alone."
+            "text": "The broader species also has closely pressed colored spines. The nursery’s subspecies label distinguishes this plant from rainbow cacti sold without that detail."
         }
     ],
     "mature": {
         "sourceIds": [
             "rhs"
         ],
-        "text": "Expect a solitary upright body rather than a naturally broad mound. RHS places the species in a 10–50 cm height band; that broad species-level garden range is not a precise size forecast for this subspecies indoors."
+        "text": "The plant develops a solitary upright body rather than a broad mound. RHS lists a cultivated height and spread of 10–50 cm for the species."
     },
     "milestones": [
         {

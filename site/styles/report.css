@@ -484,7 +484,7 @@
         border-color: var(--green);
         box-shadow: 0 0 0 2px var(--green);
     }
-    & summary {
+    & > summary {
         display: flex;
         gap: 12px;
         align-items: center;
@@ -494,7 +494,7 @@
         border-radius: 16px;
     }
 }
-.daily-report .pot-card summary::-webkit-details-marker {
+.daily-report .pot-card > summary::-webkit-details-marker {
     display: none;
 }
 .daily-report .plant-portrait {
@@ -677,6 +677,12 @@
 .daily-report .photo-limitations {
     margin-block-start: 10px;
 }
+.daily-report .photo-limitations > summary {
+    min-block-size: 44px;
+    padding-block: 10px;
+    font-weight: 650;
+    cursor: pointer;
+}
 .daily-report .photo-findings {
     padding-inline-start: 20px;
     margin-block: 10px;
@@ -831,7 +837,7 @@
     .daily-report .mix-card {
         padding: 22px;
     }
-    .daily-report .pot-card summary {
+    .daily-report .pot-card > summary {
         gap: 9px;
         padding-inline: 12px;
     }

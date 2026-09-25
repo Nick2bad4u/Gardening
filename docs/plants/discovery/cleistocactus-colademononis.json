@@ -1,6 +1,6 @@
 {
     "anatomy": {
-        "intro": "The numbered illustration explains monkey tail cactus; it is a botanical guide, not a measured portrait.",
+        "intro": "Long hairlike spines surround the flexible stems, with growing tips at the ends of the hanging tails.",
         "parts": [
             {
                 "function": "The green cylinder stores water and carries the trailing growth.",
@@ -33,10 +33,10 @@
             "form",
             "range"
         ],
-        "text": "Red to pink flowers emerge from the stem sides; the collection has an observed red-orange bloom. Huntington describes a swollen nectar-holding spur at the flower base that attracts hummingbirds."
+        "text": "Red to pink flowers emerge from the stem sides; the collection has an observed red-orange bloom. Their asymmetrical base holds nectar in a swollen spur, attracting hummingbirds."
     },
     "growth": {
-        "note": "The collection's old stretched sections remain; compare new tips rather than expecting old growth to change shape.",
+        "note": "Track recovery by the diameter, hair density, and spacing of spines on the newest tips.",
         "sourceIds": [
             "form"
         ],
@@ -59,7 +59,7 @@
         "sourceIds": [
             "range"
         ],
-        "text": "Monkey tail cactus is a Bolivian rock-dweller. Huntington's introduction record gives the type locality at Cerro El Fraile, Florida Province, at 2,000 m. Hanging stems suit a plant growing from rock faces: their downward direction is natural architecture, not an automatic sign that the cactus is weak or needs staking."
+        "text": "Monkey tail cactus grows on Bolivian rock faces. Huntington records the type locality at Cerro El Fraile, Florida Province, at 2,000 m. Its pendant stems naturally hang into the open space below their rooting points."
     },
     "image": {
         "alt": "Botanical anatomy of monkey tail cactus, showing pendant stem, hairlike spines, areole, growing tip with numbered markers.",
@@ -79,7 +79,7 @@
         "sourceIds": [
             "form"
         ],
-        "text": "RHS describes trailing stems reaching about 1 m in cultivation. A cascading outline needs clearance below the pot; stem length is more meaningful here than upright height."
+        "text": "Cultivated stems can trail about 1 m, creating a hanging curtain that needs clear space below the pot."
     },
     "milestones": [
         {

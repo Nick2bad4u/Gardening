@@ -33,10 +33,10 @@
             "extension",
             "nursery"
         ],
-        "text": "Echeverias bear clusters of small bell-like flowers on stems above the foliage. The seller lists pink blooms for 'Raindrops'. A future flower record should describe this specimen's actual color and form rather than treating the nursery listing as an observation."
+        "text": "Echeverias raise clusters of tubular, bell-like flowers above their foliage. NC State notes that the genus attracts bumblebees and hummingbirds. Mountain Crest Gardens lists pink blooms for 'Raindrops'."
     },
     "growth": {
-        "note": "Bump development varies with maturity and growing conditions, so one smooth young leaf does not negate the seller's cultivar label.",
+        "note": "The smallest leaves can be smooth before their bumps develop; compare successive mature leaves to follow that change.",
         "sourceIds": [
             "nursery"
         ],
@@ -60,7 +60,7 @@
             "extension",
             "nursery"
         ],
-        "text": "'Raindrops' is a cultivated Echeveria rather than a species with its own wild range. The genus ranges from the southwestern United States into South America, and their fleshy rosettes reflect adaptation to dry conditions. Parentage is not established in this collection's evidence, so a precise ancestral habitat should not be assigned to this named hybrid."
+        "text": "'Raindrops' is a cultivated Echeveria. The genus ranges from the southwestern United States into South America; its thick rosette leaves store water through dry periods. This selection combines broad blue-green leaves, a waxy surface and raised rounded bumps that become more conspicuous as the leaves mature."
     },
     "image": {
         "alt": "Blue-green rosette with numbered raised caruncle, waxy surface, leaf blade and young center.",
@@ -80,7 +80,7 @@
         "sourceIds": [
             "nursery"
         ],
-        "text": "The nursery describes a rosette reaching about 6 inches across and producing few offsets. That gives useful room-planning context; the recorded August size is a separate early measurement, not its mature limit."
+        "text": "The nursery describes a rosette reaching about 6 inches across and producing few offsets. Give the expanding outer leaves room to spread without rubbing neighboring pots."
     },
     "milestones": [
         {

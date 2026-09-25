@@ -101,7 +101,7 @@ For any request, the useful question is: **What will this weight help decide or 
 
 **P31 / #7 [Peperomia Bicolor](./plants/houseplants/peperomia-obtipan-bicolor.md)** and **P32 / #8 [Tricolor oyster plant](./plants/houseplants/tradescantia-spathacea-tricolor.md)** need manual partial-drying checks rather than a cactus-style whole-pot plateau. Peperomia should partially dry without prolonged drought; the oyster plant uses an upper 1–2-inch check scaled to its actual root-ball depth once measured. The [watering exceptions](./watering-strategy.md#collection-exceptions) link the supporting species guidance.
 
-Request a weight when it can establish a real baseline, clarify a changing trend, check a credible measurement problem, or support a justified follow-up. Missing root-zone moisture or plant-condition evidence calls for that physical check; repeated weights cannot supply it. Keep their Check-only decisions separate from main Water candidates, and do not prolong drought to obtain a flat curve. Purchase alone supplies no scale reading, dry reference, watering event, or learned cycle.
+Request a weight when it can establish a real baseline, clarify a changing trend, check a credible measurement problem, or support a justified follow-up. Missing root-zone moisture or plant-condition evidence calls for that physical check; repeated weights cannot supply it. Keep their Check-only decisions separate from main Water candidates, and do not prolong drought to obtain a flat curve. Start their weight history with actual measurements during ordinary care.
 
 ### Leaf-Cycle Plants
 
@@ -115,7 +115,7 @@ Carry genuinely overdue evidence-based follow-ups into today. An old every-other
 
 ## Examples of the Policy
 
-These examples illustrate reasoning, not instructions for named plants or fixed intervals.
+Use these examples to choose which measurement would help next.
 
 | Evidence today                                                                                                           | Reasonable scheduling response                                                                                                            |
 | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |

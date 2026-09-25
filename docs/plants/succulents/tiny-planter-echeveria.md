@@ -13,15 +13,14 @@
 
 ## Names and identification
 
-| Kind                      | Record                                                                             |
-| ------------------------- | ---------------------------------------------------------------------------------- |
-| Common reference name     | Pale rosette echeveria                                                             |
-| Scientific name           | _Echeveria_ sp.                                                                    |
-| Identification confidence | Provisional genus-level foliage match; species and cultivar unresolved             |
-| Seller evidence           | Mixed garden label only; no component-specific botanical name                      |
-| Profile scope             | One recognizable foliage group; number of individual plants or cuttings unverified |
+| Kind                  | Record                                                        |
+| --------------------- | ------------------------------------------------------------- |
+| Common reference name | Pale rosette echeveria                                        |
+| Scientific name       | _Echeveria_ sp.                                               |
+| Seller evidence       | Mixed garden label only; no component-specific botanical name |
+| Profile scope         | One recognizable foliage group in the shared planter          |
 
-The September 2 top view and September 16 close view show several pale rosettes. Their form is consistent with _Echeveria_, but the species, cultivar, and connections between rosettes remain unknown.
+The September 2 top view and September 16 close view show several pale rosettes. The overlapping, pointed leaves and compact crowns are the features behind the Echeveria match.
 
 ## Collection evidence and shared history
 
@@ -31,23 +30,23 @@ The other component pages are [coppertone-type sedum](./tiny-planter-coppertone-
 
 ## Botanical context
 
-NC State Extension describes _Echeveria_ as a diverse American genus in Crassulaceae, with fleshy rosettes, many cultivated hybrids, and variable leaf shapes and colors. Its general growing guidance emphasizes bright light and well-drained soil. These genus-level traits guide care while the exact selection remains unidentified.
+NC State Extension describes _Echeveria_ as a diverse American genus in Crassulaceae, with fleshy rosettes, many cultivated hybrids, and variable leaf shapes and colors. Its general growing guidance emphasizes bright light and well-drained soil. The rosette shape makes new central leaves and older outer leaves easy to compare.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                   |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Position            | Remains inside P30, at the photo-matched front of the rear zone between #1 and #5. See the [current placement guide](../../layouts/table-placement-research.md). Exposure at individual leaf height remains unmeasured.                                                              |
-| Light and neighbors | Keep the low rosettes clear of shade cast by the taller paddle leaves and nearby large pots. Compare compact new growth at their actual height before changing the whole planter's position; the unknown cultivar is not a reason to jump straight to the brightest cactus position. |
-| Water               | Follow the [shared-pot watering strategy](../../watering-strategy.md): assess dryness throughout the pot, the weight trend, and all three foliage groups before watering and draining the container.                                                                                 |
-| Weighing            | Weigh the complete P30 planter using the [adaptive weighing strategy](../../weighing-strategy.md).                                                                                                                                                                                   |
-| Feeding             | Use the shared planter's [fertilizer schedule](../../equipment/msu-fertilizer-schedule.md) during a normal watering; the dose applies to the whole pot.                                                                                                                              |
+| Topic               | Practical approach                                                                                                                                                                                                      |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Position            | Remains inside P30, at the photo-matched front of the rear zone between #1 and #5. See the [current placement guide](../../layouts/table-placement-research.md). Exposure at individual leaf height remains unmeasured. |
+| Light and neighbors | Keep the low rosettes clear of shade cast by the taller paddle leaves and nearby large pots. Compare the compactness of new growth at leaf height and acclimate gradually to any brighter position.                     |
+| Water               | Follow the [shared-pot watering strategy](../../watering-strategy.md): assess dryness throughout the pot, the weight trend, and all three foliage groups before watering and draining the container.                    |
+| Weighing            | Weigh the complete P30 planter using the [adaptive weighing strategy](../../weighing-strategy.md).                                                                                                                      |
+| Feeding             | Use the shared planter's [fertilizer schedule](../../equipment/msu-fertilizer-schedule.md) during a normal watering; the dose applies to the whole pot.                                                                 |
 
 ## Growth and watch points
 
-The September 16 owner photo shows patchy loss of the pale surface coating and some older leaf damage. That is visible appearance, not a confirmed diagnosis. Avoid rubbing or wiping the powdery leaf surfaces; compare new growth with the older photographed leaves.
+The September 16 owner photo shows patchy loss of the pale surface coating and some older leaf damage. Avoid rubbing or wiping the powdery leaf surfaces; compare new growth with the older photographed leaves.
 
-If the rosettes begin to crowd, document which rosette is affected before any future division. A new offset or overlapping crown does not establish another taxon. Flowers, mature growth, and closer individual views could improve the working identification.
+Follow new offsets as they fill the gaps between older rosettes. If crowding develops, compare individual crowns and their access to light before planning a division.
 
 ## Sources
 

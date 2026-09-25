@@ -11,7 +11,7 @@
                 "label": "Marginal teeth"
             },
             {
-                "function": "Blunt whitish bumps on the upper surface support the probable identification.",
+                "function": "Blunt whitish bumps rise above the flatter pale dots on the upper surface.",
                 "label": "Raised tubercles"
             },
             {
@@ -33,10 +33,10 @@
             "sanbi",
             "comparison"
         ],
-        "text": "SANBI's taxonomic description gives yellow flowers for F. tuberculosa. A yellow flower alone would not distinguish it from F. tigrina, which also blooms yellow; leaf texture and other structures remain important."
+        "text": "The flowers are yellow. Because F. tigrina also flowers yellow, the raised leaf tubercles and shorter marginal teeth are more useful comparison features than bloom color alone."
     },
     "growth": {
-        "note": "The illustration represents the probable species; future growth and flowering can add identification evidence.",
+        "note": "The published description allows anything from one raised tubercle to a densely bumpy upper surface, so bump coverage varies naturally.",
         "sourceIds": [
             "sanbi",
             "comparison"
@@ -58,9 +58,10 @@
     },
     "habitat": {
         "sourceIds": [
-            "kew"
+            "kew",
+            "sanbi"
         ],
-        "text": "Kew places Faucaria tuberculosa in South Africa's Cape Provinces, specifically the Fort Beaufort area, and describes a subtropical succulent subshrub. This collection plant is a probable match based on its raised leaf bumps. Its seller's F. tigrina label is retained as provenance, so detailed habitat claims for that different species should not be transferred automatically."
+        "text": "Faucaria tuberculosa comes from the Fort Beaufort area of South Africa’s Cape Provinces. This subtropical succulent stays close to the ground, growing as a single compact crown or a cluster. Its thick leaves present two conspicuous textures: pale teeth along the edges and blunt raised bumps across the upper faces."
     },
     "image": {
         "alt": "Paired triangular leaves with numbered blade, marginal teeth, raised tubercles and growing center.",
@@ -80,7 +81,7 @@
         "sourceIds": [
             "sanbi"
         ],
-        "text": "The published description allows solitary plants or clumps, with 4–8 leaves per rosette and individual blades about 15–20 mm long and wide. Those are species reference dimensions, not measurements of P29."
+        "text": "Plants can remain solitary or develop clumps. Each rosette typically carries 4–8 leaves, with individual blades about 15–20 mm long and wide."
     },
     "milestones": [
         {
@@ -100,7 +101,7 @@
         "sourceIds": [
             "kew"
         ],
-        "text": "Kew also lists Faucaria felina subsp. tuberculosa as a synonym. Finding that name in a reference does not necessarily indicate a different plant; taxonomic treatments have varied."
+        "text": "Faucaria felina subsp. tuberculosa is another name listed by Kew for this plant, reflecting earlier treatment as a subspecies."
     },
     "slug": "faucaria-tuberculosa",
     "sources": [

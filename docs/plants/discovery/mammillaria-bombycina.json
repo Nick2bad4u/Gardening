@@ -1,6 +1,6 @@
 {
     "anatomy": {
-        "intro": "The numbered illustration explains a living Mammillaria bombycina reference; it is a botanical guide, not a measured portrait.",
+        "intro": "White radial spines and wool form a pale coat around the longer brown central hooks.",
         "parts": [
             {
                 "function": "Fine covering between the tubercles helps create the silky appearance.",
@@ -21,7 +21,8 @@
         ],
         "sourceIds": [
             "form",
-            "anatomy"
+            "anatomy",
+            "mammillaria"
         ]
     },
     "comparisonSourceIds": [
@@ -30,12 +31,13 @@
     ],
     "flowers": {
         "sourceIds": [
-            "form"
+            "form",
+            "mammillaria"
         ],
-        "text": "Living M. bombycina can produce deep rose-pink flowers about 1.5 cm across. The bright flowers stand out against the white coat, but no flowering claim is made for the former collection plant."
+        "text": "Deep rose-pink flowers about 1.5 cm across form near the crown. As in other Mammillaria, they emerge between tubercles, separate from the spine clusters."
     },
     "growth": {
-        "note": "These are species life stages; the historical collection plant was removed and has no retained living offset.",
+        "note": "Heads lengthen into short cylinders as basal offsets build a mound around them.",
         "sourceIds": [
             "form"
         ],
@@ -58,7 +60,7 @@
         "sourceIds": [
             "range"
         ],
-        "text": "Mammillaria bombycina is native to southwestern Aguascalientes and northeastern Jalisco, Mexico, in dry shrubland. The illustrated plant represents that species, not a surviving collection specimen. The former collection plant was a probable identification from older photographs and remains a historical record after its removal on July 24, 2026."
+        "text": "Mammillaria bombycina is native to southwestern Aguascalientes and northeastern Jalisco, Mexico, where it grows in dry shrubland."
     },
     "image": {
         "alt": "Botanical anatomy of a living Mammillaria bombycina reference, showing white wool, radial spines, hooked central spine, basal offset with numbered markers.",
@@ -78,7 +80,7 @@
         "sourceIds": [
             "form"
         ],
-        "text": "RHS describes clustering cylindrical stems reaching about 20 cm. The width of a whole clump depends on its offset count, so a single stem's height does not describe the entire colony."
+        "text": "Living plants develop clustered cylindrical stems about 20 cm tall, with offsets gradually widening the mound."
     },
     "milestones": [
         {
@@ -119,6 +121,12 @@
             "id": "anatomy",
             "title": "National Park Service: cactus adaptations",
             "url": "https://www.nps.gov/tont/learn/nature/cacti.htm"
+        },
+        {
+            "accessed": "2026-09-25",
+            "id": "mammillaria",
+            "title": "Royal Botanic Gardens Victoria: Mammillaria anatomy",
+            "url": "https://hortflora.rbg.vic.gov.au/taxon/ad8ef0ba-5340-11e7-b82b-005056b0018f"
         }
     ]
 }

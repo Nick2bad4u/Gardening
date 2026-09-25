@@ -63,7 +63,7 @@ separate 691 specification. Possible causes include a different wing setting,
 grid area, meter, fixture revision, or reporting convention, but VIVOSUN does
 not explain the difference on those pages.
 
-The useful conclusion is not “pick the larger number.” It is:
+For planning, the map shows why height and room geometry matter:
 
 - distance lowers the central hotspot and improves map uniformity;
 - reflective tent walls keep the printed edge values unusually high;
@@ -307,9 +307,8 @@ A measurement grid is more useful than one center reading.
    buying more equipment.
 6. Repeat only after a meaningful height or dimming change.
 
-A real quantum/PAR meter is the direct tool. A phone lux app is adequate for a
-relative map and rough conversion if this remains a fun project rather than a
-lab. Photographing the same growing points monthly is the other half of the
+A real quantum/PAR meter is the direct tool. A consistent phone lux setup can help compare relative bright and dim spots;
+retain its spectrum-dependent conversion as an estimate. Photographing the same growing points monthly is the other half of the
 measurement.
 
 ## E25 and airflow use

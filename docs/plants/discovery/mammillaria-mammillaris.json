@@ -1,6 +1,6 @@
 {
     "anatomy": {
-        "intro": "The numbered illustration explains probable Mammillaria mammillaris; it is a botanical guide, not a measured portrait.",
+        "intro": "Spines sit at the tubercle tips, while flowers emerge from the spaces between these raised green mounds.",
         "parts": [
             {
                 "function": "Each projecting green mound is part of the succulent, photosynthetic stem.",
@@ -21,7 +21,8 @@
         ],
         "sourceIds": [
             "form",
-            "anatomy"
+            "anatomy",
+            "mammillaria"
         ]
     },
     "comparisonSourceIds": [
@@ -30,14 +31,16 @@
     ],
     "flowers": {
         "sourceIds": [
-            "form"
+            "form",
+            "mammillaria"
         ],
-        "text": "The species' tiny cream, pale green, or yellowish flowers can hide between tubercles. The red projection recorded on this plant is fruit, not a petal; it reflects an earlier flower even after that bloom has disappeared."
+        "text": "Tiny cream, pale green, or yellowish flowers nestle between tubercles. The conspicuous red club-shaped projection recorded on this plant is a fruit from an earlier bloom."
     },
     "growth": {
-        "note": "Use flowers and spine details to refine the probable ID; size alone cannot settle it.",
+        "note": "Look closely at the tubercles: their intersecting spiral rows organize the body, with flowers appearing in the spaces between them.",
         "sourceIds": [
-            "form"
+            "form",
+            "mammillaria"
         ],
         "stages": [
             {
@@ -58,7 +61,7 @@
         "sourceIds": [
             "range"
         ],
-        "text": "Mammillaria mammillaris occurs in the southern Caribbean and northern South America, including northeastern Colombia and northern Venezuela. It belongs to seasonally dry tropical vegetation. This is the natural background of a probable identification: the collection plant was purchased without a species label, and its nursery origin does not establish a wild locality."
+        "text": "Mammillaria mammillaris occurs in the southern Caribbean and northern South America, including northeastern Colombia and northern Venezuela. It grows in seasonally dry tropical vegetation."
     },
     "image": {
         "alt": "Botanical anatomy of probable Mammillaria mammillaris, showing tubercle, areole, radial spines, central spine with numbered markers.",
@@ -78,7 +81,7 @@
         "sourceIds": [
             "form"
         ],
-        "text": "LLIFLE describes rounded to short-cylindrical stems about 8–20 cm across, solitary or sometimes clumping. These are species reference dimensions, not measurements of the collection specimen."
+        "text": "Rounded to short-cylindrical stems reach about 8–20 cm across, growing alone or sometimes in clumps."
     },
     "milestones": [
         {
@@ -125,6 +128,12 @@
             "id": "anatomy",
             "title": "National Park Service: cactus adaptations",
             "url": "https://www.nps.gov/tont/learn/nature/cacti.htm"
+        },
+        {
+            "accessed": "2026-09-25",
+            "id": "mammillaria",
+            "title": "Royal Botanic Gardens Victoria: Mammillaria anatomy",
+            "url": "https://hortflora.rbg.vic.gov.au/taxon/ad8ef0ba-5340-11e7-b82b-005056b0018f"
         }
     ]
 }

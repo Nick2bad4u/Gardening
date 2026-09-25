@@ -1,6 +1,6 @@
 {
     "anatomy": {
-        "intro": "Four structures that explain the form of paper spine cactus.",
+        "intro": "Rounded stem joints connect at narrow necks, with broad flattened spines emerging from the surface cushions.",
         "parts": [
             {
                 "function": "Each green joint stores water and contributes to photosynthesis.",
@@ -21,7 +21,8 @@
         ],
         "sourceIds": [
             "form",
-            "anatomy"
+            "anatomy",
+            "structure"
         ]
     },
     "comparisonSourceIds": [
@@ -30,12 +31,13 @@
     ],
     "flowers": {
         "sourceIds": [
-            "form"
+            "form",
+            "flowers"
         ],
-        "text": "Mountain Crest describes this form as reluctant to flower. Its remarkable stems can therefore be the main display for a long time; a bloom is a bonus, not a requirement for healthy growth."
+        "text": "The papery-spined form is often reluctant to bloom. The underlying species produces bell-shaped flowers about 3–4 cm across."
     },
     "growth": {
-        "note": "Detached joints are part of this plant's propagation strategy, but handle the collection specimen gently.",
+        "note": "New segments extend the stack, while detached joints can root and establish another plant.",
         "sourceIds": [
             "form"
         ],
@@ -56,7 +58,8 @@
     },
     "habitat": {
         "sourceIds": [
-            "range"
+            "range",
+            "form"
         ],
         "text": "The underlying species, Tephrocactus articulatus, is native to northwestern and north-central Argentina in desert and dry shrubland. This collection plant carries the papery-spined horticultural name. Its compact stack of separate joints makes a small branching framework, rather than the continuous column seen in many other cacti."
     },
@@ -78,7 +81,7 @@
         "sourceIds": [
             "form"
         ],
-        "text": "Maturity brings more stacked and branching joints. A fixed indoor height would be misleading because breakage and rooting can change the outline as much as upward growth."
+        "text": "An older plant becomes an irregular branching stack. Segment loss and new rooting continually reshape the clump."
     },
     "milestones": [
         {
@@ -125,6 +128,18 @@
             "id": "anatomy",
             "title": "National Park Service: cactus adaptations",
             "url": "https://www.nps.gov/arch/learn/nature/cacti.htm"
+        },
+        {
+            "accessed": "2026-09-25",
+            "id": "structure",
+            "title": "Annals of Botany: cactus shoot structure and development",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2803597/"
+        },
+        {
+            "accessed": "2026-09-25",
+            "id": "flowers",
+            "title": "SANBI research: Tephrocactus articulatus form and flowers",
+            "url": "https://opus.sanbi.org/sanbiserver/api/core/bitstreams/28d0cdb2-73de-4ae0-83d8-b034d53594a2/content"
         }
     ]
 }

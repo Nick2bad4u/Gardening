@@ -1,6 +1,6 @@
 {
     "anatomy": {
-        "intro": "The numbered illustration explains the probable variegated blue torch; it is a botanical guide, not a measured portrait.",
+        "intro": "Blue-green stem tissue and cream sectors run along the ribs, punctuated by hairy spine cushions.",
         "parts": [
             {
                 "function": "Green living tissue beneath the glaucous surface contributes to photosynthesis.",
@@ -34,10 +34,10 @@
             "form",
             "study"
         ],
-        "text": "The normal species opens white funnel-shaped flowers at night, sometimes with reddish tips. Studies of Pilosocereus including P. pachycladus examine bats, hawkmoths, and bees as visitors; this does not imply that the indoor specimen will flower soon."
+        "text": "White funnel-shaped flowers open at night, sometimes flushed red at the tips, and can be followed by fig-shaped fruits. Studies of Pilosocereus, including P. pachycladus, examine visits by bats, hawkmoths, and bees."
     },
     "growth": {
-        "note": "Variegation and indoor conditions change the pace; judge this rehabilitating plant by healthy new growth.",
+        "note": "Fresh growth extends the column and its color pattern; older plants develop a branching framework.",
         "sourceIds": [
             "form"
         ],
@@ -60,7 +60,7 @@
         "sourceIds": [
             "range"
         ],
-        "text": "The underlying species is native to eastern Brazil, from the northeast into northern Minas Gerais, in seasonally dry tropical vegetation including the Caatinga. The collection plant is a probable variegated Pilosocereus pachycladus. Its cream-striped nursery form has no separate wild range, and ordinary blue-green species photographs will not match its color pattern exactly."
+        "text": "Pilosocereus pachycladus is native to eastern Brazil, from the northeast into northern Minas Gerais, in seasonally dry tropical vegetation including the Caatinga. The wild species has blue-green branching columns; the collection's cream sectors are a cultivated variegated feature."
     },
     "image": {
         "alt": "Botanical anatomy of the probable variegated blue torch, showing blue-green stem, cream sector, areole, rib with numbered markers.",
@@ -80,7 +80,7 @@
         "sourceIds": [
             "form"
         ],
-        "text": "RHS reports wild plants reaching as much as 10 m, with cultivated plants much smaller. The variegated collection plant should not be assigned that wild height as an indoor prediction."
+        "text": "Wild plants can reach as much as 10 m and become branching cactus trees. Cultivated plants remain much smaller."
     },
     "milestones": [
         {

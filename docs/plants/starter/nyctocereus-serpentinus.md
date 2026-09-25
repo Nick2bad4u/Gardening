@@ -4,7 +4,7 @@
 - Label ID: `A3`
 - Tracker ID: `P03`
 - Visual description: A slender branching green stem with shallow ribs, close white areoles, and sharp radiating spines, giving each narrow section a bristled, almost rope-like outline.
-- Interesting fact: Its long flowers open at night, a behavior memorialized by the older genus name _Nyctocereus_—literally “night cereus”—even when other references place the species elsewhere.
+- Interesting fact: Its long flowers open at night, a behavior reflected in the genus name _Nyctocereus_—literally “night cereus.”
 - Identification: **labeled**
 - Acquired from: Costa Farms
 - Acquired on: 2026-07-23
@@ -33,7 +33,8 @@ store water and energy through dry periods.
 
 Large funnel-shaped flowers open at night. They are white to pale pink, strongly
 scented, and can be roughly 15–20 cm long. Red ovoid fruits follow successful
-pollination and are reported as edible. The combination of a relatively plain
+pollination and are reported as edible. Their spines fall away as the fruits
+develop. The combination of a relatively plain
 skinny stem and extravagant short-lived flower is typical of several unrelated
 plants sold loosely as “night-blooming cereus.”
 
@@ -43,13 +44,13 @@ introductions beyond Mexico, including parts of Australia and South Africa.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                          |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Photo-matched R3C4 · Bright.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Interior-right upright plant. Keep its stems from shading the adjacent low H1 and G3. See the [current placement guide](../../layouts/table-placement-research.md). |
-| Growth habit        | Give it a stake, trellis, or eventual hanging route. A horizontal stem is not automatically unhealthy; unsupported scrambling is normal.                                                                                                                                                    |
-| Water               | During warm active growth it can use water more regularly than the small globular cacti, but still wait for the pot to dry. Reduce sharply when growth slows.                                                                                                                               |
-| Mix and pot         | Fast drainage remains essential. An established tuberous root system may eventually justify a deeper pot, but do not overpot a small specimen.                                                                                                                                              |
-| Temperature         | Favor warmth during growth and protect from frost. Keep a cool plant dry.                                                                                                                                                                                                                   |
+| Topic               | Practical approach                                                                                                                                                                                                                                                  |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **R3C4 · Bright.** September 15, 2026 photo layout, facing the window (six columns, four rows). Interior-right upright plant. Keep its stems from shading the adjacent low H1 and G3. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Growth habit        | Give it a stake, trellis, or eventual hanging route. A horizontal stem is not automatically unhealthy; unsupported scrambling is normal.                                                                                                                            |
+| Water               | During warm active growth it can use water more regularly than the small globular cacti, but still wait for the pot to dry. Reduce sharply when growth slows.                                                                                                       |
+| Mix and pot         | Fast drainage remains essential. An established tuberous root system may eventually justify a deeper pot, but do not overpot a small specimen.                                                                                                                      |
+| Temperature         | Favor warmth during growth and protect from frost. Keep a cool plant dry.                                                                                                                                                                                           |
 
 Judge light by the new stem: it should emerge with a useful diameter, regular
 ribs, and normal spine spacing. A thin pale extension means it wants more light;
@@ -73,3 +74,4 @@ fresh yellow or tan patches mean the increase was too abrupt.
 - [Kew Plants of the World Online: _Nyctocereus serpentinus_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A171152-2)
 - [Llifle cactus encyclopedia: _Nyctocereus serpentinus_](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/7251/Nyctocereus_serpentinus)
 - [International Plant Names Index record](https://www.ipni.org/n/171152-2)
+- [Britton and Rose: _The Cactaceae_, volume 2, serpent cactus description](https://upload.wikimedia.org/wikipedia/commons/b/b0/The_Cactaceae_-_descriptions_and_illustrations_of_plants_of_the_cactus_family_%28IA_cactaceaedescri02brit%29.pdf)

@@ -20,34 +20,33 @@
 | Wild ancestor   | _Echinopsis chamaecereus_                          |
 | Cultivar        | Unknown until flowers or a nursery label narrow it |
 
-The dense clump of short ribbed stems is consistent with, but not diagnostic
-of, the horticultural group. Chamaelobivia hybrids combine peanut-cactus ancestry with other
+The dense clump of short ribbed stems gives the group its peanut-cactus
+appearance. Chamaelobivia hybrids combine peanut-cactus ancestry with other
 _Echinopsis_ or _Lobivia_ lines and have been selected for vivid yellow,
 orange, red, and pink flowers.
 
 ## Origin, form, and publication
 
-The hybrid has no natural range. Kew places _Echinopsis chamaecereus_ in
+Kew places _Echinopsis chamaecereus_ in
 northwestern Argentina, specifically north-northwestern Tucumán. The ancestor
-was first published as _Cereus silvestrii_ in 1905; the Chamaelobivia hybrid
-group has no single defensible discovery or publication year.
+was first published as _Cereus silvestrii_ in 1905.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                             |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Photo-matched R1C2 · Bright.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Front row, second from the Mylar. Unknown hybrid parentage limits exact exposure claims. See the [current placement guide](../../layouts/table-placement-research.md). |
-| Water               | Soak and drain, then let the small pot dry. Active clumps may use water sooner than woolly columnar cacti.                                                                                                                                                                                     |
-| Pot and mix         | The small 4-inch pot is fine until offsets pack the rim or water stops penetrating evenly.                                                                                                                                                                                                     |
-| Flowers             | Strong light, active growth, and a cooler dry winter rest can support flowering; cultivar color is unknown.                                                                                                                                                                                    |
+| Topic               | Practical approach                                                                                                                                                                                                                      |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **Photo-matched R1C2 · Bright.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Front row, second from the Mylar. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | Soak and drain, then let the small pot dry. Active clumps may use water sooner than woolly columnar cacti.                                                                                                                              |
+| Pot and mix         | The small 4-inch pot is fine until offsets pack the rim or water stops penetrating evenly.                                                                                                                                              |
+| Flowers             | Strong light, active growth, and a cooler dry winter rest can support flowering.                                                                                                                                                        |
 
 ## Rotation, propagation, and watch points
 
 - Rotate 90° clockwise on the ordinary Sunday schedule.
 - Offsets separate and root easily once large enough to handle.
 - Watch crowded stem bases for trapped moisture, scale, or mealybugs.
-- Flowers and nursery provenance may help refine the probable hybrid-group
-  identification; the cultivar is unknown.
+- Photograph open flowers from above and the side to capture both color and
+  the shape of their funnel-shaped tubes.
 
 ## Sources
 

@@ -20,8 +20,8 @@ The collection is in Fenton, Michigan. The cacti and succulents previously spent
 and several hours of drainage, followed by the dated
 [AW200SE and paired-fan operating schedule](./equipment/aw200se-operating-schedule.md).
 
-This is a hobby setup, not a laboratory. Manufacturer output figures are useful
-starting points, but plant response matters more than chasing an exact number.
+Use the reported settings as a starting point, then judge compact new growth,
+leaf condition, and drying in the actual room.
 
 ## Controlled indoor setup
 
@@ -68,7 +68,7 @@ The [new 240 W manual](https://vivosun.com/support/guide/aerolight-gen2) require
 | Fertilizer               | [Tezula/Greencare MSU 13-3-15 Tap/Rain/RO formula](https://tezulaplants.com/products/msu-fertilizer-13-3-15-for-tap-water-ro-rain-water), measured by mass with the [collection-specific schedule](./equipment/msu-fertilizer-schedule.md); it already contains calcium, magnesium, and micronutrients                                                                                   |
 | Label printer            | [SUPVAN E11](https://www.amazon.com/dp/B0DKS89T75?th=1), 203 dpi monochrome thermal printer with 15 mm maximum media width; see the [pot-label print reference](./plants/labels.md)                                                                                                                                                                                                      |
 
-The equipment plan uses four independent E25 control paths; separate light percentages are confirmed, but the new controller configuration was not inspected. The AeroLight's RJ45
+The equipment plan uses four independent E25 control paths, with separate percentages reported for the two lights. The AeroLight's RJ45
 connector is only for compatible AeroLight daisy chains; it is not an Ethernet
 connection for either canopy fan. AeroWave fans do not directly daisy-chain
 fan-to-fan. With E25 controllers, each independently controlled fan needs its
@@ -175,7 +175,7 @@ this change.
 Molly's is sold as a complete soilless medium, and the manufacturer also says
 growers may mix it with other amendments. The extra perlite is therefore an
 intentional collection-specific choice to reduce water retention in this
-indoor Michigan setup—a collection-specific choice. Compare two or three watering cycles before changing the recipe again.
+indoor Michigan setup. Compare two or three watering cycles before changing the recipe again.
 
 The same update added the second pole fan, lowered the AW200SE to **18 in**, and
 raised it to **45%**. The power change came three days ahead of the former

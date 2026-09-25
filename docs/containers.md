@@ -56,6 +56,11 @@ When recording size, say which plant or head was measured. P35's September 23
 See the [watering quick guide](./watering-quick-guide.md) for practical decisions
 and the [logger action guide](./logger-actions.md) for recording real events.
 
+For a shared planter, open its container page first: compare the members' care
+notes, check the shared setup, then follow the history link for recent weights
+and watering. Use the individual profiles when identifying a head, comparing
+new growth, or deciding whether one member is being shaded.
+
 ## Spreadsheet reference views
 
 Two spreadsheet views make the collection easier to browse:

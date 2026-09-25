@@ -226,9 +226,15 @@ export async function getDocument(
                 ];
             });
         });
-    const description = stripMarkdown(
+    const firstParagraph = stripMarkdown(
         content.split(/\r?\n\s*\n/v, 1)[0] ?? ""
-    ).slice(0, 240);
+    );
+    const preview = firstParagraph.slice(0, 239);
+    const lastSpace = preview.lastIndexOf(" ");
+    const description =
+        firstParagraph.length > 240
+            ? `${preview.slice(0, lastSpace > 0 ? lastSpace : preview.length)}…`
+            : firstParagraph;
     return { description, illustrations, slug, sourcePath, title, ...rendered };
 }
 

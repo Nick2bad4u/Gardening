@@ -15,7 +15,7 @@
                 "label": "Woolly areole"
             },
             {
-                "function": "A stout spine projects beyond the fleshy body; the apparent thickness is not soft tissue.",
+                "function": "A stout, curved spine projects beyond the green body from the areole.",
                 "label": "Curved spine"
             }
         ],
@@ -32,10 +32,10 @@
         "sourceIds": [
             "rhs"
         ],
-        "text": "Pale pink, broad funnels are only about 2 cm across in the RHS description. Their modest scale is a useful surprise beside the substantial ribbed body and heavy spines; this is species biology, not a report of a collection bloom."
+        "text": "Pale pink funnels are about 2 cm across in the RHS description. Their small scale contrasts with the broad ribbed body and heavy spines."
     },
     "growth": {
-        "note": "Watch the developing proportions rather than expecting a rapid transformation into a tall column.",
+        "note": "The broad ribs divide into rounded tubercles as the body enlarges, giving the older plant its strongly sculpted surface.",
         "sourceIds": [
             "rhs"
         ],
@@ -72,14 +72,14 @@
         {
             "name": "Variegated moon cactus",
             "profileSlug": "gymnocalycium-mihanovichii-variegated",
-            "text": "Both have notched Gymnocalycium ribs, but the giant chin cactus develops broader tubercles and much stouter spines. Variegation is a separate trait and is not the defining difference between the species."
+            "text": "Both have notched Gymnocalycium ribs, but giant chin cactus develops broader tubercles and much stouter spines than the smaller moon cactus."
         }
     ],
     "mature": {
         "sourceIds": [
             "rhs"
         ],
-        "text": "RHS lists a cultivated spread of 10–50 cm. The rounded body may bear 10–30 or more tubercled ribs, so rib count alone is not a fixed identification key or an age measurement."
+        "text": "RHS lists a cultivated spread of 10–50 cm. The rounded body can carry 10–30 or more tubercled ribs, each lined with stout curved spines."
     },
     "milestones": [
         {

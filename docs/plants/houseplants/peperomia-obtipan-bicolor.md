@@ -4,7 +4,7 @@
 - Label ID: `#7`
 - Tracker ID: `P31`
 - Visual description: A compact, branching houseplant with thick, rounded green leaves and broad cream-colored variegation; the photographed purchase is in a hanging nursery basket.
-- Interesting fact: A slender cream-colored spike can be an entire crowded cluster of minute, petal-less flowers, rather than an unusual new stem. This is species-level flower anatomy; flowering has not been recorded for this Bicolor plant.
+- Interesting fact: A slender cream-colored spike is an entire crowded cluster of minute, petal-less flowers. Each tiny flower has just two stamens, so the plant's flowering display looks more like a thin tail than a bouquet.
 - Identification: **seller-labeled “Peperomia obtipan Bicolor”; consistent with the RHS-listed _Peperomia obtusifolia_ 'Obtipan Bicolor', with cultivar identity based on nursery provenance**
 - Acquired from: Carlson's Greenhouses
 - Acquired on: 2026-09-20
@@ -19,9 +19,9 @@
 | Exact nursery wording  | “Peperomia obtipan Bicolor basket”        |
 | Species common names   | Baby rubber plant; blunt-leaved peperomia |
 
-The nursery name is consistent with the RHS cultivar record. Cultivar identity rests on the nursery label rather than photographs alone. The species is _Peperomia obtusifolia_; “obtipan” on the tag is a cultivar-name element, not a species epithet.
+The species is _Peperomia obtusifolia_; “Obtipan” is part of the cultivar name on the tag. RHS lists the full name 'Obtipan Bicolor'.
 
-The USPP29598P3 breeder record documents green-leaved 'Obtipan' and its two _P. obtusifolia_ parents. That establishes the ancestry of 'Obtipan', but does not by itself establish the exact origin, release date, or patent coverage of this Bicolor plant. No interspecific parentage is asserted here.
+The USPP29598P3 breeder record describes green-leaved 'Obtipan' as a cross between two unnamed _P. obtusifolia_ cultivars. The separate history of the Bicolor selection is unrecorded.
 
 ## Purchase and label evidence
 
@@ -45,11 +45,11 @@ The September 22 plan places **P31 / #7 Peperomia Bicolor and P32 / #8 Tricolor 
 
 For this layout, try the **FECiDA alone for 12 daytime hours** first. Two Juhefa three-head fixtures, each seller-rated about 10 W total, are available to fill dim areas if repositioning the six FECiDA heads leaves gaps. A separate Diivoo is optional; its input power is unverified. Installation, settings, and canopy coverage remain unrecorded. See the [equipment inventory](../../equipment/inventory.md#lights-and-controls) for exact models and the [living-room measurement trial](../../layouts/table-placement-research.md#planned-living-room-window-and-leds) for checking coverage.
 
-Bright indirect light remains the goal. NC State's statement that the species tolerates low light for several months is qualified as especially applicable to non-variegated cultivars; it does not establish an ideal exposure for Bicolor. Measure the combined light at the actual leaves and judge subsequent growth when adjusting the setup.
+Bright indirect light remains the goal. NC State's low-light tolerance note applies especially to non-variegated cultivars. For Bicolor, measure light at the actual leaves and watch the spacing and shape of subsequent growth when adjusting the setup.
 
 ## Origin and form
 
-NC State describes _P. obtusifolia_ as a tropical American perennial with thick, succulent-like foliage. Its compact leaf form does not make it a desert cactus: the species is intolerant of both persistently wet and very dry soil. The named cultivar has a horticultural origin and no separate wild native range.
+_Peperomia obtusifolia_ is a tropical American perennial in the pepper family. Its glossy leaves broaden toward their rounded tips, cup slightly, and attach by short stalks to fleshy branching stems. The recessed midrib is a useful detail to look for on a leaf. Despite the thick foliage, the roots tolerate neither persistently wet nor very dry soil.
 
 ## Care in this collection
 
@@ -73,7 +73,7 @@ For the proposed living-room trial, 4–6 DLI over a constant **12-hour** light 
 - Check the undersides, leaf axils, stems, and basket before placing the new plant among the established collection.
 - Persistently wet mix, soft stems, or declining roots need inspection. A soft leaf alone does not distinguish thirst from root damage.
 - Pale or scorched patches after a move warrant reassessing exposure; elongated, weak new growth can warrant a gradual increase after root and moisture checks.
-- NC State describes propagation by stem or leaf cuttings. Establish the purchased plant first; exact variegation retention is not guaranteed here from species-level propagation guidance.
+- Establish the purchased plant before taking cuttings. RHS recommends softwood stem cuttings rooted in free-draining medium or in water before potting; NC State also lists leaf cuttings for this species. Check the new plant's leaf pattern as it develops.
 
 ## Sources
 

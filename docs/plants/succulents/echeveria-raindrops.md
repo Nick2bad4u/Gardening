@@ -3,7 +3,7 @@
 - Inventory: Succulent-07 — _Echeveria_ 'Raindrops'
 - Label ID: `H2`
 - Tracker ID: `P25`
-- Visual description: The current young plant is a compact blue-green rosette with broad rounded leaves; as the cultivar matures, seller references show a raised, raindroplike bump developing near the center of each leaf.
+- Visual description: The current young plant is a compact blue-green rosette with broad rounded leaves; as the cultivar matures, rounded raised bumps develop on the upper leaf surfaces.
 - Interesting fact: Those firm “raindrops” are intentional cultivar structures called caruncles, not edema, insect damage, or a symptom that should be scraped away.
 - Identification: **seller-labeled cultivar**
 - Acquired from: Mountain Crest Gardens
@@ -23,9 +23,7 @@
 | Wild range          | None; it is a horticultural cultivar.   |
 
 Mature leaves develop a rounded, droplet-like bump near the tip. Those stable
-bumps are a cultivar trait, not edema or pest damage. Young plants may arrive
-without prominent bumps, so their absence does not by itself contradict the
-seller label.
+bumps are a cultivar trait, not edema or pest damage. The smallest young leaves can be smooth before their bumps develop.
 
 ## Arrival and repotting
 
@@ -46,9 +44,7 @@ inspection; routine pest checks remain useful.
 
 ## Seller listing snapshot
 
-These Mountain Crest Gardens fields were inspected on 2026-08-26. They record
-the retail listing rather than the condition or dimensions of the shipped
-plant.
+Mountain Crest Gardens listing, inspected 2026-08-26:
 
 | Seller field                  | Listing value                                |
 | ----------------------------- | -------------------------------------------- |
@@ -65,31 +61,25 @@ plant.
 The seller attributes the cultivar to Dick Wright, describes few offsets and a
 mature rosette up to about 6 inches, and notes that young plants may not yet
 show the characteristic bumps. It says outdoor shade favors bump development,
-while direct sun can color bumps and margins pink. Its recommended mix range is
-50%–70% mineral grit; that is a seller range, not an instruction to disturb a
-healthy arrival immediately.
+while direct sun can color bumps and margins pink. The seller recommends 50%–70% mineral grit. The collection's current pot and mix are recorded below.
 
 ## Origin, form, and cultivar history
 
 'Raindrops' is a cultivated _Echeveria_ attributed by the seller to hybridizer
-Dick Wright. No primary registration or published parent formula was located,
-so this record does not add a species epithet or speculative hybrid cross. It
-has no native range of its own. NC State Extension places the genus from the
-southwestern United States through Mexico and into South America, but that
-broad genus range must not be printed as this cultivar's origin.
+Dick Wright. The genus ranges from the southwestern United States through Mexico into South America. Its thick leaves store water, while tall stalks present tubular flowers above the rosette. NC State notes that these flowers attract bumblebees and hummingbirds.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                                                                                                                                                                                                         |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **R2C3 · Bright.** September 15 six-column/four-row front grid, facing the window. Low interior-left rosette. Keep clear bright light, without automatically assigning it the strongest intensity. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
-| Water               | Use medium dryness, plant response, and pot-weight trend as evidence.                                                                                                                                                                                                                                               |
-| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. The owner recalls Molly's Succulent Mix with approximately 20% added perlite (September 20 report; ratio estimated); keep the crown above the medium.                                                                                                              |
-| Surface             | Avoid touching or wiping the powdery farina; fingerprints and rubbed patches do not grow back on the same leaf.                                                                                                                                                                                                     |
+| Topic               | Practical starting approach                                                                                                                                                                                                                                                      |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **R2C3 · Bright.** September 15 six-column/four-row front grid, facing the window. Low interior-left rosette. Keep clear bright light, without automatically assigning it the strongest intensity. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | Use medium dryness, plant response, and pot-weight trend as evidence.                                                                                                                                                                                                            |
+| Pot and mix         | The current pot is a 4 × 4 × 3.7-inch round pot. The owner recalls Molly's Succulent Mix with approximately 20% added perlite (September 20 report; ratio estimated); keep the crown above the medium.                                                                           |
+| Surface             | Avoid touching or wiping the powdery farina; fingerprints and rubbed patches do not grow back on the same leaf.                                                                                                                                                                  |
 
 ## Rotation, propagation, and watch points
 
-- Rotate 90° weekly for even exposure under the fixed grow light.
+- Rotate as needed for even exposure under the fixed grow light.
 - Distinguish the cultivar's firm, organized bumps from new translucent,
   blistered, or collapsing tissue.
 - Remove only fully dry lower leaves that release without pulling live tissue.

@@ -1,6 +1,6 @@
 {
     "anatomy": {
-        "intro": "A single green split-rock pair is shown with a schematic taproot, distinct from the collection's purple Royal Flush.",
+        "intro": "Rounded, speckled leaves form the stone-like body, with a deep cleft above a long taproot.",
         "parts": [
             {
                 "function": "The thick, nearly spherical leaf stores water.",
@@ -30,13 +30,12 @@
     ],
     "flowers": {
         "sourceIds": [
-            "nelii",
-            "nelii-flora"
+            "nelii"
         ],
-        "text": "Flowers emerge from the cleft and can be roughly 60 mm across, with salmon, yellowish or orange tones. They open in the afternoon; no bloom is documented for this plant."
+        "text": "The fragrant flowers open in mid-afternoon and can reach about 60 mm across. SANBI describes salmon or pinkish-yellow blooms that turn orange as they wither, so a single flower can change color as it ages."
     },
     "growth": {
-        "note": "Judge the actual leaf stage indoors; SANBI's South African seasonal descriptions are not a Michigan watering calendar.",
+        "note": "Follow the visible leaf cycle indoors, letting old leaves supply the developing pair.",
         "sourceIds": [
             "nelii"
         ],
@@ -59,10 +58,10 @@
         "sourceIds": [
             "nelii"
         ],
-        "text": "Wild P. nelii occurs in sparse Karoo vegetation near the Western and Eastern Cape boundary in South Africa. Rounded, spotted bodies blend into the stony ground. This plant came from Altman nursery stock; its wild habitat provides context for its form, not a recipe for reproducing regional rain seasons indoors."
+        "text": "Pleiospilos nelii grows in sparse Karoo vegetation near the boundary of South Africa’s Western and Eastern Cape. Its rounded body and dark spots blend into the stony ground, where plants occur singly or in small populations."
     },
     "image": {
-        "alt": "One speckled green split-rock pair with numbered rounded leaf, spotted surface, deep cleft and schematic taproot.",
+        "alt": "One speckled green split-rock pair with numbered rounded leaf, spotted surface, deep cleft and taproot.",
         "file": "assets/plant-explainers/pleiospilos-nelii.webp",
         "generatedOn": "2026-09-24",
         "prompt": "Create a square 1024px botanical educational illustration on warm ivory. Clean botanically accurate pen-and-watercolor, muted forest-green, sage and ochre palette, generous whitespace, large central specimen. Exactly four large numbered circular markers 1, 2, 3, 4 with thin clear noncrossing leader lines to the specified features. Numerals legible at 350px display. No title, words, paragraphs, watering icons, calendar, border or logo. Schematic anatomy, not a photograph of an owned plant. Show ONE Pleiospilos nelii split-rock plant with exactly TWO opposite rounded nearly spherical grey-green leaves densely dotted with small dark speckles, deep central cleft, joined only at the base. No additional old or new pair, no flower, no Lithops flat patterned top. Three-quarter side view, schematic relatively long taproot and fine side roots beneath a small broken soil line. Marker1 to a rounded fleshy leaf; marker2 to clearly speckled surface patch; marker3 to deep central cleft; marker4 to taproot below. Green ordinary species form, never purple Royal Flush.",
@@ -109,7 +108,7 @@
     "slug": "pleiospilos-nelii",
     "sources": [
         {
-            "accessed": "2026-09-24",
+            "accessed": "2026-09-25",
             "id": "nelii",
             "title": "SANBI PlantZAfrica: Pleiospilos nelii",
             "url": "https://pza.sanbi.org/pleiospilos-nelii"
@@ -121,7 +120,7 @@
             "url": "https://biodiversityadvisor.sanbi.org/search/detail/9258486d-dc10-471d-a6c2-3c347842eec6"
         },
         {
-            "accessed": "2026-09-24",
+            "accessed": "2026-09-25",
             "id": "lithops",
             "title": "Wisconsin Extension: Living stones",
             "url": "https://hort.extension.wisc.edu/articles/living-stones-lithops/"
