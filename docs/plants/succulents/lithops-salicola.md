@@ -64,7 +64,10 @@ and the [short Lithops watering strategy](../../watering-quick-guide.md#lithops-
 Inspect the grey and tan heads individually through leaf replacement, and
 reassess the shared arrangement if their watering needs diverge.
 
-The September 23 repot record describes all heads as firm. Neither a dry-looking
+The September 23 repot record describes all heads as firm. On September 25,
+the owner again reported all four heads firm, including this grey/green group;
+see the [dated shared-pot update](./lithops-shared-planter.md#september-25-condition-update).
+No new medium-moisture observation accompanied that report. Neither a dry-looking
 surface nor an old leaf pair shrinking around replacements independently calls
 for water. Check the root zone and current leaves together. Introduce stronger
 light gradually. Track firmness, scars and basal condition alongside the

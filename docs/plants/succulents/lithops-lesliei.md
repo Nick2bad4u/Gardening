@@ -64,7 +64,10 @@ and the [short Lithops watering strategy](../../watering-quick-guide.md#lithops-
 Inspect these two heads individually and compare their stage with the grey/green
 group before making a whole-pot watering decision.
 
-The September 23 repot record describes all four heads as firm. An aging outer
+The September 23 repot record describes all four heads as firm. On September 25,
+the owner again reported all four heads firm, including this tan/brown group;
+see the [dated shared-pot update](./lithops-shared-planter.md#september-25-condition-update).
+No new medium-moisture observation accompanied that report. An aging outer
 pair can shrink as replacement leaves develop; that alone is not a thirst signal.
 Use actual root-zone dryness, current-leaf condition, and growth stage together.
 Acclimate to stronger light gradually, and compare photographs under similar
