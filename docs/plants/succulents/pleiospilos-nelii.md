@@ -66,6 +66,14 @@ Owner photograph, September 23, 2026: completed P36 / #10 repot in the chosen sp
 
 Owner photograph, September 23, 2026: speckled leaf surfaces and central cleft.
 
+## September 25 condition update
+
+The owner reported this plant **firm, with no new leaf pair emerging** on
+September 25, 2026. This is the separate nursery-labelled _Pleiospilos nelii_
+with no cultivar supplied, not G3 / P28 Royal Flush. No new medium-moisture,
+root, weight, watering, or feeding observation accompanied the update; the
+September 23 Dry record does not establish September 25 moisture.
+
 ## Care in this collection
 
 | Topic       | Practical starting approach                                                                                                                                                                                                                                  |
@@ -87,6 +95,7 @@ separately from the Lithops planter.
 
 ## Sources
 
+- Owner condition report received September 25, 2026, about 5:09 p.m. EDT: firm, no new leaf pair emerging; exact hands-on observation time not supplied.
 - Owner acquisition record: Home Depot, Howell, Michigan, September 21, 2026.
 
 - Owner reports, September 21–23, 2026, and Google Photos originals inspected September 23: separate non-Royal Flush acquisition, pot choice, nursery label, and completed repot photographs.

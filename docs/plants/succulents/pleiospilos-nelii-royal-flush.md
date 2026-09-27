@@ -67,6 +67,16 @@ angular leaf pairs resemble surrounding stone. GBIF accepts _Pleiospilos
 nelii_; the species was published in 1930. The cultivar name describes a
 horticultural color selection. The species produces fragrant, insect-pollinated flowers that open in mid-afternoon; its seed capsules open when wet and close as they dry.
 
+## September 25 condition update
+
+The owner reported that the **emerging new pair is firm**, the **oldest pair
+is getting quite small and wrinkled**, and the **second-oldest pair is still
+quite firm**, with perhaps a very slight amount of softness. That possible
+softness remains uncertain.
+These are owner-reported tactile and leaf-stage observations. No new
+medium-moisture, root, weight, watering, or feeding observation accompanied
+the update.
+
 ## Care in this collection
 
 | Topic               | Practical starting approach                                                                                                                                                                                                                                               |
@@ -88,6 +98,7 @@ horticultural color selection. The species produces fragrant, insect-pollinated 
 
 ## Sources
 
+- Owner condition report received September 25, 2026, about 5:09 p.m. EDT: firmness and condition of the three leaf pairs; exact hands-on observation time not supplied.
 - [SANBI PlantZAfrica: split rock flowers, habitat and seed capsules](https://pza.sanbi.org/pleiospilos-nelii)
 
 - Owner arrival and repot observations, August 28–29, 2026; medium description, September 20: Molly's Succulent Mix with approximately 20% added perlite, an estimated proportion.

@@ -8,8 +8,12 @@
 - Identification: **very high confidence**
 - Acquired from: Carlsons' Greenhouse, Torrey Road, Fenton, Michigan
 - Acquired on: 2026-08-10
-- Current pot: small 3-inch individual pot
+- Current pot: normal 4-inch individual pot; owner-confirmed September 26, 2026
 - Photo archive: [licensed cultivar and species references](../../../assets/plants/myrtillocactus-geometrizans-fukurokuryuzinboku/)
+
+**September 26, 2026 pot-size correction:** the owner confirmed that `F2` / `P17`
+uses a normal 4-inch pot like the other cacti. This corrects the earlier 3-inch
+description; no new repot or physical setup change was reported.
 
 ## Names and identity
 
@@ -39,8 +43,8 @@ unknown, so its fruit or tissue should not be used as food.
 | Topic               | Practical approach                                                                                                                                                                                                                                                                                                                |
 | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Grow-light position | **Photo-matched R1C6 · Gentler.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Front-right corner. Light at its growing tip may differ from light at the tabletop; acclimate the exposed lobes gradually. See the [current placement guide](../../layouts/table-placement-research.md). |
-| Water               | Soak and drain, then let the small 3-inch pot dry fully. Keep water from sitting in deep folds.                                                                                                                                                                                                                                   |
-| Pot and mix         | The small pot dries quickly but should not be upsized until roots justify it; use a stable draining mix.                                                                                                                                                                                                                          |
+| Water               | Soak and drain, then let the 4-inch pot dry fully. Keep water from sitting in deep folds.                                                                                                                                                                                                                                         |
+| Pot and mix         | Keep the confirmed 4-inch pot until roots justify upsizing; use a stable draining mix.                                                                                                                                                                                                                                            |
 | Handling            | Hold the pot, not the lobes; rubbing removes the protective wax and leaves permanent marks.                                                                                                                                                                                                                                       |
 
 ## Rotation, propagation, and watch points
@@ -48,7 +52,7 @@ unknown, so its fruit or tissue should not be used as food.
 - Rotate 90° clockwise on the normal Sunday schedule.
 - Stem cuttings can root after the cut surface calluses.
 - Inspect folds for scale, mealybugs, or trapped damp debris.
-- The 3-inch pot and short plant may need a riser after its actual
+- The short plant may need a riser after its actual
   tabletop-to-tip height is measured.
 
 ## Sources

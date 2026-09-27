@@ -126,3 +126,15 @@ The owner authorized review and download of the new Google Photos images. Twenty
 Both nursery products use assortment code `487712`, UPC `092852023689`, and nominal `S 2.5" .ASST MIMICRY` wording. The owner described the former pots as 2.25 inches; these remain separate observations. A shared assortment code does not identify a Lithops species. No retailer or exact purchase date is inferred from the grower labels.
 
 Gyazo still returned its maintenance page on September 23, so these selected repot views and labels use the existing local evidence fallback. Their profiles link to the full sanitized files; the site build supplies smaller responsive previews. Dedicated Gyazo Collections and remote publication remain pending. The bathroom photography location is not a record of final plant placement.
+
+## September 25 Lithops condition photograph
+
+The owner supplied this full-frame photograph on September 25, 2026; its capture date and time are not established. It shows all four heads in **#9 / P35**, with the tan/brown group at the rear and the gray-green group at the front of the mauve pot. This is a condition photograph, not nursery-label evidence or confirmation of either provisional species identification.
+
+| File                                                               | Evidence role                                                                          |
+| ------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
+| [P35 condition photograph](./2026-09-25-p35-lithops-condition.jpg) | Full-frame view of the four heads supplied alongside the owner's firmness observations |
+
+The private original is preserved. The maintained JPEG sanitizer removed private metadata without cropping, resizing, or re-encoding the primary image; the 1280 × 720 publication copy has identical decoded pixels. Firmness is an owner-reported touch observation and cannot be established from the photograph. Copyright Nick; all rights reserved.
+
+The Gyazo homepage still showed maintenance content during the September 25 check, and the authenticated image-list request returned HTTP 401. No upload or Collection creation was attempted. This image uses the established local evidence fallback; remote publication remains pending.

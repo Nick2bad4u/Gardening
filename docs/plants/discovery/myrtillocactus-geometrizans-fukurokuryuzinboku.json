@@ -87,8 +87,14 @@
         {
             "date": "2026-08-10",
             "sourcePath": "docs/plants/cacti/myrtillocactus-geometrizans-fukurokuryuzinboku.md",
-            "text": "Purchased at Carlsons' Greenhouse in a 3-inch individual pot.",
+            "text": "Purchased at Carlsons' Greenhouse.",
             "title": "Joined the collection"
+        },
+        {
+            "date": "2026-09-26",
+            "sourcePath": "docs/plants/cacti/myrtillocactus-geometrizans-fukurokuryuzinboku.md",
+            "text": "The owner confirmed F2 / P17 is in a normal 4-inch pot like the other cacti, correcting the earlier 3-inch description. No new repot or physical setup change was reported.",
+            "title": "Current pot size corrected"
         }
     ],
     "nameStory": {

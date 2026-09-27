@@ -520,8 +520,10 @@ Looking from the room toward the window:
 | 2: center      | `F3` yellow tower; `F2` boobie cactus; `F1` hook-spined pincushion | Outer-to-middle cactus zone; all direct on wood until measured.                        |
 | 3: room side   | `#4` Succulent-05 Kiwi aeonium; `#3` Houseplant-01 money tree      | Lower-light edge; money tree nearest window/periphery and outside the fixture hotspot. |
 
-The six August cacti are mostly in 4 in pots; the boobie cactus is in a small 3 in
-pot and the Chamaelobivia is in a small 4 in pot. The Kiwi aeonium is in a 5 in
+The six August cacti use 4 in pots. **September 26, 2026 correction:** the owner
+confirmed that F2 / P17 Boobie cactus uses a normal 4 in pot; the earlier 3 in
+description was incorrect, and no new repot was reported. The Chamaelobivia is
+also in a 4 in pot. The Kiwi aeonium is in a 5 in
 pot and the money tree is in a 6 in pot. This is a tight 16 in-long dry fit, so
 leave a pot off the table temporarily if rims overlap, a saucer overhangs, or
 air cannot pass between plants. Add no riser until each tabletop-to-tip height

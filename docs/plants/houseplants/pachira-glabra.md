@@ -66,6 +66,19 @@ Downward-pointing leaves were reported September 15; the north-windowsill placem
 
 Bone-dry top dressing added September 16, 2026 increased the pot's weight from **1,638 g to 1,746 g**, a **108 g** addition. The 30 earlier P21 weights include that offset for comparison with the dressed pot; their original readings remain preserved. This is still setup 1. Record future weights directly from the scale.
 
+## September 25 growth observation
+
+The owner's September 25, 2026 **Check at 4:27 p.m. EDT** records **firm new
+growth**, large new leaves, and **three new branch buds below the top branch**.
+The owner clarified that the buds emerge from the trunk, each on a different
+face. The Check notes describe them as approximately **1–4 mm**; no separate
+dimension measurement was logged. Soil moisture was recorded as **Slightly
+moist** at that check.
+
+This is dated, owner-reported growth evidence. The existing History entry is
+the observation record; the later clarification does not represent another
+inspection, watering, or feeding event.
+
 ## Rotation, propagation, and watch points
 
 - Rotate the pot 90° weekly if it leans toward the window.
@@ -78,6 +91,7 @@ Bone-dry top dressing added September 16, 2026 increased the pot's weight from *
 
 ## Sources
 
+- Owner Check recorded September 25, 2026, 4:27 p.m. EDT in the Garden Plant Tracker History, with same-day clarification in chat: new leaves and three small branch buds on different faces of the trunk below the top branch; firm new growth and slightly moist soil.
 - [Kew Plants of the World Online: _Pachira glabra_](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:562664-1)
 - [Kew's reproduced flora descriptions](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:562664-1/general-information): compound leaves, leaflets, and long petioles of the working species candidate.
 - [University of Florida Herbarium: _Flora of Florida_, _Pachira_ key](https://www.floridamuseum.ufl.edu/wp-content/uploads/sites/67/2025/01/Flora-of-Florida-Franck-2025.pdf): flower and fruit distinctions between _P. glabra_ and _P. aquatica_.

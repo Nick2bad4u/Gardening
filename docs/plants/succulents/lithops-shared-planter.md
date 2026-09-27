@@ -97,6 +97,21 @@ Owner photograph, September 23, 2026: four heads in two appearance groups, shari
 
 Owner photograph, September 23, 2026: completed shared planting.
 
+## September 25 condition update
+
+The owner reported **all four heads firm** on September 25, 2026, covering both
+the probable _L. lesliei_ and probable _L. salicola_ groups. This is a tactile
+owner observation, not a conclusion from a photograph. No new medium-moisture,
+root, weight, watering, or feeding observation accompanied the update; the
+September 23 Dry record does not establish September 25 moisture.
+
+![Four Lithops heads in the shared mauve pot, with two tan-brown heads behind two grey-green heads](../../../assets/nursery-labels/2026-09-25-p35-lithops-condition.jpg)
+
+Owner-supplied photograph received September 25, 2026; the actual capture time
+was not supplied. The full-frame view documents the four heads, their patterned
+upper surfaces, and the shared planting. Firmness comes from the owner's
+hands-on report above. This photograph does not show either split rock.
+
 ## Care in this collection
 
 | Topic           | Practical starting approach                                                                                                                                                                                                                             |
@@ -117,6 +132,7 @@ Owner photograph, September 23, 2026: completed shared planting.
 
 ## Sources
 
+- Owner condition report received September 25, 2026, about 5:09 p.m. EDT: all four heads firm; exact hands-on observation time not supplied.
 - Owner reports, September 21–23, 2026, and Google Photos originals inspected September 23: acquisition, pot choice, four visible heads, nursery labels, and completed repot photographs.
 - Owner acquisition record: Home Depot, Howell, Michigan, September 21, 2026.
 - Owner care record, September 23, 2026: repot at 02:34 EDT, recorded 02:40:36 EDT; setup 2, recipe, weight, firmness, and root observations.

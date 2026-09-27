@@ -1,6 +1,6 @@
 # Practical care notes
 
-Last updated: 2026-09-24
+Last updated: 2026-09-25
 
 Start with the [watering quick guide](./watering-quick-guide.md) for each group's
 drying target. This page brings together the collection's routine checks,
@@ -60,6 +60,20 @@ The September 23 checks record Dry medium and firm plants: all four visible Lith
 On September 23, the **02:38 P35 / #9 measurement** records an individual Lithops head at **1 in high × 1.25 in wide** (2.54 × 3.175 cm), not the whole planter. P36's separate **02:37 measurement** is **1 in × 2.25 in**. Both measurements are still marked setup 1 despite the earlier setup-2 repots, so their setup assignment needs checking before setup-specific comparisons.
 
 Treat both as manual leaf-cycle checks. A weight plateau, dry reference, or model date alone must not trigger watering. The shared Lithops planting does not require perfectly synchronized heads; inspect actual differences in firmness and replacement stage before watering the common root volume. Keep P36 separate from the existing G3 / P28 Royal Flush and retain separate observations. The profiles cite Wisconsin Extension and SANBI for drainage and leaf-replacement guidance. Do not copy a fixed seasonal calendar into this indoor setup or interpret wrinkling outer leaves alone as thirst.
+
+### September 25 owner condition update
+
+The owner reported the Lithops and two split rocks firm, with these specific observations:
+
+- **P35 / #9 Lithops:** all four heads firm, covering both probable-species groups in the shared planter.
+- **P36 / #10 split rock:** firm, with no new leaf pair emerging. This is the nursery-labelled _Pleiospilos nelii_ with no cultivar supplied, separate from Royal Flush.
+- **P28 / G3 Royal Flush:** the emerging new pair is firm; the oldest pair is getting quite small and wrinkled. The second-oldest pair is still quite firm, with perhaps a very slight amount of softness; that last detail remains uncertain.
+
+These are owner-reported tactile and leaf-stage observations, received September 25, 2026, at about 5:09 p.m. EDT; the exact hands-on observation time was not supplied. No new medium-moisture, root, weight, watering, or feeding observation accompanied this update. Firmness is not inferred from the accompanying P35 photograph, and the September 23 Dry records remain dated history.
+
+## September 25 money-tree growth
+
+The owner's **4:27 p.m. EDT Check** for **P21 / #3 [Money tree](./plants/houseplants/pachira-glabra.md#september-25-growth-observation)** records firm new growth, large new leaves, and three new branch buds described as approximately 1–4 mm. In a same-day clarification, the owner placed all three buds on different faces of the trunk below the top branch. Soil moisture was recorded as Slightly moist at that check. This preserves the existing dated observation and its clarification; no duplicate Check, watering, feeding, or formal dimension measurement was added.
 
 ## Baseline routine
 
