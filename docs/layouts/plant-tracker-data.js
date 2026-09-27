@@ -100,7 +100,7 @@ const initialPotSizeByPlant = Object.freeze({
     P14: "small 4 in",
     P15: "4 in",
     P16: "4 in",
-    P17: "small 3 in",
+    P17: "4 in",
     P18: "4 in",
     P21: "6 in",
     P22: "5 in",
