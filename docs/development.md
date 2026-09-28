@@ -6,6 +6,28 @@ The public website uses Astro to build static HTML pages, shared styles, and bro
 npm ci
 ```
 
+## Node diagnostic reports
+
+Files named `report.YYYYMMDD.HHMMSS.pid.thread.sequence.json` are Node.js
+diagnostic dumps, separate from the garden's daily reports. Store them in the
+ignored `reports/node/` directory. Its checked-in README keeps that directory
+available in fresh checkouts.
+
+The repository's `vitest.nodeExecArgs` setting keeps uncaught-exception reporting
+enabled for VS Code Vitest workers and directs those reports to
+`reports/node/`; restart the Vitest extension or reload the editor after changing
+the setting. This applies to the extension's default `child_process` runner.
+
+For a direct Node command, run from the repository root and add
+`--report-directory=./reports/node`. The checked-in `node.config.json` also sets
+this destination and the diagnostic directory, but Node only reads that file
+when explicitly invoked with `--experimental-config-file --permission` (its
+existing filesystem allowlists require permission mode). An arbitrary Node command or
+external editor runner that omits these options retains its own defaults.
+See the [Node diagnostic report documentation](https://nodejs.org/api/report.html#configuration)
+for the directory option. Keep diagnostic files local; they can contain process
+and environment details and are excluded from the public site.
+
 ## Live website development
 
 ```powershell

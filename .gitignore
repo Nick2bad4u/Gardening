@@ -930,6 +930,12 @@ codeql-agent-results/
 gha-creds-*.json
 /output/
 reports/
+# Keep the Node diagnostic directory available in a fresh checkout.
+!/reports/
+/reports/*
+!/reports/node/
+/reports/node/*
+!/reports/node/README.md
 TODO.md
 temp/
 

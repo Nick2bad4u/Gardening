@@ -125,15 +125,46 @@ export function contentUrl(repositoryPath) {
 }
 
 export const primaryNavigation = [
-    { href: siteUrl("plants/"), label: "Plants", section: "plants" },
+    {
+        href: siteUrl("plants/"),
+        icon: "plant",
+        label: "Plants",
+        section: "plants",
+    },
     {
         href: siteUrl("containers/"),
+        icon: "planter",
         label: "Containers",
         section: "containers",
     },
-    { href: siteUrl("report/"), label: "Daily Report", section: "report" },
-    { href: siteUrl("tracker/"), label: "Tracker", section: "tracker" },
-    { href: siteUrl("photos/"), label: "Photos", section: "photos" },
-    { href: siteUrl("guides/"), label: "Guides", section: "guides" },
-    { href: siteUrl("setup/"), label: "Setup", section: "setup" },
+    {
+        href: siteUrl("report/"),
+        icon: "full-report",
+        label: "Daily Report",
+        section: "report",
+    },
+    {
+        href: siteUrl("tracker/"),
+        icon: "tracker",
+        label: "Tracker",
+        section: "tracker",
+    },
+    {
+        href: siteUrl("photos/"),
+        icon: "photos",
+        label: "Photos",
+        section: "photos",
+    },
+    {
+        href: siteUrl("guides/"),
+        icon: "field-guide",
+        label: "Guides",
+        section: "guides",
+    },
+    {
+        href: siteUrl("setup/"),
+        icon: "light",
+        label: "Setup",
+        section: "setup",
+    },
 ];
