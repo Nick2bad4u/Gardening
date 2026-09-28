@@ -49,11 +49,11 @@
                         "Comparison: retain the same face and lighting to judge future color or shape changes.",
                         "September 26 re-review of this September 16 image: pale material is visible around the crown and small pale specks appear in a rib groove. Their identity is unresolved; this old view neither confirms nor rules out the insects reported overnight on September 26."
                     ],
-                    "height": 6261,
-                    "imageUrl": "https://i.gyazo.com/133ec25058b5878a0760d143de6e4d7f.png",
+                    "height": 913,
+                    "imageUrl": "https://i.gyazo.com/f1813dbc9cb6d8f7ffbde2fc941ffc14.webp",
                     "limitations": "AI photo-only review. The base is hidden; one view cannot establish changes in color or size. Root-zone moisture, tissue firmness and root health were not measured. September 26 access check: the original full-resolution endpoint returns HTTP 200 with an image content type. The downloaded full-resolution historical image was visually re-inspected. This photograph predates the September 26 owner-reported suspected pests and whole-collection 70% isopropyl application; it cannot establish present pest status, treatment success or treatment damage.",
-                    "pageUrl": "https://gyazo.com/133ec25058b5878a0760d143de6e4d7f",
-                    "width": 6578
+                    "pageUrl": "https://gyazo.com/f1813dbc9cb6d8f7ffbde2fc941ffc14",
+                    "width": 960
                 }
             ],
             "plateau": "not-supported",

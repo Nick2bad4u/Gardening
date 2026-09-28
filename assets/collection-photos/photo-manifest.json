@@ -878,20 +878,20 @@
                     "view": "plant",
                     "alt": "Variegated moon cactus (A1) plant view on September 16, 2026",
                     "caption": "Intact low ribbed globe, mainly dark green with bronze and reddish sectors, pale areoles and long sparse spines.",
-                    "source_note": "The publication is rendered from a full-resolution Google Photos export retained in the private source cache; its path is intentionally excluded from the public manifest.",
+                    "source_note": "The deleted September 16 capture was restored from its 960 by 913 pixel website preview, uploaded by the owner to Gyazo on September 27, 2026. The original photograph date and crop framing are retained.",
                     "publication_name": "2026-09-16-gymnocalycium-mihanovichii-variegated-plant.png",
                     "provider": "gyazo",
-                    "image_id": "133ec25058b5878a0760d143de6e4d7f",
-                    "image_url": "https://i.gyazo.com/133ec25058b5878a0760d143de6e4d7f.png",
-                    "page_url": "https://gyazo.com/133ec25058b5878a0760d143de6e4d7f",
+                    "image_id": "f1813dbc9cb6d8f7ffbde2fc941ffc14",
+                    "image_url": "https://i.gyazo.com/f1813dbc9cb6d8f7ffbde2fc941ffc14.webp",
+                    "page_url": "https://gyazo.com/f1813dbc9cb6d8f7ffbde2fc941ffc14",
                     "upload_metadata": {
-                        "app": "Fenton Garden Field Guide",
-                        "title": "Variegated moon cactus (A1) plant view on September 16, 2026",
-                        "url": "https://nick2bad4u.github.io/Gardening/#gymnocalycium-mihanovichii-variegated",
-                        "desc": "Intact low ribbed globe, mainly dark green with bronze and reddish sectors, pale areoles and long sparse spines. Photograph documents visible appearance; it does not establish moisture, firmness or a diagnosis. Captured 2026-09-16; view: plant; Copyright Nick; all rights reserved."
+                        "app": "Gyazo",
+                        "title": "133ec25058b5878a0760d143de6e4d7f.w960.webp",
+                        "url": "",
+                        "desc": ""
                     },
                     "crop_geometry": "6578x6261+5467+2506",
-                    "derivation_note": "Lossless source-resolution crop from the auto-oriented private photograph; hidden source metadata is removed before upload."
+                    "derivation_note": "The original crop geometry describes the source photograph. This replacement is the existing resized WebP preview, with no EXIF, XMP or IPTC metadata; it is not the full-resolution original."
                 }
             ]
         },

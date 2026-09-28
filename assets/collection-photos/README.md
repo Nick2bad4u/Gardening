@@ -40,6 +40,14 @@ the plant's Gyazo Collection. The
 [Collection Photos](https://nick2bad4u.github.io/Gardening/photos/) page is a searchable
 index of all plant Collections and the overview Collection.
 
+On September 27, 2026, the deleted September 16 moon-cactus capture was replaced
+with the owner's Gyazo upload of its 960 × 913 website preview. Its stable
+publication name, photograph date, caption and original crop geometry remain;
+the direct URL and September 16–27 report dimensions now describe the replacement
+WebP. This capture uses the metadata shown by the owner's upload (`Gyazo`, the
+preview filename, and empty source URL and description), rather than the
+deleted upload's metadata. Personal-photo rights are unchanged.
+
 ## Publish a new photo
 
 Use [`publish-collection-photo.ps1`](../../scripts/publish-collection-photo.ps1).
