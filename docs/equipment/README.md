@@ -1,6 +1,12 @@
 # Equipment research
 
 - [Complete equipment and supplies inventory](./inventory.md) — furniture, lights, controllers, air treatment, meters, scales, water supplies, pots, media, labels, camera storage, and stored equipment with product links; also available as a page in the field guide
+- [Pest-control supplies and inspection tools](./pest-control-supplies.md) — purchased sprays, systemic granules, traps, magnifier, and swabs; what each does, where their uses overlap, and exact manufacturer labels
+- [Garden Safe insect-killer guide](./garden-safe-insect-killer.md) — indoor/outdoor contact spray and oil-formula limits
+- [Bonide insecticidal-soap guide](./bonide-insecticidal-soap.md) — exposed pests, direct coverage, and plant sensitivity
+- [Captain Jack's Deadbug Brew guide](./captain-jacks-deadbug-brew.md) — outdoor spinosad application and target pests
+- [AzaMax guide](./azamax.md) — concentrate mixing, foliar treatment, and soil-drench use
+- [Bonide systemic-granule guide](./bonide-systemic-granules.md) — container dosing, watering in, and systemic insect control
 
 - [AW200 + new AeroLight 240 W](./aw200-and-aerolight-240w.md) — two horizontal
   fixtures installed September 13, one above the other in the bird's-eye plan,
