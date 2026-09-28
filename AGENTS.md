@@ -197,29 +197,11 @@
   Build Pages before `npm run test:e2e` or `npm run test:storybook:static`.
   Inspect affected pages at desktop and 390 px widths in both themes: console,
   navigation, keyboard behavior, horizontal overflow, and existing print modes.
-- Keep link validation focused and avoid repeated Lychee runs:
-  - If an edit changes no links or destinations, skip Lychee. Check changed local
-    paths and anchors directly; a successful source read during this task can
-    verify an external URL without checking it again through Lychee.
-  - When automated checking is useful, batch the affected files into one scoped
-    run after editing is complete. Reuse the configured cache. For example:
-
-    ```powershell
-    lychee --config node_modules/lychee-config-nick2bad4u/lychee.toml --host-concurrency 2 --host-request-interval 250ms docs/equipment/pest-control-supplies.md
-    ```
-
-    Replace the example path with the changed files; do not scan the whole repo
-    merely because one source link was added.
-
-  - Reserve `npm run lint:lychee` for an explicitly requested repository-wide
-    link audit, a link-checker configuration/input-discovery change, or a required
-    CI check. Do not run broad and scoped scans concurrently or rerun a passing
-    check without a relevant change; recheck only repaired links after a failure.
-  - `lint:lychee:smoke` only discovers README inputs and makes no link requests.
-    Use it when checking input discovery, not as a routine Markdown gate.
-  - Report blocked or rate-limited URLs without retry loops. Reuse successful
-    browser/source verification where available; leave unresolved checks explicit
-    rather than removing valid sources or broadening exclusions to make a run pass.
+- Lychee: skip unchanged links; check local targets and reuse source reads. Batch
+  changed files once with cached package-script settings; retry only repaired
+  links. Full scans require a requested audit, checker/input changes, or CI.
+  Never overlap scans or repeat passes. Report blocked URLs without retry loops
+  or wider exclusions. `lint:lychee:smoke` is only for input-discovery changes.
 - For broader or sensitive changes, run the repository's secret checks:
 
   ```powershell
