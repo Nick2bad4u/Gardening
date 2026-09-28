@@ -1,20 +1,49 @@
 # MSU fertilizer schedule
 
-Last updated: 2026-09-21
+Last updated: 2026-09-27
 
 This is the working nutrient plan for the collection's Tezula/Greencare **MSU
 13-3-15 Tap/Rain/RO formula**. It is a low-dose starting plan for these actual
 pots, the 60/40 Molly's-and-perlite cactus mix, RO water, indoor grow lights, and the
 indoor dry-down trial. Choose feeding only at an otherwise-ready watering.
 
+The separate [Foliage-Pro plan for #7/#8](#september-27-foliage-pro-starting-plan)
+below covers the two new foliage houseplants; their watering and feeding
+decisions remain independent of the cactus rotation.
+
 The display uses the installed [AW200 + AeroLight 240 W pair](./aw200-and-aerolight-240w.md).
 Follow growth and normal drying when reviewing the feeding rate.
 
 ## September 20 foliage-basket exceptions
 
-**P31 / #7 [Peperomia Bicolor](../plants/houseplants/peperomia-obtipan-bicolor.md)** and **P32 / #8 [Tricolor oyster plant](../plants/houseplants/tradescantia-spathacea-tricolor.md)** are not automatically enrolled in the cactus feeding rotation. Their nursery medium, existing fertilizer charge, root condition, and any repot remain unrecorded. Purchase alone is not a reason to feed, flush, or water them.
+**P31 / #7 [Peperomia Bicolor](../plants/houseplants/peperomia-obtipan-bicolor.md)** and **P32 / #8 [Tricolor oyster plant](../plants/houseplants/tradescantia-spathacea-tricolor.md)** have their own nutrient plan. On September 27, the owner confirmed that both had just been watered when collected on September 20. The exact watering times and whether that nursery water contained fertilizer are unknown; do not classify it as a plain-water or feed event. Nursery medium, any existing fertilizer charge, root condition, and completed repot status remain unrecorded.
 
-First inspect drainage, establish ordinary drying, and look for healthy new growth. Use each profile's upper-mix moisture check rather than waiting for a cactus-style whole-pot plateau. If a later review supports feeding, record the actual product, dilution, and application; the cactus **0.75 g/US gallon** starting dose and alternating feed cycle below are not a prescribed new-basket schedule. Avoid stacking MSU on an unknown nursery fertilizer charge.
+Use partial drying for #7 and the upper **1–2 inches** drying for #8, with the usual plant-readiness check. A cactus plateau, purchase anniversary, or proposed feeding never establishes watering readiness.
+
+### September 27 Foliage-Pro starting plan
+
+Use **SUPERthrive Foliage-Pro 9-3-6 liquid fertilizer**, the product family already named in the collection's money-tree feeding history. This recommendation applies to a bottle marked **Foliage-Pro 9-3-6**; other SUPERthrive products require their own instructions.
+
+The next otherwise-needed watering for each plant should be **plain RO, no nutrients**, while the nursery fertilizer charge and establishment remain uncertain. Let that ordinary watering/drying cycle and healthy new growth establish a useful first feeding opportunity. Before the first feed, check any known nursery or replacement-mix fertilizer information during normal care. If slow-release fertilizer is still supplying the pot, the mix has a fresh fertilizer charge, or establishment/feed suitability remains unclear, continue plain RO and reconsider at a later ordinary watering. Do not disturb roots or add daily checks to obtain feeding eligibility.
+
+Once feeding is appropriate, both plants can share this gentle starting recipe:
+
+- **Dose:** **1/4 US teaspoon per US gallon of RO water** (approximately **1.23 mL per 3.785 L**).
+- **Frequency:** feed at most **every second actual ready watering** while healthy new growth continues; use plain RO between feeds. Each pot advances through its own completed watering events, even when they share a batch. This is a collection starting recommendation, not a manufacturer requirement or a claim that both pots dry at the same rate.
+- **Fallback:** use plain RO when growth pauses, roots or stems are stressed, mineral buildup is evident, or the fertilizer charge remains a concern. Resume only when feeding is appropriate; do not make up a missed feed or increase the dose automatically.
+- **Watering remains separate:** #7 needs partial drying; #8 needs its upper 1–2 inches to dry. Do not water early to feed, wait for a cactus plateau, or request extra weights to maintain this plan.
+
+The original Dyna-Gro manufacturer data sheet gives **1/4 teaspoon per gallon with each watering** as a maintenance option. This plan uses that dilute concentration less frequently. It is not the stronger production or concentrated monthly application rate. RHS also supports dilute feeding during active Peperomia growth; the collection's event-based alternation is an adaptation, not a cultivar-specific published trial.
+
+| Water volume  | Foliage-Pro at 1/4 US teaspoon per US gallon |
+| ------------- | -------------------------------------------: |
+| 1 US gallon   |                            1/4 tsp ≈ 1.23 mL |
+| 1/2 US gallon |                            1/8 tsp ≈ 0.62 mL |
+| 1 litre       |                                    ≈ 0.33 mL |
+
+Measure the liquid by volume with a graduated syringe or measuring spoon. Its density has not been measured, so these are not gram doses. Add it to the measured water and mix only the amount needed for the session. Keep the stored RO jug plain. Use Foliage-Pro as the only complete fertilizer in that batch; do not add MSU, separate Cal-Mag, sulfur, or another complete feed. Wet the mix evenly at an otherwise-ready watering, let it drain, and empty retained runoff. Extra flushing is not part of this new-plant plan.
+
+When a feed is actually completed, record the Water event with `Nutrients: Yes`, product `SUPERthrive Foliage-Pro 9-3-6`, and amount `1/4 tsp/US gal`. Count any other complete fertilizer as a feed too. An unknown nursery feed remains unknown, and a recommendation is never a completed event. The owner's lower weighing priority for #7/#8 remains unchanged; a convenient weight during real care is optional, not a condition of feeding.
 
 ## September 21 leaf-cycle exceptions
 
@@ -144,6 +173,10 @@ Do not automatically pour the cactus batch into every pot:
 
 ## Sources
 
+- [Dyna-Gro Foliage-Pro manufacturer product data sheet, 2014, hosted by ZipGrow](https://zipgrow.com/wp-content/uploads/2022/06/Foliage-Pro-Sht-2014.pdf): 9-3-6 liquid fertilizer and the dilute 1/4-teaspoon-per-gallon maintenance option. This is historical manufacturer documentation, not a freshly inspected current bottle label. The current SUPERthrive manufacturer website was unavailable during the September 27 review; follow the actual bottle label if its instructions differ.
+- [RHS: How to grow peperomia](https://www.rhs.org.uk/plants/peperomia/how-to-grow-peperomia): partial drying and dilute feeding during active growth. The #7/#8 frequency above is a conservative collection recommendation.
+- [NC State Extension: oyster plant](https://plants.ces.ncsu.edu/plants/tradescantia-spathacea/): upper 1–2-inch drying and well-drained container culture; this source does not prescribe a Foliage-Pro dose.
+- Owner clarification and plan request, September 27, 2026: both foliage houseplants were watered at their September 20 pickup; set up recommendations for the existing SUPERthrive product. No nursery fertilizer details or new completed feed were supplied.
 - [Tezula: MSU 13-3-15 Tap/Rain/RO fertilizer analysis and flush guidance](https://tezulaplants.com/products/msu-fertilizer-13-3-15-for-tap-water-ro-rain-water)
 - [Tezula Amazon listing: one-teaspoon-per-gallon retail direction](https://www.amazon.com/dp/B077WJNXB4)
 - [UC Agriculture and Natural Resources: low-nitrogen, one-quarter-strength succulent feeding](https://ucanr.edu/site/uc-master-gardeners-san-luis-obispo-county/succulents)
