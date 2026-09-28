@@ -102,7 +102,7 @@ const canonical = new URL(Astro.url.pathname, siteOrigin).href;
                     data-menu-toggle
                     aria-label="Menu"
                 >
-                    <span aria-hidden="true">☰</span>
+                    <SiteIcon name="menu" />
                     <span>Menu</span>
                 </button>
                 <nav id="site-nav" class="site-nav" aria-label="Main navigation">
@@ -111,7 +111,8 @@ const canonical = new URL(Astro.url.pathname, siteOrigin).href;
                             href={item.href}
                             aria-current={section === item.section ? "page" : undefined}
                         >
-                            {item.label}
+                            <SiteIcon name={item.icon} size={22} />
+                            <span>{item.label}</span>
                         </a>
                     ))}
                 </nav>
@@ -127,9 +128,7 @@ const canonical = new URL(Astro.url.pathname, siteOrigin).href;
                         aria-label="Toggle color theme"
                         title="Change color theme"
                     >
-                        <span data-theme-glyph aria-hidden="true">
-                            ◐
-                        </span>
+                        <SiteIcon name="theme" />
                         <span id="theme-label" class="visually-hidden">
                             Theme
                         </span>
@@ -171,7 +170,8 @@ const canonical = new URL(Astro.url.pathname, siteOrigin).href;
             <div class="footer-inner">
                 <div>
                     <a class="footer-brand" href={siteUrl()}>
-                        The Garden<span aria-hidden="true"> ✦</span>
+                        <SiteIcon name="houseplant" size={36} />
+                        The Garden
                     </a>
                     <p>
                         A personal collection. An ongoing notebook.
@@ -179,19 +179,35 @@ const canonical = new URL(Astro.url.pathname, siteOrigin).href;
                     </p>
                 </div>
                 <nav aria-label="Footer navigation">
-                    <a href={siteUrl("guides/")}>Care &amp; logging guides</a>
-                    <a href={siteUrl("setup/equipment/")}>Equipment &amp; supplies</a>
-                    <a href={siteUrl("reports/")}>Report archive</a>
-                    <a href={repositoryUrl}>Repository &amp; sources</a>
+                    <a href={siteUrl("guides/")}>
+                        <SiteIcon name="field-guide" />
+                        <span>Care &amp; logging guides</span>
+                    </a>
+                    <a href={siteUrl("setup/equipment/")}>
+                        <SiteIcon name="light" />
+                        <span>Equipment &amp; supplies</span>
+                    </a>
+                    <a href={siteUrl("reports/")}>
+                        <SiteIcon name="history" />
+                        <span>Report archive</span>
+                    </a>
+                    <a href={repositoryUrl}>
+                        <SiteIcon name="source" />
+                        <span>Repository &amp; sources</span>
+                    </a>
                     <a href={siteUrl("storybook/")} data-astro-prefetch="false">
-                        Component workbench
+                        <SiteIcon name="layout" />
+                        <span>Component workbench</span>
                     </a>
                     <a href={`${repositoryUrl}/blob/main/assets/plants/ATTRIBUTION.md`}>
-                        Photo credits
+                        <SiteIcon name="camera" />
+                        <span>Photo credits</span>
                     </a>
                 </nav>
                 <p class="footer-note">
-                    <a href="#main">Back to top ↑</a>
+                    <a href="#main">
+                        <SiteIcon name="arrow-up" /> Back to top
+                    </a>
                 </p>
             </div>
         </footer>

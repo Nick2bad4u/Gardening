@@ -102,18 +102,18 @@ const reportDate = new Intl.DateTimeFormat("en-US", {
             </div>
             <dl class="home-stats">
                 <div>
-                    <dt>Botanical profiles</dt>
+                    <dt>
+                        <SiteIcon name="botanical" size={24} /> Botanical profiles
+                    </dt>
                     <dd>{current.length}</dd>
                 </div>
                 <div>
                     <dt>
-                        <a href={siteUrl("containers/")}>Tracked containers</a>
+                        <a href={siteUrl("containers/")}>
+                            <SiteIcon name="planter" size={24} /> Tracked containers
+                        </a>
                     </dt>
                     <dd>{pots.size}</dd>
-                </div>
-                <div>
-                    <dt>One ongoing</dt>
-                    <dd class="stat-word">experiment</dd>
                 </div>
             </dl>
         </div>
@@ -219,9 +219,9 @@ const reportDate = new Intl.DateTimeFormat("en-US", {
                 <h2 id="notebook-title">A place for the details.</h2>
             </div>
         </div>
-        <div class="card-grid">
+        <div class="notebook-grid">
             <a class="notebook-card card" href={siteUrl("containers/")}>
-                <SiteIcon name="succulent" size={32} />
+                <SiteIcon name="planter" size={32} />
                 <h3>Containers &amp; shared planters</h3>
                 <p>
                     See what grows together, its recorded setup, and the one history each pot
