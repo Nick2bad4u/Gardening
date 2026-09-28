@@ -171,12 +171,9 @@
   ```powershell
   npm run lint:remark
   npm run lint:prettier
-  npm run lint:lychee:smoke
   git diff --check
   ```
 
-  `lint:lychee:smoke` only discovers README inputs; it does not verify links.
-  Check changed local targets directly and use `lint:lychee` for external URLs.
   Remark intentionally ignores `AGENTS*.md`; validate instructions with
   formatting, command/path checks, and a consistency review rather than claiming
   they passed prose lint.
@@ -200,9 +197,29 @@
   Build Pages before `npm run test:e2e` or `npm run test:storybook:static`.
   Inspect affected pages at desktop and 390 px widths in both themes: console,
   navigation, keyboard behavior, horizontal overflow, and existing print modes.
-- For changed external URLs, run `npm run lint:lychee`. Treat intermittent
-  network or rate-limit failures as evidence to investigate and report, not as a
-  reason to remove a valid source.
+- Keep link validation focused and avoid repeated Lychee runs:
+  - If an edit changes no links or destinations, skip Lychee. Check changed local
+    paths and anchors directly; a successful source read during this task can
+    verify an external URL without checking it again through Lychee.
+  - When automated checking is useful, batch the affected files into one scoped
+    run after editing is complete. Reuse the configured cache. For example:
+
+    ```powershell
+    lychee --config node_modules/lychee-config-nick2bad4u/lychee.toml --host-concurrency 2 --host-request-interval 250ms docs/equipment/pest-control-supplies.md
+    ```
+
+    Replace the example path with the changed files; do not scan the whole repo
+    merely because one source link was added.
+
+  - Reserve `npm run lint:lychee` for an explicitly requested repository-wide
+    link audit, a link-checker configuration/input-discovery change, or a required
+    CI check. Do not run broad and scoped scans concurrently or rerun a passing
+    check without a relevant change; recheck only repaired links after a failure.
+  - `lint:lychee:smoke` only discovers README inputs and makes no link requests.
+    Use it when checking input discovery, not as a routine Markdown gate.
+  - Report blocked or rate-limited URLs without retry loops. Reuse successful
+    browser/source verification where available; leave unresolved checks explicit
+    rather than removing valid sources or broadening exclusions to make a run pass.
 - For broader or sensitive changes, run the repository's secret checks:
 
   ```powershell
