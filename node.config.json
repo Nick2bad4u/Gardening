@@ -18,13 +18,15 @@
         "allow-fs-write": [
             "./coverage",
             "./temp",
+            "./reports/node",
             "./.pages-site"
         ],
         "conditions": ["development", "node"],
-        "diagnostic-dir": "./temp",
+        "diagnostic-dir": "./reports/node",
         "enable-source-maps": true,
         "extra-info-on-fatal-exception": true,
         "max-old-space-size-percentage": "80",
+        "report-dir": "./reports/node",
         "trace-deprecation": false,
         "trace-warnings": false,
         "warnings": true
