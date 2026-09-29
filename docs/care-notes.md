@@ -1,6 +1,6 @@
 # Practical care notes
 
-Last updated: 2026-09-25
+Last updated: 2026-09-27
 
 Start with the [watering quick guide](./watering-quick-guide.md) for each group's
 drying target. This page brings together the collection's routine checks,
@@ -34,11 +34,13 @@ Use the [living-room measurement trial](./layouts/table-placement-research.md#pl
 
 The owner purchased **P31 / #7 [Peperomia Bicolor](./plants/houseplants/peperomia-obtipan-bicolor.md)** and **P32 / #8 [Tricolor oyster plant](./plants/houseplants/tradescantia-spathacea-tricolor.md)** on September 20. The owner confirmed purchasing both directly at Carlson's Greenhouses in owner-reported six-inch nursery pots; the tags also identify Carlson's as the grower. Both labels specify bright, indirect light. Start with a gentler leaf-height exposure and gradual acclimation; the previously reported 18–22 app-estimated DLI far-table area is not automatically assigned. The [placement guide](./layouts/table-placement-research.md#september-20-houseplant-purchases) records explicitly inferred starting ranges.
 
-Check these as houseplants, without waiting for a cactus-style whole-pot dry plateau. Peperomia should partially dry between waterings without prolonged drought; for the oyster plant, check the upper 1–2 inches once the actual pot/root-ball depth is known. Check the current nursery-pot drainage and inspect below a dry surface before watering. A weight or model date is supporting evidence only. Inspect the new plants for pests, keep oyster-plant sap away from skin and chewing pets, and defer feeding until roots, nursery medium, and existing fertilizer are understood. Their profiles cite the species care guidance.
+Check these as houseplants, without waiting for a cactus-style whole-pot dry plateau. Peperomia should partially dry between waterings without prolonged drought; for the oyster plant, check the upper 1–2 inches once the actual pot/root-ball depth is known. Check the current nursery-pot drainage and inspect below a dry surface before watering. A weight or model date is supporting evidence only. Inspect the new plants for pests and keep oyster-plant sap away from skin and chewing pets. Their profiles cite the species care guidance.
+
+**September 27 clarification and feeding plan:** the owner confirms both had just been watered at their September 20 pickup; exact times and nursery fertilizer use are unknown. Their next otherwise-ready watering should use plain RO. Once settled, drying normally and showing healthy new growth, the [Foliage-Pro plan](./equipment/msu-fertilizer-schedule.md#september-27-foliage-pro-starting-plan) starts **SUPERthrive Foliage-Pro 9-3-6 at 1/4 tsp/US gal**, at most every second actual ready watering, with plain RO between and whenever feeding remains unsuitable. Check known nursery or replacement-mix fertilizer before starting. This is a recommendation, not a completed feed, and adds no dedicated weighing or daily inspection requirement.
 
 Both houseplants were last recorded September 20 on the room-side floor near the money tree, in six-inch nursery pots. Separate eight-inch Amazon Basics pots with drainage holes are planned; one is decorated, with its plant assignment unrecorded. Compare the roots with the destination pots before repotting. The [Bamworld Nature stools](https://www.amazon.com/dp/B0GTHQRZSL) are seller-listed at 7.8, 8.6, and 11.5 inches high; receipt and installation are unconfirmed.
 
-The proposed medium blends airy, perlite-containing greenhouse potting mix with Molly's Succulent Mix. Additional perlite is available, but no completed blend is recorded. Nursery-pot depth, drainage, root condition, and feeding history are unknown. Wet leaves at purchase are not enough to judge root-ball moisture.
+The proposed medium blends airy, perlite-containing greenhouse potting mix with Molly's Succulent Mix. Additional perlite is available, but no completed blend is recorded. Nursery-pot depth, drainage, root condition, and feeding history are unknown. The owner-confirmed nursery watering is dated history, not a current moisture observation.
 
 For these planned repots, compare each actual root ball with the new pot rather than using leaf spread as the size guide. RHS recommends a Peperomia pot only a few centimetres wider than the root ball. Preserve healthy roots and the original planting depth. Use drainage holes and a uniform blend around the root ball; skip a separate clay-pebble bottom layer, because a fine-over-coarse boundary can hinder water movement. See [RHS repotting guidance](https://www.rhs.org.uk/plants/peperomia/how-to-grow-peperomia) and [Washington State University on container drainage](https://s3.wp.wsu.edu/uploads/sites/403/2015/03/container-drainage.pdf).
 

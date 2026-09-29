@@ -171,12 +171,9 @@
   ```powershell
   npm run lint:remark
   npm run lint:prettier
-  npm run lint:lychee:smoke
   git diff --check
   ```
 
-  `lint:lychee:smoke` only discovers README inputs; it does not verify links.
-  Check changed local targets directly and use `lint:lychee` for external URLs.
   Remark intentionally ignores `AGENTS*.md`; validate instructions with
   formatting, command/path checks, and a consistency review rather than claiming
   they passed prose lint.
@@ -200,9 +197,11 @@
   Build Pages before `npm run test:e2e` or `npm run test:storybook:static`.
   Inspect affected pages at desktop and 390 px widths in both themes: console,
   navigation, keyboard behavior, horizontal overflow, and existing print modes.
-- For changed external URLs, run `npm run lint:lychee`. Treat intermittent
-  network or rate-limit failures as evidence to investigate and report, not as a
-  reason to remove a valid source.
+- Lychee: skip unchanged links; check local targets and reuse source reads. Batch
+  changed files once with cached package-script settings; retry only repaired
+  links. Full scans require a requested audit, checker/input changes, or CI.
+  Never overlap scans or repeat passes. Report blocked URLs without retry loops
+  or wider exclusions. `lint:lychee:smoke` is only for input-discovery changes.
 - For broader or sensitive changes, run the repository's secret checks:
 
   ```powershell
