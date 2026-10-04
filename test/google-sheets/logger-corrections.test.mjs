@@ -2047,6 +2047,8 @@ describe("correction validation and durable receipt boundaries", () => {
         ["Repot", { potSize: " " }],
         ["Rotation", { rotationDegrees: 361 }],
         ["Check", { condition: 5 }],
+        ["Check", { condition: " \t ", soilMoisture: "" }],
+        ["Check", { notes: "Notes alone do not repair missing detail." }],
         ["Check", { soilMoisture: "Not a listed option" }],
     ])(
         "rejects invalid %s changes and their relevant dependencies",
@@ -2059,6 +2061,44 @@ describe("correction validation and durable receipt boundaries", () => {
             expect(model.state.writes).toBe(0);
         }
     );
+
+    it.each([{ condition: "Firm" }, { soilMoisture: "Dry" }])(
+        "repairs a historical blank Check with one structured field and preserves retry safety: %j",
+        (changes) => {
+            expect.hasAssertions();
+
+            const model = fixture([observation("Check")]);
+            const payload = prepare(model, changes);
+
+            expect(model.api.saveWebObservationCorrection(payload).status).toBe(
+                "saved"
+            );
+
+            const writes = model.state.writes;
+
+            expect(model.api.saveWebObservationCorrection(payload).status).toBe(
+                "saved"
+            );
+            expect(model.state.writes).toBe(writes);
+            expect(stored(model, 3, 8).value).toBe(changes.condition ?? "");
+            expect(stored(model, 3, 33).value).toBe(changes.soilMoisture ?? "");
+            expect(stored(model, 3, 9).value).toBe("saved note");
+        }
+    );
+
+    it("still allows removing an incomplete historical Check", () => {
+        expect.hasAssertions();
+
+        const model = fixture([observation("Check")]);
+
+        expect(
+            model.api.saveWebObservationCorrection(
+                prepareAction(model, "remove")
+            ).status
+        ).toBe("saved");
+        expect(stored(model, 2, 36).value).toBe("Removed");
+        expect(stored(model, 3, 36).value).toBe("Removed");
+    });
 
     it("preserves legacy blank Water details on a notes edit and explicitly clears nutrients", () => {
         expect.hasAssertions();

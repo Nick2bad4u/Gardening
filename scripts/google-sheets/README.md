@@ -27,6 +27,53 @@ Each active **P01–P32, P35, and P36** page also has a **Time between waterings
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## October 4 Check detail repair and validation
+
+Logger **5.30.2 / immutable version 101** requires a Check to contain plant
+condition, soil moisture, or both. Notes alone do not satisfy that rule.
+Single saves, bulk care, queued batches, Quick log, AppSheet intake, and
+correction edits use the same server validation. Completed historical retries
+are reconciled before validation; removing an incomplete historical Check
+remains possible. Client validation retains the draft, including its durable
+recovery copy when adding it to the queue fails validation or storage.
+
+After a [native backup](https://docs.google.com/spreadsheets/d/1HZQ7jaVd2Ll3HQJSBQuL2-vUhmGD6DijdkfwSZ5EMBE/edit)
+and disposable-copy rehearsal, the owner-authorized historical repair filled
+**102 Plant condition cells** from their existing dated Notes and added
+**102 Correction reason values**, with provenance notes on the condition cells.
+These were three 34-plant bulk-care rounds dated September 30, October 1, and
+October 2. The two named affected plants in the September 30 notes retain that
+distinction; no individual pest counts, moisture findings, or new observations
+were inferred. Dates, original notes, observation/request IDs, quality, and
+active status remain unchanged. The 100 already-valid Checks were preserved.
+
+`Integrity!B11` correctly counted the missing detail and remains unchanged.
+`Integrity!A60` now scans through row 5000 and includes active Checks whose
+condition and moisture are both blank. It uses `IFNA` for an empty result so
+unrelated non-NA errors are visible. The test copy returned the exact 102
+reviewed observation IDs before repair. Live readback then confirmed **0 / Pass**
+for missing Check details, **0 formula errors**, and no critical source-integrity
+violations. All **1,665 History records and unique observation IDs**, request
+groupings, and AppSheet staging were retained; exactly the 204 intended source
+values changed, with existing formats and validations intact.
+
+Validation passed **1,067 logger tests**, including **294 client tests**,
+Apps Script and test typechecks, strict lint, HTML checks, and source-contract
+checks. Server coverage is **99.5% statements, 98.21% branches, 100% functions,
+and 99.72% lines**. Native Google V8 rehearsal rejected incomplete single,
+bulk, and batch Checks without writes, saved a moisture-only Check, and
+reconciled its retry without another row. Synthetic data stayed in the
+disposable workbook.
+
+The existing production deployment and phone URL are retained, and all three
+immutable source files match the maintained files. The live page reports
+**Connected · logger 5.30.2**. Schemas and permissions are unchanged; no installer
+or queue-trigger replacement was needed. The single five-minute queue trigger
+completed successfully at **2:23:33 p.m. EDT**, after deployment; both version
+101 web-app startup functions also completed successfully. Private backup, exact before/after
+snapshots, requests, native rehearsal, and deployment receipts are under
+`.cache/check-structured-detail-20261004/`.
+
 ## September 24 compact correction dialog
 
 Logger **5.30.1** makes the saved-entry correction dialog easier to use on a

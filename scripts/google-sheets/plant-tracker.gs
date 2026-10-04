@@ -17,7 +17,7 @@
    installDailyCareDashboard, GARDEN_CYCLE_COMPARISON */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.30.1",
+    version: "5.30.2",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -1005,6 +1005,19 @@ function validateMeasurementEvents_(eventNames, weight, height, width) {
     }
     if (eventNames.includes("Measure") && height === "" && width === "") {
         throw new Error("Enter a height or width for the Measure event.");
+    }
+}
+
+/** @param {readonly string[]} eventNames @param {unknown} condition @param {unknown} soilMoisture @returns {void} */
+function validateCheckDetails_(eventNames, condition, soilMoisture) {
+    if (
+        eventNames.includes("Check") &&
+        !cleanText_(condition) &&
+        !cleanText_(soilMoisture)
+    ) {
+        throw new Error(
+            "Enter plant condition, soil moisture, or both for the Check event."
+        );
     }
 }
 
@@ -2650,6 +2663,8 @@ function appendPreparedWebObservationBatch_(spreadsheet, items, results) {
     items.forEach(({ index, value: prepared }) => {
         const input = prepared.observation;
         const requestId = input.requestId;
+        /** @type {"HISTORY_CONFLICT" | "VALIDATION"} */
+        let errorCode = "HISTORY_CONFLICT";
         try {
             const existing = snapshot.rowsByRequest.get(requestId) || [];
             /* New request IDs and existing retry IDs are both covered; V8 reports a synthetic alternate branch. */
@@ -2670,6 +2685,14 @@ function appendPreparedWebObservationBatch_(spreadsheet, items, results) {
                 }
             }
 
+            // Resolve completed retries before enforcing new-entry requirements.
+            errorCode = "VALIDATION";
+            validateCheckDetails_(
+                input.eventNames,
+                input.condition,
+                input.soilMoisture
+            );
+            errorCode = "HISTORY_CONFLICT";
             const targetRow = existing[0]?.rowNumber ?? nextRow;
             const recordedAt = new Date();
             const storedRows = storedObservationRows_(
@@ -2703,7 +2726,7 @@ function appendPreparedWebObservationBatch_(spreadsheet, items, results) {
                 plantId: input.plantId,
                 plantName: prepared.plant.name,
                 retryable: false,
-                errorCode: "HISTORY_CONFLICT",
+                errorCode,
                 message: error instanceof Error ? error.message : String(error),
             };
         }
@@ -7420,6 +7443,16 @@ function correctionPatchedRow_(original, changes) {
  */
 function correctionActionRow_(snapshot, original, payload) {
     const row = correctionPatchedRow_(original.values, payload.changes);
+    if (
+        payload.action !== "remove" &&
+        row[2] === "Check" &&
+        !row[7].trim() &&
+        !row[32].trim()
+    ) {
+        throw correctionValidationError_(
+            "INVALID_CORRECTION: Keep plant condition, soil moisture, or both for Check."
+        );
+    }
     if (payload.action !== "move" && payload.action !== "remove")
         return { row, destinationDigest: "" };
     if (row[2] === "Repot")
@@ -8212,6 +8245,13 @@ function appendObservation_(spreadsheet, input) {
         if (existingResult) return existingResult;
     }
 
+    // Historical completed requests remain replayable; new or incomplete ones
+    // must satisfy the same structured-detail rule as the Integrity check.
+    validateCheckDetails_(
+        input.eventNames,
+        input.condition,
+        input.soilMoisture
+    );
     const targetRow =
         firstExistingRow ?? Math.max(lastHistoryReservedRow_(history) + 1, 2);
     const recordedAt = new Date();

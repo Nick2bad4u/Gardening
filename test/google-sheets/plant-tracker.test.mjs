@@ -933,6 +933,155 @@ function quickLogWateringFixture({ amount, application, event }) {
 }
 
 describe("garden logger input normalization", () => {
+    it.each(["", " \t\n"])(
+        "rejects notes-only Check plus Other with blank detail %j across save paths",
+        (blank) => {
+            expect.hasAssertions();
+
+            const workbook = createLoggerWorkbook(["P01", "P02"]);
+            const context = loadAppsScript(workbook.history, {
+                globals: workbook.globals,
+                spreadsheet: workbook.spreadsheet,
+            });
+            const payload = {
+                condition: blank,
+                events: ["Check", "Other"],
+                notes: "No pests observed.",
+                observedAt: "2026-10-01T12:00:00Z",
+                plantId: "P01",
+                requestId: "garden-empty-check-12345",
+                soilMoisture: blank,
+            };
+            const before = structuredClone(workbook.history.__rows);
+
+            expect(() => context.saveWebObservation(payload)).toThrow(
+                "Enter plant condition, soil moisture, or both"
+            );
+            expect(context.saveWebObservationBatch([payload])).toMatchObject({
+                failedCount: 1,
+                results: [
+                    { errorCode: "VALIDATION", ok: false, retryable: false },
+                ],
+            });
+            expect(() =>
+                context.saveBulkCareObservation({
+                    ...payload,
+                    plantIds: ["P01", "P02"],
+                })
+            ).toThrow("Enter plant condition, soil moisture, or both");
+            expect(workbook.history.__rows).toStrictEqual(before);
+            expect(
+                workbook.history.__setValuesCalls.filter(
+                    (call) => call.row >= 2
+                )
+            ).toHaveLength(0);
+        }
+    );
+
+    it.each([
+        { condition: " Firm ", soilMoisture: "" },
+        { condition: "", soilMoisture: " Dry " },
+    ])(
+        "preserves one-field Checks and their idempotent bulk retries: %j",
+        (details) => {
+            expect.hasAssertions();
+
+            const workbook = createLoggerWorkbook(["P01", "P02"]);
+            const context = loadAppsScript(workbook.history, {
+                globals: workbook.globals,
+                spreadsheet: workbook.spreadsheet,
+            });
+            const payload = {
+                ...details,
+                events: ["Check", "Other"],
+                notes: "Inspection notes remain unchanged.",
+                observedAt: "2026-10-01T12:00:00Z",
+                plantIds: ["P01", "P02"],
+                requestId: "garden-valid-check-12345",
+            };
+
+            expect(context.saveBulkCareObservation(payload)).toMatchObject({
+                duplicateCount: 0,
+                ok: true,
+            });
+            expect(context.saveBulkCareObservation(payload)).toMatchObject({
+                duplicateCount: 2,
+                ok: true,
+            });
+            expect(workbook.history.__rows).toHaveLength(5);
+
+            for (const index of [1, 3]) {
+                const row = required(workbook.history.__rows[index]);
+
+                expect([row[7], row[32]]).toStrictEqual([
+                    details.condition.trim(),
+                    details.soilMoisture.trim(),
+                ]);
+                expect(row[8]).toBe(payload.notes);
+            }
+        }
+    );
+
+    it("recognizes completed historical Checks before new-entry validation", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook(["P01"]);
+        const context = loadAppsScript(workbook.history, {
+            globals: workbook.globals,
+            spreadsheet: workbook.spreadsheet,
+        });
+        const payload = {
+            condition: "Firm",
+            events: ["Check", "Other"],
+            notes: "Historical inspection.",
+            observedAt: "2026-10-01T12:00:00Z",
+            plantId: "P01",
+            requestId: "garden-legacy-check-12345",
+        };
+        context.saveWebObservation(payload);
+        // Recreate an already committed pre-validation record, without bypassing
+        // the actual retry comparison or replacing the current server guard.
+        required(workbook.history.__rows[1])[7] = "";
+        payload.condition = "";
+        const before = structuredClone(workbook.history.__rows);
+
+        expect(context.saveWebObservation(payload)).toMatchObject({
+            duplicate: true,
+            ok: true,
+        });
+        expect(context.saveWebObservationBatch([payload])).toMatchObject({
+            results: [{ duplicate: true, ok: true }],
+        });
+        expect(workbook.history.__rows).toStrictEqual(before);
+    });
+
+    it("marks notes-only AppSheet Checks for correction without appending History", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook(["P01"]);
+        const entry = emptyCells(appSheetEntryHeaders.length);
+        entry[0] = "CHECK001";
+        entry[2] = "P01";
+        entry[3] = "Check, Other";
+        entry[9] = " \t ";
+        entry[11] = "No pests observed.";
+        entry[26] = "Queued";
+        required(workbook.sheets.get("App entries")).__rows.push(entry);
+        const context = loadAppsScript(workbook.history, {
+            globals: workbook.globals,
+            spreadsheet: workbook.spreadsheet,
+        });
+
+        expect(context.processAppSheetEntry("CHECK001")).toMatchObject({
+            ok: false,
+            retryable: false,
+        });
+        expect(entry[26]).toBe("Needs correction");
+        expect(entry[27]).toMatch(/plant condition, soil moisture/iv);
+        expect(entry[11]).toBe("No pests observed.");
+        expect(workbook.history.__rows).toHaveLength(1);
+    });
+
     it.each([
         null,
         undefined,

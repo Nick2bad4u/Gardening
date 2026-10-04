@@ -4860,8 +4860,218 @@ describe("garden logger bootstrap cache and connection recovery", () => {
     });
 });
 
+/** @param {string} mode */
+function createCheckValidationWindow(mode) {
+    const { calls, window } = createLoggerWindow();
+    const isBulk = mode === "bulk";
+    if (isBulk) {
+        queryElement(
+            window.document,
+            "#bulkModeTab",
+            HTMLButtonElement
+        ).click();
+        queryElement(
+            window.document,
+            '#bulkEventChips [data-event="Water"]',
+            HTMLButtonElement
+        ).click();
+        const plant = queryElement(
+            window.document,
+            "#bulkPlantList input[type='checkbox']",
+            HTMLInputElement
+        );
+        plant.checked = true;
+        plant.dispatchEvent(new window.Event("change", { bubbles: true }));
+    }
+    for (const event of ["Check", "Other"]) {
+        queryElement(
+            window.document,
+            `#${isBulk ? "bulkEventChips" : "eventChips"} [data-event="${event}"]`,
+            HTMLButtonElement
+        ).click();
+    }
+    const notes = queryElement(
+        window.document,
+        isBulk ? "#bulkNotes" : "#notes",
+        HTMLTextAreaElement
+    );
+    notes.value = "Inspection notes alone.";
+    queryElement(
+        window.document,
+        isBulk ? "#bulkCondition" : "#condition",
+        HTMLInputElement
+    ).value = " \t ";
+    const submit = () => {
+        if (mode === "queue") {
+            queryElement(
+                window.document,
+                "#queueButton",
+                HTMLButtonElement
+            ).click();
+        } else {
+            queryElement(
+                window.document,
+                isBulk ? "#bulkWaterForm" : "#entryForm",
+                HTMLFormElement
+            ).dispatchEvent(
+                new window.Event("submit", {
+                    bubbles: true,
+                    cancelable: true,
+                })
+            );
+        }
+    };
+    return { calls, notes, submit, window };
+}
+
 describe("garden logger single-save and watering-round recovery", () => {
     afterEach(restoreLoggerMocks);
+
+    it.each([
+        "single",
+        "queue",
+        "bulk",
+    ])(
+        "retains a notes-only Check draft and blocks %s submission until detail is supplied",
+        (mode) => {
+            expect.hasAssertions();
+
+            const { calls, notes, submit, window } =
+                createCheckValidationWindow(mode);
+            submit();
+
+            expect(
+                calls.filter((call) => call.method.startsWith("save"))
+            ).toHaveLength(0);
+            expect(
+                parseStoredQueue(
+                    window.localStorage.getItem(
+                        "gardenLoggerObservationQueueV1"
+                    ) ?? "[]"
+                )
+            ).toHaveLength(0);
+            expect(
+                queryElement(window.document, "#toast", HTMLElement).textContent
+            ).toContain("Enter plant condition, soil moisture, or both");
+            expect(notes.value).toBe("Inspection notes alone.");
+
+            queryElement(
+                window.document,
+                mode === "bulk" ? "#bulkSoilMoisture" : "#soilMoisture",
+                HTMLSelectElement
+            ).value = "Dry";
+            submit();
+
+            expect(
+                parseStoredQueue(
+                    window.localStorage.getItem(
+                        "gardenLoggerObservationQueueV1"
+                    ) ?? "[]"
+                )
+            ).toHaveLength(mode === "queue" ? 1 : 0);
+            expect(
+                calls.filter((call) => call.method.startsWith("save"))
+            ).toHaveLength(mode === "queue" ? 0 : 1);
+        }
+    );
+
+    it("retains a recovered incomplete Check until its repaired replacement is durably queued", () => {
+        expect.hasAssertions();
+
+        const pendingSave = {
+            payload: {
+                condition: "",
+                events: ["Check", "Other"],
+                notes: "Historical pest inspection notes.",
+                observedAt: "2026-10-01T12:00:00.000Z",
+                plantId: "P01",
+                soilMoisture: "",
+            },
+            replaceable: true,
+            requestId: "garden-incomplete-check-12345",
+        };
+        const { calls, window } = createLoggerWindow({ pendingSave });
+        const savedDraft = window.localStorage.getItem(
+            "gardenLoggerPendingSaveV1"
+        );
+        const queueButton = queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        );
+        const notes = queryElement(
+            window.document,
+            "#notes",
+            HTMLTextAreaElement
+        );
+        queueButton.click();
+
+        expect(
+            queryElement(window.document, "#toast", HTMLElement).textContent
+        ).toContain("Enter plant condition, soil moisture, or both");
+        expect(window.localStorage.getItem("gardenLoggerPendingSaveV1")).toBe(
+            savedDraft
+        );
+        expect(notes.value).toBe(pendingSave.payload.notes);
+        expect(
+            calls.filter((call) => call.method.startsWith("save"))
+        ).toHaveLength(0);
+
+        queryElement(
+            window.document,
+            "#soilMoisture",
+            HTMLSelectElement
+        ).value = "Dry";
+        const originalSetItem = window.localStorage.setItem.bind(
+            window.localStorage
+        );
+        const setItem = vi
+            .spyOn(window.localStorage, "setItem")
+            .mockImplementation((key, value) => {
+                if (key === "gardenLoggerObservationQueueV1") {
+                    throw new window.DOMException(
+                        "Storage full",
+                        "QuotaExceededError"
+                    );
+                }
+                originalSetItem(key, value);
+            });
+        queueButton.click();
+
+        expect(window.localStorage.getItem("gardenLoggerPendingSaveV1")).toBe(
+            savedDraft
+        );
+        expect(notes.value).toBe(pendingSave.payload.notes);
+        expect(
+            parseStoredQueue(
+                window.localStorage.getItem("gardenLoggerObservationQueueV1") ??
+                    "[]"
+            )
+        ).toHaveLength(0);
+
+        setItem.mockRestore();
+        queueButton.click();
+
+        expect(
+            window.localStorage.getItem("gardenLoggerPendingSaveV1")
+        ).toBeNull();
+        expect(
+            parseStoredQueue(
+                window.localStorage.getItem("gardenLoggerObservationQueueV1")
+            )
+        ).toMatchObject([
+            {
+                payload: {
+                    events: ["Check", "Other"],
+                    notes: pendingSave.payload.notes,
+                    soilMoisture: "Dry",
+                },
+            },
+        ]);
+        expect(
+            calls.filter((call) => call.method.startsWith("save"))
+        ).toHaveLength(0);
+    });
 
     it("automatically clears a recovered draft that already reached History", () => {
         expect.hasAssertions();
