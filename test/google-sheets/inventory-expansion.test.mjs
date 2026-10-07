@@ -6,6 +6,7 @@ import {
     extendInventoryFormula,
     finalizeInventoryPageCharts,
     inventoryAdditions,
+    inventorySnapshotDigest,
     shiftInventoryRow,
     verifyInventoryExpansionPreconditions,
 } from "../../scripts/google-sheets/inventory-expansion.mjs";
@@ -1545,5 +1546,348 @@ describe("native selected-chart series capacity", () => {
         expect(() =>
             buildInventoryExpansion(metadata, [snapshot], currentOptions)
         ).toThrow("Occupied expansion destination");
+    });
+});
+
+/** Synthetic 34-pot layout, including the full comparison blocks and roles. */
+function arcticFixture() {
+    const result = currentFixture();
+    const { metadata, sheet, snapshot } = result;
+    const ids = [
+        ...currentIds,
+        "P35",
+        "P36",
+    ];
+    for (const title of ["Plant tracker", "Baselines"]) {
+        put(sheet(title), 33, 0, "P35");
+        put(sheet(title), 34, 0, "P36");
+        put(sheet(title), 34, 1, "Split rock");
+        put(sheet(title), 34, 2, "=Baselines!C35");
+    }
+    sheet("Integrity").data = required(sheet("Integrity").data).filter(
+        (block) => block.startRow !== 55
+    );
+    put(sheet("Integrity"), 56, 0, "=Baselines!A35");
+    put(sheet("Integrity"), 57, 0, "Critical source-row exceptions");
+    for (const plant of livingStoneAdditions) {
+        const page = {
+            data: [],
+            properties: {
+                gridProperties: { columnCount: 22, rowCount: 5139 },
+                index: metadata.sheets.length,
+                sheetId: plant.sheetId,
+                title: plant.title,
+            },
+        };
+        metadata.sheets.push(structuredClone(page));
+        snapshot.sheets.push(page);
+    }
+    sheet("App bulk").properties.gridProperties.columnCount = 60;
+    required(
+        metadata.sheets.find((s) => s.properties.title === "App bulk")
+    ).properties.gridProperties.columnCount = 60;
+    put(sheet("App bulk"), 0, 58, "P35 weight (g)");
+    put(sheet("App bulk"), 0, 59, "P36 weight (g)");
+    required(
+        required(sheet("App entries").data?.[0]?.rowData?.[1]?.values)?.[2]
+    ).dataValidation = {
+        condition: {
+            type: "ONE_OF_LIST",
+            values: ids.map((userEnteredValue) => ({ userEnteredValue })),
+        },
+        showCustomUi: true,
+        strict: true,
+    };
+    sheet("Plant colors").properties.gridProperties.rowCount = 38;
+    required(
+        metadata.sheets.find(
+            (current) => current.properties.title === "Plant colors"
+        )
+    ).properties.gridProperties.rowCount = 38;
+    sheet("Plant color data").data = [];
+    for (let block = 0; block < 14; block += 1) {
+        put(sheet("Plant color data"), block * 35, 0, "Plant ID");
+        const blockIds = ids.slice(0, block < 4 ? 34 : 30);
+        for (const [index, id] of blockIds.entries()) {
+            put(sheet("Plant color data"), block * 35 + index + 1, 0, id);
+            put(
+                sheet("Plant color data"),
+                block * 35 + index + 1,
+                1,
+                `=XLOOKUP($A${block * 35 + index + 2},Baselines!$A$2:$A$35,Baselines!$C$2:$C$35,"")`
+            );
+        }
+    }
+    for (const [row, column] of [
+        [1, 25],
+        [1, 27],
+        [1, 28],
+        [1, 30],
+        ...[
+            41,
+            81,
+            121,
+            161,
+            201,
+            241,
+            281,
+            321,
+        ].map((row) => [row, 0]),
+    ])
+        put(
+            sheet("Dry-down insights"),
+            required(row),
+            required(column),
+            "=SUM(A2:A35)"
+        );
+    put(
+        sheet("Dry-down insights"),
+        361,
+        0,
+        `=IFNA(QUERY({P2:P31},"select Col1, count(Col1) where Col1 is not null group by Col1 label count(Col1) ''",0),"")`
+    );
+    const colors = required(
+        metadata.sheets.find((s) => s.properties.title === "Plant color data")
+    );
+    colors.properties.sheetId = 907_202_603;
+    sheet("Plant color data").properties.sheetId = 907_202_603;
+    colors.charts = [
+        {
+            chartId: 777,
+            spec: {
+                basicChart: {
+                    domains: [
+                        {
+                            domain: {
+                                sourceRange: {
+                                    sources: [
+                                        {
+                                            endColumnIndex: 1,
+                                            endRowIndex: 70,
+                                            sheetId: 907_202_603,
+                                            startColumnIndex: 0,
+                                            startRowIndex: 35,
+                                        },
+                                    ],
+                                },
+                            },
+                        },
+                    ],
+                    series: [
+                        {
+                            styleOverrides: ids.map((_, index) => ({
+                                color: { red: 0.4 },
+                                index,
+                            })),
+                        },
+                    ],
+                },
+            },
+        },
+    ];
+    for (const title of [
+        "History",
+        "App entries",
+        "App bulk",
+        "RO refills",
+    ])
+        densifyLedger(sheet(title));
+    required(colors.charts).push({
+        chartId: 778,
+        spec: {
+            basicChart: {
+                domains: [
+                    {
+                        domain: {
+                            sourceRange: {
+                                sources: [
+                                    {
+                                        endColumnIndex: 1,
+                                        endRowIndex: 175,
+                                        sheetId: 907_202_603,
+                                        startColumnIndex: 0,
+                                        startRowIndex: 140,
+                                    },
+                                ],
+                            },
+                        },
+                    },
+                ],
+            },
+        },
+    });
+    return { ...result, ids };
+}
+const arcticAddition = {
+    contents: "Echeveria 'Arctic Ice' (owner-reported cultivar)",
+    details: "Purchased ceramic destination; completed repot unconfirmed",
+    id: "P37",
+    label: "#11",
+    medium: "Not recorded",
+    name: "Arctic Ice",
+    pot: "Not recorded",
+    sheetId: 202_610_370,
+    source: "Owner report",
+    title: "P37 Arctic Ice",
+};
+
+describe("34-to-35 Arctic Ice enrollment", () => {
+    it("preserves full comparison blocks and reference roles while growing exactly one pot", () => {
+        expect.hasAssertions();
+
+        const { ids, metadata, snapshot } = arcticFixture();
+        const before = structuredClone(snapshot);
+        const options = {
+            additions: [arcticAddition],
+            bulkStartColumn: 60,
+            existingIds: ids,
+        };
+        const plan = buildInventoryExpansion(metadata, [snapshot], options);
+
+        expect(
+            verifyInventoryExpansionPreconditions(plan, metadata, [snapshot])
+        ).toBe(true);
+        expect(snapshot).toStrictEqual(before);
+        expect(
+            plan.prepareRequests.filter(
+                (request) => request["duplicateSheet"] !== undefined
+            )
+        ).toHaveLength(1);
+
+        const newBulk = plan.valueRequests.filter(
+            (request) => updateStart(request)["sheetId"] === 16
+        );
+
+        expect(
+            newBulk.map((request) => updateStart(request)["columnIndex"])
+        ).toStrictEqual([60]);
+
+        const serialized = JSON.stringify(plan.valueRequests);
+
+        expect(serialized).toContain("P37 weight (g)");
+        expect(serialized).toContain("A5002:F5505");
+        expect(serialized).toContain("QUERY({P2:P36}");
+        expect(serialized).toContain("Baselines!$A$2:$A$36");
+
+        const relocated = plan.valueRequests.filter(
+            (request) =>
+                updateStart(request)["sheetId"] === 907_202_603 &&
+                Number(updateStart(request)["rowIndex"]) >= 5001
+        );
+
+        expect(relocated).toHaveLength(994);
+        expect(plan.prepareRequests).toContainEqual({
+            appendDimension: { dimension: "ROWS", length: 1, sheetId: 6 },
+        });
+        expect(JSON.stringify(plan.chartRequests)).toContain(
+            '"startRowIndex":5145'
+        );
+        expect(JSON.stringify(plan.chartRequests)).toContain(
+            '"endRowIndex":5181'
+        );
+
+        const newIds = relocated.filter((request) =>
+            JSON.stringify(request).includes('"stringValue":"P37"')
+        );
+
+        expect(newIds).toHaveLength(14);
+        expect(JSON.stringify(plan.postValueRequests)).toContain(
+            "Previous page: P36"
+        );
+        expect(JSON.stringify(plan.postValueRequests)).toContain(
+            arcticAddition.details
+        );
+
+        expect(JSON.stringify(plan.chartRequests)).toContain(
+            '"startRowIndex":5037'
+        );
+        expect(JSON.stringify(plan.chartRequests)).toContain(
+            '"endRowIndex":5073'
+        );
+
+        const forbidden = new Set([
+            17,
+            18,
+            19,
+        ]);
+
+        expect(
+            plan.valueRequests.filter((request) =>
+                forbidden.has(Number(updateStart(request)["sheetId"]))
+            )
+        ).toStrictEqual([]);
+        expect(
+            extendInventoryFormula(
+                "=SUM(Baselines!A2:A35,Dashboard!B6:B40,History!A2:A5000)",
+                34,
+                1
+            )
+        ).toBe("=SUM(Baselines!A2:A36,Dashboard!B6:B41,History!A2:A5000)");
+    });
+
+    it("rejects altered comparison rosters and used identities", () => {
+        expect.hasAssertions();
+
+        const { ids, metadata, sheet, snapshot } = arcticFixture();
+        const options = {
+            additions: [arcticAddition],
+            bulkStartColumn: 60,
+            existingIds: ids,
+        };
+        required(
+            required(
+                sheet("Plant color data").data?.[1]?.rowData?.[0]?.values
+            )?.[0]
+        ).userEnteredValue = { stringValue: "P99" };
+
+        expect(() =>
+            buildInventoryExpansion(metadata, [snapshot], options)
+        ).toThrow("Comparison block roster changed");
+    });
+});
+
+describe("native metadata protection ordering", () => {
+    it("accepts reordered protection IDs while rejecting edited definitions and ordered arrays", () => {
+        expect.hasAssertions();
+
+        const source = {
+            sheets: [
+                {
+                    charts: [{ chartId: 1 }, { chartId: 2 }],
+                    protectedRanges: [
+                        {
+                            protectedRangeId: 2,
+                            range: { sheetId: 1 },
+                            warningOnly: true,
+                        },
+                        {
+                            protectedRangeId: 1,
+                            range: { sheetId: 2 },
+                            warningOnly: true,
+                        },
+                    ],
+                },
+            ],
+        };
+        const reordered = structuredClone(source);
+        required(reordered.sheets[0]).protectedRanges.reverse();
+
+        expect(inventorySnapshotDigest(reordered)).toBe(
+            inventorySnapshotDigest(source)
+        );
+
+        required(required(reordered.sheets[0]).protectedRanges[0]).warningOnly =
+            false;
+
+        expect(inventorySnapshotDigest(reordered)).not.toBe(
+            inventorySnapshotDigest(source)
+        );
+
+        const chartOrder = structuredClone(source);
+        required(chartOrder.sheets[0]).charts.reverse();
+
+        expect(inventorySnapshotDigest(chartOrder)).not.toBe(
+            inventorySnapshotDigest(source)
+        );
     });
 });

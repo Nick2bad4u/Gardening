@@ -7072,6 +7072,7 @@ describe("garden logger plant photos and portrait rendering", () => {
         ["P32", "tradescantia-spathacea-tricolor"],
         ["P35", "lithops-shared-planter"],
         ["P36", "pleiospilos-nelii"],
+        ["P37", "echeveria-arctic-ice"],
     ])("uses the maintained explicit portrait for %s", (id, slug) => {
         expect.hasAssertions();
 

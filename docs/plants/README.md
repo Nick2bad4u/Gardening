@@ -1,8 +1,13 @@
 # Plant profiles
 
-Last updated: 2026-09-24
+Last updated: 2026-10-06
 
-These **45 pages cover 44 active profile records and one historical record, across 34 tracker allocations**. Each profile combines identification, botanical background, collection photographs, and practical care for its current pot. Use the guides with plant-condition and moisture checks rather than a fixed watering calendar.
+These **46 pages cover 45 active profile records and one historical record, across 35 tracker allocations**. Each profile combines identification, botanical background, collection photographs, and practical care for its current pot. Use the guides with plant-condition and moisture checks rather than a fixed watering calendar.
+
+**New acquisition:** [Arctic Ice echeveria](./succulents/echeveria-arctic-ice.md)
+is enrolled as **Succulent-17 / #11 / P37**, acquired October 6, 2026 at Home
+Depot. A six-inch blue-and-white ceramic pot was purchased for it; current
+container, medium, drainage, repot, placement, and owner photographs remain pending.
 
 The collection-level [setup record](../setup.md#august-14-substrate-airflow-and-light-reset)
 documents the August 14 move of all 18 individually potted cactus-display
@@ -20,7 +25,7 @@ the best current match and the evidence that could confirm or change it. The
 [pot-label reference](./labels.md) collects the print layouts, native origins,
 publication years, warnings, and orientation instructions.
 
-The [container guide](../containers.md) separates 42 current botanical profile
+The [container guide](../containers.md) separates 43 current botanical profile
 groups from two whole-planter overviews. Each member of a shared planter has
 its own profile while retaining one P-ID and care history. Use the
 [container directory](https://nick2bad4u.github.io/Gardening/containers/)
@@ -90,6 +95,7 @@ weights and Ruler dimensions are recorded in the individual profiles.
 | Succulent-15A | `#9`                   | [_Lithops lesliei_](./succulents/lithops-lesliei.md)                                                                        | Probable species from photos; two tan/brown heads; shared P35 component group       |
 | Succulent-15B | `#9`                   | [_Lithops salicola_](./succulents/lithops-salicola.md)                                                                      | Probable species from photos; two grey/green heads; shared P35 component group      |
 | Succulent-16  | `#10`                  | [Split rock](./succulents/pleiospilos-nelii.md)                                                                             | Nursery-labelled _Pleiospilos nelii_; no cultivar supplied; not Royal Flush; P36    |
+| Succulent-17  | `#11`                  | [Arctic Ice echeveria](./succulents/echeveria-arctic-ice.md)                                                                | Owner-associated Altman listing; specimen and label photographs pending; P37        |
 
 The three Mountain Crest succulents arrived rooted in 2-inch nursery pots of unrecorded shape and moved to matching round 4 × 4 × 3.7-inch pots on 2026-08-28. Their 2026-08-29 Scale weights and Ruler dimensions are recorded in the individual profiles.
 

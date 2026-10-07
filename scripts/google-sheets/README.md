@@ -27,6 +27,42 @@ Each active **P01–P32, P35, and P36** page also has a **Time between waterings
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## October 7 Arctic Ice enrollment — production pending
+
+Logger **5.31.0** and the maintained collection now include **P37 / #11 /
+Succulent-17, Echeveria ‘Arctic Ice’**. The owner bought it at Home Depot on
+October 6, together with a new six-inch blue-and-white ceramic pot. The current
+container, drainage, medium, completed repot, placement, and measurements remain
+unrecorded. Enrollment creates no care events or wet/dry references.
+
+The prepared roster has **35 active allocations: P01–P32, P35–P37**. App bulk
+appends **P37 weight (g)** at **BI**, giving **61 physical columns / 62 including
+AppSheet's `_RowNumber`**. Existing columns keep their positions; retired
+P33/P34 fields remain blank-only. The server retains the reviewed 60-, 58-,
+56-, and 54-column queue paths during migration. History remains **A:AP** and
+App entries remains **A:AH**.
+
+The source also preserves the structured Check validation recovered from the
+live **5.30.2 / immutable version 101** deployment. A new Check requires plant
+condition, soil moisture, or both; completed historical requests remain
+idempotently replayable. The logger's P37 tests cover empty initial evidence,
+separate Weigh/Measure/Photo rows, bulk mapping, and retries.
+
+A [native backup](https://docs.google.com/spreadsheets/d/1vK45gT-xaND3dwTHZESeSyGVCZUSCxdLBTMbO8qfc2Y/edit)
+and [disposable rehearsal workbook](https://docs.google.com/spreadsheets/d/1fkd42PIDfA0zJ71Svz3ZF0bnLMx522OLaCS7F8wrJ-Q/edit)
+were created before structural changes. The fresh production capture contains
+**60 tabs, 164 charts, 1,767 History records with 1,767 unique observation IDs,
+and 1,459 request-ID groups**. P37 has no observations in that baseline.
+
+The guarded inventory expansion extends the maintained roster, per-pot page,
+chart helpers, and selectors; the separate guarded catalog append adds P37
+and its botanical membership after reading back the expanded tracker. It
+preserves existing observations, staged entries, chart identities, owner tab
+order, and protections. Private snapshots, request plans, native-copy results,
+and deployment receipts belong under `.cache/arctic-enrollment-20261007/`.
+Production workbook application, AppSheet save, and immutable logger deployment
+are pending and must be verified before calling the rollout complete.
+
 ## September 24 compact correction dialog
 
 Logger **5.30.1** makes the saved-entry correction dialog easier to use on a
@@ -174,7 +210,7 @@ The owner confirmed that the September 23 02:38 EDT Measure observation
 light tube since they are all close in size,” belongs to Lithops P35 / #9.
 After a [native backup](https://docs.google.com/spreadsheets/d/1qXcan0librwzp0ksl8eL5e8TtzUMCD-xHtHjoL94WnI/edit),
 the scoped write changed only `History!B1158` from P36 to P35 and `L1158` from
-#10 to #9, adding cell notes with the original assignments and authorization.
+`#10` to `#9`, adding cell notes with the original assignments and authorization.
 The mobile correction flow at that time kept plant identity fixed, so this was an explicit
 owner-authorized identity reassignment, not a duplicate observation or a deployment.
 

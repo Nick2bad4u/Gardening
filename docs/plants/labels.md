@@ -2,7 +2,7 @@
 
 Last updated: 2026-09-25
 
-This is the print reference for 44 active profile records across 34 tracked pot allocations. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
+This is the print reference for 45 active profile records across 35 tracked pot allocations. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
 
 The six August cactus labels are `E1`–`E3` and `F1`–`F3`; their exact mapping
 was recorded from the pots on 2026-08-10. The numbered mapping was also
@@ -14,7 +14,7 @@ planter (`P30`). Their Smart Planet Home / Altman Plants tags are archived; `#5`
 the probable _F. tuberculosa_ identification alongside its retail
 _F. tigrina_ name.
 
-Current numbered labels are **#1–#10**. Peperomia Bicolor uses **#7 / P31**, and Tricolor oyster plant uses **#8 / P32**.
+Current numbered labels are **#1–#11**. Peperomia Bicolor uses **#7 / P31**, and Tricolor oyster plant uses **#8 / P32**.
 
 The six Mountain Crest mappings were recorded after receipt on
 2026-08-28: `G1` Black Widow (`P27`), `G2` paper spine (`P23`), `G3` Royal
@@ -151,6 +151,7 @@ sources and the full collection records. Mountain Crest dates are receipt dates.
 | `#7`  | Peperomia Bicolor               | Thick rounded green leaves with broad cream variegation on branching stems.                     | Each slender cream-colored flower spike holds many minute, petal-less flowers with two stamens apiece.              | Carlson's Greenhouses — 2026-09-20             |
 | `#8`  | Tricolor oyster plant           | Pointed strap-shaped leaves striped green and cream, with pink tones and purple undersides.     | The purple boat around the tiny white flowers consists of bracts, or modified leaves.                               | Carlson's Greenhouses — 2026-09-20             |
 | `#9`  | Shared Lithops planter          | Four visible heads: two tan/brown patterned heads and two grey-green heads with darker windows. | Each head is a pair of succulent leaves; replacement growth draws water from the older pair.                        | Home Depot, Howell — 2026-09-21                |
+| `#11` | Arctic Ice echeveria            | Pale opalescent rosette in cultivar references; owned appearance pending.                       | Cultivar selected from a 2012 cross; patent issued in 2018.                                                         | Home Depot — 2026-10-06                        |
 | `#10` | Split rock                      | Rounded grey-green speckled leaves divided by a deep central cleft.                             | Seed capsules open when wet and close as they dry, releasing some seeds with each shower.                           | Home Depot, Howell — 2026-09-21                |
 | `G1`  | Black Widow chin cactus         | Dark ribbed globe variegated in near-black purple, red, and green.                              | It belongs to the same species commonly sold as colorful grafted moon cacti.                                        | Mountain Crest Gardens — received 2026-08-28   |
 | `G2`  | Paper spine cactus              | Rounded gray-green segments carrying broad curling paperlike spines.                            | Loose segments detach readily and can root as new plants; the “paper” structures are true spines.                   | Mountain Crest Gardens — received 2026-08-28   |
@@ -474,3 +475,15 @@ Important date conventions:
   replacement name dates to 1787.
 - Peter MacOwan collected _Euphorbia obesa_ in 1897, but its formal botanical
   publication dates to 1903.
+
+## October 7 Arctic Ice label
+
+**Succulent-17 / #11 / P37** is [Arctic Ice echeveria](./succulents/echeveria-arctic-ice.md),
+identified from the owner's associated Altman listing. Physical-label and plant
+photographs remain pending. Current pot, medium, drainage, and placement are unrecorded.
+
+```text
+#11 | ARCTIC ICE ECHEVERIA
+Echeveria 'Arctic Ice' | OWNER-ASSOCIATED LISTING
+CONFIRM DRAINAGE AND ROOT-ZONE DRYNESS
+```

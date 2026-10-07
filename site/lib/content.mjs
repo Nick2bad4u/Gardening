@@ -121,9 +121,14 @@ export async function renderMarkdown(markdown, sourcePath, prefix = "") {
             /** @type {string} */ image,
             /** @type {string} */ source
         ) => {
-            const caption = source.includes("/assets/nursery-labels/")
-                ? "Nursery and acquisition evidence"
-                : "Planning illustration";
+            let caption;
+            if (source.includes("/assets/nursery-labels/")) {
+                caption = "Nursery and acquisition evidence";
+            } else if (source.includes("/assets/plants/")) {
+                caption = "Reference image";
+            } else {
+                caption = "Planning illustration";
+            }
             return `<figure class="placement-figure"><a href="${source}">${image}</a><figcaption>${caption} · Open full size</figcaption></figure>`;
         }
     );
@@ -265,7 +270,16 @@ export async function getGuides() {
         ["docs/weighing-strategy.md", "weighing-strategy"],
         ["docs/logger-actions.md", "logger-actions"],
         ["docs/care-notes.md", "care-notes"],
+        ["docs/cactus-seed-starting.md", "cactus-seed-starting"],
+        [
+            "docs/astrophytum-asterias-seed-starting.md",
+            "astrophytum-asterias-seed-starting",
+        ],
         ["docs/plants/labels.md", "labels"],
+        [
+            "docs/plants/research/echeveria-arctic-ice.md",
+            "echeveria-arctic-ice-research",
+        ],
     ];
     return Promise.all(
         sources.map(([source, slug]) => getDocument(source, slug))

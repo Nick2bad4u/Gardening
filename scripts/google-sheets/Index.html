@@ -14916,7 +14916,7 @@
             ].join("/");
             const PLANT_ICON_PATH = "/Gardening/assets/plant-icons/";
             // Generated from the exported artwork by sync-plant-icons.mjs.
-            const PLANT_ICON_REVISION = "b86b51605d0afb26";
+            const PLANT_ICON_REVISION = "5f4fc05caf24f2fd";
             const PLANT_ICON_CACHE = "gardenLoggerPlantPortraitsV1";
             const plantPortraitRequests = new Map();
             let plantPortraitCache;
@@ -15970,8 +15970,20 @@
                     );
             }
 
+            function validateCheckDetails(payload) {
+                if (
+                    payload.events.includes("Check") &&
+                    !String(payload.condition || "").trim() &&
+                    !String(payload.soilMoisture || "").trim()
+                )
+                    throw new Error(
+                        "Enter plant condition, soil moisture, or both for the Check event."
+                    );
+            }
+
             function validateQueuedPayload(payload) {
                 const events = inferredPayloadEvents(payload);
+                validateCheckDetails(payload);
                 if (!payload.plantId)
                     throw new Error("Choose a plant before adding to queue.");
                 if (!events.length)
@@ -16280,8 +16292,6 @@
                     );
                     return;
                 }
-                if (state.pendingSave && state.pendingSave.replaceable)
-                    clearPendingSave();
                 if (state.queue.length >= 50) {
                     showToast(
                         "Send the current 50 entries before adding more.",
@@ -16315,6 +16325,8 @@
                     ];
                     state.queueSendSummary = null;
                     persistObservationQueue(nextQueue);
+                    if (state.pendingSave && state.pendingSave.replaceable)
+                        clearPendingSave();
                     renderObservationQueue();
                     showToast(
                         `${selectedPlant().name} added to the phone queue.`
@@ -16425,6 +16437,7 @@
                 if (plant?.id === "P20") return "shared-succulent-planter";
                 if (plant?.id === "P35") return "lithops-shared-planter";
                 if (plant?.id === "P36") return "pleiospilos-nelii";
+                if (plant?.id === "P37") return "echeveria-arctic-ice";
                 if (plant?.id === "P31") return "peperomia-obtipan-bicolor";
                 if (plant?.id === "P32")
                     return "tradescantia-spathacea-tricolor";
@@ -19979,13 +19992,19 @@
                     return;
                 }
                 let payload;
+                const stored = readBulkPendingSave();
                 try {
                     payload = bulkPayload();
+                    if (
+                        !stored ||
+                        JSON.stringify(stored.payload) !==
+                            JSON.stringify(payload)
+                    )
+                        validateCheckDetails(payload);
                 } catch (error) {
                     showToast(error.message, true);
                     return;
                 }
-                const stored = readBulkPendingSave();
                 let pending = stored;
                 if (pending && isStaleHouseplantDraft(pending.payload)) {
                     showToast(
@@ -20904,6 +20923,12 @@
                 let payload;
                 try {
                     payload = payloadFromForm();
+                    if (
+                        !state.pendingSave ||
+                        payloadFingerprint(state.pendingSave.payload) !==
+                            payloadFingerprint(payload)
+                    )
+                        validateCheckDetails(payload);
                 } catch (error) {
                     showToast(error.message, true);
                     return;

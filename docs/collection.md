@@ -1,6 +1,6 @@
 # Plant collection
 
-Last updated: 2026-09-24
+Last updated: 2026-10-07
 
 This is the current working inventory plus historical records for plants
 removed from the collection. Photo-based identifications are marked as probable, with nursery names retained alongside them.
@@ -8,14 +8,14 @@ removed from the collection. Photo-based identifications are marked as probable,
 The [original nursery-label archive](../assets/nursery-labels/) keeps
 supplier wording alongside the current working identifications.
 
-Every record has a [deep plant profile](./plants/) and a
+Every enrolled record has a [deep plant profile](./plants/) and a
 [licensed reference gallery](../assets/plants/) when reusable photography is
 available. Gallery captions distinguish species and ancestry references from photographs of the owned plants.
 
 The short label IDs are permanent plant or shared-planter identifiers, not
 table coordinates. They are shown beside the longer historical inventory IDs.
 
-The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was installed September 13. The collection has **45 profile records: 44 active and one historical, across 34 tracker allocations**. The established [Table Placement Guide](./layouts/table-placement-research.md) remains the working arrangement.
+The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was installed September 13. The profiled collection has **46 profile records: 45 active and one historical, across 35 tracker allocations**. The established [Table Placement Guide](./layouts/table-placement-research.md) remains the working arrangement.
 
 Profile records and containers answer different questions: a profile describes
 a botanical identity or an aggregate planting, while a tracker identifies the
@@ -25,10 +25,53 @@ references. Component profiles add botanical detail without adding pots or
 duplicating care events.
 
 The [container guide](./containers.md) brings together the four shared planters,
-their members, and the distinction between 42 botanical profile groups and two
+their members, and the distinction between 43 botanical profile groups and two
 aggregate overviews. Open the
 [container directory](https://nick2bad4u.github.io/Gardening/containers/) for
 each container's member list, care context, and existing history.
+
+## October 6 Arctic Ice acquisition
+
+The owner reported buying an **_Echeveria_ 'Arctic Ice'** at **Home Depot on
+October 6, 2026**, together with a **6-inch blue-and-white ceramic pot acquired
+for it**. The store location and price paid have not been supplied.
+More information and photographs of the owned plant and pot are pending.
+Physical label **#11** was allocated on October 7 at the owner's request; the collection allocation is
+**Succulent-17 / P37**. Enrollment does not create a care observation.
+
+| Field                  | Recorded evidence                                                                                                                                                             |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Working identification | _Echeveria_ 'Arctic Ice', from the owner-supplied Altman Plants product-listing screenshot; owned-plant identification not yet checked against photographs or a nursery label |
+| Seller reference       | Altman Plants; SKU `0850821`; listing names USPP29,584                                                                                                                        |
+| Acquired on            | 2026-10-06 at Home Depot, owner report; store location and price paid unrecorded                                                                                              |
+| Pot acquired for it    | Owner-described 6-inch blue-and-white ceramic pot; brand, model, usable internal dimensions, drainage, and saucer details unrecorded                                          |
+| Current setup          | Current container, completed repot, medium, root condition, plant size, and placement unrecorded                                                                              |
+| Care history           | No weight, watering, feeding, or repot event supplied with this acquisition report                                                                                            |
+
+The screenshot's title says **3.5-inch**, while the selected item at the bottom
+shows **2.5**. Neither establishes the received nursery-pot size. The separate
+6-inch ceramic-pot description is owner-reported, not a measured root-ball or
+plant dimension. Buying the pot does not establish that repotting is complete.
+
+Altman's [cultivar listing](https://shopaltmanplants.com/products/echeveria-arctic-ice-ppaf)
+describes rounded rosettes with pale, opalescent leaves. The
+[original plant patent](https://patents.google.com/patent/USPP29584P2/en)
+records a cultivated hybrid selected by Renee O'Connell in Vista, California,
+from a cross of _Echeveria_ 'E1 IV' and 'Lila's Surprise'; the patent was
+published August 7, 2018. These identify the named cultivar, not the appearance
+or condition of this particular plant.
+
+Sources: owner acquisition report and supplied listing screenshot, October 6,
+2026; Altman listing and USPP29,584 checked October 6. See the
+[setup note](./setup.md#october-6-arctic-ice-acquisition) and
+[pot inventory](./equipment/inventory.md#pots-medium-and-top-dressing).
+
+The [Arctic Ice profile](./plants/succulents/echeveria-arctic-ice.md)
+now includes breeding history, identification features, provisional care,
+and a [10-image reference gallery](../assets/plants/echeveria-arctic-ice/): two
+monochrome Arctic Ice patent figures and eight labeled comparison photographs.
+The comparisons show other echeverias; all references remain separate from
+pending owner photos.
 
 ## September 21 Lithops and split-rock additions
 

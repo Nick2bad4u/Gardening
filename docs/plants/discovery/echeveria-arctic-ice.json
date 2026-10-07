@@ -1,0 +1,109 @@
+{
+    "anatomy": {
+        "intro": "The patent describes pale opalescent rosettes with thick spoon-shaped leaves and small pointed tips; this illustration does not identify the owned specimen.",
+        "parts": [
+            {
+                "function": "The thick spoon-shaped leaf forms part of the rosette.",
+                "label": "Fleshy blade"
+            },
+            {
+                "function": "The powdery coating gives the leaf a pale finish and can rub away to expose greener tissue.",
+                "label": "Glaucous surface"
+            },
+            {
+                "function": "A short point finishes the otherwise rounded leaf end.",
+                "label": "Small pointed tip"
+            },
+            {
+                "function": "Closely packed developing leaves occupy the rosette center.",
+                "label": "Young center"
+            }
+        ],
+        "sourceIds": [
+            "patent"
+        ]
+    },
+    "comparisonSourceIds": [
+        "patent"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "patent"
+        ],
+        "text": "The patent records bell-shaped flowers with red-orange outer surfaces and yellow tips and interiors on a raised stem. Its spring and summer observations are not a flowering schedule for this indoor plant."
+    },
+    "growth": {
+        "note": "Observe the actual plant over time; the breeder’s examples do not establish this specimen’s size or growth rate.",
+        "sourceIds": [
+            "patent"
+        ],
+        "stages": [
+            {
+                "text": "Young leaves expand from the center into the thick spoon-shaped form.",
+                "title": "Develop the rosette"
+            },
+            {
+                "text": "The patent describes example rosettes about 15 cm wide four months after cutting; this is not a mature-size ceiling.",
+                "title": "Broaden the crown"
+            },
+            {
+                "text": "The breeder describes moderate offsetting; do not assume how many rooted plants are in the purchased container.",
+                "title": "Watch for offsets"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "patent"
+        ],
+        "text": "'Arctic Ice' is a cultivated hybrid selected in Vista, California. The patent names 'E1 IV' and 'Lila’s Surprise' as its parents; these cultivar names do not establish a species-level pedigree or a wild native range."
+    },
+    "image": {
+        "alt": "Schematic pale Arctic Ice rosette with four numbered features: fleshy blade, glaucous surface, small pointed tip, and young center.",
+        "file": "assets/plant-explainers/echeveria-arctic-ice.webp",
+        "generatedOn": "2026-10-07",
+        "prompt": "Create a square 1024px educational botanical illustration on warm ivory, clean pen-and-watercolor style matching a personal plant field guide. Subject Echeveria 'Arctic Ice': broad compact pale opalescent blue-green rosette, many thick smooth spoon-shaped leaves with rounded ends and tiny pointed tips, powdery glaucous surface, smaller tightly packed leaves at center. Slight overhead three-quarter view. No bumps or caruncles, no red rims, no flowers, no roots, no pots. Four numbered circular markers with thin clean noncrossing leaders: 1 to one broad fleshy outer leaf blade; 2 to matte powdery surface of another leaf; 3 to tiny pointed tip of a front leaf; 4 to young central leaves. Exactly numerals 1 2 3 4, no other text or title. Schematic cultivar reference, not a photograph of the owned specimen. Save generated project asset.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Echeveria elegans",
+            "profileSlug": null,
+            "text": "Named as a commercial comparison in the patent, not a documented parent. Resemblance does not identify the owned plant."
+        },
+        {
+            "name": "Echeveria 'Perle von Nürnberg'",
+            "profileSlug": null,
+            "text": "Also named as a commercial comparison, with variant spelling. Its purple coloring in reference photographs should not be transferred to Arctic Ice."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "patent"
+        ],
+        "text": "The patent’s recorded plants had broad pale rosettes and moderate offsets. Its measured examples are not a mature-size ceiling; the owned plant’s dimensions remain unrecorded."
+    },
+    "milestones": [
+        {
+            "date": "2026-10-06",
+            "sourcePath": "docs/plants/succulents/echeveria-arctic-ice.md",
+            "text": "Owner reported acquisition at Home Depot and purchase of a six-inch blue-and-white ceramic pot; completed repot and current setup remain unrecorded.",
+            "title": "Acquired at Home Depot"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "patent"
+        ],
+        "text": "Renee O’Connell made the February 2012 cross and selected the plant in March 2013. U.S. plant patent PP29,584 was issued August 7, 2018."
+    },
+    "slug": "echeveria-arctic-ice",
+    "sources": [
+        {
+            "accessed": "2026-10-06",
+            "id": "patent",
+            "title": "USPP29584P2: Echeveria 'Arctic Ice' cultivar patent",
+            "url": "https://patents.google.com/patent/USPP29584P2/en"
+        }
+    ]
+}

@@ -1,6 +1,16 @@
 {
     "photos": [
         {
+            "caption": "Monochrome patent sheet showing the Arctic Ice rosette; not evidence of color or the owned plant.",
+            "file": "assets/plants/echeveria-arctic-ice/patent-uspp29584-figure-1.png",
+            "topic": "whole-plant"
+        },
+        {
+            "caption": "Monochrome patent sheet showing the rosette and raised flowering stem; not evidence of flower color or the owned plant.",
+            "file": "assets/plants/echeveria-arctic-ice/patent-uspp29584-figure-2.png",
+            "topic": "flowers"
+        },
+        {
             "caption": "Slender pale columns branching near the base.",
             "file": "assets/plants/espostoa-melanostele-nana/commons-109816186-habit.jpg",
             "topic": "whole-plant"
@@ -2118,6 +2128,46 @@
         {
             "caption": "Two stacked pairs of spotted green leaves.",
             "file": "assets/plants/pleiospilos-nelii/commons-965551-habit.jpg",
+            "topic": "whole-plant"
+        },
+        {
+            "caption": "Echeveria elegans rosettes; comparison reference, not Arctic Ice.",
+            "file": "assets/plants/echeveria-arctic-ice/commons-51791504-comparison.jpg",
+            "topic": "whole-plant"
+        },
+        {
+            "caption": "Echeveria elegans growth habit; comparison reference, not Arctic Ice.",
+            "file": "assets/plants/echeveria-arctic-ice/commons-25261576-comparison.jpg",
+            "topic": "whole-plant"
+        },
+        {
+            "caption": "Echeveria elegans leaf detail; comparison reference, not Arctic Ice.",
+            "file": "assets/plants/echeveria-arctic-ice/commons-30277827-comparison.jpg",
+            "topic": "detail"
+        },
+        {
+            "caption": "Echeveria elegans inflorescence; comparison reference, not Arctic Ice.",
+            "file": "assets/plants/echeveria-arctic-ice/commons-88254430-comparison.jpg",
+            "topic": "flowers"
+        },
+        {
+            "caption": "Echeveria elegans flowers; comparison reference, not Arctic Ice.",
+            "file": "assets/plants/echeveria-arctic-ice/commons-13127644-comparison.jpg",
+            "topic": "flowers"
+        },
+        {
+            "caption": "Echeveria elegans rosette; comparison reference, not Arctic Ice.",
+            "file": "assets/plants/echeveria-arctic-ice/commons-20372185-comparison.jpg",
+            "topic": "whole-plant"
+        },
+        {
+            "caption": "Echeveria 'Perle von Nürnberg' leaves; comparison reference, not Arctic Ice.",
+            "file": "assets/plants/echeveria-arctic-ice/commons-61874040-comparison.jpg",
+            "topic": "detail"
+        },
+        {
+            "caption": "Echeveria 'Perle von Nürnberg' rosette; comparison reference, not Arctic Ice.",
+            "file": "assets/plants/echeveria-arctic-ice/commons-57234409-comparison.jpg",
             "topic": "whole-plant"
         }
     ],

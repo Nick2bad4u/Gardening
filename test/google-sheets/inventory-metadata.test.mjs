@@ -340,7 +340,7 @@ describe("current 32-pot presentation bounds", () => {
         range.endRowIndex = 31;
 
         expect(buildInventoryMetadataRequests(metadata, 32)).toStrictEqual([]);
-        expect(() => buildInventoryMetadataRequests(metadata, 34)).toThrow(
+        expect(() => buildInventoryMetadataRequests(metadata, 36)).toThrow(
             "Unsupported inventory base count"
         );
     });

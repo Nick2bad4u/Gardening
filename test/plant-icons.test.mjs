@@ -51,17 +51,17 @@ function openingAttributes(source) {
 }
 
 describe("custom plant portrait exports", () => {
-    it("keeps 45 collection profiles, five archived portraits and three shared-planter exports aligned with the canonical sprite", () => {
+    it("keeps 46 collection profiles, five archived portraits and three shared-planter exports aligned with the canonical sprite", () => {
         expect.hasAssertions();
 
         const slugs = plantSymbols.map(({ slug }) => slug);
 
-        expect(plantSymbols).toHaveLength(53);
+        expect(plantSymbols).toHaveLength(54);
 
         const uniqueSlugs = new Set(slugs);
 
-        expect(uniqueSlugs.size).toBe(53);
-        expect(standaloneNames).toHaveLength(53);
+        expect(uniqueSlugs.size).toBe(54);
+        expect(standaloneNames).toHaveLength(54);
         expect(standaloneNames).toStrictEqual(
             slugs
                 .map((slug) => `${slug}.svg`)

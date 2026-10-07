@@ -38,6 +38,7 @@ AND(
     [P31 weight (g)] > 0,
     [P32 weight (g)] > 0,
     [P35 weight (g)] > 0,
-    [P36 weight (g)] > 0
+    [P36 weight (g)] > 0,
+    [P37 weight (g)] > 0
   )
 )

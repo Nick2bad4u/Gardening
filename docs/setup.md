@@ -1,14 +1,37 @@
 # Setup and equipment
 
-Last updated: 2026-09-24
+Last updated: 2026-10-07
 
 The [equipment and supplies inventory](./equipment/inventory.md) lists the collection's products and model references. All four wooden tables are the [LEJANEOYE two-tier bamboo side-table model](https://www.amazon.com/dp/B0D25H73ZS), identified September 17; measured tabletop dimensions are recorded separately from seller specifications.
 
-The [container guide](./containers.md) separates the 42 current botanical profile groups from two whole-planter overviews. P19, P20, P30, and P35 are shared containers: multiple profiles retain one label, one tracker history, and one current setup. The P-ID persists when a planting moves to a different pot; repots record a setup boundary rather than a new container ID.
+The [container guide](./containers.md) separates the 43 current botanical profile groups from two whole-planter overviews. P19, P20, P30, and P35 are shared containers: multiple profiles retain one label, one tracker history, and one current setup. The P-ID persists when a planting moves to a different pot; repots record a setup boundary rather than a new container ID.
+
+## October 6 Arctic Ice acquisition
+
+The owner reported buying an **_Echeveria_ 'Arctic Ice'** and a **6-inch
+blue-and-white ceramic pot for it** at Home Depot on October 6, 2026. The store
+location and price paid are unrecorded. Identification follows
+the supplied [Altman Plants listing](https://shopaltmanplants.com/products/echeveria-arctic-ice-ppaf)
+screenshot, which names **USPP29,584 / SKU 0850821**. Photos of the owned plant
+and pot, its current container, and additional setup details are still pending.
+See the [collection record](./collection.md) for the acquisition evidence and
+the [equipment inventory](./equipment/inventory.md#pots-medium-and-top-dressing)
+for the pot.
+
+The ceramic pot is recorded as acquired for this plant; a completed repot,
+medium recipe, drainage arrangement, usable depth, watering history, and
+growing position have not been reported. The listing's 3.5-inch title and the
+screenshot's 2.5 selection do not establish the received nursery-pot size.
+The assigned identity is **Succulent-17 / #11 / P37**. No weight reference
+or position in the existing light layout is inferred from enrollment.
+
+The [Arctic Ice profile](./plants/succulents/echeveria-arctic-ice.md)
+includes the cultivar's history, a reference gallery, and provisional care.
+The six-inch pot's suitability remains conditional on root-ball fit and drainage.
 
 ## Current routine
 
-The collection has **34 tracked containers and 45 profiles: 44 active and one historical**. Recent additions are P31 / #7 Peperomia Bicolor and P32 / #8 Tricolor oyster plant, purchased at Carlson's Greenhouses September 20, and P35 / #9 shared Lithops and P36 / #10 split rock, purchased at Home Depot in Howell, Michigan September 21.
+The collection has **35 tracked containers and 46 profiles: 45 active and one historical**. Recent additions are P31 / #7 Peperomia Bicolor and P32 / #8 Tricolor oyster plant, purchased at Carlson's Greenhouses September 20, and P35 / #9 shared Lithops and P36 / #10 split rock, purchased at Home Depot in Howell, Michigan September 21.
 
 The September 23 Lithops and split-rock repots are **setup 2**, using **80% Molly's Succulent Mix + 20% perlite**. P35 holds four visible Lithops heads in the D'vine Dev Blush Mauve pot, logged as **4.2 in round**; P36 holds one split-rock leaf pair in the Thirtypot speckled-brown pot, logged as **4 in round**. Seller-selected sizes are 4.3 and 4.5 inches, respectively. Routine weights were **1247 g** and **713.5 g**, with dry medium and firm plants; neither batch includes watering or a verified dry baseline. Final growing positions, actual drainage, and usable internal depth remain unverified.
 

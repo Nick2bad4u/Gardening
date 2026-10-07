@@ -37,6 +37,11 @@ export function siteUrl(relative = "") {
 }
 
 const documentRoutes = new Map([
+    [
+        "docs/astrophytum-asterias-seed-starting.md",
+        "guides/astrophytum-asterias-seed-starting/",
+    ],
+    ["docs/cactus-seed-starting.md", "guides/cactus-seed-starting/"],
     ["docs/care-notes.md", "guides/care-notes/"],
     ["docs/collection.md", "plants/"],
     ["docs/containers.md", "containers/"],
@@ -56,6 +61,10 @@ const documentRoutes = new Map([
     ["docs/plant-booklet/index.html", ""],
     ["docs/plants/labels.md", "guides/labels/"],
     ["docs/plants/README.md", "plants/"],
+    [
+        "docs/plants/research/echeveria-arctic-ice.md",
+        "guides/echeveria-arctic-ice-research/",
+    ],
     ["docs/setup.md", "setup/"],
     ["docs/two-light-placement-review.md", "setup/placement/"],
     ["docs/watering-quick-guide.md", "guides/watering-quick-guide/"],

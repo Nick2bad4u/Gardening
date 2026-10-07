@@ -731,6 +731,10 @@ function stripMarkdown(value) {
 
 const heroPhotoFiles = new Map([
     [
+        "echeveria-arctic-ice",
+        "assets/plants/echeveria-arctic-ice/patent-uspp29584-figure-1.png",
+    ],
+    [
         "mammillaria-rekoi",
         "assets/plants/mammillaria-rekoi/commons-19440517-habit.jpg",
     ],
@@ -872,6 +876,7 @@ function identificationLabel(markdown) {
     const labels = [
         [/seller-labeled.*but probable/v, "Likely Revised ID"],
         [/^seller-labeled/v, "Seller Label"],
+        [/^owner-associated.*listing/v, "Owner-Associated Listing"],
         [/^labeled/v, "Nursery Label"],
         [/^very high/v, "Very Strong Match"],
         [/^high/v, "Strong Match"],

@@ -689,7 +689,7 @@ function rewriteFixturePreviews(html, base = "/Gardening/") {
 
 /** @param {string} html @param {PlantImages} optimizedImages */
 function rewritePublishedPlantImages(html, optimizedImages) {
-    return html.replaceAll(
+    const rewrittenImages = html.replaceAll(
         /<img\b[^>]*>/gv,
         (/** @type {string} */ imageTag) => {
             const source =
@@ -735,6 +735,24 @@ function rewritePublishedPlantImages(html, optimizedImages) {
             return `${openingTag}${responsiveAttributes}>`;
         }
     );
+    return rewrittenImages.replaceAll(/<a\b[^>]*>/gv, (anchorTag) => {
+        const source =
+            /\bhref="(?<prefix>\/Gardening\/|\.\/|\.\.\/|\.\.\/\.\.\/)(?<relativePath>assets\/plants\/[^"#?]+\.(?:jpe?g|png|webp))"/v.exec(
+                anchorTag
+            );
+        if (!source) return anchorTag;
+        const prefix = source.groups?.["prefix"];
+        const relativePath = source.groups?.["relativePath"];
+        if (prefix === undefined || relativePath === undefined)
+            throw new Error("Incomplete reference image download link.");
+        const largest = optimizedImages.get(relativePath)?.variants.at(-1);
+        // Only optimized reference originals are removed from publication.
+        if (largest === undefined) return anchorTag;
+        return anchorTag.replace(
+            source[0],
+            () => `href="${prefix}${largest.path}"`
+        );
+    });
 }
 
 const isDirectRun =

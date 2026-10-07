@@ -216,6 +216,54 @@ describe("the GitHub Pages publication transforms", () => {
     });
 
     it.each([
+        "/Gardening/",
+        "./",
+        "../",
+        "../../",
+    ])(
+        "keeps full-size reference links working with the %s prefix",
+        (prefix) => {
+            expect.hasAssertions();
+
+            const source = "assets/plants/example/reference.png";
+            const largest = "assets/plants/example/reference.w960.webp";
+            const images = new Map([
+                [
+                    source,
+                    {
+                        relativePath: source,
+                        variants: [
+                            {
+                                bytes: 1200,
+                                path: "assets/plants/example/reference.w480.webp",
+                                width: 480,
+                            },
+                            { bytes: 2400, path: largest, width: 960 },
+                        ],
+                    },
+                ],
+            ]);
+            const unaffected =
+                `<a href="https://example.com/${source}">External reference</a>` +
+                '<a href="/Gardening/assets/plants/example/unoptimized.png">Unoptimized reference</a>' +
+                '<a href="/Gardening/assets/nursery-labels/evidence.png">Nursery original</a>' +
+                '<a href="/Gardening/guides/">Guides</a>';
+            const output = rewritePublishedPlantImages(
+                `<figure><a href="${prefix}${source}" class="full-size"><img src="${prefix}${source}" alt="Patent sheet"></a></figure>${unaffected}`,
+                images
+            );
+
+            expect(output).toContain(
+                `href="${prefix}${largest}" class="full-size"`
+            );
+            expect(output).toContain(`src="${prefix}${largest}"`);
+            expect(output).toContain(`${prefix}${largest} 960w`);
+            expect(output).not.toContain(`href="${prefix}${source}"`);
+            expect(output).toContain(unaffected);
+        }
+    );
+
+    it.each([
         "jpg",
         "jpeg",
         "png",

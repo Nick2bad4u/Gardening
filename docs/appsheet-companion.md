@@ -12,7 +12,19 @@ contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
 
+## October 7 Arctic Ice enrollment
+
+**Source changes prepared; live workbook, logger, and AppSheet enrollment pending verification.** The owner assigned **P37 / #11** to Echeveria 'Arctic Ice', bringing the maintained roster to **35 active containers: P01–P32, P35–P37**. P33/P34 remain retired. The cultivar is nursery-labelled evidence, and this allocation does not imply a repot, watering, weight, measurement, or photograph has been recorded.
+
+Logger **5.31.0** and the maintained AppSheet expressions use **61 physical App bulk columns, A:BI / 62 including \_RowNumber**. The new `P37 weight (g)` field appends at **BI**; preserve all 60 earlier physical columns and existing staging rows. Regenerate only App bulk after its new workbook header is verified, then configure P37 as an optional positive Decimal with two decimal digits, `[_THIS] > 0`, and the existing Weigh / Water + weigh visibility rule. Bulk Log places P37 immediately after P36 and before Notes. Round validation covers all 35 active weights while retaining both retired-field blank guards; natural label order adds **#11 = 911**.
+
+The new portrait revision **5f4fc05caf24f2fd** has **35 verified SVGs** in [GardenPlantPortraits-5f4fc05caf24f2fd](https://drive.google.com/drive/folders/1fShiB-3BZ0G1vREcPG3wUlC9kASdf-Pv), including the schematic Arctic Ice portrait. Each downloaded file matched the maintained source hash, and the folder's membership exactly matched the manifest. The prior folders remain available to cached clients. Portrait publication is complete; changing the live AppSheet expression remains part of the pending saved-app verification.
+
+Fresh preflight captured AppSheet **1.100112**, its full definition, and its 61-column bulk schema. Canonical and helper datasets remain read-only, while App entries and App bulk remain writable staging tables. Preserve the creation-only id528 keys, their reset-on-edit settings, and the existing retry protections. The production trigger inspection confirmed exactly one Head `processQueuedAppSheetEntries` trigger using **Minutes timer / Every 5 minutes**, with a zero-percent error rate; its inspection dialog was canceled without saving.
+
 ## September 21 Lithops and split-rock enrollment
+
+This dated rollout record is historical. The October 7 section above describes the pending Arctic Ice addition and supersedes the maintained roster and schema counts after its live verification.
 
 **Production workbook, logger, and AppSheet rollout completed September 21; AppSheet 1.100112 saved and verified.** A fresh editor reload showed no issues and Save disabled. The active roster has **34 active allocations: P01–P32, P35, P36**. P35 / #9 is the planned shared pot for two owner-described Lithops pairs; P36 / #10 is the separate split rock, nursery-labelled Pleiospilos nelii with no cultivar supplied and explicitly not Royal Flush. P31 / #7 and P32 / #8 remain the purchased houseplants; P33/P34 remain retired. See the [enrollment runbook](../scripts/google-sheets/README.md#september-21-lithops-and-split-rock-enrollment).
 
@@ -192,7 +204,7 @@ forecast backup — 2026-09-04`. The view choices are deliberate:
   predictions appear before plants that still need more evidence; the helper
   itself is not displayed.
 - **Bulk rounds** sorts newest first and uses a manual round-level layout. The
-  thirty P01-P30 weight-entry columns remain available in Bulk Log but are
+  active per-container weight-entry columns remain available in Bulk Log but are
   intentionally absent from the submitted-round table.
 - **Care history** uses the emoji-backed `Event badge` summary. **Needs
   attention** puts the actionable `Status message` directly on each row.
@@ -245,12 +257,12 @@ and defaults to 90. The degree value is archived in `History!AN:AN`, displayed
 in read-only care history, and remains available to the public plant history.
 Clean and Prune are lightweight dated actions whose specifics belong in Notes.
 Bulk Log uses one `Selected plants` field for every supported shared action;
-per-plant weights use P01–P32, P35, and P36; P33/P34 fields remain hidden compatibility columns. `Selected plants` is
+per-plant weights use the active roster recorded in the latest enrollment above; P33/P34 fields remain hidden compatibility columns. `Selected plants` is
 an EnumList of refs with `Valid_If` set to `SORT(Plant tracker[Plant ID])`; if
 that expression is removed, the deployed picker can appear empty even while
 the source table contains plants.
 
-The maintained Round action validation checks all 34 active weight fields and requires the retired P33/P34 fields blank. Weigh requires
+The maintained Round action validation checks all 35 active weight fields and requires the retired P33/P34 fields blank. Weigh requires
 at least one positive weight; Water + weigh also requires selected plants.
 Other shared care actions require selected plants. The maintained expression
 is [`appsheet-bulk-validation.txt`](../scripts/google-sheets/appsheet-bulk-validation.txt).
@@ -285,9 +297,9 @@ identification.
 The Plants view sorts by the hidden virtual Number column
 `Natural label order`, not by `Plant ID`. Its explicit mapping keeps labels in
 the physical sequence A1-A3 through H1-H3, followed by the numbered plant and
-shared-planter labels #1-#6, #9, and #10. The `#` group always sorts after every lettered
+shared-planter labels #1–#11 after the Arctic Ice enrollment. The `#` group always sorts after every lettered
 label.
-Canonical active IDs and writable picker values are P01-P32; do not replace them
+Canonical active IDs and writable picker values are P01–P32 and P35–P37 after enrollment; do not replace them
 with the display-order helper.
 
 Plants uses the Image virtual column `Plant portrait` as its square main
@@ -300,7 +312,7 @@ image across unrelated history rows. The virtual `Event badge` column adds a
 compact event symbol and name such as `💧 Water`, `⚖ Weigh`, `📏 Measure`, or
 `📝 Other` without changing the canonical `Event` value.
 
-If a portrait is missing, verify its current P01-P32 mapping, the revisioned Drive
+If a portrait is missing, verify its current active-roster mapping, the revisioned Drive
 folder and filename, and signed-in app access. For a missing reference photo,
 verify its external URL and the `Reference image` expression. Do not replace
 a missing image with an unrelated taxon merely to fill the thumbnail.
@@ -483,7 +495,7 @@ plant in its left/top Plants pane to filter all three charts together.
 The corresponding read-only slices filter blank values before charting so
 missing measurements or weights do not appear as zero. The charts are the
 AppSheet equivalent of the three weight/dimension charts on each current Pxx workbook page; they
-reuse canonical History fields rather than connecting the 32 active individual plant-page
+reuse canonical History fields rather than connecting the individual active plant-page
 tables.
 
 ## Sync and recovery

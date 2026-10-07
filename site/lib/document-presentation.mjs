@@ -1,6 +1,18 @@
 /** Visual categories only: all substantive text remains in maintained Markdown. */
 const guideAppearances = new Map([
+    [
+        "astrophytum-asterias-seed-starting",
+        { icon: "care", label: "Species Seed Guide", tone: "leaf" },
+    ],
+    [
+        "cactus-seed-starting",
+        { icon: "care", label: "Seed Starting", tone: "leaf" },
+    ],
     ["care-notes", { icon: "care", label: "Collection Care", tone: "leaf" }],
+    [
+        "echeveria-arctic-ice",
+        { icon: "research", label: "Cultivar Research", tone: "leaf" },
+    ],
     ["labels", { icon: "label", label: "Plant Identity", tone: "record" }],
     [
         "logger-actions",

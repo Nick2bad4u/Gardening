@@ -53,7 +53,9 @@ Describe 'Reference photo catalog' {
         @(
             Compare-Object -ReferenceObject @(
                 $profiles | Sort-Object
-            ) -DifferenceObject @($script:Catalog.Slug | Sort-Object)
+            ) -DifferenceObject @(
+                $script:Catalog | Where-Object Id -NE 'pending' | Select-Object -ExpandProperty Slug | Sort-Object
+            )
         ).Count
             | Should -Be 0
     }
@@ -62,12 +64,23 @@ Describe 'Reference photo catalog' {
         foreach (
             $slug in 'lithops-lesliei',
             'lithops-salicola',
-            'pleiospilos-nelii',
             'faucaria-tuberculosa'
         ) {
             ($script:Catalog | Where-Object Slug -EQ $slug).ScopeNote
                 | Should -Match 'probable'
         }
+        ($script:Catalog | Where-Object Slug -EQ 'pleiospilos-nelii').ScopeNote
+            | Should -Match 'identified on the owned plant''s nursery label'
+    }
+
+    It 'enrolls Arctic Ice while retaining its manually curated reference gallery' {
+        $plant = $script:Catalog | Where-Object Slug -EQ 'echeveria-arctic-ice'
+        $plant.Id | Should -Be 'Succulent-17'
+        $plant.LabelId | Should -Be '#11'
+        $plant.ManualReferencesOnly | Should -BeTrue
+        Get-ProfileGroup -InventoryId $plant.Id | Should -Be 'succulents'
+        Join-Path $PSScriptRoot '../../docs/plants/succulents/echeveria-arctic-ice.md'
+            | Should -Exist
     }
 }
 
@@ -307,6 +320,73 @@ Describe 'Scoped archive refresh' {
         Mock Start-Sleep {}
     }
 
+    It 'does not replace manually reviewed patent references with automatic search results' {
+        & $script:FixtureImporter -PlantSlug 'echeveria-arctic-ice' -ImagesPerPlant 10 -Confirm:$false
+
+        $result = Get-Content -LiteralPath $script:FixtureManifest -Raw
+            | ConvertFrom-Json
+        @($result.photos).Count | Should -Be 0
+        Get-Content -LiteralPath (
+            Join-Path $script:FixtureAssets 'README.md'
+        ) -Raw
+            | Should -Match 'docs/plants/succulents/echeveria-arctic-ice.md'
+        Should -Invoke Invoke-RestMethod -Times 0 -Exactly
+    }
+
+    It 'labels manually curated comparison images with their source taxon instead of the target cultivar' {
+        $relativeFile = 'assets/plants/echeveria-arctic-ice/comparison.jpg'
+        $imagePath = Join-Path $script:FixtureRoot $relativeFile
+        New-Item -ItemType Directory -Path (
+            Split-Path -Parent $imagePath
+        ) -Force
+            | Out-Null
+        Set-Content -LiteralPath $imagePath -Value 'synthetic image bytes'
+        $title = 'Echeveria elegans comparison reference, not Arctic Ice'
+        $photo = [pscustomobject] @{
+            plant_id = 'Succulent-17'
+            plant_slug = 'echeveria-arctic-ice'
+            scientific_name = 'Echeveria Arctic Ice'
+            common_name = 'Arctic Ice echeveria'
+            scope_note = 'Comparison reference'
+            file = $relativeFile
+            source = 'Wikimedia Commons'
+            source_url = 'https://example.test/comparison'
+            subject = 'habit'
+            title = $title
+            description = $title
+            author = 'Example photographer'
+            license = 'CC BY-SA 4.0'
+            license_url = 'https://creativecommons.org/licenses/by-sa/4.0/'
+            sha256 =
+                (
+                    Get-FileHash -LiteralPath $imagePath -Algorithm SHA256
+                ).Hash.ToLowerInvariant()
+            observed_on = ''
+            location = ''
+        }
+        @{
+            schema_version = 1
+            generated_at = '2026-10-06T00:00:00Z'
+            photos = @($photo)
+        }
+            | ConvertTo-Json -Depth 8
+            | Set-Content -LiteralPath $script:FixtureManifest
+
+        & $script:FixtureImporter -PlantSlug 'echeveria-arctic-ice' -ImagesPerPlant 10 -Confirm:$false
+
+        $archive = Get-Content -LiteralPath (
+            Join-Path $script:FixtureAssets 'echeveria-arctic-ice/README.md'
+        ) -Raw
+        $archive
+            | Should -Match ([regex]::Escape("![$title](./comparison.jpg)"))
+        $archive | Should -Not -Match '!\[Arctic Ice echeveria: habit\]'
+        $result = Get-Content -LiteralPath $script:FixtureManifest -Raw
+            | ConvertFrom-Json
+        $result.photos[0].title | Should -Be $title
+        $result.photos[0].sha256 | Should -Be $photo.sha256
+        Should -Invoke Invoke-RestMethod -Times 0 -Exactly
+    }
+
     It 'preserves unknown records and archived plans while reusing balanced component references' {
         $fixtureRecords = @(
             foreach (
@@ -452,7 +532,8 @@ Describe 'Scoped archive refresh' {
         $photo = [pscustomobject] @{ SourceUrl = $original.source_url }
         $copy = Get-ReusedPhotoRecord -Plant $plant -Photo $photo -Records $records -Root $script:FixtureRoot
         $copy.plant_slug | Should -Be 'pleiospilos-nelii'
-        $copy.scope_note | Should -Match 'probable'
+        $copy.scope_note
+            | Should -Match 'identified on the owned plant''s nursery label'
         foreach (
             $property in 'file',
             'sha256',
