@@ -1,6 +1,6 @@
 # Google Sheets observation logger
 
-The production **Garden Plant Tracker** roster has **34 active container allocations**, using IDs `P01`–`P32`, `P35`, and `P36`, verified after the September 21 enrollment. It keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+The production **Garden Plant Tracker** roster has **35 active container allocations**, using IDs `P01`–`P32` and `P35`–`P37`, verified after the October 7 enrollment. It keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
@@ -18,16 +18,16 @@ for retained water, measured loss, forecast windows, and model evidence. The
 **Current weight difference** comparison starts at **Insights A586**.
 The [RO refill log](RO-REFILLS.md) records water-supply refill dates, amounts
 for the four storage containers, and a chart of gallons refilled per visit.
-The September 21 production **Plant colors** sheet maps its 34 active allocations to
+The October 7 production **Plant colors** sheet maps its 35 active allocations to
 consistent chart colors, with full names, swatches, and links to their charts.
-Comparison charts keep P01–P32, P35, P36 order so colors stay attached to the same plant;
+Comparison charts keep P01–P32, P35–P37 order so colors stay attached to the same plant;
 the cycle explorer changes color automatically with its selected plant.
-Each active **P01–P32, P35, and P36** page also has a **Time between waterings** column chart at
+Each active **P01–P32 and P35–P37** page also has a **Time between waterings** column chart at
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
-## October 7 Arctic Ice enrollment — production pending
+## October 7 Arctic Ice enrollment — production verified
 
 Logger **5.31.0** and the maintained collection now include **P37 / #11 /
 Succulent-17, Echeveria ‘Arctic Ice’**. The owner bought it at Home Depot on
@@ -35,7 +35,7 @@ October 6, together with a new six-inch blue-and-white ceramic pot. The current
 container, drainage, medium, completed repot, placement, and measurements remain
 unrecorded. Enrollment creates no care events or wet/dry references.
 
-The prepared roster has **35 active allocations: P01–P32, P35–P37**. App bulk
+The production roster has **35 active allocations: P01–P32, P35–P37**. App bulk
 appends **P37 weight (g)** at **BI**, giving **61 physical columns / 62 including
 AppSheet's `_RowNumber`**. Existing columns keep their positions; retired
 P33/P34 fields remain blank-only. The server retains the reviewed 60-, 58-,
@@ -60,8 +60,50 @@ and its botanical membership after reading back the expanded tracker. It
 preserves existing observations, staged entries, chart identities, owner tab
 order, and protections. Private snapshots, request plans, native-copy results,
 and deployment receipts belong under `.cache/arctic-enrollment-20261007/`.
-Production workbook application, AppSheet save, and immutable logger deployment
-are pending and must be verified before calling the rollout complete.
+The production enrollment and separate catalog append passed native readback on
+October 7. The workbook now contains **61 tabs and 168 charts**, with **35
+containers and 43 botanical catalog members**. The existing 1,767 observations,
+1,767 unique observation IDs, and 1,459 request groups have the same canonical
+digest. Existing chart identities, tab order, protections, staging entries, and
+captured formatting remain preserved; the formula-error count is zero. P37
+still has no care observations, measurements, or collection photos.
+
+The disposable native logger rehearsal confirmed separate Weigh, Measure, and
+Photo records, duplicate-free retries, rejected empty Checks, and a four-day
+watering interval from two explicitly synthetic test dates. A ruler measurement
+also produced the expected chart values; estimated dimensions remain excluded.
+The copy contains seven synthetic fixture rows; none were sent to production.
+
+Google omits series and vertical-axis styling from empty native charts. The
+copy's four populated P37 charts matched the complete planned specifications
+after their styles were reapplied. Production charts remain empty until real
+observations exist; reapply the corresponding reviewed specifications after
+real data first populates each chart if Google has dropped its styles. Do not
+add test observations or a styling trigger to production.
+
+Production Apps Script HEAD and the existing phone deployment are verified as
+**5.31.0 / immutable version 102**, with the same three maintained files,
+unchanged phone URL, and unchanged permissions. The public profile, P37 pot
+history, and both seed-starting guides returned HTTP 200 after the successful
+Pages deployment; the published Arctic Ice portrait matches the reviewed hash.
+[AppSheet 1.100114](../../docs/appsheet-companion.md#october-7-arctic-ice-enrollment)
+is saved and verified, including the optional P37 bulk weight field and all
+35 weight inputs in label order. Exactly one Head queue trigger remains
+scheduled every five minutes.
+
+The authenticated phone check showed **Connected · logger 5.31.0**, all 35
+label buttons, and **#11 Arctic Ice / P37**. Its blank Weigh, Measure, and
+Photo fields opened together with Measured / Ruler selectors and correct
+guide/history links; the entry was cleared without submitting. Version 102
+`doGet` and `getWebAppBootstrap` executions completed at 03:32 EDT, followed
+by a successful Head queue execution at 03:33 EDT on October 7.
+
+The final postactivation readback compared 316,925 cells, preserved all 93,906
+original staging body cells, and found the 999 new P37 staging cells empty.
+It reconfirmed the original History digest and request grouping, 61 bulk
+columns, 35 tracker/catalog containers, 43 catalog members, empty P37 care
+summaries, and zero Integrity errors. Private test observations remain confined
+to the disposable native copy.
 
 ## September 24 compact correction dialog
 
