@@ -1685,6 +1685,69 @@ describe("atomic saved History corrections", () => {
         }
     );
 
+    it("refuses to erase the final structured Check detail without changing History", () => {
+        expect.hasAssertions();
+
+        const model = fixture([
+            observation("Check", "original-1", { 7: "Leaves firm" }),
+        ]);
+        const before = structuredClone(model.state.rows);
+
+        expect(() => prepare(model, { condition: "" })).toThrow(
+            "Keep plant condition, soil moisture, or both for Check"
+        );
+        expect(model.state.writes).toBe(0);
+        expect(model.state.rows).toStrictEqual(before);
+    });
+
+    it("allows clearing a Check condition when recorded soil moisture remains", () => {
+        expect.hasAssertions();
+
+        const model = fixture([
+            observation("Check", "original-1", {
+                7: "Condition entered in error",
+                32: "Dry",
+            }),
+        ]);
+        const payload = prepare(model, { condition: "" });
+        const receipt = model.api.saveWebObservationCorrection(payload);
+
+        expect(stored(model, 3, 8).value).toBe("");
+        expect(stored(model, 3, 33).value).toBe("Dry");
+        expect(stored(model, 3, 3).value).toBe("Check");
+        expect(stored(model, 2, 36).value).toBe("Removed");
+        expect(model.api.saveWebObservationCorrection(payload)).toStrictEqual(
+            receipt
+        );
+        expect(model.state.rows).toHaveLength(3);
+    });
+
+    it("blocks moving an old blank-detail Check but allows its audited deletion", () => {
+        expect.hasAssertions();
+
+        const model = fixture([observation("Check")]);
+        const before = structuredClone(model.state.rows);
+
+        expect(() => prepareAction(model, "move")).toThrow(
+            "Keep plant condition, soil moisture, or both for Check"
+        );
+        expect(model.state.writes).toBe(0);
+        expect(model.state.rows).toStrictEqual(before);
+
+        const payload = prepareAction(model, "remove");
+        const receipt = model.api.saveWebObservationCorrection(payload);
+
+        expect(stored(model, 2, 36).value).toBe("Removed");
+        expect(stored(model, 3, 36).value).toBe("Removed");
+        expect(stored(model, 3, 31).value).toBe("original-1");
+        expect(stored(model, 3, 8).value).toBe("");
+        expect(stored(model, 3, 33).value).toBe("");
+        expect(model.api.saveWebObservationCorrection(payload)).toStrictEqual(
+            receipt
+        );
+        expect(model.state.rows).toHaveLength(3);
+    });
+
     it("hashes reordered patch keys identically while retaining scalar type distinctions", () => {
         expect.hasAssertions();
 
