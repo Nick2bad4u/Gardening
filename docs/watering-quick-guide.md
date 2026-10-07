@@ -81,7 +81,7 @@ Keep both split rocks and the Lithops outside automatic cactus feeding alternati
 
 ## Find every plant in its group
 
-This index covers **42 botanical profile groups in 34 containers**, plus the two whole-planter overview pages, as of September 24. A shared container is listed once with all its members. The removed silken pincushion and canceled orders are in their historical records.
+This index covers **43 botanical profile groups in 35 containers**, plus the two whole-planter overview pages, as of October 6. A shared container is listed once with all its members. The removed silken pincushion and canceled orders are in their historical records.
 
 ### Cacti and Dragon's Egg
 
@@ -114,6 +114,7 @@ This index covers **42 botanical profile groups in 34 containers**, plus the two
 
 | Pot / label | Plants                                                                                                                                                                                                                                                                                                      |
 | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| P37 / #11   | [Arctic Ice echeveria](./plants/succulents/echeveria-arctic-ice.md) — new acquisition; confirm current medium, root-zone dryness, drainage, and condition before establishing weight references                                                                                                             |
 | P20 / #2    | Shared: [Pulido's echeveria](./plants/succulents/echeveria-pulidonis.md), [elephant bush](./plants/succulents/portulacaria-afra.md), [silver teaspoons](./plants/succulents/kalanchoe-bracteata.md), [copper spoons](./plants/succulents/kalanchoe-orgyalis.md)                                             |
 | P24 / H1    | [Coconut Crystal hens and chicks](./plants/succulents/sempervivum-coconut-crystal.md)                                                                                                                                                                                                                       |
 | P25 / H2    | [Raindrops echeveria](./plants/succulents/echeveria-raindrops.md)                                                                                                                                                                                                                                           |

@@ -326,6 +326,18 @@ $plantCatalog = @(
         ScopeNote = 'Echeveria reference photographs may include other species or cultivars without the characteristic Raindrops leaf bumps.'
     },
     [pscustomobject]@{
+        Id = 'Succulent-17'
+        LabelId = '#11'
+        Slug = 'echeveria-arctic-ice'
+        ScientificName = 'Echeveria ''Arctic Ice'''
+        CommonName = 'Arctic Ice echeveria'
+        ManualReferencesOnly = $true
+        CommonsCategory = 'Echeveria Arctic Ice'
+        CommonsSearch = 'Echeveria "Arctic Ice"'
+        INaturalistName = 'Echeveria Arctic Ice'
+        ScopeNote = "Two exact Arctic Ice monochrome patent figures, six Echeveria elegans comparison photographs, and two Echeveria Perle von N`u{00FC}rnberg comparison photographs. Comparison taxa are not Arctic Ice and neither is a documented parent of Arctic Ice. Patent figures do not establish color; none of these images documents the owned plant. Collection allocation: Succulent-17 / #11 / P37. Each record retains its own source, creator, and reuse terms; the comparison photographs are Creative Commons licensed, while the patent figures use the separately documented USPTO basis."
+    },
+    [pscustomobject]@{
         Id = 'Succulent-08'
         LabelId = 'H1'
         Slug = 'sempervivum-coconut-crystal'
@@ -1154,6 +1166,9 @@ function ConvertTo-MarkdownAuthor {
 function Get-ProfileGroup {
     param([Parameter(Mandatory)][string] $InventoryId)
 
+    if ($InventoryId -eq 'pending') {
+        return 'research'
+    }
     if ($InventoryId.StartsWith('Starter-', [StringComparison]::Ordinal)) {
         return 'starter'
     }
@@ -1272,6 +1287,9 @@ foreach ($record in $existingRecords) {
 
 foreach ($plant in $selectedPlants) {
     if ($plant.PSObject.Properties.Name -contains 'ReferenceSlugs') {
+        continue
+    }
+    if ($plant.PSObject.Properties.Name -contains 'ManualReferencesOnly' -and $plant.ManualReferencesOnly) {
         continue
     }
     Write-Information "Collecting licensed photographs for $($plant.Id) $($plant.ScientificName)..." -InformationAction Continue
@@ -1562,6 +1580,9 @@ foreach ($plant in $plantCatalog) {
     foreach ($record in $plantRecords) {
         $fileName = [System.IO.Path]::GetRelativePath($plantDirectory, (Join-Path $repoRoot $record.file)).Replace('\', '/')
         $altText = ConvertTo-MarkdownCell "$($record.common_name): $($record.subject)"
+        if ($plant.PSObject.Properties.Name -contains 'ManualReferencesOnly' -and $plant.ManualReferencesOnly) {
+            $altText = ConvertTo-MarkdownCell $record.title
+        }
         $profileLines.Add("![$altText](./$fileName)")
         $profileLines.Add('')
         $profileLines.Add(

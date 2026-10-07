@@ -42,31 +42,46 @@ const rosterBounds = new Map([
 ]);
 
 /**
- * Grow only the known roster presentation ranges for the 30-to-32 expansion.
- * Apply after the planner inserts Integrity rows 54:55. Rules retain their
- * original indices, formulas, colors, filter criteria, and sort specifications.
- * No chart, observation, protection, or unrelated range is returned.
+ * Grow only known roster presentation ranges for supported enrollments. Apply
+ * after the planner inserts the new Integrity rows. Rules retain their original
+ * indices, formulas, colors, filter criteria, and sort specifications. No
+ * chart, observation, protection, or unrelated range is returned.
  *
  * @param {{ sheets: MetadataSheet[] }} metadata @param {number} [baseCount]
+ * @param {number} [additionCount]
  *
  * @returns {Record<string, unknown>[]}
  */
-export function buildInventoryMetadataRequests(metadata, baseCount = 30) {
-    if (![30, 32].includes(baseCount))
+export function buildInventoryMetadataRequests(
+    metadata,
+    baseCount = 30,
+    additionCount = 2
+) {
+    if (
+        ![
+            30,
+            32,
+            34,
+        ].includes(baseCount)
+    )
         throw new Error("Unsupported inventory base count");
     /** @type {Record<string, unknown>[]} */
     const requests = [];
     for (const sheet of metadata.sheets) {
         if (sheet.basicFilter !== undefined) {
             const filter = structuredClone(sheet.basicFilter);
-            if (extendRosterRange(filter.range, sheet, baseCount))
+            if (
+                extendRosterRange(filter.range, sheet, baseCount, additionCount)
+            )
                 requests.push({ setBasicFilter: { filter } });
         }
         const conditionalFormats = sheet.conditionalFormats ?? [];
         for (const [index, source] of conditionalFormats.entries()) {
             const rule = structuredClone(source);
             const isChanged = rule.ranges
-                .map((range) => extendRosterRange(range, sheet, baseCount))
+                .map((range) =>
+                    extendRosterRange(range, sheet, baseCount, additionCount)
+                )
                 .some(Boolean);
             if (isChanged)
                 requests.push({
@@ -80,7 +95,14 @@ export function buildInventoryMetadataRequests(metadata, baseCount = 30) {
         const bandedRanges = sheet.bandedRanges ?? [];
         for (const source of bandedRanges) {
             const bandedRange = structuredClone(source);
-            if (extendRosterRange(bandedRange.range, sheet, baseCount))
+            if (
+                extendRosterRange(
+                    bandedRange.range,
+                    sheet,
+                    baseCount,
+                    additionCount
+                )
+            )
                 requests.push({
                     updateBanding: { bandedRange, fields: "range" },
                 });
@@ -91,9 +113,9 @@ export function buildInventoryMetadataRequests(metadata, baseCount = 30) {
 
 /**
  * @param {GridRange} range @param {MetadataSheet} sheet @param {number}
- *   baseCount
+ *   baseCount @param {number} additionCount
  */
-function extendRosterRange(range, sheet, baseCount) {
+function extendRosterRange(range, sheet, baseCount, additionCount) {
     const original = rosterBounds.get(sheet.properties.title);
     const bounds =
         original === undefined
@@ -101,12 +123,14 @@ function extendRosterRange(range, sheet, baseCount) {
             : {
                   ...original,
                   firstStart:
-                      baseCount === 32 && sheet.properties.title === "Quick log"
+                      baseCount >= 32 && sheet.properties.title === "Quick log"
                           ? 3
                           : original.firstStart,
-                  newEnd: original.newEnd + baseCount - 30,
+                  newEnd: original.newEnd + baseCount - 32 + additionCount,
                   oldEnds:
-                      baseCount === 30 ? original.oldEnds : [original.newEnd],
+                      baseCount === 30
+                          ? original.oldEnds
+                          : [original.newEnd + baseCount - 32],
               };
     if (bounds === undefined || range.endRowIndex === undefined) return false;
     if (

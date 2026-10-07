@@ -1,6 +1,6 @@
 # Equipment and Supplies
 
-Equipment and supplies documented through September 28, 2026, grouped by use. Entries distinguish the installed setup from planned additions and stored equipment.
+Equipment and supplies documented through October 6, 2026, grouped by use. Entries distinguish the installed setup from planned additions and stored equipment.
 
 ## Display and Support
 
@@ -73,6 +73,8 @@ The September 28 purchase list adds the supplies below. Quantities describe that
 - **[Hi-Yield Spreader Sticker](https://www.amazon.com/dp/B000NCV0OK) · 8 fl oz.** Purchased September 28 **for other uses**; the owner has not decided whether to use it on this collection. A nonionic additive for compatible spray mixtures. Amazon calls the item **32005**; the current manufacturer's 8 fl oz product is **31061**. The [optional-additive reference](./pest-control-supplies.md#spreader-sticker-optional-supply) keeps its oil/soap compatibility guidance available without adding it to a plant-treatment plan.
 
 ## Pots, Medium, and Top Dressing
+
+- **Blue-and-white ceramic pot · owner-described 6-inch size.** Acquired at Home Depot on October 6, 2026, for the new [_Echeveria_ 'Arctic Ice'](../setup.md#october-6-arctic-ice-acquisition). Brand/model, store location, measured internal dimensions, drainage hole or plug, and saucer details are unrecorded. Receipt of this pot is confirmed by the owner; completed repotting and the plant's current container are not yet documented. Owner photos and further details are pending.
 
 - **Two Amazon Basics eight-inch destination pots.** The owner confirms two pots with many drainage holes for P31 / #7 and P32 / #8, one previously decorated. The September 22 plan puts them side by side at the living-room north-facing sliding glass door, P31 on the smallest Bamworld stool and P32 closest to the glass; no completed placement or repotting is reported.
 - **Loose Carlson's greenhouse potting mix.** Supplied for the proposed P31/P32 repots and described by the owner as airy and containing perlite. The owner plans to blend it with Molly's Succulent Mix; additional perlite is available, but no ratio or completed blend is recorded. The existing nursery-pot medium is separately unrecorded.

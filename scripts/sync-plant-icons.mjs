@@ -233,6 +233,10 @@ function portraitDescriptions() {
             "Three pale-haired cactus stems trailing from a hanging terracotta basket.",
         ],
         [
+            "echeveria-arctic-ice",
+            "A schematic pale blue-green rosette of rounded pointed leaves, without a pictured pot; cultivar reference, not the owned specimen.",
+        ],
+        [
             "echeveria-cubic-frost",
             "A pale lilac rosette with angular upturned leaves above a warm cream pot.",
         ],

@@ -202,8 +202,10 @@ const metadata = [
         </div>
         {heroPhoto && (
             <p class="profile-hero-credit">
-                Species reference · {heroPhoto.author} ·{" "}
-                <a href={heroPhoto.license_url}>{heroPhoto.license}</a> ·{" "}
+                {heroPhoto.source.startsWith("United States Patent and Trademark Office")
+                    ? "Cultivar patent reference (monochrome)"
+                    : "Species reference"}{" "}
+                · {heroPhoto.author} · <a href={heroPhoto.license_url}>{heroPhoto.license}</a> ·{" "}
                 <a href={heroPhoto.source_url}>Photo Source ↗</a>
             </p>
         )}

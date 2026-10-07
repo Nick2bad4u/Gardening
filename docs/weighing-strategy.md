@@ -12,7 +12,7 @@ Frequent early weighing helps establish how a particular plant, pot, and medium 
 
 Reviewing every active container's existing data each morning does not require physically weighing every container. A shared planter counts as one weighed assembly even when several plants live in it.
 
-The active roster has **34 tracked containers: P01–P32, P35 and P36**. Shared containers receive one whole-pot weight; separate botanical profiles do not create additional weigh-ins.
+The active roster has **35 tracked containers: P01–P32, P35, P36 and P37**. Shared containers receive one whole-pot weight; separate botanical profiles do not create additional weigh-ins.
 
 ## What Exists Today
 

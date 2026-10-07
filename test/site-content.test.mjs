@@ -72,15 +72,38 @@ describe("field guide source rendering", () => {
         ).toBe("pleiospilos-nelii-royal-flush");
     });
 
+    it("enrolls Arctic Ice without inventing owner photos or care observations", async () => {
+        expect.hasAssertions();
+
+        const profiles = await getProfiles();
+        const profile = profiles.find(
+            (item) => item.slug === "echeveria-arctic-ice"
+        );
+
+        expect(profile?.inventoryId).toBe("Succulent-17");
+        expect(profile?.trackerId).toBe("P37");
+        expect(profile?.allPhotos).toHaveLength(10);
+        expect(profile?.collectionRecord.photos).toHaveLength(0);
+        expect(profile?.selectedPhotos[0]?.file).toBe(
+            "assets/plants/echeveria-arctic-ice/patent-uspp29584-figure-1.png"
+        );
+        expect(profile?.labelMarkdown).toBe("`#11`");
+        expect(profile?.identificationMarkdown).toContain(
+            "owner-associated Altman Plants listing"
+        );
+        expect(profile?.bodyHtml).toContain("No first-water date");
+        expect(plantSheetUrl("P37")).toContain("gid=202610370");
+    });
+
     it("assigns the received houseplants to P31/P32 while keeping abandoned orders in old plans", async () => {
         expect.hasAssertions();
 
         const profiles = await getProfiles();
         const archived = await getOldPlans();
 
-        expect(profiles).toHaveLength(45);
+        expect(profiles).toHaveLength(46);
         expect(profiles.filter((profile) => !profile.historical)).toHaveLength(
-            44
+            45
         );
         expect(
             profiles.some((profile) =>
@@ -152,7 +175,7 @@ describe("field guide source rendering", () => {
         ).toStrictEqual(
             slugs.toSorted((left, right) => left.localeCompare(right))
         );
-        expect(potIds.size).toBe(34);
+        expect(potIds.size).toBe(35);
         expect(
             members
                 .map((profile) => profile.inventoryId)

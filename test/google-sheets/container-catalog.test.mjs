@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
+    buildContainerCatalogAppendRequests,
     buildContainerCatalogRequests,
     containerCatalogHeaders,
     containerCatalogSheetId,
@@ -8,6 +9,7 @@ import {
     containerMembersSheetId,
     containerTrackerHeaders,
     normalizeContainerCatalog,
+    verifyContainerCatalogAppendPreconditions,
 } from "../../scripts/google-sheets/container-catalog.mjs";
 import { getContainers } from "../../site/lib/containers.mjs";
 import { required } from "../helpers/required.mjs";
@@ -507,4 +509,181 @@ describe("container catalog migration", () => {
             expect(first[1]?.formulaValue).toContain(`$A$2:$A$${count + 1},`);
         }
     );
+});
+
+function appendFixture() {
+    const before = fixture(2);
+    const existing = buildContainerCatalogRequests(
+        before.snapshot,
+        before.catalog
+    );
+    const expanded = fixture(3);
+    const generatedRows = writtenRows(existing);
+    /** @type {Parameters<typeof buildContainerCatalogAppendRequests>[0]} */
+    const snapshot = {
+        ...expanded.snapshot,
+        catalogRows: {
+            "Container members": [
+                ...required(generatedRows[1]).map((row) =>
+                    row.map((userEnteredValue) => ({ userEnteredValue }))
+                ),
+                [],
+            ],
+            Containers: [
+                ...required(generatedRows[0]).map((row) =>
+                    row.map((userEnteredValue) => ({ userEnteredValue }))
+                ),
+                [],
+            ],
+        },
+        integrity: {
+            formula:
+                "=SUM(ARRAYFORMULA(N(ISERROR('Plant tracker'!A1:AJ3))),SUM(ARRAYFORMULA(N(ISERROR('Containers'!A1:S3)))),SUM(ARRAYFORMULA(N(ISERROR('Container members'!A1:J4)))))",
+            sheetId: 504,
+        },
+    };
+    for (const [
+        title,
+        sheetId,
+        endRowIndex,
+        endColumnIndex,
+    ] of /** @type {[string, number, number, number][]} */ ([
+        [
+            "Containers",
+            containerCatalogSheetId,
+            3,
+            19,
+        ],
+        [
+            "Container members",
+            containerMembersSheetId,
+            4,
+            10,
+        ],
+    ]))
+        snapshot.metadata.sheets.push({
+            basicFilter: {
+                range: {
+                    endColumnIndex,
+                    endRowIndex,
+                    sheetId,
+                    startColumnIndex: 0,
+                    startRowIndex: 0,
+                },
+            },
+            properties: {
+                gridProperties: { columnCount: 26, rowCount: 100 },
+                sheetId,
+                title,
+            },
+        });
+    return { catalog: expanded.catalog, snapshot };
+}
+
+describe("existing catalog append", () => {
+    it("accepts native optional sheet-name quotes without accepting endpoint drift", () => {
+        expect.hasAssertions();
+
+        const { catalog, snapshot } = appendFixture();
+        snapshot.integrity.formula = snapshot.integrity.formula.replace(
+            "'Containers'!",
+            "Containers!"
+        );
+        const plan = buildContainerCatalogAppendRequests(snapshot, catalog);
+
+        expect(verifyContainerCatalogAppendPreconditions(plan, snapshot)).toBe(
+            true
+        );
+        expect(JSON.stringify(plan.requests)).toContain("'Containers'!A1:S4");
+
+        snapshot.integrity.formula = snapshot.integrity.formula.replace(
+            "Containers!A1:S3",
+            "Containers!A1:S4"
+        );
+
+        expect(() =>
+            buildContainerCatalogAppendRequests(snapshot, catalog)
+        ).toThrow("Existing catalog Integrity bounds changed");
+    });
+
+    it("appends one allocation/member and extends formulas without overwriting evidence", () => {
+        expect.hasAssertions();
+
+        const { catalog, snapshot } = appendFixture();
+        const before = structuredClone(snapshot);
+        const plan = buildContainerCatalogAppendRequests(snapshot, catalog);
+
+        expect(verifyContainerCatalogAppendPreconditions(plan, snapshot)).toBe(
+            true
+        );
+        expect(snapshot).toStrictEqual(before);
+        expect(plan.containerRange).toBe("'Containers'!A1:S4");
+        expect(plan.memberRange).toBe("'Container members'!A1:J5");
+        expect(
+            plan.requests.some(
+                (request) =>
+                    "addSheet" in request || "addProtectedRange" in request
+            )
+        ).toBe(false);
+        expect(JSON.stringify(plan.requests)).toContain(
+            "'Plant tracker'!$A$2:$A$4"
+        );
+
+        const writes = plan.requests.filter(
+            (request) => "updateCells" in request
+        );
+
+        expect(JSON.stringify(writes)).toContain("P03");
+        expect(JSON.stringify(writes)).not.toContain("Container 1");
+        expect(JSON.stringify(writes)).not.toContain("Probable second species");
+        expect(JSON.stringify(writes)).toContain("'Containers'!A1:S4");
+        expect(JSON.stringify(writes)).toContain("'Container members'!A1:J5");
+    });
+
+    it("rejects header drift, occupied destinations, membership changes and stale preconditions", () => {
+        expect.hasAssertions();
+
+        const { catalog, snapshot } = appendFixture();
+        const plan = buildContainerCatalogAppendRequests(snapshot, catalog);
+        const occupied = structuredClone(snapshot);
+        required(occupied.catalogRows["Containers"])[3] = [
+            { effectiveValue: { stringValue: "spill" } },
+        ];
+
+        expect(() =>
+            buildContainerCatalogAppendRequests(occupied, catalog)
+        ).toThrow("destination occupied");
+        expect(() =>
+            verifyContainerCatalogAppendPreconditions(plan, occupied)
+        ).toThrow("destination occupied");
+
+        const drift = structuredClone(snapshot);
+        required(required(drift.catalogRows["Containers"])[0])[0] = {
+            userEnteredValue: { stringValue: "Changed" },
+        };
+
+        expect(() =>
+            buildContainerCatalogAppendRequests(drift, catalog)
+        ).toThrow("headers changed");
+        expect(() =>
+            verifyContainerCatalogAppendPreconditions(plan, drift)
+        ).toThrow("source changed");
+
+        const replay = structuredClone(snapshot);
+        required(replay.catalogRows["Containers"])[3] = [
+            { userEnteredValue: { stringValue: "P03" } },
+        ];
+
+        expect(() =>
+            buildContainerCatalogAppendRequests(replay, catalog)
+        ).toThrow("destination occupied");
+
+        const membership = structuredClone(snapshot);
+        required(required(membership.catalogRows["Container members"])[1])[0] =
+            { userEnteredValue: { stringValue: "Wrong ID" } };
+
+        expect(() =>
+            buildContainerCatalogAppendRequests(membership, catalog)
+        ).toThrow("membership changed");
+    });
 });

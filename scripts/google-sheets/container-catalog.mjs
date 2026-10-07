@@ -1,4 +1,6 @@
 import { stripMarkdown } from "../../site/lib/content/profile-source.mjs";
+import { isRecord } from "../build-data.mjs";
+import { inventorySnapshotDigest } from "./inventory-expansion.mjs";
 
 /**
  * @typedef {{
@@ -29,6 +31,7 @@ import { stripMarkdown } from "../../site/lib/content/profile-source.mjs";
  *         title: string;
  *         gridProperties: { rowCount: number; columnCount: number };
  *     };
+ *     basicFilter?: { range: Record<string, unknown>; [key: string]: unknown };
  * }} CatalogSheet
  *
  * @typedef {{
@@ -115,6 +118,168 @@ const site = "https://nick2bad4u.github.io/Gardening";
 const green = { blue: 0.18, green: 0.24, red: 0.12 };
 const gold = { blue: 0.44, green: 0.78, red: 0.91 };
 const pale = { blue: 0.92, green: 0.97, red: 0.94 };
+
+/**
+ * Append reviewed catalog membership after the roster/page expansion. Existing
+ * catalog evidence stays unchanged; only bounded tracker lookups, filter ends,
+ * and the two Integrity scan ends grow. Capture the complete used rows plus the
+ * empty destination row, including userEnteredValue and effectiveValue.
+ *
+ * @param {CatalogSnapshot & {
+ *     catalogRows: Record<
+ *         string,
+ *         import("./inventory-expansion.mjs").Cell[][]
+ *     >;
+ * }} snapshot
+ * @param {{ containers: CatalogContainer[]; members: CatalogMember[] }} catalog
+ */
+export function buildContainerCatalogAppendRequests(snapshot, catalog) {
+    const clean = structuredClone(snapshot);
+    clean.metadata.sheets = clean.metadata.sheets.filter(
+        ({ properties }) =>
+            !["Container members", "Containers"].includes(properties.title)
+    );
+    const oldContainerEnd = catalog.containers.length;
+    const oldMemberEnd = catalog.members.length;
+    const oldTerms = [
+        [
+            `SUM(ARRAYFORMULA(N(ISERROR('Containers'!A1:S${oldContainerEnd}))))`,
+            `SUM(ARRAYFORMULA(N(ISERROR(Containers!A1:S${oldContainerEnd}))))`,
+        ],
+        [
+            `SUM(ARRAYFORMULA(N(ISERROR('Container members'!A1:J${oldMemberEnd}))))`,
+        ],
+    ];
+    for (const variants of oldTerms) {
+        // Sheets removes optional quotes from this simple sheet name on read.
+        // Accept either spelling while retaining the exact endpoint guard.
+        const matching = variants.filter((term) =>
+            clean.integrity.formula.includes(`,${term}`)
+        );
+        const term = matching[0];
+        if (
+            term === undefined ||
+            matching.length !== 1 ||
+            clean.integrity.formula.split(term).length !== 2
+        )
+            throw new Error("Existing catalog Integrity bounds changed");
+        clean.integrity.formula = clean.integrity.formula.replace(
+            `,${term}`,
+            ""
+        );
+    }
+    const generated = buildContainerCatalogRequests(clean, catalog);
+    /** @type {Record<string, unknown>[]} */
+    const requests = [];
+    for (const [
+        title,
+        sheetId,
+        headers,
+        ids,
+    ] of /** @type {[string, number, readonly string[], string[]][]} */ ([
+        [
+            "Containers",
+            containerCatalogSheetId,
+            containerCatalogHeaders,
+            catalog.containers.map(({ id }) => id),
+        ],
+        [
+            "Container members",
+            containerMembersSheetId,
+            containerMemberHeaders,
+            catalog.members.map(({ inventoryId }) => inventoryId),
+        ],
+    ])) {
+        const { rows, sheet } = validateCatalogAppendSheet(
+            snapshot,
+            title,
+            sheetId,
+            headers,
+            ids
+        );
+        const generatedWrite = generated.requests.find(
+            (request) =>
+                isRecord(request["updateCells"]) &&
+                isRecord(request["updateCells"]["start"]) &&
+                request["updateCells"]["start"]["sheetId"] === sheetId
+        );
+        const updateCells = generatedWrite?.["updateCells"];
+        if (!isRecord(updateCells) || !Array.isArray(updateCells["rows"]))
+            throw new Error("Missing generated catalog rows");
+        const added = /** @type {unknown} */ (updateCells["rows"][ids.length]);
+        if (!isRecord(added)) throw new Error("Missing new catalog member row");
+        if (sheet.properties.gridProperties.rowCount < ids.length + 1)
+            requests.push({
+                appendDimension: {
+                    dimension: "ROWS",
+                    length:
+                        ids.length +
+                        1 -
+                        sheet.properties.gridProperties.rowCount,
+                    sheetId,
+                },
+            });
+        requests.push(
+            {
+                copyPaste: {
+                    destination: {
+                        endColumnIndex: headers.length,
+                        endRowIndex: ids.length + 1,
+                        sheetId,
+                        startColumnIndex: 0,
+                        startRowIndex: ids.length,
+                    },
+                    pasteType: "PASTE_FORMAT",
+                    source: {
+                        endColumnIndex: headers.length,
+                        endRowIndex: ids.length,
+                        sheetId,
+                        startColumnIndex: 0,
+                        startRowIndex: ids.length - 1,
+                    },
+                },
+            },
+            {
+                updateCells: {
+                    fields: "userEnteredValue",
+                    rows: [added],
+                    start: { columnIndex: 0, rowIndex: ids.length, sheetId },
+                },
+            },
+            ...extendCatalogLookups(
+                rows.slice(1, ids.length),
+                sheetId,
+                oldContainerEnd
+            )
+        );
+        if (sheet.basicFilter.range["endRowIndex"] !== ids.length)
+            throw new Error(`Catalog filter bounds changed: ${title}`);
+        requests.push({
+            setBasicFilter: {
+                filter: {
+                    ...structuredClone(sheet.basicFilter),
+                    range: {
+                        ...sheet.basicFilter.range,
+                        endRowIndex: ids.length + 1,
+                    },
+                },
+            },
+        });
+    }
+    const finalIntegrity = generated.requests.at(-1);
+    if (!finalIntegrity) throw new Error("Missing catalog integrity request");
+    requests.push(finalIntegrity);
+    return {
+        containerRange: generated.containerRange,
+        destinations: {
+            "Container members": catalog.members.length,
+            Containers: catalog.containers.length,
+        },
+        memberRange: generated.memberRange,
+        requests,
+        sourceDigest: catalogAppendDigest(snapshot),
+    };
+}
 
 /**
  * Add two read-only catalog views and extend only Integrity B12. Supply a fresh
@@ -283,14 +448,98 @@ export function normalizeContainerCatalog(source) {
     return { containers, members };
 }
 
+/**
+ * @param {ReturnType<typeof buildContainerCatalogAppendRequests>} plan
+ * @param {Parameters<typeof buildContainerCatalogAppendRequests>[0]} fresh
+ */
+export function verifyContainerCatalogAppendPreconditions(plan, fresh) {
+    for (const [title, startRow] of Object.entries(plan.destinations))
+        assertCatalogAppendEmpty(
+            (fresh.catalogRows[title] ?? []).slice(startRow),
+            title
+        );
+    if (catalogAppendDigest(fresh) !== plan.sourceDigest)
+        throw new Error("Catalog source changed since append planning");
+    return true;
+}
+
 /** @param {string | undefined} value */
 function acquisitionDate(value) {
     return /^\d{4}-\d{2}-\d{2}\b/v.exec(stripMarkdown(value ?? ""))?.[0] ?? "";
 }
 
+/**
+ * @param {import("./inventory-expansion.mjs").Cell[][]} rows @param {string}
+ *   title
+ */
+function assertCatalogAppendEmpty(rows, title) {
+    if (
+        rows.some((row) =>
+            row.some(
+                (cell) =>
+                    cell.userEnteredValue !== undefined ||
+                    cell.effectiveValue !== undefined
+            )
+        )
+    )
+        throw new Error(`Catalog append destination occupied: ${title}`);
+}
+
+/** @param {unknown} snapshot */
+function catalogAppendDigest(snapshot) {
+    const stable = /** @type {unknown} */ (
+        JSON.parse(
+            JSON.stringify(snapshot, (key, /** @type {unknown} */ value) =>
+                key === "effectiveValue" ? undefined : value
+            )
+        )
+    );
+    return inventorySnapshotDigest(stable);
+}
+
 /** @param {string} id */
 function containerUrl(id) {
     return `${site}/containers/${id}/`;
+}
+
+/**
+ * @param {import("./inventory-expansion.mjs").Cell[][]} rows
+ * @param {number} sheetId @param {number} oldEnd
+ */
+function extendCatalogLookups(rows, sheetId, oldEnd) {
+    return rows.flatMap((row, rowIndex) =>
+        row.flatMap((cell, columnIndex) => {
+            const before = cell.userEnteredValue?.formulaValue;
+            if (before === undefined) return [];
+            const after = before.replaceAll(
+                /(?<range>'Plant tracker'!\$[A-Z]+\$2:\$[A-Z]+\$)(?<end>\d+)(?!\d)/gv,
+                (match, range, end) =>
+                    Number(end) === oldEnd
+                        ? `${String(range)}${oldEnd + 1}`
+                        : match
+            );
+            if (after === before) return [];
+            return [
+                {
+                    updateCells: {
+                        fields: "userEnteredValue",
+                        rows: [
+                            {
+                                values: [
+                                    {
+                                        userEnteredValue: {
+                                            formulaValue: after,
+                                        },
+                                    },
+                                ],
+                            },
+                        ],
+                        start: { columnIndex, rowIndex: rowIndex + 1, sheetId },
+                    },
+                },
+            ];
+        })
+    );
 }
 
 /**
@@ -621,6 +870,38 @@ function validateCatalog(snapshot, { containers, members }) {
         );
     validateMembers(containers, members);
     validateContainerMembers(snapshot, containers, members);
+}
+
+/**
+ * @param {Parameters<typeof buildContainerCatalogAppendRequests>[0]} snapshot
+ * @param {string} title @param {number} sheetId @param {readonly string[]}
+ *   headers @param {string[]} ids
+ */
+function validateCatalogAppendSheet(snapshot, title, sheetId, headers, ids) {
+    const sheet = snapshot.metadata.sheets.find(
+        ({ properties }) => properties.title === title
+    );
+    const rows = snapshot.catalogRows[title];
+    if (
+        rows === undefined ||
+        sheet?.properties.sheetId !== sheetId ||
+        !sheet.basicFilter ||
+        rows.length < ids.length + 1
+    )
+        throw new Error(`Missing complete existing catalog snapshot: ${title}`);
+    if (
+        headers.some(
+            (header, column) =>
+                rows[0]?.[column]?.userEnteredValue?.stringValue !== header
+        )
+    )
+        throw new Error(`Catalog headers changed: ${title}`);
+    const previousIds = ids.slice(0, -1);
+    for (const [index, id] of previousIds.entries())
+        if (rows[index + 1]?.[0]?.userEnteredValue?.stringValue !== id)
+            throw new Error(`Catalog membership changed: ${title}`);
+    assertCatalogAppendEmpty(rows.slice(ids.length), title);
+    return { rows, sheet: { ...sheet, basicFilter: sheet.basicFilter } };
 }
 
 /**

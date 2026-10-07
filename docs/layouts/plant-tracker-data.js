@@ -56,6 +56,7 @@ const plantSheetGids = Object.freeze({
     P32: 202_609_340,
     P35: 202_609_350,
     P36: 202_609_360,
+    P37: 202_610_370,
 });
 
 export const sheetUrls = {

@@ -17,7 +17,7 @@
    installDailyCareDashboard, GARDEN_CYCLE_COMPARISON */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.30.1",
+    version: "5.31.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -434,6 +434,7 @@ const APP_SHEET_BULK_PLANTS = Object.freeze([
     "P32",
     "P35",
     "P36",
+    "P37",
 ]);
 // Owner reassigned the two purchased houseplants to P31/P32. Old P33/P34
 // requests stay retired; freshness guards prevent canceled-order draft reuse.
@@ -529,10 +530,14 @@ const APP_SHEET_BULK_V528_HEADERS = Object.freeze([
     "P33 weight (g)",
     "P34 weight (g)",
 ]);
-const APP_SHEET_BULK_HEADERS = Object.freeze([
+const APP_SHEET_BULK_V529_HEADERS = Object.freeze([
     ...APP_SHEET_BULK_V528_HEADERS,
     "P35 weight (g)",
     "P36 weight (g)",
+]);
+const APP_SHEET_BULK_HEADERS = Object.freeze([
+    ...APP_SHEET_BULK_V529_HEADERS,
+    "P37 weight (g)",
 ]);
 
 const APP_SHEET_BULK_ACTION_INDEX = 3;
@@ -1005,6 +1010,19 @@ function validateMeasurementEvents_(eventNames, weight, height, width) {
     }
     if (eventNames.includes("Measure") && height === "" && width === "") {
         throw new Error("Enter a height or width for the Measure event.");
+    }
+}
+
+/** @param {readonly string[]} eventNames @param {unknown} condition @param {unknown} soilMoisture @returns {void} */
+function validateCheckDetails_(eventNames, condition, soilMoisture) {
+    if (
+        eventNames.includes("Check") &&
+        !cleanText_(condition) &&
+        !cleanText_(soilMoisture)
+    ) {
+        throw new Error(
+            "Enter plant condition, soil moisture, or both for the Check event."
+        );
     }
 }
 
@@ -1490,10 +1508,11 @@ function processQueuedAppSheetBulkEntries_(spreadsheet) {
     if (!bulkSheet) {
         return appSheetBulkQueueSummary_(false, 0, [], 0, startedAt);
     }
-    // Live 54/56/58-column AppSheet apps remain usable until an explicit upgrade.
+    // Live 54/56/58/60-column AppSheet apps remain usable until an explicit upgrade.
     migrateLegacyAppSheetBulkSheet_(bulkSheet, false);
     const bulkHeaders = [
         APP_SHEET_BULK_HEADERS,
+        APP_SHEET_BULK_V529_HEADERS,
         APP_SHEET_BULK_V528_HEADERS,
         APP_SHEET_BULK_V526_HEADERS,
         APP_SHEET_BULK_V525_HEADERS,
@@ -1963,7 +1982,7 @@ function installAppSheetBulkSheet() {
         .setDataValidation(weightValidation)
         .setNumberFormat("0.0");
     sheet
-        .getRange(2, APP_SHEET_BULK_V528_HEADERS.length + 1, dataRowCount, 2)
+        .getRange(2, APP_SHEET_BULK_V528_HEADERS.length + 1, dataRowCount, 3)
         .setDataValidation(weightValidation)
         .setNumberFormat("0.0");
     const rotationValidation = SpreadsheetApp.newDataValidation()
@@ -2044,7 +2063,7 @@ function installAppSheetBulkSheet() {
     );
     sheet.setColumnWidths(APP_SHEET_BULK_V525_HEADERS.length + 1, 2, 105);
     sheet.setColumnWidths(APP_SHEET_BULK_V526_HEADERS.length + 1, 2, 105);
-    sheet.setColumnWidths(APP_SHEET_BULK_V528_HEADERS.length + 1, 2, 105);
+    sheet.setColumnWidths(APP_SHEET_BULK_V528_HEADERS.length + 1, 3, 105);
     sheet.setColumnWidth(APP_SHEET_BULK_NOTES_INDEX + 1, 280);
     sheet.setColumnWidth(APP_SHEET_BULK_ROTATION_INDEX + 1, 110);
     sheet.setColumnWidths(APP_SHEET_BULK_CONDITION_INDEX + 1, 4, 190);
@@ -2054,7 +2073,7 @@ function installAppSheetBulkSheet() {
     sheet.hideColumns(APP_SHEET_BULK_NOTES_INDEX + 2, 7);
     sheet.showColumns(APP_SHEET_BULK_V525_HEADERS.length + 1, 2);
     sheet.hideColumns(APP_SHEET_BULK_V526_HEADERS.length + 1, 2);
-    sheet.showColumns(APP_SHEET_BULK_V528_HEADERS.length + 1, 2);
+    sheet.showColumns(APP_SHEET_BULK_V528_HEADERS.length + 1, 3);
 
     const result = {
         created,
@@ -2088,6 +2107,7 @@ function migrateLegacyAppSheetBulkSheet_(sheet, shouldUpgradeInventory = true) {
 
     if (hasHeaders(APP_SHEET_BULK_HEADERS)) return false;
     const priorSchema = [
+        { headers: APP_SHEET_BULK_V529_HEADERS, lastColumn: "BH" },
         { headers: APP_SHEET_BULK_V528_HEADERS, lastColumn: "BF" },
         { headers: APP_SHEET_BULK_V526_HEADERS, lastColumn: "BD" },
         { headers: APP_SHEET_BULK_V525_HEADERS, lastColumn: "BB" },
@@ -2650,6 +2670,8 @@ function appendPreparedWebObservationBatch_(spreadsheet, items, results) {
     items.forEach(({ index, value: prepared }) => {
         const input = prepared.observation;
         const requestId = input.requestId;
+        /** @type {"HISTORY_CONFLICT" | "VALIDATION"} */
+        let errorCode = "HISTORY_CONFLICT";
         try {
             const existing = snapshot.rowsByRequest.get(requestId) || [];
             /* New request IDs and existing retry IDs are both covered; V8 reports a synthetic alternate branch. */
@@ -2670,6 +2692,14 @@ function appendPreparedWebObservationBatch_(spreadsheet, items, results) {
                 }
             }
 
+            // Resolve completed retries before enforcing new-entry requirements.
+            errorCode = "VALIDATION";
+            validateCheckDetails_(
+                input.eventNames,
+                input.condition,
+                input.soilMoisture
+            );
+            errorCode = "HISTORY_CONFLICT";
             const targetRow = existing[0]?.rowNumber ?? nextRow;
             const recordedAt = new Date();
             const storedRows = storedObservationRows_(
@@ -2703,7 +2733,7 @@ function appendPreparedWebObservationBatch_(spreadsheet, items, results) {
                 plantId: input.plantId,
                 plantName: prepared.plant.name,
                 retryable: false,
-                errorCode: "HISTORY_CONFLICT",
+                errorCode,
                 message: error instanceof Error ? error.message : String(error),
             };
         }
@@ -7420,6 +7450,16 @@ function correctionPatchedRow_(original, changes) {
  */
 function correctionActionRow_(snapshot, original, payload) {
     const row = correctionPatchedRow_(original.values, payload.changes);
+    if (
+        payload.action !== "remove" &&
+        row[2] === "Check" &&
+        !row[7].trim() &&
+        !row[32].trim()
+    ) {
+        throw correctionValidationError_(
+            "INVALID_CORRECTION: Keep plant condition, soil moisture, or both for Check."
+        );
+    }
     if (payload.action !== "move" && payload.action !== "remove")
         return { row, destinationDigest: "" };
     if (row[2] === "Repot")
@@ -8212,6 +8252,13 @@ function appendObservation_(spreadsheet, input) {
         if (existingResult) return existingResult;
     }
 
+    // Historical completed requests remain replayable; new or incomplete ones
+    // must satisfy the same structured-detail rule as the Integrity check.
+    validateCheckDetails_(
+        input.eventNames,
+        input.condition,
+        input.soilMoisture
+    );
     const targetRow =
         firstExistingRow ?? Math.max(lastHistoryReservedRow_(history) + 1, 2);
     const recordedAt = new Date();
