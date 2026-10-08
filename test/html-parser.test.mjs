@@ -1,37 +1,61 @@
-import upstream from "@html-eslint/parser";
-import { createRequire } from "node:module";
+import parser from "@html-eslint/parser";
 import { describe, expect, it } from "vitest";
 
-import parser from "../scripts/html-eslint-parser.mjs";
-
 /** @import {ParserOptions} from "@html-eslint/parser" */
-/** @import {getLineInfo} from "es-html-parser/dist/utils/get-line-info.js" */
 
-const upstreamRequire = createRequire(
-    import.meta.resolve("@html-eslint/parser")
-);
-/** @type {unknown} */
-const locationModule = upstreamRequire(
-    "es-html-parser/dist/utils/get-line-info.js"
-);
-
-/** @param {unknown} value @returns {value is {getLineInfo: typeof getLineInfo}} */
-function hasLocationLookup(value) {
-    return (
-        typeof value === "object" &&
-        value !== null &&
-        "getLineInfo" in value &&
-        typeof value.getLineInfo === "function"
-    );
+/** @param {string} source @param {number} offset */
+function expectedLocation(source, offset) {
+    const lines = source.slice(0, offset).split(/\r\n|[\n\r\u{2028}\u{2029}]/v);
+    return { column: lines.at(-1)?.length ?? 0, line: lines.length };
 }
 
-if (!hasLocationLookup(locationModule)) {
-    throw new Error("The pinned parser's location helper is unavailable.");
+/**
+ * Check nested HTML/CSS nodes, tokens, and comments against their source
+ * ranges. The independent prefix oracle is deliberately limited to these small
+ * fixtures.
+ *
+ * @param {unknown} value
+ * @param {string} source
+ * @param {WeakSet<object>} [seen]
+ *
+ * @returns {number}
+ */
+function expectSourceLocations(value, source, seen = new WeakSet()) {
+    if (typeof value !== "object" || value === null || seen.has(value)) {
+        return 0;
+    }
+    seen.add(value);
+    let checked = 0;
+    if ("range" in value && "loc" in value && Array.isArray(value.range)) {
+        /** @type {unknown[]} */
+        const [start, end] = value.range;
+        if (typeof start !== "number" || typeof end !== "number") {
+            throw new TypeError("Parser ranges must contain numeric offsets.");
+        }
+
+        expect(start).toBeGreaterThanOrEqual(0);
+        expect(end).toBeGreaterThanOrEqual(start);
+        expect(end).toBeLessThanOrEqual(source.length);
+        expect(value.loc).toMatchObject({
+            end: expectedLocation(source, end),
+            start: expectedLocation(source, start),
+        });
+
+        checked += 1;
+    }
+    for (const child of Object.values(value)) {
+        checked += expectSourceLocations(child, source, seen);
+    }
+    return checked;
 }
-
-const originalLookup = locationModule.getLineInfo;
-
-/** @type {{ name: string; source: string; options?: ParserOptions }[]} */
+/**
+ * @type {{
+ *     name: string;
+ *     source: string;
+ *     options?: ParserOptions;
+ *     recoveredEnd?: number;
+ * }[]}
+ */
 const fixtures = [
     { name: "empty input and omitted options", source: "" },
     {
@@ -62,7 +86,7 @@ if (1 < 2) { document.title = label; }
     },
     {
         name: "template comments and conditional branches",
-        options: { templateEngineSyntax: upstream.TEMPLATE_ENGINE_SYNTAX.TWIG },
+        options: { templateEngineSyntax: parser.TEMPLATE_ENGINE_SYNTAX.TWIG },
         source: '{# care #}\n{% if plant %}<p id="care">{{ plant }}</p>{% else %}<p id="care">None</p>{% endif %}',
     },
     {
@@ -74,7 +98,7 @@ if (1 < 2) { document.title = label; }
         name: "frontmatter combined with template branches",
         options: {
             frontmatter: true,
-            templateEngineSyntax: upstream.TEMPLATE_ENGINE_SYNTAX.TWIG,
+            templateEngineSyntax: parser.TEMPLATE_ENGINE_SYNTAX.TWIG,
         },
         source: '---\r\nname: plant\r\n---\r\n{% if plant %}<p id="care">🪴</p>{% else %}<p id="care">None</p>{% endif %}',
     },
@@ -86,21 +110,25 @@ if (1 < 2) { document.title = label; }
     {
         name: "recoverable malformed markup",
         options: {},
+        recoveredEnd: 47,
         source: '<div><p title="open">Care<br><span>🪴</div><!-- unfinished',
     },
 ];
 
-describe("indexed HTML parser", () => {
+describe("public HTML parser", () => {
     it.each(fixtures)(
-        "preserves the complete parse result for $name",
-        ({ options, source }) => {
+        "preserves source locations throughout $name",
+        ({ options, recoveredEnd, source }) => {
             expect.hasAssertions();
 
-            const expected = upstream.parseForESLint(source, options);
-            const actual = parser.parseForESLint(source, options);
+            const result = parser.parseForESLint(source, options);
 
-            expect(actual).toStrictEqual(expected);
-            expect(locationModule.getLineInfo).toBe(originalLookup);
+            expect(result.ast.type).toBe("Program");
+            expect(result.ast.range?.[1]).toBe(recoveredEnd ?? source.length);
+            expect(expectSourceLocations(result.ast, source)).toBeGreaterThan(
+                0
+            );
+            expect(result.visitorKeys).toBe(parser.visitorKeys);
         }
     );
 
@@ -123,75 +151,23 @@ describe("indexed HTML parser", () => {
                 "<span>🌱</span></p>",
                 "",
             ].join(separator);
-            const expected = upstream.parseForESLint(source, {});
+            const result = parser.parseForESLint(source, undefined);
 
-            expect(parser.parseForESLint(source)).toStrictEqual(expected);
+            expect(expectSourceLocations(result.ast, source)).toBeGreaterThan(
+                20
+            );
+            expect(result.ast.loc?.end).toStrictEqual(
+                expectedLocation(source, source.length)
+            );
+            expect(result.ast.comments).toHaveLength(1);
         }
     );
 
-    it("preserves every UTF-16 offset, including inside CRLF and astral pairs", () => {
-        expect.hasAssertions();
-
-        const sources = [
-            "",
-            "plain",
-            "\r\n\r\n",
-            "a\r\r\n\nb",
-            "😀\r\n🪴\n🌱\u{2028}x\u{2029}",
-        ];
-        const expected = sources.map((source) =>
-            Array.from({ length: source.length + 1 }, (_, offset) =>
-                originalLookup(source, offset)
-            )
-        );
-        /** @type {ReturnType<typeof getLineInfo>[][]} */
-        let actual = [];
-
-        parser.parseForESLint("<p>Care</p>", {
-            get frontmatter() {
-                // The upstream option getter runs while the temporary helper is
-                // installed, allowing boundary checks without exporting internals.
-                actual = sources.map((source) =>
-                    Array.from({ length: source.length + 1 }, (_, offset) =>
-                        locationModule.getLineInfo(source, offset)
-                    )
-                );
-                return false;
-            },
-        });
-
-        expect(actual).toStrictEqual(expected);
-        expect(locationModule.getLineInfo).toBe(originalLookup);
-    });
-
-    it("uses a fresh lookup for each parse and restores it after success", () => {
-        expect.hasAssertions();
-
-        /** @type {(typeof getLineInfo)[]} */
-        const lookups = [];
-        const options = {
-            get frontmatter() {
-                lookups.push(locationModule.getLineInfo);
-                return false;
-            },
-        };
-
-        parser.parseForESLint("<p>First</p>", options);
-        const restoredAfterFirst = locationModule.getLineInfo;
-
-        parser.parseForESLint("<p>Second</p>", options);
-
-        expect(restoredAfterFirst).toBe(originalLookup);
-        expect(locationModule.getLineInfo).toBe(originalLookup);
-        expect(lookups).toHaveLength(2);
-        expect(lookups[0]).not.toBe(originalLookup);
-        expect(lookups[0]).not.toBe(lookups[1]);
-    });
-
-    it("restores the helper when the upstream parser throws", () => {
+    it("parses independently after an option getter throws", () => {
         expect.hasAssertions();
 
         const failure = new Error("Parser option evaluation failed");
+        const expected = parser.parseForESLint("<p>Recovered</p>", undefined);
         const options = {
             /** @returns {never} */
             get frontmatter() {
@@ -202,41 +178,30 @@ describe("indexed HTML parser", () => {
         expect(() => parser.parseForESLint("<p>Care</p>", options)).toThrow(
             failure
         );
-        expect(locationModule.getLineInfo).toBe(originalLookup);
-        expect(parser.parseForESLint("<p>Recovered</p>")).toStrictEqual(
-            upstream.parseForESLint("<p>Recovered</p>", undefined)
-        );
+        expect(
+            parser.parseForESLint("<p>Recovered</p>", undefined)
+        ).toStrictEqual(expected);
     });
 
-    it("restores the outer lookup after a synchronous nested parse", () => {
+    it("keeps source locations independent across a synchronous nested parse", () => {
         expect.hasAssertions();
 
-        const expected = upstream.parseForESLint("<p>Outer</p>", undefined);
-        const actual = parser.parseForESLint("<p>Outer</p>", {
+        const source = "<p>Outer\n🪴</p>";
+        const expected = parser.parseForESLint(source, undefined);
+        const actual = parser.parseForESLint(source, {
             get frontmatter() {
-                const outer = locationModule.getLineInfo;
-                parser.parseForESLint("<p>Inner</p>");
+                const innerSource = "<p>Inner\r\n🌱</p>";
+                const inner = parser.parseForESLint(innerSource, undefined);
 
-                expect(locationModule.getLineInfo).toBe(outer);
+                expect(
+                    expectSourceLocations(inner.ast, innerSource)
+                ).toBeGreaterThan(0);
 
                 return false;
             },
         });
 
         expect(actual).toStrictEqual(expected);
-        expect(locationModule.getLineInfo).toBe(originalLookup);
-    });
-
-    it("retains parser exports and supplies distinct ESLint cache metadata", () => {
-        expect.hasAssertions();
-
-        expect(parser.NODE_TYPES).toBe(upstream.NODE_TYPES);
-        expect(parser.TEMPLATE_ENGINE_SYNTAX).toBe(
-            upstream.TEMPLATE_ENGINE_SYNTAX
-        );
-        expect(parser.visitorKeys).toBe(upstream.visitorKeys);
-        expect(parser.meta.name).not.toBe(upstream.meta.name);
-        expect(parser.meta.version).not.toBe(upstream.meta.version);
     });
 
     it("parses a bounded larger document through its final token", () => {
@@ -244,7 +209,7 @@ describe("indexed HTML parser", () => {
 
         const repetitions = 2000;
         const source = `<main>\n${'<section><span title="🪴">Care</span></section>\n'.repeat(repetitions)}</main>`;
-        const result = parser.parseForESLint(source);
+        const result = parser.parseForESLint(source, undefined);
 
         expect(result.ast.range).toStrictEqual([0, source.length]);
         expect(result.ast.tokens?.at(-1)?.range).toStrictEqual([
@@ -255,6 +220,5 @@ describe("indexed HTML parser", () => {
             column: "</main>".length,
             line: repetitions + 2,
         });
-        expect(locationModule.getLineInfo).toBe(originalLookup);
     });
 });

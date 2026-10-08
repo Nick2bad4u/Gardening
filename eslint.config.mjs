@@ -1,10 +1,10 @@
+import parser from "@html-eslint/parser";
 import { createConfig } from "eslint-config-nick2bad4u";
 import astro from "eslint-plugin-astro";
 
 import appsScriptConfig, {
     createAppsScriptDeclarationConfig,
 } from "./scripts/eslint-apps-script-config.mjs";
-import parser from "./scripts/html-eslint-parser.mjs";
 
 /** @type {import("eslint").Linter.Config[]} */
 const sharedConfig = createConfig({
@@ -281,19 +281,6 @@ const config = [
         name: "Gardening: private static-site manifest",
         // The manifest installs development tools; it exposes no Node entry point or consumer peers.
         rules: {
-            // The source-location adapter is intentionally tied to these exact
-            // private parser implementations and refuses unverified upgrades.
-            "node-dependencies/absolute-version": [
-                "error",
-                {
-                    dependencies: "never",
-                    devDependencies: "never",
-                    overridePackages: {
-                        "@html-eslint/parser": "always",
-                        "es-html-parser": "always",
-                    },
-                },
-            ],
             "package-json/require-contributors": "off",
             "package-json/require-dependencies": "off",
             "package-json/require-main": "off",
