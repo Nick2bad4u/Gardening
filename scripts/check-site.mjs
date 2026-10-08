@@ -1,3 +1,4 @@
+import parser from "@html-eslint/parser";
 import assert from "node:assert/strict";
 import { readdir, readFile, stat } from "node:fs/promises";
 import * as path from "node:path";
@@ -13,7 +14,6 @@ import { archivedAmazonPlan } from "../site/lib/old-plans.mjs";
 import { getReports } from "../site/lib/reports.mjs";
 import { siteApps } from "../site/lib/site-apps.mjs";
 import { isRecord } from "./build-data.mjs";
-import parser from "./html-eslint-parser.mjs";
 
 /** @typedef {{ slug: string; title: string }} ProfileIdentity */
 /** @typedef {{ filename: string; html: string; relative: string }} PublishedPage */
@@ -189,7 +189,7 @@ async function assertTargetExists(filename, context) {
 
 /** @param {string} html @returns {{name: string; value: string}[]} */
 function attributes(html) {
-    const { ast } = parser.parseForESLint(html);
+    const { ast } = parser.parseForESLint(html, {});
     /** @type {unknown[]} */
     const pending = [...ast.body];
     /** @type {{ name: string; value: string }[]} */

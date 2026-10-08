@@ -78,9 +78,9 @@
 
 ## Tooling maintenance
 
-- Preserve `html-eslint-parser.mjs`'s version guards, equivalent parse results,
-  and restoration in `finally`. Review `test/html-parser.test.mjs` before
-  upgrading either pinned HTML parser package or removing the adapter.
+- Use the public `@html-eslint/parser`; its upstream source-location repair
+  replaces the retired local adapter. Keep the source-location, repeated-parse,
+  and large-input regressions in `test/html-parser.test.mjs` when upgrading it.
 - Use existing shared lint/type/test presets and narrow runtime overrides.
   Some inherited package scripts currently lack implementations: `lint:attw`,
   `sync:node-version-files`, `sync:npm-version` (including `:check`),

@@ -186,9 +186,9 @@ npm run check:logger
 
 ESLint and Prettier include Astro sources. Stylelint covers maintained CSS and the remaining standalone HTML styles, including the self-contained logger client. Generated artifacts and private caches stay excluded. Preserve the shared configurations and narrow runtime overrides rather than weakening checks to accommodate a migration.
 
-The pinned HTML parser adapter in `scripts/html-eslint-parser.mjs` indexes line breaks to avoid repeated source rescans and restores the upstream helper in `finally`. Its version guards and equivalence tests still apply to the remaining large standalone HTML inputs. Remove the adapter only when an upstream repair passes those tests.
+ESLint uses the public `@html-eslint/parser` directly. Version 0.66.1 incorporates the [upstream source-location performance repair](https://github.com/yeonjuan/html-eslint/pull/688), so the local adapter and private parser pins are retired. `test/html-parser.test.mjs` checks source locations, repeated parses, and large standalone HTML inputs when updating the parser.
 
-Vitest, its V8 coverage provider, and its Playwright browser provider use the same 4.1 release line. Storybook 10.6's Vitest addon supports Vitest 3 or 4. Keep these dependencies and the shared TypeScript preset compatible when updating; do not force a conflicting installation.
+Vitest, its V8 coverage provider, and its Playwright browser provider use the same 4.1 release line. Storybook 10.6.1's Vitest addon supports Vitest 3, 4, or 5, but `tsconfig-nick2bad4u@1.0.0` still requires Vitest 4.1. Keep these dependencies and the shared TypeScript preset compatible when updating; do not force a conflicting installation.
 
 The Node unit project uses native imports through `experimental.viteModuleRunner: false`. The logger harness evaluates Apps Script verbatim in VM contexts; Vite SSR transformations change source offsets and distort its V8 coverage. Preserve native execution and the separate 90% logger thresholds.
 
