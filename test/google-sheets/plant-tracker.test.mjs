@@ -511,13 +511,13 @@ function createDataValidationBuilder() {
  *     requestId?: string;
  *     values: import("../logger-fixtures.d.ts").CellValue[];
  * }[]} [observations]
- * @param {{ measurementValidations?: boolean }} [options]
+ * @param {{ formulaInputs?: string[][]; measurementValidations?: boolean }} [options]
  *
  * @returns {import("../sheet-fixtures.d.ts").HistorySheet}
  */
 function createHistorySheet(
     observations = [],
-    { measurementValidations = false } = {}
+    { formulaInputs = [], measurementValidations = false } = {}
 ) {
     /** @type {import("../sheet-fixtures.d.ts").RangePosition[]} */
     const rangeReads = [];
@@ -679,11 +679,16 @@ function createHistorySheet(
                 getDisplayValue: () => String(required(values()[0])[0] ?? ""),
                 getDisplayValues: () => sheetDisplayValues(values()),
                 getFormulas: () =>
-                    values().map((cells) =>
-                        cells.map((value) =>
-                            typeof value === "string" && value.startsWith("=")
-                                ? value
-                                : ""
+                    values().map((cells, rowOffset) =>
+                        cells.map(
+                            (value, columnOffset) =>
+                                formulaInputs[row - 1 + rowOffset]?.[
+                                    column - 1 + columnOffset
+                                ] ??
+                                (typeof value === "string" &&
+                                value.startsWith("=")
+                                    ? value
+                                    : "")
                         )
                     ),
                 getValues: values,
@@ -7356,6 +7361,106 @@ describe("garden logger inspection and light evidence", () => {
 });
 
 describe("garden logger light staging guards", () => {
+    it.each(["", "Column 44"])(
+        "installs History light headers over replaceable %j headers without changing observations",
+        (header) => {
+            expect.hasAssertions();
+
+            const history = createHistorySheet();
+            const headers = required(history.__rows[0]);
+            headers[43] = header;
+            headers[44] = header ? "Column 45" : "";
+            const row = emptyCells(45);
+            row[1] = "P01";
+            row[2] = "Check";
+            row[7] = "Legacy condition";
+            row[42] = 0;
+            row[12] = '=IF(B2="","",B2)';
+            history.__rows.push(row);
+            const context = loadAppsScript(history);
+            const before = structuredClone(row);
+
+            context.ensureHistoryLightColumns_(history, true);
+
+            expect(headers.slice(43)).toStrictEqual([
+                "PPFD (µmol/m²/s)",
+                "Illuminance (lux)",
+            ]);
+            expect(row).toStrictEqual(before);
+            expect(history.getRange(2, 13).getFormulas()).toStrictEqual([
+                [row[12]],
+            ]);
+            expect(history.__validationCells.has("2:44")).toBe(true);
+            expect(history.__validationCells.has("5000:45")).toBe(true);
+
+            row[43] = 0;
+            row[44] = 1000;
+            const installed = structuredClone(history.__rows);
+            context.ensureHistoryLightColumns_(history);
+
+            expect(history.__rows).toStrictEqual(installed);
+            expect(history.getRange(2, 13).getFormulas()).toStrictEqual([
+                [row[12]],
+            ]);
+        }
+    );
+
+    it.each([43, 44])(
+        "refuses a History light destination %s containing a formula that displays blank",
+        (index) => {
+            expect.hasAssertions();
+
+            const formulas = Array.from({ length: 45 }, () => "");
+            formulas[index] = '=IF(TRUE,"",1)';
+            const history = createHistorySheet([{ values: emptyCells(45) }], {
+                formulaInputs: [[], formulas],
+            });
+            const headers = required(history.__rows[0]);
+            headers[43] = "";
+            headers[44] = "";
+            const before = structuredClone(history.__rows);
+            const context = loadAppsScript(history);
+
+            expect(() => {
+                context.ensureHistoryLightColumns_(history, true);
+            }).toThrow(
+                /contains existing data; review before adding light readings/v
+            );
+            expect(history.__rows).toStrictEqual(before);
+            expect(history.getRange(2, index + 1).getFormulas()).toStrictEqual([
+                [formulas[index]],
+            ]);
+            expect(history.__validationCells.size).toBe(0);
+        }
+    );
+
+    it.each([31, 37])(
+        "upgrades legacy App entries with %s physical columns and preserves queued data",
+        (width) => {
+            expect.hasAssertions();
+
+            const headers = emptyCells(width);
+            headers.splice(0, 31, ...appSheetEntryHeaders.slice(0, 31));
+            const row = emptyCells(width);
+            row[0] = "LIGHT-UPGRADE-DRAFT";
+            row[2] = "P01";
+            row[3] = "Check";
+            row[9] = "Legacy condition";
+            row[26] = "Queued";
+            const before = row.slice(0, 31);
+            const entries = createDataSheet("App entries", [headers, row]);
+            const context = loadAppsScript(createHistorySheet());
+
+            expect(context.ensureAppSheetEntryColumns_(entries, true)).toBe(
+                true
+            );
+            expect(headers).toStrictEqual(appSheetEntryHeaders);
+            expect(row.slice(0, 31)).toStrictEqual(before);
+            expect(row.slice(31)).toStrictEqual(emptyCells(6));
+            expect(entries.getMaxColumns()).toBe(37);
+        }
+    );
+
     it.each([
         { formula: "", index: 35, value: 0 },
         { formula: "", index: 36, value: 0 },
