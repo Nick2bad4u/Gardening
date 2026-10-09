@@ -239,7 +239,7 @@ function portraitDescriptions() {
         ],
         [
             "echeveria-arctic-ice",
-            "A schematic pale blue-green rosette of rounded pointed leaves, without a pictured pot; cultivar reference, not the owned specimen.",
+            "A schematic pale blue-green rosette in a tall blue-and-white glazed pot with a dark blue diamond pattern, following owner photographs of #11 / P37.",
         ],
         [
             "echeveria-cubic-frost",
@@ -411,7 +411,7 @@ function portraitDescriptions() {
         ],
         [
             "tiny-mixed-succulent-planter",
-            "Two large pale rosettes and a smaller open rosette surround broad red-edged green paddles, copper-orange shoots, and a green-and-burgundy shoot in a striped terracotta planter.",
+            "Two pale rosettes, broad red-orange paddles, copper-orange shoots, and low purple foliage share a shallow rounded green-glazed bowl with multicolored mineral grit, following owner photographs of #6 / P30.",
         ],
         [
             "tiny-planter-coppertone-sedum",

@@ -5033,9 +5033,108 @@
         },
         {
             "plant_slug": "echeveria-arctic-ice",
-            "gyazo_collection": null,
-            "pending_note": "Acquired October 6, 2026 at Home Depot. Owner photographs and nursery-label evidence remain pending; the associated listing is not a photograph of the owned plant.",
-            "photos": []
+            "gyazo_collection": {
+                "id": "972b1a33508290c1279568678b2b39cd",
+                "url": "https://gyazo.com/collections/972b1a33508290c1279568678b2b39cd"
+            },
+            "pending_note": "Five owner photographs supplied October 8, 2026 document the owned plant and blue-and-white pot. Nursery-label evidence remains pending.",
+            "photos": [
+                {
+                    "kind": "collection",
+                    "provided_on": "2026-10-08",
+                    "view": "top-bright",
+                    "alt": "Bright top view of Arctic Ice echeveria (#11 / P37) in its blue-and-white pot",
+                    "caption": "Top view supplied for the October 8, 2026 initial care session. Pale leaves, greener leaf areas, and the full rosette are visible. Exact camera capture time was not supplied.",
+                    "publication_name": "2026-10-08-echeveria-arctic-ice-top-bright.jpg",
+                    "provider": "gyazo",
+                    "image_id": "40fe2737af77ebd3fe000923f4aff59c",
+                    "image_url": "https://i.gyazo.com/40fe2737af77ebd3fe000923f4aff59c.jpg",
+                    "page_url": "https://gyazo.com/40fe2737af77ebd3fe000923f4aff59c",
+                    "upload_metadata": {
+                        "app": "Gyazo",
+                        "title": "2026-10-08-echeveria-arctic-ice-top-bright.jpg",
+                        "url": "",
+                        "desc": ""
+                    },
+                    "source_note": "Owner-provided JPEG attachment retained privately. The repository publisher removed private metadata without resizing or re-encoding the primary image. Uploaded through Gyazo on October 8, 2026 after API authorization failed; the public image exactly matches the sanitized file. Actual Gyazo app and filename metadata were verified in the authenticated capture view. The provided date is recorded because the camera capture time was not supplied. Copyright Nick; all rights reserved."
+                },
+                {
+                    "kind": "collection",
+                    "provided_on": "2026-10-08",
+                    "view": "angled",
+                    "alt": "Angled view of Arctic Ice echeveria (#11 / P37), its leaf layers, and pot rim",
+                    "caption": "Angled rosette view supplied for the October 8, 2026 initial care session. Exact camera capture time was not supplied.",
+                    "publication_name": "2026-10-08-echeveria-arctic-ice-angled.jpg",
+                    "provider": "gyazo",
+                    "image_id": "a1e850d07c3da76382bc26582e91760a",
+                    "image_url": "https://i.gyazo.com/a1e850d07c3da76382bc26582e91760a.jpg",
+                    "page_url": "https://gyazo.com/a1e850d07c3da76382bc26582e91760a",
+                    "upload_metadata": {
+                        "app": "Gyazo",
+                        "title": "2026-10-08-echeveria-arctic-ice-angled.jpg",
+                        "url": "",
+                        "desc": ""
+                    },
+                    "source_note": "Owner-provided JPEG attachment retained privately. The repository publisher removed private metadata without resizing or re-encoding the primary image. Uploaded through Gyazo on October 8, 2026 after API authorization failed; the public image exactly matches the sanitized file. Actual Gyazo app and filename metadata were verified in the authenticated capture view. The provided date is recorded because the camera capture time was not supplied. Copyright Nick; all rights reserved."
+                },
+                {
+                    "kind": "collection",
+                    "provided_on": "2026-10-08",
+                    "view": "side",
+                    "alt": "Side view of Arctic Ice echeveria (#11 / P37) and its full blue-and-white patterned pot",
+                    "caption": "Full plant and pot view supplied for the October 8, 2026 initial care session. Exact camera capture time was not supplied.",
+                    "publication_name": "2026-10-08-echeveria-arctic-ice-side.jpg",
+                    "provider": "gyazo",
+                    "image_id": "8393fa584d5d4482b03ce9411fcd11ac",
+                    "image_url": "https://i.gyazo.com/8393fa584d5d4482b03ce9411fcd11ac.jpg",
+                    "page_url": "https://gyazo.com/8393fa584d5d4482b03ce9411fcd11ac",
+                    "upload_metadata": {
+                        "app": "Gyazo",
+                        "title": "2026-10-08-echeveria-arctic-ice-side.jpg",
+                        "url": "",
+                        "desc": ""
+                    },
+                    "source_note": "Owner-provided JPEG attachment retained privately. The repository publisher removed private metadata without resizing or re-encoding the primary image. Uploaded through Gyazo on October 8, 2026 after API authorization failed; the public image exactly matches the sanitized file. Actual Gyazo app and filename metadata were verified in the authenticated capture view. The provided date is recorded because the camera capture time was not supplied. Copyright Nick; all rights reserved."
+                },
+                {
+                    "kind": "collection",
+                    "provided_on": "2026-10-08",
+                    "view": "top",
+                    "alt": "Top view of Arctic Ice echeveria (#11 / P37) showing the pale rosette and greener leaf patches",
+                    "caption": "Second top view supplied for the October 8, 2026 initial care session, with different lighting. Exact camera capture time was not supplied.",
+                    "publication_name": "2026-10-08-echeveria-arctic-ice-top.jpg",
+                    "provider": "gyazo",
+                    "image_id": "2c2e5b588d49399f4c54119a60198c16",
+                    "image_url": "https://i.gyazo.com/2c2e5b588d49399f4c54119a60198c16.jpg",
+                    "page_url": "https://gyazo.com/2c2e5b588d49399f4c54119a60198c16",
+                    "upload_metadata": {
+                        "app": "Gyazo",
+                        "title": "2026-10-08-echeveria-arctic-ice-top.jpg",
+                        "url": "",
+                        "desc": ""
+                    },
+                    "source_note": "Owner-provided JPEG attachment retained privately. The repository publisher removed private metadata without resizing or re-encoding the primary image. Uploaded through Gyazo on October 8, 2026 after API authorization failed; the public image exactly matches the sanitized file. Actual Gyazo app and filename metadata were verified in the authenticated capture view. The provided date is recorded because the camera capture time was not supplied. Copyright Nick; all rights reserved."
+                },
+                {
+                    "kind": "collection",
+                    "provided_on": "2026-10-08",
+                    "view": "detail",
+                    "alt": "Close view of the Arctic Ice echeveria (#11 / P37) rosette center",
+                    "caption": "Rosette-center detail supplied for the October 8, 2026 initial care session. Exact camera capture time was not supplied.",
+                    "publication_name": "2026-10-08-echeveria-arctic-ice-detail.jpg",
+                    "provider": "gyazo",
+                    "image_id": "f844c90e33c4f6d7d84dc65995fb4862",
+                    "image_url": "https://i.gyazo.com/f844c90e33c4f6d7d84dc65995fb4862.jpg",
+                    "page_url": "https://gyazo.com/f844c90e33c4f6d7d84dc65995fb4862",
+                    "upload_metadata": {
+                        "app": "Gyazo",
+                        "title": "2026-10-08-echeveria-arctic-ice-detail.jpg",
+                        "url": "",
+                        "desc": ""
+                    },
+                    "source_note": "Owner-provided JPEG attachment retained privately. The repository publisher removed private metadata without resizing or re-encoding the primary image. Uploaded through Gyazo on October 8, 2026 after API authorization failed; the public image exactly matches the sanitized file. Actual Gyazo app and filename metadata were verified in the authenticated capture view. The provided date is recorded because the camera capture time was not supplied. Copyright Nick; all rights reserved."
+                }
+            ]
         }
     ],
     "schema_version": 3

@@ -64,7 +64,9 @@ The September 22 garden launcher set adds eleven original symbols for Home, Trac
 
 The September 23 Containers launcher adds original repository vector artwork: three leafy plants share a wide blush planter against a muted teal square. Its central composition fits the maskable safe circle and represents shared containers without identifying any particular plants. The Containers directory and its detail pages share this app identity; launching the installed app opens the directory.
 
-The October 6 Arctic Ice portrait for #11 / P37 is original schematic vector artwork: pale rounded rosette leaves based on the cultivar's descriptive form. It does not document the owned plant's appearance or imply a completed ceramic-pot repot. The profile preserves the patent and seller references.
+The Arctic Ice portrait for **#11 / P37**, first added October 6 and updated October 9, is original schematic vector artwork. The revision follows owner photographs supplied October 8: a pale, broad rosette above a tall blue-and-white glazed ceramic pot with dark blue elongated diamonds. The photographs guide its appearance; the drawing does not verify cultivar identity. The profile preserves the patent and seller references.
+
+The October 9 revision of the tiny mixed planter portrait for **#6 / P30** follows the five owner photographs supplied that day. Its shallow rounded green-glazed bowl has a dark narrow rim, mottled lower glaze, and multicolored mineral top dressing. Two pale rosettes, red-orange paddles, copper-orange shoots, and low purple foliage suggest the photographed arrangement without resolving the component plants' provisional identities. The separate component portraits still use illustrative pots to frame their foliage; they do not represent additional containers. Both revised portraits remain original simplified vectors, not photographs or botanical diagrams. The source photographs retain the owner's separate rights.
 
 ## Terrarium and humidity symbols
 
