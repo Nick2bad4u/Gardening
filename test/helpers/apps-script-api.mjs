@@ -50,6 +50,7 @@ export function appsScriptApi(context) {
         ensureHistoryDetailColumns_: null,
         ensureHistoryGrid_: null,
         ensureHistoryHumidityColumn_: null,
+        ensureHistoryLightColumns_: null,
         ensureHistoryMeasurementColumns_: null,
         ensureHistoryProvenanceColumns_: null,
         ensureHistoryRequestIdColumn_: null,

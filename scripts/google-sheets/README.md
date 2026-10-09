@@ -27,6 +27,51 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## Inspect and light readings (5.33.0) — rollout pending
+
+**Maintained source: 5.33.0. Deployment and AppSheet activation are not yet
+verified for this change.** The production version/deployment facts above and
+the dated rollout records below remain the preceding verified baseline.
+
+The detailed writer adds **Inspect** for visual plant condition, requiring
+descriptive condition with **Observed / Observed** provenance. Soil moisture
+remains Check. Legacy condition-only Check observations and requests remain
+valid; this change does not relabel historical events. Inspect plus Check
+produces separate condition and moisture rows. Bulk Inspect uses the entered
+shared condition for each selected container and requires that condition.
+
+Canonical **Light** is displayed as **Light reading** in the phone logger. It
+accepts optional request fields `ppfd` in **µmol/m²/s** and `lux` in **lux**,
+requiring at least one finite nonnegative value. Zero is valid; blank is absent.
+Both supplied values remain independent and are never automatically converted
+by the logger. A Light row with PPFD uses **Estimated / Light app** provenance;
+lux-only uses **Measured / Lux meter**. Light and Humidity are individual-entry
+events, excluded from Bulk care and Bulk Log.
+
+| Surface                            | 5.33.0 physical schema | Appended fields                                   |
+| ---------------------------------- | ---------------------- | ------------------------------------------------- |
+| History and read-only History view | 45 columns, A:AS       | AR: `PPFD (µmol/m²/s)`; AS: `Illuminance (lux)`   |
+| App entries                        | 37 columns, A:AK       | AJ/AK: the same headers, mapped to `ppfd` / `lux` |
+| App bulk                           | 62 columns, A:BJ       | Unchanged                                         |
+
+Append columns without shifting earlier data. Rehearse structural migration in
+a disposable native copy and retain a production Drive backup. Before live
+writes, reread source, headers, formulas, validations, trigger and deployment
+state. Verify preservation of canonical records, IDs, request grouping,
+existing staging values and AppSheet settings. Keep canonical/helper tables
+readonly, staging writable and exactly one five-minute queue trigger. Preserve
+the phone URL by updating its existing deployment to an immutable version.
+Record actual backup, migration, version, trigger and readback facts here only
+after verification; do not send synthetic observations to production.
+
+The owner's UT383BT supplies illuminance; PPFD Meter provides the app estimate.
+Use the matched light setting and record preset, light state, sensor location
+and daylight context in Notes when useful. Source references checked October 9:
+
+- [UNI-T UT383/UT383BT specifications](https://meters.uni-trend.com/product/ut383-ut383bt/) — lux/foot-candle illuminance display.
+- [PPFD Meter developer listing](https://play.google.com/store/apps/details?id=com.homestudio.ppfdmeter) — UT383BT support, lux-to-PPFD conversion and settings profiles; developer claims are not calibration evidence.
+- [Operator action guide](../../docs/logger-actions.md#light-readings) and [AppSheet contract](../../docs/appsheet-companion.md#inspect-and-light-reading-source-contract--rollout-pending).
+
 ## October 9 terrarium and humidity rollout
 
 Production logger **5.32.0** adds **P38 / #12 — Terrarium** at the owner's October 9
@@ -1941,7 +1986,8 @@ The AppSheet form contract is:
 
 - `Plant ID` is a required Ref to `Plant tracker`; `Events` is a required
   EnumList containing Water, Weigh, Measure, Check, Rotation, Clean, Prune,
-  Repot, Flower, Photo, Pest, Other, and Humidity in 5.32.0.
+  Repot, Flower, Photo, Pest, Other, Humidity, Inspect, and Light in the 5.33.0
+  source contract. Production activation is tracked above.
 - Event-specific fields use `Show_If` and `Required_If` rules. Weigh requires a
   positive weight. Measure requires at least height or width and accepts inches
   or centimeters. Water records whether nutrients were used. Repot requires a
@@ -1956,7 +2002,7 @@ The AppSheet form contract is:
   are system fields. Users may inspect the status but must not edit the receipt.
 
 The `App bulk` contract is deliberately narrower and faster: one row is one
-collection-wide Water, Weigh, Water + weigh, Rotation, Check, Clean, Prune,
+collection-wide Water, Weigh, Water + weigh, Rotation, Inspect, Check, Clean, Prune,
 Pest, or Other round. It stores `Round ID`, observation time, one action
 selector, a compact EnumList of selected plant IDs, a hidden legacy weight-state
 field, optional shared care details, and P01-P30 active gram fields. Empty weight fields are
@@ -2235,7 +2281,8 @@ installable trigger is not required.
   logger also records whether the dimensions were measured or estimated and how
   they were obtained. Older pending drafts without an explicit unit remain
   centimeters because the pre-5.8 form was centimeters-only.
-- Plant condition and soil moisture are separate Check fields. Growing medium
+- Inspect records visual plant condition; Check records soil moisture. Legacy
+  condition-only Check remains valid, without historical rewriting. Growing medium
   is recorded separately on Repot rows, so substrate descriptions no longer
   masquerade as dated plant-condition observations. Notes are attached to the
   first event created by a Save so text is not repeated across several history
@@ -2270,13 +2317,14 @@ installable trigger is not required.
   method, and status fields; AK:AM stores the entry unit plus automatic
   height/width inch conversions; AN stores rotation degrees; AO:AP store
   watering application plus optional measured milliliters; and 5.32.0
-  appends relative humidity in AQ. A 5.32.0 save writes the entire A:AQ record
+  appends relative humidity in AQ. The 5.33.0 source appends PPFD and illuminance
+  in AR:AS and writes the entire A:AS record
   block in one call so a failed service call cannot
   strand a request ID apart from its
   observation. The installer keeps 5,000 History rows available, and workbook
   formulas use that same bound so new observations cannot outgrow the derived
   dashboards silently.
-- The Bulk care tab can append Water, Check, Rotation, Clean, Prune, Pest, or
+- The Bulk care tab can append Water, Inspect, Check, Rotation, Clean, Prune, Pest, or
   Other rows for every selected plant with shared details. Use single-plant
   mode for weights, measurements, repots, flowers, and photos because those
   values differ by plant.

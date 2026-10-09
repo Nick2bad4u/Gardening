@@ -59,6 +59,8 @@ const headers = [
     "Watering application",
     "Water amount (mL)",
     "Relative humidity (%)",
+    "PPFD (µmol/m²/s)",
+    "Illuminance (lux)",
 ];
 
 /**
@@ -128,12 +130,12 @@ function applyUpdate(rows, update, maxRows, timeZone) {
         rowIndex >= maxRows ||
         update.rows.length !== 1 ||
         columnIndex < 0 ||
-        columnIndex + values.length > 43
+        columnIndex + values.length > 45
     ) {
         throw new Error("Invalid update range");
     }
     while (rows.length <= rowIndex)
-        rows.push(Array.from({ length: 43 }, () => cell()));
+        rows.push(Array.from({ length: 45 }, () => cell()));
     for (const [offset, data] of values.entries()) {
         applyCell(
             required(required(rows[rowIndex])[columnIndex + offset]),
@@ -305,7 +307,7 @@ function fixture(
         lastSelectedRow: 2,
         locked: false,
         lockUnavailable: false,
-        maxColumns: 43,
+        maxColumns: 45,
         maxRows: Math.max(100, observations.length + 1),
         missingFormulaReadRow: 0,
         onAlert: () => {},
@@ -562,7 +564,7 @@ function fixture(
  * @returns {import("../logger-correction-fixtures.d.ts").CorrectionCell[]}
  */
 function observation(event = "Weigh", id = "original-1", overrides = {}) {
-    const row = Array.from({ length: 43 }, () => cell());
+    const row = Array.from({ length: 45 }, () => cell());
     const values = {
         0: new Date("2026-09-03T16:23:45.123Z"),
         1: "P01",
@@ -632,6 +634,110 @@ function prepare(
     const preview = model.api.previewWebObservationCorrection(request);
     return { ...request, previewToken: preview.previewToken, requestId };
 }
+
+describe("inspection and light correction evidence", () => {
+    it("corrects Inspect condition but prevents clearing its only structured evidence", () => {
+        expect.hasAssertions();
+
+        const model = fixture([
+            observation("Inspect", "original-1", { 7: "Leaves firm" }),
+        ]);
+
+        expect(() => prepare(model, { condition: "" })).toThrow(
+            /condition for inspect/iv
+        );
+
+        const payload = prepare(model, { condition: "New leaf" });
+
+        expect(model.api.saveWebObservationCorrection(payload)).toMatchObject({
+            status: "saved",
+        });
+        expect(stored(model, 2, 8).value).toBe("Leaves firm");
+        expect(stored(model, 3, 8).value).toBe("New leaf");
+        expect(stored(model, 3, 3).value).toBe("Inspect");
+    });
+
+    it.each([
+        { lux: 0, method: "Lux meter", ppfd: "", quality: "Measured" },
+        { lux: "", method: "Light app", ppfd: 0, quality: "Estimated" },
+        {
+            lux: 1234.5,
+            method: "Light app",
+            ppfd: 150.25,
+            quality: "Estimated",
+        },
+    ])(
+        "corrects independent light values and provenance $ppfd / $lux",
+        ({ lux, method, ppfd, quality }) => {
+            expect.hasAssertions();
+
+            const model = fixture([
+                observation("Light", "original-1", {
+                    28: "Estimated",
+                    34: "Light app",
+                    43: 25,
+                    44: 500,
+                }),
+            ]);
+            const payload = prepare(model, { lux, ppfd });
+
+            expect(
+                model.api.saveWebObservationCorrection(payload)
+            ).toMatchObject({ status: "saved" });
+            expect(stored(model, 2, 44).value).toBe(25);
+            expect(stored(model, 2, 45).value).toBe(500);
+            expect(stored(model, 3, 44).value).toBe(ppfd);
+            expect(stored(model, 3, 45).value).toBe(lux);
+            expect(stored(model, 3, 29).value).toBe(quality);
+            expect(stored(model, 3, 35).value).toBe(method);
+            expect(
+                model.api.saveWebObservationCorrection(payload)
+            ).toMatchObject({ status: "saved" });
+            expect(model.state.rows).toHaveLength(3);
+        }
+    );
+
+    it("rejects missing or invalid light corrections and retains zero in a removal audit", () => {
+        expect.hasAssertions();
+
+        const model = fixture([
+            observation("Light", "original-1", {
+                28: "Estimated",
+                34: "Light app",
+                43: 0,
+                44: 0,
+            }),
+        ]);
+
+        expect(() => prepare(model, { lux: "", ppfd: "" })).toThrow(
+            /keep ppfd/iv
+        );
+
+        for (const value of [
+            -1,
+            "bad",
+            Infinity,
+            NaN,
+        ]) {
+            expect(() => prepare(model, { ppfd: value })).toThrow(
+                /INVALID_CORRECTION/v
+            );
+            expect(() => prepare(model, { lux: value })).toThrow(
+                /INVALID_CORRECTION/v
+            );
+        }
+
+        expect(
+            model.api.saveWebObservationCorrection(
+                prepareAction(model, "remove")
+            )
+        ).toMatchObject({ status: "saved" });
+        expect(stored(model, 2, 44).value).toBe(0);
+        expect(stored(model, 3, 44).value).toBe(0);
+        expect(stored(model, 2, 45).value).toBe(0);
+        expect(stored(model, 3, 45).value).toBe(0);
+    });
+});
 
 describe("humidity correction evidence", () => {
     it("removes a zero humidity observation without dropping its evidence", () => {
@@ -1554,7 +1660,7 @@ describe("atomic saved History corrections", () => {
         const model = fixture();
         model.state.rows.length = 4998;
         for (let index = 2; index < 4998; index += 1)
-            model.state.rows[index] = Array.from({ length: 43 }, () => cell());
+            model.state.rows[index] = Array.from({ length: 45 }, () => cell());
         model.state.rows.push(
             observation("Other", "last-existing", { 1: "P02" })
         );
@@ -2372,9 +2478,9 @@ describe("correction validation and durable receipt boundaries", () => {
 
         expect(() =>
             model.api.getWebCorrectionEntry({ observationId: "original-1" })
-        ).toThrow("43-column");
+        ).toThrow("45-column");
 
-        model.state.maxColumns = 43;
+        model.state.maxColumns = 45;
         stored(model, 1, 1).formula = '="Date"';
 
         expect(() =>
@@ -2788,7 +2894,7 @@ describe("durable pre-batch correction rejection", () => {
             case "HISTORY_CAPACITY": {
                 while (model.state.rows.length < 4999)
                     model.state.rows.push(
-                        Array.from({ length: 43 }, () => cell())
+                        Array.from({ length: 45 }, () => cell())
                     );
                 model.state.rows.push(
                     observation("Other", "capacity-end", { 1: "P02" })

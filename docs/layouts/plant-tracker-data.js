@@ -611,6 +611,7 @@ export function calculateSummary(sourceEvents, plantId = "") {
     );
     const pestEvents = eventNamed("Pest");
     const checkEvents = eventNamed("Check");
+    const inspectEvents = eventNamed("Inspect");
     const rotationEvents = eventNamed("Rotation");
     const cleanEvents = eventNamed("Clean");
     const pruneEvents = eventNamed("Prune");
@@ -679,6 +680,7 @@ export function calculateSummary(sourceEvents, plantId = "") {
             checks: checkEvents.length,
             cleans: cleanEvents.length,
             flowers: flowerEvents.length,
+            inspections: inspectEvents.length,
             nutrients: nutrientEvents.length,
             pests: pestEvents.length,
             photos: photoEvents.length,
@@ -698,6 +700,7 @@ export function calculateSummary(sourceEvents, plantId = "") {
         latestFlower: newest(flowerEvents, () => true),
         latestHeight,
         latestHumidity,
+        latestInspect: newest(inspectEvents, () => true),
         latestNutrients: newest(nutrientEvents, () => true),
         latestPest: newest(pestEvents, () => true),
         latestPhoto: newest(photoEvents, () => true),

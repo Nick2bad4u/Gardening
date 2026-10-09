@@ -48,6 +48,7 @@ export interface ObservationPayload {
     flowerCount?: string;
     flowerDetails?: string;
     height?: string;
+    lux?: number | string;
     measurementMethod?: string;
     measurementQuality?: string;
     measurementUnit?: string;
@@ -63,6 +64,7 @@ export interface ObservationPayload {
     plantIds?: string[];
     potSetup?: string;
     potSize?: string;
+    ppfd?: number | string;
     relativeHumidity?: number | string;
     requestId: string;
     rotationDegrees?: string;

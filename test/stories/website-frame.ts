@@ -16,6 +16,7 @@ export interface WebsiteFrameProps {
         | "empty"
         | "error"
         | "humidity"
+        | "light"
         | "loading"
         | "ready"
         | "retry";
@@ -37,6 +38,7 @@ export const websiteArgTypes = {
         options: [
             "ready",
             "humidity",
+            "light",
             "loading",
             "empty",
             "error",
@@ -44,7 +46,8 @@ export const websiteArgTypes = {
         ],
         table: {
             type: {
-                summary: "ready | humidity | loading | empty | error | retry",
+                summary:
+                    "ready | humidity | light | loading | empty | error | retry",
             },
         },
     },

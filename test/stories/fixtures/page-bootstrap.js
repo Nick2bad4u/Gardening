@@ -29,8 +29,65 @@
             ? ["P38,#12,Terrarium,Plant identities pending,5 days"]
             : []),
     ].join("\n");
+    const historyHeaders =
+        "Date,Plant ID,Event,Weight state,Weight (g),Height (cm),Width (cm),Plant condition,Notes,Pot setup,Record status,Request ID,Relative humidity (%),PPFD (µmol/m²/s),Illuminance (lux),Observation quality,Measurement method,Observation ID,Corrects observation ID,Soil moisture";
+    /** @type {Record<string, string | number>[]} */
+    const lightObservations = [
+        {
+            Event: "Inspect",
+            "Observation ID": "inspect-active",
+            "Plant condition": "Healthy leaves",
+        },
+        {
+            Event: "Inspect",
+            "Observation ID": "inspect-removed",
+            "Plant condition": "Superseded inspection",
+            "Record status": "Removed",
+        },
+        {
+            Event: "Light",
+            "Measurement method": "Light app",
+            Notes: "Zero PPFD",
+            "Observation quality": "Estimated",
+            "PPFD (µmol/m²/s)": 0,
+        },
+        {
+            Event: "Light",
+            "Illuminance (lux)": 0,
+            "Measurement method": "Lux meter",
+            Notes: "Zero lux",
+            "Observation quality": "Measured",
+        },
+        {
+            Event: "Light",
+            "Illuminance (lux)": 10_000,
+            "Measurement method": "Light app",
+            Notes: "Both readings",
+            "Observation quality": "Estimated",
+            "PPFD (µmol/m²/s)": 200,
+        },
+        {
+            Event: "Light",
+            "Measurement method": "Light app",
+            Notes: "Original reading",
+            "Observation ID": "light-original",
+            "Observation quality": "Estimated",
+            "PPFD (µmol/m²/s)": 999,
+            "Record status": "Removed",
+        },
+        {
+            "Corrects observation ID": "light-original",
+            Event: "Light",
+            "Measurement method": "Light app",
+            Notes: "Corrected reading",
+            "Observation ID": "light-corrected",
+            "Observation quality": "Estimated",
+            "PPFD (µmol/m²/s)": 350,
+        },
+        { Event: "Light", Notes: "Missing reading" },
+    ];
     const history = [
-        "Date,Plant ID,Event,Weight state,Weight (g),Height (cm),Width (cm),Plant condition,Notes,Pot setup,Record status,Request ID,Relative humidity (%)",
+        historyHeaders,
         "2026-09-01,P01,Weight,Dry,400,,,Healthy,First dry reading,1,Active,storybook-dry",
         "2026-09-02,P01,Water,,,,,Healthy,Plain water,1,Active,storybook-water",
         "2026-09-02,P01,Weight,Wet,600,,,Healthy,Drained wet reading,1,Active,storybook-wet",
@@ -43,7 +100,36 @@
                   "2026-09-03,P38,Humidity,,,,,,Latest reading,1,Active,storybook-humidity-latest,65.5",
               ]
             : []),
+        ...(scenario === "light"
+            ? lightObservations.map((event, index) => {
+                  /** @type {Record<string, string | number>} */
+                  const row = {
+                      Date: `2026-09-${String(index + 5).padStart(2, "0")}`,
+                      "Plant ID": "P02",
+                      "Pot setup": 1,
+                      "Record status": "Active",
+                      ...event,
+                  };
+                  return historyHeaders
+                      .split(",")
+                      .map((header) => row[header] ?? "")
+                      .join(",");
+              })
+            : []),
     ].join("\n");
+    if (scenario === "light") {
+        const nativeCreateObjectURL = URL.createObjectURL.bind(URL);
+        /** @param {Blob} blob */
+        const captureExport = async (blob) => {
+            document.documentElement.dataset["exportedCsv"] = await blob.text();
+        };
+        URL.createObjectURL = (blob) => {
+            if (blob instanceof Blob) {
+                void captureExport(blob);
+            }
+            return nativeCreateObjectURL(blob);
+        };
+    }
     const headers = history.split("\n", 1)[0];
     const nativeFetch = fetch.bind(globalThis);
     let failedRequests = 0;

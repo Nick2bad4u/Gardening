@@ -11,6 +11,7 @@ interface GardenCorrectionLineage {
 interface GardenEventDetailPayload {
     flowerCount?: unknown;
     flowerDetails?: unknown;
+    lux?: unknown;
     nutrientAmount?: unknown;
     nutrientProduct?: unknown;
     nutrientsUsed?: unknown;
@@ -18,6 +19,7 @@ interface GardenEventDetailPayload {
     pestTreatment?: unknown;
     photoUrl?: unknown;
     potSize?: unknown;
+    ppfd?: unknown;
     relativeHumidity?: unknown;
     rotationDegrees?: unknown;
     waterAmount?: unknown;
@@ -39,6 +41,7 @@ interface GardenHistorySaveIdentity {
 interface GardenObservationDetails {
     flowerCount?: GardenOptionalNumber;
     flowerDetails?: string;
+    lux?: GardenOptionalNumber;
     nutrientAmount?: string;
     nutrientProduct?: string;
     nutrientsUsed?: string;
@@ -46,6 +49,7 @@ interface GardenObservationDetails {
     pestTreatment?: string;
     photoUrl?: string;
     potSize?: string;
+    ppfd?: GardenOptionalNumber;
     previousPotSize?: string;
     relativeHumidity?: GardenOptionalNumber;
     rotationDegrees?: GardenOptionalNumber;

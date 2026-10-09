@@ -1,7 +1,9 @@
 # Spreadsheet and Logger Actions
 
 Use this guide to choose an action, record measurements, and correct saved care
-entries. The [deployment record](../scripts/google-sheets/README.md) keeps the
+entries. The **5.33.0 source contract** adds Inspect and Light reading; activation
+is pending verification in the [rollout record](../scripts/google-sheets/README.md#inspect-and-light-readings-5330--rollout-pending).
+The [deployment record](../scripts/google-sheets/README.md) keeps the
 logger version and production details.
 
 Read alongside the [watering strategy](./watering-strategy.md), [weighing strategy](./weighing-strategy.md), and [operator runbook](../scripts/google-sheets/README.md).
@@ -28,7 +30,7 @@ Quick log is hidden for compatibility; use the mobile logger or AppSheet for rou
 - In the phone logger, **Observed at** uses the current time when you save or queue an entry. Edit it to record earlier care, or choose **Use current time** to resume automatic timing. Queued entries and retries keep their original observation time.
 - **Pot setup** identifies the whole weighed configuration. It is not the pot size in inches.
 - **Notes** hold useful details not covered by structured fields. In a multi-event save, the note is attached to the first generated event rather than copied onto every row.
-- **Plant condition**, **Soil moisture**, and **Medium / substrate** are different fields. Condition and moisture belong to Check; the growing-medium description belongs to Repot.
+- **Plant condition**, **Soil moisture**, and **Medium / substrate** are different fields. New visual condition observations use Inspect; soil moisture uses Check. Legacy condition-only Check records remain valid. The growing-medium description belongs to Repot.
 - A shared planter receives one observation identity per event. Weigh the
   whole container and name the relevant member in Notes when needed.
 
@@ -37,31 +39,33 @@ The same applies to #6 / P30 and #9 / P35: their botanical pages share one pot
 entry. “Tan/brown Lithops firm; grey/green heads beginning replacement” belongs
 in P35's note. Find each planter's members in the [container guide](./containers.md).
 
-## The 13 Selectable Actions
+## The 15 Selectable Actions
 
-The single-plant logger exposes exactly these 13 event choices. Fields listed as required here describe the detailed web/AppSheet writer; Quick log offers a smaller set of structured fields.
+The 5.33.0 single-plant source exposes these 15 event choices. Fields listed as required here describe the detailed web/AppSheet writer; Quick log offers a smaller set of structured fields. Verify activation before expecting the new choices in the production forms.
 
-| Action      | When to use it                                                                        | Details and effects                                                                                                                                                                             |
-| ----------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 💧 Water    | Water was actually applied.                                                           | Choose application style and whether nutrients were used. With nutrients, product and amount are required. Optional water volume is measured mL. Starts a watering cycle even without a weight. |
-| ⚖️ Weigh    | You have an actual scale reading.                                                     | Requires a positive weight in grams. Does not imply Water. New rows are stored as Routine; derived views infer cycle state.                                                                     |
-| 📏 Measure  | You measured or estimated plant dimensions.                                           | Requires height, width, or both. Keep unit, quality, and method explicit. Both dimensions share one Measure row.                                                                                |
-| Humidity    | You have a current hygrometer reading for this container or enclosure.                | Requires a relative-humidity percentage from 0 through 100, including decimals. Stores its own measured event; it does not imply soil moisture, Water, or Weigh.                                |
-| 🔎 Check    | You observed condition or soil moisture.                                              | Condition is descriptive; moisture has its own field. Record only what was observed. Selecting Check alone is not proof of a specific condition or verified dryness.                            |
-| 🔄 Rotation | You turned the pot.                                                                   | Records clockwise-equivalent degrees, default 90. The detailed server accepts a value greater than 0 and at most 360. Record the actual turn.                                                   |
-| 🧽 Clean    | You cleaned something associated with this pot.                                       | Lightweight dated event; explain what was cleaned in Notes. No automatic treatment or weight correction follows.                                                                                |
-| ✂️ Prune    | You removed or trimmed plant material.                                                | Lightweight dated event; describe what was removed and why in Notes. It does not automatically adjust a weight baseline.                                                                        |
-| 🪴 Repot    | The plant was repotted or its relevant medium/configuration was deliberately changed. | The detailed form requires the new pot-size text, retains the previous size, and advances Pot setup. Record medium separately. The same physical size can still have a new setup.               |
-| 🌸 Flower   | You want to record flowering, buds, or a flowering change.                            | Requires a positive whole-number flower count, descriptive flower details, or both. For no open flowers or spent blooms, use the description; zero is not accepted as a positive count.         |
-| 📷 Photo    | You have a photo observation to link.                                                 | Requires an HTTPS Google Photos share link or Gyazo capture link. Does not automatically publish a new website photograph.                                                                      |
-| 🐛 Pest     | You observed a pest/problem and want to record the response.                          | Requires both Pest / issue and Treatment / action. If no treatment was applied, say that honestly in the action field; do not invent one.                                                       |
-| 📝 Other    | A dated event does not fit the named categories.                                      | Describe it in Notes, such as a move or lighting change. Free text does not automatically change forecasts, care rules, or Pot setup.                                                           |
+| Action        | When to use it                                                                        | Details and effects                                                                                                                                                                             |
+| ------------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 💧 Water      | Water was actually applied.                                                           | Choose application style and whether nutrients were used. With nutrients, product and amount are required. Optional water volume is measured mL. Starts a watering cycle even without a weight. |
+| ⚖️ Weigh      | You have an actual scale reading.                                                     | Requires a positive weight in grams. Does not imply Water. New rows are stored as Routine; derived views infer cycle state.                                                                     |
+| 📏 Measure    | You measured or estimated plant dimensions.                                           | Requires height, width, or both. Keep unit, quality, and method explicit. Both dimensions share one Measure row.                                                                                |
+| Humidity      | You have a current hygrometer reading for this container or enclosure.                | Requires a relative-humidity percentage from 0 through 100, including decimals. Stores its own measured event; it does not imply soil moisture, Water, or Weigh.                                |
+| Inspect       | You inspected the plant's visible condition.                                          | Requires descriptive Plant condition. Stores Observed / Observed provenance; does not establish root-zone moisture.                                                                             |
+| Light reading | You have an app PPFD estimate, meter illuminance reading, or both.                    | Stores canonical Light, with PPFD in µmol/m²/s and illuminance in lux. At least one value is required; finite values of zero or greater are valid.                                              |
+| 🔎 Check      | You checked soil moisture; legacy condition-only Check remains supported.             | Soil moisture has its own field. Record only what was observed; selecting Check alone does not prove verified dryness.                                                                          |
+| 🔄 Rotation   | You turned the pot.                                                                   | Records clockwise-equivalent degrees, default 90. The detailed server accepts a value greater than 0 and at most 360. Record the actual turn.                                                   |
+| 🧽 Clean      | You cleaned something associated with this pot.                                       | Lightweight dated event; explain what was cleaned in Notes. No automatic treatment or weight correction follows.                                                                                |
+| ✂️ Prune      | You removed or trimmed plant material.                                                | Lightweight dated event; describe what was removed and why in Notes. It does not automatically adjust a weight baseline.                                                                        |
+| 🪴 Repot      | The plant was repotted or its relevant medium/configuration was deliberately changed. | The detailed form requires the new pot-size text, retains the previous size, and advances Pot setup. Record medium separately. The same physical size can still have a new setup.               |
+| 🌸 Flower     | You want to record flowering, buds, or a flowering change.                            | Requires a positive whole-number flower count, descriptive flower details, or both. For no open flowers or spent blooms, use the description; zero is not accepted as a positive count.         |
+| 📷 Photo      | You have a photo observation to link.                                                 | Requires an HTTPS Google Photos share link or Gyazo capture link. Does not automatically publish a new website photograph.                                                                      |
+| 🐛 Pest       | You observed a pest/problem and want to record the response.                          | Requires both Pest / issue and Treatment / action. If no treatment was applied, say that honestly in the action field; do not invent one.                                                       |
+| 📝 Other      | A dated event does not fit the named categories.                                      | Describe it in Notes, such as a move or lighting change. Free text does not automatically change forecasts, care rules, or Pot setup.                                                           |
 
 ### Automatic Note Records and Inferred Actions
 
-**Note** can appear in History even though it is not one of the 13 selectable event buttons. If an otherwise event-free submission contains only notes, the writer creates a Note record. Notes entered alongside a selected action stay on the first event; they do not necessarily create a separate Note row.
+**Note** can appear in History even though it is not one of the 15 selectable event buttons. If an otherwise event-free submission contains only notes, the writer creates a Note record. Notes entered alongside a selected action stay on the first event; they do not necessarily create a separate Note row.
 
-The writer also adds appropriate events from entered data: a weight adds Weigh, dimensions add Measure, and condition or soil-moisture information adds Check in the detailed form. Entering a weight never automatically adds Water. An entirely empty submission is rejected.
+The writer also adds appropriate events from entered data: a weight adds Weigh and dimensions add Measure. Soil moisture adds Check; a legacy condition-only submission without Inspect can still add Check. Selecting Inspect keeps its condition on the Inspect row rather than creating a duplicate condition Check. Entering a weight never automatically adds Water. An entirely empty submission is rejected.
 
 This means one click on Save is not always one History row. Review the event summary rather than interpreting several rows with the same save time as duplicates.
 
@@ -116,6 +120,28 @@ P38's plant identities, photographs, and enclosure details are pending. No
 humidity target or watering threshold is assigned. Air humidity alone does not
 record substrate moisture or an inspection of the plants.
 
+## Light Readings
+
+Choose **Light reading** for the actual pot and observation time. Enter the app's
+**PPFD (µmol/m²/s)** estimate, the meter's **Illuminance (lux)** reading, or both.
+Zero is valid; a blank means no reading was supplied. The logger stores both
+values independently, with no automatic lux-to-PPFD conversion. A row containing
+PPFD carries **Estimated / Light app** provenance, including when lux is also
+present. A lux-only row carries **Measured / Lux meter** provenance.
+
+The owner's **UNI-T UT383BT** measures illuminance in lux or foot-candles, as
+documented by UNI-T. Select its lux display for the logger's lux field. The
+**PPFD Meter** app listing describes UT383BT support and lux-to-PPFD conversion;
+that app output remains an estimate here, not a direct quantum-sensor reading.
+Use the app setting matched to the light being assessed and keep the preset,
+lamp settings, daylight contribution, sensor height and orientation in Notes
+when useful. A single reading is not a measured daily light integral or a
+watering instruction. See the [sources](#sources-and-implementation-references).
+
+History appends these values in **AR:AS**; detailed App entries staging appends
+them in **AJ:AK**. Light and Humidity remain individual observations and are
+not shared Bulk care actions.
+
 ## Dimensions, Condition, and Repot Details
 
 ### Measure
@@ -126,7 +152,14 @@ Methods are **Ruler**, **Estimated from photo**, **Estimated visually**, **Other
 
 Quick log dimensions are currently recorded with Estimated quality and Unspecified method because that sheet does not provide the detailed method controls. Use the detailed form when preserving measured provenance matters. Older pending payloads with no unit use the legacy centimeter interpretation; do not assume every old number is inches.
 
-### Check
+### Inspect and Check
+
+Use **Inspect** for a visual condition observation, such as firm new leaves,
+color changes, damage, or the condition of a named shared-planter member.
+**Plant condition is required**; provenance is **Observed / Observed**. Use
+**Check** for the separate soil-moisture observation. Selecting both records
+separate events. Historical and legacy condition-only Check records remain
+valid; do not relabel or rewrite them as Inspect.
 
 The soil-moisture choices exposed by the detailed form are **Dry**, **Slightly moist**, **Moist**, **Wet**, and **Unknown**. These describe an observation, not a sensor reading automatically inferred from pot weight. Use Unknown when appropriate; a blank or Unknown field does not mean Dry.
 
@@ -153,12 +186,12 @@ Do not add private account details, addresses, or other unnecessary personal inf
 
 ## Which Actions Support Bulk Entry
 
-| Surface                      | Supported round                                                         | Important distinction                                                                                                                    |
-| ---------------------------- | ----------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Mobile Bulk care             | Water, Check, Rotation, Clean, Prune, Pest, Other                       | Shared details are applied to each selected plant. Use single-plant mode for different weights, dimensions, repots, flowers, or photos.  |
-| Mobile single-plant queue    | Separate detailed entries for several pots                              | This is how to collect different individual weights before sending the queue together. It is not one shared weight applied to every pot. |
-| AppSheet Bulk Log            | Water, Weigh, Water + weigh, Rotation, Check, Clean, Prune, Pest, Other | Has dedicated per-plant weight fields in addition to selected plants and shared details.                                                 |
-| Quick log bulk Event control | Applies an Event selection to input rows or clears those selections     | Choosing an event across rows does not mean those observations were saved. Review and save the intended rows.                            |
+| Surface                      | Supported round                                                                  | Important distinction                                                                                                                                           |
+| ---------------------------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Mobile Bulk care             | Water, Inspect, Check, Rotation, Clean, Prune, Pest, Other                       | Inspect requires the entered shared condition for each selected plant. Use single-plant mode when observations differ; Light and Humidity are not bulk actions. |
+| Mobile single-plant queue    | Separate detailed entries for several pots                                       | This is how to collect different individual weights before sending the queue together. It is not one shared weight applied to every pot.                        |
+| AppSheet Bulk Log            | Water, Weigh, Water + weigh, Rotation, Inspect, Check, Clean, Prune, Pest, Other | Has dedicated per-plant weight fields; Inspect requires selected plants and shared condition. Light and Humidity are not bulk actions.                          |
+| Quick log bulk Event control | Applies an Event selection to input rows or clears those selections              | Choosing an event across rows does not mean those observations were saved. Review and save the intended rows.                                                   |
 
 In AppSheet **Weigh** rounds, populated per-plant weight fields determine the weighed plants. **Water** requires selected watered plants. **Water + weigh** requires selected watered plants and at least one entered weight; the bridge handles each plant's actual combination. A selected watered pot can have no weight, and an entered weight can belong to a pot that was not watered. Do not assume every weight field belongs to the watered selection.
 
@@ -197,7 +230,7 @@ Do not delete entire History rows, overwrite a formula on a Pxx page, or repeate
 | Only a scale reading                                          | Weigh with grams and actual time                                  | One Weigh row; no Water event.                                                     |
 | Watered and weighed after draining                            | Water plus the actual post-drain weight and water details         | Separate Weigh and Water rows linked to the same save.                             |
 | Watered, weighed, and measured height                         | Water plus grams and height/unit/method                           | Weigh, Water, and Measure records; the values stay on their respective event rows. |
-| Recorded condition and a scale reading                        | Check information plus grams                                      | Check and Weigh records; condition is not copied into the weight value.            |
+| Recorded visual condition and a scale reading                 | Inspect with descriptive condition plus grams                     | Inspect and Weigh records; condition is not copied into the weight value.          |
 | Changed medium in the same size pot                           | Detailed Repot with the reused size and actual medium description | A new setup and a Repot record, even though the pot diameter is unchanged.         |
 | Only wrote a dated note with no selected event or measurement | Notes-only entry where supported                                  | An automatic Note record.                                                          |
 | Noticed a mistake in a saved Water amount                     | Correct that Water event with a reason                            | A reviewed replacement for that event; the accompanying Weigh row is unchanged.    |
@@ -206,6 +239,8 @@ These examples explain how to record care. Use the [daily report policy](./daily
 
 ## Sources and Implementation References
 
+- [UNI-T UT383/UT383BT manufacturer specifications](https://meters.uni-trend.com/product/ut383-ut383bt/) — illuminance readings in lux or foot-candles; checked October 9, 2026.
+- [PPFD Meter developer listing on Google Play](https://play.google.com/store/apps/details?id=com.homestudio.ppfdmeter) — UT383BT support, lux-derived PPFD and app profiles; checked October 9, 2026. Developer accuracy claims do not establish a calibrated PPFD measurement for this collection.
 - [Logger source](../scripts/google-sheets/plant-tracker.gs) — `WEB_EVENT_OPTIONS`, `BULK_WEB_EVENT_OPTIONS`, `prepareWebObservation_`, `buildEventNamesFromList_`, `eventDetailsFromPayload_`, `storedObservationRows_`, and `appSheetBulkPayloadsFromRow_`.
 - [Mobile form source](../scripts/google-sheets/Index.html) — field controls, queue, progress indicators, and correction interface.
 - [Logging behavior](../scripts/google-sheets/README.md#logging-behavior) — canonical records and event-specific data.

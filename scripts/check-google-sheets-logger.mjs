@@ -256,7 +256,101 @@ assert.deepEqual(appSheetEntryHeaders, [
     "Watering application",
     "Water amount (mL)",
     "Relative humidity (%)",
+    "PPFD (µmol/m²/s)",
+    "Illuminance (lux)",
 ]);
+assert.equal(evaluateLogger("GARDEN_LOGGER.historyStoredColumns"), 45);
+assert.equal(evaluateLogger("GARDEN_LOGGER.historyHumidityColumn"), 43);
+assert.equal(evaluateLogger("GARDEN_LOGGER.historyLightStartColumn"), 44);
+assert.equal(evaluateLogger("GARDEN_LOGGER.historyLightColumns"), 2);
+assert.deepEqual(strings(evaluateLogger("HISTORY_LIGHT_HEADERS")), [
+    "PPFD (µmol/m²/s)",
+    "Illuminance (lux)",
+]);
+assert.equal(appSheetEntryHeaders.length, 37);
+const webEventOptions = strings(evaluateLogger("WEB_EVENT_OPTIONS"));
+const bulkWebEventOptions = strings(evaluateLogger("BULK_WEB_EVENT_OPTIONS"));
+for (const event of [
+    "Inspect",
+    "Light",
+    "Check",
+    "Humidity",
+]) {
+    assert.ok(webEventOptions.includes(event));
+}
+assert.ok(bulkWebEventOptions.includes("Inspect"));
+assert.ok(bulkWebEventOptions.includes("Check"));
+assert.ok(!bulkWebEventOptions.includes("Light"));
+assert.ok(!bulkWebEventOptions.includes("Humidity"));
+assert.throws(
+    () => loggerFunction("validateCheckDetails_")(["Inspect"], "", "Dry"),
+    /plant condition/v
+);
+assert.doesNotThrow(() =>
+    loggerFunction("validateCheckDetails_")(["Inspect"], "Firm", "")
+);
+for (const [condition, soil] of [
+    ["Firm", ""],
+    ["", "Dry"],
+]) {
+    assert.doesNotThrow(() =>
+        loggerFunction("validateCheckDetails_")(["Check"], condition, soil)
+    );
+}
+assert.throws(
+    () => loggerFunction("validateCheckDetails_")(["Check"], "", ""),
+    /plant condition, soil moisture/v
+);
+assert.throws(
+    () => loggerFunction("eventDetailsFromPayload_")({}, ["Light"], null),
+    /PPFD, illuminance, or both/v
+);
+for (const value of [
+    -1,
+    NaN,
+    Infinity,
+    " ",
+    true,
+]) {
+    assert.throws(
+        () => loggerFunction("optionalLightReading_")(value, "PPFD"),
+        /finite number of zero or greater/v
+    );
+}
+for (const payload of [
+    { ppfd: 0 },
+    { lux: 0 },
+    { lux: 0, ppfd: 0 },
+]) {
+    const details = loggerFunction("eventDetailsFromPayload_")(
+        payload,
+        ["Light"],
+        null
+    );
+    assert.ok(isRecord(details));
+    assert.equal(details["ppfd"], payload.ppfd ?? "");
+    assert.equal(details["lux"], payload.lux ?? "");
+    const provenance = strings(
+        loggerFunction("historyProvenanceRow_")(
+            { details },
+            "test-light-request",
+            "Light",
+            0
+        )
+    );
+    assert.equal(provenance[2], payload.ppfd === 0 ? "Estimated" : "Measured");
+    assert.equal(provenance[8], payload.ppfd === 0 ? "Light app" : "Lux meter");
+}
+const inspectProvenance = strings(
+    loggerFunction("historyProvenanceRow_")(
+        {},
+        "test-inspect-request",
+        "Inspect",
+        0
+    )
+);
+assert.equal(inspectProvenance[2], "Observed");
+assert.equal(inspectProvenance[8], "Observed");
 const appSheetBulkHeaders = strings(evaluateLogger("APP_SHEET_BULK_HEADERS"));
 assert.equal(appSheetBulkHeaders.length, 62);
 assert.deepEqual(appSheetBulkHeaders.slice(0, 6), [
@@ -669,6 +763,8 @@ assert.match(html, /id="bulkRotationDegrees"/v);
 assert.match(html, /id="nutrientsUsed"/v);
 assert.match(html, /id="wateringApplication"/v);
 assert.match(html, /id="waterAmount"/v);
+assert.match(html, /id="ppfd"/v);
+assert.match(html, /id="lux"/v);
 assert.match(html, /id="bulkWateringApplication"/v);
 assert.match(html, /id="bulkWaterAmount"/v);
 for (const selectId of ["nutrientProduct", "bulkNutrientProduct"]) {

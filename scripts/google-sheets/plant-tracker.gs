@@ -17,7 +17,7 @@
    installDailyCareDashboard, GARDEN_CYCLE_COMPARISON */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.32.1",
+    version: "5.33.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -64,7 +64,9 @@ const GARDEN_LOGGER = Object.freeze({
     historyWaterStartColumn: 41,
     historyWaterColumns: 2,
     historyHumidityColumn: 43,
-    historyStoredColumns: 43,
+    historyLightStartColumn: 44,
+    historyLightColumns: 2,
+    historyStoredColumns: 45,
     historyCapacityRows: 5000,
     lockTimeoutMs: 5000,
     spreadsheetUrl:
@@ -251,6 +253,8 @@ const WEB_EVENT_OPTIONS = Object.freeze([
     "Photo",
     "Pest",
     "Other",
+    "Inspect",
+    "Light",
 ]);
 
 const BULK_WEB_EVENT_OPTIONS = Object.freeze([
@@ -261,6 +265,7 @@ const BULK_WEB_EVENT_OPTIONS = Object.freeze([
     "Prune",
     "Pest",
     "Other",
+    "Inspect",
 ]);
 
 // Retained only to validate stale/offline payloads created before logger 5.16.
@@ -383,14 +388,22 @@ const APP_SHEET_ENTRY_V514_HEADERS = Object.freeze([
     "Rotation (°)",
 ]);
 const HISTORY_HUMIDITY_HEADERS = Object.freeze(["Relative humidity (%)"]);
+const HISTORY_LIGHT_HEADERS = Object.freeze([
+    "PPFD (µmol/m²/s)",
+    "Illuminance (lux)",
+]);
 
 const APP_SHEET_ENTRY_V525_HEADERS = Object.freeze([
     ...APP_SHEET_ENTRY_V514_HEADERS,
     ...HISTORY_WATER_HEADERS,
 ]);
-const APP_SHEET_ENTRY_HEADERS = Object.freeze([
+const APP_SHEET_ENTRY_V532_HEADERS = Object.freeze([
     ...APP_SHEET_ENTRY_V525_HEADERS,
     ...HISTORY_HUMIDITY_HEADERS,
+]);
+const APP_SHEET_ENTRY_HEADERS = Object.freeze([
+    ...APP_SHEET_ENTRY_V532_HEADERS,
+    ...HISTORY_LIGHT_HEADERS,
 ]);
 const APP_SHEET_QUEUE_STATUSES = Object.freeze(["Queued", "Retry"]);
 const APP_SHEET_QUEUE_LIMIT = 50;
@@ -476,6 +489,7 @@ const APP_SHEET_BULK_ACTION_OPTIONS = Object.freeze([
     "Prune",
     "Pest",
     "Other",
+    "Inspect",
 ]);
 
 const APP_SHEET_BULK_V511_HEADERS = Object.freeze([
@@ -610,6 +624,8 @@ const HISTORY_MEASUREMENT_METHOD_OPTIONS = Object.freeze([
     "Other",
     "Unspecified",
     "Hygrometer",
+    "Light app",
+    "Lux meter",
 ]);
 
 // Documented starting sizes. A later Repot entry supersedes these values.
@@ -1040,9 +1056,13 @@ function validateMeasurementEvents_(eventNames, weight, height, width) {
 
 /** @param {readonly string[]} eventNames @param {unknown} condition @param {unknown} soilMoisture @returns {void} */
 function validateCheckDetails_(eventNames, condition, soilMoisture) {
+    if (eventNames.includes("Inspect") && !cleanText_(condition)) {
+        throw new Error("Enter plant condition for the Inspect event.");
+    }
+    const checkCondition = eventNames.includes("Inspect") ? "" : condition;
     if (
         eventNames.includes("Check") &&
-        !cleanText_(condition) &&
+        !cleanText_(checkCondition) &&
         !cleanText_(soilMoisture)
     ) {
         throw new Error(
@@ -1161,8 +1181,9 @@ function prepareWebObservation_(spreadsheet, payload, plantRecords) {
         weight,
         heightInput,
         widthInput,
-        condition || soilMoisture,
-        notes
+        condition,
+        notes,
+        soilMoisture
     );
     validateMeasurementEvents_(eventNames, weight, heightInput, widthInput);
     const measurementMethod = normalizeMeasurementMethod_(
@@ -2250,17 +2271,16 @@ function ensureAppSheetEntryColumns_(sheet, configureColumn = false) {
     );
     if (!compatible) return false;
 
-    ensureSheetColumnCapacity_(sheet, APP_SHEET_ENTRY_HEADERS.length);
     const extensionStartColumn = APP_SHEET_ENTRY_LEGACY_HEADERS.length + 1;
-    const extensionHeaders = firstDisplayRow_(
-        sheet.getRange(
-            1,
-            extensionStartColumn,
-            1,
-            APP_SHEET_ENTRY_HEADERS.length -
-                APP_SHEET_ENTRY_LEGACY_HEADERS.length
-        )
-    ).map((value) => value.trim());
+    const extensionWidth =
+        Math.min(sheet.getMaxColumns(), APP_SHEET_ENTRY_HEADERS.length) -
+        APP_SHEET_ENTRY_LEGACY_HEADERS.length;
+    const extensionHeaders =
+        extensionWidth > 0
+            ? firstDisplayRow_(
+                  sheet.getRange(1, extensionStartColumn, 1, extensionWidth)
+              ).map((value) => value.trim())
+            : [];
     const expectedExtension = APP_SHEET_ENTRY_HEADERS.slice(
         APP_SHEET_ENTRY_LEGACY_HEADERS.length
     );
@@ -2274,7 +2294,10 @@ function ensureAppSheetEntryColumns_(sheet, configureColumn = false) {
             );
         }
     });
-    if (extensionHeaders[3] !== HISTORY_HUMIDITY_HEADERS[0]) {
+    if (
+        extensionHeaders[3] !== HISTORY_HUMIDITY_HEADERS[0] &&
+        sheet.getMaxColumns() >= 35
+    ) {
         const destination = sheet.getRange(
             2,
             35,
@@ -2290,6 +2313,26 @@ function ensureAppSheetEntryColumns_(sheet, configureColumn = false) {
             );
         }
     }
+    HISTORY_LIGHT_HEADERS.forEach((header, index) => {
+        if (extensionHeaders[4 + index] === header) return;
+        const column = 36 + index;
+        if (column > sheet.getMaxColumns()) return;
+        const destination = sheet.getRange(
+            2,
+            column,
+            Math.max(1, sheet.getLastRow() - 1),
+            1
+        );
+        if (
+            destination.getValues().some((row) => row[0] !== "") ||
+            destination.getFormulas().some((row) => row[0])
+        ) {
+            throw new Error(
+                `App entries!${columnName_(column)} contains existing data; review before adding light readings.`
+            );
+        }
+    });
+    ensureSheetColumnCapacity_(sheet, APP_SHEET_ENTRY_HEADERS.length);
     const changed = expectedExtension.some(
         (header, index) => extensionHeaders[index] !== header
     );
@@ -2353,6 +2396,10 @@ function ensureAppSheetEntryColumns_(sheet, configureColumn = false) {
                     .setAllowInvalid(false)
                     .build()
             )
+            .setNumberFormat("0.##");
+        sheet
+            .getRange(2, 36, dataRowCount, 2)
+            .setDataValidation(lightReadingValidation_())
             .setNumberFormat("0.##");
         const nutrientProductColumn =
             APP_SHEET_ENTRY_HEADERS.indexOf("Nutrient product") + 1;
@@ -2443,6 +2490,8 @@ function appSheetPayloadFromRow_(row, requestId) {
         wateringApplication: cleanText_(row[32]),
         waterAmount: row[33],
         relativeHumidity: row[34],
+        ppfd: row[35],
+        lux: row[36],
         entrySource: "AppSheet",
     };
 }
@@ -3202,6 +3251,7 @@ function installGardenLogger() {
     ensureHistoryRotationColumns_(history, true);
     ensureHistoryWaterColumns_(history, true);
     ensureHistoryHumidityColumn_(history, true);
+    ensureHistoryLightColumns_(history, true);
     ensureHistoryView_(spreadsheet);
     const appEntries = requireSheet_(
         spreadsheet,
@@ -3590,7 +3640,8 @@ function dryDownPolicyOutput_(plantId, model) {
                     ? "No watering recorded"
                     : model.basis,
             readiness: "Manual houseplant readiness; weigh when useful",
-            inspection: "Manual houseplant readiness; no cactus dry-out trigger",
+            inspection:
+                "Manual houseplant readiness; no cactus dry-out trigger",
         };
     }
     if (plantId === "P21") {
@@ -6944,11 +6995,11 @@ function correctionChangeValues_(changes) {
 function correctionSnapshot_(spreadsheet) {
     const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
     if (
-        GARDEN_LOGGER.historyStoredColumns !== 43 ||
-        history.getMaxColumns() < 43
+        GARDEN_LOGGER.historyStoredColumns !== 45 ||
+        history.getMaxColumns() < 45
     ) {
         throw new Error(
-            "HISTORY_SCHEMA: Expected the installed 43-column History schema."
+            "HISTORY_SCHEMA: Expected the installed 45-column History schema."
         );
     }
     const expected = [
@@ -6963,10 +7014,11 @@ function correctionSnapshot_(spreadsheet) {
         ...HISTORY_ROTATION_HEADERS,
         ...HISTORY_WATER_HEADERS,
         ...HISTORY_HUMIDITY_HEADERS,
+        ...HISTORY_LIGHT_HEADERS,
     ];
     /** @type {GardenHistoryRow | undefined} */
-    const headers = history.getRange(1, 1, 1, 43).getValues()[0];
-    const headerFormulas = history.getRange(1, 1, 1, 43).getFormulas()[0];
+    const headers = history.getRange(1, 1, 1, 45).getValues()[0];
+    const headerFormulas = history.getRange(1, 1, 1, 45).getFormulas()[0];
     if (
         !headers ||
         !headerFormulas ||
@@ -6980,7 +7032,7 @@ function correctionSnapshot_(spreadsheet) {
         );
     }
     const rowCount = Math.max(0, history.getLastRow() - 1);
-    const range = rowCount ? history.getRange(2, 1, rowCount, 43) : null;
+    const range = rowCount ? history.getRange(2, 1, rowCount, 45) : null;
     /** @type {GardenHistoryRow[]} */
     const values = range ? range.getValues() : [];
     const formulas = range ? range.getFormulas() : [];
@@ -7104,7 +7156,7 @@ function correctionCanonicalRow_(row) {
         !events.includes(row[2]) ||
         (row[9] !== "" && !(row[9] instanceof Date)) ||
         (row[35] !== "" && row[35] !== "Active" && row[35] !== "Removed") ||
-        [4, 5, 6, 10, 21, 39, 41, 42].some(
+        [4, 5, 6, 10, 21, 39, 41, 42, 43, 44].some(
             (index) => row[index] !== "" && typeof row[index] !== "number"
         ) ||
         (row[10] !== "" &&
@@ -7114,7 +7166,7 @@ function correctionCanonicalRow_(row) {
         row.some(
             (value, index) =>
                 !correctionFormulaColumn_(index) &&
-                ![0, 4, 5, 6, 9, 10, 21, 39, 41, 42].includes(index) &&
+                ![0, 4, 5, 6, 9, 10, 21, 39, 41, 42, 43, 44].includes(index) &&
                 typeof value !== "string"
         )
     ) {
@@ -7141,6 +7193,8 @@ function correctionEvents_() {
         "Other",
         "Prune",
         "Clean",
+        "Inspect",
+        "Light",
     ];
 }
 
@@ -7151,6 +7205,26 @@ function correctionFieldDefinitions_(event) {
         ["observationDate", 0, "Saved date", "datetime", [], true],
         ["notes", 8, "Notes"],
         ["weight", 4, "Weight", "number", [], true, "g", ["Weigh"]],
+        [
+            "ppfd",
+            43,
+            "App-estimated PPFD",
+            "number",
+            [],
+            false,
+            "µmol/m²/s",
+            ["Light"],
+        ],
+        [
+            "lux",
+            44,
+            "Measured illuminance",
+            "number",
+            [],
+            false,
+            "lux",
+            ["Light"],
+        ],
         [
             "relativeHumidity",
             42,
@@ -7201,7 +7275,16 @@ function correctionFieldDefinitions_(event) {
             "",
             ["Weigh", "Measure"],
         ],
-        ["condition", 7, "Plant condition", "text", [], false, "", ["Check"]],
+        [
+            "condition",
+            7,
+            "Plant condition",
+            "text",
+            [],
+            false,
+            "",
+            ["Check", "Inspect"],
+        ],
         [
             "soilMoisture",
             32,
@@ -7553,6 +7636,11 @@ function correctionPatchedRow_(original, changes) {
  */
 function correctionActionRow_(snapshot, original, payload) {
     const row = correctionPatchedRow_(original.values, payload.changes);
+    if (payload.action !== "remove" && row[2] === "Inspect" && !row[7].trim()) {
+        throw correctionValidationError_(
+            "INVALID_CORRECTION: Keep plant condition for Inspect."
+        );
+    }
     if (
         payload.action !== "remove" &&
         row[2] === "Check" &&
@@ -7724,9 +7812,10 @@ function correctionNumericValue_(definition, input) {
     if (
         (value !== "" &&
             (!Number.isFinite(value) ||
-                (key === "relativeHumidity"
-                    ? value < 0 || value > 100
-                    : value <= 0))) ||
+                value < 0 ||
+                (value === 0 &&
+                    !["relativeHumidity", "ppfd", "lux"].includes(key)))) ||
+        (key === "relativeHumidity" && value !== "" && value > 100) ||
         (key === "flowerCount" && value !== "" && !Number.isInteger(value)) ||
         (key === "rotationDegrees" && value !== "" && value > 360)
     ) {
@@ -7777,6 +7866,16 @@ function correctionValidateDependencies_(row, changes) {
     /** @param {...string} keys @returns {boolean} */
     const changed = (...keys) =>
         keys.some((key) => Object.hasOwn(changes, key));
+    if (row[2] === "Light") {
+        if (row[43] === "" && row[44] === "") {
+            throw correctionValidationError_(
+                "INVALID_CORRECTION: Keep PPFD, illuminance, or both for Light."
+            );
+        }
+        const provenance = lightReadingProvenance_(row[43]);
+        row[28] = provenance.quality;
+        row[34] = provenance.method;
+    }
     if (
         row[2] === "Measure" &&
         changed("heightCm", "widthCm") &&
@@ -8228,6 +8327,9 @@ function archiveQuickLogRow_(quickLog, rowNumber) {
     const condition = cleanText_(conditionInput);
     const notes = cleanText_(notesInput);
     const selectedEvent = cleanText_(eventInput);
+    if (selectedEvent === "Light") {
+        throw new Error("Use the detailed form to save a Light reading.");
+    }
     const weightState = normalizeWeightState_(weightStateInput, weight);
 
     if (selectedEvent && !WEB_EVENT_OPTIONS.includes(selectedEvent)) {
@@ -8398,6 +8500,7 @@ function prepareHistoryForObservationWrites_(history) {
     ensureHistoryRotationColumns_(history);
     ensureHistoryWaterColumns_(history);
     ensureHistoryHumidityColumn_(history);
+    ensureHistoryLightColumns_(history);
 }
 
 /**
@@ -8477,7 +8580,7 @@ function sameCanonicalObservationRow_(actual, expected) {
     // input or request provenance and must still match for an idempotent retry.
     const comparableColumns = [
         0, 1, 2, 4, 5, 6, 7, 8, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27,
-        28, 29, 30, 31, 32, 33, 34, 36, 39, 40, 41, 42,
+        28, 29, 30, 31, 32, 33, 34, 36, 39, 40, 41, 42, 43, 44,
     ];
     return comparableColumns.every(
         (index) =>
@@ -8506,6 +8609,9 @@ function comparableHistoryValue_(value) {
  */
 function storedObservationRows_(input, requestId, targetRow, recordedAt) {
     const safeCondition = safeSheetText_(input.condition);
+    const conditionEvent = input.eventNames.includes("Inspect")
+        ? "Inspect"
+        : "Check";
     const safeNotes = safeSheetText_(input.notes);
     const safeCurrentLabel = safeSheetText_(input.currentLabel);
     const details = input.details || {};
@@ -8520,7 +8626,7 @@ function storedObservationRows_(input, requestId, targetRow, recordedAt) {
             eventName === "Weigh" ? input.weight : "",
             eventName === "Measure" ? input.height : "",
             eventName === "Measure" ? input.width : "",
-            eventName === "Check" ? safeCondition : "",
+            eventName === conditionEvent ? safeCondition : "",
             primaryEvent ? safeNotes : "",
             recordedAt,
             input.potSetup,
@@ -8539,6 +8645,8 @@ function storedObservationRows_(input, requestId, targetRow, recordedAt) {
                 : "",
             eventName === "Water" ? details.waterAmount : "",
             eventName === "Humidity" ? details.relativeHumidity : "",
+            eventName === "Light" ? details.ppfd : "",
+            eventName === "Light" ? details.lux : "",
         ];
     });
 }
@@ -8692,6 +8800,10 @@ function historyProvenanceRow_(input, requestId, eventName, eventIndex) {
     } else if (eventName === "Humidity") {
         quality = "Measured";
         method = "Hygrometer";
+    } else if (eventName === "Light") {
+        const provenance = lightReadingProvenance_(input.details?.ppfd);
+        quality = provenance.quality;
+        method = provenance.method;
     } else if (eventName === "Measure") {
         quality = measurementQuality || "Estimated";
         method = measurementMethod || "Unspecified";
@@ -8746,6 +8858,7 @@ function historyRotationRow_(input, eventName) {
  * @param {GardenOptionalNumber} width
  * @param {string} condition
  * @param {string} notes
+ * @param {string} [soilMoisture]
  */
 function buildEventNamesFromList_(
     requestedEvents,
@@ -8754,7 +8867,8 @@ function buildEventNamesFromList_(
     height,
     width,
     condition,
-    notes
+    notes,
+    soilMoisture = ""
 ) {
     /** @type {string[]} */
     const eventNames = [];
@@ -8769,7 +8883,8 @@ function buildEventNamesFromList_(
     if (weight !== "") addUnique("Weigh");
     if (height !== "" || width !== "") addUnique("Measure");
     /* Both outcomes have tests; V8 reports a synthetic alternate branch for this one-sided guard. */
-    if (condition) addUnique("Check");
+    if (soilMoisture || (condition && !eventNames.includes("Inspect")))
+        addUnique("Check");
     /* Both outcomes have tests; V8 reports a synthetic alternate branch for this one-sided guard. */
     if (eventNames.length === 0 && notes) addUnique("Note");
 
@@ -8807,6 +8922,8 @@ function eventDetailsFromPayload_(payload, eventNames, plant) {
         wateringApplication: "",
         waterAmount: "",
         relativeHumidity: "",
+        ppfd: "",
+        lux: "",
     };
 
     addWaterDetails_(details, payload, eventNames);
@@ -8830,8 +8947,37 @@ function eventDetailsFromPayload_(payload, eventNames, plant) {
         }
         details.relativeHumidity = Number(raw);
     }
+    if (eventNames.includes("Light")) {
+        details.ppfd = optionalLightReading_(payload?.ppfd, "PPFD");
+        details.lux = optionalLightReading_(payload?.lux, "Illuminance");
+        if (details.ppfd === "" && details.lux === "") {
+            throw new Error(
+                "Enter PPFD, illuminance, or both for the Light event."
+            );
+        }
+    }
 
     return details;
+}
+
+/** @param {unknown} value @param {string} label @returns {GardenOptionalNumber} */
+function optionalLightReading_(value, label) {
+    if (value === undefined || value === null || value === "") return "";
+    if (
+        (typeof value !== "number" && typeof value !== "string") ||
+        String(value).trim() === "" ||
+        !Number.isFinite(Number(value)) ||
+        Number(value) < 0
+    ) {
+        throw new Error(`${label} must be a finite number of zero or greater.`);
+    }
+    return Number(value);
+}
+
+/** @param {GardenOptionalNumber} [ppfd] */
+function lightReadingProvenance_(ppfd = "") {
+    if (ppfd !== "") return { quality: "Estimated", method: "Light app" };
+    return { quality: "Measured", method: "Lux meter" };
 }
 
 /** @param {GardenObservationDetails} details @param {GardenEventDetailPayload | null | undefined} payload @param {string[]} eventNames */
@@ -9990,6 +10136,7 @@ function webHistoryDetails_(row) {
         },
         Weigh: { measurementMethod: 34 },
         Humidity: { relativeHumidity: 42, measurementMethod: 34 },
+        Light: { ppfd: 43, lux: 44, measurementMethod: 34 },
         Measure: {
             heightCm: 5,
             widthCm: 6,
@@ -9997,6 +10144,7 @@ function webHistoryDetails_(row) {
             measurementUnit: 36,
         },
         Check: { condition: 7, soilMoisture: 32 },
+        Inspect: { condition: 7, measurementMethod: 34 },
         Repot: { previousPotSize: 19, potSize: 20, medium: 33 },
         Flower: { flowerCount: 21, flowerDetails: 22 },
         Photo: { photoUrl: 23 },
@@ -10524,6 +10672,66 @@ function ensureHistoryHumidityColumn_(history, configureColumn = false) {
         .setNumberFormat("0.##");
 }
 
+/** @returns {GoogleAppsScript.Spreadsheet.DataValidation} */
+function lightReadingValidation_() {
+    return SpreadsheetApp.newDataValidation()
+        .requireNumberGreaterThanOrEqualTo(0)
+        .setAllowInvalid(false)
+        .build();
+}
+
+/** @param {GardenSheet} history @param {boolean} [configureColumn] */
+function ensureHistoryLightColumns_(history, configureColumn = false) {
+    ensureHistoryGrid_(history);
+    const start = GARDEN_LOGGER.historyLightStartColumn;
+    const range = history.getRange(
+        1,
+        start,
+        1,
+        GARDEN_LOGGER.historyLightColumns
+    );
+    const current = firstDisplayRow_(range).map(cleanText_);
+    HISTORY_LIGHT_HEADERS.forEach((header, index) => {
+        if (current[index] === header) return;
+        const column = start + index;
+        if (!isReplaceableGeneratedHeader_(current[index], column)) {
+            throw new Error(
+                `History!${columnName_(column)}1 must be "${header}".`
+            );
+        }
+        const destination = history.getRange(
+            2,
+            column,
+            Math.max(1, history.getLastRow() - 1),
+            1
+        );
+        if (
+            destination.getValues().some((row) => row[0] !== "") ||
+            destination.getFormulas().some((row) => row[0])
+        ) {
+            throw new Error(
+                `History!${columnName_(column)} contains existing data; review before adding light readings.`
+            );
+        }
+    });
+    if (
+        HISTORY_LIGHT_HEADERS.some((header, index) => current[index] !== header)
+    ) {
+        range.setValues([[...HISTORY_LIGHT_HEADERS]]);
+    }
+    if (configureColumn) {
+        history
+            .getRange(
+                2,
+                start,
+                Math.max(1, history.getMaxRows() - 1),
+                GARDEN_LOGGER.historyLightColumns
+            )
+            .setDataValidation(lightReadingValidation_())
+            .setNumberFormat("0.##");
+    }
+}
+
 /**
  * @param {GardenSpreadsheet} spreadsheet
  */
@@ -10661,6 +10869,7 @@ function ensureQuickLogValidations_(quickLog) {
                 "Prune",
                 "Other",
                 "Clear events",
+                "Inspect",
             ])
         );
     quickLog
@@ -10987,7 +11196,7 @@ function buildEventNames_(
     addUnique(selectedEvent);
     if (weight !== "") addUnique("Weigh");
     if (height !== "" || width !== "") addUnique("Measure");
-    if (condition) addUnique("Check");
+    if (condition && selectedEvent !== "Inspect") addUnique("Check");
     if (eventNames.length === 0 && notes) addUnique("Note");
 
     if (eventNames.length === 0) {

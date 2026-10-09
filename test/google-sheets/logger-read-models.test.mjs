@@ -60,7 +60,7 @@ function readPlant(rows, setup = 1) {
  */
 function row(at, event = "Weigh", cells = {}) {
     /** @type {import("../logger-fixtures.d.ts").CellValue[]} */
-    const values = Array.from({ length: 43 }, () => "");
+    const values = Array.from({ length: 45 }, () => "");
     values[0] = new Date(at);
     values[1] = "P01";
     values[2] = event;
@@ -85,7 +85,7 @@ function runtime(historyRows = []) {
     const sheet = (name, values) => ({
         getLastColumn: () => required(values[0]).length,
         getLastRow: () => values.length,
-        getMaxColumns: () => 43,
+        getMaxColumns: () => 45,
         getName: () => name,
         /**
          * @param {number} rowNumber @param {number} column @param {number}
@@ -129,7 +129,7 @@ function runtime(historyRows = []) {
         [
             "History",
             sheet("History", [
-                Array.from({ length: 43 }, () => ""),
+                Array.from({ length: 45 }, () => ""),
                 ...historyRows,
             ]),
         ],
@@ -377,7 +377,7 @@ describe("logger History-backed read models", () => {
                 latestWeightAt: "",
                 weightSeries: { points: [] },
             });
-            expect(historyReads).toHaveBeenCalledExactlyOnceWith(2, 1, 2, 43);
+            expect(historyReads).toHaveBeenCalledExactlyOnceWith(2, 1, 2, 45);
             expect(rows).toStrictEqual(before);
         } finally {
             vi.useRealTimers();
@@ -1070,6 +1070,16 @@ describe("logger filtered recent History and event details", () => {
             "Humidity",
             { 34: "Hygrometer", 42: 0 },
             { measurementMethod: "Hygrometer", relativeHumidity: 0 },
+        ],
+        [
+            "Inspect",
+            { 7: "Leaves firm", 34: "Observed" },
+            { condition: "Leaves firm", measurementMethod: "Observed" },
+        ],
+        [
+            "Light",
+            { 34: "Light app", 43: 0, 44: 0 },
+            { lux: 0, measurementMethod: "Light app", ppfd: 0 },
         ],
         [
             "Water",
