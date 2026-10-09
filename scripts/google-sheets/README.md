@@ -1,6 +1,6 @@
 # Google Sheets observation logger
 
-The maintained **5.32.0** source prepares **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`. The October 9 rollout below is pending; the October 7 production record retains its verified 35-container baseline. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.32.0 / immutable version 103** supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`. The October 9 rollout record below supersedes the dated October 7 baseline. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
@@ -18,18 +18,18 @@ for retained water, measured loss, forecast windows, and model evidence. The
 **Current weight difference** comparison starts at **Insights A586**.
 The [RO refill log](RO-REFILLS.md) records water-supply refill dates, amounts
 for the four storage containers, and a chart of gallons refilled per visit.
-The October 7 production **Plant colors** sheet maps its 35 active allocations to
+The production **Plant colors** sheet maps its 36 active allocations to
 consistent chart colors, with full names, swatches, and links to their charts.
-That October 7 chart snapshot keeps P01–P32, P35–P37 order so colors stay attached to the same plant;
+The October 9 chart snapshot keeps P01–P32, P35–P38 order so colors stay attached to the same plant;
 the cycle explorer changes color automatically with its selected plant.
-Each **P01–P32 and P35–P37** page in that snapshot also has a **Time between waterings** column chart at
+Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between waterings** column chart at
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
-## October 9 terrarium and humidity rollout — prepared, not deployed
+## October 9 terrarium and humidity rollout
 
-Source **5.32.0** adds **P38 / #12 — Terrarium** at the owner's October 9
+Production logger **5.32.0** adds **P38 / #12 — Terrarium** at the owner's October 9
 request. Its plant identities and photographs are pending. Open or closed
 enclosure design, location, dimensions, drainage, and substrate remain unknown.
 It has one container record and an explicitly empty member list, with no
@@ -37,7 +37,7 @@ invented botanical profile: **36 containers, 43 botanical catalog members,
 45 active profile pages, and one historical profile**. P33/P34 remain retired.
 Enrollment itself creates no observation, watering, repot, or weight reference.
 
-The prepared append-only schema is:
+The verified production append-only schema is:
 
 | Surface                                | Physical columns | Appended field                                                             |
 | -------------------------------------- | ---------------- | -------------------------------------------------------------------------- |
@@ -53,28 +53,83 @@ summaries, and public CSV exports preserve the field. Humidity is not a shared
 Bulk care action. P38's pending care mode suppresses weight-based watering dates
 and dry/plateau/full-dry triggers while retaining actual observations.
 
-AppSheet preserves its captured read-only History dataset binding to canonical
-History (gid 1465181080). Its prepared schema has 46 attributes: 43 physical
-columns, `_RowNumber`, and two existing virtual fields; it does not switch to
-the separate History view projection. App entries and App bulk have 36 and 63
-attributes, respectively, including `_RowNumber`.
+A [native backup](https://docs.google.com/spreadsheets/d/1AFmU_ZgWYSGTOUnyfxH0VfxqJK9FzjLGVwdnvW0rbQc/edit)
+and [disposable rehearsal workbook](https://docs.google.com/spreadsheets/d/16MsjAzE_vypxltr2H1295aDWGxFKv4FDGvowHR7W-NE/edit)
+were retained before structural production changes. Native enrollment readback
+compared **1,204,566 cells**, preserving all **168 existing chart identities**
+and adding four P38 charts. The separate **17-request humidity migration**
+compared **465,000 cells**; the **five-request catalog append** compared **5,201
+cells**. All three phases passed, including native metadata, protected ranges,
+captured formats, entered values, and formula-error checks.
 
-The prepared AppSheet configuration adds Humidity to detailed Events, a
-conditional Decimal humidity input, the optional P38 bulk weight, #12 label
-order, and the schematic terrarium portrait. The current source portrait
-revision is **4987bcaf5dbb7c8c**; publication and signed-in access still require
-verification. The [AppSheet runbook](../../docs/appsheet-companion.md#october-9-terrarium-and-humidity--prepared-rollout)
-distinguishes these source changes from its captured **1.100114** production
-baseline.
+The resulting workbook contains **62 tabs and 172 charts**, with **36 containers
+and 43 botanical catalog members**. Its **1,781 original History records and
+1,781 unique observation IDs**, **1,466 request-ID groups**, and **295 multi-event
+groups** retain the same canonical record digest and exact request grouping.
+Existing staging data remains preserved. P38 has no observations, measured
+dimensions, weight references, or learned cycles; its calibration and readiness
+say **Terrarium care pending; inspect enclosure and plant needs**. The expanded
+Integrity scan reports zero formula errors.
 
-**Rollout status:** native-copy rehearsal, structural production migration,
-immutable Apps Script deployment, AppSheet schema/configuration changes, and
-production readback remain pending in this record. Before structural writes,
-retain a native backup and rehearse on a disposable copy. Verify preserved
-History values and ID grouping, existing staging values/formulas/chart
-identities, blank new P38 evidence, the same phone deployment URL, and exactly
-one five-minute queue trigger. Record actual backup/copy links and deployment
-receipts only when confirmed; synthetic observations belong only in the copy.
+Native-copy tests passed for mixed event saves, humidity **0 and 100**, rejected
+invalid values, duplicate-free retries, correction/removal, mapped App entries,
+and bootstrap/recent-history output. History's Measurement method validation
+appends **Hygrometer**, preserving its prior choices; App entries' dimension
+measurement methods remain unchanged. No synthetic observations were written to
+production. The copy's four populated P38 charts matched the complete reviewed
+specifications, including series, axes, colors, identity, and position. Empty
+production charts can omit native series/axis metadata; retain the populated
+copy witness and reapply the reviewed specifications after real observations
+first populate a chart if Google drops its styles.
+
+Production HEAD and immutable **version 103** exactly match the maintained
+**5.32.0** source. The existing phone deployment was updated in place with the
+same URL and access settings. The signed-in phone check displayed **Connected ·
+logger 5.32.0**, P38, and a blank Humidity input with **0–100** limits; no entry
+was submitted. After the migration, the queue schedule was restored and
+verified as exactly one Head `processQueuedAppSheetEntries` trigger using
+**Minutes timer / Every 5 minutes**, with daily failure notifications. A
+successful time-driven execution was recorded at **02:28:57 EDT** on October 9;
+version 103 `doGet` and bootstrap executions followed at **02:29:59** and
+**02:30:04 EDT**.
+
+The final postactivation readback at **06:34:03 UTC** compared **324,159 cells**,
+including **94,905 original staging cells**. Its hash-bound receipt confirms the
+same 1,781 observations and unique IDs, unchanged request grouping, 36 containers and 43
+members; empty P38 evidence with manual care; and Integrity zero.
+The published Sheet feed readback at **06:35:31 UTC** also exposed all 43 History
+columns through AQ and P38 / #12 in the roster, with no P38 observations.
+
+Portrait revision **4987bcaf5dbb7c8c** contains **36 SVGs** in
+[GardenPlantPortraits-4987bcaf5dbb7c8c](https://drive.google.com/drive/folders/1X5czv8o64pc1sJQgGuwjCGHTcIt-UQhn).
+Every file matches the maintained source bytes, including the generic terrarium
+schematic. Prior portrait folders remain available to cached clients. The phone
+logger loads the matching standalone portrait from the Pages export; the private
+Drive revision serves AppSheet.
+
+**AppSheet 1.100120 is saved and verified**, advancing the captured **1.100114**
+baseline. The fresh saved-definition comparison found **zero unexpected
+differences** across 296 existing attributes, three new fields, 11 schemas and
+datasets, 41 controls, and five slices. The final schema has **46 / 36 / 63
+attributes** for History / App entries / App bulk. All 17 existing custom
+descriptions were restored after regeneration; the new humidity descriptions
+use valid quoted text expressions. The editor reports **No issues found**, with
+Save disabled after reload.
+
+History remains bound read-only to canonical History (gid 1465181080), with
+43 physical columns, `_RowNumber`, and two existing virtual fields. Staging
+permissions, creation-only keys, retry behavior, retired-field guards, and
+existing defaults remain preserved. The saved app uses portrait revision
+**4987bcaf5dbb7c8c** and the P38/Humidity form changes. The signed-in P38 / #12
+card displays its schematic portrait and **No log**. Detailed Log reveals a
+blank Humidity input with 0–100 limits; Bulk Log displays all **36 blank weight
+inputs**, ending with P38 before Notes. Both checks were discarded or canceled
+without submitting observations, and no unsynced changes remained. The
+[AppSheet runbook](../../docs/appsheet-companion.md#october-9-terrarium-and-humidity)
+records the configuration scope and signed-in checks. Private phase captures, plans,
+native-copy results, and deployment receipts remain under
+`.cache/terrarium-enrollment-20261009/`.
+
 Older dated sections below remain historical evidence, not the 5.32.0 schema.
 
 ## October 7 Arctic Ice enrollment — production verified
@@ -1575,7 +1630,7 @@ Stale previews, changed headers, duplicate identities, unsupported fields, and
 insufficient History capacity fail before any write.
 
 The manifest enables Advanced Sheets v4. The commit uses one atomic
-`Sheets.Spreadsheets.batchUpdate`: append a replacement row across the configured History schema (A:AQ in prepared 5.32.0) and mark only
+`Sheets.Spreadsheets.batchUpdate`: append a replacement row across the configured History schema (A:AQ in 5.32.0) and mark only
 the original AJ as `Removed`. Edits and moves create an active replacement;
 deletion creates a replacement already marked `Removed`, leaving neither event
 active while preserving a durable audit receipt. The original values, formulas,
@@ -1633,7 +1688,7 @@ Cache Storage retains each SVG across reloads, including when the image server
 is unreachable. This caches artwork only; it does not make the Google-hosted
 logger itself available offline.
 
-`npm run sync:logger-artwork` explicitly derives `PLANT_ICON_REVISION` from the current exported SVG inventory (55 portraits in prepared 5.32.0). Ordinary website and artwork-export builds leave the logger source unchanged.
+`npm run sync:logger-artwork` explicitly derives `PLANT_ICON_REVISION` from the current exported SVG inventory (55 portraits in 5.32.0). Ordinary website and artwork-export builds leave the logger source unchanged.
 Each image URL includes this revision. The cache stores one entry per portrait
 and replaces an older revision when needed, so future artwork updates do not
 leave the logger stuck on old icons or accumulate a second complete set.
@@ -1869,12 +1924,12 @@ The AppSheet form contract is:
 
 - `Plant ID` is a required Ref to `Plant tracker`; `Events` is a required
   EnumList containing Water, Weigh, Measure, Check, Rotation, Clean, Prune,
-  Repot, Flower, Photo, Pest, Other, and Humidity in prepared 5.32.0.
+  Repot, Flower, Photo, Pest, Other, and Humidity in 5.32.0.
 - Event-specific fields use `Show_If` and `Required_If` rules. Weigh requires a
   positive weight. Measure requires at least height or width and accepts inches
   or centimeters. Water records whether nutrients were used. Repot requires a
   pot size. Photo requires a URL, Pest requires both the issue and action, and
-  Rotation accepts 1–360 degrees with a default of 90. Prepared 5.32.0 adds
+  Rotation accepts 1–360 degrees with a default of 90. Logger 5.32.0 adds
   a required 0–100 relative-humidity reading when Humidity is selected;
   the Decimal field stores percentage points, not a fractional Percent value.
 - New measurements default to inches, `Measured`, and `Ruler`; the server still
@@ -2197,7 +2252,7 @@ installable trigger is not required.
   observation identity, source, quality, correction, soil-moisture, medium,
   method, and status fields; AK:AM stores the entry unit plus automatic
   height/width inch conversions; AN stores rotation degrees; AO:AP store
-  watering application plus optional measured milliliters; and prepared 5.32.0
+  watering application plus optional measured milliliters; and 5.32.0
   appends relative humidity in AQ. A 5.32.0 save writes the entire A:AQ record
   block in one call so a failed service call cannot
   strand a request ID apart from its
