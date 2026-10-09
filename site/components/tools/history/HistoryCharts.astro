@@ -1,5 +1,9 @@
 ---
 import { siteUrl } from "../../../lib/routes.mjs";
+interface Props {
+    manualCare?: boolean;
+}
+const { manualCare = false } = Astro.props;
 ---
 
 <section class="charts-panel" aria-labelledby="charts-title">
@@ -54,7 +58,11 @@ import { siteUrl } from "../../../lib/routes.mjs";
                         </svg>
                         Pot weight
                     </h3>
-                    <p>Current pot setup; dry and wet means appear when available.</p>
+                    <p>
+                        {manualCare
+                            ? "Recorded weights only; no dry or wet care targets are assigned."
+                            : "Current pot setup; dry and wet means appear when available."}
+                    </p>
                 </div>
             </header>
             <div class="chart-canvas" id="weight-chart"></div>
@@ -105,7 +113,11 @@ import { siteUrl } from "../../../lib/routes.mjs";
                         </svg>
                         Watering intervals
                     </h3>
-                    <p>Elapsed days between recorded soak-to-runoff events.</p>
+                    <p>
+                        {manualCare
+                            ? "Past intervals are descriptive history, not a watering schedule."
+                            : "Elapsed days between recorded soak-to-runoff events."}
+                    </p>
                 </div>
             </header>
             <div class="chart-canvas" id="watering-chart"></div>

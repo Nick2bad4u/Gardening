@@ -56,6 +56,16 @@ export const MeasurementsAndFilters: Story = {
         await expect(
             document.querySelector("#weight-chart svg")
         ).toBeInTheDocument();
+        await expect(
+            canvas.getByText(
+                "Elapsed days between recorded soak-to-runoff events."
+            )
+        ).toBeVisible();
+        await expect(
+            document.querySelector("#watering-chart-summary")
+        ).toHaveTextContent(
+            "Log Water only when the container is actually soaked to runoff."
+        );
         await userEvent.selectOptions(
             canvas.getByRole("combobox", { name: "Event type" }),
             "Water"
@@ -187,6 +197,46 @@ export const TerrariumHumidity: Story = {
         await expect(
             document.querySelector("#baseline-status")
         ).toHaveTextContent("Manual care review");
+        await expect(
+            canvas.getByText(
+                "Recorded weights only; no dry or wet care targets are assigned."
+            )
+        ).toBeVisible();
+        await expect(
+            canvas.getByText(
+                "Past intervals are descriptive history, not a watering schedule."
+            )
+        ).toBeVisible();
+        await expect(
+            document.querySelector("#watering-chart")
+        ).toHaveTextContent(
+            "No recorded watering intervals in this chart range."
+        );
+        await expect(
+            document.querySelector("#watering-chart-summary")
+        ).toHaveTextContent(
+            "Review the plants and enclosure before choosing a watering method. Recorded intervals do not set a care schedule."
+        );
+        await expect(
+            document.querySelector(".charts-panel")
+        ).not.toHaveTextContent(
+            /dry and wet means|soak(?:ed)? to runoff|soak-to-runoff/v
+        );
         await expectNoOverflow(document);
     },
+};
+
+export const TerrariumDesktopLight: Story = {
+    ...TerrariumHumidity,
+    args: { ...TerrariumHumidity.args, theme: "light", width: 1280 },
+};
+
+export const TerrariumDesktopDark: Story = {
+    ...TerrariumHumidity,
+    args: { ...TerrariumHumidity.args, theme: "dark", width: 1280 },
+};
+
+export const TerrariumMobileLight: Story = {
+    ...TerrariumHumidity,
+    args: { ...TerrariumHumidity.args, theme: "light", width: 390 },
 };
