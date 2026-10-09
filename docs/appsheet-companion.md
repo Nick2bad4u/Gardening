@@ -6,19 +6,26 @@ workbook. It supports daily browsing, individual observations, collection-wide
 care/weight rounds, save receipts, dashboards, and per-plant charts without
 creating a second gardening database.
 
+The latest verified production baseline is **AppSheet 1.100123** with logger
+**5.33.0 / immutable version 105**, checked on October 9, 2026. The Inspect and
+Light rollout below supersedes the earlier dated records.
+
 The owner-only
 [AppSheet editor](https://www.appsheet.com/template/AppDef?appName=GardenPlantTracker-903231205-26-08-25&appId=de6fc182-d01e-427b-b46e-a031d7bc4588&quickStart=False)
 contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
 
-## Inspect and Light reading source contract — rollout pending
+## October 9 Inspect and Light rollout
 
-Logger **5.33.0 source** adds **Inspect** and canonical **Light**, displayed as
-**Light reading** in the phone logger. This section describes the intended
-AppSheet form contract; production activation and saved app/version readback
-remain pending. The dated verified sections below retain their original facts.
-See the [logger rollout record](../scripts/google-sheets/README.md#inspect-and-light-readings-5330--rollout-pending).
+Production logger **5.33.0 / immutable version 105** adds **Inspect** and canonical
+**Light**, displayed as **Light reading** in the phone logger. AppSheet
+**1.100123** is saved, runnable, and verified against the captured **1.100120**
+baseline. A fresh editor reload reports **No issues found** and disabled Save.
+The complete saved-definition comparison found **zero unexpected differences**
+across **299 existing attributes**, four new fields, 11 schemas and datasets,
+41 controls, and five slices. The dated sections below retain their original
+facts. See the [logger rollout record](../scripts/google-sheets/README.md#october-9-inspect-and-light-rollout).
 
 | Table                    | 5.33.0 physical schema | Appended fields                                                  |
 | ------------------------ | ---------------------- | ---------------------------------------------------------------- |
@@ -26,13 +33,21 @@ See the [logger rollout record](../scripts/google-sheets/README.md#inspect-and-l
 | App entries              | 37 columns, A:AK       | AJ: `PPFD (µmol/m²/s)` → `ppfd`; AK: `Illuminance (lux)` → `lux` |
 | App bulk                 | 62 columns, A:BJ       | No appended fields                                               |
 
-Detailed Log's Events EnumList must retain all existing choices and append
+The saved app has **48 History attributes**, **38 App entries attributes**, and
+**63 App bulk attributes**. History includes 45 physical columns, `_RowNumber`,
+and the existing Plant image and Event badge virtual fields. Only History and
+App entries were regenerated after the native headers were verified. History
+remains bound to canonical **History** (gid 1465181080), and canonical/helper
+tables remain read-only. Both staging tables remain writable; creation-only
+keys, retry IDs, defaults, and the retired P33/P34 guards are preserved.
+
+Detailed Log's Events EnumList retains all existing choices and appends
 **Inspect** and **Light**. Inspect requires descriptive **Plant condition** and
 stores **Observed / Observed** provenance. Soil moisture remains a separate
 Check observation; condition-only legacy Check remains valid without rewriting
 History. Selecting both Inspect and Check must preserve their separate rows.
 
-The two new App entries fields are optional nonnegative Decimal values shown
+The two new App entries fields are nonnegative Decimal values shown
 for Light. A Light submission must contain either value or both, including a
 valid zero. Blank is missing, not zero. With PPFD present, the Light row carries
 **Estimated / Light app** provenance; lux-only carries **Measured / Lux meter**.
@@ -45,9 +60,42 @@ Bulk Log adds **Inspect** alongside Check, with selected plants and a required
 shared Plant condition. Use individual entries when conditions differ. Bulk
 Light and Humidity remain unsupported; preserve the 62-column bulk schema,
 existing weight fields, staging permissions, creation-only keys and receipts.
-After regeneration, verify field types, visibility, event validation, preserved
-descriptions and readonly canonical tables against the saved app before
-claiming activation. Use a disposable copy for integration observations.
+When Inspect and Check are both selected in an individual entry, condition is
+required for Inspect and soil moisture is required for Check. The saved
+History event badge distinguishes **Inspect**, **Light reading**, and
+**Soil check**. History's Measurement method choices append **Light app** and
+**Lux meter**; App entries' dimension-only method choices remain unchanged.
+
+Log places PPFD and illuminance after relative humidity. Active History and
+Needs attention include both new fields. Regeneration replaced 17 customized
+entry descriptions: 16 were restored exactly, while Events deliberately adds
+concise Inspect/Light help. New light descriptions are quoted constant
+expressions. The comparison permits regenerated internal IDs only for History
+and App entries, alongside compiler caches and save metadata; it still checks
+all other fields, views, slices, actions, settings, and security.
+
+Portrait revision **5a953c965a38ff05** is active. All **36 SVG portraits** in
+[GardenPlantPortraits-5a953c965a38ff05](https://drive.google.com/drive/folders/1Fi58P9XkeSCmqlqHeE5XybL6Xncka-tD)
+were downloaded and byte-verified against the canonical SVG files before the
+saved portrait expression changed. The folder retains owner-only access.
+Prior portrait folders remain available for cached clients.
+
+The native-copy integration rehearsal passed before production migration. The
+production readback preserved **1,782 observations / unique observation IDs**,
+**1,467 request groups**, and **295 multi-event groups**, with the canonical
+record digest unchanged. The logger remains at its existing deployment URL,
+with exactly one five-minute Head queue trigger and successful post-deployment
+executions. Integration observations were confined to the disposable copy.
+
+Signed-in AppSheet preview checks show a blank required condition for Inspect,
+and blank PPFD/lux inputs with minimum zero and no maximum for Light. Bulk
+Inspect shows a blank required shared condition and offers neither Light nor
+Humidity. Forms were canceled without entering or submitting observations.
+Arctic Ice (P37) and the tiny mixed succulent planter (P30) render their updated
+portraits from the new revision. The preview has zero unsynced changes.
+The private saved-definition and UI receipts are
+`appsheet-config-verification.json` and `appsheet-ui-verification.json` under
+`.cache/inspect-light-20261009/`.
 
 ## October 9 terrarium and humidity
 

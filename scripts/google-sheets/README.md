@@ -1,6 +1,6 @@
 # Google Sheets observation logger
 
-Production logger **5.32.1 / immutable version 104** supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`. The October 9 rollout record below supersedes the dated October 7 baseline. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.33.0 / immutable version 105** supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`. The October 9 Inspect and Light rollout below supersedes the earlier dated baselines. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
@@ -27,11 +27,14 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
-## Inspect and light readings (5.33.0) — rollout pending
+## October 9 Inspect and Light rollout
 
-**Maintained source: 5.33.0. Deployment and AppSheet activation are not yet
-verified for this change.** The production version/deployment facts above and
-the dated rollout records below remain the preceding verified baseline.
+Production logger **5.33.0 / immutable version 105** is active at the existing
+phone URL. The October 9 deployment update completed at **23:11:22 UTC**; a
+fresh API read verified the deployment, immutable source and unchanged access
+settings. The signed-in phone logger reports **Connected · logger 5.33.0** and
+shows the new Inspect and Light reading controls. The earlier dated rollout
+records below retain their original facts.
 
 The detailed writer adds **Inspect** for visual plant condition, requiring
 descriptive condition with **Observed / Observed** provenance. Soil moisture
@@ -54,15 +57,43 @@ events, excluded from Bulk care and Bulk Log.
 | App entries                        | 37 columns, A:AK       | AJ/AK: the same headers, mapped to `ppfd` / `lux` |
 | App bulk                           | 62 columns, A:BJ       | Unchanged                                         |
 
-Append columns without shifting earlier data. Rehearse structural migration in
-a disposable native copy and retain a production Drive backup. Before live
-writes, reread source, headers, formulas, validations, trigger and deployment
-state. Verify preservation of canonical records, IDs, request grouping,
-existing staging values and AppSheet settings. Keep canonical/helper tables
-readonly, staging writable and exactly one five-minute queue trigger. Preserve
-the phone URL by updating its existing deployment to an immutable version.
-Record actual backup, migration, version, trigger and readback facts here only
-after verification; do not send synthetic observations to production.
+A [native production backup](https://docs.google.com/spreadsheets/d/1HUvNS3fkpC0882T6htZFyhzDmBCScyIiPGHKAKcYN-Y/edit)
+preceded the [disposable native rehearsal](https://docs.google.com/spreadsheets/d/1D1Cgd70Ze9bHutHiJRPu-lrl1wOMzgxhzRX4ELFHwk0/edit).
+All 18 rehearsal phases passed, covering Inspect, mixed events, independent
+PPFD/lux and zero readings, invalid values, corrections, retries, mapped
+AppSheet entries, and supported bulk Inspect paths. The successful phased run
+added 17 test rows in 13 request groups to the disposable copy; rejected inputs
+and retries added none. All 1,782 original canonical rows were preserved,
+excluding only the workbook's derived M:O fields from that comparison. The
+temporary authorized runner was restored to its exact original source.
+
+Fresh source, deployment, trigger, headers, formulas and validation reads
+preceded the guarded 24-request production migration. The **23:09 UTC**
+readback verified **1,782 observations / 1,782 unique observation IDs**, **1,467
+request groups** including **295 multi-event groups**, and an unchanged
+canonical-value digest. Existing staging values, formats, notes, validations,
+protections and tab order were preserved, along with all **62 tabs and 172
+charts**. No synthetic observations were submitted to production.
+A second readback at **23:19 UTC** confirmed the same canonical values and
+request groups, all 38 existing App entries rows and the empty App bulk table.
+
+Post-deployment executions completed for version 105 `doGet` at **23:12:44 UTC**
+and `getWebAppBootstrap` at **23:12:48 UTC**, followed by the Head queue processor
+at **23:13:57 UTC**. A fresh trigger inspection confirmed exactly one
+`processQueuedAppSheetEntries` trigger using **Minutes timer / Every 5 minutes**.
+No trigger was reinstalled or changed. Blank live forms showed separate
+Inspect condition and Light inputs, with `min="0"`, arbitrary decimal steps
+and no numeric defaults. Bulk care exposed Inspect and its shared condition;
+Light and Humidity remained absent.
+
+The website and phone logger use the refreshed **P30 / #6 green bowl** and
+**P37 / #11 patterned blue planter** artwork. The generated portrait set retains
+36 container SVGs at revision `5a953c965a38ff05`; the private Drive originals
+remain owner-only. **AppSheet 1.100123** is saved and runnable; a fresh reload
+passed the configuration comparison with zero unexpected differences. Blank
+Inspect, Light and Bulk Inspect forms and both updated portraits were verified
+without submitting observations. See the [AppSheet rollout record](../../docs/appsheet-companion.md#october-9-inspect-and-light-rollout)
+for the saved configuration and form checks.
 
 The owner's UT383BT supplies illuminance; PPFD Meter provides the app estimate.
 Use the matched light setting and record preset, light state, sensor location
@@ -70,7 +101,7 @@ and daylight context in Notes when useful. Source references checked October 9:
 
 - [UNI-T UT383/UT383BT specifications](https://meters.uni-trend.com/product/ut383-ut383bt/) — lux/foot-candle illuminance display.
 - [PPFD Meter developer listing](https://play.google.com/store/apps/details?id=com.homestudio.ppfdmeter) — UT383BT support, lux-to-PPFD conversion and settings profiles; developer claims are not calibration evidence.
-- [Operator action guide](../../docs/logger-actions.md#light-readings) and [AppSheet contract](../../docs/appsheet-companion.md#inspect-and-light-reading-source-contract--rollout-pending).
+- [Operator action guide](../../docs/logger-actions.md#light-readings) and [AppSheet contract](../../docs/appsheet-companion.md#october-9-inspect-and-light-rollout).
 
 ## October 9 terrarium and humidity rollout
 

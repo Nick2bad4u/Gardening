@@ -1,8 +1,8 @@
 # Spreadsheet and Logger Actions
 
 Use this guide to choose an action, record measurements, and correct saved care
-entries. The **5.33.0 source contract** adds Inspect and Light reading; activation
-is pending verification in the [rollout record](../scripts/google-sheets/README.md#inspect-and-light-readings-5330--rollout-pending).
+entries. Production logger **5.33.0** adds Inspect and Light reading; see the
+verified [rollout record](../scripts/google-sheets/README.md#october-9-inspect-and-light-rollout).
 The [deployment record](../scripts/google-sheets/README.md) keeps the
 logger version and production details.
 
@@ -41,7 +41,7 @@ in P35's note. Find each planter's members in the [container guide](./containers
 
 ## The 15 Selectable Actions
 
-The 5.33.0 single-plant source exposes these 15 event choices. Fields listed as required here describe the detailed web/AppSheet writer; Quick log offers a smaller set of structured fields. Verify activation before expecting the new choices in the production forms.
+The 5.33.0 single-plant form exposes these 15 event choices. Fields listed as required here describe the detailed web/AppSheet writer; Quick log offers a smaller set of structured fields.
 
 | Action        | When to use it                                                                        | Details and effects                                                                                                                                                                             |
 | ------------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
