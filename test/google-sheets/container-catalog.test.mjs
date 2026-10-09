@@ -687,3 +687,49 @@ describe("existing catalog append", () => {
         ).toThrow("membership changed");
     });
 });
+
+describe("pending memberless catalog enrollment", () => {
+    it("appends one container while retaining every existing member and growing its lookup bounds", () => {
+        expect.hasAssertions();
+
+        const { catalog, snapshot } = appendFixture();
+        const pending = {
+            ...required(catalog.containers.at(-1)),
+            memberSlugs: [],
+            pending: true,
+        };
+        catalog.containers[catalog.containers.length - 1] = pending;
+        catalog.members = catalog.members.filter(
+            ({ containerId }) => containerId !== pending.id
+        );
+        const plan = buildContainerCatalogAppendRequests(snapshot, catalog);
+
+        expect(plan.containerRange).toBe("'Containers'!A1:S4");
+        expect(plan.memberRange).toBe("'Container members'!A1:J4");
+        expect(JSON.stringify(plan.requests)).toContain(
+            "Identification pending"
+        );
+        expect(JSON.stringify(plan.requests)).toContain(
+            "'Plant tracker'!$A$2:$A$4"
+        );
+
+        const memberWrites = plan.requests.filter(
+            (request) =>
+                JSON.stringify(request).includes(
+                    `"sheetId":${containerMembersSheetId}`
+                ) && "updateCells" in request
+        );
+
+        expect(memberWrites).toHaveLength(3);
+        expect(JSON.stringify(memberWrites)).not.toContain('"columnIndex":0');
+        expect(verifyContainerCatalogAppendPreconditions(plan, snapshot)).toBe(
+            true
+        );
+
+        pending.pending = false;
+
+        expect(() =>
+            buildContainerCatalogAppendRequests(snapshot, catalog)
+        ).toThrow("Existing catalog Integrity bounds changed");
+    });
+});

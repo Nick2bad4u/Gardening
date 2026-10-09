@@ -30,8 +30,8 @@ prior weight. The
 provides the phone-first input surface. Google Sheets remains the single
 editable source of truth.
 
-Each of the **35 tracked containers** has a permanent internal ID: `P01` through
-`P32`, plus `P35`, `P36`, and `P37`. `P33`/`P34` remain retired houseplant redirects to
+Each of the **36 tracked containers** has a permanent internal ID: `P01` through
+`P32`, plus `P35`, `P36`, `P37`, and `P38`. `P33`/`P34` remain retired houseplant redirects to
 `P31`/`P32`; the abandoned Amazon research has no active pot allocation. The
 [container guide](../containers.md) explains the 43 current botanical profile
 groups, two whole-planter overviews, labels, and setup boundaries. The owner
@@ -66,7 +66,7 @@ each assembly's members to its existing history. A repot may replace the vessel
 and advance the setup without changing the P-ID.
 
 The workbook's `Containers` and `Container members` reference views organize
-the same 35 containers and 43 botanical profile groups. Current tracker fields
+the same 36 containers and 43 botanical profile groups. Current tracker fields
 reference the existing `Plant tracker`; the views do not create another
 observation ledger or duplicate care events. See the [container guide](../containers.md#spreadsheet-reference-views)
 and [operator runbook](../../scripts/google-sheets/README.md).
@@ -162,3 +162,4 @@ The deployed URLs are:
 - [Historical layout tool](https://nick2bad4u.github.io/Gardening/setup/archive/layout/)
 - [Historical acclimation calendar](https://nick2bad4u.github.io/Gardening/setup/archive/calendar/)
 - [Plant photo Collections index](https://nick2bad4u.github.io/Gardening/photos/)
+  P38 / #12 is the [Terrarium container](https://nick2bad4u.github.io/Gardening/containers/P38/), with plant identities, photographs, and setup details pending. It adds one tracked container and no botanical profile.

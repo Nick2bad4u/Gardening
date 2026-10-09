@@ -37,15 +37,16 @@ The same applies to #6 / P30 and #9 / P35: their botanical pages share one pot
 entry. “Tan/brown Lithops firm; grey/green heads beginning replacement” belongs
 in P35's note. Find each planter's members in the [container guide](./containers.md).
 
-## The 12 Selectable Actions
+## The 13 Selectable Actions
 
-The single-plant logger exposes exactly these 12 event choices. Fields listed as required here describe the detailed web/AppSheet writer; Quick log offers a smaller set of structured fields.
+The single-plant logger exposes exactly these 13 event choices. Fields listed as required here describe the detailed web/AppSheet writer; Quick log offers a smaller set of structured fields.
 
 | Action      | When to use it                                                                        | Details and effects                                                                                                                                                                             |
 | ----------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 💧 Water    | Water was actually applied.                                                           | Choose application style and whether nutrients were used. With nutrients, product and amount are required. Optional water volume is measured mL. Starts a watering cycle even without a weight. |
 | ⚖️ Weigh    | You have an actual scale reading.                                                     | Requires a positive weight in grams. Does not imply Water. New rows are stored as Routine; derived views infer cycle state.                                                                     |
 | 📏 Measure  | You measured or estimated plant dimensions.                                           | Requires height, width, or both. Keep unit, quality, and method explicit. Both dimensions share one Measure row.                                                                                |
+| Humidity    | You have a current hygrometer reading for this container or enclosure.                | Requires a relative-humidity percentage from 0 through 100, including decimals. Stores its own measured event; it does not imply soil moisture, Water, or Weigh.                                |
 | 🔎 Check    | You observed condition or soil moisture.                                              | Condition is descriptive; moisture has its own field. Record only what was observed. Selecting Check alone is not proof of a specific condition or verified dryness.                            |
 | 🔄 Rotation | You turned the pot.                                                                   | Records clockwise-equivalent degrees, default 90. The detailed server accepts a value greater than 0 and at most 360. Record the actual turn.                                                   |
 | 🧽 Clean    | You cleaned something associated with this pot.                                       | Lightweight dated event; explain what was cleaned in Notes. No automatic treatment or weight correction follows.                                                                                |
@@ -58,7 +59,7 @@ The single-plant logger exposes exactly these 12 event choices. Fields listed as
 
 ### Automatic Note Records and Inferred Actions
 
-**Note** can appear in History even though it is not one of the 12 selectable event buttons. If an otherwise event-free submission contains only notes, the writer creates a Note record. Notes entered alongside a selected action stay on the first event; they do not necessarily create a separate Note row.
+**Note** can appear in History even though it is not one of the 13 selectable event buttons. If an otherwise event-free submission contains only notes, the writer creates a Note record. Notes entered alongside a selected action stay on the first event; they do not necessarily create a separate Note row.
 
 The writer also adds appropriate events from entered data: a weight adds Weigh, dimensions add Measure, and condition or soil-moisture information adds Check in the detailed form. Entering a weight never automatically adds Water. An entirely empty submission is rejected.
 
@@ -84,7 +85,7 @@ Partial and Spot waterings remain real Water events, but do not qualify for the 
 
 There is no separate Fertilize event button. The structured nutrient record belongs to Water. Do not create a fictional watering to document a different activity; use Other with an accurate note when appropriate.
 
-**Water + Weigh** is a combination of events, not a thirteenth single-plant event. Water without a scale reading is valid. Weigh without Water is valid. If the weight represents the post-drain condition of that watering, it can be included in the same observation. If it is a pre-watering reading, save it separately at its actual earlier time and record the post-drain reading separately if taken.
+**Water + Weigh** combines two existing events. Water without a scale reading is valid. Weigh without Water is valid. If the weight represents the post-drain condition of that watering, it can be included in the same observation. If it is a pre-watering reading, save it separately at its actual earlier time and record the post-drain reading separately if taken.
 
 The writer places Weigh before Water within a combined save for historical ordering. The shared save identity lets the cycle logic recognize that weight as the watering's Wet anchor. Do not rearrange rows or edit their timestamps merely to make the sheet look chronological.
 
@@ -93,6 +94,27 @@ The writer places Weigh before Water within a combined save for historical order
 The Weight state field remains in the workbook for compatibility with older records and drafts. New weights are stored as Routine. Derived views identify the same-save watering weight, or the first eligible positive weight within five days when needed, as Wet. The final eligible non-Wet weight before the next Water can become the completed Dry endpoint. An unfinished cycle's latest low remains Routine.
 
 A derived Wet/Dry label can therefore differ from a canonical History state shown elsewhere. This is expected. See the [watering reference explanation](./watering-strategy.md#what-wet-and-dry-references-mean).
+
+## Humidity Readings
+
+For the terrarium, choose **#12 / P38**, select **Humidity**, and enter the current
+sensor reading in **Relative humidity (% RH)**. Enter `72` for a display showing
+72% RH, or `72.5` when the sensor supplies that precision. Use the actual
+observation time. Zero is a valid value; leaving the field blank does not record
+zero. This field records one current reading, not a daily minimum, maximum, or
+target.
+
+The saved Humidity row carries **Measured / Hygrometer** provenance and its
+percentage in History AQ. Its timestamp, save identity, retry protection,
+offline recovery, and supported corrections work like other observations.
+Combining Humidity with another action creates separate event rows. The public
+container history shows the latest recorded humidity, its history chart, and
+the value in CSV exports. Humidity is available only in individual entry forms,
+so an enclosure reading cannot be broadcast across a bulk selection.
+
+P38's plant identities, photographs, and enclosure details are pending. No
+humidity target or watering threshold is assigned. Air humidity alone does not
+record substrate moisture or an inspection of the plants.
 
 ## Dimensions, Condition, and Repot Details
 

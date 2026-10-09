@@ -66,6 +66,7 @@ export interface HistoryRange {
     getDataValidations: () => (null | object)[][];
     getDisplayValue: () => string;
     getDisplayValues: () => string[][];
+    getFormulas: () => string[][];
     getValues: () => CellValue[][];
     protect: () => Protection;
     setDataValidation: (validation: null | object) => HistoryRange;

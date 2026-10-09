@@ -15,6 +15,7 @@ export interface WebsiteFrameProps {
     scenario:
         | "empty"
         | "error"
+        | "humidity"
         | "loading"
         | "ready"
         | "retry";
@@ -35,12 +36,17 @@ export const websiteArgTypes = {
             "Synthetic spreadsheet response. Applies to the plant tracker and history pages.",
         options: [
             "ready",
+            "humidity",
             "loading",
             "empty",
             "error",
             "retry",
         ],
-        table: { type: { summary: "ready | loading | empty | error | retry" } },
+        table: {
+            type: {
+                summary: "ready | humidity | loading | empty | error | retry",
+            },
+        },
     },
     theme: {
         control: "inline-radio",

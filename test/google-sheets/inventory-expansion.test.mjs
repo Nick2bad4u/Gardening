@@ -1891,3 +1891,191 @@ describe("native metadata protection ordering", () => {
         );
     });
 });
+
+function terrariumFixture() {
+    const result = arcticFixture();
+    const { metadata, sheet, snapshot } = result;
+    const ids = [...result.ids, "P37"];
+    sheet("Integrity").data = required(sheet("Integrity").data).filter(
+        (block) => block.startRow !== 57
+    );
+    put(sheet("Integrity"), 58, 0, "Critical source-row exceptions");
+    for (const title of ["Plant tracker", "Baselines"]) {
+        put(sheet(title), 35, 0, "P37");
+        put(sheet(title), 35, 1, "Arctic Ice");
+        put(sheet(title), 35, 2, "=Baselines!C36");
+    }
+    const page = {
+        data: [],
+        properties: {
+            gridProperties: { columnCount: 22, rowCount: 5139 },
+            index: metadata.sheets.length,
+            sheetId: arcticAddition.sheetId,
+            title: arcticAddition.title,
+        },
+    };
+    metadata.sheets.push(structuredClone(page));
+    snapshot.sheets.push(page);
+    for (const current of [
+        sheet("App bulk"),
+        required(
+            metadata.sheets.find((s) => s.properties.title === "App bulk")
+        ),
+    ])
+        current.properties.gridProperties.columnCount = 61;
+    put(sheet("App bulk"), 0, 60, "P37 weight (g)");
+    densifyLedger(sheet("App bulk"));
+    required(
+        required(sheet("App entries").data?.[0]?.rowData?.[1]?.values)?.[2]
+    ).dataValidation = {
+        condition: {
+            type: "ONE_OF_LIST",
+            values: ids.map((userEnteredValue) => ({ userEnteredValue })),
+        },
+        strict: true,
+    };
+    const colors = sheet("Plant color data");
+    colors.data = [];
+    colors.properties.gridProperties.rowCount = 5505;
+    required(
+        metadata.sheets.find(
+            (s) => s.properties.title === colors.properties.title
+        )
+    ).properties.gridProperties.rowCount = 5505;
+    for (let block = 0; block < 14; block += 1) {
+        const start = 5001 + block * 36;
+        put(colors, start, 0, "Plant ID");
+        for (const [index, id] of ids.entries()) {
+            put(colors, start + index + 1, 0, id);
+            put(
+                colors,
+                start + index + 1,
+                1,
+                `=XLOOKUP($A${start + index + 2},Baselines!$A$2:$A$36,Baselines!$C$2:$C$36,"")`
+            );
+        }
+    }
+    const sourceCells = required(sheet("Dry-down insights").data).flatMap(
+        (block) => (block.rowData ?? []).flatMap((row) => row.values ?? [])
+    );
+    for (const cell of sourceCells) {
+        const formula = cell.userEnteredValue?.formulaValue;
+        if (formula === undefined || cell.userEnteredValue === undefined)
+            continue;
+        cell.userEnteredValue.formulaValue = formula
+            .replaceAll("A2:A35", "A2:A36")
+            .replaceAll("P2:P31", "P2:P36");
+    }
+    const charts = required(
+        required(
+            metadata.sheets.find(
+                (s) => s.properties.title === colors.properties.title
+            )
+        ).charts
+    );
+    const source = {
+        endColumnIndex: 1,
+        endRowIndex: 5073,
+        sheetId: colors.properties.sheetId,
+        startColumnIndex: 0,
+        startRowIndex: 5037,
+    };
+    required(charts[0]).spec = {
+        basicChart: {
+            domains: [{ domain: { sourceRange: { sources: [source] } } }],
+        },
+        title: "Preserved comparison",
+    };
+    return { ...result, ids };
+}
+
+const terrariumAddition = {
+    ...arcticAddition,
+    contents: "Identification pending",
+    id: "P38",
+    label: "#12",
+    name: "Terrarium",
+    sheetId: 202_610_380,
+    title: "P38 Terrarium",
+};
+
+describe("35-to-36 pending terrarium enrollment", () => {
+    it("grows the current relocated comparisons and preserves their chart IDs and full specs", () => {
+        expect.hasAssertions();
+
+        const { ids, metadata, snapshot } = terrariumFixture();
+        const plan = buildInventoryExpansion(metadata, [snapshot], {
+            additions: [terrariumAddition],
+            bulkStartColumn: 61,
+            existingIds: ids,
+        });
+
+        expect(
+            verifyInventoryExpansionPreconditions(plan, metadata, [snapshot])
+        ).toBe(true);
+        expect(JSON.stringify(plan.valueRequests)).toContain("P38 weight (g)");
+        expect(JSON.stringify(plan.valueRequests)).toContain("A5506:F6023");
+        expect(JSON.stringify(plan.valueRequests)).toContain(
+            "Baselines!$A$2:$A$37"
+        );
+        expect(JSON.stringify(plan.valueRequests)).toContain("QUERY({P2:P37}");
+
+        const relocated = plan.valueRequests.filter(
+            (request) =>
+                updateStart(request)["sheetId"] === 907_202_603 &&
+                Number(updateStart(request)["rowIndex"]) >= 5505
+        );
+
+        expect(relocated).toHaveLength(1022);
+        expect(
+            relocated.filter((request) =>
+                JSON.stringify(request).includes('"stringValue":"P38"')
+            )
+        ).toHaveLength(14);
+        expect(JSON.stringify(plan.chartRequests)).toContain('"chartId":777');
+        expect(JSON.stringify(plan.chartRequests)).toContain(
+            '"startRowIndex":5542'
+        );
+        expect(JSON.stringify(plan.chartRequests)).toContain(
+            '"endRowIndex":5579'
+        );
+        expect(JSON.stringify(plan.chartRequests)).toContain(
+            "Preserved comparison"
+        );
+        expect(plan.prepareRequests).toContainEqual({
+            appendDimension: {
+                dimension: "ROWS",
+                length: 518,
+                sheetId: 907_202_603,
+            },
+        });
+    });
+
+    it("rejects changed current blocks and occupied new comparison destinations", () => {
+        expect.hasAssertions();
+
+        const { ids, metadata, sheet, snapshot } = terrariumFixture();
+        const options = {
+            additions: [terrariumAddition],
+            bulkStartColumn: 61,
+            existingIds: ids,
+        };
+        put(sheet("Plant color data"), 5505, 0, "Owner note");
+
+        expect(() =>
+            buildInventoryExpansion(metadata, [snapshot], options)
+        ).toThrow("Occupied expansion destination");
+
+        required(sheet("Plant color data").data).pop();
+        const firstBlockRow = required(
+            sheet("Plant color data").data?.[1]?.rowData?.[0]
+        );
+        required(firstBlockRow.values?.[0]).userEnteredValue = {
+            stringValue: "P99",
+        };
+
+        expect(() =>
+            buildInventoryExpansion(metadata, [snapshot], options)
+        ).toThrow("Comparison block roster changed");
+    });
+});

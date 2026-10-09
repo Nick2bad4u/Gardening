@@ -3,15 +3,17 @@ import { containerUrl, profileUrl, siteUrl } from "../../../lib/routes.mjs";
 import { stripMarkdown } from "../../../lib/content/profile-source.mjs";
 interface Props {
     potId?: string;
+    container?: import("../../../lib/containers.mjs").Container | undefined;
     profiles?: readonly import("../../../lib/content.mjs").SiteProfile[];
 }
-const { potId = "", profiles = [] } = Astro.props;
+const { potId = "", profiles = [], container } = Astro.props;
 const primaryProfile = profiles[0];
-const potLabel = primaryProfile?.drawerLabel.primary;
+const potLabel = container?.label ?? primaryProfile?.drawerLabel.primary;
 const initialName =
-    profiles.length > 1
+    container?.name ??
+    (profiles.length > 1
         ? `Shared container ${potLabel ?? potId}`
-        : (primaryProfile?.title ?? (potId ? `Pot ${potId}` : "Plant history"));
+        : (primaryProfile?.title ?? (potId ? `Pot ${potId}` : "Plant history")));
 ---
 
 <header class="hero history-hero">
@@ -32,7 +34,9 @@ const initialName =
         </p>
         <h1 id="plant-name">{initialName}</h1>
         <div class="scientific-heading" id="plant-scientific">
-            {profiles.map((profile) => stripMarkdown(profile.scientificMarkdown)).join(" · ")}
+            {container?.pending
+                ? "Plant identities pending"
+                : profiles.map((profile) => stripMarkdown(profile.scientificMarkdown)).join(" · ")}
         </div>
         <p class="lede">
             Follow watering, growth, and observations over time. Compare pot weights within the same

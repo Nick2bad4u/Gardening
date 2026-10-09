@@ -63,6 +63,7 @@ export interface ObservationPayload {
     plantIds?: string[];
     potSetup?: string;
     potSize?: string;
+    relativeHumidity?: number | string;
     requestId: string;
     rotationDegrees?: string;
     weight?: string;

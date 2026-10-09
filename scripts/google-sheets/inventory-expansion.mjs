@@ -166,7 +166,7 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
     const existingIds = expansionRoster(options, additions, bulkStartColumn);
     const baseCount = existingIds.length;
     const additionCount = additions.length;
-    const roleOffset = baseCount === 34 ? 2 : 0;
+    const roleOffset = baseCount >= 34 ? 2 : 0;
     const offset = baseCount - 30;
     const lastId = existingIds.at(-1) ?? "P30";
     const lastPage = metadata.sheets.find((current) =>
@@ -428,6 +428,12 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
     prepareStructure();
     /** @param {Sheet} current @param {ReturnType<typeof entries>[number]} item */
     function expandCellReference(current, item) {
+        if (
+            baseCount === 35 &&
+            current.properties.title === colorDataSheet &&
+            item.column < 6
+        )
+            return;
         const formula = item.cell.userEnteredValue?.formulaValue;
         if (formula !== undefined) {
             const next = extendFormula(formula);
@@ -550,7 +556,7 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
         appendRows(colorDataSheet, baseCount, 127, 133);
     }
     appendDerivedRows();
-    if (baseCount === 34) {
+    if (baseCount >= 34) {
         relocateFullComparisonBlocks({
             additions,
             cell,
@@ -562,8 +568,13 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
             source: meta(colorDataSheet),
             write,
         });
-        expandLegacyDryDownBounds(cell, write, 35, 36);
-        expandForecastBasisBound(cell, write);
+        expandLegacyDryDownBounds(cell, write, baseCount + 1, baseCount + 2);
+        expandForecastBasisBound(
+            cell,
+            write,
+            baseCount === 34 ? 31 : 36,
+            baseCount + 2
+        );
     }
     function expandIntegrityRows() {
         if (options.reuseCapacity === true) {
@@ -903,21 +914,9 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
         baseCount,
         additionCount
     );
-    function expandProtections() {
-        for (const current of metadata.sheets) {
-            const protections = records(current["protectedRanges"]);
-            for (const protection of protections) {
-                const request = expandedInventoryProtection(
-                    current,
-                    protection,
-                    baseCount,
-                    additionCount
-                );
-                if (request !== undefined) prepareRequests.push(request);
-            }
-        }
-    }
-    expandProtections();
+    prepareRequests.push(
+        ...expandedInventoryProtections(metadata, baseCount, additionCount)
+    );
     chartRequests.push(
         ...expandedInventoryCharts(metadata, additions, baseCount)
     );
@@ -942,7 +941,7 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
         newPageChartFinalizationRequired: true,
         postValueRequests: [
             ...headerFormatRequests(quickLog, cell, baseCount),
-            ...(baseCount === 34
+            ...(baseCount >= 34
                 ? enrollmentPageNotes(
                       additionAt(additions, 0),
                       lastPage.properties.title
@@ -1185,12 +1184,13 @@ function appendColoredSeries(series, additions, baseCount) {
 function assertCurrentEnrollment(cell, sheet, additions, baseCount) {
     assertNewIdentitiesUnused(sheet, additions);
     for (const [column, expected] of [
-        ...(baseCount === 34
+        ...(baseCount >= 34
             ? [
                   [58, "P35 weight (g)"],
                   [59, "P36 weight (g)"],
               ]
             : []),
+        ...(baseCount >= 35 ? [[60, "P37 weight (g)"]] : []),
         [54, "P31 weight (g)"],
         [55, "P32 weight (g)"],
         [56, "P33 weight (g)"],
@@ -1596,7 +1596,7 @@ function expandedIntegrityFormula(integrity, additions, baseCount) {
         throw new Error("Integrity formula-error anchor changed");
     const offset = baseCount - 30;
     const additionCount = additions.length;
-    const roleOffset = baseCount === 34 ? 2 : 0;
+    const roleOffset = baseCount >= 34 ? 2 : 0;
     const scan = additions
         .map(
             (plant) =>
@@ -1605,6 +1605,7 @@ function expandedIntegrityFormula(integrity, additions, baseCount) {
         .join(",");
     const helperScans = [
         ...(baseCount === 34 ? ["'Plant color data'!A5002:F5505"] : []),
+        ...(baseCount === 35 ? ["'Plant color data'!A5506:F6023"] : []),
         `'Watering intervals'!${columnName(90 + offset * 3)}1:${columnName(89 + offset * 3 + additionCount * 3)}5000`,
         `'Plant color data'!${columnName(133 + offset * 4 + roleOffset)}1:${columnName(132 + offset * 4 + roleOffset + additionCount * 4)}5001`,
         `'Workbook analytics'!${columnName(100 + offset * 3 + roleOffset)}1:${columnName(99 + offset * 3 + roleOffset + additionCount * 3)}5001`,
@@ -1651,7 +1652,7 @@ function expandedInventoryProtection(
     additionCount
 ) {
     const offset = baseCount - 30;
-    const roleOffset = baseCount === 34 ? 2 : 0;
+    const roleOffset = baseCount >= 34 ? 2 : 0;
     const range = structuredClone(record(protection["range"]));
     const title = current.properties.title;
     if (title === intervalSheet && range["endColumnIndex"] === 90 + offset * 3)
@@ -1684,6 +1685,28 @@ function expandedInventoryProtection(
 }
 
 /**
+ * @param {NativeSnapshot} metadata @param {number} baseCount @param {number}
+ *   additionCount
+ */
+function expandedInventoryProtections(metadata, baseCount, additionCount) {
+    /** @type {Record<string, unknown>[]} */
+    const requests = [];
+    for (const current of metadata.sheets) {
+        const protections = records(current["protectedRanges"]);
+        for (const protection of protections) {
+            const request = expandedInventoryProtection(
+                current,
+                protection,
+                baseCount,
+                additionCount
+            );
+            if (request !== undefined) requests.push(request);
+        }
+    }
+    return requests;
+}
+
+/**
  * @param {unknown} original @param {number} index @param {string} id @param
  *   {number} offset @param {number} width @param {number} baseCount
  */
@@ -1699,18 +1722,18 @@ function expandedSeries(original, index, id, offset, width, baseCount) {
         first["sheetId"] === 907_202_608
             ? 100 +
               (baseCount - 30) * 3 +
-              (baseCount === 34 ? 2 : 0) +
+              (baseCount >= 34 ? 2 : 0) +
               index * 3 +
               offset
             : width === 3
               ? 133 +
                 (baseCount - 30) * 4 +
-                (baseCount === 34 ? 2 : 0) +
+                (baseCount >= 34 ? 2 : 0) +
                 index * 4 +
                 offset
               : 136 +
                 (baseCount - 30) * 4 +
-                (baseCount === 34 ? 2 : 0) +
+                (baseCount >= 34 ? 2 : 0) +
                 index * 4;
     const difference = column - first["startColumnIndex"];
     for (const range of ranges) {
@@ -1735,17 +1758,20 @@ function expandedSeries(original, index, id, offset, width, baseCount) {
  *     column: number,
  *     value: EnteredValue
  * ) => void} write
+ * @param {number} [sourceEnd] @param {number} [targetEnd]
  */
-function expandForecastBasisBound(cell, write) {
-    const expected = `=IFNA(QUERY({P2:P31},"select Col1, count(Col1) where Col1 is not null group by Col1 label count(Col1) ''",0),"")`;
+function expandForecastBasisBound(cell, write, sourceEnd = 31, targetEnd = 36) {
+    const expected = `=IFNA(QUERY({P2:P${sourceEnd}},"select Col1, count(Col1) where Col1 is not null group by Col1 label count(Col1) ''",0),"")`;
     const before = cell(dryDownSheet, 361, 0)?.userEnteredValue?.formulaValue;
     if (before !== expected)
         throw new Error("Forecast-basis summary source changed");
     write(dryDownSheet, 361, 0, {
-        formulaValue: before.replace("P2:P31", "P2:P36"),
+        formulaValue: before.replace(
+            `P2:P${sourceEnd}`,
+            () => `P2:P${targetEnd}`
+        ),
     });
 }
-
 /**
  * @param {(title: string) => Sheet} meta @param {Record<string, unknown>[]}
  *   prepareRequests @param {number} bulkStartColumn @param {number} baseCount
@@ -1759,7 +1785,7 @@ function expandHelperFormatting(
     additionCount
 ) {
     const offset = baseCount - 30;
-    const roleOffset = baseCount === 34 ? 2 : 0;
+    const roleOffset = baseCount >= 34 ? 2 : 0;
     // Fill the newly appended helper columns with their existing number formats.
     for (const [
         title,
@@ -1882,6 +1908,7 @@ function expandLegacyDryDownBounds(
         write(dryDownSheet, row, column, { formulaValue: after });
     }
 }
+
 /**
  * @param {ExpansionOptions} options @param {Addition[]} additions @param
  *   {number} bulkStartColumn
@@ -1905,8 +1932,9 @@ function expansionRoster(options, additions, bulkStartColumn) {
             30,
             32,
             34,
+            35,
         ].includes(baseCount) ||
-        additions.length !== (baseCount === 34 ? 1 : 2) ||
+        additions.length !== (baseCount >= 34 ? 1 : 2) ||
         existingIds.some(
             (id, index) =>
                 id !==
@@ -1954,7 +1982,7 @@ function extendChartInventory(value, metadata, additions, baseCount) {
         )
             appendColoredSeries(series, additions, baseCount);
         if (
-            baseCount === 34 &&
+            baseCount >= 34 &&
             Array.isArray(series) &&
             series.length === baseCount + 2
         ) {
@@ -1982,19 +2010,7 @@ function extendChartInventory(value, metadata, additions, baseCount) {
  *   baseCount @param {number} additionCount
  */
 function extendChartRange(item, title, baseCount, additionCount) {
-    if (
-        baseCount === 34 &&
-        title === colorDataSheet &&
-        Number(item["startColumnIndex"] ?? 0) < 6 &&
-        Number(item["startRowIndex"] ?? 0) % 35 === 0 &&
-        Number(item["startRowIndex"] ?? 0) < 490 &&
-        Number(item["endRowIndex"]) - Number(item["startRowIndex"] ?? 0) === 35
-    ) {
-        const block = Number(item["startRowIndex"] ?? 0) / 35;
-        item["startRowIndex"] = 5001 + block * 36;
-        item["endRowIndex"] = 5001 + (block + 1) * 36;
-        return;
-    }
+    if (relocateComparisonChartRange(item, title, baseCount)) return;
     if (
         title === colorDataSheet &&
         typeof item["startRowIndex"] === "number" &&
@@ -2010,14 +2026,14 @@ function extendChartRange(item, title, baseCount, additionCount) {
         item["endRowIndex"] = baseCount + 6 + additionCount;
 }
 
-/** @param {string} formula */
-function extendComparisonFormula(formula) {
-    const expanded = extendInventoryFormula(formula, 30, 5);
+/** @param {string} formula @param {number} [targetCount] */
+function extendComparisonFormula(formula, targetCount = 35) {
+    const expanded = extendInventoryFormula(formula, 30, targetCount - 30);
     return expanded.replaceAll(
         /(?<prefix>'Dry-down insights'!\$[A-Z]+\$(?<start>41|81|121|161|201|241|281|321):\$[A-Z]+\$)(?<end>\d+)(?!\d)/gv,
         (match, prefix, start, end) =>
-            Number(end) === Number(start) + 30
-                ? `${String(prefix)}${Number(end) + 5}`
+            [30, 35].includes(Number(end) - Number(start))
+                ? `${String(prefix)}${Number(start) + targetCount}`
                 : match
     );
 }
@@ -2159,7 +2175,6 @@ function patchNewChart(spec, index, id, baseCount) {
         delete axis["viewWindowOptions"]["viewWindowMax"];
     }
 }
-
 /** @param {Addition} plant */
 function plantGuideUrl(plant) {
     return (
@@ -2167,6 +2182,7 @@ function plantGuideUrl(plant) {
         `https://nick2bad4u.github.io/Gardening/pots/${plant.id}/`
     );
 }
+
 /**
  * Rebase both endpoints; a reversed CO:CL reference is a multi-column range.
  *
@@ -2205,16 +2221,59 @@ function records(value) {
 }
 
 /**
+ * @param {Record<string, unknown>} item @param {string} title @param {number}
+ *   baseCount
+ */
+function relocateComparisonChartRange(item, title, baseCount) {
+    if (title !== colorDataSheet) return false;
+    const start = Number(item["startRowIndex"] ?? 0);
+    if (
+        baseCount === 35 &&
+        Number(item["startColumnIndex"] ?? 0) < 6 &&
+        start >= 5001 &&
+        start < 5505 &&
+        (start - 5001) % 36 === 0 &&
+        Number(item["endRowIndex"]) - start === 36
+    ) {
+        const block = (start - 5001) / 36;
+        item["startRowIndex"] = 5505 + block * 37;
+        item["endRowIndex"] = 5505 + (block + 1) * 37;
+        return true;
+    }
+    if (
+        baseCount === 34 &&
+        Number(item["startColumnIndex"] ?? 0) < 6 &&
+        Number(item["startRowIndex"] ?? 0) % 35 === 0 &&
+        Number(item["startRowIndex"] ?? 0) < 490 &&
+        Number(item["endRowIndex"]) - Number(item["startRowIndex"] ?? 0) === 35
+    ) {
+        const block = Number(item["startRowIndex"] ?? 0) / 35;
+        item["startRowIndex"] = 5001 + block * 36;
+        item["endRowIndex"] = 5001 + (block + 1) * 36;
+        return true;
+    }
+    return false;
+}
+
+/**
  * @param {ReturnType<typeof entries>[number]} item @param {number} newRow
  * @param {(formula: string) => string} extendFormula @param {string} [newId]
+ * @param {number} [targetCount]
  */
-function relocatedComparisonCell(item, newRow, extendFormula, newId) {
+function relocatedComparisonCell(
+    item,
+    newRow,
+    extendFormula,
+    newId,
+    targetCount = 35
+) {
     const value = structuredClone(item.cell.userEnteredValue ?? {});
     if (value.formulaValue !== undefined)
         value.formulaValue = extendComparisonFormula(
             extendFormula(
                 shiftInventoryRow(value.formulaValue, item.row + 1, newRow + 1)
-            )
+            ),
+            targetCount
         );
     if (newId !== undefined && item.column === 0) value.stringValue = newId;
     return value;
@@ -2257,8 +2316,10 @@ function relocateFullComparisonBlocks({
     source,
     write,
 }) {
-    const startRow = 5001;
-    const blockSize = 36;
+    const isCurrent = existingIds.length === 35;
+    const startRow = isCurrent ? 5505 : 5001;
+    const blockSize = existingIds.length + 2;
+    const sourceSize = isCurrent ? 36 : 35;
     const endRow = startRow + 14 * blockSize;
     requireEmpty(colorDataSheet, startRow, endRow, 0, 6);
     const missing = endRow - source.properties.gridProperties.rowCount;
@@ -2271,14 +2332,14 @@ function relocateFullComparisonBlocks({
             },
         });
     for (let block = 0; block < 14; block += 1) {
-        const from = block * 35;
+        const from = isCurrent ? 5001 + block * 36 : block * 35;
         if (
             cell(colorDataSheet, from, 0)?.userEnteredValue?.stringValue !==
             "Plant ID"
         )
             throw new Error("Comparison block header changed");
         const to = startRow + block * blockSize;
-        const sourceCount = block < 4 ? 34 : 30;
+        const sourceCount = isCurrent ? 35 : block < 4 ? 34 : 30;
         const sourceIds = existingIds.slice(0, sourceCount);
         for (const [index, id] of sourceIds.entries())
             if (
@@ -2286,13 +2347,19 @@ function relocateFullComparisonBlocks({
                     ?.stringValue !== id
             )
                 throw new Error("Comparison block roster changed");
-        requireEmpty(colorDataSheet, from + sourceCount + 1, from + 35, 0, 6);
+        requireEmpty(
+            colorDataSheet,
+            from + sourceCount + 1,
+            from + sourceSize,
+            0,
+            6
+        );
         prepareRequests.push(
             {
                 copyPaste: {
                     destination: {
                         endColumnIndex: 6,
-                        endRowIndex: to + 35,
+                        endRowIndex: to + sourceSize,
                         sheetId: source.properties.sheetId,
                         startColumnIndex: 0,
                         startRowIndex: to,
@@ -2300,7 +2367,7 @@ function relocateFullComparisonBlocks({
                     pasteType: "PASTE_FORMAT",
                     source: {
                         endColumnIndex: 6,
-                        endRowIndex: from + 35,
+                        endRowIndex: from + sourceSize,
                         sheetId: source.properties.sheetId,
                         startColumnIndex: 0,
                         startRowIndex: from,
@@ -2311,7 +2378,7 @@ function relocateFullComparisonBlocks({
                 copyPaste: {
                     destination: {
                         endColumnIndex: 6,
-                        endRowIndex: to + 36,
+                        endRowIndex: to + blockSize,
                         sheetId: source.properties.sheetId,
                         startColumnIndex: 0,
                         startRowIndex: to + sourceCount + 1,
@@ -2330,7 +2397,7 @@ function relocateFullComparisonBlocks({
         const blockEntries = colorEntries.filter(
             (item) =>
                 item.row >= from &&
-                item.row < from + 35 &&
+                item.row < from + sourceSize &&
                 item.column < 6 &&
                 item.cell.userEnteredValue !== undefined
         );
@@ -2342,7 +2409,9 @@ function relocateFullComparisonBlocks({
                 relocatedComparisonCell(
                     item,
                     to + item.row - from,
-                    extendFormula
+                    extendFormula,
+                    undefined,
+                    existingIds.length + additions.length
                 )
             );
         const sourceRow = blockEntries.filter(
@@ -2359,7 +2428,13 @@ function relocateFullComparisonBlocks({
                     colorDataSheet,
                     row,
                     item.column,
-                    relocatedComparisonCell(item, row, extendFormula, id)
+                    relocatedComparisonCell(
+                        item,
+                        row,
+                        extendFormula,
+                        id,
+                        existingIds.length + additions.length
+                    )
                 );
         }
     }

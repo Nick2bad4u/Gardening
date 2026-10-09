@@ -15,7 +15,7 @@ available. Gallery captions distinguish species and ancestry references from pho
 The short label IDs are permanent plant or shared-planter identifiers, not
 table coordinates. They are shown beside the longer historical inventory IDs.
 
-The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was installed September 13. The profiled collection has **46 profile records: 45 active and one historical, across 35 tracker allocations**. The established [Table Placement Guide](./layouts/table-placement-research.md) remains the working arrangement.
+The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was installed September 13. The profiled collection has **46 profile records: 45 active and one historical, across 36 tracker allocations**. The established [Table Placement Guide](./layouts/table-placement-research.md) remains the working arrangement.
 
 Profile records and containers answer different questions: a profile describes
 a botanical identity or an aggregate planting, while a tracker identifies the
@@ -29,6 +29,10 @@ their members, and the distinction between 43 botanical profile groups and two
 aggregate overviews. Open the
 [container directory](https://nick2bad4u.github.io/Gardening/containers/) for
 each container's member list, care context, and existing history.
+
+## Terrarium — identities and setup pending
+
+**P38 / #12 — Terrarium**, enrolled October 9, 2026, is a tracked container with plant identities and photographs pending. Its open or closed design, placement, size, drainage, and substrate are not yet recorded. Enrollment adds one container history and no botanical profile; the collection still has 43 botanical profile groups and two whole-planter overviews. Record measured relative humidity as a standalone **Humidity** event in **% RH** (0–100); no humidity target or watering rule is assigned before the plants and setup are known.
 
 ## October 6 Arctic Ice acquisition
 

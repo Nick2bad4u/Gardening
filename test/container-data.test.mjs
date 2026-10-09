@@ -9,12 +9,12 @@ import {
 import { getProfiles } from "../site/lib/content.mjs";
 
 describe("container membership", () => {
-    it("keeps 35 care units, four shared pots, and qualified Lithops members without counting overviews twice", async () => {
+    it("keeps 36 care units, four shared pots, and qualified Lithops members without counting overviews twice", async () => {
         expect.hasAssertions();
 
         const containers = await getContainers();
 
-        expect(containers).toHaveLength(35);
+        expect(containers).toHaveLength(36);
         expect(
             containers
                 .filter((container) => container.shared)
@@ -58,6 +58,49 @@ describe("container membership", () => {
             expect(member.acquiredFromMarkdown).toMatch(/home depot.*howell/iv);
             expect(member.acquiredOnMarkdown).toContain("2026-09-21");
         }
+    });
+
+    it("accepts only explicitly pending memberless containers without inventing botanical profiles", async () => {
+        expect.hasAssertions();
+
+        const profiles = await getProfiles();
+        const mapping = await readJson(
+            "docs/layouts/plant-profile-data.json",
+            isProfileData
+        );
+        const metadata = await readJson(
+            "docs/layouts/container-data.json",
+            isContainerData
+        );
+        const pending = required(metadata["P38"], "pending terrarium metadata");
+        const container = buildContainers(profiles, mapping, metadata).find(
+            (entry) => entry.id === "P38"
+        );
+
+        expect(container).toMatchObject({
+            label: "#12",
+            members: [],
+            name: "Terrarium",
+            pending: true,
+            portraitSlug: "terrarium",
+            profiles: [],
+        });
+
+        const unmarked = { ...metadata };
+        delete unmarked["P38"];
+
+        expect(() => buildContainers(profiles, mapping, unmarked)).toThrow(
+            /explicit pending metadata/v
+        );
+        expect(isContainerData({ P38: { ...pending, label: "" } })).toBe(false);
+        expect(
+            isContainerData({
+                P38: { ...pending, membershipStatus: "unknown" },
+            })
+        ).toBe(false);
+        expect(() =>
+            buildContainers(profiles, { ...mapping, P01: [] }, metadata)
+        ).toThrow(/explicit pending metadata/v);
     });
 
     it("rejects duplicate, mismatched, missing, and historical membership", async () => {

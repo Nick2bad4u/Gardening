@@ -1316,6 +1316,7 @@
         }
     }
 
+    & .series-humidity,
     & .series-weight {
         fill: var(--chart-weight);
         stroke: var(--chart-weight);

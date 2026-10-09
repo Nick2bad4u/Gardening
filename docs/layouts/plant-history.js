@@ -123,6 +123,7 @@ const HISTORY_HEADERS = Object.freeze([
     "Rotation (°)",
     "Watering application",
     "Water amount (mL)",
+    "Relative humidity (%)",
 ]);
 
 const searchParameters = new URLSearchParams(location.search);
@@ -312,6 +313,12 @@ function eventSpecificDetails(event) {
                 count ? `${count} ${unit}` : "",
                 displayValue(event["Flower details"]),
             ].filter(Boolean);
+        }
+        case "humidity": {
+            const value = numericValue(event["Relative humidity (%)"]);
+            return value !== null && value >= 0 && value <= 100
+                ? [`${value}% RH`]
+                : ["Humidity reading not recorded"];
         }
         case "pest": {
             const action = displayValue(event["Treatment / action"]);
@@ -515,6 +522,25 @@ function renderCharts(summary) {
             : "Add a Quick log weight to begin this chart."
     );
 
+    const humidityPoints = summary.humiditySeries.filter((entry) =>
+        inChartRange(entry)
+    );
+    renderLineChart(getRequiredElement("#humidity-chart", HTMLElement), {
+        ariaLabel: `Relative humidity history for ${plantLabel(state.currentPlant)}`,
+        emptyMessage: "No humidity readings in this chart range yet.",
+        series: [
+            {
+                className: "series-humidity",
+                label: "Relative humidity",
+                points: humidityPoints,
+            },
+        ],
+        unit: "% RH",
+    });
+    setText(
+        "#humidity-chart-summary",
+        `${humidityPoints.length} humidity readings. Recorded observations only; no care target is assigned.`
+    );
     const heightPoints = summary.heightSeries.filter((entry) =>
         inChartRange(entry)
     );
@@ -684,6 +710,9 @@ function renderPlant(plant, plants, index, trackerIndex) {
     state.currentPlant = plant;
     setHistoryPanelsVisible(true);
     const summary = plant.summary;
+    for (const panel of document.querySelectorAll("[data-weight-baseline]")) {
+        if (panel instanceof HTMLElement) panel.hidden = summary.manualCare;
+    }
     const name = plant["Plant / planter"];
     const id = plant["Plant ID"];
     const label = plantLabel(plant);
@@ -728,6 +757,13 @@ function renderPlant(plant, plants, index, trackerIndex) {
         "cm"
     );
 
+    setCheckedValue(
+        "#latest-humidity",
+        "#humidity-checked",
+        summary.latestHumidity,
+        "Relative humidity (%)",
+        "% RH"
+    );
     renderActivitySummary(plant);
     const activeSetupEntries = plant.events.filter(
         (event) =>

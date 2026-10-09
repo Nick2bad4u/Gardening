@@ -8,6 +8,7 @@ import { inventorySnapshotDigest } from "./inventory-expansion.mjs";
  *     label: string;
  *     name: string;
  *     memberSlugs: string[];
+ *     pending?: boolean;
  *     careNote: string;
  *     setupNote: string;
  *     acquiredFrom?: string;
@@ -140,7 +141,9 @@ export function buildContainerCatalogAppendRequests(snapshot, catalog) {
             !["Container members", "Containers"].includes(properties.title)
     );
     const oldContainerEnd = catalog.containers.length;
-    const oldMemberEnd = catalog.members.length;
+    const memberAdditionCount =
+        catalog.containers.at(-1)?.pending === true ? 0 : 1;
+    const oldMemberEnd = catalog.members.length + 1 - memberAdditionCount;
     const oldTerms = [
         [
             `SUM(ARRAYFORMULA(N(ISERROR('Containers'!A1:S${oldContainerEnd}))))`,
@@ -190,12 +193,15 @@ export function buildContainerCatalogAppendRequests(snapshot, catalog) {
             catalog.members.map(({ inventoryId }) => inventoryId),
         ],
     ])) {
+        const additionCount = title === "Containers" ? 1 : memberAdditionCount;
+        const previousEnd = ids.length + 1 - additionCount;
         const { rows, sheet } = validateCatalogAppendSheet(
             snapshot,
             title,
             sheetId,
             headers,
-            ids
+            ids,
+            additionCount
         );
         const generatedWrite = generated.requests.find(
             (request) =>
@@ -207,7 +213,8 @@ export function buildContainerCatalogAppendRequests(snapshot, catalog) {
         if (!isRecord(updateCells) || !Array.isArray(updateCells["rows"]))
             throw new Error("Missing generated catalog rows");
         const added = /** @type {unknown} */ (updateCells["rows"][ids.length]);
-        if (!isRecord(added)) throw new Error("Missing new catalog member row");
+        if (additionCount && !isRecord(added))
+            throw new Error("Missing new catalog member row");
         if (sheet.properties.gridProperties.rowCount < ids.length + 1)
             requests.push({
                 appendDimension: {
@@ -219,40 +226,47 @@ export function buildContainerCatalogAppendRequests(snapshot, catalog) {
                     sheetId,
                 },
             });
+        if (additionCount)
+            requests.push(
+                {
+                    copyPaste: {
+                        destination: {
+                            endColumnIndex: headers.length,
+                            endRowIndex: ids.length + 1,
+                            sheetId,
+                            startColumnIndex: 0,
+                            startRowIndex: ids.length,
+                        },
+                        pasteType: "PASTE_FORMAT",
+                        source: {
+                            endColumnIndex: headers.length,
+                            endRowIndex: ids.length,
+                            sheetId,
+                            startColumnIndex: 0,
+                            startRowIndex: ids.length - 1,
+                        },
+                    },
+                },
+                {
+                    updateCells: {
+                        fields: "userEnteredValue",
+                        rows: [added],
+                        start: {
+                            columnIndex: 0,
+                            rowIndex: ids.length,
+                            sheetId,
+                        },
+                    },
+                }
+            );
         requests.push(
-            {
-                copyPaste: {
-                    destination: {
-                        endColumnIndex: headers.length,
-                        endRowIndex: ids.length + 1,
-                        sheetId,
-                        startColumnIndex: 0,
-                        startRowIndex: ids.length,
-                    },
-                    pasteType: "PASTE_FORMAT",
-                    source: {
-                        endColumnIndex: headers.length,
-                        endRowIndex: ids.length,
-                        sheetId,
-                        startColumnIndex: 0,
-                        startRowIndex: ids.length - 1,
-                    },
-                },
-            },
-            {
-                updateCells: {
-                    fields: "userEnteredValue",
-                    rows: [added],
-                    start: { columnIndex: 0, rowIndex: ids.length, sheetId },
-                },
-            },
             ...extendCatalogLookups(
-                rows.slice(1, ids.length),
+                rows.slice(1, previousEnd),
                 sheetId,
                 oldContainerEnd
             )
         );
-        if (sheet.basicFilter.range["endRowIndex"] !== ids.length)
+        if (sheet.basicFilter.range["endRowIndex"] !== previousEnd)
             throw new Error(`Catalog filter bounds changed: ${title}`);
         requests.push({
             setBasicFilter: {
@@ -272,7 +286,8 @@ export function buildContainerCatalogAppendRequests(snapshot, catalog) {
     return {
         containerRange: generated.containerRange,
         destinations: {
-            "Container members": catalog.members.length,
+            "Container members":
+                catalog.members.length + 1 - memberAdditionCount,
             Containers: catalog.containers.length,
         },
         memberRange: generated.memberRange,
@@ -307,7 +322,13 @@ export function buildContainerCatalogRequests(snapshot, catalog) {
             textCell(container.id),
             lookup(row, "A", "O", sourceEnd),
             textCell(container.name),
-            textCell(names.length > 1 ? "Shared" : "Single profile"),
+            textCell(
+                container.pending === true
+                    ? "Identification pending"
+                    : names.length > 1
+                      ? "Shared"
+                      : "Single profile"
+            ),
             { userEnteredValue: { numberValue: names.length } },
             textCell(names.join(" · ")),
             lookup(row, "A", "P", sourceEnd),
@@ -440,6 +461,7 @@ export function normalizeContainerCatalog(source) {
             label: container.label,
             memberSlugs: container.members.map(({ slug }) => slug),
             name: container.name,
+            pending: container.pending,
             setupNote: stripMarkdown(
                 container.currentPot || container.setupNote
             ),
@@ -875,9 +897,16 @@ function validateCatalog(snapshot, { containers, members }) {
 /**
  * @param {Parameters<typeof buildContainerCatalogAppendRequests>[0]} snapshot
  * @param {string} title @param {number} sheetId @param {readonly string[]}
- *   headers @param {string[]} ids
+ *   headers @param {string[]} ids @param {number} additionCount
  */
-function validateCatalogAppendSheet(snapshot, title, sheetId, headers, ids) {
+function validateCatalogAppendSheet(
+    snapshot,
+    title,
+    sheetId,
+    headers,
+    ids,
+    additionCount
+) {
     const sheet = snapshot.metadata.sheets.find(
         ({ properties }) => properties.title === title
     );
@@ -896,11 +925,11 @@ function validateCatalogAppendSheet(snapshot, title, sheetId, headers, ids) {
         )
     )
         throw new Error(`Catalog headers changed: ${title}`);
-    const previousIds = ids.slice(0, -1);
+    const previousIds = ids.slice(0, ids.length - additionCount);
     for (const [index, id] of previousIds.entries())
         if (rows[index + 1]?.[0]?.userEnteredValue?.stringValue !== id)
             throw new Error(`Catalog membership changed: ${title}`);
-    assertCatalogAppendEmpty(rows.slice(ids.length), title);
+    assertCatalogAppendEmpty(rows.slice(previousIds.length + 1), title);
     return { rows, sheet: { ...sheet, basicFilter: sheet.basicFilter } };
 }
 
@@ -916,7 +945,9 @@ function validateContainerMembers(snapshot, containers, members) {
             .map(({ slug }) => slug);
         if (
             !container.name.trim() ||
-            expected.length === 0 ||
+            (expected.length === 0
+                ? container.pending !== true
+                : container.pending === true) ||
             !unique(container.memberSlugs) ||
             expected.length !== container.memberSlugs.length ||
             container.memberSlugs.some((slug) => !expected.includes(slug))

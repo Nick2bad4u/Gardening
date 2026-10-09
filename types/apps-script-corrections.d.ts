@@ -42,6 +42,7 @@ type GardenCorrectionEvent =
     | "Check"
     | "Clean"
     | "Flower"
+    | "Humidity"
     | "Measure"
     | "Note"
     | "Other"
@@ -84,7 +85,8 @@ type GardenCorrectionFieldColumn =
     | 36
     | 39
     | 40
-    | 41;
+    | 41
+    | 42;
 interface GardenCorrectionFieldDefinition extends GardenCorrectionField {
     column: GardenCorrectionFieldColumn;
     events: GardenCorrectionEvent[];
@@ -210,6 +212,7 @@ type GardenCorrectionRowFields = [
     rotationDegrees: GardenOptionalNumber,
     wateringApplication: string,
     waterAmount: GardenOptionalNumber,
+    relativeHumidity: GardenOptionalNumber,
 ];
 interface GardenCorrectionRowSnapshot {
     formulas: string[];

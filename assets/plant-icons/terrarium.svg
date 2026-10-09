@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="terrarium-title terrarium-description" data-plant-slug="terrarium" focusable="false">
+  <title id="terrarium-title">Terrarium plant portrait</title>
+  <desc id="terrarium-description">Generic schematic glass vessel with an unknown-contents marker; not a depiction of the owned terrarium, its closure, plants, or substrate.</desc>
+  <path d="M22 9h20v9l11 20v13c0 5-4 8-9 8H20c-5 0-9-3-9-8V38l11-20Z" fill="#d8eee7" stroke="#527b75" stroke-width="3" stroke-linejoin="round" />
+  <path d="M14 44h36v7c0 3-3 5-6 5H20c-3 0-6-2-6-5Z" fill="#b7a28b" />
+  <path d="M24 12h16M19 33l7-13" fill="none" stroke="#fff8e8" stroke-width="3" stroke-linecap="round" />
+  <path d="M27 34c0-6 10-6 10 0 0 4-5 3-5 8m0 6h0" fill="none" stroke="#456b60" stroke-width="3" stroke-linecap="round" />
+</svg>

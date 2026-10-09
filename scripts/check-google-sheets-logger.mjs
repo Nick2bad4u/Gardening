@@ -255,9 +255,10 @@ assert.deepEqual(appSheetEntryHeaders, [
     "Rotation (°)",
     "Watering application",
     "Water amount (mL)",
+    "Relative humidity (%)",
 ]);
 const appSheetBulkHeaders = strings(evaluateLogger("APP_SHEET_BULK_HEADERS"));
-assert.equal(appSheetBulkHeaders.length, 61);
+assert.equal(appSheetBulkHeaders.length, 62);
 assert.deepEqual(appSheetBulkHeaders.slice(0, 6), [
     "Round ID",
     "Started at",
@@ -287,6 +288,7 @@ assert.deepEqual(appSheetBulkHeaders.slice(54), [
     "P35 weight (g)",
     "P36 weight (g)",
     "P37 weight (g)",
+    "P38 weight (g)",
 ]);
 assert.deepEqual(strings(evaluateLogger("NUTRIENT_PRODUCT_OPTIONS")), [
     "MSU 13-3-15",
@@ -822,11 +824,11 @@ const forecastFormulaRow = strings(
 );
 assert.match(
     required(forecastFormulaRow[20], "forecast formula"),
-    /'Dry-down models'!\$E\$2:\$E\$36/v
+    /'Dry-down models'!\$E\$2:\$E\$37/v
 );
 assert.match(
     required(forecastFormulaRow[30], "forecast formula"),
-    /'Dry-down models'!\$G\$2:\$G\$36/v
+    /'Dry-down models'!\$G\$2:\$G\$37/v
 );
 assert.doesNotMatch(
     required(forecastFormulaRow[30], "forecast formula"),

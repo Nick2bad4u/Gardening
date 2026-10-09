@@ -560,3 +560,113 @@ describe("measured-only growth analytics", () => {
         expect(summary.eventCounts.nutrients).toBe(1);
     });
 });
+
+describe("humidity observations", () => {
+    it("retains zero and 100 percent while excluding removed, absent, invalid, and other event readings", () => {
+        expect.hasAssertions();
+
+        const summary = calculateSummary([
+            {
+                Date: "2026-09-01",
+                Event: "Humidity",
+                "Relative humidity (%)": 0,
+            },
+            {
+                Date: "2026-09-02",
+                Event: "Humidity",
+                "Relative humidity (%)": 100,
+            },
+            {
+                Date: "2026-09-03",
+                Event: "Humidity",
+                "Record status": "Removed",
+                "Relative humidity (%)": 70,
+            },
+            {
+                Date: "2026-09-04",
+                Event: "Humidity",
+                "Relative humidity (%)": -1,
+            },
+            {
+                Date: "2026-09-05",
+                Event: "Humidity",
+                "Relative humidity (%)": 101,
+            },
+            { Date: "2026-09-06", Event: "Check", "Relative humidity (%)": 50 },
+            { Date: "2026-09-07", Event: "Humidity" },
+            {
+                Date: "2999-09-07",
+                Event: "Humidity",
+                "Relative humidity (%)": 80,
+            },
+        ]);
+
+        expect(
+            summary.humiditySeries.map((point) => point.value)
+        ).toStrictEqual([0, 100]);
+        expect(summary.latestHumidity?.["Relative humidity (%)"]).toBe(100);
+        expect(summary.lastWater).toBeUndefined();
+        expect(summary.weightSeries).toStrictEqual([]);
+        expect(summary.drySamples).toBe(0);
+        expect(summary.wetSamples).toBe(0);
+    });
+
+    it("leaves historical rows without the new field blank", () => {
+        expect.hasAssertions();
+
+        const summary = calculateSummary([
+            { Date: "2026-09-01", Event: "Check" },
+        ]);
+
+        expect(summary.humiditySeries).toStrictEqual([]);
+        expect(summary.latestHumidity).toBeUndefined();
+    });
+});
+
+describe("pending terrarium care", () => {
+    it("retains observations without creating dry/wet readiness or watering capacity", () => {
+        expect.hasAssertions();
+
+        const events = [
+            {
+                _index: 0,
+                Date: "2026-09-01",
+                Event: "Water",
+                "Weight (g)": 600,
+            },
+            {
+                _index: 1,
+                Date: "2026-09-02",
+                Event: "Weight",
+                "Weight (g)": 500,
+            },
+            {
+                _index: 2,
+                Date: "2026-09-03",
+                Event: "Water",
+                "Weight (g)": 600,
+            },
+            {
+                _index: 3,
+                Date: "2026-09-04",
+                Event: "Weight",
+                "Weight (g)": 450,
+            },
+        ];
+        const summary = summarizeIndexedHistory(events, "P38");
+
+        expect(summary.manualCare).toBe(true);
+        expect(summary.baselineStatus).toContain("Manual care review");
+        expect(summary.weightSeries).toHaveLength(4);
+        expect(
+            summary.weightSeries.every((point) => point.state === "Routine")
+        ).toBe(true);
+        expect(summary.latestWeightValue).toBe(450);
+        expect(summary.lastWater?.["Date"]).toBe("2026-09-03");
+        expect(summary.dryAverage).toBeNull();
+        expect(summary.wetAverage).toBeNull();
+        expect(summary.capacity).toBeNull();
+        expect(summary.remainingFraction).toBeNull();
+        expect(summarizeIndexedHistory(events, "P01").manualCare).toBe(false);
+    });
+});

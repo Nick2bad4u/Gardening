@@ -13,7 +13,7 @@ import { renumberedPots } from "../site/lib/legacy.mjs";
 import { archivedAmazonPlan } from "../site/lib/old-plans.mjs";
 import { getReports } from "../site/lib/reports.mjs";
 import { siteApps } from "../site/lib/site-apps.mjs";
-import { isRecord } from "./build-data.mjs";
+import { isProfileData, isRecord, readJson } from "./build-data.mjs";
 
 /** @typedef {{ slug: string; title: string }} ProfileIdentity */
 /** @typedef {{ filename: string; html: string; relative: string }} PublishedPage */
@@ -262,11 +262,11 @@ async function main() {
         getReports(),
         getOldPlans(),
     ]);
-    const pots = new Set(
-        profiles
-            .map((profile) => profile.trackerId)
-            .filter((id) => id !== undefined)
+    const mapping = await readJson(
+        "docs/layouts/plant-profile-data.json",
+        isProfileData
     );
+    const pots = new Set(Object.keys(mapping));
     const required = [
         indexFilename,
         "404.html",

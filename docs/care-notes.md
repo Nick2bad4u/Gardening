@@ -26,6 +26,10 @@ triggers below do not replace that equipment limit.
 
 The owner reports current conditions around **45–50% RH** and temperatures **in the 70s °F**, with three sensing points described in the [setup record](./setup.md). Two under-table Honeywell fans are set to low; A22 control is limited to fan cycles. Use those readings alongside each pot's drying pattern.
 
+## Terrarium — identities and setup pending
+
+**P38 / #12 — Terrarium**, enrolled October 9, 2026, is a tracked container with plant identities and photographs pending. Its open or closed design, placement, size, drainage, and substrate are not yet recorded. Enrollment adds one container history and no botanical profile; the collection still has 43 botanical profile groups and two whole-planter overviews. Record measured relative humidity as a standalone **Humidity** event in **% RH** (0–100); no humidity target or watering rule is assigned before the plants and setup are known.
+
 ## September 20 houseplant purchases
 
 The **September 22 living-room plan** places P31/P32 side by side at the **north-facing double glass sliding door**, with **P32 oyster plant closest to the glass**, **P31 Peperomia on the smallest Bamworld stool**, and the **FECiDA clipped to a shelf**. Start with a **12-hour FECiDA-only trial**, adding the two available Juhefas as targeted fill if canopy measurements show gaps. The optional Diivoo can stay off. Installation and the move remain unconfirmed.

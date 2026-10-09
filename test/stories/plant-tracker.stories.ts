@@ -171,3 +171,34 @@ export const NoObservations: Story = {
         ).toHaveTextContent("0");
     },
 };
+
+export const PendingTerrariumCare: Story = {
+    args: { scenario: "humidity", theme: "light", width: 390 },
+    play: async ({ canvasElement }) => {
+        const { canvas, document, userEvent } =
+            await websiteCanvas(canvasElement);
+        await waitFor(() =>
+            expect(
+                document.querySelector("#container-count")
+            ).toHaveTextContent("4")
+        );
+        await userEvent.type(
+            canvas.getByRole("searchbox", { name: "Find a plant" }),
+            "P38"
+        );
+        await expect(document.querySelector("tbody")).toHaveTextContent(
+            "Manual care review"
+        );
+        await expect(document.querySelector("tbody")).not.toHaveTextContent(
+            "5 days"
+        );
+        await userEvent.selectOptions(
+            canvas.getByRole("combobox", { name: "Show" }),
+            "needs-baseline"
+        );
+        await expect(
+            canvas.getByText("No plants match the current search and filter.")
+        ).toBeVisible();
+        await expectNoOverflow(document);
+    },
+};

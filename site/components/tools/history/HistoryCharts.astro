@@ -26,6 +26,19 @@ import { siteUrl } from "../../../lib/routes.mjs";
         <article class="chart-card">
             <header>
                 <div>
+                    <h3>Relative humidity</h3>
+                    <p>
+                        Current readings as logged; no inferred watering instruction or humidity
+                        target.
+                    </p>
+                </div>
+            </header>
+            <div class="chart-canvas" id="humidity-chart"></div>
+            <div class="chart-summary" id="humidity-chart-summary"></div>
+        </article>
+        <article class="chart-card">
+            <header>
+                <div>
                     <h3>
                         <svg
                             class="site-icon"

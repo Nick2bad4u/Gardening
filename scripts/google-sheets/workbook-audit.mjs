@@ -291,7 +291,9 @@ export function buildWorkbookAuditRequests({ cells, metadata }) {
         ],
     ]);
     const errorRanges = [
-        "History!A2:AP5000",
+        sheetNamed("History").properties.gridProperties.columnCount === 43
+            ? "History!A2:AQ5000"
+            : "History!A2:AP5000",
         "Baselines!A2:AJ1000",
         "'Plant tracker'!A2:AJ1000",
         "Dashboard!A1:X254",
@@ -436,7 +438,10 @@ export function buildWorkbookAuditRequests({ cells, metadata }) {
     const displayedColumns = {
         Baselines: 36,
         Dashboard: 24,
-        History: 42,
+        History:
+            sheetNamed("History").properties.gridProperties.columnCount === 43
+                ? 43
+                : 42,
         [plantTrackerSheet]: 36,
     };
     for (const [name, count] of Object.entries(displayedColumns)) {

@@ -11,7 +11,7 @@ Two plant illustrations are adapted from SVG Repo sources:
 | `icon-cactus`    | [Cactus, SVG Repo 206109](https://www.svgrepo.com/svg/206109/cactus)         | SVG Repo                 | [CC0](https://www.svgrepo.com/page/licensing/#CC0)          | Redrawn and simplified for clear rendering from 16–52 px; colors were harmonized with the field-guide palette.       |
 | `icon-succulent` | [Succulents, SVG Repo 474474](https://www.svgrepo.com/svg/474474/succulents) | xiyou0608                | [Public domain](https://www.svgrepo.com/page/licensing/#PD) | Redrawn as a compact rosette while retaining the source illustration's concentric soil and layered-leaf composition. |
 
-The 53 `icon-plant-*` portraits and the remaining interface symbols are original
+The 55 `icon-plant-*` portraits and the remaining interface symbols are original
 repository artwork. Each portrait uses a different simplified silhouette,
 color pattern, growth habit, spine or leaf treatment, and pot where appropriate
 to evoke the plant named by that profile. The P29 portrait emphasizes paired,
@@ -65,3 +65,7 @@ The September 22 garden launcher set adds eleven original symbols for Home, Trac
 The September 23 Containers launcher adds original repository vector artwork: three leafy plants share a wide blush planter against a muted teal square. Its central composition fits the maskable safe circle and represents shared containers without identifying any particular plants. The Containers directory and its detail pages share this app identity; launching the installed app opens the directory.
 
 The October 6 Arctic Ice portrait for #11 / P37 is original schematic vector artwork: pale rounded rosette leaves based on the cultivar's descriptive form. It does not document the owned plant's appearance or imply a completed ceramic-pot repot. The profile preserves the patent and seller references.
+
+## Terrarium and humidity symbols
+
+`icon-plant-terrarium` and `icon-humidity` are original schematic repository artwork added for P38 / #12. The generic glass vessel and question mark indicate pending plant identities; its shape and substrate color do not document the actual enclosure or medium. The drop and percent marks represent relative humidity, not a watering recommendation. No reference photograph or third-party artwork was used.

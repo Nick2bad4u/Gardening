@@ -21,18 +21,28 @@
 
     // Synthetic observations belong only to this browser frame.
     const plants = [
-        "Plant ID,Current pot label,Plant / planter,Scientific name / contents",
+        "Plant ID,Current pot label,Plant / planter,Scientific name / contents,Est. time to dry",
         "P01,1,Variegated moon cactus,Gymnocalycium mihanovichii",
         "P02,2,Feather cactus,Mammillaria plumosa",
         "P03,10,Serpent cactus,Nyctocereus serpentinus",
+        ...(scenario === "humidity"
+            ? ["P38,#12,Terrarium,Plant identities pending,5 days"]
+            : []),
     ].join("\n");
     const history = [
-        "Date,Plant ID,Event,Weight state,Weight (g),Height (cm),Width (cm),Plant condition,Notes,Pot setup,Record status,Request ID",
+        "Date,Plant ID,Event,Weight state,Weight (g),Height (cm),Width (cm),Plant condition,Notes,Pot setup,Record status,Request ID,Relative humidity (%)",
         "2026-09-01,P01,Weight,Dry,400,,,Healthy,First dry reading,1,Active,storybook-dry",
         "2026-09-02,P01,Water,,,,,Healthy,Plain water,1,Active,storybook-water",
         "2026-09-02,P01,Weight,Wet,600,,,Healthy,Drained wet reading,1,Active,storybook-wet",
         "2026-09-03,P01,Weight,Routine,550,8,6,Healthy,Routine check,1,Active,storybook-routine",
         "2026-09-04,P02,Check,,,,,Healthy,No weight recorded,1,Active,storybook-check",
+        ...(scenario === "humidity"
+            ? [
+                  "2026-09-01,P38,Humidity,,,,,,Zero reading,1,Active,storybook-humidity-zero,0",
+                  "2026-09-02,P38,Humidity,,,,,,Saturated reading,1,Active,storybook-humidity-full,100",
+                  "2026-09-03,P38,Humidity,,,,,,Latest reading,1,Active,storybook-humidity-latest,65.5",
+              ]
+            : []),
     ].join("\n");
     const headers = history.split("\n", 1)[0];
     const nativeFetch = fetch.bind(globalThis);

@@ -1825,6 +1825,10 @@
                 background: #a86732;
                 border-color: #a86732;
             }
+            .chip[data-event="Humidity"][aria-pressed="true"] {
+                background: #286b79;
+                border-color: #286b79;
+            }
             .chip[data-event="Check"][aria-pressed="true"] {
                 background: #39746f;
                 border-color: #39746f;
@@ -2377,6 +2381,11 @@
                     --event-bg: #dff2e4;
                     --event-ink: #24543a;
                     --event-accent: #3d9a60;
+                }
+                &[data-event="Humidity"] {
+                    --event-bg: #dff2f5;
+                    --event-ink: #205462;
+                    --event-accent: #286b79;
                 }
                 &[data-event="Check"] {
                     --event-bg: #fff0c7;
@@ -11299,6 +11308,50 @@
             </symbol>
 
             <symbol
+                id="app-icon-humidity"
+                viewBox="0 0 64 64"
+            >
+                <desc id="app-ui-humidity-description">
+                    A blue drop and percentage marks represent a measured
+                    relative-humidity reading.
+                </desc>
+                <path
+                    d="M25 7C20 18 10 27 10 37a15 15 0 0 0 30 0C40 27 30 18 25 7Z"
+                    fill="#79bdd0"
+                    stroke="#386e82"
+                    stroke-width="3"
+                />
+                <path
+                    d="M17 36c0 6 3 9 7 10"
+                    fill="none"
+                    stroke="#e9f9f7"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                />
+                <path
+                    d="m44 52 12-22"
+                    stroke="#5e7164"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                />
+                <circle
+                    cx="45"
+                    cy="31"
+                    r="4"
+                    fill="#c9dcb4"
+                    stroke="#5e7164"
+                    stroke-width="2"
+                />
+                <circle
+                    cx="55"
+                    cy="51"
+                    r="4"
+                    fill="#c9dcb4"
+                    stroke="#5e7164"
+                    stroke-width="2"
+                />
+            </symbol>
+            <symbol
                 id="app-icon-rotate"
                 viewBox="0 0 64 64"
             >
@@ -13795,6 +13848,43 @@
                                     </select>
                                 </div>
                                 <div
+                                    id="humiditySection"
+                                    class="conditional event-panel"
+                                >
+                                    <h3
+                                        ><svg
+                                            viewBox="0 0 64 64"
+                                            class="app-icon"
+                                            aria-hidden="true"
+                                        >
+                                            <use
+                                                href="#app-icon-humidity"
+                                            ></use></svg
+                                        >Humidity</h3
+                                    >
+                                    <p
+                                        class="hint"
+                                        id="humidityHint"
+                                        >Record the current hygrometer reading.
+                                        This records an observation, not a
+                                        humidity target.</p
+                                    >
+                                    <label
+                                        class="field-label"
+                                        for="relativeHumidity"
+                                        >Current relative humidity (% RH)</label
+                                    >
+                                    <input
+                                        id="relativeHumidity"
+                                        type="number"
+                                        inputmode="decimal"
+                                        min="0"
+                                        max="100"
+                                        step="any"
+                                        aria-describedby="humidityHint"
+                                    />
+                                </div>
+                                <div
                                     id="rotationSection"
                                     class="conditional event-panel"
                                 >
@@ -14916,7 +15006,7 @@
             ].join("/");
             const PLANT_ICON_PATH = "/Gardening/assets/plant-icons/";
             // Generated from the exported artwork by sync-plant-icons.mjs.
-            const PLANT_ICON_REVISION = "5f4fc05caf24f2fd";
+            const PLANT_ICON_REVISION = "4987bcaf5dbb7c8c";
             const PLANT_ICON_CACHE = "gardenLoggerPlantPortraitsV1";
             const plantPortraitRequests = new Map();
             let plantPortraitCache;
@@ -14954,6 +15044,7 @@
                 Water: "water",
                 Weigh: "weight",
                 Measure: "dimensions",
+                Humidity: "humidity",
                 Check: "condition",
                 Rotation: "rotate",
                 Clean: "clean",
@@ -15408,6 +15499,7 @@
                     pestIssue: payload.pestIssue,
                     pestTreatment: payload.pestTreatment,
                     rotationDegrees: String(payload.rotationDegrees || ""),
+                    relativeHumidity: String(payload.relativeHumidity ?? ""),
                 };
             }
 
@@ -15910,7 +16002,8 @@
                 const latest = Number(plant?.latestWeight);
                 const dry = Number(plant?.dryOrLowestWeight);
                 const hasLatest = Number.isFinite(latest) && latest > 0;
-                const hasDry = Number.isFinite(dry) && dry > 0;
+                const hasDry =
+                    plant?.id !== "P38" && Number.isFinite(dry) && dry > 0;
                 const observedAt = Date.parse($("observedAt").value);
                 const latestAt = Date.parse(plant?.latestWeightAt);
                 feedback.textContent = "";
@@ -15923,7 +16016,9 @@
                     return;
                 if (String($("potSetup").value) !== String(plant.potSetup)) {
                     feedback.textContent =
-                        "Different pot setup · no comparable latest or dry weight.";
+                        plant.id === "P38"
+                            ? "Different pot setup · no comparable latest weight."
+                            : "Different pot setup · no comparable latest or dry weight.";
                 } else {
                     const comparisons = [];
                     const timing =
@@ -15981,9 +16076,24 @@
                     );
             }
 
+            function validateHumidityDetails(payload) {
+                if (!payload.events.includes("Humidity")) return;
+                const value = String(payload.relativeHumidity ?? "").trim();
+                if (value === "")
+                    throw new Error(
+                        "Enter the current relative humidity for the Humidity event."
+                    );
+                const number = Number(value);
+                if (!Number.isFinite(number) || number < 0 || number > 100)
+                    throw new Error(
+                        "Relative humidity must be between 0 and 100 % RH."
+                    );
+            }
+
             function validateQueuedPayload(payload) {
                 const events = inferredPayloadEvents(payload);
                 validateCheckDetails(payload);
+                validateHumidityDetails(payload);
                 if (!payload.plantId)
                     throw new Error("Choose a plant before adding to queue.");
                 if (!events.length)
@@ -16134,6 +16244,9 @@
                             eventText,
                             payload.weight ? `${payload.weight} g` : "",
                             queuedMeasurementText(payload),
+                            payloadEvents.includes("Humidity")
+                                ? `${payload.relativeHumidity} % RH`
+                                : "",
                             payloadEvents.includes("Rotation")
                                 ? `${payload.rotationDegrees || 90}°`
                                 : "",
@@ -16438,6 +16551,7 @@
                 if (plant?.id === "P35") return "lithops-shared-planter";
                 if (plant?.id === "P36") return "pleiospilos-nelii";
                 if (plant?.id === "P37") return "echeveria-arctic-ice";
+                if (plant?.id === "P38") return "terrarium";
                 if (plant?.id === "P31") return "peperomia-obtipan-bicolor";
                 if (plant?.id === "P32")
                     return "tradescantia-spathacea-tricolor";
@@ -17137,6 +17251,8 @@
                     ],
                 ];
                 metricData.forEach(([iconName, label, value, detail, help]) => {
+                    if (plant.id === "P38" && label === "Last completed dry")
+                        return;
                     const metric = document.createElement("div");
                     metric.className = "metric";
                     if (label === "Last completed dry") {
@@ -17261,6 +17377,7 @@
             }
 
             function latestWeightComparison(plant) {
+                if (plant.id === "P38") return "";
                 const { latestWeight, dryOrLowestWeight } = plant;
                 if (
                     ![latestWeight, dryOrLowestWeight].every(
@@ -17343,6 +17460,7 @@
                             Date.parse(right.observedAt)
                     );
                 const previousDry =
+                    plant.id !== "P38" &&
                     series.previousDry &&
                     Number.isFinite(series.previousDry.weight) &&
                     series.previousDry.weight > 0
@@ -17617,13 +17735,17 @@
                             ? formattedTimestamp(series.startedAt)
                             : "Not recorded",
                     ],
-                    [
-                        "dry",
-                        "Last completed dry reference",
-                        previousDry
-                            ? `${previousDry.weight} g · ${formattedTimestamp(previousDry.observedAt)}`
-                            : "No completed dry reference in this setup.",
-                    ],
+                    ...(plant.id === "P38"
+                        ? []
+                        : [
+                              [
+                                  "dry",
+                                  "Last completed dry reference",
+                                  previousDry
+                                      ? `${previousDry.weight} g · ${formattedTimestamp(previousDry.observedAt)}`
+                                      : "No completed dry reference in this setup.",
+                              ],
+                          ]),
                 ]);
                 if (points.length) {
                     const legend = document.createElement("ul");
@@ -18036,6 +18158,16 @@
                 const panel = document.createElement("section");
                 panel.className = "plant-forecast";
                 panel.setAttribute("aria-label", "Watering plan");
+                if (plant.id === "P38") {
+                    const title = document.createElement("strong");
+                    title.textContent = "Manual care · setup details pending";
+                    const note = document.createElement("p");
+                    note.className = "forecast-guidance";
+                    note.textContent =
+                        "Record observed weights and humidity. Watering guidance is pending confirmation of the terrarium's plants, substrate, drainage and ventilation; no dry-weight baseline or watering forecast is assigned.";
+                    panel.append(title, note);
+                    return panel;
+                }
                 const heading = document.createElement("div");
                 heading.className = "forecast-heading forecast-item";
                 const waterHelp = createHelp(
@@ -18223,6 +18355,7 @@
                 [
                     ["waterSection", "Water"],
                     ["checkSection", "Check"],
+                    ["humiditySection", "Humidity"],
                     ["rotationSection", "Rotation"],
                     ["repotSection", "Repot"],
                     ["flowerSection", "Flower"],
@@ -18288,6 +18421,19 @@
                     }
                     const sub = document.createElement("div");
                     sub.className = "recent-sub";
+                    const relativeHumidity =
+                        entry.relativeHumidity ??
+                        entry.details?.relativeHumidity;
+                    if (relativeHumidity !== "" && relativeHumidity != null) {
+                        const humidity = document.createElement("span");
+                        setIconLabel(
+                            humidity,
+                            "humidity",
+                            `${relativeHumidity} % RH`,
+                            "app-icon app-icon--small"
+                        );
+                        metrics.append(humidity);
+                    }
                     sub.textContent = `${entry.observedAt}${entry.weightState ? ` · ${entry.weightState}` : ""}`;
                     const badge = document.createElement("div");
                     badge.className = "event-badge";
@@ -18672,6 +18818,10 @@
                                 : field.type;
                         if (["number", "datetime"].includes(field.type))
                             input.step = "any";
+                        if (field.key === "relativeHumidity") {
+                            input.min = "0";
+                            input.max = "100";
+                        }
                     }
                     input.value =
                         field.type === "datetime"
@@ -18790,6 +18940,10 @@
                     const input = correction.inputs.get(field.key);
                     if (input.value === input.dataset.originalDisplay) return;
                     const value = input.value;
+                    if (field.key === "relativeHumidity" && value.trim() === "")
+                        throw new Error(
+                            "Enter the current relative humidity for the Humidity event."
+                        );
                     if (field.type === "datetime") {
                         const date = new Date(value);
                         if (!value || !Number.isFinite(date.getTime()))
@@ -18808,6 +18962,13 @@
                         if (!Number.isFinite(number))
                             throw new Error(
                                 `${field.label} must be a finite number.`
+                            );
+                        if (
+                            field.key === "relativeHumidity" &&
+                            (number < 0 || number > 100)
+                        )
+                            throw new Error(
+                                "Relative humidity must be between 0 and 100 % RH."
                             );
                         if (
                             number !==
@@ -19468,6 +19629,7 @@
                     waterAmount: "Water amount (mL)",
                     waterAmountMl: "Water amount (mL)",
                     rotationDegrees: "Rotation (°)",
+                    relativeHumidity: "Relative humidity (% RH)",
                     photoUrl: "Photo URL",
                 };
                 const icons = {
@@ -19494,6 +19656,7 @@
                     waterAmount: "water",
                     waterAmountMl: "water",
                     rotationDegrees: "rotate",
+                    relativeHumidity: "humidity",
                     photoUrl: "camera",
                     notes: "note",
                 };
@@ -20163,6 +20326,7 @@
                     "weight",
                     "height",
                     "width",
+                    "relativeHumidity",
                     "condition",
                     "soilMoisture",
                     "notes",
@@ -20252,6 +20416,9 @@
                     rotationDegrees: $("rotationDegrees").value || "90",
                     wateringApplication: $("wateringApplication").value,
                     waterAmount: $("waterAmount").value,
+                    relativeHumidity: state.events.has("Humidity")
+                        ? $("relativeHumidity").value
+                        : "",
                 };
             }
 
@@ -20896,6 +21063,7 @@
                     payload.wateringApplication ||
                     WATERING_APPLICATION_OPTIONS[0];
                 $("waterAmount").value = payload.waterAmount || "";
+                $("relativeHumidity").value = payload.relativeHumidity ?? "";
                 $("measurementQuality").value =
                     payload.measurementQuality || "Estimated";
                 $("measurementMethod").value =
@@ -20927,8 +21095,10 @@
                         !state.pendingSave ||
                         payloadFingerprint(state.pendingSave.payload) !==
                             payloadFingerprint(payload)
-                    )
+                    ) {
                         validateCheckDetails(payload);
+                        validateHumidityDetails(payload);
+                    }
                 } catch (error) {
                     showToast(error.message, true);
                     return;

@@ -49,6 +49,7 @@ export function appsScriptApi(context) {
         ensureAppSheetEntryColumns_: null,
         ensureHistoryDetailColumns_: null,
         ensureHistoryGrid_: null,
+        ensureHistoryHumidityColumn_: null,
         ensureHistoryMeasurementColumns_: null,
         ensureHistoryProvenanceColumns_: null,
         ensureHistoryRequestIdColumn_: null,

@@ -12,6 +12,54 @@ contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
 
+## October 9 terrarium and humidity — prepared rollout
+
+The maintained logger **5.32.0** and AppSheet source expressions prepare
+**36 containers: P01–P32, P35–P38**. **P38 / #12 — Terrarium** has pending
+plant identities, photographs, and enclosure/setup details. Its member list is
+explicitly empty; the collection retains **43 botanical catalog members**.
+P33/P34 remain retired compatibility fields. Do not assign a humidity target,
+cactus dry reference, or weight-based watering trigger to the pending terrarium.
+
+**Production status:** the captured AppSheet baseline is **1.100114**. This
+section describes prepared changes; native-copy rehearsal, production schema
+regeneration, editor save, and live verification are pending. The October 7
+section below records the previous verified rollout. See the
+[logger rollout record](../scripts/google-sheets/README.md#october-9-terrarium-and-humidity-rollout--prepared-not-deployed)
+for the coordinated workbook/deployment sequence.
+
+| Table                              | Prepared physical schema | Including `_RowNumber` | New field                                               |
+| ---------------------------------- | ------------------------ | ---------------------- | ------------------------------------------------------- |
+| History and read-only History view | 43 columns, A:AQ         | 44                     | AQ: `Relative humidity (%)`                             |
+| App entries                        | 35 columns, A:AI         | 36                     | AI: `Relative humidity (%)` → logger `relativeHumidity` |
+| App bulk                           | 62 columns, A:BJ         | 63                     | BJ: `P38 weight (g)`                                    |
+
+After each workbook header is verified, regenerate the affected AppSheet tables
+and compare every existing field definition with the captured app. Keep History,
+History view, catalog, and chart helpers read-only, and keep both staging tables
+writable through the existing queue bridge. Preserve creation-only keys, retry
+IDs, previous field positions, saved rows, and the retired P33/P34 blank guards.
+
+Detailed Log adds **Humidity** to Events and shows its Decimal input only when
+selected, requiring a value from **0 through 100**, inclusive. Store percentage
+points: **65.5 means 65.5% RH**, not 0.655. Zero is valid; blank means no reading.
+Use Decimal rather than AppSheet's fractional Percent type. The bridge writes a
+separate Humidity event, which neither implies Water nor creates a weight
+reference. Humidity is not a collection-wide Bulk Log action.
+
+P38's optional bulk weight follows the existing positive Decimal validation and
+Weigh / Water + weigh visibility rules. The maintained round validation covers
+36 active weights; place P38 after P37 and before Notes. Natural label order
+adds **#12 = 912**. The prepared portrait revision **4987bcaf5dbb7c8c** includes
+the generic terrarium schematic; it is not an owner photograph or evidence of
+actual enclosure shape. Upload/hash/access verification and the saved app's
+revision switch remain pending. Keep prior portrait folders for cached clients.
+
+Before marking this rollout complete, verify the saved definition, signed-in
+P38 card and blank form, humidity zero/100 handling on the disposable copy,
+read-only canonical tables, and exactly one five-minute queue trigger. Do not
+submit synthetic observations to production.
+
 ## October 7 Arctic Ice enrollment
 
 **Production AppSheet 1.100114 is saved and verified after workbook enrollment.** The owner assigned **P37 / #11** to Echeveria 'Arctic Ice', bringing the maintained roster to **35 active containers: P01–P32, P35–P37**. P33/P34 remain retired. The cultivar is nursery-labelled evidence, and this allocation does not imply a repot, watering, weight, measurement, or photograph has been recorded. The [logger runbook](../scripts/google-sheets/README.md) records the separate versioned phone deployment and workbook preservation checks.
@@ -252,7 +300,9 @@ weights remain `Routine` in the append-only ledger. Current-cycle analytics use
 the latest Water, treat its same-save weight—or otherwise the first positive
 weight within five days—as Wet, and use the completed Dry reading immediately
 before that Water as the dry anchor. Per-plant history displays the canonical
-stored state, so refreshing formulas never relabels old observations.
+stored state, so refreshing formulas never relabels old observations. Prepared
+5.32.0 keeps P38 in manual care review: pending plant identities and enclosure
+setup do not support a dry/plateau/full-dry watering trigger.
 
 Rotation is available in Log and Bulk Log. It accepts 1–360 degrees
 and defaults to 90. The degree value is archived in `History!AN:AN`, displayed
@@ -264,7 +314,7 @@ an EnumList of refs with `Valid_If` set to `SORT(Plant tracker[Plant ID])`; if
 that expression is removed, the deployed picker can appear empty even while
 the source table contains plants.
 
-The maintained Round action validation checks all 35 active weight fields and requires the retired P33/P34 fields blank. Weigh requires
+The prepared 5.32.0 Round action validation checks all 36 active weight fields and requires the retired P33/P34 fields blank. Weigh requires
 at least one positive weight; Water + weigh also requires selected plants.
 Other shared care actions require selected plants. The maintained expression
 is [`appsheet-bulk-validation.txt`](../scripts/google-sheets/appsheet-bulk-validation.txt).
@@ -299,9 +349,9 @@ identification.
 The Plants view sorts by the hidden virtual Number column
 `Natural label order`, not by `Plant ID`. Its explicit mapping keeps labels in
 the physical sequence A1-A3 through H1-H3, followed by the numbered plant and
-shared-planter labels #1–#11 after the Arctic Ice enrollment. The `#` group always sorts after every lettered
+shared-planter labels #1–#12 in the prepared October 9 mapping. The `#` group always sorts after every lettered
 label.
-Canonical active IDs and writable picker values are P01–P32 and P35–P37 after enrollment; do not replace them
+Prepared active IDs and writable picker values are P01–P32 and P35–P38; apply them only with the coordinated enrollment, and do not replace them
 with the display-order helper.
 
 Plants uses the Image virtual column `Plant portrait` as its square main

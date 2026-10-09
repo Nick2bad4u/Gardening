@@ -188,8 +188,9 @@ function renderRow(plant) {
         plant["Est. time to dry"] || "Collecting",
         "dry-time-cell"
     );
-    dryTimeCell.title =
-        "Workbook estimate from established wet-to-dry weight cycles; use it as an observation, not a watering deadline.";
+    dryTimeCell.title = summary.manualCare
+        ? "Plant identities and enclosure setup are pending; no dry-down or watering forecast is assigned."
+        : "Workbook estimate from established wet-to-dry weight cycles; use it as an observation, not a watering deadline.";
     row.append(dryTimeCell);
 
     const weightCell = element("td");
@@ -287,7 +288,7 @@ function renderStats() {
         state.collection.history.length
     );
     getRequiredElement("#baseline-count", HTMLElement).textContent =
-        `${ready} / ${state.collection.plants.length}`;
+        `${ready} / ${state.collection.plants.filter((plant) => !plant.summary.manualCare).length}`;
     getRequiredElement("#latest-activity", HTMLElement).textContent =
         formatDate(latest);
 }
@@ -366,6 +367,7 @@ function visiblePlants() {
         const isMatchesFilter =
             filter === "all" ||
             (filter === "needs-baseline" &&
+                !plant.summary.manualCare &&
                 plant.summary.baselineStatus !== "Ready") ||
             (filter === "has-weight" &&
                 plant.summary.latestWeightValue !== null);
