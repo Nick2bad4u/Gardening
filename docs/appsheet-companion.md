@@ -14,7 +14,7 @@ editor save as a live application change.
 
 ## October 9 terrarium and humidity
 
-Production logger **5.32.0 / immutable version 103** and the verified workbook support
+Production logger **5.32.1 / immutable version 104** and the verified workbook support
 **36 containers: P01–P32, P35–P38**. **P38 / #12 — Terrarium** has pending
 plant identities, photographs, and enclosure/setup details. Its member list is
 explicitly empty; the collection retains **43 botanical catalog members**.
@@ -76,8 +76,10 @@ populated P38 charts. The final production readback preserved all **1,781
 observations / unique observation IDs**, **1,466 request groups**, and **295
 multi-event groups**, with P38 still empty and Integrity zero. Exactly one Head
 queue trigger is restored to **Every 5 minutes** and has a successful
-time-driven execution. The phone logger shows **Connected · logger 5.32.0** and
+time-driven execution. The phone logger shows **Connected · logger 5.32.1** and
 a blank P38 Humidity form; it was inspected without submitting an observation.
+The 5.32.1 follow-up simplifies care-policy branches with identical outputs;
+it preserves the 5.32.0 workbook schema and saved AppSheet configuration.
 
 A fresh editor reload reports **No issues found** and disabled Save. The
 saved-definition verifier also passed two positive fixtures and rejected 30

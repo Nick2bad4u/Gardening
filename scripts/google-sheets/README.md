@@ -1,6 +1,6 @@
 # Google Sheets observation logger
 
-Production logger **5.32.0 / immutable version 103** supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`. The October 9 rollout record below supersedes the dated October 7 baseline. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.32.1 / immutable version 104** supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`. The October 9 rollout record below supersedes the dated October 7 baseline. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
@@ -82,8 +82,8 @@ production charts can omit native series/axis metadata; retain the populated
 copy witness and reapply the reviewed specifications after real observations
 first populate a chart if Google drops its styles.
 
-Production HEAD and immutable **version 103** exactly match the maintained
-**5.32.0** source. The existing phone deployment was updated in place with the
+The initial production HEAD and immutable **version 103** exactly matched the
+maintained **5.32.0** source. The existing phone deployment was updated in place with the
 same URL and access settings. The signed-in phone check displayed **Connected ·
 logger 5.32.0**, P38, and a blank Humidity input with **0–100** limits; no entry
 was submitted. After the migration, the queue schedule was restored and
@@ -93,7 +93,7 @@ successful time-driven execution was recorded at **02:28:57 EDT** on October 9;
 version 103 `doGet` and bootstrap executions followed at **02:29:59** and
 **02:30:04 EDT**.
 
-The final postactivation readback at **06:34:03 UTC** compared **324,159 cells**,
+The initial postactivation readback at **06:34:03 UTC** compared **324,159 cells**,
 including **94,905 original staging cells**. Its hash-bound receipt confirms the
 same 1,781 observations and unique IDs, unchanged request grouping, 36 containers and 43
 members; empty P38 evidence with manual care; and Integrity zero.
@@ -130,7 +130,24 @@ records the configuration scope and signed-in checks. Private phase captures, pl
 native-copy results, and deployment receipts remain under
 `.cache/terrarium-enrollment-20261009/`.
 
-Older dated sections below remain historical evidence, not the 5.32.0 schema.
+A subsequent **5.32.1 / immutable version 104** patch replaces nested care-policy
+conditions with explicit branches. Its 22 output cells matched the prior source
+across **72 cases**, including the terrarium and existing manual-care plants;
+all **1,123 logger tests** passed, with **99.5% statement coverage**. This
+addresses the nested-condition findings exposed by the post-merge main Sonar
+gate without changing observation behavior, care guidance, or workbook schema.
+A [fresh native backup](https://docs.google.com/spreadsheets/d/15FHrTG0x4HqgMh6Rc47_Qch67HMKEuWyoalZgY8BsVM/edit)
+was retained before deployment. HEAD and version 104 exactly match the maintained
+5.32.1 source, and the existing phone URL and access settings remain unchanged.
+The signed-in logger reports **Connected · logger 5.32.1**. The **07:15:39 UTC**
+readback preserved canonical History and both staging tables exactly, including
+all 1,781 observations, unique observation IDs, and request grouping. Captured
+headers, validations, all 36 dry-down outputs, P38 summaries, and Integrity also
+matched exactly. The existing five-minute queue trigger and AppSheet 1.100120
+configuration were retained. Private patch receipts are under
+`.cache/terrarium-care-patch-20261009/`.
+
+Older dated sections below remain historical evidence, not the current schema.
 
 ## October 7 Arctic Ice enrollment — production verified
 

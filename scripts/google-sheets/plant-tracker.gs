@@ -17,7 +17,7 @@
    installDailyCareDashboard, GARDEN_CYCLE_COMPARISON */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.32.0",
+    version: "5.32.1",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -3524,52 +3524,79 @@ function dryDownRecordsByPlant_(history) {
 
 /** @param {string} id @param {DryDownRecord[]} records @returns {GardenDryDownRow} */
 function dryDownOutputRow_(id, records) {
+    const plantId = cleanText_(id);
     const model = dryDownModelForPlant_(records);
-    const watering = wateringRecommendation_(cleanText_(id), model);
-    const isTerrarium = cleanText_(id) === "P38";
-    const isManualHouseplant = ["P31", "P32"].includes(cleanText_(id));
-    const isLeafReplacementPlant = ["P28", "P35", "P36"].includes(
-        cleanText_(id)
-    );
+    const watering = wateringRecommendation_(plantId, model);
+    const output = dryDownPolicyOutput_(plantId, model);
     return [
-        cleanText_(id),
+        plantId,
         model.setup,
-        isTerrarium ? "" : model.dry,
-        isTerrarium ? "" : model.wet,
+        output.dry,
+        output.wet,
         model.count,
         model.learned,
-        isTerrarium ? "" : model.loss,
-        isLeafReplacementPlant || isTerrarium ? "" : model.date,
-        isLeafReplacementPlant || isTerrarium ? "" : model.early,
-        isLeafReplacementPlant || isTerrarium ? "" : model.late,
-        isTerrarium
-            ? "Terrarium care pending"
-            : (isManualHouseplant || isLeafReplacementPlant) &&
-                model.basis === "Need a watering"
-              ? "No watering recorded"
-              : model.basis,
-        isTerrarium
-            ? "Terrarium care pending; inspect enclosure and plant needs"
-            : isLeafReplacementPlant
-              ? "Manual leaf-cycle readiness; weigh when useful"
-              : isManualHouseplant
-                ? "Manual houseplant readiness; weigh when useful"
-                : model.readiness,
+        output.loss,
+        output.date,
+        output.early,
+        output.late,
+        output.basis,
+        output.readiness,
         model.review,
         model.fit,
         watering.date,
         watering.guidance,
         ...model.recent,
-        isTerrarium
-            ? "Terrarium care pending; no weight-based watering trigger"
-            : isLeafReplacementPlant
-              ? "Leaf-cycle check only"
-              : cleanText_(id) === "P21"
-                ? "Check upper 2 in of mix"
-                : isManualHouseplant
-                  ? "Manual houseplant readiness; no cactus dry-out trigger"
-                  : model.inspection,
+        output.inspection,
     ];
+}
+
+/** @param {string} plantId @param {GardenDryDownModel} model @returns {GardenDryDownModel} */
+function dryDownPolicyOutput_(plantId, model) {
+    if (plantId === "P38") {
+        return {
+            ...model,
+            dry: "",
+            wet: "",
+            loss: "",
+            date: "",
+            early: "",
+            late: "",
+            basis: "Terrarium care pending",
+            readiness:
+                "Terrarium care pending; inspect enclosure and plant needs",
+            inspection:
+                "Terrarium care pending; no weight-based watering trigger",
+        };
+    }
+    if (["P28", "P35", "P36"].includes(plantId)) {
+        return {
+            ...model,
+            date: "",
+            early: "",
+            late: "",
+            basis:
+                model.basis === "Need a watering"
+                    ? "No watering recorded"
+                    : model.basis,
+            readiness: "Manual leaf-cycle readiness; weigh when useful",
+            inspection: "Leaf-cycle check only",
+        };
+    }
+    if (["P31", "P32"].includes(plantId)) {
+        return {
+            ...model,
+            basis:
+                model.basis === "Need a watering"
+                    ? "No watering recorded"
+                    : model.basis,
+            readiness: "Manual houseplant readiness; weigh when useful",
+            inspection: "Manual houseplant readiness; no cactus dry-out trigger",
+        };
+    }
+    if (plantId === "P21") {
+        return { ...model, inspection: "Check upper 2 in of mix" };
+    }
+    return model;
 }
 
 // Menu actions, scoped installers, and formula builders called by workbook-audit.mjs.
