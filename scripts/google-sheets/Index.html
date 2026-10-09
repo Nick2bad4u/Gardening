@@ -289,6 +289,11 @@
                 text-transform: uppercase;
                 letter-spacing: 0.04em;
 
+                &[for="ppfd"],
+                &[for="lux"] {
+                    text-transform: none;
+                }
+
                 :root[data-theme="dark"] & {
                     color: #b7d8bd;
                 }
@@ -1829,6 +1834,11 @@
                 background: #286b79;
                 border-color: #286b79;
             }
+            .chip[data-event="Light"][aria-pressed="true"] {
+                background: #89620f;
+                border-color: #89620f;
+            }
+            .chip[data-event="Inspect"][aria-pressed="true"],
             .chip[data-event="Check"][aria-pressed="true"] {
                 background: #39746f;
                 border-color: #39746f;
@@ -2387,6 +2397,8 @@
                     --event-ink: #205462;
                     --event-accent: #286b79;
                 }
+                &[data-event="Inspect"],
+                &[data-event="Light"],
                 &[data-event="Check"] {
                     --event-bg: #fff0c7;
                     --event-ink: #684b00;
@@ -13814,11 +13826,12 @@
                                             <use
                                                 href="#app-icon-condition"
                                             ></use></svg
-                                        >Plant check</h3
+                                        >Inspection / soil check</h3
                                     >
                                     <p class="hint"
-                                        >Condition belongs to a Check event so
-                                        it is dated and easy to compare.</p
+                                        >Inspect records what you observed about
+                                        the plant. Soil check retains condition
+                                        and soil-moisture observations.</p
                                     >
                                     <label
                                         class="field-label"
@@ -13831,21 +13844,83 @@
                                         maxlength="240"
                                         placeholder="Firm leaves; no discoloration"
                                     />
-                                    <label
-                                        class="field-label"
-                                        for="soilMoisture"
-                                        >Soil moisture</label
+                                    <div id="soilMoistureField">
+                                        <label
+                                            class="field-label"
+                                            for="soilMoisture"
+                                            >Soil moisture</label
+                                        >
+                                        <select id="soilMoisture">
+                                            <option value=""
+                                                >Not checked</option
+                                            >
+                                            <option value="Dry">Dry</option>
+                                            <option value="Slightly moist">
+                                                Slightly moist
+                                            </option>
+                                            <option value="Moist">Moist</option>
+                                            <option value="Wet">Wet</option>
+                                            <option value="Unknown"
+                                                >Unknown</option
+                                            >
+                                        </select>
+                                    </div>
+                                </div>
+                                <div
+                                    id="lightSection"
+                                    class="conditional event-panel"
+                                >
+                                    <h3
+                                        ><svg
+                                            viewBox="0 0 64 64"
+                                            class="app-icon"
+                                            aria-hidden="true"
+                                        >
+                                            <use
+                                                href="#app-icon-light"
+                                            ></use></svg
+                                        >Light reading</h3
                                     >
-                                    <select id="soilMoisture">
-                                        <option value="">Not checked</option>
-                                        <option value="Dry">Dry</option>
-                                        <option value="Slightly moist">
-                                            Slightly moist
-                                        </option>
-                                        <option value="Moist">Moist</option>
-                                        <option value="Wet">Wet</option>
-                                        <option value="Unknown">Unknown</option>
-                                    </select>
+                                    <p
+                                        class="hint"
+                                        id="lightHint"
+                                        >Enter PPFD from the light app,
+                                        illuminance from the meter, or both. The
+                                        UT383BT measures illuminance; app PPFD
+                                        is an estimate based on the chosen light
+                                        preset. Record the preset and reading
+                                        position in Notes. No automatic
+                                        conversion is applied.</p
+                                    >
+                                    <div class="fields">
+                                        <div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="ppfd"
+                                                >PPFD app estimate
+                                                (µmol/m²/s)</label
+                                            ><input
+                                                id="ppfd"
+                                                type="number"
+                                                inputmode="decimal"
+                                                min="0"
+                                                step="any"
+                                                aria-describedby="lightHint"
+                                        /></div>
+                                        <div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="lux"
+                                                >Illuminance (lux)</label
+                                            ><input
+                                                id="lux"
+                                                type="number"
+                                                inputmode="decimal"
+                                                min="0"
+                                                step="any"
+                                                aria-describedby="lightHint"
+                                        /></div>
+                                    </div>
                                 </div>
                                 <div
                                     id="humiditySection"
@@ -14535,7 +14610,7 @@
                                             <use
                                                 href="#app-icon-condition"
                                             ></use></svg
-                                        >Shared plant check</h3
+                                        >Shared inspection / soil check</h3
                                     >
                                     <div class="fields">
                                         <div class="field full"
@@ -14548,7 +14623,9 @@
                                                 maxlength="240"
                                                 placeholder="Firm leaves; no discoloration"
                                         /></div>
-                                        <div class="field"
+                                        <div
+                                            class="field"
+                                            id="bulkSoilMoistureField"
                                             ><label
                                                 class="field-label"
                                                 for="bulkSoilMoisture"
@@ -15006,7 +15083,7 @@
             ].join("/");
             const PLANT_ICON_PATH = "/Gardening/assets/plant-icons/";
             // Generated from the exported artwork by sync-plant-icons.mjs.
-            const PLANT_ICON_REVISION = "4987bcaf5dbb7c8c";
+            const PLANT_ICON_REVISION = "5a953c965a38ff05";
             const PLANT_ICON_CACHE = "gardenLoggerPlantPortraitsV1";
             const plantPortraitRequests = new Map();
             let plantPortraitCache;
@@ -15027,6 +15104,7 @@
             const QUEUE_RETRY_DELAYS_MS = [2000, 5000, 10000];
             const BULK_EVENT_OPTIONS = Object.freeze([
                 "Water",
+                "Inspect",
                 "Check",
                 "Rotation",
                 "Clean",
@@ -15045,6 +15123,8 @@
                 Weigh: "weight",
                 Measure: "dimensions",
                 Humidity: "humidity",
+                Inspect: "condition",
+                Light: "light",
                 Check: "condition",
                 Rotation: "rotate",
                 Clean: "clean",
@@ -15218,8 +15298,16 @@
                 return EVENT_ICON_NAMES[eventName] || "info";
             }
 
+            function eventLabel(eventName) {
+                return (
+                    { Light: "Light reading", Check: "Soil check" }[
+                        eventName
+                    ] || eventName
+                );
+            }
+
             function eventSummary(eventNames) {
-                return eventNames.join(" + ");
+                return eventNames.map(eventLabel).join(" + ");
             }
 
             function nutrientStateFrom(prefix = "") {
@@ -15500,6 +15588,8 @@
                     pestTreatment: payload.pestTreatment,
                     rotationDegrees: String(payload.rotationDegrees || ""),
                     relativeHumidity: String(payload.relativeHumidity ?? ""),
+                    ppfd: String(payload.ppfd ?? ""),
+                    lux: String(payload.lux ?? ""),
                 };
             }
 
@@ -15788,7 +15878,10 @@
                 );
                 if (payload.weight) events.add("Weigh");
                 if (payload.height || payload.width) events.add("Measure");
-                if (payload.condition || payload.soilMoisture)
+                if (
+                    payload.soilMoisture ||
+                    (payload.condition && !events.has("Inspect"))
+                )
                     events.add("Check");
                 if (!events.size && payload.notes) events.add("Note");
                 return [...events];
@@ -16067,8 +16160,18 @@
 
             function validateCheckDetails(payload) {
                 if (
+                    payload.events.includes("Inspect") &&
+                    !String(payload.condition || "").trim()
+                )
+                    throw new Error(
+                        "Enter the observed plant condition for the Inspect event."
+                    );
+                const checkCondition = payload.events.includes("Inspect")
+                    ? ""
+                    : payload.condition;
+                if (
                     payload.events.includes("Check") &&
-                    !String(payload.condition || "").trim() &&
+                    !String(checkCondition || "").trim() &&
                     !String(payload.soilMoisture || "").trim()
                 )
                     throw new Error(
@@ -16090,10 +16193,46 @@
                     );
             }
 
+            function validateLightDetails(payload) {
+                if (!payload.events.includes("Light")) return;
+                const values = [payload.ppfd, payload.lux].map((value) =>
+                    String(value ?? "").trim()
+                );
+                if (values.every((value) => value === ""))
+                    throw new Error(
+                        "Enter PPFD, illuminance, or both for the Light reading."
+                    );
+                if (
+                    values.some(
+                        (value) =>
+                            value !== "" &&
+                            (!Number.isFinite(Number(value)) ||
+                                Number(value) < 0)
+                    )
+                )
+                    throw new Error(
+                        "PPFD and illuminance must be finite numbers of zero or greater."
+                    );
+            }
+
+            function lightReadingText(payload) {
+                return [
+                    payload.ppfd !== "" && payload.ppfd != null
+                        ? `${payload.ppfd} µmol/m²/s (app estimate)`
+                        : "",
+                    payload.lux !== "" && payload.lux != null
+                        ? `${payload.lux} lux`
+                        : "",
+                ]
+                    .filter(Boolean)
+                    .join(" · ");
+            }
+
             function validateQueuedPayload(payload) {
                 const events = inferredPayloadEvents(payload);
                 validateCheckDetails(payload);
                 validateHumidityDetails(payload);
+                validateLightDetails(payload);
                 if (!payload.plantId)
                     throw new Error("Choose a plant before adding to queue.");
                 if (!events.length)
@@ -16244,6 +16383,9 @@
                             eventText,
                             payload.weight ? `${payload.weight} g` : "",
                             queuedMeasurementText(payload),
+                            payloadEvents.includes("Light")
+                                ? lightReadingText(payload)
+                                : "",
                             payloadEvents.includes("Humidity")
                                 ? `${payload.relativeHumidity} % RH`
                                 : "",
@@ -18314,7 +18456,7 @@
                     "app-icon chip-icon"
                 );
                 const label = document.createElement("span");
-                label.textContent = eventName;
+                label.textContent = eventLabel(eventName);
                 button.append(icon, label);
                 return button;
             }
@@ -18354,7 +18496,7 @@
                 );
                 [
                     ["waterSection", "Water"],
-                    ["checkSection", "Check"],
+                    ["lightSection", "Light"],
                     ["humiditySection", "Humidity"],
                     ["rotationSection", "Rotation"],
                     ["repotSection", "Repot"],
@@ -18367,6 +18509,11 @@
                         state.events.has(eventName)
                     );
                 });
+                $("checkSection").classList.toggle(
+                    "visible",
+                    state.events.has("Inspect") || state.events.has("Check")
+                );
+                $("soilMoistureField").hidden = !state.events.has("Check");
                 updateNutrientFields("", $("nutrientsUsed").value);
             }
 
@@ -18434,13 +18581,27 @@
                         );
                         metrics.append(humidity);
                     }
+                    const lightText = lightReadingText({
+                        ppfd: entry.ppfd ?? entry.details?.ppfd,
+                        lux: entry.lux ?? entry.details?.lux,
+                    });
+                    if (lightText) {
+                        const light = document.createElement("span");
+                        setIconLabel(
+                            light,
+                            "light",
+                            lightText,
+                            "app-icon app-icon--small"
+                        );
+                        metrics.append(light);
+                    }
                     sub.textContent = `${entry.observedAt}${entry.weightState ? ` · ${entry.weightState}` : ""}`;
                     const badge = document.createElement("div");
                     badge.className = "event-badge";
                     setIconLabel(
                         badge,
                         eventIconName(entry.event),
-                        entry.event,
+                        eventLabel(entry.event),
                         "app-icon app-icon--small"
                     );
                     metrics.prepend(badge);
@@ -18818,6 +18979,8 @@
                                 : field.type;
                         if (["number", "datetime"].includes(field.type))
                             input.step = "any";
+                        if (["ppfd", "lux"].includes(field.key))
+                            input.min = "0";
                         if (field.key === "relativeHumidity") {
                             input.min = "0";
                             input.max = "100";
@@ -18963,6 +19126,10 @@
                             throw new Error(
                                 `${field.label} must be a finite number.`
                             );
+                        if (["ppfd", "lux"].includes(field.key) && number < 0)
+                            throw new Error(
+                                "PPFD and illuminance must be finite numbers of zero or greater."
+                            );
                         if (
                             field.key === "relativeHumidity" &&
                             (number < 0 || number > 100)
@@ -18982,6 +19149,14 @@
                             changes[field.key] = number;
                     } else changes[field.key] = value;
                 });
+                const values = {
+                    ...correction.context.original.values,
+                    ...changes,
+                };
+                if (correction.context.original.event === "Light")
+                    validateLightDetails({ ...values, events: ["Light"] });
+                if (correction.context.original.event === "Inspect")
+                    validateCheckDetails({ ...values, events: ["Inspect"] });
                 return changes;
             }
 
@@ -19630,6 +19805,8 @@
                     waterAmountMl: "Water amount (mL)",
                     rotationDegrees: "Rotation (°)",
                     relativeHumidity: "Relative humidity (% RH)",
+                    ppfd: "PPFD app estimate (µmol/m²/s)",
+                    lux: "Illuminance (lux)",
                     photoUrl: "Photo URL",
                 };
                 const icons = {
@@ -19657,6 +19834,8 @@
                     waterAmountMl: "water",
                     rotationDegrees: "rotate",
                     relativeHumidity: "humidity",
+                    ppfd: "light",
+                    lux: "light",
                     photoUrl: "camera",
                     notes: "note",
                 };
@@ -19802,7 +19981,6 @@
             function updateBulkConditionalFields() {
                 [
                     ["bulkWaterSection", "Water"],
-                    ["bulkCheckSection", "Check"],
                     ["bulkRotationSection", "Rotation"],
                     ["bulkPestSection", "Pest"],
                 ].forEach(([sectionId, eventName]) => {
@@ -19811,6 +19989,13 @@
                         state.bulkEvents.has(eventName)
                     );
                 });
+                $("bulkCheckSection").classList.toggle(
+                    "visible",
+                    state.bulkEvents.has("Inspect") ||
+                        state.bulkEvents.has("Check")
+                );
+                $("bulkSoilMoistureField").hidden =
+                    !state.bulkEvents.has("Check");
                 updateNutrientFields("bulk", $("bulkNutrientsUsed").value);
             }
 
@@ -19995,7 +20180,11 @@
                     wateringApplication: $("bulkWateringApplication").value,
                     waterAmount: $("bulkWaterAmount").value,
                     condition: $("bulkCondition").value.trim(),
-                    soilMoisture: $("bulkSoilMoisture").value,
+                    soilMoisture:
+                        state.bulkEvents.has("Inspect") &&
+                        !state.bulkEvents.has("Check")
+                            ? ""
+                            : $("bulkSoilMoisture").value,
                     rotationDegrees: $("bulkRotationDegrees").value || "90",
                     pestIssue: $("bulkPestIssue").value.trim(),
                     pestTreatment: $("bulkPestTreatment").value.trim(),
@@ -20327,6 +20516,8 @@
                     "height",
                     "width",
                     "relativeHumidity",
+                    "ppfd",
+                    "lux",
                     "condition",
                     "soilMoisture",
                     "notes",
@@ -20398,7 +20589,11 @@
                     width: $("width").value,
                     measurementUnit: $("measurementUnit").value,
                     condition: $("condition").value.trim(),
-                    soilMoisture: $("soilMoisture").value,
+                    soilMoisture:
+                        state.events.has("Inspect") &&
+                        !state.events.has("Check")
+                            ? ""
+                            : $("soilMoisture").value,
                     notes: $("notes").value.trim(),
                     potSetup: $("potSetup").value,
                     nutrientsUsed: $("nutrientsUsed").value,
@@ -20416,6 +20611,8 @@
                     rotationDegrees: $("rotationDegrees").value || "90",
                     wateringApplication: $("wateringApplication").value,
                     waterAmount: $("waterAmount").value,
+                    ppfd: state.events.has("Light") ? $("ppfd").value : "",
+                    lux: state.events.has("Light") ? $("lux").value : "",
                     relativeHumidity: state.events.has("Humidity")
                         ? $("relativeHumidity").value
                         : "",
@@ -21064,6 +21261,8 @@
                     WATERING_APPLICATION_OPTIONS[0];
                 $("waterAmount").value = payload.waterAmount || "";
                 $("relativeHumidity").value = payload.relativeHumidity ?? "";
+                $("ppfd").value = payload.ppfd ?? "";
+                $("lux").value = payload.lux ?? "";
                 $("measurementQuality").value =
                     payload.measurementQuality || "Estimated";
                 $("measurementMethod").value =
@@ -21098,6 +21297,7 @@
                     ) {
                         validateCheckDetails(payload);
                         validateHumidityDetails(payload);
+                        validateLightDetails(payload);
                     }
                 } catch (error) {
                     showToast(error.message, true);
@@ -21581,7 +21781,7 @@
                     bootstrap.events.forEach((eventName) => {
                         const option = document.createElement("option");
                         option.value = eventName;
-                        option.textContent = eventName;
+                        option.textContent = eventLabel(eventName);
                         $("recentEvent").append(option);
                     });
                     const storedRecentLimit = Number(

@@ -1,3 +1,4 @@
+import { containerUrl } from "../site/lib/routes.mjs";
 import {
     compareLabels,
     escapeHtml,
@@ -76,6 +77,49 @@ function groupFor(pot) {
         return pot.reason === "flexible" ? "flexible" : "priority";
     if (pot.action === "check") return "special";
     return pot.action;
+}
+
+/**
+ * @param {ReportPot} pot @param {Profiles} profiles @param {Record<string,
+ *   unknown>} containers
+ */
+function guideFor(pot, profiles, containers) {
+    const entries = profiles[pot.id];
+    const profile = entries?.[0];
+    if (
+        Array.isArray(profile) &&
+        typeof profile[0] === "string" &&
+        /^[\-0-9a-z]+$/v.test(profile[0])
+    )
+        return {
+            href: `../plant-booklet/#${profile[0]}`,
+            label: "Field guide",
+            portrait: portraitFor(pot.id, profile[0]),
+        };
+    const metadata = containers[pot.id];
+    if (
+        metadata !== null &&
+        typeof metadata === "object" &&
+        !Array.isArray(metadata) &&
+        Array.isArray(entries) &&
+        entries.length === 0
+    ) {
+        const container = /** @type {Record<string, unknown>} */ (metadata);
+        const name = container["name"];
+        const portrait = container["portraitSlug"];
+        if (
+            typeof name === "string" &&
+            typeof portrait === "string" &&
+            name.trim() !== "" &&
+            /^[\-0-9a-z]+$/v.test(portrait)
+        )
+            return {
+                href: containerUrl(pot.id),
+                label: "Container guide",
+                portrait,
+            };
+    }
+    throw new TypeError(`Missing field-guide profile for ${pot.id}`);
 }
 
 /** @param {ReportPot} pot @param {DailyReport} report */
@@ -160,12 +204,13 @@ function portraitFor(id, slug) {
     return slug;
 }
 
-/** @param {ReportPot} pot @param {DailyReport} report @param {Profiles} profiles */
-function potCard(pot, report, profiles) {
-    const profile = profiles[pot.id]?.[0];
-    if (profile === undefined || !/^[\-0-9a-z]+$/v.test(profile[0]))
-        throw new TypeError(`Missing field-guide profile for ${pot.id}`);
-    const portrait = portraitFor(pot.id, profile[0]);
+/**
+ * @param {ReportPot} pot @param {DailyReport} report @param {Profiles} profiles
+ * @param {Record<string, unknown>} containers
+ */
+function potCard(pot, report, profiles, containers) {
+    const guide = guideFor(pot, profiles, containers);
+    const { portrait } = guide;
     const mix = report.mixes.find((entry) => entry.id === pot.mixId);
     const change = weightChange(pot);
     const status =
@@ -214,7 +259,7 @@ function potCard(pot, report, profiles) {
     const note = pot.metricsNote
         ? `<p class="metric-note">${escapeHtml(pot.metricsNote)}</p>`
         : "";
-    return `<details class="pot-card" id="pot-${escapeHtml(pot.id)}" data-action="${escapeHtml(pot.action)}" data-search="${searchText}"><summary><img class="plant-portrait" src="../../assets/plant-icons/${portrait}.svg" alt="" width="64" height="64" loading="lazy" /><span class="pot-identity"><span class="pot-title"><strong>${escapeHtml(pot.label)}</strong><span class="pot-id">${escapeHtml(pot.id)}</span></span><span class="pot-name">${escapeHtml(pot.name)}</span><span class="card-badges"><span class="reason-badge">${escapeHtml(reason)}</span>${mixBadge}</span></span><span class="card-rate">${change === null ? "—" : signed(change.perDay, 2)}<small>g/day</small></span><span class="expand-icon" aria-hidden="true">⌄</span></summary><div class="pot-detail"><p class="pot-recommendation"><span aria-hidden="true">📌</span> ${escapeHtml(pot.recommendation)}</p><dl class="pot-facts">${mixDetail}<div><dt>🕒 Last reading</dt><dd>${escapeHtml(latest)}</dd></div><div><dt>💧 Last watered</dt><dd>${lastWatering(pot, report)}</dd></div><div><dt>⚖️ Weight change</dt><dd>${escapeHtml(changeText)}</dd></div><div><dt>🎯 Dry reference</dt><dd>${escapeHtml(comparison)}</dd></div><div><dt>📊 Plateau</dt><dd><strong>${status}</strong>${plateauDetail}</dd></div></dl>${wateringContext(pot, report)}${note}${photoEvidence(pot)}<div class="pot-links"><a href="./plant-history.html?id=${escapeHtml(pot.id)}">Weight history ↗</a><a href="../plant-booklet/#${profile[0]}">Field guide ↗</a></div></div></details>`;
+    return `<details class="pot-card" id="pot-${escapeHtml(pot.id)}" data-action="${escapeHtml(pot.action)}" data-search="${searchText}"><summary><img class="plant-portrait" src="../../assets/plant-icons/${portrait}.svg" alt="" width="64" height="64" loading="lazy" /><span class="pot-identity"><span class="pot-title"><strong>${escapeHtml(pot.label)}</strong><span class="pot-id">${escapeHtml(pot.id)}</span></span><span class="pot-name">${escapeHtml(pot.name)}</span><span class="card-badges"><span class="reason-badge">${escapeHtml(reason)}</span>${mixBadge}</span></span><span class="card-rate">${change === null ? "—" : signed(change.perDay, 2)}<small>g/day</small></span><span class="expand-icon" aria-hidden="true">⌄</span></summary><div class="pot-detail"><p class="pot-recommendation"><span aria-hidden="true">📌</span> ${escapeHtml(pot.recommendation)}</p><dl class="pot-facts">${mixDetail}<div><dt>🕒 Last reading</dt><dd>${escapeHtml(latest)}</dd></div><div><dt>💧 Last watered</dt><dd>${lastWatering(pot, report)}</dd></div><div><dt>⚖️ Weight change</dt><dd>${escapeHtml(changeText)}</dd></div><div><dt>🎯 Dry reference</dt><dd>${escapeHtml(comparison)}</dd></div><div><dt>📊 Plateau</dt><dd><strong>${status}</strong>${plateauDetail}</dd></div></dl>${wateringContext(pot, report)}${note}${photoEvidence(pot)}<div class="pot-links"><a href="./plant-history.html?id=${escapeHtml(pot.id)}">Weight history ↗</a><a href="${escapeHtml(guide.href)}">${guide.label} ↗</a></div></div></details>`;
 }
 
 /**
@@ -329,8 +374,9 @@ function quickRow(
 /**
  * @param {DailyReport} report @param {string} template @param {Profiles}
  *   profiles
+ * @param {Record<string, unknown>} [containers]
  */
-function renderReport(report, template, profiles) {
+function renderReport(report, template, profiles, containers = {}) {
     const pots = report.pots.toSorted(compareLabels);
     const reviewed = pots.filter((pot) => pot.action !== "unresolved").length;
     const coverage =
@@ -347,7 +393,7 @@ function renderReport(report, template, profiles) {
                 const members = pots.filter((pot) => groupFor(pot) === key);
                 return members.length === 0
                     ? ""
-                    : `<section class="pot-group" aria-labelledby="group-${key}"><div class="group-heading"><h3 id="group-${key}">${title} <span>${members.length}</span></h3><p>${description}</p></div><div class="pot-grid">${members.map((pot) => potCard(pot, report, profiles)).join("")}</div></section>`;
+                    : `<section class="pot-group" aria-labelledby="group-${key}"><div class="group-heading"><h3 id="group-${key}">${title} <span>${members.length}</span></h3><p>${description}</p></div><div class="pot-grid">${members.map((pot) => potCard(pot, report, profiles, containers)).join("")}</div></section>`;
             }
         )
         .join("");

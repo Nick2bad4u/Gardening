@@ -124,6 +124,8 @@ const HISTORY_HEADERS = Object.freeze([
     "Watering application",
     "Water amount (mL)",
     "Relative humidity (%)",
+    "PPFD (µmol/m²/s)",
+    "Illuminance (lux)",
 ]);
 
 const searchParameters = new URLSearchParams(location.search);
@@ -193,7 +195,9 @@ function configureEventFilter(events) {
         .toSorted((left, right) => left.localeCompare(right));
     eventFilter.replaceChildren(
         new Option("All events", "all"),
-        ...names.map((name) => new Option(name, name.toLowerCase()))
+        ...names.map(
+            (name) => new Option(eventDisplayName(name), name.toLowerCase())
+        )
     );
     eventFilter.value = [...eventFilter.options].some(
         (option) => option.value === previous
@@ -299,6 +303,12 @@ function eventDetailsCell(event) {
     return cell;
 }
 
+/** @param {string | number | undefined} value */
+function eventDisplayName(value) {
+    const name = String(value ?? "").trim();
+    return name.toLowerCase() === "light" ? "Light reading" : name;
+}
+
 /** @param {HistoryEvent} event */
 function eventSpecificDetails(event) {
     const eventName = String(event["Event"] ?? "")
@@ -319,6 +329,9 @@ function eventSpecificDetails(event) {
             return value !== null && value >= 0 && value <= 100
                 ? [`${value}% RH`]
                 : ["Humidity reading not recorded"];
+        }
+        case "light": {
+            return lightReadingDetails(event);
         }
         case "pest": {
             const action = displayValue(event["Treatment / action"]);
@@ -432,6 +445,21 @@ function latestMatching(events, predicate) {
         sortedEvents(events, false).findLast((event) => predicate(event)) ??
         null
     );
+}
+
+/** @param {HistoryEvent} event */
+function lightReadingDetails(event) {
+    const ppfd = numericValue(event["PPFD (µmol/m²/s)"]);
+    const lux = numericValue(event["Illuminance (lux)"]);
+    const details = [
+        ppfd !== null && ppfd >= 0
+            ? `PPFD ${ppfd} µmol/m²/s · light app estimate`
+            : "",
+        lux !== null && lux >= 0
+            ? `Illuminance ${lux} lux · lux meter reading`
+            : "",
+    ].filter(Boolean);
+    return details.length > 0 ? details : ["Light reading not recorded"];
 }
 
 async function loadPlant() {
@@ -604,7 +632,7 @@ function renderCharts(summary) {
             const eventLabel =
                 eventName === "Water" && event["Nutrients used"] === "Yes"
                     ? `Water + ${displayValue(event["Nutrient product"], "nutrients")}`
-                    : eventName || "Care event";
+                    : eventDisplayName(eventName) || "Care event";
             return {
                 active: isActive,
                 category: eventName || "Other",
@@ -627,7 +655,7 @@ function renderCharts(summary) {
     const eventMix = [...eventCounts]
         .map(([label, value]) => ({
             className: activityClassName(label),
-            label,
+            label: eventDisplayName(label),
             value,
         }))
         .toSorted(
@@ -683,7 +711,7 @@ function renderHistory() {
         const rows = events.map((event) => {
             const row = document.createElement("tr");
             row.append(tableCell(formatDate(event["Date"])));
-            row.append(tableCell(event["Event"]));
+            row.append(tableCell(eventDisplayName(event["Event"])));
             row.append(tableCell(event["Weight state"]));
             row.append(tableCell(formatMeasurement(event["Weight (g)"], "g")));
             row.append(
@@ -1208,7 +1236,7 @@ function renderActivitySummary(plant) {
     setText(
         "#latest-activity",
         displayValue(
-            summary.latestActivity?.["Event"],
+            eventDisplayName(summary.latestActivity?.["Event"]),
             summary.latestActivity ? "Observation" : "—"
         )
     );
@@ -1246,6 +1274,7 @@ function renderCareSummary(plant) {
     setText("#photo-count", String(summary.eventCounts.photos));
     setText("#pest-count", String(summary.eventCounts.pests));
     setText("#check-count", String(summary.eventCounts.checks));
+    setText("#inspect-count", String(summary.eventCounts.inspections));
     setText("#rotation-count", String(summary.eventCounts.rotations));
     setText("#clean-count", String(summary.eventCounts.cleans));
     setText("#prune-count", String(summary.eventCounts.prunes));
@@ -1288,6 +1317,12 @@ function renderCareSummary(plant) {
         summary.latestCheck
             ? `${displayValue(summary.latestCheck["Condition / soil"], "Check logged")} · ${formatDate(summary.latestCheck["Date"])}`
             : "No checks logged"
+    );
+    setText(
+        "#latest-inspect-detail",
+        summary.latestInspect
+            ? `${displayValue(summary.latestInspect["Plant condition"], "Inspection logged")} · ${formatDate(summary.latestInspect["Date"])}`
+            : "No inspections logged"
     );
     setText(
         "#latest-rotation-detail",

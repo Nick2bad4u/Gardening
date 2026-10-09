@@ -14,6 +14,7 @@ export interface WebHistoryDetails {
     height?: number;
     heightCm?: HistoryDetailValue;
     heightIn?: number;
+    lux?: HistoryDetailValue;
     measurementMethod?: HistoryDetailValue;
     measurementUnit?: string;
     medium?: HistoryDetailValue;
@@ -28,6 +29,7 @@ export interface WebHistoryDetails {
     potLabel?: HistoryDetailValue;
     potSetup?: HistoryDetailValue;
     potSize?: HistoryDetailValue;
+    ppfd?: HistoryDetailValue;
     previousPotSize?: HistoryDetailValue;
     recordedAtIso?: string;
     recordStatus?: HistoryDetailValue;

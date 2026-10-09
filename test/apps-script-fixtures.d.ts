@@ -120,7 +120,8 @@ export interface AppsScriptTestApi {
         height: unknown,
         width: unknown,
         condition: unknown,
-        notes: unknown
+        notes: unknown,
+        soilMoisture?: unknown
     ) => string[];
     cleanText_: (value: unknown) => string;
     columnName_: (columnNumber: unknown) => string;
@@ -163,6 +164,10 @@ export interface AppsScriptTestApi {
     ensureHistoryDetailColumns_: (history: unknown) => void;
     ensureHistoryGrid_: (history: unknown) => void;
     ensureHistoryHumidityColumn_: (
+        history: HistorySheet,
+        shouldConfigureColumn?: boolean
+    ) => void;
+    ensureHistoryLightColumns_: (
         history: HistorySheet,
         shouldConfigureColumn?: boolean
     ) => void;

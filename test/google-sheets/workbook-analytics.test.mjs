@@ -384,7 +384,7 @@ describe("native derived formula contracts", () => {
     });
 });
 
-describe("humidity History width compatibility", () => {
+describe("humidity and light History width compatibility", () => {
     it("accepts only the explicit legacy and current widths, and guards the appended humidity header", () => {
         expect.hasAssertions();
 
@@ -415,6 +415,36 @@ describe("humidity History width compatibility", () => {
 
         expect(() =>
             buildWateringCalendarRequests(snapshot, { clockReference: clock })
-        ).toThrow("42-column legacy or 43-column current");
+        ).toThrow("42, 43, or 45 columns");
+
+        grid.columnCount = 45;
+
+        expect(() =>
+            buildWateringCalendarRequests(snapshot, { clockReference: clock })
+        ).toThrow("Unexpected History header: PPFD (µmol/m²/s)");
+
+        snapshot.cells.push({
+            column: 43,
+            row: 0,
+            sheet: "History",
+            value: { stringValue: "PPFD (µmol/m²/s)" },
+        });
+
+        expect(() =>
+            buildWateringCalendarRequests(snapshot, { clockReference: clock })
+        ).toThrow("Unexpected History header: Illuminance (lux)");
+
+        snapshot.cells.push({
+            column: 44,
+            row: 0,
+            sheet: "History",
+            value: { stringValue: "Illuminance (lux)" },
+        });
+
+        const light = buildWateringCalendarRequests(snapshot, {
+            clockReference: clock,
+        });
+
+        expect(light).toStrictEqual(legacy);
     });
 });

@@ -18,6 +18,84 @@ function calculateSummary(events) {
     );
 }
 
+describe("inspection and light event summaries", () => {
+    it("keeps visual inspections separate from legacy checks and excludes removed inspections", () => {
+        expect.hasAssertions();
+
+        const events = [
+            {
+                Date: "2026-09-01",
+                Event: "Check",
+                "Plant condition": "Legacy condition",
+            },
+            { Date: "2026-09-02", Event: "Check", "Soil moisture": "Dry" },
+            {
+                Date: "2026-09-03",
+                Event: "Inspect",
+                "Observation ID": "inspect-original",
+                "Plant condition": "Original condition",
+                "Record status": "Removed",
+            },
+            {
+                "Corrects observation ID": "inspect-original",
+                Date: "2026-09-03",
+                Event: "Inspect",
+                "Observation ID": "inspect-corrected",
+                "Plant condition": "Healthy",
+            },
+            {
+                Date: "2026-09-04",
+                Event: "Inspect",
+                "Plant condition": "Removed later record",
+                "Record status": "Removed",
+            },
+        ];
+        const summary = calculateSummary(events);
+
+        expect(summary.eventCounts.checks).toBe(2);
+        expect(summary.eventCounts.inspections).toBe(1);
+        expect(summary.latestCheck?.["Soil moisture"]).toBe("Dry");
+        expect(summary.latestInspect?.["Plant condition"]).toBe("Healthy");
+    });
+
+    it("retains light fields without deriving weight or watering evidence", () => {
+        expect.hasAssertions();
+
+        const summary = calculateSummary([
+            {
+                Date: "2026-09-01",
+                Event: "Light",
+                "Illuminance (lux)": 10_000,
+                "Measurement method": "Light app",
+                "Observation quality": "Estimated",
+                "PPFD (µmol/m²/s)": 200,
+            },
+            {
+                Date: "2026-09-02",
+                Event: "Light",
+                "Illuminance (lux)": "",
+                "Measurement method": "Light app",
+                "Observation quality": "Estimated",
+                "PPFD (µmol/m²/s)": 0,
+            },
+        ]);
+
+        expect(summary.latestActivity).toMatchObject({
+            Event: "Light",
+            "Illuminance (lux)": "",
+            "Measurement method": "Light app",
+            "Observation quality": "Estimated",
+            "PPFD (µmol/m²/s)": 0,
+        });
+        expect(summary.eventCounts.checks).toBe(0);
+        expect(summary.eventCounts.inspections).toBe(0);
+        expect(summary.weightSeries).toStrictEqual([]);
+        expect(summary.watering.events).toStrictEqual([]);
+        expect(summary.capacity).toBeNull();
+        expect(summary.remainingFraction).toBeNull();
+    });
+});
+
 /**
  * @param {{
  *     date: string;

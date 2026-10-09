@@ -12,6 +12,43 @@ contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
 
+## Inspect and Light reading source contract — rollout pending
+
+Logger **5.33.0 source** adds **Inspect** and canonical **Light**, displayed as
+**Light reading** in the phone logger. This section describes the intended
+AppSheet form contract; production activation and saved app/version readback
+remain pending. The dated verified sections below retain their original facts.
+See the [logger rollout record](../scripts/google-sheets/README.md#inspect-and-light-readings-5330--rollout-pending).
+
+| Table                    | 5.33.0 physical schema | Appended fields                                                  |
+| ------------------------ | ---------------------- | ---------------------------------------------------------------- |
+| History and History view | 45 columns, A:AS       | AR: `PPFD (µmol/m²/s)`; AS: `Illuminance (lux)`                  |
+| App entries              | 37 columns, A:AK       | AJ: `PPFD (µmol/m²/s)` → `ppfd`; AK: `Illuminance (lux)` → `lux` |
+| App bulk                 | 62 columns, A:BJ       | No appended fields                                               |
+
+Detailed Log's Events EnumList must retain all existing choices and append
+**Inspect** and **Light**. Inspect requires descriptive **Plant condition** and
+stores **Observed / Observed** provenance. Soil moisture remains a separate
+Check observation; condition-only legacy Check remains valid without rewriting
+History. Selecting both Inspect and Check must preserve their separate rows.
+
+The two new App entries fields are optional nonnegative Decimal values shown
+for Light. A Light submission must contain either value or both, including a
+valid zero. Blank is missing, not zero. With PPFD present, the Light row carries
+**Estimated / Light app** provenance; lux-only carries **Measured / Lux meter**.
+Preserve units and both supplied values without automatic conversion. Keep app
+preset, sensor position and lighting context in Notes when useful; the
+[action guide](./logger-actions.md#light-readings) distinguishes the UT383BT
+illuminance reading from the app estimate.
+
+Bulk Log adds **Inspect** alongside Check, with selected plants and a required
+shared Plant condition. Use individual entries when conditions differ. Bulk
+Light and Humidity remain unsupported; preserve the 62-column bulk schema,
+existing weight fields, staging permissions, creation-only keys and receipts.
+After regeneration, verify field types, visibility, event validation, preserved
+descriptions and readonly canonical tables against the saved app before
+claiming activation. Use a disposable copy for integration observations.
+
 ## October 9 terrarium and humidity
 
 Production logger **5.32.1 / immutable version 104** and the verified workbook support
@@ -184,7 +221,7 @@ updates, or deletes `History` rows directly.
 
 - `App entries` is the writable staging table for a detailed observation.
 - `App bulk` is the writable staging table for a collection-wide Water, Weigh,
-  Water + weigh, Rotation, Check, Clean, Prune, Pest, or Other round.
+  Water + weigh, Rotation, Inspect, Check, Clean, Prune, Pest, or Other round.
 - The bound Apps Script queue trigger validates staged rows and sends them
   through the same idempotent batch writer used by the mobile logger.
 - `Plant tracker`, `Baselines`, `History`, the chart helpers, and their slices

@@ -1,3 +1,4 @@
+import assert from "node:assert/strict";
 import { describe, expect, it } from "vitest";
 
 import { sheetUrls } from "../docs/layouts/plant-tracker-data.js";
@@ -72,7 +73,7 @@ describe("field guide source rendering", () => {
         ).toBe("pleiospilos-nelii-royal-flush");
     });
 
-    it("enrolls Arctic Ice without inventing owner photos or care observations", async () => {
+    it("shows Arctic Ice owner photos separately from references without inventing capture dates or care observations", async () => {
         expect.hasAssertions();
 
         const profiles = await getProfiles();
@@ -83,7 +84,27 @@ describe("field guide source rendering", () => {
         expect(profile?.inventoryId).toBe("Succulent-17");
         expect(profile?.trackerId).toBe("P37");
         expect(profile?.allPhotos).toHaveLength(10);
-        expect(profile?.collectionRecord.photos).toHaveLength(0);
+        expect(profile?.collectionRecord.photos).toHaveLength(5);
+
+        const photos = profile?.collectionRecord.photos;
+        assert.ok(photos);
+        for (const photo of photos) {
+            expect(photo).toMatchObject({
+                kind: "collection",
+                provided_on: "2026-10-08",
+                provider: "gyazo",
+            });
+            expect(photo).not.toHaveProperty("captured_on");
+            expect(photo.caption).toContain(
+                "Exact camera capture time was not supplied."
+            );
+        }
+
+        expect(profile?.avatar).toMatchObject({
+            external: true,
+            image_id: "f844c90e33c4f6d7d84dc65995fb4862",
+            src: "https://i.gyazo.com/f844c90e33c4f6d7d84dc65995fb4862.jpg",
+        });
         expect(profile?.selectedPhotos[0]?.file).toBe(
             "assets/plants/echeveria-arctic-ice/patent-uspp29584-figure-1.png"
         );

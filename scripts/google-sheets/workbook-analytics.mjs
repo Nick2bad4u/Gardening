@@ -34,10 +34,14 @@ export function buildWateringCalendarRequests(
     );
     if (
         ledger?.properties.gridProperties.rowCount !== 5000 ||
-        ![42, 43].includes(ledger.properties.gridProperties.columnCount)
+        ![
+            42,
+            43,
+            45,
+        ].includes(ledger.properties.gridProperties.columnCount)
     )
         throw new Error(
-            "Review the 5,000-row, 42-column legacy or 43-column current History contract"
+            "Review the 5,000-row History contract: 42, 43, or 45 columns"
         );
     for (const [column, label] of /** @type {[number, string][]} */ ([
         [0, "Date"],
@@ -45,8 +49,14 @@ export function buildWateringCalendarRequests(
         [2, "Event"],
         [16, "Nutrients used"],
         [35, "Record status"],
-        ...(ledger.properties.gridProperties.columnCount === 43
+        ...(ledger.properties.gridProperties.columnCount >= 43
             ? [[42, "Relative humidity (%)"]]
+            : []),
+        ...(ledger.properties.gridProperties.columnCount === 45
+            ? [
+                  [43, "PPFD (µmol/m²/s)"],
+                  [44, "Illuminance (lux)"],
+              ]
             : []),
     ])) {
         if (

@@ -66,6 +66,8 @@ const bootstrap = {
         "Weigh",
         "Measure",
         "Humidity",
+        "Inspect",
+        "Light",
         "Check",
         "Rotation",
         "Clean",
@@ -1722,6 +1724,11 @@ function correctionContext(event = "Weigh") {
             correctionField("flowerDetails"),
         ],
         Humidity: [correctionField("relativeHumidity", "number", "% RH")],
+        Inspect: [correctionField("condition")],
+        Light: [
+            correctionField("ppfd", "number", "µmol/m²/s"),
+            correctionField("lux", "number", "lux"),
+        ],
         Measure: [
             correctionField("heightCm", "number", "cm"),
             correctionField("widthCm", "number", "cm"),
@@ -10631,5 +10638,545 @@ describe("garden logger mobile orientation and hit targets", () => {
         expect(window.document.documentElement.className).toContain(
             "mobile-hit-recovery"
         );
+    });
+});
+
+describe("garden logger Inspect and Light entries", () => {
+    afterEach(restoreLoggerMocks);
+
+    /** @param {Window} window @param {string} selector */
+    function click(window, selector) {
+        queryElement(window.document, selector, HTMLButtonElement).click();
+    }
+
+    /** @param {Window} window @param {string} id @param {string} value */
+    function input(window, id, value) {
+        queryElement(window.document, `#${id}`, HTMLInputElement).value = value;
+    }
+
+    /** @param {Window} window @param {string} [id] */
+    function submit(window, id = "entryForm") {
+        queryElement(window.document, `#${id}`, HTMLFormElement).dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
+    }
+
+    it("requires an observed condition for Inspect and excludes stale soil moisture", () => {
+        expect.hasAssertions();
+
+        const { calls, window } = createLoggerWindow();
+        click(window, '#eventChips [data-event="Inspect"]');
+
+        expect(
+            queryElement(
+                window.document,
+                "#checkSection",
+                HTMLElement
+            ).classList.contains("visible")
+        ).toBe(true);
+        expect(
+            queryElement(window.document, "#soilMoistureField", HTMLElement)
+                .hidden
+        ).toBe(true);
+        expect(
+            queryElement(window.document, "#condition", HTMLInputElement).value
+        ).toBe("");
+
+        click(window, "#queueButton");
+        submit(window);
+
+        expect(calls.some((call) => call.method === "saveWebObservation")).toBe(
+            false
+        );
+        expect(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        ).toBeNull();
+        expect(
+            queryElement(window.document, "#toast", HTMLElement).textContent
+        ).toContain("observed plant condition");
+
+        queryElement(
+            window.document,
+            "#soilMoisture",
+            HTMLSelectElement
+        ).value = "Dry";
+        input(window, "condition", "Leaves firm; one older leaf yellowing");
+        click(window, "#queueButton");
+        const queued = required(
+            parseStoredQueue(
+                window.localStorage.getItem("gardenLoggerObservationQueueV1")
+            )[0]
+        );
+
+        expect(queued.payload).toMatchObject({
+            condition: "Leaves firm; one older leaf yellowing",
+            events: ["Inspect"],
+            soilMoisture: "",
+        });
+        expect(
+            queryElement(window.document, "#queueList", HTMLElement).textContent
+        ).not.toContain("Soil check");
+    });
+
+    it("preserves explicit legacy Check condition and soil details in recovered drafts", () => {
+        expect.hasAssertions();
+
+        const first = createLoggerWindow();
+        click(first.window, '#eventChips [data-event="Check"]');
+        input(first.window, "condition", "Historical condition");
+        queryElement(
+            first.window.document,
+            "#soilMoisture",
+            HTMLSelectElement
+        ).value = "Moist";
+        submit(first.window);
+        const sent = required(
+            first.calls.find((call) => call.method === "saveWebObservation")
+        ).args[0];
+        const { calls, window } = createLoggerWindow({
+            pendingSave: {
+                payload: sent,
+                requestId: "legacy-check-request-12345",
+            },
+        });
+
+        expect(
+            queryElement(window.document, "#soilMoistureField", HTMLElement)
+                .hidden
+        ).toBe(false);
+
+        submit(window);
+
+        expect(
+            required(calls.find((call) => call.method === "saveWebObservation"))
+                .args[0]
+        ).toMatchObject({
+            condition: "Historical condition",
+            events: ["Check"],
+            requestId: "legacy-check-request-12345",
+            soilMoisture: "Moist",
+        });
+    });
+
+    it("preserves the legacy inferred Check preview when a queued weight carries condition", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        click(window, '#eventChips [data-event="Weigh"]');
+        input(window, "weight", "300");
+        input(window, "condition", "Leaves firm");
+        click(window, "#queueButton");
+        const stored = required(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        );
+
+        expect(
+            required(parseStoredQueue(stored)[0]).payload.events
+        ).toStrictEqual(["Weigh"]);
+
+        const reloaded = createLoggerWindow({
+            online: false,
+            storage: { gardenLoggerObservationQueueV1: stored },
+        });
+
+        expect(
+            queryElement(reloaded.window.document, "#queueList", HTMLElement)
+                .textContent
+        ).toContain("Weigh + Soil check");
+        expect(
+            queryElement(reloaded.window.document, "#queueList", HTMLElement)
+                .textContent
+        ).not.toContain("Inspect");
+    });
+
+    it("requires separate soil evidence when Inspect and Check are selected together", () => {
+        expect.hasAssertions();
+
+        const { calls, window } = createLoggerWindow();
+        click(window, '#eventChips [data-event="Inspect"]');
+        click(window, '#eventChips [data-event="Check"]');
+        input(window, "condition", "Leaves firm");
+        click(window, "#queueButton");
+        submit(window);
+
+        expect(calls.some((call) => call.method === "saveWebObservation")).toBe(
+            false
+        );
+        expect(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        ).toBeNull();
+        expect(
+            queryElement(window.document, "#soilMoistureField", HTMLElement)
+                .hidden
+        ).toBe(false);
+
+        queryElement(
+            window.document,
+            "#soilMoisture",
+            HTMLSelectElement
+        ).value = "Dry";
+        click(window, "#queueButton");
+
+        const queued = parseStoredQueue(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        );
+
+        expect(required(queued[0]).payload).toMatchObject({
+            condition: "Leaves firm",
+            events: ["Inspect", "Check"],
+            soilMoisture: "Dry",
+        });
+    });
+
+    it.each([
+        [
+            "0",
+            "",
+            "0 µmol/m²/s (app estimate)",
+        ],
+        [
+            "",
+            "0",
+            "0 lux",
+        ],
+        [
+            "123.45",
+            "6789.5",
+            "123.45 µmol/m²/s (app estimate) · 6789.5 lux",
+        ],
+    ])(
+        "preserves PPFD %s and lux %s through an offline queue reload",
+        (ppfd, lux, expected) => {
+            expect.hasAssertions();
+
+            const { window } = createLoggerWindow({ online: false });
+            click(window, '#eventChips [data-event="Light"]');
+
+            expect(
+                queryElement(
+                    window.document,
+                    "#lightSection",
+                    HTMLElement
+                ).classList.contains("visible")
+            ).toBe(true);
+
+            input(window, "ppfd", ppfd);
+            input(window, "lux", lux);
+            click(window, "#queueButton");
+            const stored = required(
+                window.localStorage.getItem("gardenLoggerObservationQueueV1")
+            );
+
+            expect(required(parseStoredQueue(stored)[0]).payload).toMatchObject(
+                { events: ["Light"], lux, ppfd, weight: "" }
+            );
+            expect(
+                queryElement(window.document, "#ppfd", HTMLInputElement).value
+            ).toBe("");
+            expect(
+                queryElement(window.document, "#lux", HTMLInputElement).value
+            ).toBe("");
+
+            const reloaded = createLoggerWindow({
+                online: false,
+                storage: { gardenLoggerObservationQueueV1: stored },
+            });
+            const text = queryElement(
+                reloaded.window.document,
+                "#queueList",
+                HTMLElement
+            ).textContent;
+
+            expect(text).toContain(expected);
+
+            expect(
+                reloaded.window.document.querySelector(
+                    ':scope #bulkEventChips [data-event="Light"]'
+                )
+            ).toBeNull();
+        }
+    );
+
+    it.each([
+        ["", ""],
+        ["-1", ""],
+        ["", "-0.1"],
+    ])(
+        "rejects invalid PPFD %s and lux %s before queue or save",
+        (ppfd, lux) => {
+            expect.hasAssertions();
+
+            const { calls, window } = createLoggerWindow();
+            click(window, '#eventChips [data-event="Light"]');
+            input(window, "ppfd", ppfd);
+            input(window, "lux", lux);
+            click(window, "#queueButton");
+            submit(window);
+
+            expect(
+                window.localStorage.getItem("gardenLoggerObservationQueueV1")
+            ).toBeNull();
+            expect(
+                calls.some((call) => call.method === "saveWebObservation")
+            ).toBe(false);
+            expect(
+                queryElement(window.document, "#toast", HTMLElement).textContent
+            ).toMatch(/PPFD/v);
+        }
+    );
+
+    it("restores numeric-zero light values and retries the same pending request", () => {
+        expect.hasAssertions();
+
+        const first = createLoggerWindow();
+        click(first.window, '#eventChips [data-event="Light"]');
+        input(first.window, "ppfd", "0");
+        input(first.window, "lux", "0");
+        queryElement(
+            first.window.document,
+            "#notes",
+            HTMLTextAreaElement
+        ).value = "LED preset; at leaf level";
+        submit(first.window);
+        const sent = required(
+            first.calls.find((call) => call.method === "saveWebObservation")
+        ).args[0];
+        const { calls, window } = createLoggerWindow({
+            pendingSave: {
+                payload: { ...sent, lux: 0, ppfd: 0 },
+                requestId: "light-zero-retry-12345",
+            },
+        });
+
+        expect(
+            queryElement(window.document, "#ppfd", HTMLInputElement).value
+        ).toBe("0");
+        expect(
+            queryElement(window.document, "#lux", HTMLInputElement).value
+        ).toBe("0");
+
+        submit(window);
+
+        expect(
+            required(calls.find((call) => call.method === "saveWebObservation"))
+                .args[0]
+        ).toMatchObject({
+            lux: 0,
+            notes: "LED preset; at leaf level",
+            ppfd: 0,
+            requestId: "light-zero-retry-12345",
+        });
+    });
+
+    it("does not submit light values after Light is deselected", () => {
+        expect.hasAssertions();
+
+        const { calls, window } = createLoggerWindow();
+        click(window, '#eventChips [data-event="Light"]');
+        input(window, "ppfd", "90");
+        input(window, "lux", "4200");
+        click(window, '#eventChips [data-event="Light"]');
+        queryElement(window.document, "#notes", HTMLTextAreaElement).value =
+            "Observation only";
+        submit(window);
+
+        expect(
+            required(calls.find((call) => call.method === "saveWebObservation"))
+                .args[0]
+        ).toMatchObject({ events: [], lux: "", ppfd: "" });
+    });
+
+    it("shows zero light readings and explicit units in recent history and details", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            bootstrapData: {
+                ...bootstrap,
+                recent: [
+                    {
+                        ...recentExample,
+                        details: { lux: 0, ppfd: 0 },
+                        event: "Light",
+                        observationId: "light-recent-zero",
+                        observedAtIso: "2026-09-05T16:00:00.000Z",
+                        weight: "",
+                    },
+                ],
+            },
+        });
+
+        expect(
+            queryElement(
+                window.document,
+                "#recentList .recent-metrics",
+                HTMLElement
+            ).textContent
+        ).toContain("0 µmol/m²/s (app estimate) · 0 lux");
+        expect(
+            queryElement(
+                window.document,
+                '#recentList [data-field="ppfd"]',
+                HTMLElement
+            ).textContent
+        ).toContain("PPFD app estimate (µmol/m²/s)0");
+        expect(
+            queryElement(
+                window.document,
+                '#recentList [data-field="lux"]',
+                HTMLElement
+            ).textContent
+        ).toContain("Illuminance (lux)0");
+    });
+
+    it.each(["Inspect", "Light"])(
+        "supports notes-only %s corrections without changing measurements or condition",
+        (event) => {
+            expect.hasAssertions();
+
+            const { calls, window } = createCorrectionLogger(event);
+            openFirstCorrection(window);
+            editCorrection(window, "notes", "Correct the observation note");
+            editCorrection(window, "reason", "Fix wording");
+            submitCorrectionReview(window);
+
+            expect(
+                required(
+                    calls.find(
+                        (call) =>
+                            call.method === "previewWebObservationCorrection"
+                    )
+                ).args[0].changes
+            ).toMatchObject({ notes: "Correct the observation note" });
+
+            const reviewed = required(
+                calls.find(
+                    (call) => call.method === "previewWebObservationCorrection"
+                )
+            ).args[0].changes;
+
+            expect(Object.keys(reviewed)).toStrictEqual(["notes"]);
+        }
+    );
+
+    it.each(["ppfd", "lux"])("rejects a negative corrected %s", (field) => {
+        expect.hasAssertions();
+
+        const { calls, window } = createCorrectionLogger("Light");
+        openFirstCorrection(window);
+        editCorrection(window, field, "-1");
+        editCorrection(window, "reason", "Correct reading");
+        submitCorrectionReview(window);
+
+        expect(
+            calls.some(
+                (call) => call.method === "previewWebObservationCorrection"
+            )
+        ).toBe(false);
+        expect(
+            queryElement(window.document, "#correctionStatus", HTMLElement)
+                .textContent
+        ).toContain("zero or greater");
+    });
+
+    it("allows clearing one corrected light value while retaining a zero reading, but rejects clearing both", () => {
+        expect.hasAssertions();
+
+        const { calls, window } = createCorrectionLogger("Light");
+        openFirstCorrection(window);
+        editCorrection(window, "ppfd", "");
+        editCorrection(window, "lux", "");
+        editCorrection(window, "reason", "Correct light reading");
+        submitCorrectionReview(window);
+
+        expect(
+            calls.some(
+                (call) => call.method === "previewWebObservationCorrection"
+            )
+        ).toBe(false);
+
+        editCorrection(window, "lux", "0");
+        submitCorrectionReview(window);
+
+        expect(
+            required(
+                calls.find(
+                    (call) => call.method === "previewWebObservationCorrection"
+                )
+            ).args[0].changes
+        ).toMatchObject({ lux: 0, ppfd: "" });
+    });
+
+    it("rejects clearing the condition from an Inspect correction", () => {
+        expect.hasAssertions();
+
+        const { calls, window } = createCorrectionLogger("Inspect");
+        openFirstCorrection(window);
+        editCorrection(window, "condition", "");
+        editCorrection(window, "reason", "Correct observation");
+        submitCorrectionReview(window);
+
+        expect(
+            calls.some(
+                (call) => call.method === "previewWebObservationCorrection"
+            )
+        ).toBe(false);
+        expect(
+            queryElement(window.document, "#correctionStatus", HTMLElement)
+                .textContent
+        ).toContain("observed plant condition");
+    });
+
+    it("saves bulk Inspect only with a condition and without soil moisture or environmental broadcast", () => {
+        expect.hasAssertions();
+
+        const { calls, window } = createLoggerWindow();
+        click(window, "#bulkModeTab");
+        click(window, '#bulkEventChips [data-event="Water"]');
+        click(window, '#bulkEventChips [data-event="Inspect"]');
+        const checkbox = queryElement(
+            window.document,
+            "#bulkPlantList input[type='checkbox']",
+            HTMLInputElement
+        );
+        checkbox.checked = true;
+        checkbox.dispatchEvent(new window.Event("change", { bubbles: true }));
+        submit(window, "bulkWaterForm");
+
+        expect(
+            calls.some((call) => call.method === "saveBulkCareObservation")
+        ).toBe(false);
+        expect(
+            queryElement(window.document, "#bulkSoilMoistureField", HTMLElement)
+                .hidden
+        ).toBe(true);
+
+        input(window, "bulkCondition", "Firm leaves on each selected plant");
+        queryElement(
+            window.document,
+            "#bulkSoilMoisture",
+            HTMLSelectElement
+        ).value = "Dry";
+        submit(window, "bulkWaterForm");
+
+        expect(
+            required(
+                calls.find((call) => call.method === "saveBulkCareObservation")
+            ).args[0]
+        ).toMatchObject({
+            condition: "Firm leaves on each selected plant",
+            events: ["Inspect"],
+            plantIds: ["P01"],
+            soilMoisture: "",
+        });
+        expect(
+            window.document.querySelector(
+                ':scope #bulkEventChips [data-event="Humidity"]'
+            )
+        ).toBeNull();
+        expect(
+            window.document.querySelector(
+                ':scope #bulkEventChips [data-event="Light"]'
+            )
+        ).toBeNull();
     });
 });

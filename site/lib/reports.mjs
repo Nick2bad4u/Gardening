@@ -154,7 +154,11 @@ export async function renderReviewedReport(entry) {
         );
         return `<article class="daily-report report-archive" data-report-date="${entry.date}"><header class="report-hero"><div><p class="eyebrow">Historical reviewed report</p><h1>${entry.date}</h1><p>${escapeHtml(entry.summary)}</p><p class="read-time">Workbook read: ${escapeHtml(entry.sourceReadAt ?? "Unavailable")} · ${escapeHtml(entry.coverage)} coverage</p></div></header><p class="notice">Archived version 1 policy. These are the original dated decisions, not current care instructions. They have not been converted to today's plateau-gated policy.</p><section><h2>Original pot decisions</h2><div class="archive-grid">${cards}</div></section><details class="archive-metadata"><summary>Original review metadata, notes, and mixes</summary>${archiveFields(metadata)}</details></article>`;
     }
-    const [template, profileText] = await Promise.all([
+    const [
+        template,
+        profileText,
+        containerText,
+    ] = await Promise.all([
         readFile(
             path.join(root, "scripts/templates/daily-report.html"),
             "utf8"
@@ -163,12 +167,23 @@ export async function renderReviewedReport(entry) {
             path.join(root, "docs/layouts/plant-profile-data.json"),
             "utf8"
         ),
+        readFile(path.join(root, "docs/layouts/container-data.json"), "utf8"),
     ]);
     const parsedProfiles = /** @type {unknown} */ (JSON.parse(profileText));
     const profiles = /** @type {Record<string, [string, string][]>} */ (
         parsedProfiles
     );
-    return renderReport(entry.report, template, profiles)
+    const parsedContainers = /** @type {unknown} */ (JSON.parse(containerText));
+    if (
+        parsedContainers === null ||
+        typeof parsedContainers !== "object" ||
+        Array.isArray(parsedContainers)
+    )
+        throw new TypeError("Container metadata must be an object.");
+    const containers = /** @type {Record<string, unknown>} */ (
+        parsedContainers
+    );
+    return renderReport(entry.report, template, profiles, containers)
         .replaceAll("../../assets/", () => siteUrl("assets/"))
         .replaceAll(
             /\.\/plant-history\.html\?id=(?<id>P\d+)/gv,

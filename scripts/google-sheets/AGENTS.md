@@ -7,28 +7,21 @@
 - `.gs` files share global scope: no Node imports or browser APIs. Retain ES2023
   in `tsconfig.apps-script.json` and align `types/apps-script*.d.ts` with code;
   never weaken the checker for missing globals or invalid fixtures.
-- Typechecking is not runtime compatibility evidence. Native rehearsal rejected
-  numeric separators; emitted Apps Script must avoid them. The cycle source
-  generator replaces Node's `toSorted`/`toReversed` with `sort`/`reverse` only
-  on newly allocated arrays. Preserve that ownership boundary and verify new
-  syntax/APIs in a disposable bound script before deployment.
-- Observations are append-only unless the owner requests a historical correction.
-  One save may append multiple event rows; History's hidden column P Request ID
-  makes retries idempotent.
-- Keep observation/request/save/batch IDs and correction links distinct.
-  Corrections preview one event, append its replacement, and mark its predecessor
-  Removed, retaining original values/provenance. Never delete ledger rows or
-  treat corrections as new pot setups.
-- Preserve the live workbook contract: A:L core observations, M:O workbook
-  formulas, P retry IDs, and Q:Z structured Water/Repot/Flower/Photo/Pest
-  details. AA:AJ stores provenance and record state, AK:AM stores measurement
-  units and derived inch values, AN stores rotation degrees, AO stores the
-  watering-application class, and AP stores an optional measured water amount
-  in milliliters. AQ stores relative humidity as a number from 0 through 100;
-  a blank is missing evidence, while zero is a valid measured reading.
-  `installGardenLogger()` may add or verify headers. Do not clear existing
-  values or formulas unless the repository owner explicitly requests a workbook
-  migration with that effect.
+- Native Apps Script rejects numeric separators; typechecking is not runtime
+  proof. Validate new syntax/APIs in a disposable bound script. The cycle
+  generator substitutes `sort`/`reverse` for `toSorted`/`toReversed` only on new arrays.
+- History is append-only. One save may create multiple events; P Request ID
+  makes retries idempotent. Keep observation/request/save/batch IDs distinct.
+  Corrections preview one event, append its replacement and mark the ancestor
+  Removed, retaining provenance. Never delete ledger rows or create a setup for a correction.
+- Preserve History positions: A:L core observations; M:O formulas; P retry ID;
+  Q:Z structured care details; AA:AJ provenance/state; AK:AM entry units and
+  inch values; AN rotation degrees; AO watering application; AP measured mL;
+  AQ 0–100% RH. Blank differs from zero. Source 5.33.0 appends AR
+  `PPFD (µmol/m²/s)` and AS `Illuminance (lux)`, finite nonnegative values.
+  Verify live rollout and preserve existing headers, data and formulas.
+  `installGardenLogger()` can add/verify headers; clearing existing values or
+  formulas requires explicit owner authorization.
 - Pot setup is a whole-pot weighing configuration, not pot diameter. A Repot
   starts the next setup and updates Baselines; old setup readings remain
   historical and should not affect the new dry/wet average.
@@ -51,6 +44,14 @@
   independent of weights, soil moisture, watering cycles, and setup changes.
   Do not broadcast an enclosure humidity reading through bulk care. App entries
   appends its humidity field at AI; preserve all earlier staging positions.
+- Inspect requires visual Plant condition with Observed / Observed provenance;
+  Check retains soil moisture and legacy condition-only records. Never relabel old Checks.
+  Bulk Inspect requires selected plants and their shared observed condition.
+- Light (UI: Light reading) requires PPFD, lux or both; keep blank distinct from zero.
+  PPFD uses Estimated / Light app, including combined readings; lux-only uses
+  Measured / Lux meter. No quantum-sensor claim, conversion, DLI or inferred care threshold.
+  Keep preset/context in Notes. App entries appends AJ/AK (37 columns); History
+  has 45; App bulk stays 62, excluding Light/Humidity. Align retries, corrections and parsers.
 - Progress uses the workbook timezone and a 4 a.m. care-day boundary; drying
   rates use actual observation intervals. Preserve correction ordering and
   exclusions for future, Removed, estimated, invalid, and other-setup readings.

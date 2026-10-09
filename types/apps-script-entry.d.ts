@@ -27,6 +27,7 @@ interface GardenEntryPayload {
     flowerDetails?: unknown;
     height?: unknown;
     inventoryRevision?: unknown;
+    lux?: unknown;
     measurementMethod?: unknown;
     measurementQuality?: unknown;
     measurementUnit?: unknown;
@@ -42,6 +43,7 @@ interface GardenEntryPayload {
     plantId?: unknown;
     plantIds?: unknown;
     potSize?: unknown;
+    ppfd?: unknown;
     relativeHumidity?: unknown;
     requestId?: unknown;
     rotationDegrees?: unknown;

@@ -240,3 +240,131 @@ export const TerrariumMobileLight: Story = {
     ...TerrariumHumidity,
     args: { ...TerrariumHumidity.args, theme: "light", width: 390 },
 };
+
+export const InspectionAndLightReadings: Story = {
+    args: { path: "pots/P02/", scenario: "light" },
+    play: async ({ canvasElement }) => {
+        const { canvas, document, userEvent } =
+            await websiteCanvas(canvasElement);
+        await waitFor(() =>
+            expect(document.querySelector("#inspect-count")).toHaveTextContent(
+                "1"
+            )
+        );
+        await expect(document.querySelector("#check-count")).toHaveTextContent(
+            "1"
+        );
+        await expect(
+            document.querySelector("#latest-inspect-detail")
+        ).toHaveTextContent("Healthy leaves");
+        await expect(
+            document.querySelector("#latest-inspect-detail")
+        ).not.toHaveTextContent("Superseded");
+        await expect(
+            document.querySelector("#latest-activity")
+        ).toHaveTextContent("Light reading");
+        const eventFilter = canvas.getByRole("combobox", {
+            name: "Event type",
+        });
+        await userEvent.selectOptions(eventFilter, "light");
+        await expect(document.querySelectorAll("tbody tr")).toHaveLength(6);
+        const historyBody = document.querySelector("tbody");
+        await expect(historyBody).toHaveTextContent(
+            "PPFD 0 µmol/m²/s · light app estimate"
+        );
+        await expect(historyBody).toHaveTextContent(
+            "Illuminance 0 lux · lux meter reading"
+        );
+        const bothRow = canvas.getByRole("row", { name: /Both readings/v });
+        await expect(bothRow).toHaveTextContent(
+            "PPFD 200 µmol/m²/s · light app estimate"
+        );
+        await expect(bothRow).toHaveTextContent(
+            "Illuminance 10000 lux · lux meter reading"
+        );
+        await expect(bothRow).toHaveTextContent("Quality: Estimated");
+        await expect(
+            canvas.getByRole("row", { name: /Missing reading/v })
+        ).toHaveTextContent("Light reading not recorded");
+        await expect(
+            canvas.getByRole("row", { name: /Original reading/v })
+        ).toHaveTextContent("Record status: Removed");
+        await expect(
+            canvas.getByRole("row", { name: /Corrected reading/v })
+        ).toHaveTextContent("PPFD 350");
+        await userEvent.click(
+            canvas.getByRole("button", { name: "Export this plant CSV" })
+        );
+        await waitFor(() =>
+            expect(document.documentElement.dataset["exportedCsv"]).toContain(
+                "PPFD (µmol/m²/s),Illuminance (lux)"
+            )
+        );
+        const [headerLine, ...lines] = (
+            document.documentElement.dataset["exportedCsv"] ?? ""
+        )
+            .trim()
+            .split("\r\n");
+        const headers = (headerLine ?? "").trim().split(",");
+        const records = lines.map((line) =>
+            Object.fromEntries(
+                line
+                    .split(",")
+                    .map((value, index) => [headers[index] ?? "", value])
+            )
+        );
+        const ppfdZero = records.find(
+            (record) => record["Notes"] === "Zero PPFD"
+        );
+        await expect(ppfdZero).toMatchObject({
+            Event: "Light",
+            "Illuminance (lux)": "",
+            "Measurement method": "Light app",
+            "Observation quality": "Estimated",
+            "PPFD (µmol/m²/s)": "0",
+        });
+        await expect(
+            records.find((record) => record["Notes"] === "Zero lux")
+        ).toMatchObject({
+            "Illuminance (lux)": "0",
+            "Measurement method": "Lux meter",
+            "Observation quality": "Measured",
+            "PPFD (µmol/m²/s)": "",
+        });
+        await expect(
+            records.find(
+                (record) => record["Observation ID"] === "light-original"
+            )
+        ).toMatchObject({
+            "PPFD (µmol/m²/s)": "999",
+            "Record status": "Removed",
+        });
+        await expect(
+            records.find(
+                (record) => record["Observation ID"] === "light-corrected"
+            )
+        ).toMatchObject({
+            "Corrects observation ID": "light-original",
+            "PPFD (µmol/m²/s)": "350",
+        });
+        await expect(records).toHaveLength(9);
+        await userEvent.selectOptions(eventFilter, "inspect");
+        await expect(document.querySelectorAll("tbody tr")).toHaveLength(2);
+        await expectNoOverflow(document);
+    },
+};
+
+export const InspectionAndLightMobileDark: Story = {
+    ...InspectionAndLightReadings,
+    args: { ...InspectionAndLightReadings.args, theme: "dark", width: 390 },
+};
+
+export const InspectionAndLightDesktopDark: Story = {
+    ...InspectionAndLightReadings,
+    args: { ...InspectionAndLightReadings.args, theme: "dark", width: 1280 },
+};
+
+export const InspectionAndLightMobileLight: Story = {
+    ...InspectionAndLightReadings,
+    args: { ...InspectionAndLightReadings.args, theme: "light", width: 390 },
+};
