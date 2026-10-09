@@ -18,6 +18,7 @@ interface GardenEventDetailPayload {
     pestTreatment?: unknown;
     photoUrl?: unknown;
     potSize?: unknown;
+    relativeHumidity?: unknown;
     rotationDegrees?: unknown;
     waterAmount?: unknown;
     wateringApplication?: unknown;
@@ -46,6 +47,7 @@ interface GardenObservationDetails {
     photoUrl?: string;
     potSize?: string;
     previousPotSize?: string;
+    relativeHumidity?: GardenOptionalNumber;
     rotationDegrees?: GardenOptionalNumber;
     waterAmount?: GardenOptionalNumber;
     wateringApplication?: string;

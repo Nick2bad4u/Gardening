@@ -22,8 +22,10 @@ const { container, currentSlug, showContainerLink = true } = Astro.props;
                 <SiteIcon name="succulent" size={32} /> {container.name} · {container.id}
             </h2>
             <p>
-                {container.members.length} botanical{" "}
-                {container.members.length === 1 ? "profile" : "profiles"} · one container history
+                {container.pending
+                    ? "Plant identities pending"
+                    : `${container.members.length} botanical ${container.members.length === 1 ? "profile" : "profiles"}`}{" "}
+                · one container history
             </p>
         </div>
         {showContainerLink && (
@@ -32,6 +34,12 @@ const { container, currentSlug, showContainerLink = true } = Astro.props;
             </a>
         )}
     </div>
+    {container.pending && (
+        <p>
+            Photographs and botanical identities will be added when supplied. This container already
+            has one permanent care history.
+        </p>
+    )}
     <ul class="container-member-list">
         {container.members.map((member) => (
             <li>

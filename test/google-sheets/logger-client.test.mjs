@@ -65,6 +65,7 @@ const bootstrap = {
         "Water",
         "Weigh",
         "Measure",
+        "Humidity",
         "Check",
         "Rotation",
         "Clean",
@@ -1720,6 +1721,7 @@ function correctionContext(event = "Weigh") {
             correctionField("flowerCount", "number"),
             correctionField("flowerDetails"),
         ],
+        Humidity: [correctionField("relativeHumidity", "number", "% RH")],
         Measure: [
             correctionField("heightCm", "number", "cm"),
             correctionField("widthCm", "number", "cm"),
@@ -2479,6 +2481,13 @@ describe("saved History move and deletion controls", () => {
     });
 });
 
+const humidityCorrectionCase = [
+    "Humidity",
+    "relativeHumidity",
+    "0",
+    "notes",
+];
+
 describe("saved History correction editor and durable recovery", () => {
     afterEach(restoreLoggerMocks);
 
@@ -2888,6 +2897,7 @@ describe("saved History correction editor and durable recovery", () => {
             "180",
             "notes",
         ],
+        humidityCorrectionCase,
         [
             "Clean",
             "notes",
@@ -4530,6 +4540,331 @@ async function restoreLoggerMocks() {
     vi.useRealTimers();
     vi.restoreAllMocks();
 }
+
+describe("garden logger humidity observations", () => {
+    afterEach(restoreLoggerMocks);
+
+    it("keeps terrarium measurements while withholding dry baselines and forecast prompts even from a stale cache", () => {
+        expect.hasAssertions();
+
+        const data = workflowBootstrap();
+        const plant = {
+            ...required(data.plants[0]),
+            dryForecastWindow: "Tomorrow",
+            id: "P38",
+            recommendedWaterDate: "Tomorrow",
+        };
+        const { window } = createLoggerWindow({
+            bootstrapData: { ...data, plants: [plant] },
+        });
+        const summary = queryElement(
+            window.document,
+            "#plantSummary",
+            HTMLElement
+        );
+        const chart = queryElement(
+            window.document,
+            ".weight-chart",
+            HTMLElement
+        );
+        const forecast = queryElement(
+            window.document,
+            ".plant-forecast",
+            HTMLElement
+        );
+
+        expect(forecast.textContent).toContain(
+            "Manual care · setup details pending"
+        );
+        expect(forecast.textContent).not.toMatch(
+            /Dry-check window|Needs watering-cycle data|Tomorrow/v
+        );
+        expect(summary.textContent).not.toMatch(
+            /Last completed dry|No completed cycle yet|vs last dry/v
+        );
+        expect(chart.querySelectorAll(":scope .chart-dry")).toHaveLength(0);
+        expect(chart.querySelectorAll(":scope .chart-point")).toHaveLength(4);
+        expect(chart.querySelectorAll(":scope .chart-watering")).toHaveLength(
+            1
+        );
+        expect(chart.textContent).toContain("480 g");
+
+        enterWorkflowValue(window, "weight", "415");
+
+        expect(
+            queryElement(window.document, "#weightFeedback", HTMLElement)
+                .textContent
+        ).toContain("-5 g vs latest 420 g");
+        expect(
+            queryElement(window.document, "#weightFeedback", HTMLElement)
+                .textContent
+        ).not.toContain("vs last dry");
+    });
+
+    it.each([
+        "",
+        "-1",
+        "101",
+    ])("rejects invalid corrected humidity %s before review", (value) => {
+        expect.hasAssertions();
+
+        const { calls, window } = createCorrectionLogger("Humidity");
+        openFirstCorrection(window);
+        editCorrection(window, "relativeHumidity", value);
+        editCorrection(window, "reason", "Correct hygrometer reading");
+        submitCorrectionReview(window);
+
+        expect(
+            calls.some(
+                (call) => call.method === "previewWebObservationCorrection"
+            )
+        ).toBe(false);
+        expect(
+            queryElement(window.document, "#correctionStatus", HTMLElement)
+                .textContent
+        ).toMatch(/relative humidity/iv);
+    });
+
+    it("uses the generic terrarium portrait when P38 is supplied by the current roster", () => {
+        expect.hasAssertions();
+
+        const plant = {
+            ...required(bootstrap.plants[0]),
+            currentImageUrl: "",
+            id: "P38",
+            label: "#12",
+            name: "Terrarium",
+        };
+        const { window } = createLoggerWindow({
+            bootstrapData: { ...bootstrap, plants: [plant] },
+        });
+
+        expect(
+            queryElement(window.document, "#plantSelect", HTMLSelectElement)
+                .value
+        ).toBe("P38");
+        expect(
+            queryElement(
+                window.document,
+                'img[src*="/terrarium.svg"]',
+                HTMLImageElement
+            ).src
+        ).toContain(`/terrarium.svg?v=${portraitRevision}`);
+    });
+
+    it.each([
+        "0",
+        "57.5",
+        "100",
+    ])(
+        "queues %s RH without a weight and preserves it after an offline reload",
+        (value) => {
+            expect.hasAssertions();
+
+            const { window } = createLoggerWindow({ online: false });
+            queryElement(
+                window.document,
+                '#eventChips [data-event="Humidity"]',
+                HTMLButtonElement
+            ).click();
+
+            expect(
+                queryElement(
+                    window.document,
+                    "#humiditySection",
+                    HTMLElement
+                ).classList.contains("visible")
+            ).toBe(true);
+
+            queryElement(
+                window.document,
+                "#relativeHumidity",
+                HTMLInputElement
+            ).value = value;
+            queryElement(
+                window.document,
+                "#queueButton",
+                HTMLButtonElement
+            ).click();
+            const stored = required(
+                window.localStorage.getItem("gardenLoggerObservationQueueV1")
+            );
+
+            expect(required(parseStoredQueue(stored)[0]).payload).toMatchObject(
+                { events: ["Humidity"], relativeHumidity: value, weight: "" }
+            );
+            expect(
+                queryElement(
+                    window.document,
+                    "#relativeHumidity",
+                    HTMLInputElement
+                ).value
+            ).toBe("");
+
+            const reloaded = createLoggerWindow({
+                online: false,
+                storage: { gardenLoggerObservationQueueV1: stored },
+            });
+
+            expect(
+                queryElement(
+                    reloaded.window.document,
+                    "#queueList",
+                    HTMLElement
+                ).textContent
+            ).toContain(`${value} % RH`);
+
+            const restoredQueue = parseStoredQueue(
+                reloaded.window.localStorage.getItem(
+                    "gardenLoggerObservationQueueV1"
+                )
+            );
+
+            expect(required(restoredQueue[0]).payload.relativeHumidity).toBe(
+                value
+            );
+            expect(
+                reloaded.window.document.querySelector(
+                    ':scope #bulkEventChips [data-event="Humidity"]'
+                )
+            ).toBeNull();
+        }
+    );
+
+    it.each([
+        "",
+        "-0.1",
+        "100.1",
+    ])(
+        "rejects invalid humidity %s for both queue and immediate save",
+        (value) => {
+            expect.hasAssertions();
+
+            const { calls, window } = createLoggerWindow();
+            queryElement(
+                window.document,
+                '#eventChips [data-event="Humidity"]',
+                HTMLButtonElement
+            ).click();
+            queryElement(
+                window.document,
+                "#relativeHumidity",
+                HTMLInputElement
+            ).value = value;
+            queryElement(
+                window.document,
+                "#queueButton",
+                HTMLButtonElement
+            ).click();
+            queryElement(
+                window.document,
+                "#entryForm",
+                HTMLFormElement
+            ).dispatchEvent(
+                new window.Event("submit", { bubbles: true, cancelable: true })
+            );
+
+            expect(
+                window.localStorage.getItem("gardenLoggerObservationQueueV1")
+            ).toBeNull();
+            expect(
+                calls.some((call) => call.method === "saveWebObservation")
+            ).toBe(false);
+            expect(
+                queryElement(window.document, "#toast", HTMLElement).textContent
+            ).toMatch(/relative humidity/iv);
+        }
+    );
+
+    it("restores a numeric zero pending humidity reading and retries the unchanged request", () => {
+        expect.hasAssertions();
+
+        const first = createLoggerWindow();
+        queryElement(
+            first.window.document,
+            '#eventChips [data-event="Humidity"]',
+            HTMLButtonElement
+        ).click();
+        queryElement(
+            first.window.document,
+            "#relativeHumidity",
+            HTMLInputElement
+        ).value = "0";
+        queryElement(
+            first.window.document,
+            "#entryForm",
+            HTMLFormElement
+        ).dispatchEvent(
+            new first.window.Event("submit", {
+                bubbles: true,
+                cancelable: true,
+            })
+        );
+        const sent = required(
+            first.calls.find((call) => call.method === "saveWebObservation")
+        ).args[0];
+        const payload = { ...sent, relativeHumidity: 0 };
+        const { calls, window } = createLoggerWindow({
+            pendingSave: { payload, requestId: "humidity-zero-retry-12345" },
+        });
+
+        expect(
+            queryElement(window.document, "#relativeHumidity", HTMLInputElement)
+                .value
+        ).toBe("0");
+
+        queryElement(
+            window.document,
+            "#entryForm",
+            HTMLFormElement
+        ).dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
+
+        expect(
+            required(calls.find((call) => call.method === "saveWebObservation"))
+                .args[0]
+        ).toMatchObject({
+            relativeHumidity: 0,
+            requestId: "humidity-zero-retry-12345",
+        });
+    });
+
+    it("shows zero humidity with explicit units in recent History and its details", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            bootstrapData: {
+                ...bootstrap,
+                recent: [
+                    {
+                        ...recentExample,
+                        details: { relativeHumidity: 0 },
+                        event: "Humidity",
+                        observationId: "humidity-recent-0",
+                        observedAtIso: "2026-09-05T16:00:00.000Z",
+                        weight: "",
+                    },
+                ],
+            },
+        });
+
+        expect(
+            queryElement(
+                window.document,
+                "#recentList .recent-metrics",
+                HTMLElement
+            ).textContent
+        ).toContain("0 % RH");
+        expect(
+            queryElement(
+                window.document,
+                '#recentList [data-field="relativeHumidity"]',
+                HTMLElement
+            ).textContent
+        ).toContain("Relative humidity (% RH)0");
+    });
+});
 
 describe("garden logger bootstrap cache and connection recovery", () => {
     afterEach(restoreLoggerMocks);

@@ -31,6 +31,7 @@ export interface WebHistoryDetails {
     previousPotSize?: HistoryDetailValue;
     recordedAtIso?: string;
     recordStatus?: HistoryDetailValue;
+    relativeHumidity?: HistoryDetailValue;
     rotationDegrees?: HistoryDetailValue;
     saveGroup?: HistoryDetailValue;
     soilMoisture?: HistoryDetailValue;

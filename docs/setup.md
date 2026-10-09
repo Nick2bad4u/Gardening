@@ -6,6 +6,10 @@ The [equipment and supplies inventory](./equipment/inventory.md) lists the colle
 
 The [container guide](./containers.md) separates the 43 current botanical profile groups from two whole-planter overviews. P19, P20, P30, and P35 are shared containers: multiple profiles retain one label, one tracker history, and one current setup. The P-ID persists when a planting moves to a different pot; repots record a setup boundary rather than a new container ID.
 
+## Terrarium — identities and setup pending
+
+**P38 / #12 — Terrarium**, enrolled October 9, 2026, is a tracked container with plant identities and photographs pending. Its open or closed design, placement, size, drainage, and substrate are not yet recorded. Enrollment adds one container history and no botanical profile; the collection still has 43 botanical profile groups and two whole-planter overviews. Record measured relative humidity as a standalone **Humidity** event in **% RH** (0–100); no humidity target or watering rule is assigned before the plants and setup are known.
+
 ## October 6 Arctic Ice acquisition
 
 The owner reported buying an **_Echeveria_ 'Arctic Ice'** and a **6-inch
@@ -31,7 +35,7 @@ The six-inch pot's suitability remains conditional on root-ball fit and drainage
 
 ## Current routine
 
-The collection has **35 tracked containers and 46 profiles: 45 active and one historical**. Recent additions are P31 / #7 Peperomia Bicolor and P32 / #8 Tricolor oyster plant, purchased at Carlson's Greenhouses September 20, and P35 / #9 shared Lithops and P36 / #10 split rock, purchased at Home Depot in Howell, Michigan September 21.
+The collection has **36 tracked containers and 46 profiles: 45 active and one historical**. Recent additions are P31 / #7 Peperomia Bicolor and P32 / #8 Tricolor oyster plant, purchased at Carlson's Greenhouses September 20, and P35 / #9 shared Lithops and P36 / #10 split rock, purchased at Home Depot in Howell, Michigan September 21.
 
 The September 23 Lithops and split-rock repots are **setup 2**, using **80% Molly's Succulent Mix + 20% perlite**. P35 holds four visible Lithops heads in the D'vine Dev Blush Mauve pot, logged as **4.2 in round**; P36 holds one split-rock leaf pair in the Thirtypot speckled-brown pot, logged as **4 in round**. Seller-selected sizes are 4.3 and 4.5 inches, respectively. Routine weights were **1247 g** and **713.5 g**, with dry medium and firm plants; neither batch includes watering or a verified dry baseline. Final growing positions, actual drainage, and usable internal depth remain unverified.
 

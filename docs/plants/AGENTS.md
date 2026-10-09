@@ -15,6 +15,7 @@
 - The owner explicitly assigned `P31` / `#7` to Peperomia Bicolor and `P32` / `#8` to Tricolor oyster plant on September 20, 2026. The unreceived Amazon research under `docs/old-plans/` has no physical-label or tracker allocation and is excluded from active profiles.
 - `P35` / `#9` is the shared Lithops pot: aggregate Succulent-15 and components Succulent-15A (probable Lithops lesliei, tan/brown) and Succulent-15B (probable Lithops salicola, grey/green). Four visible heads came from two nursery pots; root connections remain unresolved. All three profiles share one container history. `P36` / `#10` is separate Succulent-16, nursery-labelled Pleiospilos nelii, with no cultivar supplied and explicitly not Royal Flush. Use the profiles for current repot evidence. Never reuse `P33`/`P34`: their old houseplant URLs redirect permanently to `P31`/`P32`. Archived Succulent-11–14 remain reserved.
 - `P37` / `#11` is Succulent-17, Echeveria 'Arctic Ice', acquired October 6, 2026. Current container, medium, drainage, repot, placement, and owner photographs remain unrecorded. The purchased six-inch ceramic pot is not a confirmed current setup.
+- `P38` / `#12` is the Terrarium container with plant identities and photographs pending. It has explicit pending container metadata and no botanical profile. Keep the 43 botanical groups and 45 active profile pages unchanged until evidence supports adding identified members.
 - Keep seller labels, qualified working IDs, receipt dates, and repot dates
   distinct. Preserve original label evidence when the probable identification
   changes. An order is not a confirmed arrival; a retail pot size is not a
@@ -32,7 +33,7 @@
 - Adding/removing a profile also affects the site build/check inventories,
   canonical SVG portraits, photo manifests, and relevant tests. Check those
   contracts before adding only a Markdown file. The current checker expects
-  46 profiles: 45 active and one historical, covering 35 tracker allocations.
+  46 profiles: 45 active and one historical, covering 36 tracker allocations.
   Recalculate these separately when the collection changes.
 - Keep a substantive Sources section with direct evidence for identification,
   nomenclature, range, and specific care claims. Owner observations need clear

@@ -52,7 +52,7 @@ function countPixels(data, info) {
 describe("shared multicolor interface artwork", () => {
     it("exports every interface/category symbol as a self-contained accessible SVG", () => {
         expect.hasAssertions();
-        expect(icons).toHaveLength(97);
+        expect(icons).toHaveLength(98);
 
         const files = fs
             .readdirSync(new URL("../assets/ui-icons/", import.meta.url))
@@ -133,7 +133,7 @@ describe("shared multicolor interface artwork", () => {
             ({ name }) => !launcherIconNames.includes(name)
         );
 
-        expect(controlIcons).toHaveLength(83);
+        expect(controlIcons).toHaveLength(84);
 
         for (const icon of controlIcons) {
             const { data, info } = await sharp(
@@ -217,10 +217,14 @@ describe("shared multicolor interface artwork", () => {
         expect(uniqueIds.size).toBe(ids.length);
 
         for (const match of logger.matchAll(
-            /url\(#(?<id>app-ui-[\w\-]+)\)/gv
+            /(?:url\(#|href="#)(?<id>app-(?:icon|ui)-[\w\-]+)/gv
         )) {
             expect(ids).toContain(required(match.groups?.["id"]));
         }
+
+        expect(logger).toMatch(
+            /<symbol\s+id="app-icon-humidity"[^>]*>[\s\S]*?<desc id="app-ui-humidity-description">/v
+        );
 
         expect(logger).toContain('viewBox="0 0 64 64"');
         expect(logger).not.toContain("assets/ui-icons/");

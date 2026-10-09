@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-humidity-title" aria-describedby="ui-humidity-description" data-ui-icon="humidity" focusable="false">
+  <title id="ui-humidity-title">Humidity</title>
+<desc id="ui-humidity-description">A blue drop and percentage marks represent a measured relative-humidity reading.</desc>
+<path d="M25 7C20 18 10 27 10 37a15 15 0 0 0 30 0C40 27 30 18 25 7Z" fill="#79bdd0" stroke="#386e82" stroke-width="3" />
+<path d="M17 36c0 6 3 9 7 10" fill="none" stroke="#e9f9f7" stroke-width="3" stroke-linecap="round" />
+<path d="m44 52 12-22" stroke="#5e7164" stroke-width="3" stroke-linecap="round" />
+<circle cx="45" cy="31" r="4" fill="#c9dcb4" stroke="#5e7164" stroke-width="2" />
+<circle cx="55" cy="51" r="4" fill="#c9dcb4" stroke="#5e7164" stroke-width="2" />
+</svg>

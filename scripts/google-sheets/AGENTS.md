@@ -2,32 +2,30 @@
 
 ## Runtime and history contract
 
-- The logger is bound Google Apps Script, not a standalone web service. Keep
-  `Index.html` self-contained unless `doGet()` is deliberately changed to use
-  templating.
-- `.gs` files share the Apps Script global scope. Keep Node imports and browser
-  APIs out of the server, and retain the ES2023 typecheck baseline in
-  `tsconfig.apps-script.json`. Keep domain/entry declarations under
-  `types/apps-script*.d.ts` aligned with the implementation; do not weaken the
-  custom checker to accommodate missing globals or invalid fixtures.
+- The logger is bound Apps Script. Keep `Index.html` self-contained unless
+  `doGet()` is deliberately changed to use templating.
+- `.gs` files share global scope: no Node imports or browser APIs. Retain ES2023
+  in `tsconfig.apps-script.json` and align `types/apps-script*.d.ts` with code;
+  never weaken the checker for missing globals or invalid fixtures.
 - Typechecking is not runtime compatibility evidence. Native rehearsal rejected
   numeric separators; emitted Apps Script must avoid them. The cycle source
   generator replaces Node's `toSorted`/`toReversed` with `sort`/`reverse` only
   on newly allocated arrays. Preserve that ownership boundary and verify new
   syntax/APIs in a disposable bound script before deployment.
-- Keep observations append-only unless the repository owner explicitly requests
-  a historical correction. One save may append multiple event-specific rows.
-- Keep every retry idempotent through the hidden Request ID in History column P.
-- Keep observation IDs, request IDs, save/batch IDs, and correction links
-  distinct. Supported corrections preview one event, append its replacement,
-  and mark its predecessor Removed while retaining the original values and
-  provenance. Do not delete ledger rows or treat a correction as a new pot setup.
+- Observations are append-only unless the owner requests a historical correction.
+  One save may append multiple event rows; History's hidden column P Request ID
+  makes retries idempotent.
+- Keep observation/request/save/batch IDs and correction links distinct.
+  Corrections preview one event, append its replacement, and mark its predecessor
+  Removed, retaining original values/provenance. Never delete ledger rows or
+  treat corrections as new pot setups.
 - Preserve the live workbook contract: A:L core observations, M:O workbook
   formulas, P retry IDs, and Q:Z structured Water/Repot/Flower/Photo/Pest
   details. AA:AJ stores provenance and record state, AK:AM stores measurement
   units and derived inch values, AN stores rotation degrees, AO stores the
   watering-application class, and AP stores an optional measured water amount
-  in milliliters.
+  in milliliters. AQ stores relative humidity as a number from 0 through 100;
+  a blank is missing evidence, while zero is a valid measured reading.
   `installGardenLogger()` may add or verify headers. Do not clear existing
   values or formulas unless the repository owner explicitly requests a workbook
   migration with that effect.
@@ -44,12 +42,15 @@
   five days is Wet. The last eligible non-Wet weight before the next Water is
   Dry; later open-cycle weights remain Routine. Water still never implies that
   a weight exists, and inferred state must not rewrite canonical History.
-- Keep mobile entries recoverable until Google confirms the callback, lock
-  writes, escape formula-like text, validate URLs, and make bulk operations
-  retry-safe per plant.
+- Preserve mobile entries until Google's callback; lock writes, escape
+  formula-like text, validate URLs, and make bulk retries idempotent per plant.
 - Water, Weigh, and Measure are event-specific rows even when entered in one
   save. Water without a weight must remain valid. A bulk water amount is the
   amount for each applicable pot, not a total to divide across the selection.
+- Humidity is a separate measured event with Hygrometer provenance. Keep it
+  independent of weights, soil moisture, watering cycles, and setup changes.
+  Do not broadcast an enclosure humidity reading through bulk care. App entries
+  appends its humidity field at AI; preserve all earlier staging positions.
 - Progress uses the workbook timezone and a 4 a.m. care-day boundary; drying
   rates use actual observation intervals. Preserve correction ordering and
   exclusions for future, Removed, estimated, invalid, and other-setup readings.
@@ -61,9 +62,8 @@
 
 ## Workbook presentation
 
-- Daily care is retired. The existing daily chat task and generated report page
-  are the care plan. Do not run the legacy `installDailyCareDashboard()`
-  against production or add it back to menus, refreshes, triggers, or sources.
+- The daily chat/report is the care plan. Keep retired `installDailyCareDashboard()`
+  out of production, menus, refreshes, triggers, and sources.
 - Preserve owner tab order, visibility, formatting, and protections. Quick log
   is hidden for compatibility. Whole-sheet warning protections catch manual
   edits without blocking the logger/AppSheet; keep RO refills A20:I and K20:M
@@ -105,15 +105,13 @@
   correction resolver and cycle helpers. Use actual elapsed time for curve
   comparisons and the workbook timezone for labels. Do not pass NOW/TODAY,
   including indirect references, into custom functions.
-- Keep inventory lookups bounded to the maintained inventory and regenerate
-  their bounds when adding plants. Compare derived outputs before and after
-  optimization; report measured timings without promising a fixed speedup.
+- Bound lookups to the maintained inventory; regenerate bounds when adding plants.
+  Compare outputs before/after optimization; report measured timings, not promises.
 
 ## Validation and deployment
 
-- Native chart-only changes are scoped workbook migrations. Follow
-  `INSIGHTS-CHARTS.md` and the relevant request builder; do not run a full
-  workbook/page refresh or deploy Apps Script solely to add a chart.
+- For chart-only migrations, follow `INSIGHTS-CHARTS.md` and its request builder;
+  do not refresh the whole workbook/pages or deploy Apps Script just to add charts.
 - `plant-chart-layout.mjs` copies P01 styling by verified chart role and binding.
   Retain bindings/colors and axis maxima; derive width from visible A:J columns.
   Derive floors from fresh plotted minima with a 250 g base and measured
@@ -131,13 +129,11 @@
   before writing. Apply preparation, then formulas, verify their calculated
   outputs, and only then create charts. Stop on drift or an already-installed
   destination instead of clearing cells or replaying the migration blindly.
-- Preserve every existing chart ID and all specifications/positions outside
-  the reviewed migration's intended presentation changes. The
-  basic metadata connector may omit chart definitions; a no-op `findReplace`
-  request with `include_spreadsheet_in_response: true` and grid data disabled
-  returns the full native chart metadata. Rehearse on a separate native copy,
-  apply helper formulas before chart requests, and verify calculation and
-  retained series colors after creation.
+- Preserve chart IDs and specifications/positions outside the reviewed changes.
+  Basic metadata may omit charts; no-op `findReplace` with
+  `include_spreadsheet_in_response: true` and no grid data returns full metadata.
+  Rehearse on a native copy, apply helpers before charts, and verify calculations
+  and retained series colors.
 - Every current Pxx page has a watering-interval status at A109 and chart anchored
   at A111, maintained by `watering-intervals.mjs`. Its hidden, warning-protected
   `Watering intervals` helper is derived from History and is not an AppSheet
@@ -151,40 +147,37 @@
   once real intervals exist, reapply the planned chart specification if needed.
   Do not seed production with fake observations or add a styling-only trigger.
 
-- Run `npm run test:logger`, `npm run test:logger:coverage`, and
-  `npm run check:logger` after behavior or schema changes. Keep the server,
-  inline client, source-contract check, AppSheet mapping, and regression tests
-  synchronized.
+- After behavior/schema changes, run `npm run test:logger`,
+  `npm run test:logger:coverage`, and `npm run check:logger`. Synchronize server,
+  client, contract checks, AppSheet mappings, and regressions.
 - For `.gs` changes, also run `npm run lint:apps-script` and
   `npm run typecheck:apps-script`. For client changes, check maintained inline
   HTML/styles and the client tests. Only the explicit
   `npm run sync:logger-artwork` command updates generated client icons/revision;
   website builds leave them unchanged. Inspect synchronized artwork and its
   published asset dependencies before deploying an authorized logger update.
-- Before a live workbook write, create a native Drive backup and re-read the
-  current headers, formulas, validations, last populated rows, request IDs,
-  AppSheet staging schemas, deployment assignment, and trigger list. Do not
-  infer live state from an older chat or repository snapshot.
-- Keep full native before/after metadata and cell snapshots in ignored private
-  storage. For derived-view migrations, compare canonical History, staging
-  tables, and RO entry/formula ranges exactly, along with existing chart IDs,
-  specifications, positions, protections, and relative tab order. Rehearse
-  structural changes on a separate native workbook and bound script copy.
-- A History contract change must update the constants and row builders in
-  `plant-tracker.gs`, the logger tests/checker, the public tracker/history
-  parser and CSV export when applicable, this runbook, and the AppSheet column
-  configuration. Run `installGardenLogger()` and `installAppSheetIntake()` only
-  after the checked-in contract and tests agree.
+- Before live writes, create a native Drive backup; freshly read headers,
+  formulas, validations, last populated rows, request IDs, AppSheet staging
+  schemas, deployment assignment, and triggers. Old chats/repo snapshots do not
+  establish live state.
+- Keep full native before/after metadata and cells in ignored private storage.
+  For derived-view migrations, compare History, staging, RO entries/formulas,
+  chart IDs/specifications/positions, protections, and relative tab order exactly.
+  Rehearse structural changes on a native workbook/script copy.
+- Native Drive copies include the bound Apps Script. Inspect/update that script;
+  do not create competing functions. When extending History's BasicFilter range,
+  never replay `sortSpecs`: doing so re-sorts the append-only ledger.
+- History changes must align `plant-tracker.gs` constants/row builders, logger
+  tests/checker, public parsing/CSV exports, this runbook, and AppSheet columns.
+  Run `installGardenLogger()`/`installAppSheetIntake()` only after source/tests agree.
 - `npm run apps-script:status` must show only `plant-tracker.gs`, `Index.html`,
   and `appsscript.json` in the clasp push set. Updating checked-in code or
   running `clasp push` does not update the versioned web app by itself.
-- For an authorized production release, create a new immutable Apps Script
-  version and update the existing production deployment ID in place; do not
-  create a replacement phone URL. Run installers and reinstall the queue
-  trigger only when their contracts change; for a presentation-only release,
-  preserve the existing intake/trigger. Verify `Connected · logger <version>`, successful web-app and
-  trigger executions, and exactly one `processQueuedAppSheetEntries` trigger
-  scheduled every five minutes.
+- For authorized releases, create an immutable Apps Script version and update
+  the existing deployment ID, preserving the phone URL. Run installers/reinstall
+  the queue trigger only when their contracts change. Verify
+  `Connected · logger <version>`, successful web-app/trigger executions, and exactly
+  one `processQueuedAppSheetEntries` trigger running every five minutes.
 - Do not submit fake observations to production. Use a disposable workbook and
   bound script for integration writes. Finish with pre/post canonical History
   row counts, observation-ID uniqueness, request-ID grouping, formula/error

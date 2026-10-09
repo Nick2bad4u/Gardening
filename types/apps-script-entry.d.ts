@@ -42,6 +42,7 @@ interface GardenEntryPayload {
     plantId?: unknown;
     plantIds?: unknown;
     potSize?: unknown;
+    relativeHumidity?: unknown;
     requestId?: unknown;
     rotationDegrees?: unknown;
     soilMoisture?: unknown;

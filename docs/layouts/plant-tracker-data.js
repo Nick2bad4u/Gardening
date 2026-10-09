@@ -57,6 +57,7 @@ const plantSheetGids = Object.freeze({
     P35: 202_609_350,
     P36: 202_609_360,
     P37: 202_610_370,
+    P38: 202_610_380,
 });
 
 export const sheetUrls = {
@@ -541,7 +542,9 @@ export function calculateSummary(sourceEvents, plantId = "") {
     const activeEvents = currentEvents.filter(
         (event) => (numericValue(event["Pot setup"]) ?? 1) === activePotSetup
     );
-    const weightCycles = weightCycleAnalytics(activeEvents);
+    // P38 has no identified plants or enclosure setup; dry-cycle care is unestablished.
+    const isManualCare = plantId === "P38";
+    const weightCycles = weightCycleAnalytics(activeEvents, isManualCare);
     const activeWeights = weightCycles.weights;
     const dryWeights = weightCycles.dryAnchors.map((event) =>
         Number(event["Weight (g)"])
@@ -562,6 +565,25 @@ export function calculateSummary(sourceEvents, plantId = "") {
     const latestWidth = newest(
         currentEvents,
         (event) => numericValue(event["Width (cm)"]) !== null
+    );
+    const humidityEvents = currentEvents.filter((event) => {
+        const value = numericValue(event["Relative humidity (%)"]);
+        const date = parseDate(event["Date"]);
+        return (
+            date !== null &&
+            date.getTime() <= Date.now() &&
+            String(event["Event"] ?? "")
+                .trim()
+                .toLowerCase() === "humidity" &&
+            value !== null &&
+            value >= 0 &&
+            value <= 100
+        );
+    });
+    const latestHumidity = newest(humidityEvents, () => true);
+    const humiditySeries = measurementSeries(
+        humidityEvents,
+        "Relative humidity (%)"
     );
     const latestCondition = newest(
         currentEvents,
@@ -620,12 +642,14 @@ export function calculateSummary(sourceEvents, plantId = "") {
         latestWeightValue,
         dryAverage
     );
-    const baselineStatus = weightBaselineStatus(
-        activeWeights.length,
-        wetWeights.length,
-        dryWeights.length,
-        capacity
-    );
+    const baselineStatus = isManualCare
+        ? "Manual care review · identities and setup pending"
+        : weightBaselineStatus(
+              activeWeights.length,
+              wetWeights.length,
+              dryWeights.length,
+              capacity
+          );
     const previousWeightValue = weightSeries.at(-2)?.value ?? null;
     const weightChange =
         latestWeightValue !== null && previousWeightValue !== null
@@ -666,12 +690,14 @@ export function calculateSummary(sourceEvents, plantId = "") {
         heightChange: seriesChange(heightSeries),
         heightMonthlyRate: monthlyRate(heightSeries),
         heightSeries,
+        humiditySeries,
         lastWater: watering.events.at(-1)?.event,
         latestActivity,
         latestCheck: newest(checkEvents, () => true),
         latestCondition,
         latestFlower: newest(flowerEvents, () => true),
         latestHeight,
+        latestHumidity,
         latestNutrients: newest(nutrientEvents, () => true),
         latestPest: newest(pestEvents, () => true),
         latestPhoto: newest(photoEvents, () => true),
@@ -680,6 +706,7 @@ export function calculateSummary(sourceEvents, plantId = "") {
         latestWeight,
         latestWeightValue,
         latestWidth,
+        manualCare: isManualCare,
         observationSpanDays:
             datedEvents.length > 1
                 ? daysBetween(
@@ -857,16 +884,19 @@ function buildCollectionData(source) {
         plants: plants.map((plant) => {
             const plantId = plant["Plant ID"] ?? "";
             const events = eventsById.get(plantId) ?? [];
+            const summary = calculateSummary(events, plantId);
             return {
                 ...plant,
                 "Current pot label": plant["Current pot label"] ?? "",
-                "Est. time to dry": plant["Est. time to dry"] ?? "",
+                "Est. time to dry": summary.manualCare
+                    ? "Manual care review"
+                    : (plant["Est. time to dry"] ?? ""),
                 events,
                 "Plant / planter": plant["Plant / planter"] ?? "",
                 "Plant ID": plantId,
                 "Scientific name / contents":
                     plant["Scientific name / contents"] ?? "",
-                summary: calculateSummary(events, plantId),
+                summary,
             };
         }),
     };
@@ -928,8 +958,9 @@ function historyCorrectionOrder(events) {
  * which one was actually the cycle endpoint.
  *
  * @param {HistoryEvent[]} activeEvents
+ * @param {boolean} manualCare
  */
-function weightCycleAnalytics(activeEvents) {
+function weightCycleAnalytics(activeEvents, manualCare) {
     const orderedEvents = sortEvents(activeEvents);
     const orderByEvent = new Map(
         orderedEvents.map((event, index) => [event, index])
@@ -946,6 +977,8 @@ function weightCycleAnalytics(activeEvents) {
     const stateByEvent = new Map(weights.map((event) => [event, "Routine"]));
     /** @type {HistoryEvent[]} */
     const wetAnchors = [];
+    if (manualCare)
+        return { dryAnchors: [], stateByEvent, weights, wetAnchors };
     for (const [waterIndex, waterEvent] of waterEvents.entries()) {
         const waterOrder = orderByEvent.get(waterEvent) ?? -1;
         const nextWater = waterEvents[waterIndex + 1];

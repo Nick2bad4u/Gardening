@@ -29,14 +29,16 @@ const container = (await getContainers()).find((item) => item.id === id);
     description="Weights, watering, measurements, and observations for this tracked pot."
 >
     <div class="tool-tracker tool-content" data-pot-id={id}>
-        <HistoryHeader potId={id} profiles={profiles} />
-        {container?.shared && <ContainerMembers container={container} />}
+        <HistoryHeader potId={id} profiles={profiles} container={container} />
+        {container && (container.shared || container.pending) && (
+            <ContainerMembers container={container} />
+        )}
         <HistoryPager />
         <HistoryStatus />
         <HistorySummary />
         <HistoryTrend />
         <HistoryMilestones />
-        <HistoryBaselines />
+        <HistoryBaselines manualCare={container?.pending ?? false} />
         <HistoryCharts />
         <HistoryTable />
         <HistoryLogging />

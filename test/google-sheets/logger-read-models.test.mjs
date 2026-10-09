@@ -60,7 +60,7 @@ function readPlant(rows, setup = 1) {
  */
 function row(at, event = "Weigh", cells = {}) {
     /** @type {import("../logger-fixtures.d.ts").CellValue[]} */
-    const values = Array.from({ length: 42 }, () => "");
+    const values = Array.from({ length: 43 }, () => "");
     values[0] = new Date(at);
     values[1] = "P01";
     values[2] = event;
@@ -85,7 +85,7 @@ function runtime(historyRows = []) {
     const sheet = (name, values) => ({
         getLastColumn: () => required(values[0]).length,
         getLastRow: () => values.length,
-        getMaxColumns: () => 42,
+        getMaxColumns: () => 43,
         getName: () => name,
         /**
          * @param {number} rowNumber @param {number} column @param {number}
@@ -129,7 +129,7 @@ function runtime(historyRows = []) {
         [
             "History",
             sheet("History", [
-                Array.from({ length: 42 }, () => ""),
+                Array.from({ length: 43 }, () => ""),
                 ...historyRows,
             ]),
         ],
@@ -168,6 +168,48 @@ function runtime(historyRows = []) {
 }
 
 describe("logger History-backed read models", () => {
+    it("withholds a terrarium dry reference while retaining measured weights and watering history", () => {
+        expect.hasAssertions();
+
+        const observations = [
+            row("2026-09-01T12:00:00Z", "Water"),
+            row("2026-09-01T13:00:00Z", "Weigh", { 4: 500 }),
+            row("2026-09-03T12:00:00Z", "Weigh", { 4: 450 }),
+            row("2026-09-04T12:00:00Z", "Water"),
+            row("2026-09-04T13:00:00Z", "Weigh", { 4: 500 }),
+            row("2026-09-05T13:00:00Z", "Weigh", { 4: 495 }),
+        ];
+        const terrariumRows = observations.map((record) => {
+            const copy = [...record];
+            copy[1] = "P38";
+            return copy;
+        });
+        const before = structuredClone(terrariumRows);
+        const result = runtime().api.webWeightReadModelsFromRows_(
+            [...observations, ...terrariumRows],
+            new Map([
+                ["P01", 1],
+                ["P38", 1],
+            ]),
+            now,
+            zone
+        );
+        const terrarium = structuredClone(required(result.byPlant.get("P38")));
+
+        expect(terrarium.latestWeight).toBe(495);
+        expect(terrarium.weightSeries.previousDry).toBeNull();
+        expect(
+            terrarium.weightSeries.points.map((point) => point.weight)
+        ).toStrictEqual([500, 495]);
+        expect(terrarium.weightSeries.waterings).toMatchObject([
+            { observedAt: "2026-09-04T12:00:00.000Z" },
+        ]);
+        expect(
+            result.byPlant.get("P01")?.weightSeries.previousDry?.weight
+        ).toBe(450);
+        expect(terrariumRows).toStrictEqual(before);
+    });
+
     it("ignores anonymous History rows and defaults a blank baseline setup to the first pot", () => {
         expect.hasAssertions();
 
@@ -335,7 +377,7 @@ describe("logger History-backed read models", () => {
                 latestWeightAt: "",
                 weightSeries: { points: [] },
             });
-            expect(historyReads).toHaveBeenCalledExactlyOnceWith(2, 1, 2, 42);
+            expect(historyReads).toHaveBeenCalledExactlyOnceWith(2, 1, 2, 43);
             expect(rows).toStrictEqual(before);
         } finally {
             vi.useRealTimers();
@@ -1024,6 +1066,11 @@ describe("logger filtered recent History and event details", () => {
     );
 
     it.each([
+        [
+            "Humidity",
+            { 34: "Hygrometer", 42: 0 },
+            { measurementMethod: "Hygrometer", relativeHumidity: 0 },
+        ],
         [
             "Water",
             { 16: "Yes", 17: "MSU 13-3-15", 18: "1/4 tsp", 40: "Spot", 41: 25 },

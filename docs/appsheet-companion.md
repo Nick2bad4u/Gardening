@@ -12,6 +12,89 @@ contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
 
+## October 9 terrarium and humidity
+
+Production logger **5.32.0 / immutable version 103** and the verified workbook support
+**36 containers: P01–P32, P35–P38**. **P38 / #12 — Terrarium** has pending
+plant identities, photographs, and enclosure/setup details. Its member list is
+explicitly empty; the collection retains **43 botanical catalog members**.
+P33/P34 remain retired compatibility fields. Do not assign a humidity target,
+cactus dry reference, or weight-based watering trigger to the pending terrarium.
+
+**Production AppSheet 1.100120 is saved and verified**, advancing the captured
+**1.100114** baseline. The fresh saved-definition comparison found **zero
+unexpected differences** across **296 existing attributes**, three new fields,
+11 schemas and datasets, 41 controls, and five slices. Native-copy rehearsal,
+production workbook migration, and logger deployment are also verified. The
+October 7 section below preserves the earlier saved app record. See the
+[logger rollout record](../scripts/google-sheets/README.md#october-9-terrarium-and-humidity-rollout)
+for the backup, copy, ledger preservation, and deployment evidence.
+
+| Table                       | Verified physical schema | App attributes | New field                                               |
+| --------------------------- | ------------------------ | -------------- | ------------------------------------------------------- |
+| History (read-only dataset) | 43 columns, A:AQ         | 46             | AQ: `Relative humidity (%)`                             |
+| App entries                 | 35 columns, A:AI         | 36             | AI: `Relative humidity (%)` → logger `relativeHumidity` |
+| App bulk                    | 62 columns, A:BJ         | 63             | BJ: `P38 weight (g)`                                    |
+
+The saved app retains its read-only History dataset binding to the canonical **History** worksheet (gid 1465181080), not History view. Its 46 attributes include 43 physical columns, `_RowNumber`, and the existing Plant image and Event badge virtual fields. History view remains a separate workbook projection.
+
+After the workbook headers were verified, only History, App entries, and App
+bulk were regenerated. The saved definition preserves canonical/helper
+read-only modes, both writable staging tables, creation-only keys, retry IDs,
+previous field positions, defaults, and the retired P33/P34 blank guards. All
+17 existing custom descriptions were restored after regeneration. The new
+humidity descriptions are quoted constant expressions, so AppSheet treats them
+as text rather than trying to parse their words as an expression. The comparison
+allows regenerated internal IDs only on those three schemas and their fields,
+alongside compiler caches and save metadata; it does not omit user settings,
+actions, views, slices, security, or existing descriptions.
+
+Detailed Log adds **Humidity** to Events and shows its Decimal input only when
+selected, requiring a value from **0 through 100**, inclusive. Store percentage
+points: **65.5 means 65.5% RH**, not 0.655. Zero is valid; blank means no reading.
+Use Decimal rather than AppSheet's fractional Percent type. The bridge writes a
+separate Humidity event, which neither implies Water nor creates a weight
+reference. Humidity is not a collection-wide Bulk Log action. History's
+Measurement method choices append **Hygrometer** after Scale, Ruler, Estimated
+from photo, Estimated visually, Observed, Other, and Unspecified. Preserve the
+existing enum behavior; App entries' dimension-only Measurement method choices
+remain unchanged.
+
+P38's optional bulk weight follows the existing positive Decimal validation and
+Weigh / Water + weigh visibility rules. The maintained round validation covers
+36 active weights; place P38 after P37 and before Notes. Natural label order
+adds **#12 = 912**. Portrait revision **4987bcaf5dbb7c8c** includes
+the generic terrarium schematic; it is not an owner photograph or evidence of
+actual enclosure shape. All **36 SVGs** in
+[GardenPlantPortraits-4987bcaf5dbb7c8c](https://drive.google.com/drive/folders/1X5czv8o64pc1sJQgGuwjCGHTcIt-UQhn)
+match their maintained source bytes. The saved app's Plant portrait expression
+uses this revision. Keep prior portrait folders for cached clients.
+
+The native copy passed humidity zero/100, mixed-save, retry, correction/removal,
+and mapped App entries tests, plus complete styling checks for all four
+populated P38 charts. The final production readback preserved all **1,781
+observations / unique observation IDs**, **1,466 request groups**, and **295
+multi-event groups**, with P38 still empty and Integrity zero. Exactly one Head
+queue trigger is restored to **Every 5 minutes** and has a successful
+time-driven execution. The phone logger shows **Connected · logger 5.32.0** and
+a blank P38 Humidity form; it was inspected without submitting an observation.
+
+A fresh editor reload reports **No issues found** and disabled Save. The
+saved-definition verifier also passed two positive fixtures and rejected 30
+unintended mutations, including malformed humidity descriptions, changed old
+descriptions, permission/key drift, missing Hygrometer, and an incorrectly
+broadened dimension-method enum.
+
+The separate signed-in UI check confirmed that **1.100120 is runnable**. The
+**P38 / #12 — Terrarium** card shows its schematic portrait and **No log**.
+Selecting Humidity reveals a blank input with **minimum 0 / maximum 100**; the
+selection was discarded without entering a reading. Bulk Log displays **36
+blank weight inputs**, ending with P38 before Notes, and was canceled. The app
+has zero unsynced changes; the editor still reports no issues and disabled Save.
+No synthetic observations were submitted to production. The private saved-app
+and rendered-UI receipts are `appsheet-config-verification.json` and
+`appsheet-ui-verification.json` under `.cache/terrarium-enrollment-20261009/`.
+
 ## October 7 Arctic Ice enrollment
 
 **Production AppSheet 1.100114 is saved and verified after workbook enrollment.** The owner assigned **P37 / #11** to Echeveria 'Arctic Ice', bringing the maintained roster to **35 active containers: P01–P32, P35–P37**. P33/P34 remain retired. The cultivar is nursery-labelled evidence, and this allocation does not imply a repot, watering, weight, measurement, or photograph has been recorded. The [logger runbook](../scripts/google-sheets/README.md) records the separate versioned phone deployment and workbook preservation checks.
@@ -252,7 +335,9 @@ weights remain `Routine` in the append-only ledger. Current-cycle analytics use
 the latest Water, treat its same-save weight—or otherwise the first positive
 weight within five days—as Wet, and use the completed Dry reading immediately
 before that Water as the dry anchor. Per-plant history displays the canonical
-stored state, so refreshing formulas never relabels old observations.
+stored state, so refreshing formulas never relabels old observations. Logger
+5.32.0 keeps P38 in manual care review: pending plant identities and enclosure
+setup do not support a dry/plateau/full-dry watering trigger.
 
 Rotation is available in Log and Bulk Log. It accepts 1–360 degrees
 and defaults to 90. The degree value is archived in `History!AN:AN`, displayed
@@ -264,7 +349,7 @@ an EnumList of refs with `Valid_If` set to `SORT(Plant tracker[Plant ID])`; if
 that expression is removed, the deployed picker can appear empty even while
 the source table contains plants.
 
-The maintained Round action validation checks all 35 active weight fields and requires the retired P33/P34 fields blank. Weigh requires
+The Round action validation saved with this rollout checks all 36 active weight fields and requires the retired P33/P34 fields blank. Weigh requires
 at least one positive weight; Water + weigh also requires selected plants.
 Other shared care actions require selected plants. The maintained expression
 is [`appsheet-bulk-validation.txt`](../scripts/google-sheets/appsheet-bulk-validation.txt).
@@ -299,9 +384,9 @@ identification.
 The Plants view sorts by the hidden virtual Number column
 `Natural label order`, not by `Plant ID`. Its explicit mapping keeps labels in
 the physical sequence A1-A3 through H1-H3, followed by the numbered plant and
-shared-planter labels #1–#11 after the Arctic Ice enrollment. The `#` group always sorts after every lettered
+shared-planter labels #1–#12 in the saved October 9 mapping. The `#` group always sorts after every lettered
 label.
-Canonical active IDs and writable picker values are P01–P32 and P35–P37 after enrollment; do not replace them
+Active IDs and writable picker values are P01–P32 and P35–P38; do not replace them
 with the display-order helper.
 
 Plants uses the Image virtual column `Plant portrait` as its square main

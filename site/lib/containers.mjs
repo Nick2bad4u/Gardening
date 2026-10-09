@@ -1,3 +1,4 @@
+import { sheetUrls } from "../../docs/layouts/plant-tracker-data.js";
 import {
     isNonemptyString,
     isProfileData,
@@ -15,6 +16,8 @@ import { getProfiles } from "./content.mjs";
  *     careNote: string;
  *     setupNote: string;
  *     portraitSlug?: string;
+ *     membershipStatus?: "pending";
+ *     label?: string;
  * }} ContainerMetadata
  */
 /** @typedef {Record<string, ContainerMetadata>} ContainerData */
@@ -25,8 +28,9 @@ import { getProfiles } from "./content.mjs";
  *     label: string;
  *     profiles: SiteProfile[];
  *     members: SiteProfile[];
- *     overview: SiteProfile | undefined;
+ *     overview?: SiteProfile | undefined;
  *     shared: boolean;
+ *     pending: boolean;
  *     portraitSlug: string;
  *     careNote: string;
  *     setupNote: string;
@@ -55,8 +59,14 @@ export function buildContainers(profiles, mapping, metadata) {
     }
     const seen = new Set();
     const containers = Object.entries(mapping).map(([id, entries]) => {
-        if (!/^P\d{2}$/v.test(id) || entries.length === 0)
+        if (!/^P\d{2}$/v.test(id))
             throw new Error(`Invalid or empty container: ${id}`);
+        const details = metadata[id];
+        if (entries.length === 0) return pendingContainer(id, details);
+        if (details?.membershipStatus === "pending")
+            throw new Error(
+                `Pending container ${id} cannot have botanical members.`
+            );
         const containerProfiles = entries.map(([slug]) => {
             const profile = required(
                 bySlug.get(slug),
@@ -69,7 +79,6 @@ export function buildContainers(profiles, mapping, metadata) {
             seen.add(slug);
             return profile;
         });
-        const details = metadata[id];
         const overview = findOverview(
             containerProfiles,
             details?.overviewSlug,
@@ -103,6 +112,7 @@ export function buildContainers(profiles, mapping, metadata) {
             members,
             name: details?.name ?? primary.title,
             overview,
+            pending: false,
             portraitSlug,
             profiles: containerProfiles,
             setupNote:
@@ -150,6 +160,11 @@ export function isContainerData(value) {
                     isNonemptyString(entry["overviewSlug"])) &&
                 isNonemptyString(entry["careNote"]) &&
                 isNonemptyString(entry["setupNote"]) &&
+                (!Object.hasOwn(entry, "membershipStatus") ||
+                    (entry["membershipStatus"] === "pending" &&
+                        isNonemptyString(entry["portraitSlug"]) &&
+                        isNonemptyString(entry["label"]) &&
+                        entry["overviewSlug"] === null)) &&
                 (!Object.hasOwn(entry, "portraitSlug") ||
                     isNonemptyString(entry["portraitSlug"]))
         )
@@ -161,6 +176,7 @@ function assertPortrait(profiles, slug, id) {
     const sharedPortraits = new Map([
         ["P19", "shared-rehab-cactus-planter"],
         ["P20", "shared-succulent-planter"],
+        ["P38", "terrarium"],
     ]);
     if (
         sharedPortraits.get(id) !== slug &&
@@ -180,4 +196,35 @@ function findOverview(profiles, slug, id) {
     if (overview === undefined)
         throw new Error(`Overview is not in container ${id}: ${slug}`);
     return overview;
+}
+
+/**
+ * @param {string} id @param {ContainerMetadata | undefined} details @returns
+ *   {Container}
+ */
+function pendingContainer(id, details) {
+    if (
+        details?.membershipStatus !== "pending" ||
+        !isNonemptyString(details.label) ||
+        !isNonemptyString(details.portraitSlug) ||
+        details.overviewSlug !== null
+    )
+        throw new Error(
+            `Empty container ${id} needs explicit pending metadata.`
+        );
+    assertPortrait([], details.portraitSlug, id);
+    return {
+        careNote: details.careNote,
+        currentPot: "",
+        id,
+        label: details.label,
+        members: [],
+        name: details.name,
+        pending: true,
+        portraitSlug: details.portraitSlug,
+        profiles: [],
+        setupNote: details.setupNote,
+        shared: false,
+        sheetUrl: sheetUrls.plantPage(id),
+    };
 }

@@ -34,15 +34,20 @@ export function buildWateringCalendarRequests(
     );
     if (
         ledger?.properties.gridProperties.rowCount !== 5000 ||
-        ledger.properties.gridProperties.columnCount !== 42
+        ![42, 43].includes(ledger.properties.gridProperties.columnCount)
     )
-        throw new Error("Review the 5,000-row, 42-column History contract");
+        throw new Error(
+            "Review the 5,000-row, 42-column legacy or 43-column current History contract"
+        );
     for (const [column, label] of /** @type {[number, string][]} */ ([
         [0, "Date"],
         [1, "Plant ID"],
         [2, "Event"],
         [16, "Nutrients used"],
         [35, "Record status"],
+        ...(ledger.properties.gridProperties.columnCount === 43
+            ? [[42, "Relative humidity (%)"]]
+            : []),
     ])) {
         if (
             cells.every(

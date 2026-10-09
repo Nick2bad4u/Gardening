@@ -429,7 +429,7 @@ describe("dry-down formulas and workbook installation", () => {
 
             expect(required(baselineFormulas[0])[0]).toContain("XLOOKUP($A2,");
             expect(required(baselineFormulas[1])[1]).toContain(
-                "'Dry-down models'!$P$2:$P$36"
+                "'Dry-down models'!$P$2:$P$37"
             );
             expect(required(dashboardFormulas[1])[0]).toContain("XLOOKUP($B8,");
             expect(calls.some((call) => call.name === "History")).toBe(false);

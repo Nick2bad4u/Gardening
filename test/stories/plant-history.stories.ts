@@ -143,3 +143,50 @@ export const Unavailable: Story = {
         );
     },
 };
+
+export const TerrariumHumidity: Story = {
+    args: {
+        path: "pots/P38/",
+        scenario: "humidity",
+        theme: "dark",
+        width: 390,
+    },
+    play: async ({ canvasElement }) => {
+        const { canvas, document, userEvent } =
+            await websiteCanvas(canvasElement);
+        await waitFor(() =>
+            expect(
+                document.querySelector("#latest-humidity")
+            ).toHaveTextContent("65.5 % RH")
+        );
+        await expect(document.querySelector("#plant-name")).toHaveTextContent(
+            "Terrarium"
+        );
+        await expect(
+            document.querySelector("#plant-scientific")
+        ).toHaveTextContent("Plant identities pending");
+        await expect(
+            document.querySelector("#humidity-chart svg")
+        ).toBeInTheDocument();
+        await expect(document.querySelector("#last-watered")).toHaveTextContent(
+            "Not logged"
+        );
+        await userEvent.selectOptions(
+            canvas.getByRole("combobox", { name: "Event type" }),
+            "humidity"
+        );
+        await expect(document.querySelector("tbody")).toHaveTextContent(
+            "0% RH"
+        );
+        await expect(document.querySelector("tbody")).toHaveTextContent(
+            "100% RH"
+        );
+        await expect(
+            document.querySelector(".baseline-panel")
+        ).not.toBeVisible();
+        await expect(
+            document.querySelector("#baseline-status")
+        ).toHaveTextContent("Manual care review");
+        await expectNoOverflow(document);
+    },
+};

@@ -1,4 +1,16 @@
-<section class="baseline-panel" aria-labelledby="baseline-title">
+---
+interface Props {
+    manualCare?: boolean;
+}
+const { manualCare = false } = Astro.props;
+---
+
+<section
+    hidden={manualCare}
+    data-weight-baseline
+    class="baseline-panel"
+    aria-labelledby="baseline-title"
+>
     <header>
         <div>
             <p class="eyebrow">Current pot setup</p>

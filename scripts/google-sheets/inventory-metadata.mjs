@@ -62,6 +62,7 @@ export function buildInventoryMetadataRequests(
             30,
             32,
             34,
+            35,
         ].includes(baseCount)
     )
         throw new Error("Unsupported inventory base count");

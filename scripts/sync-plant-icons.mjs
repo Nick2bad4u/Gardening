@@ -4,6 +4,7 @@ import * as path from "node:path";
 import { pathToFileURL } from "node:url";
 import { format, resolveConfig } from "prettier";
 
+import { isContainerData } from "../site/lib/containers.mjs";
 import { archivedAmazonPlan } from "../site/lib/old-plans.mjs";
 import {
     compareText,
@@ -55,7 +56,11 @@ export async function syncPlantIcons({
         syncLogger ? readFile(loggerPath, "utf8") : Promise.resolve(""),
     ]);
     const symbols = parsePlantSymbols(sprite);
-    const titles = profileTitles(profileData);
+    const metadata = await readJson(
+        "docs/layouts/container-data.json",
+        isContainerData
+    );
+    const titles = profileTitles(profileData, metadata);
     const descriptions = portraitDescriptions();
     validateSymbols(symbols, titles, descriptions);
 
@@ -401,6 +406,10 @@ function portraitDescriptions() {
             "Jointed gray-green cactus segments with long tapered ivory spines curling like paper ribbons.",
         ],
         [
+            "terrarium",
+            "Generic schematic glass vessel with an unknown-contents marker; not a depiction of the owned terrarium, its closure, plants, or substrate.",
+        ],
+        [
             "tiny-mixed-succulent-planter",
             "Two large pale rosettes and a smaller open rosette surround broad red-edged green paddles, copper-orange shoots, and a green-and-burgundy shoot in a striped terracotta planter.",
         ],
@@ -429,13 +438,18 @@ function portraitDescriptions() {
 
 /**
  * @param {import("./build-data.mjs").ProfileData} profileData
+ * @param {import("../site/lib/containers.mjs").ContainerData} metadata
  */
-function profileTitles(profileData) {
+function profileTitles(profileData, metadata) {
     const titles = new Map(
         Object.values(profileData)
             .flat()
             .map(([slug, title]) => [slug, title])
     );
+    for (const entry of Object.values(metadata)) {
+        if (isNonemptyString(entry.portraitSlug))
+            titles.set(entry.portraitSlug, entry.name);
+    }
     // The historical, removed Rehab-04 profile is intentionally absent from
     // the live tracker map but still has a booklet portrait and export.
     titles.set("mammillaria-bombycina", "Silken pincushion cactus");

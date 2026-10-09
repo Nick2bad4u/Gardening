@@ -66,9 +66,13 @@ export function buildWorkbookUpgradeRequests(snapshot, factories) {
     }
     if (
         sheet("History").properties.gridProperties.rowCount !== 5000 ||
-        sheet("History").properties.gridProperties.columnCount !== 42
+        ![42, 43].includes(
+            sheet("History").properties.gridProperties.columnCount
+        )
     )
-        throw new Error("Expected the 5,000-row, 42-column History contract");
+        throw new Error(
+            "Expected the 5,000-row, 42-column legacy or 43-column current History contract"
+        );
     const trackerIds = cells
         .filter(
             (cell) =>

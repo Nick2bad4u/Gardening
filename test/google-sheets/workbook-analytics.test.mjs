@@ -8,6 +8,7 @@ import {
     wateringCalendarFormulas,
     wateringSummaryFormulas,
 } from "../../scripts/google-sheets/workbook-analytics.mjs";
+import { required } from "../helpers/required.mjs";
 
 const clock = "'Workbook calculations'!$E$2";
 
@@ -380,5 +381,40 @@ describe("native derived formula contracts", () => {
             "SUM(FILTER('RO refills'!$J$20:$J$1000"
         );
         expect(summary.latestVisitGallons).toContain('IF(lastDate="","",');
+    });
+});
+
+describe("humidity History width compatibility", () => {
+    it("accepts only the explicit legacy and current widths, and guards the appended humidity header", () => {
+        expect.hasAssertions();
+
+        const snapshot = fixture();
+        const grid = required(snapshot.metadata.sheets[0]).properties
+            .gridProperties;
+        const legacy = buildWateringCalendarRequests(snapshot, {
+            clockReference: clock,
+        });
+        grid.columnCount = 43;
+
+        expect(() =>
+            buildWateringCalendarRequests(snapshot, { clockReference: clock })
+        ).toThrow("Unexpected History header: Relative humidity (%)");
+
+        snapshot.cells.push({
+            column: 42,
+            row: 0,
+            sheet: "History",
+            value: { stringValue: "Relative humidity (%)" },
+        });
+
+        expect(
+            buildWateringCalendarRequests(snapshot, { clockReference: clock })
+        ).toStrictEqual(legacy);
+
+        grid.columnCount = 44;
+
+        expect(() =>
+            buildWateringCalendarRequests(snapshot, { clockReference: clock })
+        ).toThrow("42-column legacy or 43-column current");
     });
 });

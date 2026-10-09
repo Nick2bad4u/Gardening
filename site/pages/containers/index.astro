@@ -7,7 +7,8 @@ import "../../styles/containers.css";
 const containers = await getContainers();
 const containerGuide = await getDocument("docs/containers.md");
 const shared = containers.filter((container) => container.shared);
-const single = containers.filter((container) => !container.shared);
+const single = containers.filter((container) => !container.shared && !container.pending);
+const pending = containers.filter((container) => container.pending);
 const botanicalCount = containers.reduce((count, container) => count + container.members.length, 0);
 ---
 
@@ -43,6 +44,7 @@ const botanicalCount = containers.reduce((count, container) => count + container
     {[
         { title: "Shared planters", items: shared },
         { title: "Individual planters", items: single },
+        { title: "Plant identities pending", items: pending },
     ].map((group) => (
         <section class="section-block">
             <h2>{group.title}</h2>
@@ -63,8 +65,9 @@ const botanicalCount = containers.reduce((count, container) => count + container
                             <span class="badge badge-id">{container.id}</span>{" "}
                             <span class="badge badge-label">{container.label}</span>{" "}
                             <span class="badge">
-                                {container.members.length} botanical{" "}
-                                {container.members.length === 1 ? "profile" : "profiles"}
+                                {container.pending
+                                    ? "Plant identities pending"
+                                    : `${container.members.length} botanical ${container.members.length === 1 ? "profile" : "profiles"}`}
                             </span>
                         </div>
                         {container.shared && (

@@ -24,5 +24,14 @@
         "name": "Lithops shared planter",
         "overviewSlug": "lithops-shared-planter",
         "setupNote": "D'vine Dev Blush Mauve pot with 80% Molly's Succulent Mix and 20% perlite; repotted September 23, 2026 into setup 2. Recorded diameter: 4.2 in; sold as the 4.3-in variant. Four visible heads came from two nursery pots; their root connections are unknown."
+    },
+    "P38": {
+        "careNote": "Plant identities and photographs are pending. Record observations without assigning a humidity target or borrowing cactus watering guidance.",
+        "label": "#12",
+        "membershipStatus": "pending",
+        "name": "Terrarium",
+        "overviewSlug": null,
+        "portraitSlug": "terrarium",
+        "setupNote": "Container enrolled October 9, 2026 as P38 / #12. Open or closed design, placement, size, drainage, and substrate are not yet recorded."
     }
 }

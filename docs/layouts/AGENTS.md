@@ -27,7 +27,9 @@
   details. AA:AJ stores provenance and record state, AK:AM stores measurement
   units and derived inch values, AN stores rotation degrees, AO stores the
   watering-application class, and AP stores an optional measured water amount
-  in milliliters. Update the parser, tracker, history page, CSV export, and
+  in milliliters. AQ stores relative humidity (%) from 0 through 100; preserve
+  zero and distinguish it from an absent reading. Humidity is independent of
+  watering/weight evidence. Update the parser, tracker, history page, CSV export, and
   logger checks together when that contract changes.
 - Share parsing and calculations through `plant-tracker-data.js` and
   `plant-charts.js`. Keep removed/superseded records, missing values, setup

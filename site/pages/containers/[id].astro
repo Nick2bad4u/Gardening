@@ -14,12 +14,10 @@ interface Props {
     container: import("../../lib/containers.mjs").Container;
 }
 const { container } = Astro.props;
+const primaryProfile = container.overview ?? container.members[0];
 const currentPot =
-    !container.shared && container.currentPot
-        ? await renderMarkdown(
-              container.currentPot,
-              (container.overview ?? container.members[0])!.sourcePath
-          )
+    !container.shared && primaryProfile && container.currentPot
+        ? await renderMarkdown(container.currentPot, primaryProfile.sourcePath)
         : undefined;
 ---
 
@@ -35,9 +33,11 @@ const currentPot =
         </p>
         <h1>{container.name}</h1>
         <p class="lede">
-            {container.shared
-                ? "Meet the plants growing together and follow their shared care history."
-                : "The pot, growing mix, and care history for this plant."}
+            {container.pending
+                ? "One terrarium history, with plant identities and setup details pending."
+                : container.shared
+                  ? "Meet the plants growing together and follow their shared care history."
+                  : "The pot, growing mix, and care history for this plant."}
         </p>
         <div class="action-row">
             <a class="button" href={potUrl(container.id)}>

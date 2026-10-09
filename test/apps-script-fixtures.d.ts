@@ -12,6 +12,7 @@ import type {
     WebRecentObservation,
     WebWeightReadModels,
 } from "./logger-workflow-fixtures.js";
+import type { HistorySheet } from "./sheet-fixtures.js";
 
 export interface ActivitySummary {
     averageDryDownGramsPerDay: "" | number;
@@ -161,6 +162,10 @@ export interface AppsScriptTestApi {
     ) => boolean;
     ensureHistoryDetailColumns_: (history: unknown) => void;
     ensureHistoryGrid_: (history: unknown) => void;
+    ensureHistoryHumidityColumn_: (
+        history: HistorySheet,
+        shouldConfigureColumn?: boolean
+    ) => void;
     ensureHistoryMeasurementColumns_: (
         history: unknown,
         shouldConfigureColumn?: boolean
