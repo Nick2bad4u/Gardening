@@ -93,6 +93,18 @@ export function buildLightSchemaRequests(snapshot, schema) {
         };
         requests.push(
             {
+                updateDimensionProperties: {
+                    fields: "pixelSize",
+                    properties: { pixelSize: 180 },
+                    range: {
+                        dimension: "COLUMNS",
+                        endIndex: width + 2,
+                        sheetId,
+                        startIndex: width,
+                    },
+                },
+            },
+            {
                 copyPaste: {
                     destination: range,
                     pasteType: "PASTE_FORMAT",
