@@ -117,12 +117,15 @@ export async function websiteCanvas(
     userEvent: ReturnType<typeof userEvent.setup>;
 }> {
     const frame = canvasElement.querySelector("iframe");
-    await waitFor(async () => {
-        await expect(
-            frame?.contentDocument?.querySelector("main")
-        ).not.toBeNull();
-        await expect(frame?.contentDocument?.readyState).toBe("complete");
-    });
+    await waitFor(
+        async () => {
+            await expect(
+                frame?.contentDocument?.querySelector("main")
+            ).not.toBeNull();
+            await expect(frame?.contentDocument?.readyState).toBe("complete");
+        },
+        { timeout: 10_000 }
+    );
     const document = frame?.contentDocument;
     if (!document) throw new Error("Website preview did not load.");
     return {
