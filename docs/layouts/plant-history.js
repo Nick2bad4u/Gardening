@@ -575,17 +575,27 @@ function renderCharts(summary) {
     const intervals = summary.watering.intervals.filter((entry) =>
         inChartRange(entry)
     );
+    const wateringCopy = summary.manualCare
+        ? {
+              emptyMessage:
+                  "No recorded watering intervals in this chart range.",
+              summary:
+                  "Review the plants and enclosure before choosing a watering method. Recorded intervals do not set a care schedule.",
+          }
+        : {
+              emptyMessage:
+                  "Two water events are needed to calculate an interval.",
+              summary:
+                  intervals.length > 0
+                      ? `${intervals.length} interval${intervals.length === 1 ? "" : "s"} shown; elapsed time is not a watering deadline.`
+                      : "Log Water only when the container is actually soaked to runoff.",
+          };
     renderIntervalChart(getRequiredElement("#watering-chart", HTMLElement), {
         ariaLabel: `Watering intervals for ${plantLabel(state.currentPlant)}`,
-        emptyMessage: "Two water events are needed to calculate an interval.",
+        emptyMessage: wateringCopy.emptyMessage,
         intervals,
     });
-    setText(
-        "#watering-chart-summary",
-        intervals.length > 0
-            ? `${intervals.length} interval${intervals.length === 1 ? "" : "s"} shown; elapsed time is not a watering deadline.`
-            : "Log Water only when the container is actually soaked to runoff."
-    );
+    setText("#watering-chart-summary", wateringCopy.summary);
 
     const activityEvents = state.currentPlant.events
         .map((event) => {

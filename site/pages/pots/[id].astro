@@ -39,7 +39,7 @@ const container = (await getContainers()).find((item) => item.id === id);
         <HistoryTrend />
         <HistoryMilestones />
         <HistoryBaselines manualCare={container?.pending ?? false} />
-        <HistoryCharts />
+        <HistoryCharts manualCare={container?.pending ?? false} />
         <HistoryTable />
         <HistoryLogging />
         <noscript>
