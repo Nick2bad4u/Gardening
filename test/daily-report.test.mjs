@@ -38,6 +38,44 @@ const profileData = /** @type {unknown} */ (
 const profiles = /** @type {Record<string, [string, string][]>} */ (
     profileData
 );
+const containers = /** @type {Record<string, unknown>} */ (
+    JSON.parse(
+        readFileSync(
+            new URL("../docs/layouts/container-data.json", import.meta.url),
+            "utf8"
+        )
+    )
+);
+
+function pendingContainerReport() {
+    const report = structuredClone(sample);
+    report.date = "2026-10-09";
+    report.sourceReadAt = "2026-10-09T13:48:00Z";
+    report.generatedAt = "2026-10-09T14:00:00Z";
+    report.totalPots = 1;
+    report.mixes = [];
+    report.pots = [
+        {
+            ...pot(sample, "P21"),
+            action: "none",
+            cycleStartedAt: null,
+            dryReferenceGrams: null,
+            id: "P38",
+            label: "#12",
+            lastWateredAt: null,
+            latest: null,
+            mixId: null,
+            name: "Terrarium — plants unidentified",
+            plateau: "unavailable",
+            plateauPoints: [],
+            previous: null,
+            reason: "none",
+            recommendation:
+                "Plant identities and setup are pending; no watering target is assigned.",
+        },
+    ];
+    return validateReport(report);
+}
 
 /** @type {ReportPhoto} */
 const photo = {
@@ -56,6 +94,66 @@ const photo = {
 const unsafeScriptUrl = "javascript:alert(1)";
 
 describe("native reviewed report pages", () => {
+    it("renders an enrolled container without botanical profiles using its maintained metadata", async () => {
+        expect.hasAssertions();
+
+        const report = pendingContainerReport();
+        const html = await renderReviewedReport(parseReviewedReport(report));
+
+        expect(profiles["P38"]).toStrictEqual([]);
+        expect(html).toContain('id="pot-P38"');
+        expect(html).toContain("/Gardening/assets/plant-icons/terrarium.svg");
+        expect(html).toContain(
+            '<span class="pot-name">Terrarium — plants unidentified</span>'
+        );
+        expect(html).toContain(
+            'data-search="#12 P38 Terrarium — plants unidentified"'
+        );
+        expect(html).toContain(
+            'href="/Gardening/containers/P38/">Container guide'
+        );
+        expect(html).toContain('href="/Gardening/pots/P38/"');
+        expect(html).not.toContain("/Gardening/plants/terrarium/");
+        expect(html).not.toContain("../plant-booklet/#");
+    });
+
+    it("requires explicit empty profile membership and valid container metadata", () => {
+        expect.hasAssertions();
+
+        const report = pendingContainerReport();
+
+        expect(renderReport(report, template, profiles, containers)).toContain(
+            "terrarium.svg"
+        );
+        expect(() => renderReport(report, template, profiles)).toThrow(
+            "Missing field-guide profile for P38"
+        );
+        expect(() => renderReport(report, template, {}, containers)).toThrow(
+            "Missing field-guide profile for P38"
+        );
+
+        const malformedProfiles =
+            /** @type {Record<string, [string, string][]>} */ ({
+                P38: [["../invalid", "Terrarium"]],
+            });
+
+        expect(() =>
+            renderReport(report, template, malformedProfiles, containers)
+        ).toThrow("Missing field-guide profile for P38");
+
+        for (const metadata of [
+            null,
+            [],
+            {},
+            { name: "", portraitSlug: "terrarium" },
+            { name: "Terrarium", portraitSlug: "../terrarium" },
+        ]) {
+            expect(() =>
+                renderReport(report, template, profiles, { P38: metadata })
+            ).toThrow("Missing field-guide profile for P38");
+        }
+    });
+
     it("preserves archived version-1 decisions without applying the current water gate", async () => {
         expect.hasAssertions();
 
@@ -595,30 +693,33 @@ describe("recorded watering facts", () => {
         expect(() => validateReport(report)).toThrow(/water/iv);
     });
 
-    it.each([
-        { message: "Not recorded", value: null },
-        { message: "Not included in this report", value: undefined },
-    ])(
-        "keeps %s watering unknown despite a setup boundary and narrative date",
-        ({ message, value }) => {
-            expect.hasAssertions();
+    it("keeps explicitly unrecorded watering unknown despite a setup boundary and narrative date", () => {
+        expect.hasAssertions();
 
-            const report = wateringReport();
-            const candidate = pot(report, "P06");
-            if (value === undefined) delete candidate.lastWateredAt;
-            else candidate.lastWateredAt = value;
-            candidate.metricsNote =
-                "An old note mentions watering on August 26.";
-            const html = renderReport(
-                validateReport(report),
-                template,
-                profiles
-            );
+        const report = wateringReport();
+        const candidate = pot(report, "P06");
+        candidate.lastWateredAt = null;
+        candidate.metricsNote = "An old note mentions watering on August 26.";
+        const html = renderReport(validateReport(report), template, profiles);
 
-            expect(html).toContain(`Last watered</dt><dd>${message}</dd>`);
-            expect(html).not.toContain("ago)");
-        }
-    );
+        expect(html).toContain("Last watered</dt><dd>Not recorded</dd>");
+        expect(html).not.toContain("ago)");
+    });
+
+    it("keeps omitted watering unknown despite a setup boundary and narrative date", () => {
+        expect.hasAssertions();
+
+        const report = wateringReport();
+        const candidate = pot(report, "P06");
+        delete candidate.lastWateredAt;
+        candidate.metricsNote = "An old note mentions watering on August 26.";
+        const html = renderReport(validateReport(report), template, profiles);
+
+        expect(html).toContain(
+            "Last watered</dt><dd>Not included in this report</dd>"
+        );
+        expect(html).not.toContain("ago)");
+    });
 
     it.each([
         ["2026-09-14T22:16:19Z", "0 days ago"],
