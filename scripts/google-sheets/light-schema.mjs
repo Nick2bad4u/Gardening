@@ -360,9 +360,7 @@ function completeRows(sheet) {
 
 /** @param {Cell | undefined} cell @returns {Record<string, unknown>} */
 function editableCell(cell) {
-    const result = /** @type {Record<string, unknown>} */ (
-        structuredClone(cell ?? {})
-    );
+    const result = /** @type {Record<string, unknown>} */ ({ ...cell });
     delete result["effectiveValue"];
     delete result["effectiveFormat"];
     delete result["formattedValue"];
@@ -478,6 +476,13 @@ function extendDecorations(sheet, width) {
         });
     }
     return requests;
+}
+
+/** @param {Sheet} sheet */
+function metadataOnly(sheet) {
+    const metadata = { ...sheet };
+    delete metadata.data;
+    return structuredClone(metadata);
 }
 
 /** @param {unknown} value @returns {Record<string, unknown>[]} */
@@ -756,10 +761,15 @@ function verifyExistingRow(title, row, current, rowIndex, width, enums) {
             const rule = expected["dataValidation"];
             if (!isRecord(rule) || !isRecord(rule["condition"]))
                 throw new Error("Missing reviewed light validation");
-            rule["condition"]["values"] = [
-                ...extension.expected,
-                ...extension.append,
-            ].map((userEnteredValue) => ({ userEnteredValue }));
+            expected["dataValidation"] = {
+                ...rule,
+                condition: {
+                    ...rule["condition"],
+                    values: [...extension.expected, ...extension.append].map(
+                        (userEnteredValue) => ({ userEnteredValue })
+                    ),
+                },
+            };
         }
         if (!isDeepStrictEqual(expected, actual))
             throw new Error(
@@ -783,10 +793,8 @@ function verifyNativeMetadata(plan, before, after) {
         throw new Error("Light readback sheet membership or order changed");
     for (const source of before.sheets) {
         const target = uniqueSheet(after, source.properties.title);
-        const expected = structuredClone(source);
-        const actual = structuredClone(target);
-        delete expected.data;
-        delete actual.data;
+        const expected = metadataOnly(source);
+        const actual = metadataOnly(target);
         for (const request of plan.requests)
             applyMetadataRequest(expected, request);
         // The API can return protections in a different order; identities and

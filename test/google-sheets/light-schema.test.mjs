@@ -349,6 +349,7 @@ describe("guarded light and Inspect workbook migration", () => {
         const { before, plan, snapshot } = migratedFixture();
 
         expect(verifyLightSchemaReadback(plan, before, snapshot)).toBe(true);
+        expect(verifyLightSchemaPreconditions(plan, before)).toBe(true);
     });
 
     it.each([
