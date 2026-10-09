@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
+    buildHumidityMethodValidationRequest,
     buildHumiditySchemaRequests,
     verifyHumiditySchemaPreconditions,
 } from "../../scripts/google-sheets/humidity-schema.mjs";
@@ -11,6 +12,7 @@ function fixture() {
         entryHeaders: Array.from({ length: 34 }, (_, i) => `Entry ${i}`),
         historyHeaders: Array.from({ length: 42 }, (_, i) => `History ${i}`),
     };
+    schema.historyHeaders[34] = "Measurement method";
     const formula =
         '=LET(rows,SORT(FILTER(History!A2:AP5000,History!A2:A5000<>""),1,FALSE,10,FALSE),fmt,LAMBDA(d,IF(d="","",IF(MOD(d,1)=0,TEXT(d,"M/d/yyyy"),TEXT(d,"M/d/yyyy h:mm AM/PM")))),VSTACK(History!A1:AP1,HSTACK(MAP(CHOOSECOLS(rows,1),fmt),CHOOSECOLS(rows,SEQUENCE(1,41,2,1)))))';
     /** @type {import("../../scripts/google-sheets/inventory-expansion.mjs").NativeSnapshot} */
@@ -41,6 +43,30 @@ function fixture() {
                     },
                 },
             ];
+            if (index === 0)
+                for (const row of rows.slice(1)) {
+                    while (row.length < 35) row.push({});
+                    row[34] = {
+                        dataValidation: {
+                            condition: {
+                                type: "ONE_OF_LIST",
+                                values: [
+                                    "Scale",
+                                    "Ruler",
+                                    "Estimated from photo",
+                                    "Estimated visually",
+                                    "Observed",
+                                    "Other",
+                                    "Unspecified",
+                                ].map((userEnteredValue) => ({
+                                    userEnteredValue,
+                                })),
+                            },
+                            showCustomUi: true,
+                            strict: true,
+                        },
+                    };
+                }
             return {
                 data: [{ rowData: rows.map((values) => ({ values })) }],
                 properties: {
@@ -112,7 +138,7 @@ describe("guarded native humidity schema extension", () => {
         expect(text).toContain("History!A2:AQ5000");
         expect(text).toContain("SEQUENCE(1,42,2,1)");
         expect(text).toContain("NUMBER_BETWEEN");
-        expect(text).not.toContain("showCustomUi");
+        expect(text).toContain("Hygrometer");
         expect(text).not.toContain("Queued real draft");
         expect(text).not.toContain("Existing evidence");
         expect(
@@ -121,6 +147,77 @@ describe("guarded native humidity schema extension", () => {
         expect(
             plan.requests.filter((request) => "updateCells" in request)
         ).toHaveLength(3);
+    });
+
+    it("extends only History method validation while preserving strict rejection and all prior options and flags", () => {
+        expect.hasAssertions();
+
+        const { snapshot } = fixture();
+        const history = required(snapshot.sheets[0]);
+        const before = structuredClone(history);
+        const request = buildHumidityMethodValidationRequest(history);
+
+        expect(history).toStrictEqual(before);
+        expect(request.setDataValidation.range).toStrictEqual({
+            endColumnIndex: 35,
+            endRowIndex: 5000,
+            sheetId: 1,
+            startColumnIndex: 34,
+            startRowIndex: 1,
+        });
+        expect(request.setDataValidation.rule).toStrictEqual({
+            condition: {
+                type: "ONE_OF_LIST",
+                values: [
+                    "Scale",
+                    "Ruler",
+                    "Estimated from photo",
+                    "Estimated visually",
+                    "Observed",
+                    "Other",
+                    "Unspecified",
+                    "Hygrometer",
+                ].map((userEnteredValue) => ({ userEnteredValue })),
+            },
+            showCustomUi: true,
+            strict: true,
+        });
+        expect(
+            request.setDataValidation.rule.condition.values
+        ).not.toContainEqual({
+            userEnteredValue: "Unknown instrument",
+        });
+        expect(Object.keys(request)).toStrictEqual(["setDataValidation"]);
+    });
+
+    it("refuses missing, weakened, reordered, or nonuniform method validation and replay", () => {
+        expect.hasAssertions();
+
+        const { snapshot } = fixture();
+        const history = required(snapshot.sheets[0]);
+        const values = required(history.data?.[0]?.rowData?.[1]?.values);
+        const original = structuredClone(required(values[34]));
+
+        for (const dataValidation of [
+            {},
+            { ...original.dataValidation, strict: false },
+            { ...original.dataValidation, showCustomUi: false },
+            {
+                condition: {
+                    type: "ONE_OF_LIST",
+                    values: [{ userEnteredValue: "Unspecified" }],
+                },
+                strict: true,
+            },
+            buildHumidityMethodValidationRequest(history).setDataValidation
+                .rule,
+        ]) {
+            values[34] = { dataValidation };
+
+            expect(() => buildHumidityMethodValidationRequest(history)).toThrow(
+                "measurement method validation changed"
+            );
+        }
     });
 
     it("rejects occupied destinations, replay, schema drift, incomplete snapshots, and changed canonical rows", () => {

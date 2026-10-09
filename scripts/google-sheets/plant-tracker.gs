@@ -600,6 +600,17 @@ const MEASUREMENT_METHOD_OPTIONS = Object.freeze([
     "Other",
     "Unspecified",
 ]);
+// Canonical History also stores provenance for non-dimension events.
+const HISTORY_MEASUREMENT_METHOD_OPTIONS = Object.freeze([
+    "Scale",
+    "Ruler",
+    "Estimated from photo",
+    "Estimated visually",
+    "Observed",
+    "Other",
+    "Unspecified",
+    "Hygrometer",
+]);
 
 // Documented starting sizes. A later Repot entry supersedes these values.
 /** @type {Readonly<Record<string, string>>} */
@@ -10464,6 +10475,13 @@ function ensureHistoryHumidityColumn_(history, configureColumn = false) {
         range.setValues([[expected]]);
     }
     if (!configureColumn) return;
+    const methodRule = SpreadsheetApp.newDataValidation()
+        .requireValueInList([...HISTORY_MEASUREMENT_METHOD_OPTIONS], true)
+        .setAllowInvalid(false)
+        .build();
+    history
+        .getRange(2, 35, Math.max(1, history.getMaxRows() - 1), 1)
+        .setDataValidation(methodRule);
     const rule = SpreadsheetApp.newDataValidation()
         .requireNumberBetween(0, 100)
         .setAllowInvalid(false)

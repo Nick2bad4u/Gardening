@@ -7428,6 +7428,85 @@ describe("garden logger humidity and terrarium enrollment", () => {
         );
     });
 
+    it("installs Hygrometer provenance in native History while rejecting it for dimensions", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook(["P38"]);
+        const context = loadAppsScript(workbook.history, {
+            globals: workbook.globals,
+            spreadsheet: workbook.spreadsheet,
+        });
+        const history = workbook.history;
+        /** @type {unknown[]} */
+        const validationCalls = [];
+        const originalGetRange = history.getRange;
+        history.getRange = (row, column, rowCount = 1, columnCount = 1) => {
+            const range = originalGetRange(row, column, rowCount, columnCount);
+            const originalSetValidation = range.setDataValidation;
+            range.setDataValidation = (validation) => {
+                validationCalls.push({
+                    column,
+                    columnCount,
+                    row,
+                    rowCount,
+                    validation,
+                });
+                return originalSetValidation(validation);
+            };
+            return range;
+        };
+        const before = structuredClone(history.__rows);
+        context.ensureHistoryHumidityColumn_(history, true);
+
+        expect(validationCalls).toContainEqual({
+            column: 35,
+            columnCount: 1,
+            row: 2,
+            rowCount: history.getMaxRows() - 1,
+            validation: {
+                allowInvalid: false,
+                showDropdown: true,
+                type: "ONE_OF_LIST",
+                values: [
+                    "Scale",
+                    "Ruler",
+                    "Estimated from photo",
+                    "Estimated visually",
+                    "Observed",
+                    "Other",
+                    "Unspecified",
+                    "Hygrometer",
+                ],
+            },
+        });
+        expect(validationCalls).toContainEqual({
+            column: 43,
+            columnCount: 1,
+            row: 2,
+            rowCount: history.getMaxRows() - 1,
+            validation: {
+                allowInvalid: false,
+                type: "NUMBER_BETWEEN",
+                values: [0, 100],
+            },
+        });
+        expect(history.__rows).toStrictEqual(before);
+        expect(() =>
+            context.saveWebObservation({
+                events: ["Measure"],
+                height: 3,
+                measurementMethod: "Hygrometer",
+                measurementQuality: "Measured",
+                measurementUnit: "cm",
+                observedAt: "2026-10-08T12:00:00-04:00",
+                plantId: "P38",
+                requestId: "terrarium-invalid-dimension-method",
+            })
+        ).toThrow(/measurement method must be one of/iv);
+        expect(workbook.history.__rows).toHaveLength(1);
+        expect(workbook.history.__setValuesCalls).toStrictEqual([]);
+    });
+
     it("guards the legacy History append and leaves existing humidity intact on rerun", () => {
         expect.hasAssertions();
 

@@ -894,29 +894,12 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
         formulaValue: expandedIntegrityFormula(integrity, additions, baseCount),
     });
     // App entries retain every staged observation; only their ID dropdown grows.
-    prepareRequests.push({
-        setDataValidation: {
-            range: {
-                endColumnIndex: 3,
-                endRowIndex:
-                    meta(appEntriesSheet).properties.gridProperties.rowCount,
-                sheetId: meta(appEntriesSheet).properties.sheetId,
-                startColumnIndex: 2,
-                startRowIndex: 1,
-            },
-            rule: {
-                condition: {
-                    type: "ONE_OF_LIST",
-                    values: [
-                        ...existingIds,
-                        ...additions.map((plant) => plant.id),
-                    ].map((userEnteredValue) => ({ userEnteredValue })),
-                },
-                showCustomUi: true,
-                strict: true,
-            },
-        },
-    });
+    prepareRequests.push(
+        inventoryIdValidation(meta(appEntriesSheet), [
+            ...existingIds,
+            ...additions.map((plant) => plant.id),
+        ])
+    );
     expandHelperFormatting(
         meta,
         prepareRequests,
@@ -2131,6 +2114,31 @@ function intervalChartSource(column) {
                     startRowIndex: 0,
                 },
             ],
+        },
+    };
+}
+
+/** @param {Sheet} sheet @param {string[]} ids */
+function inventoryIdValidation(sheet, ids) {
+    return {
+        setDataValidation: {
+            range: {
+                endColumnIndex: 3,
+                endRowIndex: sheet.properties.gridProperties.rowCount,
+                sheetId: sheet.properties.sheetId,
+                startColumnIndex: 2,
+                startRowIndex: 1,
+            },
+            rule: {
+                condition: {
+                    type: "ONE_OF_LIST",
+                    values: ids.map((userEnteredValue) => ({
+                        userEnteredValue,
+                    })),
+                },
+                showCustomUi: true,
+                strict: true,
+            },
         },
     };
 }

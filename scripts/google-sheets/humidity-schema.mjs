@@ -1,3 +1,5 @@
+import { isDeepStrictEqual } from "node:util";
+
 import { isRecord } from "../build-data.mjs";
 import { inventorySnapshotDigest } from "./inventory-expansion.mjs";
 
@@ -5,6 +7,68 @@ import { inventorySnapshotDigest } from "./inventory-expansion.mjs";
 /** @typedef {import("./inventory-expansion.mjs").Sheet} Sheet */
 
 export const humidityHeader = "Relative humidity (%)";
+
+/**
+ * Extend the reviewed History method validation without replacing its other
+ * options or flags. Also usable as a guarded repair after humidity columns have
+ * already been appended.
+ *
+ * @param {Sheet} sheet
+ */
+export function buildHumidityMethodValidationRequest(sheet) {
+    if (
+        sheet.properties.title !== "History" ||
+        sheet.properties.gridProperties.rowCount !== 5000
+    )
+        throw new Error("Expected complete History method validation");
+    const cells = completeCells(sheet);
+    if (
+        cells.find(({ column, row }) => row === 0 && column === 34)?.cell
+            .userEnteredValue?.stringValue !== "Measurement method"
+    )
+        throw new Error("History measurement method header changed");
+    const methods = cells.filter(({ column, row }) => row > 0 && column === 34);
+    const rule = methods[0]?.cell.dataValidation;
+    const values = [
+        "Scale",
+        "Ruler",
+        "Estimated from photo",
+        "Estimated visually",
+        "Observed",
+        "Other",
+        "Unspecified",
+    ].map((userEnteredValue) => ({ userEnteredValue }));
+    if (
+        methods.length !== 4999 ||
+        !isRecord(rule) ||
+        rule["strict"] !== true ||
+        !isRecord(rule["condition"]) ||
+        rule["condition"]["type"] !== "ONE_OF_LIST" ||
+        !isDeepStrictEqual(rule["condition"]["values"], values) ||
+        methods.some(
+            ({ cell }) => !isDeepStrictEqual(cell.dataValidation, rule)
+        )
+    )
+        throw new Error("History measurement method validation changed");
+    return {
+        setDataValidation: {
+            range: {
+                endColumnIndex: 35,
+                endRowIndex: 5000,
+                sheetId: sheet.properties.sheetId,
+                startColumnIndex: 34,
+                startRowIndex: 1,
+            },
+            rule: {
+                ...structuredClone(rule),
+                condition: {
+                    ...structuredClone(rule["condition"]),
+                    values: [...values, { userEnteredValue: "Hygrometer" }],
+                },
+            },
+        },
+    };
+}
 
 /**
  * Plan the append-only 42-to-43 History / 34-to-35 intake transition. Capture
@@ -52,6 +116,8 @@ export function buildHumiditySchemaRequests(snapshot, schema) {
         const sheet = validateSheet(snapshot, title, headers, width);
         const { columnCount, rowCount } = sheet.properties.gridProperties;
         const sheetId = sheet.properties.sheetId;
+        if (title === "History")
+            requests.push(buildHumidityMethodValidationRequest(sheet));
         if (columnCount === width)
             requests.push({
                 appendDimension: { dimension: "COLUMNS", length: 1, sheetId },
