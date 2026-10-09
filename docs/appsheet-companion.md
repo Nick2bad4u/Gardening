@@ -28,11 +28,13 @@ section below records the previous verified rollout. See the
 [logger rollout record](../scripts/google-sheets/README.md#october-9-terrarium-and-humidity-rollout--prepared-not-deployed)
 for the coordinated workbook/deployment sequence.
 
-| Table                              | Prepared physical schema | Including `_RowNumber` | New field                                               |
-| ---------------------------------- | ------------------------ | ---------------------- | ------------------------------------------------------- |
-| History and read-only History view | 43 columns, A:AQ         | 44                     | AQ: `Relative humidity (%)`                             |
-| App entries                        | 35 columns, A:AI         | 36                     | AI: `Relative humidity (%)` → logger `relativeHumidity` |
-| App bulk                           | 62 columns, A:BJ         | 63                     | BJ: `P38 weight (g)`                                    |
+| Table                       | Prepared physical schema | App attributes | New field                                               |
+| --------------------------- | ------------------------ | -------------- | ------------------------------------------------------- |
+| History (read-only dataset) | 43 columns, A:AQ         | 46             | AQ: `Relative humidity (%)`                             |
+| App entries                 | 35 columns, A:AI         | 36             | AI: `Relative humidity (%)` → logger `relativeHumidity` |
+| App bulk                    | 62 columns, A:BJ         | 63             | BJ: `P38 weight (g)`                                    |
+
+The captured app binds its read-only History dataset to the canonical **History** worksheet (gid 1465181080), not History view. Preserve that source binding. Its 46 prepared attributes include 43 physical columns, `_RowNumber`, and the existing Plant image and Event badge virtual fields. History view remains a separate workbook projection.
 
 After each workbook header is verified, regenerate the affected AppSheet tables
 and compare every existing field definition with the captured app. Keep History,

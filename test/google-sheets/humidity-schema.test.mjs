@@ -74,24 +74,24 @@ describe("guarded native humidity schema extension", () => {
                 rowProperties: { headerColor: { red: 0.3 } },
             },
         ];
+        required(snapshot.sheets[2])["basicFilter"] = {
+            range: { endColumnIndex: 34, endRowIndex: 1000, sheetId: 3 },
+            sortSpecs: [{ dimensionIndex: 1, sortOrder: "DESCENDING" }],
+        };
         const before = structuredClone(snapshot);
         const plan = buildHumiditySchemaRequests(snapshot, schema);
 
         expect(snapshot).toStrictEqual(before);
         expect(verifyHumiditySchemaPreconditions(plan, snapshot)).toBe(true);
 
-        expect(plan.requests).toContainEqual({
-            setBasicFilter: {
-                filter: {
-                    range: {
-                        endColumnIndex: 43,
-                        endRowIndex: 5000,
-                        sheetId: 1,
-                    },
-                    sortSpecs: [{ dimensionIndex: 0, sortOrder: "ASCENDING" }],
-                },
-            },
-        });
+        expect(
+            plan.requests.some(
+                (request) =>
+                    "setBasicFilter" in request ||
+                    "clearBasicFilter" in request ||
+                    "sortRange" in request
+            )
+        ).toBe(false);
         expect(plan.requests).toContainEqual({
             updateBanding: {
                 bandedRange: {
@@ -112,6 +112,7 @@ describe("guarded native humidity schema extension", () => {
         expect(text).toContain("History!A2:AQ5000");
         expect(text).toContain("SEQUENCE(1,42,2,1)");
         expect(text).toContain("NUMBER_BETWEEN");
+        expect(text).not.toContain("showCustomUi");
         expect(text).not.toContain("Queued real draft");
         expect(text).not.toContain("Existing evidence");
         expect(

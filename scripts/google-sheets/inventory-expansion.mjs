@@ -728,6 +728,16 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
                     entered(String(value))
                 );
             write("Baselines", row, 1, entered(plant.name));
+            if (plant.id === "P38")
+                write(
+                    "Baselines",
+                    row,
+                    7,
+                    entered(
+                        '="Terrarium care pending; inspect enclosure and plant needs"'
+                    )
+                );
+
             // Initial metadata is not a Repot observation or a fabricated date.
             write(
                 "Baselines",
@@ -929,7 +939,6 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
             requireEmpty,
             cell
         );
-    const quickLog = meta("Quick log");
     return {
         baseCount,
         capturedSnapshotDigest: inventorySnapshotDigest(
@@ -939,15 +948,13 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
         emptyRanges,
         metadataDigest: inventorySnapshotDigest(metadata),
         newPageChartFinalizationRequired: true,
-        postValueRequests: [
-            ...headerFormatRequests(quickLog, cell, baseCount),
-            ...(baseCount >= 34
-                ? enrollmentPageNotes(
-                      additionAt(additions, 0),
-                      lastPage.properties.title
-                  )
-                : []),
-        ],
+        postValueRequests: enrollmentPostValueRequests(
+            meta("Quick log"),
+            cell,
+            baseCount,
+            additions,
+            lastPage.properties.title
+        ),
         preconditions,
         prepareRequests: orderedPreparationRequests(prepareRequests),
         validationPreconditions,
@@ -1529,6 +1536,27 @@ function enrollmentPageNotes(plant, previousTitle) {
 }
 
 /**
+ * @param {Sheet} quickLog
+ * @param {(title: string, row: number, column: number) => Cell | undefined} cell
+ * @param {number} baseCount @param {Addition[]} additions @param {string}
+ *   lastTitle
+ */
+function enrollmentPostValueRequests(
+    quickLog,
+    cell,
+    baseCount,
+    additions,
+    lastTitle
+) {
+    return [
+        ...headerFormatRequests(quickLog, cell, baseCount),
+        ...(baseCount >= 34
+            ? enrollmentPageNotes(additionAt(additions, 0), lastTitle)
+            : []),
+    ];
+}
+
+/**
  * @param {Sheet} sheet @param {number} requiredEnd @param {Record<string,
  *   unknown>[]} requests
  */
@@ -1749,7 +1777,6 @@ function expandedSeries(original, index, id, offset, width, baseCount) {
     delete next["color"];
     return next;
 }
-
 /**
  * @param {(title: string, row: number, column: number) => Cell | undefined} cell
  * @param {(
@@ -1846,6 +1873,7 @@ function expandHelperFormatting(
         });
     }
 }
+
 /**
  * Extend only the twelve captured legacy helper anchors. Their exact original
  * formulas remain preconditions; quoted strings and qualified ranges stay
@@ -2152,7 +2180,6 @@ function patchIntervalChart(basic, index, baseCount) {
         },
     ];
 }
-
 /**
  * @param {Record<string, unknown>} spec @param {number} index @param {string}
  *   id @param {number} baseCount
@@ -2175,6 +2202,7 @@ function patchNewChart(spec, index, id, baseCount) {
         delete axis["viewWindowOptions"]["viewWindowMax"];
     }
 }
+
 /** @param {Addition} plant */
 function plantGuideUrl(plant) {
     return (

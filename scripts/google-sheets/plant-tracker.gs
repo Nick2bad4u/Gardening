@@ -4757,7 +4757,9 @@ function baselineViewRow_(rowNumber, plant) {
         latestMeasuredWeightFormula_(row, 2),
         `=XLOOKUP($A${row},'Plant tracker'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Plant tracker'!$AB$2:$AB$${APP_SHEET_BULK_PLANTS.length + 1},"Not recorded")`,
         `=XLOOKUP($A${row},'Plant tracker'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Plant tracker'!$O$2:$O$${APP_SHEET_BULK_PLANTS.length + 1},"")`,
-        `=IFS(V${row}<1,"Collecting weights",Y${row}="","Need a wet weight",W${row}="","Need a completed dry cycle",Z${row}="","Recheck weights",TRUE,"Calibrated")`,
+        plant.id === "P38"
+            ? '="Terrarium care pending; inspect enclosure and plant needs"'
+            : `=IFS(V${row}<1,"Collecting weights",Y${row}="","Need a wet weight",W${row}="","Need a completed dry cycle",Z${row}="","Recheck weights",TRUE,"Calibrated")`,
         `=${dryDownLookupFormula_(row, "L")}`,
         `=LET(review,XLOOKUP($A${row},'Plant tracker'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Plant tracker'!$AD$2:$AD$${APP_SHEET_BULK_PLANTS.length + 1},""),IF(review<>"",review,${dryDownLookupFormula_(row, "M")}))`,
         remeasureStatusFormula_(row),

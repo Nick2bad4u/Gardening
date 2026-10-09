@@ -121,7 +121,6 @@ export function buildHumiditySchemaRequests(snapshot, schema) {
                                 { userEnteredValue: "100" },
                             ],
                         },
-                        showCustomUi: true,
                         strict: true,
                     },
                 },
@@ -191,21 +190,8 @@ function completeCells(sheet) {
 function decorationRequests(sheet, width) {
     /** @type {Record<string, unknown>[]} */
     const requests = [];
-    const filter = sheet["basicFilter"];
-    if (
-        isRecord(filter) &&
-        isRecord(filter["range"]) &&
-        filter["range"]["endColumnIndex"] === width
-    ) {
-        requests.push({
-            setBasicFilter: {
-                filter: {
-                    ...structuredClone(filter),
-                    range: { ...filter["range"], endColumnIndex: width + 1 },
-                },
-            },
-        });
-    }
+    // Reapplying a filter with sortSpecs sorts existing rows immediately.
+    // Preserve filters on canonical and staging sheets, including their bounds.
     const bands = sheet["bandedRanges"];
     if (!Array.isArray(bands)) return requests;
     for (const band of bands) {

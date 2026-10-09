@@ -1905,6 +1905,12 @@ function terrariumFixture() {
         put(sheet(title), 35, 1, "Arctic Ice");
         put(sheet(title), 35, 2, "=Baselines!C36");
     }
+    put(
+        sheet("Baselines"),
+        35,
+        7,
+        '=IFS(V36<1,"Collecting weights",Y36="","Need a wet weight",TRUE,"Calibrated")'
+    );
     const page = {
         data: [],
         properties: {
@@ -2013,6 +2019,33 @@ describe("35-to-36 pending terrarium enrollment", () => {
         expect(
             verifyInventoryExpansionPreconditions(plan, metadata, [snapshot])
         ).toBe(true);
+
+        const calibrationWrites = plan.valueRequests.filter((request) => {
+            const start = updateStart(request);
+            return (
+                start["sheetId"] === 3 &&
+                start["rowIndex"] === 36 &&
+                start["columnIndex"] === 7
+            );
+        });
+
+        expect(calibrationWrites.at(-1)).toMatchObject({
+            updateCells: {
+                fields: "userEnteredValue",
+                rows: [
+                    {
+                        values: [
+                            {
+                                userEnteredValue: {
+                                    formulaValue:
+                                        '="Terrarium care pending; inspect enclosure and plant needs"',
+                                },
+                            },
+                        ],
+                    },
+                ],
+            },
+        });
         expect(JSON.stringify(plan.valueRequests)).toContain("P38 weight (g)");
         expect(JSON.stringify(plan.valueRequests)).toContain("A5506:F6023");
         expect(JSON.stringify(plan.valueRequests)).toContain(

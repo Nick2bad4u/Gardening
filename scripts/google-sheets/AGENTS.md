@@ -4,11 +4,9 @@
 
 - The logger is bound Apps Script. Keep `Index.html` self-contained unless
   `doGet()` is deliberately changed to use templating.
-- `.gs` files share the Apps Script global scope. Keep Node imports and browser
-  APIs out of the server, and retain the ES2023 typecheck baseline in
-  `tsconfig.apps-script.json`. Keep domain/entry declarations under
-  `types/apps-script*.d.ts` aligned with the implementation; do not weaken the
-  custom checker to accommodate missing globals or invalid fixtures.
+- `.gs` files share global scope: no Node imports or browser APIs. Retain ES2023
+  in `tsconfig.apps-script.json` and align `types/apps-script*.d.ts` with code;
+  never weaken the checker for missing globals or invalid fixtures.
 - Typechecking is not runtime compatibility evidence. Native rehearsal rejected
   numeric separators; emitted Apps Script must avoid them. The cycle source
   generator replaces Node's `toSorted`/`toReversed` with `sort`/`reverse` only
@@ -17,10 +15,10 @@
 - Observations are append-only unless the owner requests a historical correction.
   One save may append multiple event rows; History's hidden column P Request ID
   makes retries idempotent.
-- Keep observation IDs, request IDs, save/batch IDs, and correction links
-  distinct. Supported corrections preview one event, append its replacement,
-  and mark its predecessor Removed while retaining the original values and
-  provenance. Do not delete ledger rows or treat a correction as a new pot setup.
+- Keep observation/request/save/batch IDs and correction links distinct.
+  Corrections preview one event, append its replacement, and mark its predecessor
+  Removed, retaining original values/provenance. Never delete ledger rows or
+  treat corrections as new pot setups.
 - Preserve the live workbook contract: A:L core observations, M:O workbook
   formulas, P retry IDs, and Q:Z structured Water/Repot/Flower/Photo/Pest
   details. AA:AJ stores provenance and record state, AK:AM stores measurement
@@ -131,13 +129,11 @@
   before writing. Apply preparation, then formulas, verify their calculated
   outputs, and only then create charts. Stop on drift or an already-installed
   destination instead of clearing cells or replaying the migration blindly.
-- Preserve every existing chart ID and all specifications/positions outside
-  the reviewed migration's intended presentation changes. The
-  basic metadata connector may omit chart definitions; a no-op `findReplace`
-  request with `include_spreadsheet_in_response: true` and grid data disabled
-  returns the full native chart metadata. Rehearse on a separate native copy,
-  apply helper formulas before chart requests, and verify calculation and
-  retained series colors after creation.
+- Preserve chart IDs and specifications/positions outside the reviewed changes.
+  Basic metadata may omit charts; no-op `findReplace` with
+  `include_spreadsheet_in_response: true` and no grid data returns full metadata.
+  Rehearse on a native copy, apply helpers before charts, and verify calculations
+  and retained series colors.
 - Every current Pxx page has a watering-interval status at A109 and chart anchored
   at A111, maintained by `watering-intervals.mjs`. Its hidden, warning-protected
   `Watering intervals` helper is derived from History and is not an AppSheet
@@ -164,16 +160,16 @@
   formulas, validations, last populated rows, request IDs, AppSheet staging
   schemas, deployment assignment, and triggers. Old chats/repo snapshots do not
   establish live state.
-- Keep full native before/after metadata and cell snapshots in ignored private
-  storage. For derived-view migrations, compare canonical History, staging
-  tables, and RO entry/formula ranges exactly, along with existing chart IDs,
-  specifications, positions, protections, and relative tab order. Rehearse
-  structural changes on a separate native workbook and bound script copy.
-- A History contract change must update the constants and row builders in
-  `plant-tracker.gs`, the logger tests/checker, the public tracker/history
-  parser and CSV export when applicable, this runbook, and the AppSheet column
-  configuration. Run `installGardenLogger()` and `installAppSheetIntake()` only
-  after the checked-in contract and tests agree.
+- Keep full native before/after metadata and cells in ignored private storage.
+  For derived-view migrations, compare History, staging, RO entries/formulas,
+  chart IDs/specifications/positions, protections, and relative tab order exactly.
+  Rehearse structural changes on a native workbook/script copy.
+- Native Drive copies include the bound Apps Script. Inspect/update that script;
+  do not create competing functions. When extending History's BasicFilter range,
+  never replay `sortSpecs`: doing so re-sorts the append-only ledger.
+- History changes must align `plant-tracker.gs` constants/row builders, logger
+  tests/checker, public parsing/CSV exports, this runbook, and AppSheet columns.
+  Run `installGardenLogger()`/`installAppSheetIntake()` only after source/tests agree.
 - `npm run apps-script:status` must show only `plant-tracker.gs`, `Index.html`,
   and `appsscript.json` in the clasp push set. Updating checked-in code or
   running `clasp push` does not update the versioned web app by itself.

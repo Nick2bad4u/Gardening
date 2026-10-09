@@ -53,6 +53,12 @@ summaries, and public CSV exports preserve the field. Humidity is not a shared
 Bulk care action. P38's pending care mode suppresses weight-based watering dates
 and dry/plateau/full-dry triggers while retaining actual observations.
 
+AppSheet preserves its captured read-only History dataset binding to canonical
+History (gid 1465181080). Its prepared schema has 46 attributes: 43 physical
+columns, `_RowNumber`, and two existing virtual fields; it does not switch to
+the separate History view projection. App entries and App bulk have 36 and 63
+attributes, respectively, including `_RowNumber`.
+
 The prepared AppSheet configuration adds Humidity to detailed Events, a
 conditional Decimal humidity input, the optional P38 bulk weight, #12 label
 order, and the schematic terrarium portrait. The current source portrait

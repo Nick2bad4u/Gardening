@@ -6156,6 +6156,47 @@ describe("garden logger AppSheet entry intake", () => {
         expect(thrown[27]).toBe("String service failure");
     });
 
+    it.each([
+        { description: "numeric zero", formula: "", value: 0 },
+        {
+            description: "a formula displaying blank",
+            formula: '=""',
+            value: "",
+        },
+    ])(
+        "refuses to replace $description in the App entries humidity destination",
+        ({ formula, value }) => {
+            expect.hasAssertions();
+
+            const stagedRow = emptyCells(35);
+            stagedRow[0] = "PRESERVE-HUMIDITY-ENTRY";
+            stagedRow[2] = "P01";
+            stagedRow[26] = "Queued";
+            stagedRow[34] = value;
+            const formulas = emptyCells(35);
+            formulas[34] = formula;
+            const entries = createDataSheet(
+                "App entries",
+                [[...appSheetEntryHeaders.slice(0, 34), ""], stagedRow],
+                [[], formulas]
+            );
+            const beforeValues = structuredClone(entries.__rows);
+            const beforeFormulas = entries.getRange(1, 1, 2, 35).getFormulas();
+            const context = loadAppsScript(createHistorySheet());
+
+            expect(() =>
+                context.ensureAppSheetEntryColumns_(entries, true)
+            ).toThrow(
+                "App entries!AI contains existing data; review before adding humidity."
+            );
+            expect(entries.__rows).toStrictEqual(beforeValues);
+            expect(entries.getRange(1, 1, 2, 35).getFormulas()).toStrictEqual(
+                beforeFormulas
+            );
+            expect(entries.__dataValidationCalls).toStrictEqual([]);
+        }
+    );
+
     it("extends the previous AppSheet entry schema without shifting data", () => {
         expect.hasAssertions();
 
@@ -7016,6 +7057,106 @@ describe("garden logger structured Check details", () => {
 });
 
 describe("garden logger humidity and terrarium enrollment", () => {
+    it.each([
+        { description: "no observations", history: [] },
+        {
+            description: "weights without watering",
+            history: [
+                [
+                    10,
+                    "P38",
+                    "Weigh",
+                    "",
+                    500,
+                    1,
+                ],
+                [
+                    12,
+                    "P38",
+                    "Weigh",
+                    "",
+                    490,
+                    1,
+                ],
+            ],
+        },
+        {
+            description: "waterings with repeated weights",
+            history: [
+                [
+                    10,
+                    "P38",
+                    "Water",
+                    "",
+                    "",
+                    1,
+                ],
+                [
+                    10,
+                    "P38",
+                    "Weigh",
+                    "",
+                    500,
+                    1,
+                ],
+                [
+                    12,
+                    "P38",
+                    "Weigh",
+                    "",
+                    490,
+                    1,
+                ],
+                [
+                    13,
+                    "P38",
+                    "Water",
+                    "",
+                    "",
+                    1,
+                ],
+                [
+                    13,
+                    "P38",
+                    "Weigh",
+                    "",
+                    510,
+                    1,
+                ],
+            ],
+        },
+    ])(
+        "keeps terrarium calibration manual with $description",
+        ({ history }) => {
+            expect.hasAssertions();
+
+            const context = loadAppsScript(createHistorySheet());
+            const before = structuredClone(history);
+            const model = required(
+                context.GARDEN_DRY_DOWN(history, [["P38"]])[0]
+            );
+            const baseline = context.baselineViewRow_(37, {
+                id: "P38",
+                name: "Terrarium",
+            });
+
+            expect(baseline[7]).toBe(
+                '="Terrarium care pending; inspect enclosure and plant needs"'
+            );
+            expect(model[11]).toBe(
+                "Terrarium care pending; inspect enclosure and plant needs"
+            );
+            expect(model[3]).toBe("");
+            expect(history).toStrictEqual(before);
+            expect(
+                context.baselineViewRow_(2, {
+                    id: "P01",
+                    name: "Moon cactus",
+                })[7]
+            ).toContain('"Need a wet weight"');
+        }
+    );
+
     it("keeps terrarium weight evidence without a dry-out watering recommendation", () => {
         expect.hasAssertions();
 
