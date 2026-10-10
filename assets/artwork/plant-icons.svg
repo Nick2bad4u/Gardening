@@ -18213,10 +18213,51 @@
 <g stroke-linecap="round" stroke-linejoin="round"><path d="m39 40 7 6" stroke="#342d4b" stroke-width="8"/><path d="m39 39 7 7" stroke="#efc791" stroke-width="6"/><circle cx="28" cy="28" r="15" fill="#f5ebd5"/><circle cx="28" cy="28" r="11" fill="#b6c6b3"/><path d="M24 33c-4-8 0-14 11-15 2 10-3 17-11 15Z" fill="#518a68"/><path d="m22 37 10-14" stroke="#d8e5ae" stroke-width="2"/></g>
   </symbol>
   <symbol id="icon-plant-terrarium" viewBox="0 0 64 64">
-<path d="M22 9h20v9l11 20v13c0 5-4 8-9 8H20c-5 0-9-3-9-8V38l11-20Z" fill="#d8eee7" stroke="#527b75" stroke-width="3" stroke-linejoin="round" />
-<path d="M14 44h36v7c0 3-3 5-6 5H20c-3 0-6-2-6-5Z" fill="#b7a28b" />
-<path d="M24 12h16M19 33l7-13" fill="none" stroke="#fff8e8" stroke-width="3" stroke-linecap="round" />
-<path d="M27 34c0-6 10-6 10 0 0 4-5 3-5 8m0 6h0" fill="none" stroke="#456b60" stroke-width="3" stroke-linecap="round" />
+<defs>
+  <linearGradient id="terrarium-glass" x1="0" y1="0" x2="1" y2="0.8">
+    <stop offset="0" stop-color="#eef9ef" stop-opacity="0.92" />
+    <stop offset="0.45" stop-color="#c4e0d7" stop-opacity="0.5" />
+    <stop offset="1" stop-color="#83b0a3" stop-opacity="0.72" />
+  </linearGradient>
+  <linearGradient id="terrarium-cork" x1="0" y1="0" x2="0.4" y2="1">
+    <stop offset="0" stop-color="#dcb17b" />
+    <stop offset="1" stop-color="#947046" />
+  </linearGradient>
+  <linearGradient id="terrarium-medium" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#655344" />
+    <stop offset="1" stop-color="#393c31" />
+  </linearGradient>
+  <linearGradient id="terrarium-leaf" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#61946a" />
+    <stop offset="1" stop-color="#254f43" />
+  </linearGradient>
+</defs>
+<ellipse cx="32" cy="60" rx="23" ry="2.4" fill="#294d3d" opacity="0.15" />
+<g stroke-linecap="round" stroke-linejoin="round">
+  <path d="M16 13Q16 22 12 28C7 35 6 42 8 49Q10 59 32 59Q54 59 56 49C58 42 57 35 52 28Q48 22 48 13Z" fill="url(#terrarium-glass)" stroke="#638b82" stroke-width="1.6" />
+  <path d="M9 44Q20 38 32 42Q45 38 55 44L54 50Q52 56 32 56Q12 56 10 50Z" fill="url(#terrarium-medium)" />
+  <path d="M10 44Q12 40 17 41Q19 36 23 39Q27 37 30 42Q32 40 35 43Q40 37 45 40Q49 38 54 44Q49 48 42 46Q36 50 29 46Q21 48 17 45Q12 47 10 44Z" fill="#7d8950" stroke="#596343" stroke-width="0.8" />
+  <path d="M12 43Q17 39 20 42M21 41l3-1 3 3M35 44l4-2 4 1M45 43l3-2 3 2" fill="none" stroke="#b0b170" stroke-width="1.2" />
+  <path d="M15 47Q18 43 23 46M35 48l4-1M46 48l4-2" fill="none" stroke="#8e7654" stroke-width="1.4" />
+  <path d="M43 45Q47 34 43 24" fill="none" stroke="#4d7650" stroke-width="1.4" />
+  <path d="M44 28Q38 28 38 23Q43 23 44 28ZM45 32Q40 33 38 28Q43 27 45 32ZM46 37Q40 38 38 33Q43 32 46 37ZM45 29Q45 24 50 23Q51 27 45 29ZM46 34Q48 29 53 30Q52 34 46 34ZM46 40Q48 35 54 36Q53 41 46 40Z" fill="#679e59" stroke="#47734a" stroke-width="0.65" />
+  <path d="M22 43Q23 36 28 30" fill="none" stroke="#598252" stroke-width="1.2" />
+  <path d="M25 34Q17 34 18 27Q25 26 25 34ZM26 33Q25 25 32 24Q35 31 26 33Z" fill="#5d8a58" stroke="#365f43" stroke-width="0.9" />
+  <path d="m20 29 1 1m1 2 1-1m5-3 1-1m-1 4 2-1" fill="none" stroke="#e1e5c4" stroke-width="1.5" />
+  <path d="M24 47Q24 41 32 39M24 46Q21 40 17 38" fill="none" stroke="#aa7372" stroke-width="1.3" />
+  <path d="M24 46C24 36 33 34 39 37C40 46 32 50 24 46Z" fill="url(#terrarium-leaf)" stroke="#365e4b" stroke-width="1" />
+  <path d="M23 43C15 44 11 38 13 32C20 31 26 35 23 43Z" fill="url(#terrarium-leaf)" stroke="#365e4b" stroke-width="1" />
+  <path d="m25 46 11-7m-6 4-1-5m4 3 1-3m-6 7 5 1m-10-4-7-7m4 4 1-4m-3 2-4 1m8 3-5 1" fill="none" stroke="#d38391" stroke-width="0.95" />
+  <path d="M32 49Q42 50 48 43Q51 39 51 36" fill="none" stroke="#839d5c" stroke-width="1.1" />
+  <path d="M38 49Q33 44 38 43Q42 44 38 49ZM41 47Q43 51 47 48Q47 45 41 47ZM46 44Q41 41 44 38Q48 38 46 44ZM49 41Q51 44 54 41Q54 38 49 41Z" fill="#9ebc71" stroke="#617c49" stroke-width="0.65" />
+  <path d="M12 31Q8 40 11 47M17 21l-1 4M53 34Q56 42 53 49" fill="none" stroke="#f5fff8" stroke-width="1.8" opacity="0.8" />
+  <path d="M14 53Q32 61 50 53" fill="none" stroke="#d4ece0" stroke-width="1.7" opacity="0.8" />
+  <path d="M16 14Q32 20 48 14M16 17Q32 23 48 17" fill="none" stroke="#86a89c" stroke-width="1" />
+  <path d="M15 9Q32 4 49 9L48 15Q32 22 16 15Z" fill="url(#terrarium-cork)" stroke="#886642" stroke-width="1.2" />
+  <ellipse cx="32" cy="9" rx="17" ry="5.5" fill="#dcbc8e" stroke="#99754e" stroke-width="1.1" />
+  <path d="m21 8 2-1m4 4 1-1m5-3 2 1m5 2 2-1m-7 3 1 1m-17 2 2 1m5 1 1 1m15-2 2-1" fill="none" stroke="#a78054" stroke-width="1" />
+  <path d="M20 6Q31 2 44 7" fill="none" stroke="#efdab5" stroke-width="1" />
+</g>
   </symbol>
   <symbol id="icon-humidity" viewBox="0 0 64 64">
 <desc id="ui-humidity-description">A blue drop and percentage marks represent a measured relative-humidity reading.</desc>

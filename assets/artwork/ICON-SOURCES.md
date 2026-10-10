@@ -70,4 +70,6 @@ The October 9 revision of the tiny mixed planter portrait for **#6 / P30** follo
 
 ## Terrarium and humidity symbols
 
-`icon-plant-terrarium` and `icon-humidity` are original schematic repository artwork added for P38 / #12. The generic glass vessel and question mark indicate pending plant identities; its shape and substrate color do not document the actual enclosure or medium. The drop and percent marks represent relative humidity, not a watering recommendation. No reference photograph or third-party artwork was used.
+`icon-plant-terrarium` is original schematic repository artwork for **P38 / #12**, revised October 10 to follow the owner's [arrival photographs](../../docs/terrarium.md#arrival-photographs). The rounded glass jar and broad cork lid frame low moss, pink-veined and pale-speckled leaves, trailing greenery, and fern-like foliage. These simplified appearance groups replace the initial question-mark placeholder without confirming botanical identities, depicting a verified recovery, or establishing substrate composition or drainage layers. The source photographs retain the owner's separate rights.
+
+`icon-humidity` remains original schematic repository artwork added for P38 / #12. Its drop and percent marks represent relative humidity, not a watering recommendation. No reference photograph or third-party artwork was used for this symbol.

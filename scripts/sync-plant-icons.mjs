@@ -407,7 +407,7 @@ function portraitDescriptions() {
         ],
         [
             "terrarium",
-            "Generic schematic glass vessel with an unknown-contents marker; not a depiction of the owned terrarium, its closure, plants, or substrate.",
+            "Schematic of the owned terrarium's rounded glass jar and broad cork lid, with moss, pink-veined and pale-speckled leaves, trailing greenery, and fern-like foliage. Plant identities and substrate composition remain unverified.",
         ],
         [
             "tiny-mixed-succulent-planter",

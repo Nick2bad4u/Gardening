@@ -4632,7 +4632,7 @@ describe("garden logger humidity observations", () => {
         ).toMatch(/relative humidity/iv);
     });
 
-    it("uses the generic terrarium portrait when P38 is supplied by the current roster", () => {
+    it("uses the terrarium portrait when P38 is supplied by the current roster", () => {
         expect.hasAssertions();
 
         const plant = {
