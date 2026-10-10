@@ -2,7 +2,7 @@
 
 Last updated: 2026-10-10
 
-This is the print reference for 45 active profile records across 36 tracked pot allocations. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
+This is the print reference for 46 active profile records across 36 tracked pot allocations. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
 
 The six August cactus labels are `E1`–`E3` and `F1`–`F3`; their exact mapping
 was recorded from the pots on 2026-08-10. The numbered mapping was also
@@ -488,12 +488,12 @@ Echeveria 'Arctic Ice' | OWNER-ASSOCIATED LISTING
 CONFIRM DRAINAGE AND ROOT-ZONE DRYNESS
 ```
 
-## Terrarium label — plant identities pending
+## Terrarium label — Houseplants aggregate
 
-**#12 / P38** identifies the whole terrarium. The [October 10 arrival record](../terrarium.md) includes five owner-supplied photographs of its cork-lidded glass jar and qualified plant identifications. No botanical inventory record is assigned yet; membership awaits seller details. Keep this single physical label and container history. Humidity readings use % RH and are observations, not a care target.
+**#12 / P38** identifies the whole terrarium. The [October 10 arrival record](../terrarium.md) includes five owner-supplied photographs of its cork-lidded glass jar and qualified plant identifications. [Houseplant-05](./houseplants/terrarium.md) is its aggregate Houseplants profile; the probable and tentative IDs remain qualified, and fern-like foliage and moss remain unidentified. Keep this single physical label and container history. Humidity readings use % RH and are observations, not a care target.
 
 ```text
 #12 | TERRARIUM
-P38 | Plant identities pending
+P38 | Houseplant-05 | Mixed houseplants
 One container · one care history
 ```

@@ -2038,7 +2038,7 @@ describe("35-to-36 pending terrarium enrollment", () => {
                             {
                                 userEnteredValue: {
                                     formulaValue:
-                                        '="Terrarium care pending; inspect enclosure and plant needs"',
+                                        '="Closed-jar terrarium; inspect enclosure, substrate and plants"',
                                 },
                             },
                         ],

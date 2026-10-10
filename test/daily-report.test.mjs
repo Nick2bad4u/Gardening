@@ -38,14 +38,19 @@ const profileData = /** @type {unknown} */ (
 const profiles = /** @type {Record<string, [string, string][]>} */ (
     profileData
 );
-const containers = /** @type {Record<string, unknown>} */ (
-    JSON.parse(
-        readFileSync(
-            new URL("../docs/layouts/container-data.json", import.meta.url),
-            "utf8"
-        )
-    )
-);
+/** @type {Record<string, [string, string][]>} */
+const pendingProfiles = { P38: [] };
+const pendingContainers = {
+    P38: {
+        careNote: "Identities remain provisional.",
+        label: "#12",
+        membershipStatus: "pending",
+        name: "Terrarium",
+        overviewSlug: null,
+        portraitSlug: "terrarium",
+        setupNote: "No watering target assigned.",
+    },
+};
 
 function pendingContainerReport() {
     const report = structuredClone(sample);
@@ -94,13 +99,13 @@ const photo = {
 const unsafeScriptUrl = "javascript:alert(1)";
 
 describe("native reviewed report pages", () => {
-    it("renders an enrolled container without botanical profiles using its maintained metadata", async () => {
+    it("links the current terrarium aggregate while retaining the dated report decision", async () => {
         expect.hasAssertions();
 
         const report = pendingContainerReport();
         const html = await renderReviewedReport(parseReviewedReport(report));
 
-        expect(profiles["P38"]).toStrictEqual([]);
+        expect(profiles["P38"]).toStrictEqual([["terrarium", "Terrarium"]]);
         expect(html).toContain('id="pot-P38"');
         expect(html).toContain("/Gardening/assets/plant-icons/terrarium.svg");
         expect(html).toContain(
@@ -110,11 +115,31 @@ describe("native reviewed report pages", () => {
             'data-search="#12 P38 Terrarium — plants unidentified"'
         );
         expect(html).toContain(
-            'href="/Gardening/containers/P38/">Container guide'
+            'href="/Gardening/plants/terrarium/">Field guide'
         );
         expect(html).toContain('href="/Gardening/pots/P38/"');
-        expect(html).not.toContain("/Gardening/plants/terrarium/");
+        expect(html).toContain(
+            "Plant identities and setup are pending; no watering target is assigned."
+        );
         expect(html).not.toContain("../plant-booklet/#");
+    });
+
+    it("renders a historical pending container fixture without inventing a botanical profile", () => {
+        expect.hasAssertions();
+
+        const html = renderReport(
+            pendingContainerReport(),
+            template,
+            pendingProfiles,
+            pendingContainers
+        );
+
+        expect(html).toContain('id="pot-P38"');
+        expect(html).toContain("terrarium.svg");
+        expect(html).toContain(
+            'href="/Gardening/containers/P38/">Container guide'
+        );
+        expect(html).not.toContain("../plant-booklet/#terrarium");
     });
 
     it("requires explicit empty profile membership and valid container metadata", () => {
@@ -122,15 +147,15 @@ describe("native reviewed report pages", () => {
 
         const report = pendingContainerReport();
 
-        expect(renderReport(report, template, profiles, containers)).toContain(
-            "terrarium.svg"
-        );
-        expect(() => renderReport(report, template, profiles)).toThrow(
+        expect(
+            renderReport(report, template, pendingProfiles, pendingContainers)
+        ).toContain("terrarium.svg");
+        expect(() => renderReport(report, template, pendingProfiles)).toThrow(
             "Missing field-guide profile for P38"
         );
-        expect(() => renderReport(report, template, {}, containers)).toThrow(
-            "Missing field-guide profile for P38"
-        );
+        expect(() =>
+            renderReport(report, template, {}, pendingContainers)
+        ).toThrow("Missing field-guide profile for P38");
 
         const malformedProfiles =
             /** @type {Record<string, [string, string][]>} */ ({
@@ -138,7 +163,7 @@ describe("native reviewed report pages", () => {
             });
 
         expect(() =>
-            renderReport(report, template, malformedProfiles, containers)
+            renderReport(report, template, malformedProfiles, pendingContainers)
         ).toThrow("Missing field-guide profile for P38");
 
         for (const metadata of [
@@ -149,7 +174,9 @@ describe("native reviewed report pages", () => {
             { name: "Terrarium", portraitSlug: "../terrarium" },
         ]) {
             expect(() =>
-                renderReport(report, template, profiles, { P38: metadata })
+                renderReport(report, template, pendingProfiles, {
+                    P38: metadata,
+                })
             ).toThrow("Missing field-guide profile for P38");
         }
     });

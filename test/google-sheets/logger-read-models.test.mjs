@@ -384,6 +384,125 @@ describe("logger History-backed read models", () => {
         }
     });
 
+    it("keeps independent environment values, zero and timestamps in the one-read bootstrap", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        try {
+            vi.setSystemTime(now);
+            const rows = [
+                row("2026-09-06T10:00:00Z", "Humidity", { 42: 0 }),
+                row("2026-09-06T11:00:00Z", "Light", { 43: 125, 44: 7000 }),
+                row("2026-09-06T12:00:00Z", "Light", { 10: 2, 44: 0 }),
+                row("2026-09-06T13:00:00Z", "Light", { 43: -1, 44: Infinity }),
+                row("2026-09-06T14:00:00Z", "Humidity", { 42: 101 }),
+                row("2026-09-06T15:00:00Z", "Humidity", {
+                    35: "Removed",
+                    42: 80,
+                }),
+                row("2026-09-07T15:00:00Z", "Humidity", { 42: 90 }),
+                row("invalid", "Light", { 43: 500 }),
+                row("2026-09-06T16:00:00Z", "Check", {
+                    42: 99,
+                    43: 900,
+                    44: 9000,
+                }),
+            ];
+            const { api, historyReads } = runtime(rows);
+            const bootstrap = api.getWebAppBootstrap();
+
+            expect(bootstrap.plants[0]).toMatchObject({
+                latestLightAt: "2026-09-06T12:00:00.000Z",
+                latestLux: 0,
+                latestLuxAt: "2026-09-06T12:00:00.000Z",
+                latestPpfd: 125,
+                latestPpfdAt: "2026-09-06T11:00:00.000Z",
+                latestRelativeHumidity: 0,
+                latestRelativeHumidityAt: "2026-09-06T10:00:00.000Z",
+            });
+            expect(bootstrap.plants[1]).not.toHaveProperty("latestPpfd");
+            expect(
+                structuredClone(api.GARDEN_ENVIRONMENT_READINGS(rows))
+                    .slice(1)
+                    .map((reading) => reading.slice(1, 6))
+            ).toStrictEqual([
+                [
+                    "P01",
+                    "Humidity",
+                    "",
+                    "",
+                    0,
+                ],
+                [
+                    "P01",
+                    "Light",
+                    125,
+                    7000,
+                    "",
+                ],
+                [
+                    "P01",
+                    "Light",
+                    "",
+                    0,
+                    "",
+                ],
+            ]);
+            expect(historyReads).toHaveBeenCalledExactlyOnceWith(
+                2,
+                1,
+                rows.length,
+                45
+            );
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it("preserves original order for same-time environment corrections", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        try {
+            vi.setSystemTime(now);
+            const at = "2026-09-06T10:00:00Z";
+            const rows = [
+                row(at, "Humidity", { 26: "rh-first", 35: "Removed", 42: 80 }),
+                row(at, "Humidity", { 26: "rh-later", 42: 60 }),
+                row(at, "Humidity", {
+                    26: "rh-corrected",
+                    30: "rh-first",
+                    42: 85,
+                }),
+                row("2026-09-06T11:00:00Z", "Light", {
+                    26: "light-old",
+                    35: "Removed",
+                    43: 100,
+                    44: 6000,
+                }),
+                row("2026-09-06T11:00:00Z", "Light", {
+                    26: "light-new",
+                    30: "light-old",
+                    43: 0,
+                    44: "",
+                }),
+            ];
+            const before = structuredClone(rows);
+
+            expect(
+                runtime(rows).api.getWebAppBootstrap().plants[0]
+            ).toMatchObject({
+                latestLux: "",
+                latestLuxAt: "",
+                latestPpfd: 0,
+                latestRelativeHumidity: 60,
+            });
+            expect(rows).toStrictEqual(before);
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
     it.each([
         [
             "2026-09-06T07:59:59Z",

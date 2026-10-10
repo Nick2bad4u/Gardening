@@ -127,7 +127,7 @@ assert.deepEqual(
         "Weigh",
         "Water",
         "Measure",
-        "Check",
+        "Inspect",
     ]
 );
 assert.deepEqual(
@@ -290,7 +290,7 @@ assert.doesNotThrow(() =>
     loggerFunction("validateCheckDetails_")(["Inspect"], "Firm", "")
 );
 for (const [condition, soil] of [
-    ["Firm", ""],
+    ["Firm", "Dry"],
     ["", "Dry"],
 ]) {
     assert.doesNotThrow(() =>
@@ -298,8 +298,12 @@ for (const [condition, soil] of [
     );
 }
 assert.throws(
+    () => loggerFunction("validateCheckDetails_")(["Check"], "Firm", ""),
+    /soil moisture/v
+);
+assert.throws(
     () => loggerFunction("validateCheckDetails_")(["Check"], "", ""),
-    /plant condition, soil moisture/v
+    /soil moisture/v
 );
 assert.throws(
     () => loggerFunction("eventDetailsFromPayload_")({}, ["Light"], null),

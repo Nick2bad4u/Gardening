@@ -1395,7 +1395,7 @@ describe("garden logger event inference and structured details", () => {
             "Weigh",
             "Water",
             "Measure",
-            "Check",
+            "Inspect",
         ]);
 
         const observedBuildEventNames = structuredClone(
@@ -1512,7 +1512,7 @@ describe("garden logger event inference and structured details", () => {
         expect(observedBuildEventNames2).toStrictEqual([
             "Weigh",
             "Measure",
-            "Check",
+            "Inspect",
         ]);
 
         const observedBuildEventNames3 = structuredClone(
@@ -2234,6 +2234,23 @@ describe("garden logger weight-state inference and dry-down formulas", () => {
         expect(context.plantPageHistoryFormula_("P01")).toContain(
             'pounds,MAP(weights,LAMBDA(w,IF(w="","",w/453.59237)))'
         );
+    });
+
+    it("pairs baseline condition and date with Inspect or a historical condition Check", () => {
+        expect.hasAssertions();
+
+        const context = loadAppsScript(createHistorySheet([]));
+        const baselineRow = context.baselineViewRow_(2, {
+            id: "P01",
+            name: "Test plant",
+        });
+
+        for (const column of [15, 16]) {
+            expect(baselineRow[column]).toContain(
+                'REGEXMATCH(History!$C$2:$C$5000,"^(Check|Inspect)$")'
+            );
+            expect(baselineRow[column]).toContain('History!$H$2:$H$5000<>""');
+        }
     });
 
     it("returns an empty history before evaluating array columns when a new pot has no observations", () => {
@@ -4576,7 +4593,7 @@ describe("garden logger canonical observation persistence", () => {
                 "Water",
                 "Weigh",
                 "Measure",
-                "Check",
+                "Inspect",
                 "Repot",
                 "Flower",
                 "Photo",
@@ -4653,7 +4670,7 @@ describe("garden logger canonical observation persistence", () => {
         "https://gyazo.com/0123456789abcdef0123456789abcdef",
         "https://photos.app.goo.gl/example",
         "https://photos.google.com/share/example?key=abc",
-    ])("saves Check and Photo as two retry-safe rows for %s", (photoUrl) => {
+    ])("saves Inspect and Photo as two retry-safe rows for %s", (photoUrl) => {
         expect.hasAssertions();
 
         const workbook = createLoggerWorkbook();
@@ -4663,13 +4680,12 @@ describe("garden logger canonical observation persistence", () => {
         });
         const payload = {
             condition: "New leaf pair visible",
-            events: ["Check", "Photo"],
+            events: ["Inspect", "Photo"],
             notes: "Visual inspection only; firmness not checked.",
             observedAt: "2026-08-16T08:00:00-04:00",
             photoUrl,
             plantId: "P01",
             requestId: "garden-photo-check-12345",
-            soilMoisture: "Not checked",
         };
 
         expect(context.saveWebObservation(payload)).toMatchObject({
@@ -4682,10 +4698,14 @@ describe("garden logger canonical observation persistence", () => {
             historyRows: 2,
         });
 
-        const check = required(workbook.history.__rows[1]);
-        const photo = required(workbook.history.__rows[2]);
+        const check = required(
+            workbook.history.__rows.find((row) => row[2] === "Inspect")
+        );
+        const photo = required(
+            workbook.history.__rows.find((row) => row[2] === "Photo")
+        );
 
-        expect(check[2]).toBe("Check");
+        expect(check[2]).toBe("Inspect");
         expect(photo[2]).toBe("Photo");
         expect(check[7]).toBe(payload.condition);
         expect(check[23]).toBe("");
@@ -4770,12 +4790,12 @@ describe("garden logger canonical observation persistence", () => {
 
         expect(result).toMatchObject({
             duplicate: false,
-            historyRows: 8,
+            historyRows: 9,
             ok: true,
             plantId: "P01",
         });
         expect(result.events).toContain("Repot");
-        expect(retry).toMatchObject({ duplicate: true, historyRows: 8 });
+        expect(retry).toMatchObject({ duplicate: true, historyRows: 9 });
         expect(required(workbook.history.__rows[1])[10]).toBe(2);
         expect(required(workbook.history.__rows[3])[28]).toBe("Measured");
         expect(required(workbook.history.__rows[3])[34]).toBe("Ruler");
@@ -4980,7 +5000,7 @@ describe("garden logger canonical observation persistence", () => {
             events: [
                 "Weigh",
                 "Measure",
-                "Check",
+                "Inspect",
             ],
             height: 5,
             measurementMethod: "Ruler",
@@ -6981,6 +7001,218 @@ describe("garden logger AppSheet bulk submission and validation", () => {
 });
 
 describe("garden logger structured Check details", () => {
+    it("replays a completed legacy condition-only Check and rejects changed retry content", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook();
+        const context = loadAppsScript(workbook.history, {
+            globals: workbook.globals,
+            spreadsheet: workbook.spreadsheet,
+        });
+        const payload = {
+            condition: "Leaves firm",
+            events: ["Check"],
+            observedAt: "2026-10-06T12:00:00-04:00",
+            plantId: "P01",
+            requestId: "garden-check-legacy-condition",
+        };
+        // Seed a pre-separation Check without going through the new-entry rule.
+        context.saveWebObservation({
+            ...payload,
+            condition: "",
+            soilMoisture: "Dry",
+        });
+        const legacy = required(workbook.history.__rows[1]);
+        legacy[7] = payload.condition;
+        legacy[32] = "";
+        const before = structuredClone(workbook.history.__rows);
+
+        expect(context.saveWebObservation(payload)).toMatchObject({
+            duplicate: true,
+            historyRows: 1,
+        });
+        expect(
+            context.saveWebObservationBatch([payload]).results[0]
+        ).toMatchObject({ duplicate: true });
+        expect(() =>
+            context.saveWebObservation({ ...payload, condition: "Changed" })
+        ).toThrow(/no longer matches/iv);
+        expect(workbook.history.__rows).toStrictEqual(before);
+    });
+
+    it.each(["AppSheet", "AppSheet bulk"])(
+        "ignores stale hidden care fields for new %s entries",
+        (entrySource) => {
+            expect.hasAssertions();
+
+            const workbook = createLoggerWorkbook();
+            const context = loadAppsScript(workbook.history, {
+                globals: workbook.globals,
+                spreadsheet: workbook.spreadsheet,
+            });
+            const payload = {
+                condition: "Stale hidden condition",
+                entrySource,
+                observedAt: "2026-10-10T12:00:00-04:00",
+                plantId: "P01",
+                requestId: `garden-hidden-fields-${entrySource.replaceAll(" ", "-")}`,
+                soilMoisture: "Dry",
+            };
+
+            expect(
+                context.saveWebObservation({ ...payload, events: ["Check"] })
+            ).toMatchObject({ historyRows: 1 });
+            expect(required(workbook.history.__rows[1])[7]).toBe("");
+            expect(required(workbook.history.__rows[1])[32]).toBe("Dry");
+            expect(
+                context.saveWebObservation({
+                    ...payload,
+                    events: ["Inspect"],
+                    requestId: `${payload.requestId}-inspect`,
+                })
+            ).toMatchObject({ historyRows: 1 });
+            expect(required(workbook.history.__rows[2])[7]).toBe(
+                payload.condition
+            );
+            expect(required(workbook.history.__rows[2])[32]).toBe("");
+
+            // A completed older Check retains its condition even after selection rules change.
+            const legacy = required(workbook.history.__rows[1]);
+            legacy[7] = payload.condition;
+
+            expect(
+                context.saveWebObservation({ ...payload, events: ["Check"] })
+            ).toMatchObject({ duplicate: true });
+        }
+    );
+
+    it("preserves Inspect when replaying an older AppSheet request with an inferred soil Check", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook();
+        const context = loadAppsScript(workbook.history, {
+            globals: workbook.globals,
+            spreadsheet: workbook.spreadsheet,
+        });
+        const requestId = "garden-old-inspect-inferred-soil";
+        const observedAt = "2026-10-09T12:00:00-04:00";
+        context.appendObservation_(workbook.spreadsheet, {
+            condition: "Firm",
+            currentLabel: "A1",
+            entrySource: "AppSheet",
+            eventNames: ["Inspect", "Check"],
+            height: "",
+            notes: "",
+            observationDate: new Date(observedAt),
+            plantId: "P01",
+            potSetup: 1,
+            requestId,
+            soilMoisture: "Dry",
+            weight: "",
+            weightState: "",
+            width: "",
+        });
+        const before = structuredClone(workbook.history.__rows);
+
+        expect(
+            context.saveWebObservation({
+                condition: "Firm",
+                entrySource: "AppSheet",
+                events: ["Inspect"],
+                observedAt,
+                plantId: "P01",
+                requestId,
+                soilMoisture: "Dry",
+            })
+        ).toMatchObject({ duplicate: true, historyRows: 2 });
+        expect(workbook.history.__rows).toStrictEqual(before);
+    });
+
+    it("isolates Inspect, Check, Humidity and Light measurements in a shared request", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook();
+        const context = loadAppsScript(workbook.history, {
+            globals: workbook.globals,
+            spreadsheet: workbook.spreadsheet,
+        });
+        const payload = {
+            condition: "Leaves firm",
+            events: [
+                "Inspect",
+                "Check",
+                "Humidity",
+                "Light",
+            ],
+            lux: 1250,
+            observedAt: "2026-10-10T12:00:00-04:00",
+            plantId: "P01",
+            ppfd: 0,
+            relativeHumidity: 0,
+            requestId: "garden-separated-environment-care",
+            soilMoisture: "Dry",
+        };
+
+        expect(context.saveWebObservation(payload)).toMatchObject({
+            historyRows: 4,
+        });
+        expect(context.saveWebObservation(payload)).toMatchObject({
+            duplicate: true,
+            historyRows: 4,
+        });
+
+        const rows = workbook.history.__rows.slice(1);
+
+        expect(rows.map((row) => row[15])).toStrictEqual(
+            Array.from({ length: 4 }, () => payload.requestId)
+        );
+        expect(
+            rows.map((row) => [
+                row[2],
+                row[7],
+                row[32],
+                row[42],
+                row[43],
+                row[44],
+            ])
+        ).toStrictEqual(
+            expect.arrayContaining([
+                [
+                    "Inspect",
+                    "Leaves firm",
+                    "",
+                    "",
+                    "",
+                    "",
+                ],
+                [
+                    "Check",
+                    "",
+                    "Dry",
+                    "",
+                    "",
+                    "",
+                ],
+                [
+                    "Humidity",
+                    "",
+                    "",
+                    0,
+                    "",
+                    "",
+                ],
+                [
+                    "Light",
+                    "",
+                    "",
+                    "",
+                    0,
+                    1250,
+                ],
+            ])
+        );
+    });
+
     it("replays a completed historical Check without applying the new detail requirement", () => {
         expect.hasAssertions();
 
@@ -6995,9 +7227,9 @@ describe("garden logger structured Check details", () => {
             plantId: "P01",
             requestId: "garden-check-historical-fixture",
         };
-        context.saveWebObservation({ ...payload, condition: "Leaves firm" });
+        context.saveWebObservation({ ...payload, soilMoisture: "Dry" });
         // Simulate a completed pre-5.30.2 Check with no structured details.
-        required(workbook.history.__rows[1])[7] = "";
+        required(workbook.history.__rows[1])[32] = "";
         const before = structuredClone(workbook.history.__rows);
 
         expect(context.saveWebObservation(payload)).toMatchObject({
@@ -7027,7 +7259,7 @@ describe("garden logger structured Check details", () => {
         };
 
         expect(() => context.saveWebObservation(payload)).toThrow(
-            "Enter plant condition, soil moisture, or both"
+            "Enter soil moisture for the Soil check event"
         );
         expect(workbook.history.__rows).toHaveLength(1);
         expect(
@@ -7053,7 +7285,7 @@ describe("garden logger structured Check details", () => {
             },
             {
                 condition: "Leaves firm",
-                events: ["Check"],
+                events: ["Inspect"],
                 observedAt: "2026-10-06T12:00:00-04:00",
                 plantId: "P01",
                 requestId: "garden-check-valid-fixture",
@@ -7180,7 +7412,7 @@ describe("garden logger inspection and light evidence", () => {
         expect(workbook.history.__rows).toHaveLength(1);
     });
 
-    it("keeps Inspect condition separate from an inferred soil Check and preserves legacy Check", () => {
+    it("keeps Inspect condition separate from Soil check and rejects new condition-only Checks", () => {
         expect.hasAssertions();
 
         const workbook = createLoggerWorkbook();
@@ -7206,13 +7438,13 @@ describe("garden logger inspection and light evidence", () => {
                 soilMoisture: "Dry",
             })
         ).toMatchObject({ historyRows: 2 });
-        expect(
+        expect(() =>
             context.saveWebObservation({
                 ...payload,
                 events: ["Check"],
                 requestId: "garden-legacy-check",
             })
-        ).toMatchObject({ historyRows: 1 });
+        ).toThrow(/soil moisture/iv);
         expect(
             workbook.history.__rows.slice(1).map((row) => [
                 row[2],
@@ -7235,11 +7467,6 @@ describe("garden logger inspection and light evidence", () => {
                 "",
                 "Dry",
             ],
-            [
-                "Check",
-                "Leaves firm",
-                "",
-            ],
         ]);
         expect(() =>
             context.saveWebObservation({
@@ -7254,8 +7481,8 @@ describe("garden logger inspection and light evidence", () => {
                 events: ["Inspect", "Check"],
                 requestId: "garden-empty-soil-check",
             })
-        ).toThrow(/condition, soil moisture/iv);
-        expect(workbook.history.__rows).toHaveLength(5);
+        ).toThrow(/soil moisture/iv);
+        expect(workbook.history.__rows).toHaveLength(4);
     });
 
     it("supports bulk Inspect while keeping numeric light and humidity out of bulk", () => {
@@ -7648,10 +7875,10 @@ describe("garden logger humidity and terrarium enrollment", () => {
             });
 
             expect(baseline[7]).toBe(
-                '="Terrarium care pending; inspect enclosure and plant needs"'
+                '="Closed-jar terrarium; inspect enclosure, substrate and plants"'
             );
             expect(model[11]).toBe(
-                "Terrarium care pending; inspect enclosure and plant needs"
+                "Closed-jar terrarium; inspect enclosure, substrate and plants"
             );
             expect(model[3]).toBe("");
             expect(history).toStrictEqual(before);
@@ -7719,15 +7946,15 @@ describe("garden logger humidity and terrarium enrollment", () => {
             "",
             "",
         ]);
-        expect(model[10]).toBe("Terrarium care pending");
+        expect(model[10]).toBe("Closed-jar terrarium");
         expect(model[11]).toBe(
-            "Terrarium care pending; inspect enclosure and plant needs"
+            "Closed-jar terrarium; inspect enclosure, substrate and plants"
         );
         expect(model[14]).toBe("");
         expect(model[15]).toContain("do not use a cactus dry reference");
         expect(model[16]).toBe(-1);
         expect(model[21]).toBe(
-            "Terrarium care pending; no weight-based watering trigger"
+            "Closed-jar terrarium; no weight-based watering trigger"
         );
         expect(history[1]).toStrictEqual([
             10,

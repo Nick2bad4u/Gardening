@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../../components/SiteLayout.astro";
+import SiteIcon from "../../components/SiteIcon.astro";
 import PlantCard from "../../components/PlantCard.astro";
 import { getProfiles } from "../../lib/content.mjs";
 import { getContainers } from "../../lib/containers.mjs";
@@ -10,6 +11,11 @@ const containers = await getContainers();
 const containersById = new Map(containers.map((container) => [container.id, container]));
 const overviewSlugs = new Set(
     containers.flatMap((container) => (container.overview ? [container.overview.slug] : []))
+);
+const aggregateSlugs = new Set(
+    containers.flatMap((container) =>
+        container.aggregate && container.overview ? [container.overview.slug] : []
+    )
 );
 const currentCount = profiles.filter(
     (profile) => !profile.historical && !overviewSlugs.has(profile.slug)
@@ -22,16 +28,27 @@ const currentCount = profiles.filter(
     description="Browse the Fenton Collection by plant name, scientific name, label, and pot ID."
 >
     <header class="page-heading directory-heading">
-        <p class="eyebrow">THE FENTON COLLECTION</p>
+        <p class="eyebrow">
+            <SiteIcon name="garden-plants" size={30} /> THE FENTON COLLECTION
+        </p>
         <h1>Meet the plants.</h1>
         <p class="lede">Names, care notes, photos, and nursery records for the collection.</p>
-        <a class="button button-secondary" href={siteUrl("containers/")}>
-            Explore {containers.length} containers &amp; shared planters →
+        <a class="directory-callout" href={siteUrl("containers/")}>
+            <span class="directory-callout-icon">
+                <SiteIcon name="planter" size={40} />
+            </span>
+            <span>
+                <strong>Explore {containers.length} containers &amp; shared planters</strong>
+                <span>Meet the plants growing together, with one care history for each pot.</span>
+            </span>
+            <SiteIcon name="arrow-right" size={24} />
         </a>
     </header>
     <div class="directory-toolbar no-print">
         <label for="plant-search">
-            Find a plant
+            <span class="control-label">
+                <SiteIcon name="search" size={22} /> Find a plant
+            </span>
             <input
                 type="search"
                 id="plant-search"
@@ -40,7 +57,9 @@ const currentCount = profiles.filter(
             />
         </label>
         <label for="plant-group">
-            Collection
+            <span class="control-label">
+                <SiteIcon name="houseplant" size={22} /> Collection
+            </span>
             <select id="plant-group">
                 <option value="all">All collections</option>
                 {groups.map((group) => (
@@ -49,14 +68,19 @@ const currentCount = profiles.filter(
             </select>
         </label>
         <label for="plant-status">
-            Records
+            <span class="control-label">
+                <SiteIcon name="list" size={22} /> Records
+            </span>
             <select id="plant-status">
-                <option value="current">Current botanical profiles</option>
+                <option value="current">Current plants &amp; terrariums</option>
                 <option value="overviews">Planter overviews</option>
                 <option value="all">All records</option>
                 <option value="historical">Historical only</option>
             </select>
         </label>
+        <button class="button button-secondary directory-reset" type="button" data-directory-reset>
+            <SiteIcon name="reset" /> Reset filters
+        </button>
     </div>
     <p id="plant-result-count" class="result-count" role="status" aria-live="polite">
         {currentCount} active botanical profiles · {overviewSlugs.size} separate planter overviews ·{" "}
@@ -76,11 +100,16 @@ const currentCount = profiles.filter(
                 data-group={profile.group}
                 data-historical={String(profile.historical)}
                 data-overview={String(overviewSlugs.has(profile.slug))}
-                hidden={profile.historical || overviewSlugs.has(profile.slug)}
+                data-aggregate={String(aggregateSlugs.has(profile.slug))}
+                hidden={
+                    profile.historical ||
+                    (overviewSlugs.has(profile.slug) && !aggregateSlugs.has(profile.slug))
+                }
             >
                 <PlantCard
                     profile={profile}
                     overview={overviewSlugs.has(profile.slug)}
+                    aggregate={aggregateSlugs.has(profile.slug)}
                     sharedProfileCount={
                         profile.trackerId
                             ? (containersById.get(profile.trackerId)?.members.length ?? 1)
@@ -111,8 +140,8 @@ const currentCount = profiles.filter(
         }
     }
     .directory-toolbar {
-        gap: 0.75rem;
-        padding: 0.875rem;
+        gap: 1rem;
+        padding: 1.25rem;
         margin-block-end: 0.75rem;
     }
     .plant-directory {
@@ -128,6 +157,9 @@ const currentCount = profiles.filter(
                 [end];
             & label {
                 min-inline-size: 0;
+            }
+            & .directory-reset {
+                grid-column: start / end;
             }
             & label:first-child {
                 grid-column: start / end;

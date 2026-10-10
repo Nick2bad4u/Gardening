@@ -1,5 +1,53 @@
 # Insights dry-down charts
 
+## Light and humidity observations
+
+[`workbook-environment.mjs`](workbook-environment.mjs) builds the guarded native
+**Light & humidity** view. Its maintained 36-container layout has latest readings
+in **A7:H43**, the selected plant in **B116**, and original evidence in
+**A189:J5188**. These bounds are derived from the maintained plant inventory and
+must be regenerated when that inventory grows. The view and its hidden
+**Environment data** helper are derived sheets, not AppSheet input tables.
+
+Three collection charts compare the latest recorded estimated PPFD, measured
+illuminance in lux, and relative humidity. Three separate selected-plant
+scatter plots show dated readings. Each metric keeps its own latest date; a
+new lux reading does not replace older PPFD or humidity evidence. Empty series
+have explicit no-readings messages, and a measured zero remains zero.
+
+Native Sheets can omit an empty scatter series from its metadata and drop its
+color, marker, or label overrides. The October 10 copy rehearsal confirmed that
+selecting a plant with readings restores the correct bindings automatically.
+After the first real readings, inspect the appearance and, if needed, reapply
+only the maintained chart specification with `updateChartSpec`; never replay the
+sheet-creation migration or add a styling trigger.
+
+For new light readings, place the device at the canopy top and record the
+location, device or app preset, light setting, and relevant context in Notes.
+This is the intended recording protocol; existing records establish their
+location only when their original notes say so. PPFD remains an estimate and
+lux remains measured illuminance, including combined Light events whose
+recorded quality is Estimated and method is Light app. The evidence table
+retains that original row-level provenance. Relative humidity is independent
+of light, pot setup, weight, soil moisture, and watering history. No conversion,
+DLI estimate, automatic target, or care recommendation is calculated.
+
+The shared server projection reads History A:AS, excludes Removed,
+superseded, future, and invalid readings, and uses the logger's correction
+ordering for equal timestamps. It preserves original dates, quality, method,
+notes, and observation IDs. Its native custom-function result can be cached;
+the shared calculation timestamp is not proof of a new measurement or a fresh
+custom-function evaluation.
+
+The same migration repairs the Dashboard chart overlap with position-only
+updates beneath the last occupied row. The October 10 preflight found a chart
+anchored at row 41 over a plant table ending at row 42. The planner preserves
+existing chart IDs, sizes, specifications, and visual ordering. Only verified
+empty destination rows receive fixed visible heights to maintain pixel gaps;
+the existing table, formulas, owner tab order, and unrelated charts are retained.
+See the [environment migration procedure](WORKBOOK-ANALYTICS.md#environment-view-migration)
+for the required native rehearsal and verification.
+
 The native **Insights** sheet has **26 charts** in the September 21 readback.
 The verified production enrollment retained those chart IDs and positions while extending
 the roster to **P01–P32, P35, and P36**; see the

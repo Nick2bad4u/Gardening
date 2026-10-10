@@ -1,4 +1,5 @@
 ---
+import SiteIcon from "../../components/SiteIcon.astro";
 import SiteLayout from "../../components/SiteLayout.astro";
 import ContainerMembers from "../../components/ContainerMembers.astro";
 import { getContainers } from "../../lib/containers.mjs";
@@ -34,7 +35,7 @@ const currentPot =
         </p>
         <h1>{container.name}</h1>
         <p class="lede">
-            {container.pending
+            {container.pending || container.aggregate
                 ? "One terrarium history, with arrival photographs and provisional plant identifications."
                 : container.shared
                   ? "Meet the plants growing together and follow their shared care history."
@@ -43,25 +44,27 @@ const currentPot =
         <div class="action-row">
             {arrivalRecord && (
                 <a class="button button-secondary" href="#arrival-photographs">
-                    Arrival photographs
+                    <SiteIcon name="photos" /> Arrival photographs
                 </a>
             )}
             <a class="button" href={potUrl(container.id)}>
-                Open {container.id} history →
+                <SiteIcon name="history" /> Open {container.id} history →
             </a>
             <a class="button button-secondary" href={loggerUrl}>
-                Log care
+                <SiteIcon name="edit" /> Log care
             </a>
             {container.sheetUrl && (
                 <a class="button button-secondary" href={container.sheetUrl}>
-                    Google Sheets ↗
+                    <SiteIcon name="sheets" /> Google Sheets ↗
                 </a>
             )}
         </div>
     </header>
     <ContainerMembers container={container} showContainerLink={false} />
     <section class="card">
-        <h2>Recorded container setup</h2>
+        <h2 class="icon-heading">
+            <SiteIcon name="repot" size={32} /> Recorded container setup
+        </h2>
         {currentPot && <div class="prose" set:html={currentPot.html} />}
         <p>{container.setupNote}</p>
         <p>

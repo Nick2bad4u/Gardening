@@ -16,7 +16,7 @@ import { getProfiles } from "./content.mjs";
  *     careNote: string;
  *     setupNote: string;
  *     portraitSlug?: string;
- *     membershipStatus?: "pending";
+ *     membershipStatus?: "pending" | "aggregate";
  *     label?: string;
  * }} ContainerMetadata
  */
@@ -30,6 +30,7 @@ import { getProfiles } from "./content.mjs";
  *     members: SiteProfile[];
  *     overview?: SiteProfile | undefined;
  *     shared: boolean;
+ *     aggregate: boolean;
  *     pending: boolean;
  *     portraitSlug: string;
  *     careNote: string;
@@ -87,12 +88,7 @@ export function buildContainers(profiles, mapping, metadata) {
         const members = containerProfiles.filter(
             (profile) => profile !== overview
         );
-        if (members.length === 0)
-            throw new Error(`Container ${id} needs a botanical member.`);
-        if (details === undefined && members.length > 1)
-            throw new Error(
-                `Shared container ${id} needs care and setup metadata.`
-            );
+        const isAggregate = validateMembers(members, overview, details, id);
         const primary = required(
             overview ?? members[0],
             `primary profile for ${id}`
@@ -103,6 +99,7 @@ export function buildContainers(profiles, mapping, metadata) {
         if (members.some((member) => member.drawerLabel.primary !== label))
             throw new Error(`Conflicting physical labels in ${id}.`);
         return {
+            aggregate: isAggregate,
             careNote:
                 details?.careNote ??
                 "Follow the plant's moisture cues and this pot's drying pattern. Its care profile and history bring those observations together.",
@@ -118,7 +115,7 @@ export function buildContainers(profiles, mapping, metadata) {
             setupNote:
                 details?.setupNote ??
                 "The plant profile describes its growing conditions; the care history records repotting, mix changes, and measurements as they are added.",
-            shared: members.length > 1,
+            shared: members.length > 1 || isAggregate,
             sheetUrl: primary.sheetUrl,
         };
     });
@@ -161,6 +158,8 @@ export function isContainerData(value) {
                 isNonemptyString(entry["careNote"]) &&
                 isNonemptyString(entry["setupNote"]) &&
                 (!Object.hasOwn(entry, "membershipStatus") ||
+                    (entry["membershipStatus"] === "aggregate" &&
+                        isNonemptyString(entry["overviewSlug"])) ||
                     (entry["membershipStatus"] === "pending" &&
                         isNonemptyString(entry["portraitSlug"]) &&
                         isNonemptyString(entry["label"]) &&
@@ -214,6 +213,7 @@ function pendingContainer(id, details) {
         );
     assertPortrait([], details.portraitSlug, id);
     return {
+        aggregate: false,
         careNote: details.careNote,
         currentPot: "",
         id,
@@ -227,4 +227,25 @@ function pendingContainer(id, details) {
         shared: false,
         sheetUrl: sheetUrls.plantPage(id),
     };
+}
+
+/**
+ * @param {SiteProfile[]} members
+ * @param {SiteProfile | undefined} overview
+ * @param {ContainerMetadata | undefined} details
+ * @param {string} id
+ */
+function validateMembers(members, overview, details, id) {
+    const isAggregate = details?.membershipStatus === "aggregate";
+    if (isAggregate && (!overview || members.length > 0))
+        throw new Error(
+            `Aggregate container ${id} needs only its overview profile.`
+        );
+    if (!isAggregate && members.length === 0)
+        throw new Error(`Container ${id} needs a botanical member.`);
+    if (details === undefined && members.length > 1)
+        throw new Error(
+            `Shared container ${id} needs care and setup metadata.`
+        );
+    return isAggregate;
 }

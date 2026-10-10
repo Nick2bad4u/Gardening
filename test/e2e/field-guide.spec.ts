@@ -574,3 +574,96 @@ test.describe("migration compatibility", { tag: "@routes" }, () => {
         await context.close();
     });
 });
+
+test.describe(
+    "terrarium discovery and container guide",
+    { tag: "@layout" },
+    () => {
+        for (const theme of ["dark", "light"] as const) {
+            test(`terrarium stays discoverable under Houseplants in ${theme}`, async ({
+                page,
+            }) => {
+                await openSite(page, "plants/?group=houseplants&q=P38", theme);
+                const directory = page.getByRole("list", {
+                    name: "Plant directory",
+                });
+                await expect
+                    .soft(directory.getByRole("listitem"))
+                    .toHaveCount(1);
+                const terrarium = directory.getByRole("link");
+                await expect
+                    .soft(terrarium)
+                    .toContainText("provisional members");
+                await terrarium.focus();
+                await page.keyboard.press("Enter");
+                await expect.soft(page).toHaveURL(/plants\/terrarium\//v);
+                await expect
+                    .soft(
+                        page.getByRole("article", {
+                            exact: true,
+                            name: "Terrarium",
+                        })
+                    )
+                    .toHaveAttribute("data-collection", "houseplants");
+                await expect
+                    .soft(
+                        page.getByRole("link", {
+                            name: "Open P38 care history",
+                        })
+                    )
+                    .toHaveAttribute("href", `${base}pots/P38/`);
+                await expectContained(page);
+            });
+
+            test(`container guide spacing and keyboard disclosure work in ${theme}`, async ({
+                page,
+            }) => {
+                await openSite(page, "containers/", theme);
+                await expect
+                    .soft(
+                        page
+                            .getByRole("region", {
+                                exact: true,
+                                name: "Houseplants",
+                            })
+                            .getByRole("link", { name: /Terrarium/v })
+                    )
+                    .toBeVisible();
+                await expect
+                    .soft(
+                        page.getByRole("heading", {
+                            name: "Plant identities pending",
+                        })
+                    )
+                    .toHaveCount(0);
+                const summary = page.getByText(
+                    "Understanding shared planters and their care records",
+                    { exact: true }
+                );
+                const gap = await summary.evaluate((element) => {
+                    const guide = element.closest("details");
+                    if (!guide?.previousElementSibling)
+                        throw new Error("Missing guide section");
+                    return (
+                        guide.getBoundingClientRect().top -
+                        guide.previousElementSibling.getBoundingClientRect()
+                            .bottom
+                    );
+                });
+                expect.soft(gap).toBeGreaterThanOrEqual(24);
+                await summary.evaluate((element) =>
+                    element.closest("summary")?.focus()
+                );
+                await page.keyboard.press("Enter");
+                expect
+                    .soft(
+                        await summary.evaluate(
+                            (element) => element.closest("details")?.open
+                        )
+                    )
+                    .toBe(true);
+                await expectContained(page);
+            });
+        }
+    }
+);

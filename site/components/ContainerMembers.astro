@@ -19,12 +19,15 @@ const { container, currentSlug, showContainerLink = true } = Astro.props;
                 {container.label}
             </p>
             <h2>
-                <SiteIcon name="succulent" size={32} /> {container.name} · {container.id}
+                <SiteIcon name={container.aggregate ? "houseplant" : "planter"} size={32} />{" "}
+                {container.name} · {container.id}
             </h2>
             <p>
-                {container.pending
-                    ? "Plant identities pending"
-                    : `${container.members.length} botanical ${container.members.length === 1 ? "profile" : "profiles"}`}{" "}
+                {container.aggregate
+                    ? "Terrarium · provisional plant identifications"
+                    : container.pending
+                      ? "Plant identities pending"
+                      : `${container.members.length} botanical ${container.members.length === 1 ? "profile" : "profiles"}`}{" "}
                 · one container history
             </p>
         </div>
@@ -34,7 +37,7 @@ const { container, currentSlug, showContainerLink = true } = Astro.props;
             </a>
         )}
     </div>
-    {container.pending && (
+    {(container.pending || container.aggregate) && (
         <p>
             Botanical membership is still being confirmed. This container has one permanent care
             history; its container page records the available evidence and provisional
@@ -80,11 +83,13 @@ const { container, currentSlug, showContainerLink = true } = Astro.props;
     )}
     <div class="action-row">
         <a class="button" href={potUrl(container.id)}>
-            Open {container.id} care history →
+            <SiteIcon name="history" /> Open {container.id} care history →
         </a>
         {container.overview && (
             <a class="button button-secondary" href={profileUrl(container.overview.slug)}>
-                Planter overview{container.overview.slug === currentSlug ? " · this page" : ""}
+                <SiteIcon name="field-guide" />{" "}
+                {container.aggregate ? "Houseplant terrarium profile" : "Planter overview"}
+                {container.overview.slug === currentSlug ? " · this page" : ""}
             </a>
         )}
     </div>

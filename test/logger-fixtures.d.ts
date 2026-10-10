@@ -99,6 +99,13 @@ export interface PlantSummary {
     id: string;
     label: string;
     lastWatered: string;
+    latestLightAt?: string;
+    latestLux?: "" | number;
+    latestLuxAt?: string;
+    latestPpfd?: "" | number;
+    latestPpfdAt?: string;
+    latestRelativeHumidity?: "" | number;
+    latestRelativeHumidityAt?: string;
     latestWeight: number | string;
     latestWeightAt?: string;
     name: string;

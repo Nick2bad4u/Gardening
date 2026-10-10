@@ -66,6 +66,7 @@ export function appsScriptApi(context) {
         formatClientDate_: null,
         formulaString_: null,
         GARDEN_DRY_DOWN: null,
+        GARDEN_ENVIRONMENT_READINGS: null,
         getGardenSpreadsheet_: null,
         getRecentObservations_: null,
         getRecentWebObservations: null,

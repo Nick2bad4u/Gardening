@@ -236,6 +236,7 @@ export interface AppsScriptTestApi {
     ) => string;
     formulaString_: (value: unknown) => string;
     GARDEN_DRY_DOWN: (history: unknown, plantIds: unknown) => DryDownRow[];
+    GARDEN_ENVIRONMENT_READINGS: (history: unknown) => CellValue[][];
     getGardenSpreadsheet_: () => object;
     getRecentObservations_: (
         spreadsheet: unknown,

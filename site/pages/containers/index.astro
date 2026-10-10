@@ -1,4 +1,5 @@
 ---
+import SiteIcon from "../../components/SiteIcon.astro";
 import SiteLayout from "../../components/SiteLayout.astro";
 import { getDocument } from "../../lib/content.mjs";
 import { getContainers } from "../../lib/containers.mjs";
@@ -7,7 +8,12 @@ import "../../styles/containers.css";
 const containers = await getContainers();
 const containerGuide = await getDocument("docs/containers.md");
 const shared = containers.filter((container) => container.shared);
-const single = containers.filter((container) => !container.shared && !container.pending);
+const houseplants = containers.filter((container) =>
+    container.profiles.some((profile) => profile.group === "houseplants")
+);
+const single = containers.filter(
+    (container) => !container.shared && !container.pending && !houseplants.includes(container)
+);
 const pending = containers.filter((container) => container.pending);
 const botanicalCount = containers.reduce((count, container) => count + container.members.length, 0);
 ---
@@ -18,7 +24,9 @@ const botanicalCount = containers.reduce((count, container) => count + container
     description="The physical planters behind the collection: botanical members, shared care, setup, and one history per container."
 >
     <header class="page-heading">
-        <p class="eyebrow">One pot · one care history</p>
+        <p class="eyebrow">
+            <SiteIcon name="garden-containers" size={30} /> One pot · one care history
+        </p>
         <h1>Containers &amp; their plants.</h1>
         <p class="lede">
             Explore what grows together, the recorded pot setup, and the history shared by its
@@ -34,53 +42,74 @@ const botanicalCount = containers.reduce((count, container) => count + container
         </p>
         <div class="action-row">
             <a class="button button-secondary" href={siteUrl("plants/")}>
-                Browse botanical profiles →
+                <SiteIcon name="botanical" /> Browse botanical profiles →
             </a>
             <a class="button button-secondary" href={siteUrl("tracker/")}>
-                Live weights &amp; observations →
+                <SiteIcon name="tracker" /> Live weights &amp; observations →
             </a>
         </div>
     </header>
     {[
-        { title: "Shared planters", items: shared },
-        { title: "Individual planters", items: single },
-        { title: "Plant identities pending", items: pending },
-    ].map((group) => (
-        <section class="section-block">
-            <h2>{group.title}</h2>
-            <div class="card-grid">
-                {group.items.map((container) => (
-                    <a class="card container-card" href={containerUrl(container.id)}>
-                        <div class="container-card-title">
-                            <img
-                                src={siteUrl(`assets/plant-icons/${container.portraitSlug}.svg`)}
-                                alt=""
-                                width="64"
-                                height="64"
-                                loading="lazy"
-                            />
-                            <h3>{container.name}</h3>
-                        </div>
-                        <div>
-                            <span class="badge badge-id">{container.id}</span>{" "}
-                            <span class="badge badge-label">{container.label}</span>{" "}
-                            <span class="badge">
-                                {container.pending
-                                    ? "Plant identities pending"
-                                    : `${container.members.length} botanical ${container.members.length === 1 ? "profile" : "profiles"}`}
-                            </span>
-                        </div>
-                        {container.shared && (
-                            <p>{container.members.map((member) => member.title).join(" · ")}</p>
-                        )}
-                        <span>Setup, members &amp; care history →</span>
-                    </a>
-                ))}
-            </div>
-        </section>
-    ))}
+        {
+            title: "Shared planters",
+            icon: "planter",
+            items: shared.filter((container) => !houseplants.includes(container)),
+        },
+        { title: "Individual planters", icon: "pot", items: single },
+        { title: "Houseplants", icon: "houseplant", items: houseplants },
+        { title: "Plant identities pending", icon: "identity", items: pending },
+    ]
+        .filter((group) => group.items.length > 0)
+        .map((group) => (
+            <section class="section-block" aria-labelledby={`containers-${group.icon}`}>
+                <div class="section-heading">
+                    <h2 class="icon-heading" id={`containers-${group.icon}`}>
+                        <SiteIcon name={group.icon} size={32} /> {group.title}
+                    </h2>
+                    <span class="badge">{group.items.length} containers</span>
+                </div>
+                <div class="card-grid">
+                    {group.items.map((container) => (
+                        <a class="card container-card" href={containerUrl(container.id)}>
+                            <div class="container-card-title">
+                                <img
+                                    src={siteUrl(
+                                        `assets/plant-icons/${container.portraitSlug}.svg`
+                                    )}
+                                    alt=""
+                                    width="64"
+                                    height="64"
+                                    loading="lazy"
+                                />
+                                <h3>{container.name}</h3>
+                            </div>
+                            <div>
+                                <span class="badge badge-id">{container.id}</span>{" "}
+                                <span class="badge badge-label">{container.label}</span>{" "}
+                                <span class="badge">
+                                    {container.aggregate
+                                        ? "Terrarium · provisional members"
+                                        : container.pending
+                                          ? "Plant identities pending"
+                                          : `${container.members.length} botanical ${container.members.length === 1 ? "profile" : "profiles"}`}
+                                </span>
+                            </div>
+                            {container.members.length > 1 && (
+                                <p>{container.members.map((member) => member.title).join(" · ")}</p>
+                            )}
+                            <span>Setup, members &amp; care history →</span>
+                        </a>
+                    ))}
+                </div>
+            </section>
+        ))}
     <details class="card container-guide" id="container-records">
-        <summary>Understanding shared planters and their care records</summary>
+        <summary>
+            <span class="control-label">
+                <SiteIcon name="info" size={28} /> Understanding shared planters and their care
+                records
+            </span>
+        </summary>
         <div class="prose" set:html={containerGuide.html} />
     </details>
 </SiteLayout>

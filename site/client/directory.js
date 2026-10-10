@@ -35,6 +35,7 @@ export function initializeDirectory() {
             for (const entry of entries) {
                 const isHistorical = entry.dataset["historical"] === "true";
                 const isOverview = entry.dataset["overview"] === "true";
+                const isAggregate = entry.dataset["aggregate"] === "true";
                 const isMatches = terms.every((term) =>
                     (entry.dataset["search"] ?? "").includes(term)
                 );
@@ -42,10 +43,12 @@ export function initializeDirectory() {
                     !isMatches ||
                     (group.value !== "all" &&
                         entry.dataset["group"] !== group.value) ||
-                    (status.value === "current" &&
-                        (isHistorical || isOverview)) ||
-                    (status.value === "overviews" && !isOverview) ||
-                    (status.value === "historical" && !isHistorical);
+                    !matchesRecordFilter(
+                        status.value,
+                        isHistorical,
+                        isOverview,
+                        isAggregate
+                    );
                 if (!entry.hidden) visible += 1;
             }
             if (resultCount)
@@ -69,7 +72,30 @@ export function initializeDirectory() {
         search.addEventListener("input", filterPlants);
         group.addEventListener("change", filterPlants);
         status.addEventListener("change", filterPlants);
+        document
+            .querySelector("[data-directory-reset]")
+            ?.addEventListener("click", () => {
+                search.value = "";
+                group.value = "all";
+                status.value = "current";
+                filterPlants();
+                search.focus();
+            });
         filterPlants();
     }
 }
 initializeDirectory();
+
+/**
+ * @param {string} status
+ * @param {boolean} isHistorical
+ * @param {boolean} isOverview
+ * @param {boolean} isAggregate
+ */
+function matchesRecordFilter(status, isHistorical, isOverview, isAggregate) {
+    if (status === "current")
+        return !isHistorical && (!isOverview || isAggregate);
+    if (status === "overviews") return isOverview;
+    if (status === "historical") return isHistorical;
+    return true;
+}

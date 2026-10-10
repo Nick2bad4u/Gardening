@@ -814,7 +814,7 @@
             border-radius: 1rem;
         }
         & .header-inner {
-            gap: 0.5rem;
+            gap: 0.25rem;
             padding: 0.55rem 0.65rem;
         }
         & .site-brand small {

@@ -14,10 +14,10 @@
    refreshGardenWorkbookPages11To20, refreshGardenWorkbookPages21To30,
    refreshGardenWorkbookPages31To32, refreshGardenWorkbookPages33To34,
    refreshGardenWorkbookPages35To36,
-   installDailyCareDashboard, GARDEN_CYCLE_COMPARISON */
+   installDailyCareDashboard, GARDEN_CYCLE_COMPARISON, GARDEN_ENVIRONMENT_READINGS */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.33.1",
+    version: "5.34.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -915,6 +915,10 @@ function getWebAppBootstrap() {
         refreshedAt,
         timeZone
     );
+    const environmentReads = webEnvironmentReadModelsFromRows_(
+        historyRows,
+        refreshedAt
+    );
     const forecasts = dryDownModelsFromHistory_(
         historyRows,
         trackerValues.map(([id]) => [id]),
@@ -961,6 +965,7 @@ function getWebAppBootstrap() {
                         : Number(daysSinceWater),
                 latestWeight: weightRead.latestWeight,
                 latestWeightAt: weightRead.latestWeightAt,
+                ...environmentReads.get(cleanText_(plantId)),
                 weightSeries: weightRead.weightSeries,
                 dryOrLowestWeight: dryOrLowestWeight
                     ? dryOrLowestWeight.weight
@@ -1059,14 +1064,9 @@ function validateCheckDetails_(eventNames, condition, soilMoisture) {
     if (eventNames.includes("Inspect") && !cleanText_(condition)) {
         throw new Error("Enter plant condition for the Inspect event.");
     }
-    const checkCondition = eventNames.includes("Inspect") ? "" : condition;
-    if (
-        eventNames.includes("Check") &&
-        !cleanText_(checkCondition) &&
-        !cleanText_(soilMoisture)
-    ) {
+    if (eventNames.includes("Check") && !cleanText_(soilMoisture)) {
         throw new Error(
-            "Enter plant condition, soil moisture, or both for the Check event."
+            "Enter soil moisture for the Soil check event. Use Inspect for plant condition."
         );
     }
 }
@@ -1174,6 +1174,11 @@ function prepareWebObservation_(spreadsheet, payload, plantRecords) {
     const medium = cleanText_(payload.medium);
     const notes = cleanText_(payload.notes);
     const weightState = normalizeWeightState_(payload.weightState, weight);
+    // AppSheet retains hidden field values when an event selection changes.
+    // Keep raw values for completed retry matching, but infer only selected care.
+    const explicitCareEvents = ["AppSheet", "AppSheet bulk"].includes(
+        cleanText_(payload.entrySource)
+    );
 
     const eventNames = buildEventNamesFromList_(
         requestedEvents,
@@ -1181,9 +1186,13 @@ function prepareWebObservation_(spreadsheet, payload, plantRecords) {
         weight,
         heightInput,
         widthInput,
-        condition,
+        !explicitCareEvents || requestedEvents.includes("Inspect")
+            ? condition
+            : "",
         notes,
-        soilMoisture
+        !explicitCareEvents || requestedEvents.includes("Check")
+            ? soilMoisture
+            : ""
     );
     validateMeasurementEvents_(eventNames, weight, heightInput, widthInput);
     const measurementMethod = normalizeMeasurementMethod_(
@@ -3611,11 +3620,11 @@ function dryDownPolicyOutput_(plantId, model) {
             date: "",
             early: "",
             late: "",
-            basis: "Terrarium care pending",
+            basis: "Closed-jar terrarium",
             readiness:
-                "Terrarium care pending; inspect enclosure and plant needs",
+                "Closed-jar terrarium; inspect enclosure, substrate and plants",
             inspection:
-                "Terrarium care pending; no weight-based watering trigger",
+                "Closed-jar terrarium; no weight-based watering trigger",
         };
     }
     if (["P28", "P35", "P36"].includes(plantId)) {
@@ -3672,7 +3681,7 @@ function wateringRecommendation_(plantId, model) {
     }
     /** @type {Record<string, string>} */
     const manual = {
-        P38: "Terrarium care pending; inspect enclosure and plant needs. Record humidity and weight as observations; do not use a cactus dry reference, plateau, or full-dry cycle as permission to water.",
+        P38: "Closed-jar terrarium; inspect enclosure, substrate and plants. Record humidity and weight as observations; do not use a cactus dry reference, plateau, or full-dry cycle as permission to water.",
         P21: "Inspect upper 2 in of mix; water when dry there. Do not wait for the whole root ball to become bone dry.",
         P31: "Allow the mix to partially dry before watering and draining. Do not wait for the whole root ball to become bone dry or use a cactus dry reference or plateau as permission to water.",
         P32: "Allow the upper 1–2 in of mix to dry before watering and draining. Do not wait for the whole root ball to become bone dry or use a cactus dry reference or plateau as permission to water.",
@@ -4847,7 +4856,7 @@ function baselineViewRow_(rowNumber, plant) {
         `=XLOOKUP($A${row},'Plant tracker'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Plant tracker'!$AB$2:$AB$${APP_SHEET_BULK_PLANTS.length + 1},"Not recorded")`,
         `=XLOOKUP($A${row},'Plant tracker'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Plant tracker'!$O$2:$O$${APP_SHEET_BULK_PLANTS.length + 1},"")`,
         plant.id === "P38"
-            ? '="Terrarium care pending; inspect enclosure and plant needs"'
+            ? '="Closed-jar terrarium; inspect enclosure, substrate and plants"'
             : `=IFS(V${row}<1,"Collecting weights",Y${row}="","Need a wet weight",W${row}="","Need a completed dry cycle",Z${row}="","Recheck weights",TRUE,"Calibrated")`,
         `=${dryDownLookupFormula_(row, "L")}`,
         `=LET(review,XLOOKUP($A${row},'Plant tracker'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Plant tracker'!$AD$2:$AD$${APP_SHEET_BULK_PLANTS.length + 1},""),IF(review<>"",review,${dryDownLookupFormula_(row, "M")}))`,
@@ -4856,8 +4865,8 @@ function baselineViewRow_(rowNumber, plant) {
         `=IF(OR(AE${row}="",C${row}<=0),"",AE${row}/C${row})`,
         `=IF(MAX(N(O${row}),N(AA${row}))=0,"No anchor",IF(N(O${row})>=N(AA${row}),"Water","Repot"))`,
         `=IFNA(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Water",History!$K$2:$K$5000=$T${row},History!$AJ$2:$AJ$5000<>"Removed")),"")`,
-        `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$5000,History!$H$2:$H$5000},History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Check",History!$H$2:$H$5000<>"",History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE),1,2),"Not recorded")`,
-        `=IFNA(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Check",History!$AJ$2:$AJ$5000<>"Removed")),"")`,
+        `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$5000,History!$H$2:$H$5000},History!$B$2:$B$5000=$A${row},REGEXMATCH(History!$C$2:$C$5000,"^(Check|Inspect)$"),History!$H$2:$H$5000<>"",History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE),1,2),"Not recorded")`,
+        `=IFNA(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},REGEXMATCH(History!$C$2:$C$5000,"^(Check|Inspect)$"),History!$H$2:$H$5000<>"",History!$AJ$2:$AJ$5000<>"Removed")),"")`,
         `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$5000,History!$AH$2:$AH$5000},History!$B$2:$B$5000=$A${row},History!$K$2:$K$5000=$T${row},History!$AH$2:$AH$5000<>"",History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE),1,2),"Not recorded")`,
         `=LET(flags,TEXTJOIN(" · ",TRUE,IF(H${row}<>"Calibrated",H${row},""),IF(AND(J${row}<>"OK",J${row}<>"No trend",J${row}<>"No current-cycle alert",J${row}<>"Owner-confirmed normal"),J${row},""),IF(K${row}="Due now","Remeasure due",""),IF(REGEXMATCH(AG${row},"Overdue"),"Dry forecast overdue","")),IF(flags="","No current flags",flags))`,
         `=IFNA(MAX(FILTER(History!$K$2:$K$5000,History!$B$2:$B$5000=$A${row},History!$AJ$2:$AJ$5000<>"Removed")),1)`,
@@ -8504,17 +8513,36 @@ function prepareHistoryForObservationWrites_(history) {
 }
 
 /**
- * @param {GardenStoredObservationInput} input
+ * @param {GardenStoredObservationInput} originalInput
  * @param {string} requestId
  * @param {number[]} existingRequestRows
  * @param {GardenHistoryRow[]} existingValues
  */
 function existingObservationResult_(
-    input,
+    originalInput,
     requestId,
     existingRequestRows,
     existingValues
 ) {
+    let input = originalInput;
+    // Completed historical Check requests may contain condition text. Compare
+    // their original event shape without making that legacy shape writable.
+    const legacyCondition =
+        cleanText_(input.condition) &&
+        !existingValues.some((row) => row[2] === "Inspect") &&
+        existingValues.some((row) => row[2] === "Check" && cleanText_(row[7]));
+    const legacyAppSheetCheck =
+        ["AppSheet", "AppSheet bulk"].includes(cleanText_(input.entrySource)) &&
+        cleanText_(input.soilMoisture) &&
+        existingValues.some((row) => row[2] === "Check") &&
+        !input.eventNames.includes("Check");
+    if (legacyCondition || legacyAppSheetCheck) {
+        const legacyEvents = legacyCondition
+            ? input.eventNames.filter((event) => event !== "Inspect")
+            : [...input.eventNames];
+        if (!legacyEvents.includes("Check")) legacyEvents.push("Check");
+        input = { ...input, eventNames: legacyEvents };
+    }
     const expectedRows = input.eventNames.length;
     const firstRow = existingRequestRows[0];
     if (
@@ -8546,6 +8574,11 @@ function existingObservationResult_(
         firstRow,
         recordedAt
     );
+    if (legacyCondition) {
+        expectedValues.forEach((row) => {
+            if (row[2] === "Check") row[7] = safeSheetText_(input.condition);
+        });
+    }
     const sameRequest = existingValues.every((row, index) => {
         const expected = expectedValues[index];
         return (
@@ -8609,9 +8642,6 @@ function comparableHistoryValue_(value) {
  */
 function storedObservationRows_(input, requestId, targetRow, recordedAt) {
     const safeCondition = safeSheetText_(input.condition);
-    const conditionEvent = input.eventNames.includes("Inspect")
-        ? "Inspect"
-        : "Check";
     const safeNotes = safeSheetText_(input.notes);
     const safeCurrentLabel = safeSheetText_(input.currentLabel);
     const details = input.details || {};
@@ -8626,7 +8656,7 @@ function storedObservationRows_(input, requestId, targetRow, recordedAt) {
             eventName === "Weigh" ? input.weight : "",
             eventName === "Measure" ? input.height : "",
             eventName === "Measure" ? input.width : "",
-            eventName === conditionEvent ? safeCondition : "",
+            eventName === "Inspect" ? safeCondition : "",
             primaryEvent ? safeNotes : "",
             recordedAt,
             input.potSetup,
@@ -8883,8 +8913,8 @@ function buildEventNamesFromList_(
     if (weight !== "") addUnique("Weigh");
     if (height !== "" || width !== "") addUnique("Measure");
     /* Both outcomes have tests; V8 reports a synthetic alternate branch for this one-sided guard. */
-    if (soilMoisture || (condition && !eventNames.includes("Inspect")))
-        addUnique("Check");
+    if (soilMoisture) addUnique("Check");
+    if (condition) addUnique("Inspect");
     /* Both outcomes have tests; V8 reports a synthetic alternate branch for this one-sided guard. */
     if (eventNames.length === 0 && notes) addUnique("Note");
 
@@ -9830,6 +9860,52 @@ function webHistoryTimestamp_(value) {
         return 0;
     const timestamp = dateSortValue_(value);
     return Math.max(timestamp, 0);
+}
+
+/**
+ * Latest independent environment measurements from the same bootstrap snapshot.
+ * Keep each metric's timestamp: a lux-only reading does not redate older PPFD.
+ * @param {GardenHistoryRow[]} historyRows
+ * @param {Date} now
+ * @returns {Map<string, GardenWebEnvironmentReadModel>}
+ */
+function webEnvironmentReadModelsFromRows_(historyRows, now) {
+    const rows = environmentRows_(historyRows, now, {
+        corrections: historyCorrectionContext_,
+        active: activeHistoryRow_,
+        timestamp: webHistoryTimestamp_,
+    });
+    /** @type {Map<string, GardenWebEnvironmentReadModel>} */
+    const byPlant = new Map();
+    rows.slice(1).forEach((row) => {
+        const plantId = cleanText_(row[1]);
+        const current = byPlant.get(plantId) || {
+            latestRelativeHumidity: "",
+            latestRelativeHumidityAt: "",
+            latestPpfd: "",
+            latestPpfdAt: "",
+            latestLux: "",
+            latestLuxAt: "",
+            latestLightAt: "",
+        };
+        const observedAt = new Date(webHistoryTimestamp_(row[0])).toISOString();
+        if (typeof row[3] === "number") {
+            current.latestPpfd = row[3];
+            current.latestPpfdAt = observedAt;
+            current.latestLightAt = observedAt;
+        }
+        if (typeof row[4] === "number") {
+            current.latestLux = row[4];
+            current.latestLuxAt = observedAt;
+            current.latestLightAt = observedAt;
+        }
+        if (typeof row[5] === "number") {
+            current.latestRelativeHumidity = row[5];
+            current.latestRelativeHumidityAt = observedAt;
+        }
+        byPlant.set(plantId, current);
+    });
+    return byPlant;
 }
 
 /**
@@ -11196,7 +11272,7 @@ function buildEventNames_(
     addUnique(selectedEvent);
     if (weight !== "") addUnique("Weigh");
     if (height !== "" || width !== "") addUnique("Measure");
-    if (condition && selectedEvent !== "Inspect") addUnique("Check");
+    if (condition) addUnique("Inspect");
     if (eventNames.length === 0 && notes) addUnique("Note");
 
     if (eventNames.length === 0) {
@@ -11527,4 +11603,86 @@ function cycleComparisonRows_(history, plantId, potSetup, asOf, helpers) {
                   .map(([, row]) => row)
             : [["", "", "", ""]]),
     ];
+}
+
+/**
+ * Read-only environmental observations. No volatile custom-function input.
+ * @param {GardenHistoryRow[]} history Native History A:AS.
+ * @returns {GardenCell[][]}
+ * @customfunction
+ */
+function GARDEN_ENVIRONMENT_READINGS(history) {
+    return environmentRows_(history, new Date(), {
+        corrections: historyCorrectionContext_,
+        active: activeHistoryRow_,
+        timestamp: webHistoryTimestamp_,
+    });
+}
+
+/**
+ * @param {GardenHistoryRow[]} history
+ * @param {Date} asOf
+ * @param {{corrections: (rows: GardenHistoryRow[]) => {order: number[], superseded: Set<number>}, active: (row: GardenHistoryRow) => boolean, timestamp: (value: unknown) => number}} helpers
+ * @returns {GardenCell[][]}
+ */
+function environmentRows_(history, asOf, helpers) {
+    const context = helpers.corrections(history);
+    return [
+        [
+            "Observed at",
+            "Plant ID",
+            "Event",
+            "Estimated PPFD (µmol/m²/s)",
+            "Illuminance (lux)",
+            "Relative humidity (%)",
+            "Recorded quality",
+            "Recorded method",
+            "Original notes / location",
+            "Observation ID",
+        ],
+        ...history
+            .map((row, index) => ({
+                index,
+                order: context.order[index] ?? index,
+                row,
+                time: helpers.timestamp(row[0]),
+            }))
+            .filter(
+                ({ index, row, time }) =>
+                    helpers.active(row) &&
+                    !context.superseded.has(index) &&
+                    time > 0 &&
+                    time <= asOf.getTime() &&
+                    typeof row[1] === "string" &&
+                    row[1].trim() !== "" &&
+                    ["Humidity", "Light"].includes(String(row[2]))
+            )
+            .sort(
+                (a, b) =>
+                    a.time - b.time || a.order - b.order || a.index - b.index
+            )
+            .map(({ row }) => [
+                row[0] ?? "",
+                row[1] ?? "",
+                row[2] ?? "",
+                row[2] === "Light" ? environmentNumber(row[43]) : "",
+                row[2] === "Light" ? environmentNumber(row[44]) : "",
+                row[2] === "Humidity" ? environmentNumber(row[42], 100) : "",
+                row[28] ?? "",
+                row[34] ?? "",
+                row[8] ?? "",
+                row[26] ?? "",
+            ])
+            .filter((row) => row[3] !== "" || row[4] !== "" || row[5] !== ""),
+    ];
+}
+
+/** @param {GardenCell | undefined} value @param {number} [maximum] */
+function environmentNumber(value, maximum = Infinity) {
+    return typeof value === "number" &&
+        Number.isFinite(value) &&
+        value >= 0 &&
+        value <= maximum
+        ? value
+        : "";
 }

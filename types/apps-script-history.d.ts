@@ -103,6 +103,16 @@ interface GardenWaterRecord
     potSetup: number;
 }
 
+interface GardenWebEnvironmentReadModel {
+    latestLightAt: string;
+    latestLux: GardenOptionalNumber;
+    latestLuxAt: string;
+    latestPpfd: GardenOptionalNumber;
+    latestPpfdAt: string;
+    latestRelativeHumidity: GardenOptionalNumber;
+    latestRelativeHumidityAt: string;
+}
+
 type GardenWebHistoryDetails = Record<
     string,
     | boolean

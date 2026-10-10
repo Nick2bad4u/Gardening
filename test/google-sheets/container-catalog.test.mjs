@@ -12,6 +12,7 @@ import {
     verifyContainerCatalogAppendPreconditions,
 } from "../../scripts/google-sheets/container-catalog.mjs";
 import { getContainers } from "../../site/lib/containers.mjs";
+import { getProfiles } from "../../site/lib/content.mjs";
 import { required } from "../helpers/required.mjs";
 
 function fixture(count = 2) {
@@ -120,6 +121,10 @@ describe("container catalog migration", () => {
         expect.hasAssertions();
 
         const model = await getContainers();
+        const profiles = await getProfiles();
+
+        expect(profiles).toHaveLength(47);
+
         const catalog = normalizeContainerCatalog(model);
         const lithops = catalog.members.filter(
             ({ containerId }) => containerId === "P35"
@@ -152,6 +157,42 @@ describe("container catalog migration", () => {
         expect(
             catalog.containers.find(({ id }) => id === "P35")?.memberSlugs
         ).toHaveLength(2);
+
+        const terrarium = required(
+            catalog.containers.find(({ id }) => id === "P38")
+        );
+
+        expect(terrarium).toMatchObject({
+            aggregate: true,
+            memberSlugs: [],
+            pending: false,
+        });
+        expect(catalog.containers).toHaveLength(36);
+        expect(catalog.members).toHaveLength(43);
+        expect(model.flatMap(({ profiles }) => profiles)).toHaveLength(46);
+
+        const { snapshot } = fixture(catalog.containers.length);
+        for (const [index, container] of catalog.containers.entries()) {
+            required(snapshot.metadata.sheets[index + 1]).properties.title =
+                `${container.id} Plant page`;
+            const row = required(snapshot.trackerValues[index + 1]);
+            row[0] = container.id;
+            row[14] = container.label;
+        }
+        const plan = buildContainerCatalogRequests(snapshot, catalog);
+        const rows = writtenRows(plan);
+        const terrariumRow = required(
+            required(rows[0]).find((row) => row[0]?.stringValue === "P38")
+        );
+
+        expect(terrariumRow[3]?.stringValue).toBe(
+            "Shared aggregate; provisional identification"
+        );
+        expect(terrariumRow[4]?.numberValue).toBe(0);
+        expect(terrariumRow[5]?.stringValue).toBe("");
+        expect(rows[0]).toHaveLength(37);
+        expect(rows[1]).toHaveLength(44);
+        expect(plan.memberRange).toBe("'Container members'!A1:J44");
     }, 20_000);
 
     it("creates one container row for several botanical profiles without changing inputs", () => {
@@ -730,6 +771,89 @@ describe("pending memberless catalog enrollment", () => {
 
         expect(() =>
             buildContainerCatalogAppendRequests(snapshot, catalog)
-        ).toThrow("Existing catalog Integrity bounds changed");
+        ).toThrow("Member mismatch");
+    });
+
+    it("appends an aggregate without inventing botanical members", () => {
+        expect.hasAssertions();
+
+        const { catalog, snapshot } = appendFixture();
+        const aggregate = {
+            ...required(catalog.containers.at(-1)),
+            aggregate: true,
+            memberSlugs: [],
+            pending: false,
+        };
+        catalog.containers[catalog.containers.length - 1] = aggregate;
+        catalog.members = catalog.members.filter(
+            ({ containerId }) => containerId !== aggregate.id
+        );
+        const plan = buildContainerCatalogAppendRequests(snapshot, catalog);
+
+        expect(plan.memberRange).toBe("'Container members'!A1:J4");
+        expect(JSON.stringify(plan.requests)).toContain(
+            "Shared aggregate; provisional identification"
+        );
+        expect(verifyContainerCatalogAppendPreconditions(plan, snapshot)).toBe(
+            true
+        );
+
+        aggregate.pending = true;
+
+        expect(() =>
+            buildContainerCatalogAppendRequests(snapshot, catalog)
+        ).toThrow("Member mismatch");
+    });
+
+    it("appends all actual members of a newly shared container", () => {
+        expect.hasAssertions();
+
+        const { catalog, snapshot } = appendFixture();
+        const addedContainer = required(catalog.containers.at(-1));
+        const firstMember = required(catalog.members.at(-1));
+        addedContainer.memberSlugs.push("second-new-member");
+        catalog.members.push({
+            ...firstMember,
+            inventoryId: "3-2",
+            slug: "second-new-member",
+        });
+        required(snapshot.catalogRows["Container members"]).push([]);
+        const plan = buildContainerCatalogAppendRequests(snapshot, catalog);
+
+        expect(plan.memberRange).toBe("'Container members'!A1:J6");
+
+        const append = plan.requests.find((request) => {
+            const value = JSON.stringify(request);
+            return (
+                "updateCells" in request &&
+                value.includes(`"sheetId":${containerMembersSheetId}`) &&
+                value.includes('"columnIndex":0')
+            );
+        });
+
+        expect(append).toMatchObject({
+            updateCells: {
+                rows: [
+                    {
+                        values: expect.arrayContaining([
+                            {
+                                userEnteredValue: {
+                                    stringValue: firstMember.inventoryId,
+                                },
+                            },
+                        ]),
+                    },
+                    {
+                        values: expect.arrayContaining([
+                            { userEnteredValue: { stringValue: "3-2" } },
+                        ]),
+                    },
+                ],
+                start: { rowIndex: 4 },
+            },
+        });
+        expect(verifyContainerCatalogAppendPreconditions(plan, snapshot)).toBe(
+            true
+        );
     });
 });

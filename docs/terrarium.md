@@ -5,7 +5,9 @@ Last updated: 2026-10-10
 **Container: P38 · Physical label: #12.** Enrolled October 9, 2026. Five owner
 photographs supplied October 10 document its condition after shipping; the
 capture time and exact delivery date are unconfirmed. All planting shares one
-container history. No botanical inventory IDs have been assigned yet.
+container history. [Houseplant-05 — Terrarium](./plants/houseplants/terrarium.md)
+is the Houseplants aggregate profile; its provisional plant groups have no
+separate inventory IDs or weigh-ins.
 
 ## Arrival condition
 
@@ -38,7 +40,20 @@ adjustment, not a verified plant requirement. The meter/app, lamp identity,
 distance, daily light duration, and leaf-level illumination inside are unknown.
 No PPFD or daily light integral is calculated from this external-glass reading.
 
-Jar dimensions, substrate recipe, normal lid routine, and watering history
+The seller's listing, supplied by the owner October 10, gives **6.3 × 3.9 in
+(16 × 10 cm)** for the cork-lidded glass jar. These are seller-listed dimensions,
+not owner measurements; which dimension describes height or width is unverified.
+They do not establish internal planting volume or usable substrate depth.
+
+The seller describes a made-to-order planting of live moss, small terrarium
+plants, natural hardscape, and substrate, with varieties, moss, wood, stones,
+and placement varying between jars. No species list or substrate recipe is
+supplied. Seller care says bright indirect sunlight, lid closed, avoid direct
+sun, and mist only when needed; a care guide is included according to the listing,
+but its contents have not been supplied. This describes the seller's intended
+routine, not the owner's observed lid or watering history.
+
+Substrate recipe, the owner's normal lid routine, and watering history
 remain unrecorded. The photography location is not the reported shelf location.
 Fogging alone does not establish water pooling at the bottom.
 
@@ -47,20 +62,30 @@ Fogging alone does not establish water pooling at the bottom.
 These are photo-based working identifications, not nursery-label confirmations.
 The visible groups do not establish the number of rooted individuals.
 
-| Visible group                             | Working record                                                          | Evidence and uncertainty                                                                                          |
-| ----------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| Green leaves with a pink-red vein network | Probable _Fittonia albivenis_, red-veined nerve plant; cultivar unknown | Leaf shape, netted veins, and hairy trailing stems fit the NC State description; no seller name or label supplied |
-| White-speckled green leaves               | Probable _Hypoestes phyllostachya_, polka-dot plant; cultivar unknown   | Irregular pale spotting supports this working ID; the small, partly obscured plant needs confirmation             |
-| Small rounded leaves on trailing stems    | Unidentified trailing plant                                             | These views do not establish a genus or species                                                                   |
-| Divided green foliage near the glass      | Unidentified fern-like planting                                         | No genus or species assigned                                                                                      |
-| Brown and green surface mat               | Unidentified moss                                                       | Species and the viability of brown portions remain unresolved                                                     |
+| Visible group                             | Working record                                                          | Evidence and uncertainty                                                                                                           |
+| ----------------------------------------- | ----------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Green leaves with a pink-red vein network | Probable _Fittonia albivenis_, red-veined nerve plant; cultivar unknown | Leaf shape, netted veins, and hairy trailing stems fit the NC State description; no seller name or label supplied                  |
+| White-speckled green leaves               | Probable _Hypoestes phyllostachya_, polka-dot plant; cultivar unknown   | Irregular pale spotting supports this working ID; the small, partly obscured plant needs confirmation                              |
+| Small rounded leaves on trailing stems    | Tentative _Pilea_ cf. _depressa_; low confidence                        | Small rounded leaves and trailing growth resemble the RHS description; clearer leaves and nodes are needed to test this comparison |
+| Divided green foliage near the glass      | Unidentified fern-like planting                                         | No genus or species assigned                                                                                                       |
+| Brown and green surface mat               | Unidentified moss                                                       | Species and the viability of brown portions remain unresolved                                                                      |
 
 The two probable names follow the morphology described by
 [NC State Extension for Fittonia](https://plants.ces.ncsu.edu/plants/fittonia-albivenis/)
 and [Hypoestes](https://plants.ces.ncsu.edu/plants/hypoestes-phyllostachya/).
-The collection remains at 43 botanical profile groups and 45 active profile
-pages while P38's membership is unresolved. These appearance groups do not
-create separate pots, labels, or weigh-ins.
+The trailing plant's best current comparison is _Pilea depressa_, which the
+[RHS describes](https://www.rhs.org.uk/plants/pilea/how-to-grow-pilea) as having
+small rounded green leaves and cascading growth. That resemblance is an
+inference from these photographs, weaker than the two probable IDs above;
+no seller confirmation or cultivar name is available. A sharp close-up with a
+scale showing leaf edges, upper and lower surfaces, and paired nodes would help.
+The divided foliage needs a whole frond and underside view; the moss needs
+close-ups of shoots and leaves before narrowing its identity. No fern or moss
+species is assigned merely because it is common in terrariums.
+
+The collection retains 43 botanical profile groups and now has 46 active
+profile pages, including three aggregate overviews. These appearance groups do
+not create separate pots, labels, botanical member records, or weigh-ins.
 
 ## Settling-in care
 
@@ -125,9 +150,10 @@ assigned from its color.
 
 ### Trailing plant and divided foliage
 
-![Unidentified small-leaved trailing stems across the dark medium, with fern-like foliage and moss in P38](../assets/nursery-labels/2026-10-10-p38-terrarium-arrival-trailing-plant.jpg)
+![Small-leaved trailing stems tentatively compared with Pilea depressa across the dark medium, with unidentified fern-like foliage and moss in P38](../assets/nursery-labels/2026-10-10-p38-terrarium-arrival-trailing-plant.jpg)
 
-The trailing plant and fern-like planting need clearer identification evidence.
+The tentative Pilea comparison and unidentified fern-like planting need clearer
+identification evidence.
 
 ### Red-veined plant detail
 
@@ -138,9 +164,14 @@ or a particular recovery time.
 
 ## Sources
 
+- Seller listing text supplied by the owner October 10, 2026: 6.3 × 3.9 in
+  (16 × 10 cm), cork-lidded glass jar, variable live planting and hardscape,
+  and the seller's care instructions. Seller identity and listing URL were not
+  supplied; the dimensions and product claims have not been independently checked.
 - Owner's five photographs and accompanying shipping-condition, humidity-sensor,
   fogging, and seller-guidance reports, supplied October 10, 2026; indexed in the
   [acquisition evidence archive](../assets/nursery-labels/README.md#october-10-terrarium-arrival-photographs).
 - [NC State Extension: _Fittonia albivenis_](https://plants.ces.ncsu.edu/plants/fittonia-albivenis/) — identification features; no generic pot-watering schedule is transferred to this jar.
 - [NC State Extension: _Hypoestes phyllostachya_](https://plants.ces.ncsu.edu/plants/hypoestes-phyllostachya/) — leaf spotting and species description supporting a probable identification.
+- [RHS: How to grow pilea](https://www.rhs.org.uk/plants/pilea/how-to-grow-pilea) — small rounded leaves and trailing habit of _Pilea depressa_; a comparison for the tentative identification, not confirmation of this specimen.
 - [RHS: Bottle gardens and terrariums](https://www.rhs.org.uk/plants/types/houseplants/bottle-gardens-and-terrariums) — indirect light, moisture retention, sparing watering, excess-condensation management, and dead-material removal.

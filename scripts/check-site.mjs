@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readdir, readFile, stat } from "node:fs/promises";
 import * as path from "node:path";
 
+import { getContainers } from "../site/lib/containers.mjs";
 import {
     getEquipmentDocs,
     getGuides,
@@ -13,6 +14,7 @@ import { renumberedPots } from "../site/lib/legacy.mjs";
 import { archivedAmazonPlan } from "../site/lib/old-plans.mjs";
 import { getReports } from "../site/lib/reports.mjs";
 import { siteApps } from "../site/lib/site-apps.mjs";
+// eslint-disable-next-line import-x/max-dependencies -- Publication checks read the same validated container catalog as the renderer.
 import { isProfileData, isRecord, readJson } from "./build-data.mjs";
 
 /** @typedef {{ slug: string; title: string }} ProfileIdentity */
@@ -267,6 +269,12 @@ async function main() {
         isProfileData
     );
     const pots = new Set(Object.keys(mapping));
+    const containers = await getContainers();
+    const aggregateSlugs = new Set(
+        containers
+            .filter((container) => container.aggregate)
+            .map((container) => container.overview?.slug)
+    );
     const required = [
         indexFilename,
         "404.html",
@@ -343,6 +351,19 @@ async function main() {
                 attribute.name === "data-plant-discovery" &&
                 attribute.value === profile.slug
         );
+        if (aggregateSlugs.has(profile.slug)) {
+            assert.equal(
+                discovery.length,
+                0,
+                `Aggregate ${profile.slug} must not imply a single botanical anatomy.`
+            );
+            assert.equal(
+                profile.photoCount,
+                0,
+                `Aggregate ${profile.slug} has no reviewed botanical reference archive.`
+            );
+            continue;
+        }
         assert.equal(
             discovery.length,
             1,

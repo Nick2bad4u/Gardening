@@ -30,7 +30,7 @@ Quick log is hidden for compatibility; use the mobile logger or AppSheet for rou
 - In the phone logger, **Observed at** uses the current time when you save or queue an entry. Edit it to record earlier care, or choose **Use current time** to resume automatic timing. Queued entries and retries keep their original observation time.
 - **Pot setup** identifies the whole weighed configuration. It is not the pot size in inches.
 - **Notes** hold useful details not covered by structured fields. In a multi-event save, the note is attached to the first generated event rather than copied onto every row.
-- **Plant condition**, **Soil moisture**, and **Medium / substrate** are different fields. New visual condition observations use Inspect; soil moisture uses Check. Legacy condition-only Check records remain valid. The growing-medium description belongs to Repot.
+- **Plant condition**, **Soil moisture**, and **Medium / substrate** are different fields. New above-ground condition observations use Inspect; soil moisture uses Soil check (stored as Check). Historical condition-only Check records and their supported corrections remain valid. The growing-medium description belongs to Repot.
 - A shared planter receives one observation identity per event. Weigh the
   whole container and name the relevant member in Notes when needed.
 
@@ -51,7 +51,7 @@ The 5.33.0 single-plant form exposes these 15 event choices. Fields listed as re
 | Humidity      | You have a current hygrometer reading for this container or enclosure.                | Requires a relative-humidity percentage from 0 through 100, including decimals. Stores its own measured event; it does not imply soil moisture, Water, or Weigh.                                |
 | Inspect       | You inspected the plant's visible condition.                                          | Requires descriptive Plant condition. Stores Observed / Observed provenance; does not establish root-zone moisture.                                                                             |
 | Light reading | You have an app PPFD estimate, meter illuminance reading, or both.                    | Stores canonical Light, with PPFD in µmol/m²/s and illuminance in lux. At least one value is required; finite values of zero or greater are valid.                                              |
-| 🔎 Check      | You checked soil moisture; legacy condition-only Check remains supported.             | Soil moisture has its own field. Record only what was observed; selecting Check alone does not prove verified dryness.                                                                          |
+| 🔎 Soil check | You checked soil moisture.                                                            | Requires soil moisture; stored as Check. Historical condition-only Check records remain readable and correctable. Selecting Check alone does not prove verified dryness.                        |
 | 🔄 Rotation   | You turned the pot.                                                                   | Records clockwise-equivalent degrees, default 90. The detailed server accepts a value greater than 0 and at most 360. Record the actual turn.                                                   |
 | 🧽 Clean      | You cleaned something associated with this pot.                                       | Lightweight dated event; explain what was cleaned in Notes. No automatic treatment or weight correction follows.                                                                                |
 | ✂️ Prune      | You removed or trimmed plant material.                                                | Lightweight dated event; describe what was removed and why in Notes. It does not automatically adjust a weight baseline.                                                                        |
@@ -65,7 +65,7 @@ The 5.33.0 single-plant form exposes these 15 event choices. Fields listed as re
 
 **Note** can appear in History even though it is not one of the 15 selectable event buttons. If an otherwise event-free submission contains only notes, the writer creates a Note record. Notes entered alongside a selected action stay on the first event; they do not necessarily create a separate Note row.
 
-The writer also adds appropriate events from entered data: a weight adds Weigh and dimensions add Measure. Soil moisture adds Check; a legacy condition-only submission without Inspect can still add Check. Selecting Inspect keeps its condition on the Inspect row rather than creating a duplicate condition Check. Entering a weight never automatically adds Water. An entirely empty submission is rejected.
+The mobile writer also adds appropriate events from entered data: a weight adds Weigh, dimensions add Measure, soil moisture adds Check, and plant condition adds Inspect. Each field stays on its own event row. New AppSheet condition and moisture fields apply only to their selected actions. Entering a weight never automatically adds Water. An entirely empty submission is rejected.
 
 This means one click on Save is not always one History row. Review the event summary rather than interpreting several rows with the same save time as duplicates.
 
@@ -156,12 +156,16 @@ Quick log dimensions are currently recorded with Estimated quality and Unspecifi
 
 ### Inspect and Check
 
-Use **Inspect** for a visual condition observation, such as firm new leaves,
+Use **Inspect** for an above-ground condition observation, such as firm new leaves,
 color changes, damage, or the condition of a named shared-planter member.
 **Plant condition is required**; provenance is **Observed / Observed**. Use
-**Check** for the separate soil-moisture observation. Selecting both records
-separate events. Historical and legacy condition-only Check records remain
-valid; do not relabel or rewrite them as Inspect.
+**Soil check** for the separate soil-moisture observation; a soil-moisture value
+is required for a new Check. Selecting both records separate events: condition
+stays on Inspect and soil moisture stays on Check. Historical condition-only
+Checks, their completed retries, and supported corrections remain valid; do
+not relabel or rewrite them as Inspect. AppSheet uses only the condition or
+soil-moisture field for its selected action, so a hidden value left by an earlier
+selection does not create another care event.
 
 The soil-moisture choices exposed by the detailed form are **Dry**, **Slightly moist**, **Moist**, **Wet**, and **Unknown**. These describe an observation, not a sensor reading automatically inferred from pot weight. Use Unknown when appropriate; a blank or Unknown field does not mean Dry.
 

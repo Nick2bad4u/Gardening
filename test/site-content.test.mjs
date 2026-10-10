@@ -122,9 +122,9 @@ describe("field guide source rendering", () => {
         const profiles = await getProfiles();
         const archived = await getOldPlans();
 
-        expect(profiles).toHaveLength(46);
+        expect(profiles).toHaveLength(47);
         expect(profiles.filter((profile) => !profile.historical)).toHaveLength(
-            45
+            46
         );
         expect(
             profiles.some((profile) =>
@@ -171,6 +171,33 @@ describe("field guide source rendering", () => {
         ]);
     });
 
+    it("keeps the terrarium as one qualified Houseplants profile with local arrival evidence", async () => {
+        expect.hasAssertions();
+
+        const profiles = await getProfiles();
+        const members = profiles.filter(
+            (profile) => profile.trackerId === "P38"
+        );
+
+        expect(members).toHaveLength(1);
+
+        const profile = members[0];
+
+        expect(profile).toMatchObject({
+            group: "houseplants",
+            hasInlinePhotos: true,
+            historical: false,
+            inventoryId: "Houseplant-05",
+            slug: "terrarium",
+        });
+        expect(profile?.drawerLabel.primary).toBe("#12");
+        expect(profile?.identificationMarkdown).toMatch(
+            /probable.*tentative.*unidentified/iv
+        );
+        expect(profile?.bodyHtml).toContain("arrival-overview.jpg");
+        expect(profile?.allPhotos).toHaveLength(0);
+    });
+
     it("keeps the tiny-planter overview and three qualified groups on one shared history with original photo provenance", async () => {
         expect.hasAssertions();
 
@@ -196,7 +223,7 @@ describe("field guide source rendering", () => {
         ).toStrictEqual(
             slugs.toSorted((left, right) => left.localeCompare(right))
         );
-        expect(potIds.size).toBe(35);
+        expect(potIds.size).toBe(36);
         expect(
             members
                 .map((profile) => profile.inventoryId)

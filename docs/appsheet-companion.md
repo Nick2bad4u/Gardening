@@ -16,6 +16,49 @@ contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
 
+## October 10 observation and terrarium refresh — prepared
+
+The following form changes are prepared against a freshly read **AppSheet
+1.100124** definition. They are not saved to production yet. Deploy and verify
+the corresponding logger behavior before applying them; a source edit alone
+does not update the app.
+
+New **Inspect** entries describe the plant above the soil: leaves, stems,
+posture, damage, and other visible condition. New **Soil check** entries retain
+the canonical event name **Check** and record soil moisture only. Selecting
+both creates separate observations. Historical Check rows, including their
+recorded plant condition, remain unchanged and visible in read-only history.
+
+| Staging field                  | Property      | Planned expression                                       |
+| ------------------------------ | ------------- | -------------------------------------------------------- |
+| `App entries[Plant condition]` | `Show_If`     | `IN("Inspect", [Events])`                                |
+| `App entries[Soil moisture]`   | `Required_If` | `IN("Check", [Events])`                                  |
+| `App entries[Soil moisture]`   | `Valid_If`    | `OR(NOT(IN("Check", [Events])), LEN(TRIM([_THIS])) > 0)` |
+| `App bulk[Plant condition]`    | `Show_If`     | `[Round action] = "Inspect"`                             |
+| `App bulk[Soil moisture]`      | `Required_If` | `[Round action] = "Check"`                               |
+| `App bulk[Soil moisture]`      | `Valid_If`    | `OR([Round action] <> "Check", LEN(TRIM([_THIS])) > 0)`  |
+
+Existing Inspect condition requirements and soil-field visibility already
+match this separation. Preserve the event choices, creation-only keys, retry
+behavior, schema bindings, and all other field settings. The intake bridge
+must prevent retained hidden condition/moisture values from creating an
+unselected event when the operator changes the selected action.
+
+The maintained [Terrarium profile](./plants/houseplants/terrarium.md) now records
+**Houseplant-05 / P38 / #12** as an active mixed-houseplant aggregate. Probable
+_Fittonia albivenis_ and _Hypoestes phyllostachya_, tentative _Pilea_ cf.
+_depressa_, unidentified fern-like foliage, and moss remain qualified
+identifications. The aggregate adds no separate botanical member rows, pots,
+or AppSheet observations. Seller-listed jar dimensions do not establish an
+owner measurement, and the existing P38 care history remains attached to the
+same container.
+
+The new workbook **Light & humidity** view and **Environment data** helper
+are not AppSheet tables. Do not add or regenerate AppSheet datasets for these
+workbook-only views. Canonical/helper tables remain read-only; only App entries
+and App bulk accept care staging. Portrait revision **f8ac927063b98a47** remains
+unchanged.
+
 ## October 10 terrarium artwork rollout
 
 **AppSheet 1.100124** is saved and freshly reloaded with **No issues found** and
@@ -120,6 +163,9 @@ The private saved-definition and UI receipts are
 `.cache/inspect-light-20261009/`.
 
 ## October 9 terrarium and humidity
+
+This dated enrollment record is historical. The October 10 terrarium profile
+and refresh above supersede its pending-photo and profile-allocation status.
 
 Production logger **5.32.1 / immutable version 104** and the verified workbook support
 **36 containers: P01–P32, P35–P38**. **P38 / #12 — Terrarium** has pending
@@ -357,7 +403,7 @@ disconnected from AppSheet.
 | Plants            | Primary  | Image-first list with watering age, pot label, current weight, height, width, field guide, and care action. |
 | History           | Primary  | Four-panel care overview with recent activity, watering age, activity counts, and data-quality flags.       |
 | Log               | Primary  | Full event-aware form with plant-name, pot-label, and Plant-ID lookup for every supported care event.       |
-| Bulk Log          | Primary  | Fast collection-wide Water, Weigh, combined, Rotation, Check, Clean, Prune, Pest, or Other entry.           |
+| Bulk Log          | Primary  | Fast collection-wide Water, Weigh, combined, Rotation, Inspect, Check, Clean, Prune, Pest, or Other entry.  |
 | Insights          | Primary  | Ten collection-wide chart and forecast panels described below.                                              |
 | Watering forecast | Menu     | Dry/wet calibration, recheck windows, conditional water dates, and plant-specific readiness guidance.       |
 | Bulk rounds       | Menu     | Submitted bulk-round rows and their save receipts.                                                          |
@@ -444,9 +490,10 @@ weights remain `Routine` in the append-only ledger. Current-cycle analytics use
 the latest Water, treat its same-save weight—or otherwise the first positive
 weight within five days—as Wet, and use the completed Dry reading immediately
 before that Water as the dry anchor. Per-plant history displays the canonical
-stored state, so refreshing formulas never relabels old observations. Logger
-5.32.0 keeps P38 in manual care review: pending plant identities and enclosure
-setup do not support a dry/plateau/full-dry watering trigger.
+stored state, so refreshing formulas never relabels old observations. P38's
+[mixed terrarium profile](./plants/houseplants/terrarium.md) retains manual care
+review: provisional member identities, a humid enclosure, and unresolved
+root-zone moisture do not support a cactus dry/plateau/full-dry watering trigger.
 
 Rotation is available in Log and Bulk Log. It accepts 1–360 degrees
 and defaults to 90. The degree value is archived in `History!AN:AN`, displayed

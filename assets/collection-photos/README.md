@@ -105,7 +105,10 @@ The subsequent September 23 split into probable _Lithops lesliei_ and probable _
 
 The five terrarium arrival photographs supplied October 10, 2026 are indexed as
 [local acquisition evidence](../nursery-labels/README.md#october-10-terrarium-arrival-photographs)
-and shown in the [P38 / #12 arrival record](../../docs/terrarium.md). P38 has no
-allocated botanical profile yet, so these photographs do not create a fictitious
-profile or Gyazo Collection in this manifest. Its remote capture and placement
-counts are unchanged.
+and shown in the [P38 / #12 arrival record](../../docs/terrarium.md) and
+[Houseplant-05 aggregate profile](../../docs/plants/houseplants/terrarium.md).
+The terrarium now has an active Houseplants profile and an explicit remote-photo
+pending record, bringing the manifest to 47 profile records. This pending state
+only describes remote publication; it does not mean the terrarium is unreceived.
+No Gyazo Collection or capture was invented. Existing remote capture and placement
+counts are unchanged, and the local evidence files remain untouched.

@@ -1,4 +1,5 @@
 ---
+import SiteIcon from "../components/SiteIcon.astro";
 import SiteLayout from "../components/SiteLayout.astro";
 import { siteUrl } from "../lib/routes.mjs";
 ---
@@ -9,13 +10,17 @@ import { siteUrl } from "../lib/routes.mjs";
     noindex
 >
     <header class="page-heading">
-        <p class="eyebrow">FIND YOUR WAY</p>
+        <p class="eyebrow">
+            <SiteIcon name="garden-search" size={30} /> FIND YOUR WAY
+        </p>
         <h1>Search the garden.</h1>
         <p class="lede">Look up a plant, pot label, care topic, or piece of equipment.</p>
     </header>
     <form role="search" class="directory-toolbar" id="site-search-form" action={siteUrl("search/")}>
         <label for="site-search">
-            Search plants, guides, and equipment
+            <span class="control-label">
+                <SiteIcon name="search" /> Search plants, guides, and equipment
+            </span>
             <input
                 id="site-search"
                 name="q"
@@ -25,7 +30,7 @@ import { siteUrl } from "../lib/routes.mjs";
             />
         </label>
         <button class="button" type="submit">
-            Search
+            <SiteIcon name="search" /> Search
         </button>
     </form>
     <p id="search-status" class="result-count" role="status" aria-live="polite">

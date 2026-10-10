@@ -2,7 +2,7 @@
 
 Last updated: 2026-10-10
 
-These **46 pages cover 45 active profile records and one historical record, across 36 tracker allocations**. Each profile combines identification, botanical background, collection photographs, and practical care for its current pot. Use the guides with plant-condition and moisture checks rather than a fixed watering calendar.
+These **47 pages cover 46 active profile records and one historical record, across 36 tracker allocations**. Each profile combines identification, botanical background, collection photographs, and practical care for its current pot. Use the guides with plant-condition and moisture checks rather than a fixed watering calendar.
 
 **New acquisition:** [Arctic Ice echeveria](./succulents/echeveria-arctic-ice.md)
 is enrolled as **Succulent-17 / #11 / P37**, acquired October 6, 2026 at Home
@@ -26,12 +26,13 @@ the best current match and the evidence that could confirm or change it. The
 publication years, warnings, and orientation instructions.
 
 The [container guide](../containers.md) separates 43 current botanical profile
-groups from two whole-planter overviews. Each member of a shared planter has
-its own profile while retaining one P-ID and care history. Use the
+groups from three whole-planter overviews. Documented botanical members of shared
+planters have their own profiles; the terrarium retains provisional identities
+within its overview. Each container keeps one P-ID and care history. Use the
 [container directory](https://nick2bad4u.github.io/Gardening/containers/)
 to browse those relationships and the setup of the complete pot.
 
-P38 / #12 is the [Terrarium container](https://nick2bad4u.github.io/Gardening/containers/P38/). Its [October 10 arrival record](../terrarium.md) contains five owner-supplied photographs and qualified visual identifications. Botanical membership and profile allocation remain pending seller details; it adds one tracked container and no botanical profile.
+P38 / #12 is the [Terrarium container](https://nick2bad4u.github.io/Gardening/containers/P38/). Its [October 10 arrival record](../terrarium.md) contains five owner-supplied photographs and qualified visual identifications. Its [Houseplants overview](./houseplants/terrarium.md), Houseplant-05, records probable Fittonia and Hypoestes, tentative Pilea cf. depressa, and unidentified fern-like foliage and moss. It adds an aggregate profile without increasing the botanical member count.
 
 ## Starter cactus group
 
@@ -122,11 +123,12 @@ The owner bought both Lithops nursery pots and the split rock at Home Depot, How
 
 ## Houseplants
 
-| Inventory ID  | Label ID | Profile                                                                                                         | Identification status                                    |
-| ------------- | -------- | --------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| Houseplant-01 | `#3`     | [Money tree (_Pachira glabra_)](./houseplants/pachira-glabra.md)                                                | Genus tag; working species ID                            |
-| Houseplant-03 | `#7`     | [Peperomia Bicolor (_Peperomia obtusifolia_ 'Obtipan Bicolor')](./houseplants/peperomia-obtipan-bicolor.md)     | Nursery-labeled cultivar; P31; purchased 2026-09-20      |
-| Houseplant-04 | `#8`     | [Tricolor oyster plant (_Tradescantia spathacea_ 'Tricolor')](./houseplants/tradescantia-spathacea-tricolor.md) | Nursery-labeled under _Rhoeo_; P32; purchased 2026-09-20 |
+| Inventory ID  | Label ID | Profile                                                                                                         | Identification status                                         |
+| ------------- | -------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Houseplant-01 | `#3`     | [Money tree (_Pachira glabra_)](./houseplants/pachira-glabra.md)                                                | Genus tag; working species ID                                 |
+| Houseplant-03 | `#7`     | [Peperomia Bicolor (_Peperomia obtusifolia_ 'Obtipan Bicolor')](./houseplants/peperomia-obtipan-bicolor.md)     | Nursery-labeled cultivar; P31; purchased 2026-09-20           |
+| Houseplant-04 | `#8`     | [Tricolor oyster plant (_Tradescantia spathacea_ 'Tricolor')](./houseplants/tradescantia-spathacea-tricolor.md) | Nursery-labeled under _Rhoeo_; P32; purchased 2026-09-20      |
+| Houseplant-05 | `#12`    | [Terrarium](./houseplants/terrarium.md)                                                                         | Aggregate; photo-based probable and tentative identities; P38 |
 
 Peperomia Bicolor and Tricolor oyster plant were purchased at Carlson's Greenhouses on September 20 in six-inch nursery pots. Their last recorded placement is the room-side floor near the money tree. Separate eight-inch Amazon Basics pots and the living-room arrangement are planned; the profiles detail the proposed mix and lighting trial. Completed repots, placement, and leaf-height exposure remain unrecorded.
 

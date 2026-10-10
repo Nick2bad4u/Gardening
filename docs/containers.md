@@ -2,9 +2,9 @@
 
 Last updated: 2026-10-10
 
-The collection has **36 tracked containers**, including **four shared
-planters**. Its **45 current profile pages** comprise **43 botanical profile
-groups and two whole-planter overviews**. One additional historical profile is
+The collection has **36 tracked containers**, including **five shared
+plantings**. Its **46 current profile pages** comprise **43 botanical profile
+groups and three whole-planter overviews**. One additional historical profile is
 kept for the removed silken pincushion. A profile may cover a clump or several
 heads of the same kind of plant.
 
@@ -13,9 +13,9 @@ to see what shares a pot, then open a member's profile for identification and
 botanical care. Container pages bring the members, shared care notes, setup
 context, and links to the existing observation history together.
 
-## Terrarium — arrival evidence, membership pending
+## Terrarium — Houseplants aggregate with provisional identities
 
-**P38 / #12 — Terrarium**, enrolled October 9, 2026, retains one container history and no allocated botanical profiles. Five owner-supplied photographs received October 10 show a rounded glass jar with a cork lid and several plant forms. The [terrarium arrival record](./terrarium.md) preserves the qualified visual identifications, shipping-condition evidence, and owner-reported shelf placement near the cactus grow area; membership awaits seller details. The lid's presence does not establish its normal routine, drainage, substrate recipe, or dimensions.
+**P38 / #12 — Terrarium**, enrolled October 9, 2026, retains one container history and an aggregate [Houseplants profile, Houseplant-05](./plants/houseplants/terrarium.md). No separate botanical member profiles are allocated. Five owner-supplied photographs received October 10 show a rounded glass jar with a cork lid and several plant forms. The [terrarium arrival record](./terrarium.md) preserves the qualified visual identifications, shipping-condition evidence, and owner-reported shelf placement near the cactus grow area; the seller gives no species list. Glass jar with cork lid; seller-listed 6.3 × 3.9 in (16 × 10 cm); dimension orientation unverified. Seller care says keep the lid closed and mist only when needed. The owner's normal lid routine, drainage, and substrate recipe remain unverified.
 
 ## Which identifier means what?
 
@@ -30,7 +30,7 @@ A P-ID stays with the planting when it is repotted. Each setup records the pot
 and growing mix used at that stage, so its history can be followed across
 changes in containers.
 
-## The four shared containers
+## The five shared plantings
 
 | Container                                                                                         | Current botanical members                                                                                                                                                                                                                                   | Overview                                                                                                                                                                                                |
 | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -38,11 +38,12 @@ changes in containers.
 | [P20 / #2 — shared succulents](https://nick2bad4u.github.io/Gardening/containers/P20/)            | [Pulido's echeveria](./plants/succulents/echeveria-pulidonis.md), [elephant bush](./plants/succulents/portulacaria-afra.md), [silver teaspoons](./plants/succulents/kalanchoe-bracteata.md), and [copper spoons](./plants/succulents/kalanchoe-orgyalis.md) | Four member profiles; one shared root volume                                                                                                                                                            |
 | [P30 / #6 — tiny mixed succulent planter](https://nick2bad4u.github.io/Gardening/containers/P30/) | [Pale rosette echeveria](./plants/succulents/tiny-planter-echeveria.md), [coppertone-type sedum](./plants/succulents/tiny-planter-coppertone-sedum.md), and [paddle kalanchoe](./plants/succulents/tiny-planter-paddle-kalanchoe.md)                        | Three probable botanical groups plus the [whole-planter overview](./plants/succulents/tiny-mixed-succulent-planter.md); the seller's five-plant description does not establish five verified identities |
 | [P35 / #9 — Lithops shared planter](https://nick2bad4u.github.io/Gardening/containers/P35/)       | [Probable _Lithops lesliei_](./plants/succulents/lithops-lesliei.md), tan/brown, and [probable _Lithops salicola_](./plants/succulents/lithops-salicola.md), grey/green                                                                                     | Two probable species groups plus the [whole-planter overview](./plants/succulents/lithops-shared-planter.md); four visible heads from two nursery pots, with root connections unverified                |
+| [P38 / #12 — Terrarium](https://nick2bad4u.github.io/Gardening/containers/P38/)                   | Provisional Fittonia and Hypoestes, tentative Pilea cf. depressa, unidentified fern-like foliage and moss; no counted botanical members                                                                                                                     | [Houseplants aggregate overview](./plants/houseplants/terrarium.md); all visible plant groups share one jar and history                                                                                 |
 
-Member profiles explain each plant's identification and care. The two overview
-pages describe their combined plantings. Another 31 containers each have one
-current botanical profile; P38 is the remaining container, with botanical
-membership and profile allocation pending. Together these make 36 tracked containers.
+Member profiles explain each plant's identification and care. Three overview
+pages describe combined plantings, including P38's provisional groups without
+separate member records. Another 31 containers each have one current botanical
+profile. Together these make 36 tracked containers.
 
 ## Record care once, describe members separately
 
@@ -74,7 +75,7 @@ Two spreadsheet views make the collection easier to browse:
   shared care notes, setup context, and page links. Current setup, pot details,
   medium, last watering, and weight fields reference the existing `Plant tracker`.
 - **Container members — 43 data rows:** one row per current botanical profile
-  group, linked to its container, profile, and workbook page. The two aggregate
+  group, linked to its container, profile, and workbook page. The three aggregate
   overviews and the removed historical profile are excluded from member counts.
 
 Use **Log Care** to record observations. These spreadsheet views bring the

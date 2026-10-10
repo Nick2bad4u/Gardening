@@ -4551,6 +4551,59 @@ async function restoreLoggerMocks() {
 describe("garden logger humidity observations", () => {
     afterEach(restoreLoggerMocks);
 
+    it.each(/** @type {const} */ (["", 50]))(
+        "marks the terrarium dry-down rate as not applicable with cached rate %s while retaining recorded watering intervals",
+        (averageDryDownGramsPerDay) => {
+            expect.hasAssertions();
+
+            const data = workflowBootstrap();
+            /** @type {import("../logger-fixtures.d.ts").PlantSummary} */
+            const plant = {
+                ...required(data.plants[0]),
+                activitySummary: {
+                    averageDryDownGramsPerDay,
+                    averageWaterIntervalDays: 10,
+                    dryDownDays: averageDryDownGramsPerDay === "" ? "" : 2,
+                    dryDownReadingCount: 3,
+                    recentDryDownDays: 1,
+                    recentDryDownGramsPerDay: 30,
+                    totalMeasurements: 1,
+                    totalWaterings: 2,
+                    totalWeights: 3,
+                    waterIntervalCount: 1,
+                },
+                id: "P38",
+            };
+            const { window } = createLoggerWindow({
+                bootstrapData: { ...data, plants: [plant] },
+            });
+            const metrics = [
+                ...window.document.querySelectorAll("#plantSummary .metric"),
+            ];
+            const loss = required(
+                metrics.find((metric) =>
+                    metric.textContent.includes("Cycle avg loss")
+                )
+            );
+            const interval = required(
+                metrics.find((metric) =>
+                    metric.textContent.includes("Avg water interval")
+                )
+            );
+
+            expect(loss.querySelector(".metric-value")?.textContent).toBe(
+                "N/A"
+            );
+            expect(loss.textContent).toContain(
+                "Closed jar — no dry-down model"
+            );
+            expect(loss.textContent).not.toMatch(
+                /50 g\/day|Needs measured dry-down|Over 2/v
+            );
+            expect(interval.textContent).toContain("10 days");
+        }
+    );
+
     it("keeps terrarium measurements while withholding dry baselines and forecast prompts even from a stale cache", () => {
         expect.hasAssertions();
 
@@ -4587,7 +4640,12 @@ describe("garden logger humidity observations", () => {
             /Dry-check window|Needs watering-cycle data|Tomorrow/v
         );
         expect(summary.textContent).not.toMatch(
-            /Last completed dry|No completed cycle yet|vs last dry/v
+            /No completed cycle yet|vs last dry/v
+        );
+        expect(summary.textContent).toContain("Last completed dry");
+        expect(summary.textContent).toContain("N/A");
+        expect(summary.textContent).toContain(
+            "Enclosure — no completed-dry reference"
         );
         expect(chart.querySelectorAll(":scope .chart-dry")).toHaveLength(0);
         expect(chart.querySelectorAll(":scope .chart-point")).toHaveLength(4);
@@ -4946,7 +5004,7 @@ describe("garden logger bootstrap cache and connection recovery", () => {
         expect(
             queryElement(window.document, "#connectionStatus", HTMLElement)
                 .textContent
-        ).toBe("Connected · logger fresh");
+        ).toBe("Connected · Logger fresh");
 
         const storedBootstrap = parseStoredRecord(
             window.localStorage.getItem("gardenLoggerBootstrapV4")
@@ -5002,7 +5060,7 @@ describe("garden logger bootstrap cache and connection recovery", () => {
         expect(
             queryElement(window.document, "#connectionStatus", HTMLElement)
                 .textContent
-        ).toBe("Connected · logger test");
+        ).toBe("Connected · Logger test");
 
         const storedBootstrap = parseStoredRecord(
             window.localStorage.getItem("gardenLoggerBootstrapV4")
@@ -5043,7 +5101,7 @@ describe("garden logger bootstrap cache and connection recovery", () => {
         expect(
             queryElement(window.document, "#connectionStatus", HTMLElement)
                 .textContent
-        ).toBe("Connected · logger test");
+        ).toBe("Connected · Logger test");
 
         vi.advanceTimersByTime(20_000);
 
@@ -5139,14 +5197,14 @@ describe("garden logger bootstrap cache and connection recovery", () => {
         expect(
             queryElement(window.document, "#connectionStatus", HTMLElement)
                 .textContent
-        ).toBe("Connected · logger test");
+        ).toBe("Connected · Logger test");
 
         required(attempts[1]).failure({ message: "Late failure" });
 
         expect(
             queryElement(window.document, "#connectionStatus", HTMLElement)
                 .textContent
-        ).toBe("Connected · logger test");
+        ).toBe("Connected · Logger test");
     });
 
     it("shows a useful recovery state when Google reports a bootstrap failure", () => {
@@ -5186,7 +5244,7 @@ describe("garden logger bootstrap cache and connection recovery", () => {
         expect(
             queryElement(window.document, "#connectionStatus", HTMLElement)
                 .textContent
-        ).toBe("Connected · logger test");
+        ).toBe("Connected · Logger test");
         expect(calls.some((call) => call.method === "getWebAppBootstrap")).toBe(
             true
         );
@@ -10670,7 +10728,7 @@ describe("garden logger Inspect and Light entries", () => {
         expect(
             queryElement(
                 window.document,
-                "#checkSection",
+                "#inspectSection",
                 HTMLElement
             ).classList.contains("visible")
         ).toBe(true);
@@ -10735,7 +10793,7 @@ describe("garden logger Inspect and Light entries", () => {
         ).args[0];
         const { calls, window } = createLoggerWindow({
             pendingSave: {
-                payload: sent,
+                payload: { ...sent, condition: "Historical condition" },
                 requestId: "legacy-check-request-12345",
             },
         });
@@ -10766,9 +10824,11 @@ describe("garden logger Inspect and Light entries", () => {
         input(window, "weight", "300");
         input(window, "condition", "Leaves firm");
         click(window, "#queueButton");
-        const stored = required(
+        const legacyQueue = parseStoredQueue(
             window.localStorage.getItem("gardenLoggerObservationQueueV1")
         );
+        required(legacyQueue[0]).payload.condition = "Leaves firm";
+        const stored = JSON.stringify(legacyQueue);
 
         expect(
             required(parseStoredQueue(stored)[0]).payload.events
@@ -11178,5 +11238,291 @@ describe("garden logger Inspect and Light entries", () => {
                 ':scope #bulkEventChips [data-event="Light"]'
             )
         ).toBeNull();
+    });
+});
+
+describe("garden logger refreshed controls", () => {
+    afterEach(restoreLoggerMocks);
+
+    it.each(["observedAt", "bulkObservedAt"])(
+        "keeps %s date and time edits fixed and restores automatic current-time mode",
+        (id) => {
+            expect.hasAssertions();
+
+            const { window } = createLoggerWindow();
+            const canonical = queryElement(
+                window.document,
+                `#${id}`,
+                HTMLInputElement
+            );
+            enterWorkflowValue(window, `${id}Date`, "2026-09-08");
+            enterWorkflowValue(window, `${id}Time`, "09:42");
+
+            expect(canonical.value).toBe("2026-09-08T09:42");
+            expect(canonical.dataset["timeMode"]).toBe("fixed");
+            expect(
+                queryElement(window.document, `#${id}Hint`, HTMLElement)
+                    .textContent
+            ).toContain("stays fixed");
+
+            enterWorkflowValue(window, `${id}Time`, "");
+
+            expect(canonical.value).toBe("");
+            expect(
+                queryElement(window.document, `#${id}Date`, HTMLInputElement)
+                    .value
+            ).toBe("2026-09-08");
+
+            queryElement(
+                window.document,
+                `#${id}Now`,
+                HTMLButtonElement
+            ).click();
+
+            expect(canonical.dataset["timeMode"]).toBe("now");
+            expect(
+                queryElement(window.document, `#${id}Date`, HTMLInputElement)
+                    .value
+            ).toBe(canonical.value.split("T", 1)[0]);
+            expect(
+                queryElement(window.document, `#${id}Time`, HTMLInputElement)
+                    .value
+            ).toBe(canonical.value.split("T", 2)[1]);
+        }
+    );
+
+    it("never leaks a deselected inspection into a new soil check", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        queryElement(
+            window.document,
+            '#eventChips [data-event="Inspect"]',
+            HTMLButtonElement
+        ).click();
+        enterWorkflowValue(window, "condition", "Leaves firm");
+        queryElement(
+            window.document,
+            '#eventChips [data-event="Inspect"]',
+            HTMLButtonElement
+        ).click();
+        queryElement(
+            window.document,
+            '#eventChips [data-event="Check"]',
+            HTMLButtonElement
+        ).click();
+        changeWorkflowSelect(window, "soilMoisture", "Dry");
+
+        expect(
+            queryElement(
+                window.document,
+                "#inspectSection",
+                HTMLElement
+            ).classList.contains("visible")
+        ).toBe(false);
+        expect(
+            queryElement(
+                window.document,
+                "#checkSection",
+                HTMLElement
+            ).classList.contains("visible")
+        ).toBe(true);
+
+        queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        ).click();
+
+        const queued = parseStoredQueue(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        );
+
+        expect(required(queued[0]).payload).toMatchObject({
+            condition: "",
+            events: ["Check"],
+            soilMoisture: "Dry",
+        });
+    });
+
+    it("persists compact history and retains accessible event disclosures and correction actions", () => {
+        expect.hasAssertions();
+
+        const data = {
+            ...bootstrap,
+            recent: [
+                { ...recentExample, observationId: "fixture-observation" },
+            ],
+        };
+        const { window } = createLoggerWindow({ bootstrapData: data });
+        const disclosure = queryElement(
+            window.document,
+            ".recent-disclosure",
+            HTMLDetailsElement
+        );
+
+        expect(disclosure.open).toBe(true);
+
+        queryElement(
+            window.document,
+            "#compactHistoryToggle",
+            HTMLButtonElement
+        ).click();
+
+        expect(disclosure.open).toBe(false);
+        expect(
+            queryElement(
+                window.document,
+                ".recent-disclosure-summary",
+                HTMLElement
+            ).getAttribute("aria-label")
+        ).toContain("Moon cactus");
+        expect(
+            queryElement(
+                window.document,
+                ".history-details summary",
+                HTMLElement
+            ).textContent
+        ).toBe("Weigh details");
+        expect(
+            queryElement(
+                window.document,
+                ".history-details summary use",
+                Element
+            ).getAttribute("href")
+        ).toBe("#app-icon-weight");
+
+        const preference = required(
+            window.localStorage.getItem("gardenLoggerCompactHistoryV1")
+        );
+        const restored = createLoggerWindow({
+            bootstrapData: data,
+            storage: { gardenLoggerCompactHistoryV1: preference },
+        });
+
+        expect(
+            queryElement(
+                restored.window.document,
+                ".recent-disclosure",
+                HTMLDetailsElement
+            ).open
+        ).toBe(false);
+        expect(
+            queryElement(
+                restored.window.document,
+                ".correct-entry",
+                HTMLButtonElement
+            ).getAttribute("aria-label")
+        ).toContain("Correct Weigh");
+
+        queryElement(
+            restored.window.document,
+            "#compactHistoryToggle",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(
+                restored.window.document,
+                ".recent-disclosure",
+                HTMLDetailsElement
+            ).open
+        ).toBe(true);
+    });
+
+    it("opens a named portrait dialog from the selected plant and plant details", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        const buttons = queryElements(
+            window.document,
+            ".portrait-button",
+            HTMLButtonElement
+        );
+
+        expect(buttons).toHaveLength(2);
+
+        for (const button of buttons) {
+            expect(button.getAttribute("aria-haspopup")).toBe("dialog");
+            expect(button.getAttribute("aria-label")).toContain("Moon cactus");
+
+            button.click();
+            const dialog = queryElement(
+                window.document,
+                "#portraitDialog",
+                HTMLDialogElement
+            );
+
+            expect(dialog.open).toBe(true);
+            expect(
+                queryElement(
+                    window.document,
+                    "#portraitDialogTitle",
+                    HTMLElement
+                ).textContent
+            ).toContain("Moon cactus");
+
+            dialog.close();
+        }
+    });
+
+    it("provides structured help for every event and keeps zero environment measurements with their own dates", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            bootstrapData: {
+                ...bootstrap,
+                plants: [
+                    {
+                        ...required(bootstrap.plants[0]),
+                        latestLux: 420,
+                        latestLuxAt: "2026-09-03T12:00:00Z",
+                        latestPpfd: 0,
+                        latestPpfdAt: "2026-09-02T12:00:00Z",
+                        latestRelativeHumidity: 0,
+                        latestRelativeHumidityAt: "2026-09-01T12:00:00Z",
+                    },
+                ],
+            },
+        });
+        for (const event of bootstrap.events) {
+            queryElement(
+                window.document,
+                `#eventChips [data-event="${event}"]`,
+                HTMLButtonElement
+            ).click();
+        }
+
+        expect(
+            queryElements(
+                window.document,
+                ".event-guidance-item",
+                HTMLDetailsElement
+            )
+        ).toHaveLength(bootstrap.events.length);
+
+        for (const guide of queryElements(
+            window.document,
+            ".event-guidance-item",
+            HTMLDetailsElement
+        )) {
+            expect(queryElements(guide, "li", HTMLElement)).toHaveLength(2);
+            expect(queryElements(guide, "summary svg", Element)).toHaveLength(
+                1
+            );
+        }
+        const summary = queryElement(
+            window.document,
+            "#plantSummary",
+            HTMLElement
+        ).textContent;
+
+        expect(summary).toContain("0 % RH");
+        expect(summary).toContain("0 µmol/m²/s");
+        expect(summary).toContain("420 lux");
+        expect(summary).toContain("app estimate");
+        expect(summary).toContain("Sep 1, 2026");
+        expect(summary).toContain("Sep 2, 2026");
+        expect(summary).toContain("Sep 3, 2026");
     });
 });

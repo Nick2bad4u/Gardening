@@ -19,7 +19,7 @@ const overviewSlugs = new Set(
 const current = profiles.filter(
     (profile) => !profile.historical && !overviewSlugs.has(profile.slug)
 );
-const pots = new Set(current.map((profile) => profile.trackerId).filter(Boolean));
+const pots = new Set(containers.map((container) => container.id));
 const hero = manifest.collection_overviews.toSorted(
     (a, b) =>
         (b.captured_on ?? b.provided_on ?? "").localeCompare(
@@ -61,7 +61,10 @@ const groups = [
 const groupCounts = new Map(
     groups.map((group) => [
         group.key,
-        current.filter((profile) => profile.group === group.key).length,
+        current.filter((profile) => profile.group === group.key).length +
+            containers.filter(
+                (container) => container.aggregate && container.overview?.group === group.key
+            ).length,
     ])
 );
 const reportDate = new Intl.DateTimeFormat("en-US", {

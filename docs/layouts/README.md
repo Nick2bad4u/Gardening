@@ -34,7 +34,7 @@ Each of the **36 tracked containers** has a permanent internal ID: `P01` through
 `P32`, plus `P35`, `P36`, `P37`, and `P38`. `P33`/`P34` remain retired houseplant redirects to
 `P31`/`P32`; the abandoned Amazon research has no active pot allocation. The
 [container guide](../containers.md) explains the 43 current botanical profile
-groups, two whole-planter overviews, labels, and setup boundaries. The owner
+groups, three whole-planter overviews, labels, and setup boundaries. The owner
 purchased the P35 Lithops and P36 split rock at Home Depot in Howell, Michigan,
 on September 21, then repotted them September 23. Each active ID links to a stable
 [history URL](https://nick2bad4u.github.io/Gardening/pots/P01/) with independent last-checked dates,
@@ -163,4 +163,4 @@ The deployed URLs are:
 - [Historical acclimation calendar](https://nick2bad4u.github.io/Gardening/setup/archive/calendar/)
 - [Plant photo Collections index](https://nick2bad4u.github.io/Gardening/photos/)
 
-P38 / #12 is the [Terrarium container](https://nick2bad4u.github.io/Gardening/containers/P38/). Its [October 10 arrival record](../terrarium.md) includes photographs of the cork-lidded jar and its owner-reported shelf position near the cactus grow area; normal lid routine remains unrecorded. Botanical membership is pending, so it adds one tracked container and no botanical profile and stays outside the established placement grid.
+P38 / #12 is the [Terrarium container](https://nick2bad4u.github.io/Gardening/containers/P38/). Its [October 10 arrival record](../terrarium.md) includes photographs of the cork-lidded jar and its owner-reported shelf position near the cactus grow area; normal lid routine remains unrecorded. Its [Houseplants aggregate profile](../plants/houseplants/terrarium.md), Houseplant-05, records qualified working IDs without adding separate botanical member records. Seller-listed jar dimensions are 6.3 × 3.9 in (16 × 10 cm), orientation unverified. It stays outside the established placement grid.

@@ -16,8 +16,10 @@ interface Props {
 }
 const { profile } = Astro.props;
 const profiles = await getProfiles();
-const discovery = await getPlantDiscovery(profile.slug, new Set(profiles.map((item) => item.slug)));
 const container = (await getContainers()).find((item) => item.id === profile.trackerId);
+const discovery = container?.aggregate
+    ? undefined
+    : await getPlantDiscovery(profile.slug, new Set(profiles.map((item) => item.slug)));
 const isOverview = container?.overview?.slug === profile.slug;
 const index = profiles.findIndex((item) => item.slug === profile.slug);
 const previous = profiles[index - 1];
@@ -78,6 +80,7 @@ const metadata = [
 
 <article
     class="plant-profile"
+    aria-label={profile.title}
     data-plant-profile={profile.slug}
     data-collection={profile.group}
     style={`--plant-cursor: url("${siteUrl("cactus-cursor.svg")}") 1 1, auto`}
@@ -129,7 +132,13 @@ const metadata = [
                 </p>
                 <h1>{profile.title}</h1>
                 <div class="profile-badges">
-                    {isOverview && <span class="badge">Shared planter overview</span>}
+                    {isOverview && (
+                        <span class="badge">
+                            {container?.aggregate
+                                ? "Terrarium · provisional members"
+                                : "Shared planter overview"}
+                        </span>
+                    )}
                     <span class="badge badge-record">
                         <SiteIcon name="inventory" size={24} />
                         <span>
@@ -210,7 +219,9 @@ const metadata = [
             </p>
         )}
     </header>
-    {container?.shared && <ContainerMembers container={container} currentSlug={profile.slug} />}
+    {(container?.shared || container?.aggregate) && (
+        <ContainerMembers container={container} currentSlug={profile.slug} />
+    )}
     <dl class="metadata-grid">
         {metadata.map(([label, value, icon]) => (
             <div class={`profile-metadata profile-metadata-${icon}`}>
@@ -320,21 +331,22 @@ const metadata = [
             </summary>
             <nav aria-label="On this page">
                 <ul>
-                    {[
-                        ["anatomy", "How this plant works", "botanical"],
-                        ["habitat", "Habitat and origins", "habitat"],
-                        ["growth", "Growth, flowers and mature form", "growth"],
-                        ["lookalikes", "Similar plants", "identity"],
-                        ["timeline", "Its story so far", "history"],
-                        ["sources", "Discovery sources", "research"],
-                    ].map(([section, title, icon]) => (
-                        <li>
-                            <a href={`#${profile.slug}-discovery-${section}`}>
-                                <SiteIcon name={icon ?? "botanical"} size={22} />
-                                {title}
-                            </a>
-                        </li>
-                    ))}
+                    {discovery &&
+                        [
+                            ["anatomy", "How this plant works", "botanical"],
+                            ["habitat", "Habitat and origins", "habitat"],
+                            ["growth", "Growth, flowers and mature form", "growth"],
+                            ["lookalikes", "Similar plants", "identity"],
+                            ["timeline", "Its story so far", "history"],
+                            ["sources", "Discovery sources", "research"],
+                        ].map(([section, title, icon]) => (
+                            <li>
+                                <a href={`#${profile.slug}-discovery-${section}`}>
+                                    <SiteIcon name={icon ?? "botanical"} size={22} />
+                                    {title}
+                                </a>
+                            </li>
+                        ))}
                     {profile.toc
                         .filter((item) => item.level === 2)
                         .map((item) => (
@@ -368,7 +380,7 @@ const metadata = [
                 </ul>
             </nav>
         </details>
-        <PlantDiscovery profile={profile} discovery={discovery} />
+        {discovery && <PlantDiscovery profile={profile} discovery={discovery} />}
         <div class="prose profile-copy" id={`${profile.slug}-notes`} set:html={profile.bodyHtml} />
     </div>
     <section class="photo-section" id={`${profile.slug}-photo-history`}>

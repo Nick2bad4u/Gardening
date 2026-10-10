@@ -84,7 +84,7 @@ const groups = [
     },
     {
         description:
-            "Money tree, variegated Peperomia, and Tricolor oyster plant, with care suited to their foliage and growing conditions.",
+            "Foliage plants and the terrarium, with care suited to their growing conditions and provisional identifications kept visible.",
         directories: ["houseplants"],
         eyebrow: "Houseplant collection",
         key: "houseplants",

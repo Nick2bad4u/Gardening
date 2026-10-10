@@ -38,8 +38,8 @@ const container = (await getContainers()).find((item) => item.id === id);
         <HistorySummary />
         <HistoryTrend />
         <HistoryMilestones />
-        <HistoryBaselines manualCare={container?.pending ?? false} />
-        <HistoryCharts manualCare={container?.pending ?? false} />
+        <HistoryBaselines manualCare={Boolean(container?.pending || container?.aggregate)} />
+        <HistoryCharts manualCare={Boolean(container?.pending || container?.aggregate)} />
         <HistoryTable />
         <HistoryLogging />
         <noscript>

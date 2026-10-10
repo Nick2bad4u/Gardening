@@ -15,7 +15,7 @@
 - The owner explicitly assigned `P31` / `#7` to Peperomia Bicolor and `P32` / `#8` to Tricolor oyster plant on September 20, 2026. The unreceived Amazon research under `docs/old-plans/` has no physical-label or tracker allocation and is excluded from active profiles.
 - `P35` / `#9` is the shared Lithops pot: aggregate Succulent-15 and components Succulent-15A (probable Lithops lesliei, tan/brown) and Succulent-15B (probable Lithops salicola, grey/green). Four visible heads came from two nursery pots; root connections remain unresolved. All three profiles share one container history. `P36` / `#10` is separate Succulent-16, nursery-labelled Pleiospilos nelii, with no cultivar supplied and explicitly not Royal Flush. Use the profiles for current repot evidence. Never reuse `P33`/`P34`: their old houseplant URLs redirect permanently to `P31`/`P32`. Archived Succulent-11–14 remain reserved.
 - `P37` / `#11` is Succulent-17, Echeveria 'Arctic Ice', acquired October 6, 2026. Current container, medium, drainage, repot, placement, and owner photographs remain unrecorded. The purchased six-inch ceramic pot is not a confirmed current setup.
-- `P38` / `#12` is the Terrarium container. Its [maintained arrival record](../terrarium.md) holds owner photographs, qualified visual identifications, and setup evidence. It has no allocated botanical profile; membership remains pending seller details. Preserve one container history and keep the 43 botanical groups and 45 active profile pages unchanged until evidence supports adding identified members.
+- `P38` / `#12` is the Terrarium container. Its [maintained arrival record](../terrarium.md) holds owner photographs, qualified visual identifications, and setup evidence. Houseplant-05 / `terrarium` is its active aggregate overview in Houseplants, with probable Fittonia albivenis and Hypoestes phyllostachya, tentative Pilea cf. depressa, and unidentified fern-like foliage and moss. Preserve these qualifiers and one container history. Count its overview among the 46 active profiles and three aggregates, but do not inflate the 43 botanical member groups with unallocated provisional components. Seller-listed jar dimensions are 6.3 × 3.9 in (16 × 10 cm), with orientation unverified; recording them is not a repot.
 - Keep seller labels, qualified working IDs, receipt dates, and repot dates
   distinct. Preserve original label evidence when the probable identification
   changes. An order is not a confirmed arrival; a retail pot size is not a
@@ -33,7 +33,7 @@
 - Adding/removing a profile also affects the site build/check inventories,
   canonical SVG portraits, photo manifests, and relevant tests. Check those
   contracts before adding only a Markdown file. The current checker expects
-  46 profiles: 45 active and one historical, covering 36 tracker allocations.
+  47 profiles: 46 active and one historical, covering 36 tracker allocations.
   Recalculate these separately when the collection changes.
 - Keep a substantive Sources section with direct evidence for identification,
   nomenclature, range, and specific care claims. Owner observations need clear

@@ -1,12 +1,14 @@
 ---
 import { profileUrl, siteUrl } from "../lib/routes.mjs";
 import { identificationLabel, stripMarkdown } from "../lib/content/profile-source.mjs";
+import SiteIcon from "./SiteIcon.astro";
 interface Props {
     profile: import("../lib/content.mjs").SiteProfile;
     sharedProfileCount?: number;
     overview?: boolean;
+    aggregate?: boolean;
 }
-const { profile, sharedProfileCount = 1, overview = false } = Astro.props;
+const { profile, sharedProfileCount = 1, overview = false, aggregate = false } = Astro.props;
 const photoCount = profile.collectionRecord.photos.filter(
     (photo) => photo.kind === "collection"
 ).length;
@@ -25,7 +27,9 @@ const identification = identificationLabel(profile.identificationMarkdown);
                 loading="lazy"
             />
             <div>
-                <p class="eyebrow">{overview ? "Planter overview" : profile.groupTitle}</p>
+                <p class="eyebrow">
+                    {overview && !aggregate ? "Planter overview" : profile.groupTitle}
+                </p>
                 <h2>{profile.title}</h2>
                 <p class="scientific">{stripMarkdown(profile.scientificMarkdown)}</p>
             </div>
@@ -37,11 +41,19 @@ const identification = identificationLabel(profile.identificationMarkdown);
         </div>
         <div class="plant-card-metadata">
             <span class="badge" title="Identification evidence">
-                {identification}
+                <SiteIcon name="identity" size={18} /> {identification}
             </span>
             <span class="badge" title="Published photos of this collection plant">
-                {photoCount} collection {photoCount === 1 ? "photo" : "photos"}
+                <SiteIcon name="camera" size={18} />{" "}
+                {aggregate && profile.hasInlinePhotos
+                    ? "Arrival photographs"
+                    : `${photoCount} collection ${photoCount === 1 ? "photo" : "photos"}`}
             </span>
+            {aggregate && (
+                <span class="badge">
+                    <SiteIcon name="planter" size={18} /> Terrarium · provisional members
+                </span>
+            )}
             {sharedProfileCount > 1 && (
                 <span class="badge">Shared pot · {sharedProfileCount} botanical profiles</span>
             )}

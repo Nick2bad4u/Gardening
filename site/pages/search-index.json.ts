@@ -25,17 +25,24 @@ export const GET: APIRoute = async () => {
     const containers = await getContainers();
     const overviewSlugs = new Set(
         containers.flatMap((container) =>
-            container.overview ? [container.overview.slug] : []
+            container.overview && !container.aggregate
+                ? [container.overview.slug]
+                : []
         )
     );
     const entries = [
-        ...containers.map((container) => ({
-            category: container.shared ? "Shared container" : "Container",
-            description: `${container.label} · ${container.members.length} botanical profiles · one care history`,
-            href: containerUrl(container.id),
-            text: `${container.id} ${container.label} ${container.name} ${container.setupNote} ${container.members.map((member) => member.searchText).join(" ")}`.toLowerCase(),
-            title: `${container.id} · ${container.name}`,
-        })),
+        ...containers.map((container) => {
+            const membership = container.aggregate
+                ? "Terrarium with provisional plant identifications"
+                : `${container.members.length} botanical profiles`;
+            return {
+                category: container.shared ? "Shared container" : "Container",
+                description: `${container.label} · ${membership} · one care history`,
+                href: containerUrl(container.id),
+                text: `${container.id} ${container.label} ${container.name} ${container.setupNote} ${container.members.map((member) => member.searchText).join(" ")}`.toLowerCase(),
+                title: `${container.id} · ${container.name}`,
+            };
+        }),
         ...profiles.map((profile) => ({
             category: profile.historical
                 ? "Historical plant"

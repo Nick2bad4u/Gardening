@@ -4,14 +4,38 @@ import * as path from "node:path";
 import sharp from "sharp";
 import { describe, expect, it } from "vitest";
 
+import { getContainers } from "../site/lib/containers.mjs";
 import { getProfiles } from "../site/lib/content.mjs";
 
 describe("licensed plant reference galleries", () => {
-    it("gives every current and historical profile at least ten distinct credited references", async () => {
+    it("gives botanical profiles and researched planter overviews at least ten distinct credited references", async () => {
         expect.hasAssertions();
 
         const profiles = await getProfiles();
-        for (const profile of profiles) {
+        const containers = await getContainers();
+        const aggregateSlugs = new Set(
+            containers
+                .filter((container) => container.aggregate)
+                .map((container) => container.overview?.slug)
+        );
+
+        expect([...aggregateSlugs]).toStrictEqual(["terrarium"]);
+
+        const aggregateProfiles = profiles.filter((profile) =>
+            aggregateSlugs.has(profile.slug)
+        );
+
+        expect(aggregateProfiles).toHaveLength(1);
+        expect(aggregateProfiles[0]?.trackerId).toBe("P38");
+        expect(aggregateProfiles[0]?.identificationMarkdown).toMatch(
+            /photo-based/iv
+        );
+        expect(aggregateProfiles[0]?.allPhotos).toHaveLength(0);
+
+        const referenceProfiles = profiles.filter(
+            (entry) => !aggregateSlugs.has(entry.slug)
+        );
+        for (const profile of referenceProfiles) {
             const hashes = new Set(
                 profile.allPhotos.map((photo) => photo.sha256)
             );

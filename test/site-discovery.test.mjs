@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import sharp from "sharp";
 import { describe, expect, it } from "vitest";
 
+import { getContainers } from "../site/lib/containers.mjs";
 import { getProfiles } from "../site/lib/content.mjs";
 import {
     getPhotoComparison,
@@ -16,6 +17,14 @@ import {
 import { contentUrl } from "../site/lib/routes.mjs";
 
 const profiles = await getProfiles();
+const aggregateSlugs = new Set(
+    (await getContainers())
+        .filter((container) => container.aggregate)
+        .map((container) => container.overview?.slug)
+);
+const discoveryProfiles = profiles.filter(
+    (profile) => !aggregateSlugs.has(profile.slug)
+);
 const knownSlugs = new Set(profiles.map((profile) => profile.slug));
 const sourcePhoto = profiles
     .flatMap((profile) => profile.collectionRecord.photos)
@@ -23,11 +32,11 @@ const sourcePhoto = profiles
 if (!sourcePhoto) throw new Error("Missing collection photo test baseline.");
 
 describe("plant discovery publication", () => {
-    it("gives every profile its own reviewed image and connected research", async () => {
+    it("gives every botanical discovery profile its own reviewed image and connected research", async () => {
         expect.hasAssertions();
 
         const records = await Promise.all(
-            profiles.map((profile) =>
+            discoveryProfiles.map((profile) =>
                 getPlantDiscovery(profile.slug, knownSlugs)
             )
         );
@@ -53,9 +62,10 @@ describe("plant discovery publication", () => {
 
         const uniqueIllustrations = new Set(illustrations);
 
-        expect(uniqueIllustrations.size).toBe(profiles.length);
+        expect(uniqueIllustrations.size).toBe(discoveryProfiles.length);
+        expect([...aggregateSlugs]).toStrictEqual(["terrarium"]);
         expect(records.map((record) => record.slug)).toStrictEqual(
-            profiles.map((profile) => profile.slug)
+            discoveryProfiles.map((profile) => profile.slug)
         );
     });
 

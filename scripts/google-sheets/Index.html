@@ -162,7 +162,7 @@
 
             .hero {
                 position: relative;
-                padding: 24px 22px;
+                padding: 22px;
                 overflow: hidden;
                 color: #ffffff;
                 background: linear-gradient(
@@ -216,7 +216,7 @@
             }
 
             h1 {
-                max-inline-size: 520px;
+                max-inline-size: 12ch;
                 margin: 0;
                 font-size: clamp(24px, 7vi, 40px);
                 line-height: 1;
@@ -400,7 +400,7 @@
             .label-picker {
                 display: grid;
                 grid-template-columns: repeat(
-                    5,
+                    6,
                     [item-start] minmax(0, 1fr) [item-end]
                 );
                 gap: 8px;
@@ -738,7 +738,12 @@
             }
 
             .observation-time-control {
-                display: flex;
+                display: grid;
+                grid-template-columns:
+                    [date-start] minmax(0, 1.2fr)
+                    [date-end time-start] minmax(0, 1fr)
+                    [time-end now-start] auto [now-end];
+                gap: 4px;
                 align-items: stretch;
                 min-inline-size: 0;
                 padding: 3px;
@@ -748,8 +753,10 @@
 
                 & input {
                     flex: 1;
-                    inline-size: 0;
+                    inline-size: 100%;
                     min-inline-size: 0;
+                    padding-inline: 3px;
+                    font-size: 0.875rem;
                     border: 0;
                 }
             }
@@ -1240,7 +1247,12 @@
                 gap: 12px;
                 padding: 14px;
                 margin-block-start: 12px;
-                background: var(--leaf-soft);
+                background: linear-gradient(
+                    135deg,
+                    var(--leaf-soft),
+                    var(--card)
+                );
+                border: 1px solid var(--line);
                 border-radius: 15px;
             }
 
@@ -1755,9 +1767,11 @@
                 border-radius: 999px;
 
                 .global-links & {
+                    justify-content: start;
                     color: #ffffff;
                     background: rgb(255 255 255 / 0.11);
                     border-color: rgb(255 255 255 / 0.26);
+                    border-radius: 10px;
                 }
             }
 
@@ -2359,11 +2373,7 @@
                 --event-bg: #ece9df;
                 --event-ink: #4c5148;
                 --event-accent: #6b7468;
-                display: grid;
-                grid-template-columns:
-                    [primary-start] minmax(0, 1fr)
-                    [primary-end secondary-start] auto [secondary-end];
-                gap: 10px;
+                display: block;
                 padding: 11px 12px;
                 background:
                     linear-gradient(
@@ -2606,6 +2616,9 @@
             }
 
             @media (width <= 520px) {
+                .metric--enclosure-context {
+                    grid-column: 1 / -1;
+                }
                 .plant-summary-heading {
                     align-items: center;
                 }
@@ -2747,6 +2760,239 @@
                 .secondary {
                     min-block-size: 50px;
                     font-size: 1rem;
+                }
+            }
+            .global-links {
+                display: grid;
+                grid-template-columns:
+                    [content-start] minmax(0, 1fr)
+                    [content-end];
+                gap: 5px;
+                padding-block-start: 16px;
+                margin-block-start: 18px;
+                border-block-start: 1px solid rgb(255 255 255 / 0.2);
+            }
+            .portrait-button {
+                display: inline-flex;
+                flex: none;
+                padding: 0;
+                cursor: zoom-in;
+                background: transparent;
+                border: 0;
+                border-radius: 16px;
+                &:focus-visible {
+                    outline: 3px solid var(--forest-2);
+                    outline-offset: 4px;
+                }
+            }
+            .portrait-preview {
+                position: fixed;
+                z-index: 1000;
+                padding: 12px;
+                background: var(--paper);
+                border: 1px solid var(--line);
+                border-radius: 22px;
+            }
+            .portrait-preview-image {
+                display: block;
+                inline-size: 100%;
+                aspect-ratio: 1;
+                object-fit: contain;
+            }
+            .portrait-dialog {
+                inline-size: min(92vi, 520px);
+                max-block-size: 90dvb;
+                padding: 20px;
+                color: var(--ink);
+                background: var(--paper);
+                border: 1px solid var(--line);
+                border-radius: 22px;
+            }
+            .portrait-dialog::backdrop {
+                background: rgb(0 0 0 / 0.6);
+            }
+            .portrait-dialog-image {
+                display: block;
+                inline-size: min(100%, 380px);
+                aspect-ratio: 1;
+                margin-inline: auto;
+                object-fit: contain;
+            }
+            .plant-details-header {
+                display: flex;
+                gap: 14px;
+                align-items: center;
+                min-inline-size: 0;
+                & > div {
+                    min-inline-size: 0;
+                }
+            }
+            .details-portrait {
+                inline-size: 80px;
+                block-size: 80px;
+                object-fit: contain;
+                background: var(--card-soft);
+                border: 1px solid var(--line);
+                border-radius: 18px;
+            }
+            .observation-date-part,
+            .observation-clock-part {
+                display: flex;
+                gap: 5px;
+                align-items: center;
+                min-inline-size: 0;
+                padding-inline-start: 7px;
+            }
+            .observation-clock-part {
+                border-inline-start: 1px solid var(--line);
+            }
+            .observation-time-hint {
+                display: block;
+                margin-block-start: 8px;
+                line-height: 1.5;
+            }
+            .event-guidance {
+                display: grid;
+                gap: 6px;
+                margin-block-start: 12px;
+            }
+            .event-hint {
+                display: flex;
+                gap: 8px;
+                align-items: start;
+                padding: 12px;
+                background: var(--help-surface);
+                border-radius: 10px;
+                & > .app-icon {
+                    margin-block-start: 3px;
+                }
+            }
+            .event-guidance-item {
+                overflow-wrap: anywhere;
+                background: var(--help-surface);
+                border: 1px solid var(--help-border);
+                border-radius: 12px;
+                & summary {
+                    min-block-size: 44px;
+                    padding: 12px;
+                    font-weight: 700;
+                    color: var(--help-accent);
+                    cursor: pointer;
+                }
+                & summary .app-icon {
+                    margin-inline-end: 6px;
+                }
+            }
+            .event-guidance-item ul,
+            .event-hint ul {
+                display: grid;
+                gap: 8px;
+                padding-inline-start: 20px;
+                margin: 0;
+                line-height: 1.5;
+            }
+            .event-guidance-item ul {
+                padding: 0 18px 14px 34px;
+            }
+            .recent-disclosure-summary {
+                display: none;
+                min-inline-size: 0;
+            }
+            .recent-expanded {
+                display: grid;
+                grid-template-columns:
+                    [content-start] minmax(0, 1fr)
+                    [content-end actions-start] auto [actions-end];
+                gap: 10px;
+            }
+            .recent-list.is-compact .recent-item {
+                padding: 0 10px;
+            }
+            .recent-list.is-compact .recent-disclosure-summary {
+                display: flex;
+                gap: 8px;
+                align-items: center;
+                min-block-size: 48px;
+                cursor: pointer;
+            }
+            .recent-disclosure-summary::after {
+                flex: none;
+                margin-inline-start: auto;
+                font-size: 1.25rem;
+                content: "+";
+            }
+            .recent-disclosure[open] > .recent-disclosure-summary::after {
+                content: "−";
+            }
+            .recent-compact-text {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-size: 0.875rem;
+                white-space: nowrap;
+            }
+            .recent-list.is-compact .recent-disclosure[open] .recent-expanded {
+                padding-block: 6px 12px;
+            }
+            .history-details > summary {
+                font-weight: 700;
+                color: var(--forest-2);
+                & .app-icon {
+                    margin-inline-end: 6px;
+                }
+            }
+            .compact-history-toggle {
+                margin-block-end: 10px;
+                &[aria-pressed="true"] {
+                    background: var(--leaf-soft);
+                    border-radius: 10px;
+                }
+            }
+
+            @media (width <= 860px) {
+                .hero h1 {
+                    max-inline-size: none;
+                }
+                .global-links {
+                    grid-template-columns: repeat(
+                        3,
+                        [item-start] minmax(0, 1fr) [item-end]
+                    );
+                    & .link-pill {
+                        gap: 5px;
+                        padding-inline: 7px;
+                        font-size: 0.875rem;
+                    }
+                }
+            }
+
+            @media (width <= 390px) {
+                .observation-date-part,
+                .observation-clock-part {
+                    gap: 2px;
+                    padding-inline-start: 2px;
+                }
+                .observation-time-control .app-icon {
+                    inline-size: 1rem;
+                    block-size: 1rem;
+                }
+                .global-links {
+                    grid-template-columns: repeat(
+                        2,
+                        [item-start] minmax(0, 1fr) [item-end]
+                    );
+                }
+            }
+
+            @media (prefers-reduced-motion: no-preference) {
+                .chip,
+                .label-choice,
+                .link-pill,
+                .portrait-button {
+                    transition: opacity 150ms ease;
+                }
+                .portrait-button:hover,
+                .portrait-button:focus-visible {
+                    box-shadow: 0 0 0 3px var(--line);
                 }
             }
         </style>
@@ -13240,13 +13486,13 @@
                         </div>
                         <p class="eyebrow">Garden Plant Tracker</p>
                         <h1>Garden care logger</h1>
-                        <p
-                            >Pick a plant, tap everything you did, and save
-                            once. The spreadsheet handles History, trends, and
-                            plant pages.</p
-                        >
                         <div class="status-line"
-                            ><span class="status-dot"></span
+                            ><svg
+                                viewBox="0 0 64 64"
+                                class="app-icon app-icon--small"
+                                aria-hidden="true"
+                            >
+                                <use href="#app-icon-status"></use></svg
                             ><span id="connectionStatus"
                                 >Connecting to the garden log…</span
                             ></div
@@ -13382,6 +13628,7 @@
                     </div>
                     <form
                         id="entryForm"
+                        aria-label="Single plant entry"
                         method="post"
                         hidden
                         novalidate
@@ -13399,6 +13646,8 @@
                             <div
                                 id="plantSummary"
                                 class="plant-summary"
+                                role="region"
+                                aria-label="Selected plant"
                             >
                                 <div
                                     id="plantDisplayTools"
@@ -13814,7 +14063,7 @@
                                     </div>
                                 </div>
                                 <div
-                                    id="checkSection"
+                                    id="inspectSection"
                                     class="conditional event-panel"
                                 >
                                     <h3
@@ -13826,17 +14075,18 @@
                                             <use
                                                 href="#app-icon-condition"
                                             ></use></svg
-                                        >Inspection / soil check</h3
+                                        >Inspect the plant</h3
                                     >
                                     <p class="hint"
-                                        >Inspect records what you observed about
-                                        the plant. Soil check retains condition
-                                        and soil-moisture observations.</p
+                                        >Record above-ground observations:
+                                        leaves, stems, firmness, color, or
+                                        visible damage. Describe what you
+                                        see.</p
                                     >
                                     <label
                                         class="field-label"
                                         for="condition"
-                                        >Plant condition</label
+                                        >Observed plant condition</label
                                     >
                                     <input
                                         id="condition"
@@ -13844,20 +14094,43 @@
                                         maxlength="240"
                                         placeholder="Firm leaves; no discoloration"
                                     />
+                                </div>
+                                <div
+                                    id="checkSection"
+                                    class="conditional event-panel"
+                                >
+                                    <h3
+                                        ><svg
+                                            viewBox="0 0 64 64"
+                                            class="app-icon"
+                                            aria-hidden="true"
+                                        >
+                                            <use
+                                                href="#app-icon-dry"
+                                            ></use></svg
+                                        >Soil check</h3
+                                    >
+                                    <p class="hint"
+                                        >Record soil or medium moisture only.
+                                        Add the method and depth checked in
+                                        Notes when useful. Use Inspect for
+                                        leaves and stems.</p
+                                    >
                                     <div id="soilMoistureField">
                                         <label
                                             class="field-label"
                                             for="soilMoisture"
-                                            >Soil moisture</label
+                                            >Soil / medium moisture</label
                                         >
                                         <select id="soilMoisture">
                                             <option value=""
-                                                >Not checked</option
+                                                >Choose moisture
+                                                observation</option
                                             >
                                             <option value="Dry">Dry</option>
-                                            <option value="Slightly moist">
-                                                Slightly moist
-                                            </option>
+                                            <option value="Slightly moist"
+                                                >Slightly moist</option
+                                            >
                                             <option value="Moist">Moist</option>
                                             <option value="Wet">Wet</option>
                                             <option value="Unknown"
@@ -14210,14 +14483,49 @@
                                 <div class="field full">
                                     <label
                                         class="field-label"
-                                        for="observedAt"
+                                        for="observedAtDate"
                                         >Observed at</label
                                     >
                                     <div class="observation-time-control"
                                         ><input
                                             id="observedAt"
+                                            aria-label="Canonical observation time"
                                             type="datetime-local"
-                                            aria-describedby="observedAtHint" />
+                                            hidden
+                                            aria-hidden="true"
+                                            tabindex="-1" />
+                                        <label class="observation-date-part"
+                                            ><svg
+                                                viewBox="0 0 64 64"
+                                                class="app-icon"
+                                                aria-hidden="true"
+                                            >
+                                                <use
+                                                    href="#app-icon-calendar"
+                                                ></use></svg
+                                            ><span class="visually-hidden"
+                                                >Observed date</span
+                                            ><input
+                                                id="observedAtDate"
+                                                type="date"
+                                                aria-describedby="observedAtHint"
+                                        /></label>
+                                        <label class="observation-clock-part"
+                                            ><svg
+                                                viewBox="0 0 64 64"
+                                                class="app-icon"
+                                                aria-hidden="true"
+                                            >
+                                                <use
+                                                    href="#app-icon-clock"
+                                                ></use></svg
+                                            ><span class="visually-hidden"
+                                                >Observed time</span
+                                            ><input
+                                                id="observedAtTime"
+                                                type="time"
+                                                aria-describedby="observedAtHint"
+                                        /></label>
                                         <button
                                             type="button"
                                             class="observation-time-now"
@@ -14234,7 +14542,7 @@
                                                 ></use></svg></button
                                     ></div>
                                     <span
-                                        class="visually-hidden"
+                                        class="hint observation-time-hint"
                                         id="observedAtHint"
                                     ></span>
                                 </div>
@@ -14309,6 +14617,7 @@
 
                     <form
                         id="bulkWaterForm"
+                        aria-label="Bulk care entry"
                         method="post"
                         hidden
                         novalidate
@@ -14452,13 +14761,48 @@
                                 <div class="field full"
                                     ><label
                                         class="field-label"
-                                        for="bulkObservedAt"
+                                        for="bulkObservedAtDate"
                                         >Observed at</label
                                     ><div class="observation-time-control"
                                         ><input
                                             id="bulkObservedAt"
+                                            aria-label="Canonical bulk observation time"
                                             type="datetime-local"
-                                            aria-describedby="bulkObservedAtHint" />
+                                            hidden
+                                            aria-hidden="true"
+                                            tabindex="-1" />
+                                        <label class="observation-date-part"
+                                            ><svg
+                                                viewBox="0 0 64 64"
+                                                class="app-icon"
+                                                aria-hidden="true"
+                                            >
+                                                <use
+                                                    href="#app-icon-calendar"
+                                                ></use></svg
+                                            ><span class="visually-hidden"
+                                                >Observed date</span
+                                            ><input
+                                                id="bulkObservedAtDate"
+                                                type="date"
+                                                aria-describedby="bulkObservedAtHint"
+                                        /></label>
+                                        <label class="observation-clock-part"
+                                            ><svg
+                                                viewBox="0 0 64 64"
+                                                class="app-icon"
+                                                aria-hidden="true"
+                                            >
+                                                <use
+                                                    href="#app-icon-clock"
+                                                ></use></svg
+                                            ><span class="visually-hidden"
+                                                >Observed time</span
+                                            ><input
+                                                id="bulkObservedAtTime"
+                                                type="time"
+                                                aria-describedby="bulkObservedAtHint"
+                                        /></label>
                                         <button
                                             type="button"
                                             class="observation-time-now"
@@ -14475,7 +14819,7 @@
                                                 ></use></svg></button
                                     ></div>
                                     <span
-                                        class="visually-hidden"
+                                        class="hint observation-time-hint"
                                         id="bulkObservedAtHint"
                                     ></span>
                                 </div>
@@ -14598,7 +14942,7 @@
                                     </div>
                                 </div>
                                 <div
-                                    id="bulkCheckSection"
+                                    id="bulkInspectSection"
                                     class="conditional event-panel"
                                 >
                                     <h3
@@ -14610,40 +14954,66 @@
                                             <use
                                                 href="#app-icon-condition"
                                             ></use></svg
-                                        >Shared inspection / soil check</h3
+                                        >Shared plant inspection</h3
                                     >
-                                    <div class="fields">
-                                        <div class="field full"
-                                            ><label
-                                                class="field-label"
-                                                for="bulkCondition"
-                                                >Plant condition</label
-                                            ><input
-                                                id="bulkCondition"
-                                                maxlength="240"
-                                                placeholder="Firm leaves; no discoloration"
-                                        /></div>
-                                        <div
-                                            class="field"
-                                            id="bulkSoilMoistureField"
-                                            ><label
-                                                class="field-label"
-                                                for="bulkSoilMoisture"
-                                                >Soil moisture</label
-                                            ><select id="bulkSoilMoisture"
-                                                ><option value=""
-                                                    >Not checked</option
-                                                ><option value="Dry">Dry</option
-                                                ><option value="Slightly moist"
-                                                    >Slightly moist</option
-                                                ><option value="Moist"
-                                                    >Moist</option
-                                                ><option value="Wet">Wet</option
-                                                ><option value="Unknown"
-                                                    >Unknown</option
-                                                ></select
-                                            ></div
+                                    <p class="hint"
+                                        >Use only for the above-ground condition
+                                        observed on every selected plant. Log
+                                        different conditions separately.</p
+                                    >
+                                    <label
+                                        class="field-label"
+                                        for="bulkCondition"
+                                        >Observed plant condition</label
+                                    >
+                                    <input
+                                        id="bulkCondition"
+                                        maxlength="240"
+                                        placeholder="Firm leaves; no discoloration"
+                                    />
+                                </div>
+                                <div
+                                    id="bulkCheckSection"
+                                    class="conditional event-panel"
+                                >
+                                    <h3
+                                        ><svg
+                                            viewBox="0 0 64 64"
+                                            class="app-icon"
+                                            aria-hidden="true"
                                         >
+                                            <use
+                                                href="#app-icon-dry"
+                                            ></use></svg
+                                        >Shared soil check</h3
+                                    >
+                                    <p class="hint"
+                                        >Choose the soil or medium moisture
+                                        observed in every selected container.
+                                        Log different moisture readings
+                                        separately.</p
+                                    >
+                                    <div id="bulkSoilMoistureField">
+                                        <label
+                                            class="field-label"
+                                            for="bulkSoilMoisture"
+                                            >Soil / medium moisture</label
+                                        >
+                                        <select id="bulkSoilMoisture">
+                                            <option value=""
+                                                >Choose moisture
+                                                observation</option
+                                            >
+                                            <option value="Dry">Dry</option>
+                                            <option value="Slightly moist"
+                                                >Slightly moist</option
+                                            >
+                                            <option value="Moist">Moist</option>
+                                            <option value="Wet">Wet</option>
+                                            <option value="Unknown"
+                                                >Unknown</option
+                                            >
+                                        </select>
                                     </div>
                                 </div>
                                 <div
@@ -14872,6 +15242,13 @@
                                     ></label
                                 >
                             </div>
+                            <button
+                                id="compactHistoryToggle"
+                                type="button"
+                                class="text-button compact-history-toggle"
+                                aria-pressed="false"
+                                >Compact history</button
+                            >
                             <div
                                 id="recentList"
                                 class="recent-list"
@@ -14882,6 +15259,29 @@
             </div>
         </main>
 
+        <div
+            id="portraitPreview"
+            class="portrait-preview"
+            aria-label="Portrait preview"
+            aria-hidden="true"
+            hidden
+        ></div>
+        <dialog
+            id="portraitDialog"
+            class="portrait-dialog"
+            aria-labelledby="portraitDialogTitle"
+        >
+            <h2 id="portraitDialogTitle">Plant portrait</h2>
+            <div id="portraitDialogImage"></div>
+            <p class="hint">Collection artwork; not identification evidence.</p>
+            <form method="dialog"
+                ><button
+                    class="secondary"
+                    type="submit"
+                    >Close portrait</button
+                ></form
+            >
+        </dialog>
         <dialog
             id="correctionDialog"
             class="correction-dialog"
@@ -15125,7 +15525,7 @@
                 Humidity: "humidity",
                 Inspect: "condition",
                 Light: "light",
-                Check: "condition",
+                Check: "dry",
                 Rotation: "rotate",
                 Clean: "clean",
                 Prune: "prune",
@@ -15393,7 +15793,6 @@
                     createLink("Grow-spot layout", links.layout, "layout"),
                     createLink("Calendar", links.calendar, "calendar"),
                     createLink("Photos", links.photos, "photos"),
-                    createLink("Quick log sheet", links.quickLog, "edit"),
                     createLink("Spreadsheet", links.spreadsheet, "sheets")
                 );
             }
@@ -15415,7 +15814,14 @@
                 input.dataset.timeMode = instant ? "fixed" : "now";
                 input.dataset.timeValue = input.value;
                 input.dataset.timeInstant = instant;
+                syncObservationTimeParts(id);
                 renderObservationTimeHint(id);
+            }
+
+            function syncObservationTimeParts(id) {
+                const [date = "", time = ""] = $(id).value.split("T");
+                $(`${id}Date`).value = date;
+                $(`${id}Time`).value = time;
             }
 
             function renderObservationTimeHint(id) {
@@ -15595,6 +16001,35 @@
 
             function payloadFingerprint(payload) {
                 return JSON.stringify(comparablePayload(payload));
+            }
+
+            function preservePendingLegacyDetails(
+                payload,
+                pending,
+                prefix = ""
+            ) {
+                if (!pending) return payload;
+                const conditionId = prefix ? "bulkCondition" : "condition";
+                const soilId = prefix ? "bulkSoilMoisture" : "soilMoisture";
+                const candidate = { ...payload };
+                if (
+                    !payload.events.includes("Inspect") &&
+                    $(conditionId).value.trim() ===
+                        String(pending.payload.condition || "")
+                )
+                    candidate.condition = pending.payload.condition || "";
+                if (
+                    !payload.events.includes("Check") &&
+                    $(soilId).value ===
+                        String(pending.payload.soilMoisture || "")
+                )
+                    candidate.soilMoisture = pending.payload.soilMoisture || "";
+                const matches = prefix
+                    ? JSON.stringify(candidate) ===
+                      JSON.stringify(pending.payload)
+                    : payloadFingerprint(candidate) ===
+                      payloadFingerprint(pending.payload);
+                return matches ? pending.payload : payload;
             }
 
             function isStaleHouseplantDraft(payload) {
@@ -16175,7 +16610,7 @@
                     !String(payload.soilMoisture || "").trim()
                 )
                     throw new Error(
-                        "Enter plant condition, soil moisture, or both for the Check event."
+                        "Choose the observed soil or medium moisture for the Soil check event."
                     );
             }
 
@@ -17392,16 +17827,69 @@
                         lossHelp,
                     ],
                 ];
+                [
+                    [
+                        "humidity",
+                        "Latest humidity",
+                        plant.latestRelativeHumidity,
+                        "% RH",
+                        plant.latestRelativeHumidityAt,
+                    ],
+                    [
+                        "light",
+                        "Latest PPFD",
+                        plant.latestPpfd,
+                        "µmol/m²/s",
+                        plant.latestPpfdAt,
+                    ],
+                    [
+                        "light",
+                        "Latest illuminance",
+                        plant.latestLux,
+                        "lux",
+                        plant.latestLuxAt,
+                    ],
+                ].forEach(([icon, label, value, unit, observedAt]) => {
+                    if (value !== "" && value !== null && value !== undefined) {
+                        metricData.push([
+                            icon,
+                            label,
+                            `${value} ${unit}`,
+                            `${formattedTimestamp(observedAt) || "Reading time unavailable"}${label === "Latest PPFD" ? " · app estimate" : ""}`,
+                        ]);
+                    }
+                });
                 metricData.forEach(([iconName, label, value, detail, help]) => {
-                    if (plant.id === "P38" && label === "Last completed dry")
-                        return;
+                    if (plant.id === "P38" && label === "Last completed dry") {
+                        value = "N/A";
+                        detail = "Enclosure — no completed-dry reference";
+                        help = [
+                            "This terrarium is an enclosure. A completed-dry pot reference is not applicable.",
+                            "Observe its moisture, condensation and plant condition. This card is not a watering instruction.",
+                        ];
+                    }
+                    if (plant.id === "P38" && label === "Cycle avg loss") {
+                        value = "N/A";
+                        detail = "Closed jar — no dry-down model";
+                        help = [
+                            "This closed terrarium is an enclosure. A pot dry-down rate is not applicable.",
+                            "Recorded weights remain observations; they do not establish a watering forecast for this enclosure.",
+                        ];
+                    }
                     const metric = document.createElement("div");
                     metric.className = "metric";
+                    if (
+                        plant.id === "P38" &&
+                        ["Last completed dry", "Current pot"].includes(label)
+                    )
+                        metric.classList.add("metric--enclosure-context");
                     if (label === "Last completed dry") {
                         metric.setAttribute(
                             "aria-description",
-                            plant.dryOrLowestWeightBasis ||
-                                "No completed cycle yet"
+                            plant.id === "P38"
+                                ? "Not applicable to this enclosure"
+                                : plant.dryOrLowestWeightBasis ||
+                                      "No completed cycle yet"
                         );
                     }
                     const iconNode = document.createElement("span");
@@ -17451,7 +17939,11 @@
                 const summaryPortrait =
                     portrait || createPlantPortrait(plant, "summary-portrait");
                 summaryPortrait.dataset.plantId = plant.id;
-                portraitGroup.append(summaryPortrait, badge);
+                const portraitButton = createPortraitButton(
+                    plant,
+                    summaryPortrait
+                );
+                portraitGroup.append(portraitButton, badge);
                 heading.append(identity, portraitGroup);
                 left.append(heading, metrics);
                 summary.append(left);
@@ -17461,9 +17953,19 @@
                 const detailsName = document.createElement("p");
                 detailsName.className = "hint";
                 detailsName.textContent = `${plant.name} · ${plant.label || plant.id}`;
+                const detailsHeader = document.createElement("div");
+                detailsHeader.className = "plant-details-header";
+                const detailsIdentity = document.createElement("div");
+                detailsIdentity.append(detailsTitle, detailsName);
+                detailsHeader.append(
+                    createPortraitButton(
+                        plant,
+                        createPlantPortrait(plant, "details-portrait")
+                    ),
+                    detailsIdentity
+                );
                 details.append(
-                    detailsTitle,
-                    detailsName,
+                    detailsHeader,
                     createActivityCounts(activity),
                     createWateringPlan(plant),
                     createWeightChart(plant),
@@ -17516,6 +18018,73 @@
                 }
                 plantLinks.append(displayTools);
                 restoreDisplayFocus?.focus({ preventScroll: true });
+            }
+
+            let portraitPreviewTimer;
+
+            function createPortraitButton(plant, portrait) {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "portrait-button";
+                button.setAttribute(
+                    "aria-label",
+                    `Enlarge portrait of ${plant.name}`
+                );
+                button.setAttribute("aria-haspopup", "dialog");
+                button.append(portrait);
+                const preview = () => {
+                    if (window.innerWidth <= 860) return;
+                    const panel = $("portraitPreview");
+                    clearTimeout(portraitPreviewTimer);
+                    panel.onpointerenter = () =>
+                        clearTimeout(portraitPreviewTimer);
+                    panel.onpointerleave = scheduleHide;
+                    clearPlantPortraits(panel);
+                    panel.append(
+                        createPlantPortrait(plant, "portrait-preview-image")
+                    );
+                    panel.hidden = false;
+                    const rect = button.getBoundingClientRect();
+                    const size = Math.min(280, window.innerHeight - 32);
+                    panel.style.inlineSize = `${size}px`;
+                    panel.style.insetInlineStart = `${Math.max(16, Math.min(window.innerWidth - size - 16, rect.left - size - 12))}px`;
+                    panel.style.insetBlockStart = `${Math.max(16, Math.min(window.innerHeight - size - 16, rect.top))}px`;
+                };
+                const hide = () => {
+                    clearTimeout(portraitPreviewTimer);
+                    $("portraitPreview").hidden = true;
+                };
+                const scheduleHide = () => {
+                    clearTimeout(portraitPreviewTimer);
+                    portraitPreviewTimer = setTimeout(() => {
+                        if (
+                            document.activeElement !== button &&
+                            !$("portraitPreview").matches(":hover")
+                        )
+                            hide();
+                    }, 120);
+                };
+                button.addEventListener("pointerenter", (event) => {
+                    if (event.pointerType === "mouse") preview();
+                });
+                button.addEventListener("pointerleave", scheduleHide);
+                button.addEventListener("focus", preview);
+                button.addEventListener("blur", scheduleHide);
+                button.addEventListener("keydown", (event) => {
+                    if (event.key === "Escape") hide();
+                });
+                button.addEventListener("click", () => {
+                    hide();
+                    const dialog = $("portraitDialog");
+                    clearPlantPortraits($("portraitDialogImage"));
+                    $("portraitDialogImage").append(
+                        createPlantPortrait(plant, "portrait-dialog-image")
+                    );
+                    $("portraitDialogTitle").textContent =
+                        `${plant.name} · ${plant.label || plant.id}`;
+                    dialog.showModal();
+                });
+                return button;
             }
 
             function latestWeightComparison(plant) {
@@ -18429,6 +18998,128 @@
                 if (state.bootstrap) renderPlantSummary();
             }
 
+            const EVENT_GUIDANCE = Object.freeze({
+                Water: [
+                    "Record the application and any measured volume.",
+                    "Water does not imply a weight. Select Weigh for a scale reading.",
+                ],
+                Weigh: [
+                    "Weigh the complete current pot setup in grams.",
+                    "Record the reading as observed; watering-cycle context is calculated.",
+                ],
+                Measure: [
+                    "Choose inches or centimeters, then enter height, width, or both.",
+                    "Keep the measuring method consistent and identify estimates.",
+                ],
+                Humidity: [
+                    "Enter the current hygrometer reading in % RH.",
+                    "Record where it was measured in Notes. This is an observation, not a target.",
+                ],
+                Inspect: [
+                    "Describe the plant above the medium: leaves, stems, color and visible damage.",
+                    "Use Soil check separately for moisture evidence.",
+                ],
+                Check: [
+                    "Choose the observed soil or medium moisture.",
+                    "Use Notes for method and depth; use Inspect for plant condition.",
+                ],
+                Light: [
+                    "Enter app PPFD, meter illuminance, or both.",
+                    "PPFD is an app estimate. Record the light preset and reading position in Notes.",
+                ],
+                Rotation: [
+                    "Enter the clockwise-equivalent turn in degrees.",
+                    "A quarter turn is 90°; record the actual turn.",
+                ],
+                Clean: [
+                    "Record cleaning you actually completed.",
+                    "Use Notes for the leaves, pot or equipment cleaned and the method.",
+                ],
+                Prune: [
+                    "Record what you removed and why in Notes.",
+                    "Describe the completed action rather than a future plan.",
+                ],
+                Repot: [
+                    "Record the new pot and medium.",
+                    "Repot starts a new whole-pot weighing setup; older weights remain historical.",
+                ],
+                Flower: [
+                    "Record the flower count and observed stage when known.",
+                    "Use details to distinguish buds, open flowers and fading blooms.",
+                ],
+                Photo: [
+                    "Add an HTTPS Google Photos share or Gyazo capture link.",
+                    "Describe the view in Notes. A photo alone does not prove an inspection.",
+                ],
+                Pest: [
+                    "Describe the issue and any treatment actually applied.",
+                    "Keep uncertain identifications qualified; record follow-up plans in Notes.",
+                ],
+                Other: [
+                    "Describe the observation or completed care action in Notes.",
+                    "Use a dedicated event when it matches what you recorded.",
+                ],
+            });
+
+            function renderEventGuidance(id, events) {
+                let container = $(id);
+                if (!container) {
+                    container = document.createElement("div");
+                    container.id = id;
+                    container.className = "event-guidance";
+                    $(
+                        id === "eventGuidance" ? "eventChips" : "bulkEventChips"
+                    ).after(container);
+                }
+                container.replaceChildren();
+                events.forEach((eventName) => {
+                    const guidance = document.createElement("details");
+                    guidance.className = "event-guidance-item";
+                    const title = document.createElement("summary");
+                    setIconLabel(
+                        title,
+                        eventIconName(eventName),
+                        `${eventLabel(eventName)} · how to record`,
+                        "app-icon app-icon--small"
+                    );
+                    const list = document.createElement("ul");
+                    (EVENT_GUIDANCE[eventName] || EVENT_GUIDANCE.Other).forEach(
+                        (text) => {
+                            const item = document.createElement("li");
+                            item.textContent = text;
+                            list.append(item);
+                        }
+                    );
+                    guidance.append(title, list);
+                    container.append(guidance);
+                });
+            }
+
+            function formatEventHints() {
+                document
+                    .querySelectorAll(".event-panel p.hint")
+                    .forEach((paragraph) => {
+                        const hint = document.createElement("div");
+                        hint.className = "hint event-hint";
+                        if (paragraph.id) hint.id = paragraph.id;
+                        const list = document.createElement("ul");
+                        paragraph.textContent
+                            .trim()
+                            .replace(/\s+/g, " ")
+                            .split(/(?<=[.!?])\s+(?=[A-Z])/)
+                            .forEach((text) => {
+                                const item = document.createElement("li");
+                                item.textContent = text;
+                                list.append(item);
+                            });
+                        hint.append(
+                            createIcon("info", "app-icon app-icon--small"),
+                            list
+                        );
+                        paragraph.replaceWith(hint);
+                    });
+            }
+
             function renderEventChips() {
                 const container = $("eventChips");
                 container.replaceChildren();
@@ -18511,9 +19202,14 @@
                 });
                 $("checkSection").classList.toggle(
                     "visible",
-                    state.events.has("Inspect") || state.events.has("Check")
+                    state.events.has("Check")
+                );
+                $("inspectSection").classList.toggle(
+                    "visible",
+                    state.events.has("Inspect")
                 );
                 $("soilMoistureField").hidden = !state.events.has("Check");
+                renderEventGuidance("eventGuidance", state.events);
                 updateNutrientFields("", $("nutrientsUsed").value);
             }
 
@@ -18526,6 +19222,25 @@
                     : "nutrientAmountField";
                 $(productFieldId).hidden = value !== "Yes";
                 $(amountFieldId).hidden = value !== "Yes";
+            }
+
+            function setCompactHistory(compact, persist = true) {
+                $("recentList").classList.toggle("is-compact", compact);
+                $("recentList")
+                    .querySelectorAll(".recent-disclosure")
+                    .forEach((disclosure) => {
+                        disclosure.open = !compact;
+                    });
+                $("compactHistoryToggle").setAttribute(
+                    "aria-pressed",
+                    String(compact)
+                );
+                if (persist)
+                    safeStorageSet(
+                        localStorage,
+                        "gardenLoggerCompactHistoryV1",
+                        compact ? "compact" : "expanded"
+                    );
             }
 
             function renderRecent(entries) {
@@ -18634,7 +19349,30 @@
                         );
                         actions.append(correct);
                     }
-                    item.append(left, actions, createHistoryDetails(entry));
+                    const disclosure = document.createElement("details");
+                    disclosure.className = "recent-disclosure";
+                    disclosure.open = !list.classList.contains("is-compact");
+                    const disclosureSummary = document.createElement("summary");
+                    disclosureSummary.className = "recent-disclosure-summary";
+                    const compactText = document.createElement("span");
+                    compactText.className = "recent-compact-text";
+                    compactText.textContent = `${entry.plantId} · ${eventLabel(entry.event)} · ${entry.weight !== "" && entry.weight != null ? `${entry.weight} g · ` : ""}${entry.observedAt}`;
+                    disclosureSummary.setAttribute(
+                        "aria-label",
+                        `${entry.name || entry.plantId} · ${eventLabel(entry.event)} · ${entry.observedAt}. Show event details`
+                    );
+                    disclosureSummary.append(
+                        createIcon(
+                            eventIconName(entry.event),
+                            "app-icon app-icon--small"
+                        ),
+                        compactText
+                    );
+                    const expanded = document.createElement("div");
+                    expanded.className = "recent-expanded";
+                    expanded.append(left, actions, createHistoryDetails(entry));
+                    disclosure.append(disclosureSummary, expanded);
+                    item.append(disclosure);
                     list.append(item);
                 });
                 card.hidden = false;
@@ -19775,8 +20513,17 @@
             function createHistoryDetails(entry) {
                 const disclosure = document.createElement("details");
                 disclosure.className = "history-details";
+                disclosure.setAttribute(
+                    "aria-label",
+                    `${eventLabel(entry.event || "Entry")} saved details`
+                );
                 const summary = document.createElement("summary");
-                summary.textContent = `${entry.event || "Entry"} details`;
+                setIconLabel(
+                    summary,
+                    eventIconName(entry.event),
+                    `${eventLabel(entry.event || "Entry")} details`,
+                    "app-icon app-icon--small"
+                );
                 const list = document.createElement("dl");
                 list.className = "history-detail-grid";
                 const details = entry.details || {};
@@ -19991,9 +20738,13 @@
                 });
                 $("bulkCheckSection").classList.toggle(
                     "visible",
-                    state.bulkEvents.has("Inspect") ||
-                        state.bulkEvents.has("Check")
+                    state.bulkEvents.has("Check")
                 );
+                $("bulkInspectSection").classList.toggle(
+                    "visible",
+                    state.bulkEvents.has("Inspect")
+                );
+                renderEventGuidance("bulkEventGuidance", state.bulkEvents);
                 $("bulkSoilMoistureField").hidden =
                     !state.bulkEvents.has("Check");
                 updateNutrientFields("bulk", $("bulkNutrientsUsed").value);
@@ -20179,12 +20930,12 @@
                     nutrientAmount: $("bulkNutrientAmount").value.trim(),
                     wateringApplication: $("bulkWateringApplication").value,
                     waterAmount: $("bulkWaterAmount").value,
-                    condition: $("bulkCondition").value.trim(),
-                    soilMoisture:
-                        state.bulkEvents.has("Inspect") &&
-                        !state.bulkEvents.has("Check")
-                            ? ""
-                            : $("bulkSoilMoisture").value,
+                    condition: state.bulkEvents.has("Inspect")
+                        ? $("bulkCondition").value.trim()
+                        : "",
+                    soilMoisture: state.bulkEvents.has("Check")
+                        ? $("bulkSoilMoisture").value
+                        : "",
                     rotationDegrees: $("bulkRotationDegrees").value || "90",
                     pestIssue: $("bulkPestIssue").value.trim(),
                     pestTreatment: $("bulkPestTreatment").value.trim(),
@@ -20346,7 +21097,11 @@
                 let payload;
                 const stored = readBulkPendingSave();
                 try {
-                    payload = bulkPayload();
+                    payload = preservePendingLegacyDetails(
+                        bulkPayload(),
+                        stored,
+                        "bulk"
+                    );
                     if (
                         !stored ||
                         JSON.stringify(stored.payload) !==
@@ -20588,12 +21343,12 @@
                     height: $("height").value,
                     width: $("width").value,
                     measurementUnit: $("measurementUnit").value,
-                    condition: $("condition").value.trim(),
-                    soilMoisture:
-                        state.events.has("Inspect") &&
-                        !state.events.has("Check")
-                            ? ""
-                            : $("soilMoisture").value,
+                    condition: state.events.has("Inspect")
+                        ? $("condition").value.trim()
+                        : "",
+                    soilMoisture: state.events.has("Check")
+                        ? $("soilMoisture").value
+                        : "",
                     notes: $("notes").value.trim(),
                     potSetup: $("potSetup").value,
                     nutrientsUsed: $("nutrientsUsed").value,
@@ -21289,7 +22044,10 @@
                 }
                 let payload;
                 try {
-                    payload = payloadFromForm();
+                    payload = preservePendingLegacyDetails(
+                        payloadFromForm(),
+                        state.pendingSave
+                    );
                     if (
                         !state.pendingSave ||
                         payloadFingerprint(state.pendingSave.payload) !==
@@ -21588,7 +22346,7 @@
                     renderBulkPlants($("bulkSearch").value);
                 if (!state.saving)
                     $("connectionStatus").textContent =
-                        `Connected · logger ${bootstrap.version}`;
+                        `Connected · Logger ${bootstrap.version}`;
                 return true;
             }
 
@@ -21742,7 +22500,7 @@
                     state.workflowDay = workbookDay();
                     $("connectionStatus").textContent = fromCache
                         ? "Using saved plant list · refreshing Google…"
-                        : `Connected · logger ${bootstrap.version}`;
+                        : `Connected · Logger ${bootstrap.version}`;
                     setObservationTime("observedAt");
                     step = "restoring saved round settings";
                     restoreRoundState();
@@ -21778,6 +22536,14 @@
                     step = "building event controls";
                     renderEventChips();
                     step = "building recent history";
+                    setCompactHistory(
+                        safeStorageGet(
+                            localStorage,
+                            "gardenLoggerCompactHistoryV1",
+                            "expanded"
+                        ) === "compact",
+                        false
+                    );
                     bootstrap.events.forEach((eventName) => {
                         const option = document.createElement("option");
                         option.value = eventName;
@@ -21841,6 +22607,12 @@
                 "click",
                 refreshSavedPlantData
             );
+            $("compactHistoryToggle").addEventListener("click", () =>
+                setCompactHistory(
+                    $("compactHistoryToggle").getAttribute("aria-pressed") !==
+                        "true"
+                )
+            );
             ["recentScope", "recentEvent"].forEach((id) =>
                 $(id).addEventListener("change", refreshRecent)
             );
@@ -21852,8 +22624,22 @@
                 const keepEditedTime = () => {
                     input.dataset.timeMode = "fixed";
                     input.dataset.timeInstant = "";
+                    syncObservationTimeParts(id);
                     renderObservationTimeHint(id);
                 };
+                ["Date", "Time"].forEach((part) => {
+                    const update = () => {
+                        const date = $(`${id}Date`).value;
+                        const time = $(`${id}Time`).value;
+                        input.value = date && time ? `${date}T${time}` : "";
+                        input.dataset.timeMode = "fixed";
+                        input.dataset.timeInstant = "";
+                        renderObservationTimeHint(id);
+                        renderWeightFeedback();
+                    };
+                    $(`${id}${part}`).addEventListener("input", update);
+                    $(`${id}${part}`).addEventListener("change", update);
+                });
                 input.addEventListener("input", keepEditedTime);
                 input.addEventListener("change", keepEditedTime);
                 $(`${id}Now`).addEventListener("click", () => {
@@ -22176,6 +22962,7 @@
             });
 
             applyTheme(preferredTheme());
+            formatEventHints();
             const cachedBootstrap = readCachedBootstrap();
             if (cachedBootstrap) {
                 initialize(cachedBootstrap, { fromCache: true });

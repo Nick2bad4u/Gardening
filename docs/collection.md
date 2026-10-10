@@ -15,7 +15,7 @@ available. Gallery captions distinguish species and ancestry references from pho
 The short label IDs are permanent plant or shared-planter identifiers, not
 table coordinates. They are shown beside the longer historical inventory IDs.
 
-The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was installed September 13. The profiled collection has **46 profile records: 45 active and one historical, across 36 tracker allocations**. The established [Table Placement Guide](./layouts/table-placement-research.md) remains the working arrangement.
+The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was installed September 13. The profiled collection has **47 profile records: 46 active and one historical, across 36 tracker allocations**. The established [Table Placement Guide](./layouts/table-placement-research.md) remains the working arrangement.
 
 Profile records and containers answer different questions: a profile describes
 a botanical identity or an aggregate planting, while a tracker identifies the
@@ -24,15 +24,15 @@ physical label, one observation history, and one set of setup-specific weight
 references. Component profiles add botanical detail without adding pots or
 duplicating care events.
 
-The [container guide](./containers.md) brings together the four shared planters,
-their members, and the distinction between 43 botanical profile groups and two
+The [container guide](./containers.md) brings together the five shared plantings,
+their members, and the distinction between 43 botanical profile groups and three
 aggregate overviews. Open the
 [container directory](https://nick2bad4u.github.io/Gardening/containers/) for
 each container's member list, care context, and existing history.
 
 ## Terrarium — October 10 arrival photographs
 
-**P38 / #12 — Terrarium**, enrolled October 9, 2026, now has five owner-supplied arrival-condition photographs received October 10. They show a rounded glass jar with a cork lid, probable red-veined _Fittonia albivenis_ and white-speckled _Hypoestes phyllostachya_ (both cultivar unknown), an unidentified trailing plant, fern-like foliage, and moss. These remain qualified visual identifications; botanical membership and profile allocation await seller details. The collection remains at 43 botanical profile groups and two whole-planter overviews. See the [terrarium arrival record](./terrarium.md) for the photographs, owner-reported shipping damage, and remaining setup questions.
+**P38 / #12 — Terrarium**, enrolled October 9, 2026, now has five owner-supplied arrival-condition photographs received October 10. They show a rounded glass jar with a cork lid, probable red-veined _Fittonia albivenis_ and white-speckled _Hypoestes phyllostachya_ (both cultivar unknown), tentative _Pilea_ cf. _depressa_ trailing growth, and unidentified fern-like foliage and moss. [Houseplant-05](./plants/houseplants/terrarium.md) is the aggregate Houseplants profile; these remain qualified visual identifications. The collection retains 43 botanical profile groups and now has three whole-planter overviews. The jar record is: Glass jar with cork lid; seller-listed 6.3 × 3.9 in (16 × 10 cm); dimension orientation unverified. See the [terrarium arrival record](./terrarium.md) for the photographs, owner-reported shipping damage, and remaining setup questions.
 
 ## October 6 Arctic Ice acquisition
 

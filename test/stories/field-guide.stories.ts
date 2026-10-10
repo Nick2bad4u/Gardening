@@ -312,3 +312,57 @@ export const GlobalSearch: Story = {
         await expectNoOverflow(document);
     },
 };
+
+export const HouseplantTerrarium: Story = {
+    args: { path: "plants/?group=houseplants", theme: "dark", width: 390 },
+    play: async ({ canvasElement }) => {
+        const { canvas, document, userEvent } =
+            await websiteCanvas(canvasElement);
+        const search = canvas.getByRole("searchbox", { name: "Find a plant" });
+        await userEvent.type(search, "P38");
+        await expect(
+            document.querySelectorAll("[data-directory-entry]:not([hidden])")
+        ).toHaveLength(1);
+        await expect(
+            canvas.getByRole("heading", { name: "Terrarium" })
+        ).toBeVisible();
+        await expect(
+            document.querySelector('[data-aggregate="true"]')
+        ).toHaveTextContent("provisional members");
+        await userEvent.tab();
+        await expect(
+            canvas.getByRole("combobox", { name: "Collection" })
+        ).toHaveFocus();
+        await userEvent.click(
+            canvas.getByRole("button", { name: "Reset filters" })
+        );
+        await expect(search).toHaveFocus();
+        await expect(search).toHaveValue("");
+        await expect(
+            canvas.getByRole("combobox", { name: "Collection" })
+        ).toHaveValue("all");
+        await expectNoOverflow(document);
+    },
+};
+export const ContainerGuideSpacing: Story = {
+    args: { path: "containers/", theme: "light", width: 390 },
+    play: async ({ canvasElement }) => {
+        const { document, userEvent } = await websiteCanvas(canvasElement);
+        const guide =
+            document.querySelector<HTMLDetailsElement>(".container-guide");
+        const previous = guide?.previousElementSibling;
+        const summary = guide?.querySelector("summary");
+        if (!guide || !previous || !summary)
+            throw new Error("Container guide missing");
+        await expect(
+            guide.getBoundingClientRect().top -
+                previous.getBoundingClientRect().bottom
+        ).toBeGreaterThanOrEqual(24);
+        // Storybook userEvent cannot invoke the browser's native summary Enter
+        // default action; the publication Playwright test covers real keyboard input.
+        await userEvent.click(summary);
+        await expect(summary).toHaveFocus();
+        await expect(guide).toHaveAttribute("open");
+        await expectNoOverflow(document);
+    },
+};

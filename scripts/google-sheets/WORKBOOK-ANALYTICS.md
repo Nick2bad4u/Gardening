@@ -105,6 +105,77 @@ The rehearsal rejected numeric separators. The emitted cycle source avoids
 them and replaces copying array methods with sort/reverse on fresh arrays.
 Verify the actual generated source in a disposable bound script before release.
 
+## Environment view migration
+
+[`workbook-environment.mjs`](workbook-environment.mjs) exports the offline
+`buildWorkbookEnvironmentRequests(snapshot)` planner and
+`assertWorkbookEnvironmentPreconditions(plan, freshSnapshot)` guard. This is a
+separate additive migration from the earlier watering analytics upgrade below.
+Do not replay it or run a broad workbook refresh to repair chart placement.
+
+Capture complete native chart specifications and positions, the bounded
+Dashboard entered **and effective** values, History A1:AS1, Plant tracker
+A1:B37, and Integrity B12. Include every Dashboard row and column in
+`dashboardReadBounds`, even when the chart destination is empty. The planner
+rejects incomplete bounds, changed headers or plant order, missing chart
+dimensions, occupied new sheet names or IDs, chart-ID collisions, and replay.
+Existing effective spill values count as occupied cells. Captured state is
+hashed and must match a second fresh read immediately before writing.
+
+Create a native backup and a disposable bound-script workbook copy. Integrate
+the exact `environmentAppsScriptSource()` output into the maintained server,
+then deploy it to the disposable script first. Its custom function accepts
+only `History!A2:AS5000`; never pass NOW or TODAY as a custom-function input.
+
+Apply the returned `prepareRequests`, then `formulaRequests`. Verify calculated
+results and honest empty states before applying `chartRequests`; native empty
+charts may drop series styling. Rehearse independent PPFD, lux, humidity and
+zero values, corrections, Removed and future rows, equal-time ordering,
+different pot setups, and an empty-to-populated transition. Synthetic records
+belong only in the disposable copy. Native Sheets formula evaluation and
+Google-rendered visual checks remain required after Node tests pass.
+
+Latest-value and matching-date formulas use reverse exact `XLOOKUP` with an
+explicit `ARRAYFORMULA` numeric mask. The native October 10 rehearsal exposed
+blank summary cells from the earlier unwrapped `LOOKUP` expression despite
+populated helper readings. Reverse search follows the projection's chronological
+and correction ordering, and the explicit missing-value argument returns blank
+without converting an absent reading to zero. Verify the calculated values and
+dates in native Sheets; checking formula text alone cannot prove evaluation.
+
+The reviewed write footprint is limited to new **Light & humidity** and
+**Environment data** sheets, Dashboard chart anchors and verified empty
+destination row heights, and the Integrity B12 formula scan extension. Existing
+Dashboard chart dimensions and complete specifications are retained. Integrity
+keeps its existing scan and appends the new visible and helper ranges plus
+History AQ:AS, preserving its exclusion of Dashboard's own check indicators.
+The snapshot and generated plan stay in ignored private storage.
+
+The current generated layout is summary **A7:H43**, selected-plant control
+**B116**, and original evidence **A189:J5188**. The helper contains canonical
+environmental projections in **A1:J5000** and independent selected metric
+series in **M1:R5000**. Both new sheets have warning protections; only the
+selector is an ordinary user control. Neither sheet is an editable observation
+ledger or an AppSheet staging table.
+
+After an authorized production application, compare History, staging,
+protections, original chart IDs/specifications/sizes, and original relative
+tab order against the native backup. Confirm the Dashboard table is visible,
+the moved chart clears it, every new chart clears its tables and status text,
+original notes are readable, and Integrity reports no formula errors. Retain
+absolute observation dates and label cached calculation timestamps honestly.
+Record the deployed Apps Script version and native rehearsal/production results
+in the [main runbook](README.md); this source section does not assert a live
+rollout.
+
+Focused local verification:
+
+```powershell
+npm run test:unit -- test/google-sheets/workbook-environment.test.mjs
+npm run typecheck:build
+npm run typecheck:tests
+```
+
 ## Migration procedure
 
 [`workbook-upgrade.mjs`](workbook-upgrade.mjs) exports

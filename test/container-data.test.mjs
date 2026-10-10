@@ -9,7 +9,7 @@ import {
 import { getProfiles } from "../site/lib/content.mjs";
 
 describe("container membership", () => {
-    it("keeps 36 care units, four shared pots, and qualified Lithops members without counting overviews twice", async () => {
+    it("keeps 36 care units, five shared plantings, and qualified Lithops members without counting overviews twice", async () => {
         expect.hasAssertions();
 
         const containers = await getContainers();
@@ -24,6 +24,7 @@ describe("container membership", () => {
             "P20",
             "P30",
             "P35",
+            "P38",
         ]);
         expect(
             containers.reduce(
@@ -38,6 +39,7 @@ describe("container membership", () => {
         ).toStrictEqual([
             "tiny-mixed-succulent-planter",
             "lithops-shared-planter",
+            "terrarium",
         ]);
 
         const lithops = required(
@@ -72,10 +74,27 @@ describe("container membership", () => {
             "docs/layouts/container-data.json",
             isContainerData
         );
-        const pending = required(metadata["P38"], "pending terrarium metadata");
-        const container = buildContainers(profiles, mapping, metadata).find(
-            (entry) => entry.id === "P38"
+        const aggregate = required(
+            metadata["P38"],
+            "aggregate terrarium metadata"
         );
+        const pending = {
+            ...aggregate,
+            label: "#12",
+            membershipStatus: /** @type {const} */ ("pending"),
+            overviewSlug: null,
+            portraitSlug: "terrarium",
+        };
+        const pendingProfiles = profiles.filter(
+            (profile) => profile.slug !== "terrarium"
+        );
+        const pendingMapping = { ...mapping, P38: [] };
+        const pendingMetadata = { ...metadata, P38: pending };
+        const container = buildContainers(
+            pendingProfiles,
+            pendingMapping,
+            pendingMetadata
+        ).find((entry) => entry.id === "P38");
 
         expect(container).toMatchObject({
             label: "#12",
@@ -86,12 +105,14 @@ describe("container membership", () => {
             profiles: [],
         });
 
-        const unmarked = { ...metadata };
-        delete unmarked["P38"];
-
-        expect(() => buildContainers(profiles, mapping, unmarked)).toThrow(
-            /explicit pending metadata/v
+        /** @type {import("../site/lib/containers.mjs").ContainerData} */
+        const unmarked = Object.fromEntries(
+            Object.entries(pendingMetadata).filter(([id]) => id !== "P38")
         );
+
+        expect(() =>
+            buildContainers(pendingProfiles, pendingMapping, unmarked)
+        ).toThrow(/explicit pending metadata/v);
         expect(isContainerData({ P38: { ...pending, label: "" } })).toBe(false);
         expect(
             isContainerData({
@@ -101,6 +122,51 @@ describe("container membership", () => {
         expect(() =>
             buildContainers(profiles, { ...mapping, P01: [] }, metadata)
         ).toThrow(/explicit pending metadata/v);
+    });
+
+    it("keeps the Houseplants terrarium aggregate outside botanical member counts", async () => {
+        expect.hasAssertions();
+
+        const profiles = await getProfiles();
+        const mapping = await readJson(
+            "docs/layouts/plant-profile-data.json",
+            isProfileData
+        );
+        const metadata = await readJson(
+            "docs/layouts/container-data.json",
+            isContainerData
+        );
+        const terrarium = required(
+            (await getContainers()).find((container) => container.id === "P38"),
+            "terrarium"
+        );
+
+        expect(terrarium).toMatchObject({
+            aggregate: true,
+            label: "#12",
+            members: [],
+            overview: { group: "houseplants", slug: "terrarium" },
+            pending: false,
+        });
+        expect(terrarium.profiles).toHaveLength(1);
+
+        const details = required(metadata["P38"], "terrarium metadata");
+
+        expect(() =>
+            buildContainers(profiles, mapping, {
+                ...metadata,
+                P38: { ...details, overviewSlug: null },
+            })
+        ).toThrow(/Aggregate container/v);
+        expect(() =>
+            buildContainers(profiles, mapping, {
+                ...metadata,
+                P38: { ...details, membershipStatus: "pending" },
+            })
+        ).toThrow(/cannot have botanical members/v);
+        expect(
+            isContainerData({ P38: { ...details, overviewSlug: null } })
+        ).toBe(false);
     });
 
     it("rejects duplicate, mismatched, missing, and historical membership", async () => {

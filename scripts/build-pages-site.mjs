@@ -11,6 +11,7 @@ import {
 import * as path from "node:path";
 import sharp from "sharp";
 
+import { getContainers } from "../site/lib/containers.mjs";
 import { getProfiles } from "../site/lib/content.mjs";
 import { getPlantDiscovery } from "../site/lib/plant-discovery.mjs";
 import { siteApps } from "../site/lib/site-apps.mjs";
@@ -597,8 +598,16 @@ async function prepareSiteAssets({ directory = publicDirectory } = {}) {
     }
     const profiles = await getProfiles();
     const profileSlugs = new Set(profiles.map((profile) => profile.slug));
+    const containers = await getContainers();
+    const aggregateSlugs = new Set(
+        containers
+            .filter((container) => container.aggregate)
+            .map((container) => container.overview?.slug)
+    );
     const discoveries = await Promise.all(
-        profiles.map((profile) => getPlantDiscovery(profile.slug, profileSlugs))
+        profiles
+            .filter((profile) => !aggregateSlugs.has(profile.slug))
+            .map((profile) => getPlantDiscovery(profile.slug, profileSlugs))
     );
     // Publish only the reviewed image named by each validated plant record.
     for (const discovery of discoveries) references.add(discovery.image.file);

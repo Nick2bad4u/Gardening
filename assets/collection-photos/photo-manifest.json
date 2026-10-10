@@ -5135,6 +5135,12 @@
                     "source_note": "Owner-provided JPEG attachment retained privately. The repository publisher removed private metadata without resizing or re-encoding the primary image. Uploaded through Gyazo on October 8, 2026 after API authorization failed; the public image exactly matches the sanitized file. Actual Gyazo app and filename metadata were verified in the authenticated capture view. The provided date is recorded because the camera capture time was not supplied. Copyright Nick; all rights reserved."
                 }
             ]
+        },
+        {
+            "plant_slug": "terrarium",
+            "gyazo_collection": null,
+            "pending_note": "Houseplant-05 / P38 / #12 is an active mixed Houseplants overview. Five owner photographs supplied October 10, 2026 are preserved as local arrival evidence; capture time is unconfirmed. Remote Collection publication is pending, not the presence of the terrarium in the collection. Copyright Nick; all rights reserved.",
+            "photos": []
         }
     ],
     "schema_version": 3

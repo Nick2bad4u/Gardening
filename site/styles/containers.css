@@ -97,9 +97,25 @@
     }
 }
 
+.container-guide {
+    margin-block-start: 2rem;
+    & > .prose {
+        padding-block-start: 1.25rem;
+        margin-block-start: 0.5rem;
+        border-block-start: 1px solid var(--line);
+    }
+}
+.terrarium-arrival {
+    margin-block-start: 1.5rem;
+}
 .container-guide > summary {
     min-block-size: 44px;
     padding-block: 0.75rem;
     font-weight: 700;
     cursor: pointer;
+    & .control-label {
+        display: inline-flex;
+        max-inline-size: calc(100% - 1.5rem);
+        vertical-align: middle;
+    }
 }

@@ -27,6 +27,38 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## October 10 logger and environment refresh preparation
+
+Source **5.34.0** refreshes the responsive logger, portrait previews, compact
+History, and separate date/time controls. New Inspect entries record above-ground
+condition; new Soil check entries require soil moisture only. Historical Checks,
+their supported corrections, and completed retries retain their original meaning.
+
+The prepared workbook migration moves the Dashboard chart below populated data
+and adds the read-only **Light & humidity** view with a hidden **Environment data**
+helper. It provides independently dated PPFD, lux, and RH summaries, three
+collection comparisons, and three selected-plant history charts. Record new light
+readings at the top of the canopy with position and light-state context in Notes;
+older readings retain their recorded location. No conversion or care threshold
+is inferred. See the [environment chart guide](INSIGHTS-CHARTS.md#light-and-humidity-observations).
+
+P38 remains one terrarium history. Its Houseplants overview records qualified
+visual identifications and seller-listed **6.3 × 3.9 in (16 × 10 cm)** jar dimensions
+without assuming their orientation or creating a repot. Completed-dry guidance
+does not apply to this enclosure.
+
+A [native backup](https://docs.google.com/spreadsheets/d/1FohsJWeiHoQ8Ghq0kKVfhTqFnrxitJl3bkIQZG7EheA/edit)
+and [disposable rehearsal copy](https://docs.google.com/spreadsheets/d/1cc0I0KDKjzdwamxPaLx1-CxpgNbrY9gm0XHDvMplits/edit)
+were created before the migration. The native rehearsal passed at **21:49:45 UTC**:
+all **1,785 original canonical rows** were preserved, excluding only derived M:O;
+13 synthetic rows in eight request groups exercised new entries, zero readings,
+corrections, and historical retries. Rejected inputs and retries added no rows.
+The temporary runner was restored to its exact original source at **21:51:06 UTC**.
+All 117 planned condition-formula and P38 metadata cells read back correctly, and
+the new environment formulas reported no errors. Six charts were verified with
+empty and populated selections. Production rollout is pending release gates;
+the production baseline above remains authoritative.
+
 ## October 10 terrarium artwork rollout
 
 Production logger **5.33.1 / immutable version 106** is active at the existing

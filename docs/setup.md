@@ -4,11 +4,11 @@ Last updated: 2026-10-10
 
 The [equipment and supplies inventory](./equipment/inventory.md) lists the collection's products and model references. All four wooden tables are the [LEJANEOYE two-tier bamboo side-table model](https://www.amazon.com/dp/B0D25H73ZS), identified September 17; measured tabletop dimensions are recorded separately from seller specifications.
 
-The [container guide](./containers.md) separates the 43 current botanical profile groups from two whole-planter overviews. P19, P20, P30, and P35 are shared containers: multiple profiles retain one label, one tracker history, and one current setup. The P-ID persists when a planting moves to a different pot; repots record a setup boundary rather than a new container ID.
+The [container guide](./containers.md) separates the 43 current botanical profile groups from three whole-planter overviews. P19, P20, P30, P35, and P38 are shared plantings with one label, one tracker history, and one current setup per container; P38 keeps its provisional identities within a Houseplants aggregate overview. The P-ID persists when a planting moves to a different pot; repots record a setup boundary rather than a new container ID.
 
-## Terrarium — photographed enclosure, setup details pending
+## Terrarium — seller-listed jar and photographed enclosure
 
-The five October 10 owner-supplied photographs of **P38 / #12 — Terrarium** show a rounded glass jar with a cork lid. Its usual lid routine, dimensions, drainage, substrate recipe, and actual moisture remain unrecorded. The owner keeps it on a shelf near the cactus grow area and reports about **9,000 lux outside the nearest glass**, with a reduction to about **7,000 lux proposed, not confirmed**. A humidity sensor hanging inside under the cap read **99% RH with fogged glass**; its model and the measurement time are unknown. Keep that reported reading distinct from the seller's suggested **90% RH**, which is not a verified target. See the [terrarium arrival and setup record](./terrarium.md) for measurement context and remaining questions.
+The five October 10 owner-supplied photographs of **P38 / #12 — Terrarium** show a rounded glass jar with a cork lid. Glass jar with cork lid; seller-listed 6.3 × 3.9 in (16 × 10 cm); dimension orientation unverified. These are not owner measurements or usable internal dimensions. Seller care says keep the lid closed and mist only when needed; the owner's usual lid routine, drainage, substrate recipe, and actual moisture remain unrecorded. The owner keeps it on a shelf near the cactus grow area and reports about **9,000 lux outside the nearest glass**, with a reduction to about **7,000 lux proposed, not confirmed**. A humidity sensor hanging inside under the cap read **99% RH with fogged glass**; its model and the measurement time are unknown. Keep that reported reading distinct from the seller's suggested **90% RH**, which is not a verified target. See the [terrarium arrival and setup record](./terrarium.md) for measurement context and remaining questions.
 
 ## October 6 Arctic Ice acquisition
 
@@ -35,7 +35,7 @@ The six-inch pot's suitability remains conditional on root-ball fit and drainage
 
 ## Current routine
 
-The collection has **36 tracked containers and 46 profiles: 45 active and one historical**. Recent additions are P31 / #7 Peperomia Bicolor and P32 / #8 Tricolor oyster plant, purchased at Carlson's Greenhouses September 20, and P35 / #9 shared Lithops and P36 / #10 split rock, purchased at Home Depot in Howell, Michigan September 21.
+The collection has **36 tracked containers and 47 profiles: 46 active and one historical**. Recent additions are P31 / #7 Peperomia Bicolor and P32 / #8 Tricolor oyster plant, purchased at Carlson's Greenhouses September 20, and P35 / #9 shared Lithops and P36 / #10 split rock, purchased at Home Depot in Howell, Michigan September 21.
 
 The September 23 Lithops and split-rock repots are **setup 2**, using **80% Molly's Succulent Mix + 20% perlite**. P35 holds four visible Lithops heads in the D'vine Dev Blush Mauve pot, logged as **4.2 in round**; P36 holds one split-rock leaf pair in the Thirtypot speckled-brown pot, logged as **4 in round**. Seller-selected sizes are 4.3 and 4.5 inches, respectively. Routine weights were **1247 g** and **713.5 g**, with dry medium and firm plants; neither batch includes watering or a verified dry baseline. Final growing positions, actual drainage, and usable internal depth remain unverified.
 

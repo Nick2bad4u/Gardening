@@ -280,6 +280,9 @@ h3 {
     margin-block-end: 2.25rem;
 }
 .eyebrow {
+    & > .site-icon {
+        margin-inline-end: 0.4rem;
+    }
     margin-block-end: 0.9rem;
     font-size: 0.75rem;
     font-weight: 750;
@@ -504,12 +507,12 @@ h3 {
         display: none;
     }
     .menu-toggle {
-        inline-size: 40px;
+        inline-size: 44px;
     }
     .header-actions {
         gap: 0;
         & .icon-button {
-            inline-size: 38px;
+            inline-size: 44px;
         }
     }
     .log-care {
@@ -524,6 +527,21 @@ h3 {
     }
     .breadcrumbs {
         margin-block-end: 1.4rem;
+    }
+}
+
+@media (width <= 380px) {
+    .header-inner {
+        display: grid;
+        grid-template-columns: [brand] minmax(0, 1fr) [menu] auto [end];
+        gap: 0.35rem 0.5rem;
+    }
+    .header-actions {
+        grid-column: brand / end;
+        justify-content: end;
+    }
+    .directory-toolbar label {
+        grid-column: start / end;
     }
 }
 
@@ -596,4 +614,17 @@ h3 {
     background: var(--surface-soft);
     border: 1px solid var(--line);
     border-radius: var(--radius);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .button,
+    .icon-button,
+    .site-nav a,
+    .plant-card-link,
+    .container-card,
+    .directory-callout {
+        transition:
+            border-color 160ms ease,
+            box-shadow 160ms ease;
+    }
 }

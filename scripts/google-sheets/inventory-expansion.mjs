@@ -734,7 +734,7 @@ export function buildInventoryExpansion(metadata, snapshots, options = {}) {
                     row,
                     7,
                     entered(
-                        '="Terrarium care pending; inspect enclosure and plant needs"'
+                        '="Closed-jar terrarium; inspect enclosure, substrate and plants"'
                     )
                 );
 
