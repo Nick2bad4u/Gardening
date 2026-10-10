@@ -578,7 +578,9 @@ export function environmentRows(history, asOf, helpers) {
         ...history
             .map((row, index) => ({
                 index,
-                order: context.order[index] ?? index,
+                // The canonical correction resolver maps every History row to
+                // a numeric order, including invalid or missing lineage.
+                order: /** @type {number} */ (context.order[index]),
                 row,
                 time: helpers.timestamp(row[0]),
             }))
@@ -597,9 +599,8 @@ export function environmentRows(history, asOf, helpers) {
                     a.time - b.time || a.order - b.order || a.index - b.index
             )
             .map(({ row }) => [
-                row[0] ?? "",
-                row[1] ?? "",
-                row[2] ?? "",
+                // Eligibility above establishes the date, plant ID and event.
+                ...row.slice(0, 3),
                 row[2] === "Light" ? environmentNumber(row[43]) : "",
                 row[2] === "Light" ? environmentNumber(row[44]) : "",
                 row[2] === "Humidity" ? environmentNumber(row[42], 100) : "",

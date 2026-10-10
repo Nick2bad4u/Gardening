@@ -7086,6 +7086,66 @@ describe("garden logger structured Check details", () => {
         }
     );
 
+    it("replays a legacy weight and condition Check without moving condition onto the weight", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook();
+        const context = loadAppsScript(workbook.history, {
+            globals: workbook.globals,
+            spreadsheet: workbook.spreadsheet,
+        });
+        const payload = {
+            condition: "Leaves firm",
+            events: ["Weigh", "Check"],
+            observedAt: "2026-10-06T12:00:00-04:00",
+            plantId: "P01",
+            requestId: "garden-legacy-weight-condition",
+            weight: 450,
+        };
+        context.saveWebObservation({
+            ...payload,
+            condition: "",
+            soilMoisture: "Dry",
+        });
+        // Recreate an older combined save: condition belongs only to its Check.
+        const legacyCheck = required(
+            workbook.history.__rows.find((row) => row[2] === "Check")
+        );
+        legacyCheck[7] = payload.condition;
+        legacyCheck[32] = "";
+        const before = structuredClone(workbook.history.__rows);
+
+        expect(context.saveWebObservation(payload)).toMatchObject({
+            duplicate: true,
+            historyRows: 2,
+        });
+        expect(
+            context.saveWebObservationBatch([payload]).results[0]
+        ).toMatchObject({ duplicate: true, historyRows: 2 });
+        expect(() =>
+            context.saveWebObservation({ ...payload, weight: 451 })
+        ).toThrow(/no longer matches/iv);
+        expect(workbook.history.__rows).toStrictEqual(before);
+        expect(
+            workbook.history.__rows.slice(1).map((row) => [
+                row[2],
+                row[4],
+                row[7],
+            ])
+        ).toStrictEqual([
+            [
+                "Weigh",
+                450,
+                "",
+            ],
+            [
+                "Check",
+                "",
+                "Leaves firm",
+            ],
+        ]);
+    });
+
     it("preserves Inspect when replaying an older AppSheet request with an inferred soil Check", () => {
         expect.hasAssertions();
 

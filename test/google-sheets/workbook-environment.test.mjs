@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 import { describe, expect, it } from "vitest";
 
@@ -12,12 +13,16 @@ import {
 } from "../../scripts/google-sheets/workbook-environment.mjs";
 import { required } from "../helpers/required.mjs";
 
-const source = readFileSync(
-    new URL("../../scripts/google-sheets/plant-tracker.gs", import.meta.url),
-    "utf8"
+const sourceUrl = new URL(
+    "../../scripts/google-sheets/plant-tracker.gs",
+    import.meta.url
 );
+const source = readFileSync(sourceUrl, "utf8");
 const context = vm.createContext({ Date, Map, Set });
-vm.runInContext(source, context);
+vm.runInContext(source, context, { filename: fileURLToPath(sourceUrl) });
+const nativeProjection = /** @type {typeof environmentRows} */ (
+    context["environmentRows_"]
+);
 const helpers = /** @type {Parameters<typeof environmentRows>[2]} */ ({
     active: context["activeHistoryRow_"],
     corrections: context["historyCorrectionContext_"],
@@ -247,15 +252,93 @@ describe("environmental evidence projection", () => {
     it("emits executable Apps Script with the same projection and no volatile formula argument", () => {
         expect.hasAssertions();
 
-        vm.runInContext(environmentAppsScriptSource(), context);
+        const generatedContext = vm.createContext({ Date, Map, Set });
+        vm.runInContext(environmentAppsScriptSource(), generatedContext);
         const generated = /** @type {typeof environmentRows} */ (
-            context["environmentRows_"]
+            generatedContext["environmentRows_"]
         );
         const rows = [reading("Humidity", { 42: 100 })];
 
         expect(
             Array.from(generated(rows, asOf, helpers), (row) => Array.from(row))
         ).toStrictEqual(environmentRows(rows, asOf, helpers));
+    });
+
+    it("preserves sparse legacy metadata as blank in the actual bound-script projection", () => {
+        expect.hasAssertions();
+
+        const legacy = /** @type {GardenHistoryRow} */ ([]);
+        legacy[0] = new Date("2026-10-09T12:00:00Z");
+        legacy[1] = "P01";
+        legacy[2] = "Humidity";
+        legacy[42] = 0;
+        const result = structuredClone(
+            nativeProjection([legacy], asOf, helpers)
+        );
+
+        expect(result.slice(1)).toStrictEqual([
+            [
+                new Date("2026-10-09T12:00:00Z"),
+                "P01",
+                "Humidity",
+                "",
+                "",
+                0,
+                "",
+                "",
+                "",
+                "",
+            ],
+        ]);
+        expect(helpers.corrections([legacy]).order).toStrictEqual([0]);
+    });
+
+    it("keeps physical order for same-time sibling corrections with the same original order", () => {
+        expect.hasAssertions();
+
+        const rows = [
+            reading("Humidity", { 26: "original", 35: "Removed", 42: 60 }),
+            reading("Humidity", {
+                26: "first-correction",
+                30: "original",
+                42: 65,
+            }),
+            reading("Humidity", {
+                26: "second-correction",
+                30: "original",
+                42: 70,
+            }),
+        ];
+        const orders = helpers.corrections(rows).order;
+        const result = structuredClone(nativeProjection(rows, asOf, helpers));
+
+        expect(orders).toStrictEqual([
+            0,
+            0,
+            0,
+        ]);
+        expect(result.slice(1).map((row) => [row[5], row[9]])).toStrictEqual([
+            [65, "first-correction"],
+            [70, "second-correction"],
+        ]);
+    });
+
+    it("rejects missing required identity fields before projecting sparse optional evidence", () => {
+        expect.hasAssertions();
+
+        const rows = [
+            reading("Humidity", { 0: "", 42: 50 }),
+            reading("Humidity", { 1: "", 42: 50 }),
+            reading("", { 42: 50 }),
+        ];
+        const result = nativeProjection(rows, asOf, helpers);
+
+        expect(result).toHaveLength(1);
+        expect(helpers.corrections(rows).order).toStrictEqual([
+            0,
+            1,
+            2,
+        ]);
     });
 });
 
