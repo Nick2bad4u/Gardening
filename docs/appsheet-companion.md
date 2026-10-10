@@ -6,9 +6,9 @@ workbook. It supports daily browsing, individual observations, collection-wide
 care/weight rounds, save receipts, dashboards, and per-plant charts without
 creating a second gardening database.
 
-The latest verified production baseline is **AppSheet 1.100124** with logger
-**5.33.1 / immutable version 106**, checked on October 10, 2026. The terrarium
-artwork rollout below supersedes the earlier dated records.
+The latest verified production baseline is **AppSheet 1.100125** with logger
+**5.34.0 / immutable version 107**, checked on October 10, 2026. The observation
+and terrarium refresh below supersedes the earlier dated records.
 
 The owner-only
 [AppSheet editor](https://www.appsheet.com/template/AppDef?appName=GardenPlantTracker-903231205-26-08-25&appId=de6fc182-d01e-427b-b46e-a031d7bc4588&quickStart=False)
@@ -16,12 +16,13 @@ contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
 
-## October 10 observation and terrarium refresh — prepared
+## October 10 observation and terrarium refresh
 
-The following form changes are prepared against a freshly read **AppSheet
-1.100124** definition. They are not saved to production yet. Deploy and verify
-the corresponding logger behavior before applying them; a source edit alone
-does not update the app.
+**AppSheet 1.100125** was saved at **22:21 UTC on October 10, 2026**, after
+production logger **5.34.0 / immutable version 107** was deployed and verified.
+An immediate read of the complete **1.100124** definition matched the reviewed
+baseline before the save. A fresh independent reload confirms exactly the
+following six expression changes and **zero unexpected differences**.
 
 New **Inspect** entries describe the plant above the soil: leaves, stems,
 posture, damage, and other visible condition. New **Soil check** entries retain
@@ -29,7 +30,7 @@ the canonical event name **Check** and record soil moisture only. Selecting
 both creates separate observations. Historical Check rows, including their
 recorded plant condition, remain unchanged and visible in read-only history.
 
-| Staging field                  | Property      | Planned expression                                       |
+| Staging field                  | Property      | Saved expression                                         |
 | ------------------------------ | ------------- | -------------------------------------------------------- |
 | `App entries[Plant condition]` | `Show_If`     | `IN("Inspect", [Events])`                                |
 | `App entries[Soil moisture]`   | `Required_If` | `IN("Check", [Events])`                                  |
@@ -39,10 +40,21 @@ recorded plant condition, remain unchanged and visible in read-only history.
 | `App bulk[Soil moisture]`      | `Valid_If`    | `OR([Round action] <> "Check", LEN(TRIM([_THIS])) > 0)`  |
 
 Existing Inspect condition requirements and soil-field visibility already
-match this separation. Preserve the event choices, creation-only keys, retry
-behavior, schema bindings, and all other field settings. The intake bridge
-must prevent retained hidden condition/moisture values from creating an
-unselected event when the operator changes the selected action.
+matched this separation. The full comparison preserved event choices,
+creation-only keys, retry behavior, component IDs, all 11 schemas and datasets,
+views, security and offline settings, and all other field settings. Events
+remains required in individual entries. The deployed intake bridge prevents
+retained hidden condition/moisture values from creating an unselected event
+when the operator changes the selected action.
+
+Signed-in blank-form checks passed at **22:24 UTC** for both individual and
+bulk staging: Inspect shows a blank required condition and no soil field;
+Check shows blank required soil moisture and no condition field. Both drafts
+were canceled and discarded without submitting observations. The reloaded
+editor reports **No issues found**, disabled Save, and **zero unsynced changes**.
+Private receipts are `appsheet-config-verification.json`,
+`appsheet-ui-verification.json`, and `appsheet-1.100125-saved.png` under
+`.cache/logger-ui-refresh-20261010/`.
 
 The maintained [Terrarium profile](./plants/houseplants/terrarium.md) now records
 **Houseplant-05 / P38 / #12** as an active mixed-houseplant aggregate. Probable

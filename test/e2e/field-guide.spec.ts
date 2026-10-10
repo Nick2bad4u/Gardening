@@ -615,6 +615,29 @@ test.describe(
                 await expectContained(page);
             });
 
+            test(`terrarium omits the empty reference gallery in ${theme}`, async ({
+                page,
+            }) => {
+                await openSite(page, "plants/terrarium/", theme);
+                await expect
+                    .soft(
+                        page.getByRole("heading", {
+                            exact: true,
+                            name: "Reference Gallery",
+                        })
+                    )
+                    .toHaveCount(0);
+                await expect
+                    .soft(
+                        page.getByRole("link", {
+                            exact: true,
+                            includeHidden: true,
+                            name: "Reference Gallery",
+                        })
+                    )
+                    .toHaveCount(0);
+            });
+
             test(`container guide spacing and keyboard disclosure work in ${theme}`, async ({
                 page,
             }) => {

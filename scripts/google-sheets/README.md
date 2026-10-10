@@ -1,6 +1,6 @@
 # Google Sheets observation logger
 
-Production logger **5.33.1 / immutable version 106** supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`. The October 10 terrarium artwork rollout below supersedes the earlier dated baselines. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.34.0 / immutable version 107** supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`. The October 10 logger and environment refresh below supersedes the earlier dated baselines. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
@@ -27,15 +27,21 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
-## October 10 logger and environment refresh preparation
+## October 10 logger and environment refresh
 
-Source **5.34.0** refreshes the responsive logger, portrait previews, compact
+Production **5.34.0 / immutable version 107** went live at **22:16:18 UTC** on
+October 10, 2026, at the existing phone URL with unchanged access settings.
+Fresh API verification confirmed all three source files against the immutable
+version. The signed-in logger reports **Connected · Logger 5.34.0**.
+
+This release refreshes the responsive logger, portrait previews, compact
 History, and separate date/time controls. New Inspect entries record above-ground
 condition; new Soil check entries require soil moisture only. Historical Checks,
 their supported corrections, and completed retries retain their original meaning.
 
-The prepared workbook migration moves the Dashboard chart below populated data
-and adds the read-only **Light & humidity** view with a hidden **Environment data**
+The workbook migration completed at **22:17:59 UTC**. It moves the Dashboard
+chart to **A46**, below populated data, and adds the read-only **Light & humidity**
+view with a hidden **Environment data**
 helper. It provides independently dated PPFD, lux, and RH summaries, three
 collection comparisons, and three selected-plant history charts. Record new light
 readings at the top of the canopy with position and light-state context in Notes;
@@ -54,10 +60,43 @@ all **1,785 original canonical rows** were preserved, excluding only derived M:O
 13 synthetic rows in eight request groups exercised new entries, zero readings,
 corrections, and historical retries. Rejected inputs and retries added no rows.
 The temporary runner was restored to its exact original source at **21:51:06 UTC**.
-All 117 planned condition-formula and P38 metadata cells read back correctly, and
-the new environment formulas reported no errors. Six charts were verified with
-empty and populated selections. Production rollout is pending release gates;
-the production baseline above remains authoritative.
+A final read-only rehearsal at **22:07:28 UTC** compared the final environment
+helper with the previous implementation on 15 focused fixtures and all 1,798
+rehearsal rows. Outputs matched, no History rows changed, and the runner was
+restored again at **22:07:56 UTC**. Six charts were checked with empty and populated
+selections before production migration.
+
+The production **22:18:36 UTC** readback preserved all **1,785 observations /
+unique observation IDs** and **1,469 request groups**, with no additional History
+rows. Canonical values matched the baseline exactly, excluding only derived M:O.
+App entries, App bulk, and RO refill records were unchanged. All **117** planned
+condition-formula and P38 metadata cells read back correctly, with their original
+validations. Integrity checks reported no duplicate or missing observation IDs,
+missing retry IDs, orphan corrections, misplaced medium values, missing required
+event details, or formula errors.
+
+The final workbook has **64 tabs and 178 charts**. All **172 original chart
+specifications**, existing tab order, and protections were preserved; only the
+planned Dashboard chart position changed. Six environment charts were added.
+P38's three existing humidity observations populate the RH view; its latest is
+**99% at October 10, 15:41** in workbook time. PPFD and lux remain blank until real
+readings are recorded. An empty selected-plant chart is expected when that plant
+has no matching readings; the chart guide documents native Sheets empty-series
+normalization.
+
+Version 107 `doGet` and `getWebAppBootstrap` executions started at **22:20:10** and
+**22:20:14 UTC** and completed successfully. The Head queue processor also
+completed successfully after starts at **22:18:57** and **22:23:57 UTC**. Fresh inspection confirmed exactly
+one `processQueuedAppSheetEntries` trigger, retaining **Every 5 minutes**.
+**AppSheet 1.100125** applies the same Inspect/Soil check distinction in individual
+and bulk forms; see the [AppSheet companion record](../../docs/appsheet-companion.md).
+
+Local validation included **1,228 logger tests** with **98.25% branch coverage**,
+the full unit and Storybook suites, **700 passing browser tests** with four existing
+browser-specific skips, and 16 focused cross-browser checks for the final P38
+gallery cleanup. Site builds, type checks, lint, and secret checks passed. GitHub
+website, logger, SonarCloud, Codecov, and secret-scan checks passed for source
+commit `8738c2e`, and Pages deployed it successfully before the live migration.
 
 ## October 10 terrarium artwork rollout
 

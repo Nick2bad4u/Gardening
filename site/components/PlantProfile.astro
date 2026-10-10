@@ -371,12 +371,14 @@ const metadata = [
                             </a>
                         </li>
                     )}
-                    <li>
-                        <a href={`#${profile.slug}-gallery-heading`}>
-                            <SiteIcon name="botanical" />
-                            Reference Gallery
-                        </a>
-                    </li>
+                    {profile.allPhotos.length > 0 && (
+                        <li>
+                            <a href={`#${profile.slug}-gallery-heading`}>
+                                <SiteIcon name="botanical" />
+                                Reference Gallery
+                            </a>
+                        </li>
+                    )}
                 </ul>
             </nav>
         </details>
@@ -484,7 +486,7 @@ const metadata = [
             </div>
         </section>
     )}
-    <ReferenceGallery profile={profile} />
+    {profile.allPhotos.length > 0 && <ReferenceGallery profile={profile} />}
     <section class="card research-links">
         <h2>
             <SiteIcon name="research" size={36} />
