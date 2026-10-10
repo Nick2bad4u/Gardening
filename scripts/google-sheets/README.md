@@ -1,6 +1,6 @@
 # Google Sheets observation logger
 
-Production logger **5.33.0 / immutable version 105** supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`. The October 9 Inspect and Light rollout below supersedes the earlier dated baselines. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.33.1 / immutable version 106** supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`. The October 10 terrarium artwork rollout below supersedes the earlier dated baselines. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
@@ -26,6 +26,47 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## October 10 terrarium artwork rollout
+
+Production logger **5.33.1 / immutable version 106** is active at the existing
+phone URL. The deployment update completed at **20:07:26 UTC** on October 10, 2026. Fresh API verification confirmed the immutable source, version assignment,
+unchanged URL, and unchanged access settings. The phone logger reports
+**Connected · logger 5.33.1** and displays the new **P38 / #12** portrait.
+
+The original schematic replaces the question-mark placeholder with the rounded
+glass jar, broad cork lid, moss, pink-veined and pale-speckled leaves, trailing
+greenery, and fern-like foliage visible in the owner's arrival photographs.
+It preserves provisional plant identities and does not establish substrate
+composition or plant recovery. See the [artwork source record](../../assets/artwork/ICON-SOURCES.md#terrarium-and-humidity-symbols).
+Website and logger portraits use revision **f8ac927063b98a47**. Both public SVG
+assets were downloaded and byte-verified against the maintained sources before
+the logger deployment.
+
+**AppSheet 1.100124** is saved with the same portrait revision. Its full saved
+definition differs only in the intended portrait expression and save metadata;
+table permissions and schemas are preserved. See the
+[AppSheet artwork rollout](../../docs/appsheet-companion.md#october-10-terrarium-artwork-rollout).
+
+A [native production backup](https://docs.google.com/spreadsheets/d/16qNhJAbNyjAYoOZMHD75IGyozUGFHFrNf5-Yak2jDns/edit)
+preceded the update. No workbook migration, installer, or observation submission
+was required. The **20:09 UTC** native readback preserved **1,785 observations /
+unique observation IDs**, **1,469 request groups** including **296 multi-event
+groups**, all 38 App entries rows, and the empty App bulk table. Canonical History
+values matched the baseline exactly, excluding only derived M:O fields. Headers,
+formulas, validations, and integrity sentinels were unchanged; no History formula
+errors were found.
+
+Successful version 106 `doGet` and `getWebAppBootstrap` executions started at
+**20:08:04** and **20:08:09 UTC**. The Head queue processor started at
+**20:08:57 UTC** and also completed successfully.
+A fresh inspection confirmed exactly one `processQueuedAppSheetEntries` trigger
+using **Minutes timer / Every 5 minutes**. The trigger was not changed.
+
+All 58 artwork tests and 1,194 logger tests passed locally, alongside the affected
+lint, type, contract, and site checks. Desktop and 390 px previews covered both
+themes. GitHub website, logger, SonarCloud, Codecov, and secret-scan checks passed
+for artwork commit `a696ea6`, and Pages deployed successfully.
 
 ## October 9 Inspect and Light rollout
 

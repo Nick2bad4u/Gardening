@@ -6,15 +6,37 @@ workbook. It supports daily browsing, individual observations, collection-wide
 care/weight rounds, save receipts, dashboards, and per-plant charts without
 creating a second gardening database.
 
-The latest verified production baseline is **AppSheet 1.100123** with logger
-**5.33.0 / immutable version 105**, checked on October 9, 2026. The Inspect and
-Light rollout below supersedes the earlier dated records.
+The latest verified production baseline is **AppSheet 1.100124** with logger
+**5.33.1 / immutable version 106**, checked on October 10, 2026. The terrarium
+artwork rollout below supersedes the earlier dated records.
 
 The owner-only
 [AppSheet editor](https://www.appsheet.com/template/AppDef?appName=GardenPlantTracker-903231205-26-08-25&appId=de6fc182-d01e-427b-b46e-a031d7bc4588&quickStart=False)
 contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
+
+## October 10 terrarium artwork rollout
+
+**AppSheet 1.100124** is saved and freshly reloaded with **No issues found** and
+disabled Save. Its **Plant tracker → Plant portrait** expression now uses portrait
+revision **f8ac927063b98a47**, matching the website and phone logger's new
+**P38 / #12** cork-topped terrarium illustration. The artwork follows the owner's
+arrival photographs while keeping plant identities provisional. See the
+[logger rollout record](../scripts/google-sheets/README.md#october-10-terrarium-artwork-rollout).
+
+All **36 SVG portraits** in
+[GardenPlantPortraits-f8ac927063b98a47](https://drive.google.com/drive/folders/1vnWdcurWTwpLcdpO3JM0UueVVTOKOy3g)
+were downloaded and byte-verified against the generated local exports before
+the expression changed. The folder and every file retain owner-only access;
+older portrait folders remain available for cached clients.
+
+The complete saved-definition comparison against **1.100123** found exactly
+the intended portrait-expression change and **zero unexpected differences**
+after normalizing save metadata. Existing component IDs, schemas, views,
+security and offline settings, and table write modes were preserved. Canonical
+and helper tables remain read-only; App entries and App bulk retain adds/updates
+access. No tables were regenerated, and no observations were submitted.
 
 ## October 9 Inspect and Light rollout
 
