@@ -1,6 +1,6 @@
 # Plant collection
 
-Last updated: 2026-10-07
+Last updated: 2026-10-10
 
 This is the current working inventory plus historical records for plants
 removed from the collection. Photo-based identifications are marked as probable, with nursery names retained alongside them.
@@ -8,7 +8,7 @@ removed from the collection. Photo-based identifications are marked as probable,
 The [original nursery-label archive](../assets/nursery-labels/) keeps
 supplier wording alongside the current working identifications.
 
-Every enrolled record has a [deep plant profile](./plants/) and a
+Established botanical records have a [deep plant profile](./plants/) and a
 [licensed reference gallery](../assets/plants/) when reusable photography is
 available. Gallery captions distinguish species and ancestry references from photographs of the owned plants.
 
@@ -30,9 +30,9 @@ aggregate overviews. Open the
 [container directory](https://nick2bad4u.github.io/Gardening/containers/) for
 each container's member list, care context, and existing history.
 
-## Terrarium — identities and setup pending
+## Terrarium — October 10 arrival photographs
 
-**P38 / #12 — Terrarium**, enrolled October 9, 2026, is a tracked container with plant identities and photographs pending. Its open or closed design, placement, size, drainage, and substrate are not yet recorded. Enrollment adds one container history and no botanical profile; the collection still has 43 botanical profile groups and two whole-planter overviews. Record measured relative humidity as a standalone **Humidity** event in **% RH** (0–100); no humidity target or watering rule is assigned before the plants and setup are known.
+**P38 / #12 — Terrarium**, enrolled October 9, 2026, now has five owner-supplied arrival-condition photographs received October 10. They show a rounded glass jar with a cork lid, probable red-veined _Fittonia albivenis_ and white-speckled _Hypoestes phyllostachya_ (both cultivar unknown), an unidentified trailing plant, fern-like foliage, and moss. These remain qualified visual identifications; botanical membership and profile allocation await seller details. The collection remains at 43 botanical profile groups and two whole-planter overviews. See the [terrarium arrival record](./terrarium.md) for the photographs, owner-reported shipping damage, and remaining setup questions.
 
 ## October 6 Arctic Ice acquisition
 

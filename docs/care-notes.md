@@ -1,6 +1,6 @@
 # Practical care notes
 
-Last updated: 2026-09-27
+Last updated: 2026-10-10
 
 Start with the [watering quick guide](./watering-quick-guide.md) for each group's
 drying target. This page brings together the collection's routine checks,
@@ -26,9 +26,11 @@ triggers below do not replace that equipment limit.
 
 The owner reports current conditions around **45–50% RH** and temperatures **in the 70s °F**, with three sensing points described in the [setup record](./setup.md). Two under-table Honeywell fans are set to low; A22 control is limited to fan cycles. Use those readings alongside each pot's drying pattern.
 
-## Terrarium — identities and setup pending
+## Terrarium — arrival condition and observation needs
 
-**P38 / #12 — Terrarium**, enrolled October 9, 2026, is a tracked container with plant identities and photographs pending. Its open or closed design, placement, size, drainage, and substrate are not yet recorded. Enrollment adds one container history and no botanical profile; the collection still has 43 botanical profile groups and two whole-planter overviews. Record measured relative humidity as a standalone **Humidity** event in **% RH** (0–100); no humidity target or watering rule is assigned before the plants and setup are known.
+The October 10 [arrival record for P38 / #12 — Terrarium](./terrarium.md) contains five owner-supplied photographs and the owner's report of shipping damage. The seller expects a quick rebound, but recovery has not yet been observed. Plant identifications remain qualified, and the photographs do not establish root-zone moisture or a watering need.
+
+The owner reports **99% RH with fogged glass** from a sensor hanging inside under the cap; sensor model and measurement time are unknown. The seller's suggested **90% RH** remains an unverified target. The jar is on a shelf near the cactus grow area, with approximately **9,000 lux measured outside the nearest glass**; reducing this to about **7,000 lux** is the owner's proposed adjustment, not a confirmed change or plant requirement. Record actual relative-humidity readings as standalone **Humidity** events in **% RH** (0–100); these are observations, not automatic watering or lid-adjustment instructions. Normal lid routine and the remaining setup details still need confirmation.
 
 ## September 20 houseplant purchases
 

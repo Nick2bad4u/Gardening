@@ -1,14 +1,14 @@
 # Setup and equipment
 
-Last updated: 2026-10-07
+Last updated: 2026-10-10
 
 The [equipment and supplies inventory](./equipment/inventory.md) lists the collection's products and model references. All four wooden tables are the [LEJANEOYE two-tier bamboo side-table model](https://www.amazon.com/dp/B0D25H73ZS), identified September 17; measured tabletop dimensions are recorded separately from seller specifications.
 
 The [container guide](./containers.md) separates the 43 current botanical profile groups from two whole-planter overviews. P19, P20, P30, and P35 are shared containers: multiple profiles retain one label, one tracker history, and one current setup. The P-ID persists when a planting moves to a different pot; repots record a setup boundary rather than a new container ID.
 
-## Terrarium — identities and setup pending
+## Terrarium — photographed enclosure, setup details pending
 
-**P38 / #12 — Terrarium**, enrolled October 9, 2026, is a tracked container with plant identities and photographs pending. Its open or closed design, placement, size, drainage, and substrate are not yet recorded. Enrollment adds one container history and no botanical profile; the collection still has 43 botanical profile groups and two whole-planter overviews. Record measured relative humidity as a standalone **Humidity** event in **% RH** (0–100); no humidity target or watering rule is assigned before the plants and setup are known.
+The five October 10 owner-supplied photographs of **P38 / #12 — Terrarium** show a rounded glass jar with a cork lid. Its usual lid routine, dimensions, drainage, substrate recipe, and actual moisture remain unrecorded. The owner keeps it on a shelf near the cactus grow area and reports about **9,000 lux outside the nearest glass**, with a reduction to about **7,000 lux proposed, not confirmed**. A humidity sensor hanging inside under the cap read **99% RH with fogged glass**; its model and the measurement time are unknown. Keep that reported reading distinct from the seller's suggested **90% RH**, which is not a verified target. See the [terrarium arrival and setup record](./terrarium.md) for measurement context and remaining questions.
 
 ## October 6 Arctic Ice acquisition
 

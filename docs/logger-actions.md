@@ -116,9 +116,11 @@ container history shows the latest recorded humidity, its history chart, and
 the value in CSV exports. Humidity is available only in individual entry forms,
 so an enclosure reading cannot be broadcast across a bulk selection.
 
-P38's plant identities, photographs, and enclosure details are pending. No
-humidity target or watering threshold is assigned. Air humidity alone does not
-record substrate moisture or an inspection of the plants.
+P38's [October 10 arrival record](./terrarium.md) includes five photographs,
+provisional plant identifications, and an owner-reported 99% RH reading below
+the cork cap with fogged glass. No humidity target or watering threshold is
+assigned; the seller's 90% suggestion remains unverified guidance. Air humidity
+alone does not record substrate moisture or an inspection of the plants.
 
 ## Light Readings
 

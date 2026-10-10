@@ -1,6 +1,6 @@
 # Containers and shared planters
 
-Last updated: 2026-10-07
+Last updated: 2026-10-10
 
 The collection has **36 tracked containers**, including **four shared
 planters**. Its **45 current profile pages** comprise **43 botanical profile
@@ -13,9 +13,9 @@ to see what shares a pot, then open a member's profile for identification and
 botanical care. Container pages bring the members, shared care notes, setup
 context, and links to the existing observation history together.
 
-## Terrarium — identities and setup pending
+## Terrarium — arrival evidence, membership pending
 
-**P38 / #12 — Terrarium**, enrolled October 9, 2026, is a tracked container with plant identities and photographs pending. Its open or closed design, placement, size, drainage, and substrate are not yet recorded. Enrollment adds one container history and no botanical profile; the collection still has 43 botanical profile groups and two whole-planter overviews. Record measured relative humidity as a standalone **Humidity** event in **% RH** (0–100); no humidity target or watering rule is assigned before the plants and setup are known.
+**P38 / #12 — Terrarium**, enrolled October 9, 2026, retains one container history and no allocated botanical profiles. Five owner-supplied photographs received October 10 show a rounded glass jar with a cork lid and several plant forms. The [terrarium arrival record](./terrarium.md) preserves the qualified visual identifications, shipping-condition evidence, and owner-reported shelf placement near the cactus grow area; membership awaits seller details. The lid's presence does not establish its normal routine, drainage, substrate recipe, or dimensions.
 
 ## Which identifier means what?
 
@@ -40,8 +40,9 @@ changes in containers.
 | [P35 / #9 — Lithops shared planter](https://nick2bad4u.github.io/Gardening/containers/P35/)       | [Probable _Lithops lesliei_](./plants/succulents/lithops-lesliei.md), tan/brown, and [probable _Lithops salicola_](./plants/succulents/lithops-salicola.md), grey/green                                                                                     | Two probable species groups plus the [whole-planter overview](./plants/succulents/lithops-shared-planter.md); four visible heads from two nursery pots, with root connections unverified                |
 
 Member profiles explain each plant's identification and care. The two overview
-pages describe their combined plantings. The other 30 containers each have one
-current botanical profile.
+pages describe their combined plantings. Another 31 containers each have one
+current botanical profile; P38 is the remaining container, with botanical
+membership and profile allocation pending. Together these make 36 tracked containers.
 
 ## Record care once, describe members separately
 

@@ -1,6 +1,6 @@
 # Plant profiles
 
-Last updated: 2026-10-06
+Last updated: 2026-10-10
 
 These **46 pages cover 45 active profile records and one historical record, across 36 tracker allocations**. Each profile combines identification, botanical background, collection photographs, and practical care for its current pot. Use the guides with plant-condition and moisture checks rather than a fixed watering calendar.
 
@@ -31,7 +31,7 @@ its own profile while retaining one P-ID and care history. Use the
 [container directory](https://nick2bad4u.github.io/Gardening/containers/)
 to browse those relationships and the setup of the complete pot.
 
-P38 / #12 is the [Terrarium container](https://nick2bad4u.github.io/Gardening/containers/P38/), with plant identities, photographs, and setup details pending. It adds one tracked container and no botanical profile.
+P38 / #12 is the [Terrarium container](https://nick2bad4u.github.io/Gardening/containers/P38/). Its [October 10 arrival record](../terrarium.md) contains five owner-supplied photographs and qualified visual identifications. Botanical membership and profile allocation remain pending seller details; it adds one tracked container and no botanical profile.
 
 ## Starter cactus group
 

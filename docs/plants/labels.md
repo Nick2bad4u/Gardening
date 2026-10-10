@@ -1,6 +1,6 @@
 # Pot labels
 
-Last updated: 2026-09-25
+Last updated: 2026-10-10
 
 This is the print reference for 45 active profile records across 36 tracked pot allocations. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
 
@@ -490,7 +490,7 @@ CONFIRM DRAINAGE AND ROOT-ZONE DRYNESS
 
 ## Terrarium label — plant identities pending
 
-**#12 / P38** identifies the whole terrarium. Plant identities and photographs are pending; no botanical inventory record is assigned yet. Open or closed design, placement, size, drainage, and substrate remain unrecorded. Humidity readings use % RH and are observations, not a care target.
+**#12 / P38** identifies the whole terrarium. The [October 10 arrival record](../terrarium.md) includes five owner-supplied photographs of its cork-lidded glass jar and qualified plant identifications. No botanical inventory record is assigned yet; membership awaits seller details. Keep this single physical label and container history. Humidity readings use % RH and are observations, not a care target.
 
 ```text
 #12 | TERRARIUM

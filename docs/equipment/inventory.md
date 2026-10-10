@@ -1,6 +1,6 @@
 # Equipment and Supplies
 
-Equipment and supplies documented through October 6, 2026, grouped by use. Entries distinguish the installed setup from planned additions and stored equipment.
+Equipment and supplies documented through October 10, 2026, grouped by use. Entries distinguish the installed setup from planned additions and stored equipment.
 
 ## Display and Support
 
@@ -31,6 +31,7 @@ Equipment and supplies documented through October 6, 2026, grouped by use. Entri
 - **[TABYIK DH-CS01 dehumidifier](https://www.amazon.com/dp/B0CMTP3GH8).** Small single-speed, 1,000 mL Peltier unit. The owner confirms it is running directly from a wall outlet, not through the A22. It has no built-in humidistat. Current approximate room readings are 45–50% RH and temperatures in the 70s °F; these are owner-reported ambient observations, not a dated sensor export or measured dehumidifier response.
 - **[Levoit Core Mini-P air purifier](https://www.amazon.com/dp/B09GTRVJQM).** Model LAP-C161-WUS, documented on low for background dust and pollen removal. It does not replace the circulation fans or dehumidifier.
 - **[VIVOSUN thermometer/hygrometer with three remote sensors](https://www.amazon.com/dp/B083J5TSJV).** The manual display/sensor kit appears in the garden-period orders. Keep canopy measurements distinct from readings at another sensor location.
+- **Mini humidity sensor for P38 / #12; brand/model unverified.** The owner reports hanging this online purchase inside below the terrarium's cork cap and seeing **99% RH with fogged glass**, reported October 10, 2026. Measurement time, accuracy, operating range, and condensation tolerance are unknown. It is not identified as one of the VIVOSUN devices. The seller's suggested 90% RH is not a manufacturer specification or adopted care target; see the [terrarium record](../terrarium.md).
 - **[Levoit LV600S humidifier](https://www.amazon.com/dp/B095KGXPW5).** Smart warm/cool-mist unit found in the equipment orders. The owner confirms it is **off** and has not started using it because it is not winter yet. Winter settings and a start date are unrecorded.
 - **[VIVOSUN GrowHub A22 outlet controller](https://www.amazon.com/dp/B0DCHFZN65).** Outlet controller with a temperature/humidity probe. The owner confirms it controls fan cycles only; cycle durations are unrecorded. It does not control the dehumidifier, and its cycle settings do not replace the reported continuous canopy airflow.
 - **[VIVOSUN app-connected temperature/humidity sensor](https://www.amazon.com/dp/B0BXP3XLLR).** Probe-equipped sensor found in the equipment orders; the owner identifies it as TH1GS. The TH1GS and A22 probe locations are described below; exact probe-to-device assignment remains unconfirmed.

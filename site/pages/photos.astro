@@ -1,7 +1,7 @@
 ---
 import SiteLayout from "../components/SiteLayout.astro";
 import { getCollectionManifest, getProfiles, photoPreview } from "../lib/content.mjs";
-import { profileUrl } from "../lib/routes.mjs";
+import { containerUrl, profileUrl } from "../lib/routes.mjs";
 const [manifest, profiles] = await Promise.all([getCollectionManifest(), getProfiles()]);
 ---
 
@@ -19,6 +19,16 @@ const [manifest, profiles] = await Promise.all([getCollectionManifest(), getProf
             Full Collection Overview ↗
         </a>
     </header>
+    <section class="card" aria-labelledby="terrarium-photos-heading">
+        <h2 id="terrarium-photos-heading">Terrarium arrival photographs · #12 / P38</h2>
+        <p>
+            Five owner photographs supplied October 10, 2026 document the cork-lidded jar and its
+            condition after shipping. Plant identifications remain provisional.
+        </p>
+        <a class="button button-secondary" href={`${containerUrl("P38")}#arrival-photographs`}>
+            View terrarium photographs and arrival notes →
+        </a>
+    </section>
     <section aria-labelledby="overview-heading">
         <h2 id="overview-heading">Collection Overviews</h2>
         <div class="card-grid">

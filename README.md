@@ -11,7 +11,7 @@ The collection has **46 profile records: 45 active and one historical, across 36
 
 The installed AW200 and AeroLight 240 W remain at their last reported 45% and 38%, with an 18-inch tip reference and a shared 13 h 15 m total cycle including 15-minute sunrise and sunset transitions. Current fixture centers and clearances over the new tables are unmeasured. See the [equipment record](docs/equipment/aw200-and-aerolight-240w.md).
 
-P38 / #12 is the [Terrarium container](https://nick2bad4u.github.io/Gardening/containers/P38/), with plant identities, photographs, and setup details pending. It adds one tracked container and no botanical profile.
+P38 / #12 is the [Terrarium container](https://nick2bad4u.github.io/Gardening/containers/P38/). Its [October 10 arrival record](docs/terrarium.md) includes five owner photographs, probable plant identifications, and the reported shelf placement, humidity, and light observations. Botanical membership remains unresolved; it adds one tracked container and no botanical profile.
 
 ## Current notes
 

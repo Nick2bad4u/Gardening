@@ -102,3 +102,10 @@ Two houseplants acquired on September 20 (#7 / P31 and #8 / P32) have explicit p
 On September 23, the pending P35 / #9 Lithops and P36 / #10 split-rock records were updated for completed repots and new owner photographs. The manifest has 43 profile records; remote placements and unique captures remain unchanged. Gyazo still returned its maintenance page, so two plant views and one nursery-label view for each pot use the same [local evidence fallback](../nursery-labels/README.md#september-23-lithops-and-split-rock-repots). All six copies retain the full primary image with private metadata removed, and the site build generates responsive previews. The 23 original camera exports and source mappings remain private. Remote Collections and uploads are pending; empty `photos` arrays do not mean these profiles lack local evidence.
 
 The subsequent September 23 split into probable _Lithops lesliei_ and probable _Lithops salicola_ component profiles adds two pending records, bringing the manifest to 45 profile records. Both components reuse the same full-frame local evidence from the P35 overview: the tan-brown appearance group is the probable _L. lesliei_, and the gray-green group is the probable _L. salicola_. Captions identify the target group while retaining the shared-planter context; the images do not confirm either species. The single blush pot remains #9 / P35. No original files, remote captures, upload metadata, or Collection IDs changed; remote placement and unique-capture counts remain 237 and 160.
+
+The five terrarium arrival photographs supplied October 10, 2026 are indexed as
+[local acquisition evidence](../nursery-labels/README.md#october-10-terrarium-arrival-photographs)
+and shown in the [P38 / #12 arrival record](../../docs/terrarium.md). P38 has no
+allocated botanical profile yet, so these photographs do not create a fictitious
+profile or Gyazo Collection in this manifest. Its remote capture and placement
+counts are unchanged.

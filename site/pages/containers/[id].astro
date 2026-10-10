@@ -2,7 +2,7 @@
 import SiteLayout from "../../components/SiteLayout.astro";
 import ContainerMembers from "../../components/ContainerMembers.astro";
 import { getContainers } from "../../lib/containers.mjs";
-import { renderMarkdown } from "../../lib/content.mjs";
+import { getDocument, renderMarkdown } from "../../lib/content.mjs";
 import { loggerUrl, potUrl, siteUrl } from "../../lib/routes.mjs";
 export async function getStaticPaths() {
     return (await getContainers()).map((container) => ({
@@ -14,6 +14,7 @@ interface Props {
     container: import("../../lib/containers.mjs").Container;
 }
 const { container } = Astro.props;
+const arrivalRecord = container.id === "P38" ? await getDocument("docs/terrarium.md") : undefined;
 const primaryProfile = container.overview ?? container.members[0];
 const currentPot =
     !container.shared && primaryProfile && container.currentPot
@@ -34,12 +35,17 @@ const currentPot =
         <h1>{container.name}</h1>
         <p class="lede">
             {container.pending
-                ? "One terrarium history, with plant identities and setup details pending."
+                ? "One terrarium history, with arrival photographs and provisional plant identifications."
                 : container.shared
                   ? "Meet the plants growing together and follow their shared care history."
                   : "The pot, growing mix, and care history for this plant."}
         </p>
         <div class="action-row">
+            {arrivalRecord && (
+                <a class="button button-secondary" href="#arrival-photographs">
+                    Arrival photographs
+                </a>
+            )}
             <a class="button" href={potUrl(container.id)}>
                 Open {container.id} history →
             </a>
@@ -63,4 +69,14 @@ const currentPot =
             weight records.
         </p>
     </section>
+    {arrivalRecord && (
+        <section class="card prose terrarium-arrival" aria-label="Terrarium arrival record">
+            <div set:html={arrivalRecord.html} />
+        </section>
+    )}
 </SiteLayout>
+<style>
+    .terrarium-arrival :global(.placement-figure) {
+        max-inline-size: 28rem;
+    }
+</style>

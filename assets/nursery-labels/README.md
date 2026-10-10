@@ -138,3 +138,27 @@ The owner supplied this full-frame photograph on September 25, 2026; its capture
 The private original is preserved. The maintained JPEG sanitizer removed private metadata without cropping, resizing, or re-encoding the primary image; the 1280 × 720 publication copy has identical decoded pixels. Firmness is an owner-reported touch observation and cannot be established from the photograph. Copyright Nick; all rights reserved.
 
 The Gyazo homepage still showed maintenance content during the September 25 check, and the authenticated image-list request returned HTTP 401. No upload or Collection creation was attempted. This image uses the established local evidence fallback; remote publication remains pending.
+
+## October 10 terrarium arrival photographs
+
+Five full-frame photographs supplied October 10, 2026 document **P38 / #12**
+after shipping. Their filenames record the supplied date; capture time and exact
+delivery date are unconfirmed. These are acquisition and condition evidence,
+not nursery-label photographs. The [terrarium record](../../docs/terrarium.md)
+distinguishes visible features, probable IDs, owner observations, and seller
+claims.
+
+| File                                                                                 | Evidence role                                                         |
+| ------------------------------------------------------------------------------------ | --------------------------------------------------------------------- |
+| [Whole jar](./2026-10-10-p38-terrarium-arrival-overview.jpg)                         | Rounded glass enclosure with cork lid fitted                          |
+| [Red-veined plant and moss](./2026-10-10-p38-terrarium-arrival-nerve-plant-moss.jpg) | Probable Fittonia, brown/green moss, and divided foliage              |
+| [White-speckled plant](./2026-10-10-p38-terrarium-arrival-speckled-plant.jpg)        | Probable Hypoestes and surrounding planting                           |
+| [Trailing plant](./2026-10-10-p38-terrarium-arrival-trailing-plant.jpg)              | Unidentified trailing stems, fern-like foliage, and visible mesh edge |
+| [Red-veined plant detail](./2026-10-10-p38-terrarium-arrival-nerve-plant-detail.jpg) | Leaf posture, veins, and stems after shipping                         |
+
+The supplied originals and source mappings remain private. The maintained JPEG
+sanitizer removes private metadata without cropping, resizing, or re-encoding
+the primary image. These local evidence copies retain the supplied 720 × 1280
+resolution; no higher-resolution camera original was supplied. Copyright Nick;
+all rights reserved. These acquisition files are served with the field guide;
+no Gyazo capture or Collection has been created for this session.

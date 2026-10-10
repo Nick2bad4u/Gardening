@@ -2,7 +2,7 @@
 
 ## Current scope
 
-The collection has **36 tracked containers**. Thirty have established positions: 29 on the four-table display and Money Tree on the north windowsill. P31 Peperomia and P32 oyster plant are recorded on the room-side floor, with a separate living-room arrangement planned below. P35 Lithops and P36 split rock were repotted September 23; their final growing positions are unrecorded. P37 / #11 Arctic Ice was acquired October 6; its placement also remains unrecorded. P38 / #12 Terrarium has no recorded growing position, enclosure design, or plant identities; it is not assigned to the established grid.
+The collection has **36 tracked containers**. Thirty have established positions: 29 on the four-table display and Money Tree on the north windowsill. P31 Peperomia and P32 oyster plant are recorded on the room-side floor, with a separate living-room arrangement planned below. P35 Lithops and P36 split rock were repotted September 23; their final growing positions are unrecorded. P37 / #11 Arctic Ice was acquired October 6; its placement also remains unrecorded. The owner places **P38 / #12 Terrarium on a shelf near the cactus grow area**, outside the established grid. The [October 10 arrival record](../terrarium.md) retains the approximate **9,000 lux outside the nearest glass**, the proposed reduction to about **7,000 lux**, and the unknown light level at the leaves inside. No distance, lamp identity, or completed light adjustment is inferred.
 
 ## September 21 additions awaiting placement
 

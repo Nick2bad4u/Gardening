@@ -66,6 +66,7 @@ const documentRoutes = new Map([
         "guides/echeveria-arctic-ice-research/",
     ],
     ["docs/setup.md", "setup/"],
+    ["docs/terrarium.md", "containers/P38/"],
     ["docs/two-light-placement-review.md", "setup/placement/"],
     ["docs/watering-quick-guide.md", "guides/watering-quick-guide/"],
     ["docs/watering-strategy.md", "guides/watering-strategy/"],

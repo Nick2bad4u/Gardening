@@ -1,6 +1,6 @@
 # Grow-spot diagrams
 
-Last updated: 2026-09-23
+Last updated: 2026-10-10
 
 The [Table Placement Guide](./table-placement-research.md) records the new **four wooden tables**: **six columns × four rows** of small pots at the front, with five larger/shared containers behind them and #3 Money Tree separately on the north windowsill (move confirmed September 16). The working 26 × 32-inch block is inferred from the photos before gaps. The current view puts **north window top, room bottom, Mylar left and white wall right**. The former round-glass placement is historical.
 
@@ -162,4 +162,5 @@ The deployed URLs are:
 - [Historical layout tool](https://nick2bad4u.github.io/Gardening/setup/archive/layout/)
 - [Historical acclimation calendar](https://nick2bad4u.github.io/Gardening/setup/archive/calendar/)
 - [Plant photo Collections index](https://nick2bad4u.github.io/Gardening/photos/)
-  P38 / #12 is the [Terrarium container](https://nick2bad4u.github.io/Gardening/containers/P38/), with plant identities, photographs, and setup details pending. It adds one tracked container and no botanical profile.
+
+P38 / #12 is the [Terrarium container](https://nick2bad4u.github.io/Gardening/containers/P38/). Its [October 10 arrival record](../terrarium.md) includes photographs of the cork-lidded jar and its owner-reported shelf position near the cactus grow area; normal lid routine remains unrecorded. Botanical membership is pending, so it adds one tracked container and no botanical profile and stays outside the established placement grid.
