@@ -1338,6 +1338,7 @@
                 font-weight: 800;
                 line-height: 1.25;
                 color: var(--forest-2);
+                overflow-wrap: anywhere;
             }
             .plant-meta {
                 grid-row: 2;
@@ -1346,6 +1347,7 @@
                 font-style: italic;
                 line-height: 1.375;
                 color: #506153;
+                overflow-wrap: anywhere;
                 :root[data-theme="dark"] & {
                     color: var(--muted);
                 }
@@ -2619,12 +2621,15 @@
                 .metric--enclosure-context {
                     grid-column: 1 / -1;
                 }
-                .plant-summary-heading {
-                    align-items: center;
+                .plant-name {
+                    grid-column: 1 / -1;
                 }
 
                 .plant-summary-portrait {
-                    max-inline-size: 8rem;
+                    flex-wrap: wrap;
+                    grid-row: 3;
+                    grid-column: 1 / -1;
+                    justify-content: space-between;
                 }
 
                 .summary-portrait {
@@ -2635,6 +2640,7 @@
 
                 .plant-id {
                     flex-wrap: wrap;
+                    max-inline-size: 100%;
                     font-size: 0.875rem;
                     white-space: normal;
                 }

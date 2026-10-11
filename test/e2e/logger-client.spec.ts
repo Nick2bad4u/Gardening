@@ -149,7 +149,7 @@ const expectTerrariumContext = async (page: Readonly<Page>) => {
     await page
         .getByRole("button", {
             exact: true,
-            name: "Label #12, Mixed tropical terrarium, P38",
+            name: "Label #12, Mixed tropical terrarium, P38, Queued · Saved today, weight safely queued",
         })
         .click();
     const selected = page.getByRole("region", {
@@ -176,6 +176,7 @@ const openLogger = async (
     width: number,
     theme: "dark" | "light"
 ) => {
+    await page.clock.setFixedTime("2026-09-09T14:00:00Z");
     await page.setViewportSize({ height: 900, width });
     await page.emulateMedia({ colorScheme: theme, reducedMotion: "reduce" });
     await page.route("**/*", async (route) => {
@@ -208,15 +209,134 @@ const openLogger = async (
         .toBeVisible();
 };
 
+const expectSummaryWithoutOverlap = async (
+    page: Readonly<Page>,
+    plantId: string,
+    name: string,
+    progress: string
+) => {
+    await page
+        .getByRole("group", { name: "Choose plant by pot label" })
+        .getByRole("button", { name: `${name}, ${plantId}` })
+        .click();
+    const selected = page.getByRole("region", {
+        exact: true,
+        name: "Selected plant",
+    });
+    await expect.soft(selected.getByText(name, { exact: true })).toBeVisible();
+    await expect
+        .soft(selected.getByText(`${plantId} · ${progress}`, { exact: true }))
+        .toBeVisible();
+    await expect
+        .soft(
+            selected.getByRole("button", {
+                exact: true,
+                name: `Enlarge portrait of ${name}`,
+            })
+        )
+        .toBeVisible();
+    expect
+        .soft(
+            await selected.evaluate((summary) => {
+                const element = summary.querySelector(".plant-summary-heading");
+                if (element === null) return ["Missing summary heading"];
+                const container = element.getBoundingClientRect();
+                const parts = [
+                    ...element.querySelectorAll<HTMLElement>(
+                        ".plant-name, .plant-meta, .plant-label-badge, .portrait-button, .plant-id"
+                    ),
+                ];
+                return parts.flatMap((part, index) => {
+                    const rect = part.getBoundingClientRect();
+                    const problems: string[] = [];
+                    if (
+                        rect.left < container.left - 1 ||
+                        rect.right > container.right + 1 ||
+                        rect.top < container.top - 1 ||
+                        rect.bottom > container.bottom + 1 ||
+                        part.scrollWidth > part.clientWidth + 1
+                    ) {
+                        problems.push(`${part.className} exceeds its layout`);
+                    }
+                    const remaining = parts.slice(index + 1);
+                    for (const other of remaining) {
+                        const next = other.getBoundingClientRect();
+                        if (
+                            Math.min(rect.right, next.right) -
+                                Math.max(rect.left, next.left) >
+                                1 &&
+                            Math.min(rect.bottom, next.bottom) -
+                                Math.max(rect.top, next.top) >
+                                1
+                        ) {
+                            problems.push(
+                                `${part.className} overlaps ${other.className}`
+                            );
+                        }
+                    }
+                    return problems;
+                });
+            })
+        )
+        .toStrictEqual([]);
+};
+
 for (const theme of ["dark", "light"] as const) {
     for (const width of [
         320,
         360,
         390,
+        520,
         768,
         1280,
     ]) {
         test.describe(`${theme} ${width}px logger`, { tag: "@logger" }, () => {
+            test("long plant names and progress badges never overlap", async ({
+                page,
+            }, testInfo) => {
+                await openLogger(page, width, theme);
+                await page
+                    .getByRole("button", { exact: true, name: "Labels" })
+                    .click();
+                await expectSummaryWithoutOverlap(
+                    page,
+                    "P05",
+                    "Old Man of the Andes",
+                    "Saved today"
+                );
+                const selected = page.getByRole("region", {
+                    exact: true,
+                    name: "Selected plant",
+                });
+                await selected.screenshot({
+                    path: testInfo.outputPath("saved-plant-summary.png"),
+                });
+                await expectSummaryWithoutOverlap(
+                    page,
+                    "P06",
+                    "Eastern prickly pear cactus",
+                    "Queued"
+                );
+                await expectSummaryWithoutOverlap(
+                    page,
+                    "P38",
+                    "Mixed tropical terrarium",
+                    "Queued · Saved today"
+                );
+                await selected.screenshot({
+                    path: testInfo.outputPath("queued-plant-summary.png"),
+                });
+                expect
+                    .soft(
+                        await page.evaluate(
+                            () =>
+                                document.documentElement.scrollWidth <=
+                                innerWidth
+                        )
+                    )
+                    .toBe(true);
+            });
+
             test("controls stay accessible and within the viewport", async ({
                 page,
             }, testInfo) => {

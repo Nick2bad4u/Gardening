@@ -19,6 +19,11 @@ const events = [
     "Pest",
     "Other",
 ];
+/** @type {Record<string, string>} */
+const namedPlants = {
+    P05: "Old Man of the Andes",
+    P06: "Eastern prickly pear cactus",
+};
 const plants = Array.from({ length: 36 }, (_, index) => ({
     currentPotSize:
         index === 35
@@ -41,7 +46,8 @@ const plants = Array.from({ length: 36 }, (_, index) => ({
     name:
         index === 35
             ? "Mixed tropical terrarium"
-            : `Collection plant ${index + 1}`,
+            : (namedPlants[`P${String(index + 1).padStart(2, "0")}`] ??
+              `Collection plant ${index + 1}`),
     potSetup: 1,
     scientificName:
         index === 35
@@ -58,6 +64,7 @@ const plants = Array.from({ length: 36 }, (_, index) => ({
 }));
 const bootstrap = {
     dayKey: "2026-09-09",
+    dayStartHour: 4,
     events,
     links: Object.fromEntries(
         [
@@ -87,12 +94,26 @@ const bootstrap = {
     serverTime: "2026-09-09T14:00:00Z",
     timeZone: "America/New_York",
     version: "browser-fixture",
+    weighedTodayPlantIds: ["P05", "P38"],
 };
 
 /** Build the actual logger with a deterministic, entirely local service bridge. */
 export function loggerBrowserFixture() {
     const bridge = `<script>
         const fixtureBootstrap = ${JSON.stringify(bootstrap)};
+        localStorage.setItem("gardenLoggerObservationQueueV1", JSON.stringify(
+            ["P06", "P38"].map((plantId) => ({
+                addedAt: "2026-09-09T14:00:00Z",
+                payload: {
+                    events: ["Weigh"],
+                    observedAt: "2026-09-09T14:00:00Z",
+                    plantId,
+                    potSetup: "1",
+                    weight: "430"
+                },
+                requestId: "browser-fixture-queue-" + plantId
+            }))
+        ));
         window.google = { script: { get run() {
             let success = () => {};
             let failure = () => {};
