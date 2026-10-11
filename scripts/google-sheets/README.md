@@ -1,6 +1,6 @@
 # Google Sheets observation logger
 
-Production logger **5.34.0 / immutable version 107** supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`. The October 10 logger and environment refresh below supersedes the earlier dated baselines. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.34.1 / immutable version 108** supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`. The October 10 mobile heading fix below is the latest deployment; the preceding logger and environment refresh records the current workbook contract. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
@@ -26,6 +26,39 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## October 10 mobile heading fix
+
+Production **5.34.1 / immutable version 108** went live at **00:35:43 UTC on
+October 11, 2026** (October 10 locally), preserving the phone URL and access
+settings. All three immutable source files match source commit `98c59fd`.
+The signed-in logger reports **Connected · Logger 5.34.1**.
+
+At widths of 520 px and below, the selected plant name spans the full heading
+width. The portrait and progress badge use a separate wrapping row beneath the
+botanical name and pot label. Long names wrap without overlapping the portrait
+or Saved today / Queued badges. The existing desktop arrangement is retained.
+
+The regression failed on the previous CSS at 390 px. After the fix, **96 browser
+tests** passed across six widths, both themes, and Chromium, Firefox, WebKit,
+and the mobile project. All **333 client unit tests**, focused lint, and type
+checks passed. GitHub website, logger, SonarCloud, Codecov, and security checks
+passed for `98c59fd`; Pages deployed that commit before the logger update.
+Live 390 px checks confirmed P05 in dark mode and the longer P14 name in light
+mode with no heading overlap or horizontal overflow.
+
+A [native backup](https://docs.google.com/spreadsheets/d/1WlfjpTOq7cjlp0xpJSEXh8Ioe-gUxvr_xYtjgGoaLS0/edit)
+was created before deployment. The **00:36:26 UTC** readback preserved all
+**1,798 observations / unique observation IDs** and **1,482 request groups**,
+with no added History rows. Canonical values matched exactly, excluding derived
+M:O; staging tables and all 428 checked header, formula, and validation cells
+were unchanged. The checked ranges contained no formula errors. No workbook
+schema or AppSheet configuration migration was needed.
+
+Version 108 `doGet` and `getWebAppBootstrap` executions started at **00:35:58**
+and **00:36:03 UTC** and completed successfully. The Head queue processor also
+completed after starting at **00:38:57 UTC**. Fresh inspection confirmed exactly
+one `processQueuedAppSheetEntries` trigger, retaining **Every 5 minutes**.
 
 ## October 10 logger and environment refresh
 

@@ -1,7 +1,7 @@
 # Spreadsheet and Logger Actions
 
 Use this guide to choose an action, record measurements, and correct saved care
-entries. Production logger **5.34.0** separates above-ground Inspect observations
+entries. The logger separates above-ground Inspect observations
 from soil-moisture Checks and adds the Light & humidity chart view; see the
 verified [rollout record](../scripts/google-sheets/README.md#october-10-logger-and-environment-refresh).
 The [deployment record](../scripts/google-sheets/README.md) keeps the
