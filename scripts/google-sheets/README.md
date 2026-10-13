@@ -27,6 +27,40 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## October 13 Inspect Integrity repair
+
+At **17:19:25 UTC on October 13, 2026**, the two Integrity formulas were repaired
+after a native Drive backup and a separate workbook-copy rehearsal. The old
+condition rule allowed only `Check`, so it incorrectly flagged both valid P35
+`Inspect` observations as medium leaks.
+
+`integrity-condition.mjs` provides the guarded, one-time repair. It changes only
+**Integrity B9** and the formula beneath **Critical source-row exceptions**
+(**A62** at repair time). Both predicates accept `Inspect` and historical `Check`
+conditions and exclude `Removed` records. Other events with a nonempty Plant
+condition remain violations. The independent missing-ID, missing-status,
+missing-Repot-size, missing-Weigh-mass, and missing-Check-detail checks are retained.
+The summary uses `SUMPRODUCT` with the same direct comparisons as the detail
+filter: native rehearsal showed that `COUNTIFS` with `"<>"` also counted an
+explicit empty-string condition cell.
+
+All ten native scenarios passed, covering valid inspections, historical
+condition-only and soil-only Checks, invalid Water/Repot/Flower conditions,
+Removed records, empty conditions, and a Check with no detail. The live warning
+changed from **2 / Fail** to **0 / Pass**, the detailed list now reports
+**No critical source-integrity violations**, and the formula-error count remains
+**0**. The repair has 18 focused regression tests; all **1,271 logger tests**
+passed with the existing coverage gates.
+
+Readback confirmed that only the two formula cells changed. History retained
+**1,873 observations**, **1,873 unique observation IDs**, and **1,529 request
+groups** with exactly matching values and formulas. Both AppSheet staging
+tables, RO records/formulas, all 64 tabs, 178 charts, and 125 protections were
+preserved. No Apps Script deployment was needed; the existing deployment still
+points to immutable version **108**. The native backup is named **Garden Plant
+Tracker — before Inspect Integrity repair — 2026-10-13** in **Garden Plant Tracker
+Backups**.
+
 ## October 10 mobile heading fix
 
 Production **5.34.1 / immutable version 108** went live at **00:35:43 UTC on
