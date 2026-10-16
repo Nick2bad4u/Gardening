@@ -3256,3 +3256,36 @@ describe("structured care corrections", () => {
         expect(mist.state.rows).toHaveLength(2);
     });
 });
+
+describe("temperature correction original unit guards", () => {
+    it("accepts a signed string temperature and rejects invalid original units before appending", () => {
+        expect.hasAssertions();
+
+        const valid = fixture([
+            observation("Temperature", "original-1", {
+                50: 1,
+                51: "Air",
+                52: "C",
+            }),
+        ]);
+        const payload = prepare(valid, { temperatureC: "-10" });
+
+        expect(valid.api.saveWebObservationCorrection(payload)).toMatchObject({
+            status: "saved",
+        });
+        expect(stored(valid, 3, 51).value).toBe(-10);
+
+        const invalid = fixture([
+            observation("Temperature", "original-1", {
+                50: 1,
+                51: "Air",
+                52: "Kelvin",
+            }),
+        ]);
+
+        expect(() => prepare(invalid, { notes: "Corrected note" })).toThrow(
+            "Temperature entry unit must be C or F."
+        );
+        expect(invalid.state.rows).toHaveLength(2);
+    });
+});

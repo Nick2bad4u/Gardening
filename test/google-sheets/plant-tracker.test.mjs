@@ -12485,3 +12485,91 @@ describe("structured care and temperature events", () => {
         expect(header[45]).toBe("Mist targets");
     });
 });
+
+describe("care schema destination and optional validation guards", () => {
+    it.each(Array.from({ length: 15 }, (_, index) => 37 + index))(
+        "preserves occupied appended App entries column %s and formulas displaying blank",
+        (index) => {
+            expect.hasAssertions();
+
+            for (const input of [
+                { formula: "", value: 0 },
+                { formula: '=IF(TRUE,"",1)', value: "" },
+            ]) {
+                const headers = [...appSheetEntryHeaders];
+                headers[index] = "";
+                const row = emptyCells(52);
+                row[index] = input.value;
+                const formulas = emptyCells(52);
+                formulas[index] = input.formula;
+                const entries = createDataSheet(
+                    "App entries",
+                    [headers, row],
+                    [[], formulas]
+                );
+                const before = structuredClone(entries.__rows);
+                const context = loadAppsScript(createHistorySheet());
+
+                expect(() =>
+                    context.ensureAppSheetEntryColumns_(entries, true)
+                ).toThrow(
+                    "contains existing data; review before adding care events."
+                );
+                expect(entries.__rows).toStrictEqual(before);
+                expect(
+                    entries.getRange(2, index + 1).getFormulas()
+                ).toStrictEqual([[input.formula]]);
+            }
+        }
+    );
+
+    it("adds care headers to a pre-expanded blank grid without altering an existing formula", () => {
+        expect.hasAssertions();
+
+        const headers = [
+            ...appSheetEntryHeaders.slice(0, 37),
+            ...emptyCells(15),
+        ];
+        const row = emptyCells(52);
+        row[0] = "existing-queued-id";
+        const formulas = emptyCells(52);
+        formulas[11] = '="preserved note"';
+        const entries = createDataSheet(
+            "App entries",
+            [headers, row],
+            [[], formulas]
+        );
+        const context = loadAppsScript(createHistorySheet());
+
+        expect(context.ensureAppSheetEntryColumns_(entries, true)).toBe(true);
+        expect(headers).toStrictEqual(appSheetEntryHeaders);
+        expect(entries.getRange(2, 12).getFormulas()).toStrictEqual([
+            ['="preserved note"'],
+        ]);
+        expect(row[0]).toBe("existing-queued-id");
+    });
+
+    it("leaves unrelated native validation intact when optional care columns are absent", () => {
+        expect.hasAssertions();
+
+        const sheet = createDataSheet("Partial schema", [
+            ["Unrelated", "Temperature target"],
+        ]);
+        const context = loadAppsScript(createHistorySheet());
+        context.clearCareColumnValidations_(sheet, ["Unrelated"]);
+
+        expect(sheet.__dataValidationCalls).toStrictEqual([]);
+
+        context.configureCareColumns_(sheet, [
+            "Unrelated",
+            "Temperature target",
+        ]);
+
+        expect(sheet.__dataValidationCalls).toHaveLength(1);
+        expect(sheet.__dataValidationCalls[0]).toMatchObject({
+            column: 2,
+            columnCount: 1,
+            validation: { type: "ONE_OF_LIST", values: ["Air", "Soil"] },
+        });
+    });
+});

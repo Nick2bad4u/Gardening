@@ -1402,3 +1402,79 @@ describe("temperature bootstrap measurements", () => {
         }
     });
 });
+
+describe("recorded location custom function", () => {
+    it("sorts moves chronologically, preserves same-time physical order and ignores removed/future rows", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        try {
+            vi.setSystemTime(now);
+            const rows = [
+                row("2026-09-06T12:00:00Z", "Move", {
+                    48: "Shelf",
+                    49: "Desk",
+                }),
+                row("2026-09-06T10:00:00Z", "Move", {
+                    26: null,
+                    48: null,
+                    49: "Shelf",
+                }),
+                row("2026-09-06T12:00:00Z", "Move", {
+                    48: "Desk",
+                    49: "Window",
+                }),
+                row("2026-09-06T13:00:00Z", "Move", {
+                    35: "Removed",
+                    49: "Removed",
+                }),
+                row("2026-09-07T13:00:00Z", "Move", { 49: "Future" }),
+            ];
+            const api = runtime(rows).api;
+            const result = structuredClone(api.GARDEN_RECORDED_LOCATIONS(rows));
+
+            expect(result.slice(1).map((entry) => entry[3])).toStrictEqual([
+                "Shelf",
+                "Desk",
+                "Window",
+            ]);
+            expect(result.slice(1).map((entry) => entry[3])).not.toContain(
+                "Removed"
+            );
+            expect(result.slice(1).map((entry) => entry[3])).not.toContain(
+                "Future"
+            );
+            expect(result[1]?.slice(2)).toStrictEqual([
+                "",
+                "Shelf",
+                "",
+            ]);
+            expect(api.getWebAppBootstrap().plants[0]?.currentLocation).toBe(
+                "Window"
+            );
+
+            const helpers = {
+                active: () => true,
+                corrections: () => ({ order: [0, 0], superseded: new Set() }),
+                timestamp: api.webHistoryTimestamp_,
+            };
+            const tied = [
+                row("2026-09-06T10:00:00Z", "Move", { 49: "One" }),
+                row("2026-09-06T10:00:00Z", "Move", { 49: "Two" }),
+                row("2026-09-06T11:00:00Z", "Move", { 49: "Three" }),
+            ];
+
+            expect(
+                structuredClone(api.recordedLocationRows_(tied, now, helpers))
+                    .slice(1)
+                    .map((entry) => entry[3])
+            ).toStrictEqual([
+                "One",
+                "Two",
+                "Three",
+            ]);
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+});

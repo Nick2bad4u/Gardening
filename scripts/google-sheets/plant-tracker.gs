@@ -8188,7 +8188,7 @@ function correctionValidateDependencies_(row, changes) {
         payload["temperature"] = row[50];
         payload["temperatureUnit"] = "C";
         const validated = eventDetailsFromPayload_(payload, [row[2]], null);
-        if (row[2] === "Mist") row[45] = validated.mistTargets || "";
+        if (row[2] === "Mist") row[45] = cleanText_(validated.mistTargets);
         if (row[2] === "Temperature") {
             if (!["C", "F"].includes(row[52]))
                 throw correctionValidationError_(
@@ -12355,10 +12355,10 @@ function recordedLocationRows_(history, asOf, helpers) {
                     a.time - b.time || a.order - b.order || a.index - b.index
             )
             .map(({ row }) => [
-                row[0] ?? "",
-                row[1] ?? "",
+                row[0],
+                row[1],
                 row[48] ?? "",
-                row[49] ?? "",
+                row[49],
                 row[26] ?? "",
             ]),
     ];

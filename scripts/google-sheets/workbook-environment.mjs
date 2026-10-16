@@ -705,10 +705,10 @@ export function recordedLocationRows(history, asOf, helpers) {
                     a.time - b.time || a.order - b.order || a.index - b.index
             )
             .map(({ row }) => [
-                row[0] ?? "",
-                row[1] ?? "",
+                row[0],
+                row[1],
                 row[48] ?? "",
-                row[49] ?? "",
+                row[49],
                 row[26] ?? "",
             ]),
     ];
