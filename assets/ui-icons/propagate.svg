@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-propagate-title" aria-describedby="ui-propagate-description" data-ui-icon="propagate" focusable="false">
+  <title id="ui-propagate-title">Propagate</title>
+<desc id="ui-propagate-description">A leafy cutting grows pale branching roots inside a small blue propagation jar.</desc>
+<defs>
+  <linearGradient id="ui-propagate-glass" x1="0" y1="0" x2="1" y2="1">
+    <stop stop-color="#cce6e7" />
+    <stop offset="1" stop-color="#77aebc" />
+  </linearGradient>
+  <linearGradient id="ui-propagate-leaf" x1="0" y1="0" x2="1" y2="1">
+    <stop stop-color="#b9dca1" />
+    <stop offset="1" stop-color="#4c9671" />
+  </linearGradient>
+</defs>
+<g stroke-linecap="round" stroke-linejoin="round">
+  <ellipse cx="32" cy="58" rx="18" ry="3" fill="#344c45" opacity=".16" />
+  <path d="M17 31h30v21a5 5 0 0 1-5 5H22a5 5 0 0 1-5-5Z" fill="url(#ui-propagate-glass)" stroke="#557e88" stroke-width="2" />
+  <path d="M18 39q14 4 28 0" fill="none" stroke="#e0f3ed" stroke-width="2" />
+  <path d="M32 37V12" fill="none" stroke="#497556" stroke-width="3" />
+  <path d="M32 24C20 24 12 17 12 9c14 0 21 5 20 15ZM32 30c0-12 8-19 21-19 0 13-8 20-21 19Z" fill="url(#ui-propagate-leaf)" stroke="#497556" stroke-width="2" />
+  <path d="m32 24-12-8m12 14 13-11" fill="none" stroke="#d6e8b9" stroke-width="1.5" />
+  <path d="M32 37v13m0-8-6 5-2 4m8-6 6 4 2 4m-8-3-3 3" fill="none" stroke="#f8eed2" stroke-width="2" />
+  <path d="M22 44v8" stroke="#e9f9f7" stroke-width="2" />
+  <path d="M16 32h32" stroke="#557e88" stroke-width="3" />
+</g>
+</svg>

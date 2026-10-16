@@ -1,10 +1,12 @@
 # Workbook analytics and history upgrade
 
-The 5.25.0 source and migration add derived views while retaining the
-42-column History contract and the daily report's care policy. **Production was
-verified on September 17, 2026**, with 54 tabs and 147 charts, including 25
-Insights charts. Logger 5.25.0 uses immutable Apps Script version 92 at the
-existing phone URL. See the [rollout record](#rollout-record) for evidence.
+The original 5.25.0 migration added derived views with a 42-column History
+contract. Its **September 17, 2026** production audit recorded 54 tabs, 147
+charts, and immutable Apps Script version 92; see the historical
+[rollout record](#rollout-record). The maintained 5.35.0 extension below adds
+care-event fields, temperature, and recorded-location evidence while preserving
+the daily report's care policy. Deployment status belongs in the
+[main runbook](README.md).
 
 ## Finding the information
 
@@ -105,7 +107,80 @@ The rehearsal rejected numeric separators. The emitted cycle source avoids
 them and replaces copying array methods with sort/reverse on fresh arrays.
 Verify the actual generated source in a disposable bound script before release.
 
+## Care events and temperature extension
+
+[`care-events-migration.mjs`](care-events-migration.mjs) extends the existing
+October 10 environmental view and ledger/staging schemas; it does not recreate
+those sheets or replay the earlier environment migration. Its maintained
+`buildCareEventsMigrationRequests(snapshot, schema)` planner takes the current
+server header arrays, captures a precondition digest, and rejects incompatible
+headers, occupied destinations, chart-ID collisions, and replay. Use
+`assertCareEventsMigrationPreconditions(plan, freshSnapshot)` immediately before
+the first write; compare each later phase with its expected preceding state.
+
+The reviewed 36-container plan contains **54 preparation requests, 55 formula
+requests, and four chart requests**. Preparation appends canonical/staging columns
+and updates event/detail validations. Native `appendDimension` inherits the
+previous last column's validation, so the planner first clears validation only
+from each newly appended care range, then applies all 18 installer-equivalent
+field-validation rules: three positive mist-amount rules, two temperature
+minimums, four temperature target/unit rules, and nine environment aspect,
+propagation method, and support action rules.
+This prevents inherited lux constraints from rejecting text or negative
+temperatures while preserving existing-column validations. Formulas expand
+History view and the read-only environmental projections; charts follow successful native calculation.
+Preserve all previous History A:AS, App entries A:AK, and App bulk A:BJ values.
+The new widths are **60, 52, and 74** respectively. Preserve the History filter's
+sort state without replaying sorting instructions over the ledger.
+
+The retained **Light & humidity** tab uses these maintained anchors:
+
+| Surface                         | Range or anchor | Content                                                                                                 |
+| ------------------------------- | --------------- | ------------------------------------------------------------------------------------------------------- |
+| Latest environmental summary    | A7:N43          | Existing metrics plus air/soil temperature and latest recorded location, each with its observation date |
+| Air collection chart            | N47             | Latest recorded air temperature for each container                                                      |
+| Soil collection chart           | N70             | Latest recorded soil temperature for each container                                                     |
+| Selected plant                  | B116            | Existing shared selector                                                                                |
+| Selected air chart              | N120            | Dated air temperature observations                                                                      |
+| Selected soil chart             | N143            | Dated soil temperature observations                                                                     |
+| Original environmental evidence | A189:L5188      | Existing evidence columns plus separate air and soil Celsius values                                     |
+| Environment data                | A1:L5000        | Correction-aware environmental projection                                                               |
+| Environment data                | M1:R5000        | Existing selected PPFD, lux, and humidity series                                                        |
+| Environment data                | S1:V5000        | Separate selected air and soil temperature/date series                                                  |
+| Environment data                | W1:AA5000       | Recorded moves used by the latest-location lookup                                                       |
+
+Both `GARDEN_ENVIRONMENT_READINGS` and `GARDEN_RECORDED_LOCATIONS` receive native
+`History!A2:BH5000`, without volatile NOW/TODAY arguments. Latest location follows
+active Move observations in correction-aware order; it is a recorded destination,
+not inferred physical presence. Air and soil temperature retain separate dates
+and Celsius values. A blank is missing, zero is a reading, and negative readings
+remain valid. The extended Integrity scan covers appended History columns,
+expanded helper ranges, and the new visible formula cells.
+
+Mist, Move, Temperature, Environment, Propagate, and Support remain independent
+activity events with structured details in history and exports. They do not
+change Water dates, watering gaps, wet-weight anchors, nutrient totals, or setup
+boundaries. Mist volume is not a watering total. Explicit Repot remains the
+setup-changing event when the weighed assembly changes. The public website
+shows separate Air and Soil series in one temperature plot, while native Sheets
+uses the four charts above.
+
+Before production writes, create a native backup and rehearse with a disposable
+bound-script workbook. Verify Fahrenheit-to-Celsius conversion, zero/negative
+readings, independent targets, correction/removal ordering, latest location, empty
+states, and empty-to-populated charts using synthetic data only on the copy.
+After applying preparation and formulas, verify native calculated outputs before
+adding charts. Compare preserved canonical/staging cells, row counts, observation
+IDs, request groups, previous formulas, chart identities/specifications/positions,
+protections, and relative tab order. Confirm no formula errors and inspect chart
+spacing at the listed anchors. Record actual deployment and verification results
+in the main runbook; this maintained procedure does not assert completion.
+
 ## Environment view migration
+
+This is the original October 10 environment-view installation with History A:AS.
+For an existing installation, use the care-event extension above; do not replay
+this sheet-creation planner against the expanded schema.
 
 [`workbook-environment.mjs`](workbook-environment.mjs) exports the offline
 `buildWorkbookEnvironmentRequests(snapshot)` planner and
@@ -151,7 +226,7 @@ keeps its existing scan and appends the new visible and helper ranges plus
 History AQ:AS, preserving its exclusion of Dashboard's own check indicators.
 The snapshot and generated plan stay in ignored private storage.
 
-The current generated layout is summary **A7:H43**, selected-plant control
+The original installation layout is summary **A7:H43**, selected-plant control
 **B116**, and original evidence **A189:J5188**. The helper contains canonical
 environmental projections in **A1:J5000** and independent selected metric
 series in **M1:R5000**. Both new sheets have warning protections; only the

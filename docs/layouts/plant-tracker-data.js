@@ -250,6 +250,10 @@ export function parseCsv(text) {
  */
 export function parseDate(value) {
     if (typeof value !== "string" || value === "") return null;
+    if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:/v.test(value)) {
+        const timestamp = new Date(value);
+        return Number.isNaN(timestamp.getTime()) ? null : timestamp;
+    }
     const iso = /^(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})$/v.exec(
         value
     )?.groups;
@@ -585,6 +589,31 @@ export function calculateSummary(sourceEvents, plantId = "") {
         humidityEvents,
         "Relative humidity (%)"
     );
+    const temperatureEvents = currentEvents.filter((event) => {
+        const date = parseDate(event["Date"]);
+        const value = numericValue(event["Temperature (°C)"]);
+        return (
+            date !== null &&
+            date.getTime() <= Date.now() &&
+            String(event["Event"] ?? "")
+                .trim()
+                .toLowerCase() === "temperature" &&
+            value !== null &&
+            value >= -273.15
+        );
+    });
+    const airTemperatureSeries = measurementSeries(
+        temperatureEvents,
+        "Temperature (°C)",
+        (event) =>
+            String(event["Temperature target"] ?? "").toLowerCase() === "air"
+    );
+    const soilTemperatureSeries = measurementSeries(
+        temperatureEvents,
+        "Temperature (°C)",
+        (event) =>
+            String(event["Temperature target"] ?? "").toLowerCase() === "soil"
+    );
     const latestCondition = newest(
         currentEvents,
         (event) => String(event["Condition / soil"] ?? "").trim() !== ""
@@ -615,6 +644,19 @@ export function calculateSummary(sourceEvents, plantId = "") {
     const rotationEvents = eventNamed("Rotation");
     const cleanEvents = eventNamed("Clean");
     const pruneEvents = eventNamed("Prune");
+    const mistEvents = eventNamed("Mist");
+    const moveEvents = eventNamed("Move");
+    const environmentEvents = eventNamed("Environment");
+    const propagationEvents = eventNamed("Propagate");
+    const supportEvents = eventNamed("Support");
+    const latestMove = newest(moveEvents, (event) => {
+        const date = parseDate(event["Date"]);
+        return (
+            date !== null &&
+            date.getTime() <= Date.now() &&
+            String(event["New location"] ?? "").trim() !== ""
+        );
+    });
     const heightSeries = measurementSeries(
         events,
         "Height (cm)",
@@ -669,8 +711,10 @@ export function calculateSummary(sourceEvents, plantId = "") {
 
     return {
         activePotSetup,
+        airTemperatureSeries,
         baselineStatus,
         capacity,
+        currentLocation: latestMove ? String(latestMove["New location"]) : "",
         currentPotSize: currentPotSize(repotEvents, plantId),
         dryAverage,
         dryCoefficientOfVariation: coefficientOfVariation(dryWeights),
@@ -679,14 +723,20 @@ export function calculateSummary(sourceEvents, plantId = "") {
         eventCounts: {
             checks: checkEvents.length,
             cleans: cleanEvents.length,
+            environments: environmentEvents.length,
             flowers: flowerEvents.length,
             inspections: inspectEvents.length,
+            mists: mistEvents.length,
+            moves: moveEvents.length,
             nutrients: nutrientEvents.length,
             pests: pestEvents.length,
             photos: photoEvents.length,
+            propagations: propagationEvents.length,
             prunes: pruneEvents.length,
             repots: repotEvents.length,
             rotations: rotationEvents.length,
+            supports: supportEvents.length,
+            temperatures: temperatureEvents.length,
         },
         firstActivity: datedEvents[0],
         heightChange: seriesChange(heightSeries),
@@ -701,11 +751,13 @@ export function calculateSummary(sourceEvents, plantId = "") {
         latestHeight,
         latestHumidity,
         latestInspect: newest(inspectEvents, () => true),
+        latestMove,
         latestNutrients: newest(nutrientEvents, () => true),
         latestPest: newest(pestEvents, () => true),
         latestPhoto: newest(photoEvents, () => true),
         latestRepot: newest(repotEvents, () => true),
         latestRotation: newest(rotationEvents, () => true),
+        latestTemperature: newest(temperatureEvents, () => true),
         latestWeight,
         latestWeightValue,
         latestWidth,
@@ -719,6 +771,7 @@ export function calculateSummary(sourceEvents, plantId = "") {
                 : 0,
         previousWeightValue,
         remainingFraction,
+        soilTemperatureSeries,
         watering,
         weightChange,
         weightChangePercent,

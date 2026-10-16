@@ -633,7 +633,12 @@ function pointTitle(point, seriesLabel, unit) {
         point.state === undefined || point.state === ""
             ? ""
             : ` · ${point.state}`;
-    return `${seriesLabel}: ${formatTick(point.value, 2)} ${unit} · ${formatShortDate(point.date)}${state}`;
+    const formatter = new Intl.DateTimeFormat("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+    });
+    const observedAt = formatter.format(point.date);
+    return `${seriesLabel}: ${formatTick(point.value, 2)} ${unit} · ${observedAt}${state}`;
 }
 
 /**

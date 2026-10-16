@@ -1,19 +1,38 @@
 # Insights dry-down charts
 
-## Light and humidity observations
+## Light, humidity, and temperature observations
 
-[`workbook-environment.mjs`](workbook-environment.mjs) builds the guarded native
-**Light & humidity** view. Its maintained 36-container layout has latest readings
-in **A7:H43**, the selected plant in **B116**, and original evidence in
-**A189:J5188**. These bounds are derived from the maintained plant inventory and
-must be regenerated when that inventory grows. The view and its hidden
-**Environment data** helper are derived sheets, not AppSheet input tables.
+[`workbook-environment.mjs`](workbook-environment.mjs) supplies the shared
+projection for the **Light & humidity** tab. The maintained 5.35.0 extension in
+[`care-events-migration.mjs`](care-events-migration.mjs) expands its 36-container
+summary to **A7:N43**, retains the selected plant at **B116**, and extends original
+environmental evidence to **A189:L5188**. These bounds follow the maintained
+inventory and must be regenerated when it grows. Deployment status is recorded
+in the [main runbook](README.md); these are maintained source targets.
 
-Three collection charts compare the latest recorded estimated PPFD, measured
-illuminance in lux, and relative humidity. Three separate selected-plant
-scatter plots show dated readings. Each metric keeps its own latest date; a
-new lux reading does not replace older PPFD or humidity evidence. Empty series
-have explicit no-readings messages, and a measured zero remains zero.
+The view compares the latest recorded estimated PPFD, measured lux, relative
+humidity, air temperature, and soil temperature. Each metric has its own latest
+observation date and selected-plant history. The latest recorded location and
+its date occupy **M:N** in the summary. The view and hidden **Environment data**
+helper remain read-only; neither is an AppSheet input table.
+
+The six existing light/humidity charts retain their identities and positions.
+Four temperature charts are appended:
+
+| Chart                       | Anchor | Meaning                                       |
+| --------------------------- | ------ | --------------------------------------------- |
+| Air temperature collection  | N47    | Latest recorded Celsius reading per container |
+| Soil temperature collection | N70    | Latest recorded Celsius reading per container |
+| Selected air temperature    | N120   | Actual air readings over time                 |
+| Selected soil temperature   | N143   | Actual soil readings over time                |
+
+Collection bars may represent different observation times. Selected temperature
+scatter plots show recorded points without implying continuous monitoring.
+Air and soil remain separate; neither replaces the other. Empty series show
+no-readings messages, zero stays zero, and negative readings remain valid.
+The public container-history page uses a single temperature plot with distinct
+Air and Soil series and includes all six new care events in activity/history
+and CSV exports.
 
 Native Sheets can omit an empty scatter series from its metadata and drop its
 color, marker, or label overrides. The October 10 copy rehearsal confirmed that
@@ -32,21 +51,25 @@ retains that original row-level provenance. Relative humidity is independent
 of light, pot setup, weight, soil moisture, and watering history. No conversion,
 DLI estimate, automatic target, or care recommendation is calculated.
 
-The shared server projection reads History A:AS, excludes Removed,
+The extended shared server projection reads History A:BH, excludes Removed,
 superseded, future, and invalid readings, and uses the logger's correction
 ordering for equal timestamps. It preserves original dates, quality, method,
-notes, and observation IDs. Its native custom-function result can be cached;
+notes, and observation IDs. A separate correction-aware Move projection supplies
+the latest recorded location. No new event changes watering or pot-setup formulas.
+Its native custom-function result can be cached;
 the shared calculation timestamp is not proof of a new measurement or a fresh
 custom-function evaluation.
 
-The same migration repairs the Dashboard chart overlap with position-only
+The original October 10 environment migration repaired the Dashboard chart overlap with position-only
 updates beneath the last occupied row. The October 10 preflight found a chart
 anchored at row 41 over a plant table ending at row 42. The planner preserves
 existing chart IDs, sizes, specifications, and visual ordering. Only verified
 empty destination rows receive fixed visible heights to maintain pixel gaps;
 the existing table, formulas, owner tab order, and unrelated charts are retained.
-See the [environment migration procedure](WORKBOOK-ANALYTICS.md#environment-view-migration)
-for the required native rehearsal and verification.
+See the [care-event extension procedure](WORKBOOK-ANALYTICS.md#care-events-and-temperature-extension)
+for the current schema, helper ranges, native rehearsal, and preservation checks.
+The earlier [environment installation procedure](WORKBOOK-ANALYTICS.md#environment-view-migration)
+remains historical context for the original sheet creation.
 
 The native **Insights** sheet has **26 charts** in the September 21 readback.
 The verified production enrollment retained those chart IDs and positions while extending

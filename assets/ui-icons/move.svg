@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-move-title" aria-describedby="ui-move-description" data-ui-icon="move" focusable="false">
+  <title id="ui-move-title">Move</title>
+<desc id="ui-move-description">A leafy terracotta pot sits below a right-pointing arrow for a location change.</desc>
+<defs>
+  <linearGradient id="ui-move-pot" x1="0" y1="0" x2="1" y2="1">
+    <stop stop-color="#f1bb8d" />
+    <stop offset="1" stop-color="#b96d4d" />
+  </linearGradient>
+  <linearGradient id="ui-move-arrow" x1="0" y1="0" x2="1" y2="1">
+    <stop stop-color="#c2e0e5" />
+    <stop offset="1" stop-color="#6796ab" />
+  </linearGradient>
+</defs>
+<g stroke-linecap="round" stroke-linejoin="round">
+  <ellipse cx="25" cy="57" rx="16" ry="3" fill="#344c45" opacity=".16" />
+  <path d="M34 8h14V4l12 10-12 10v-5H34Z" fill="url(#ui-move-arrow)" stroke="#426879" stroke-width="2" />
+  <path d="M25 40V20" stroke="#497556" stroke-width="3" />
+  <path d="M25 28C13 28 9 20 9 15c12-1 18 4 16 13Z" fill="#91c48c" stroke="#497556" stroke-width="2" />
+  <path d="M25 34c0-10 6-15 17-15 0 11-6 16-17 15Z" fill="#bddaa0" stroke="#497556" stroke-width="2" />
+  <path d="m11 40 5 16h19l5-16Z" fill="url(#ui-move-pot)" stroke="#8d5e42" stroke-width="2" />
+  <rect x="9" y="36" width="33" height="7" rx="2" fill="#e6ad7e" stroke="#8d5e42" stroke-width="2" />
+  <path d="m17 46 2 7" stroke="#f7d7ae" stroke-width="2" />
+</g>
+</svg>

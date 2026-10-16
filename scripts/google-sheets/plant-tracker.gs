@@ -14,10 +14,10 @@
    refreshGardenWorkbookPages11To20, refreshGardenWorkbookPages21To30,
    refreshGardenWorkbookPages31To32, refreshGardenWorkbookPages33To34,
    refreshGardenWorkbookPages35To36,
-   installDailyCareDashboard, GARDEN_CYCLE_COMPARISON, GARDEN_ENVIRONMENT_READINGS */
+   installDailyCareDashboard, GARDEN_CYCLE_COMPARISON, GARDEN_ENVIRONMENT_READINGS, GARDEN_RECORDED_LOCATIONS */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.34.1",
+    version: "5.35.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -66,7 +66,8 @@ const GARDEN_LOGGER = Object.freeze({
     historyHumidityColumn: 43,
     historyLightStartColumn: 44,
     historyLightColumns: 2,
-    historyStoredColumns: 45,
+    historyCareStartColumn: 46,
+    historyStoredColumns: 60,
     historyCapacityRows: 5000,
     lockTimeoutMs: 5000,
     spreadsheetUrl:
@@ -242,6 +243,30 @@ const WEB_PLANT_IMAGE_URLS = Object.freeze({
 const WEB_EVENT_OPTIONS = Object.freeze([
     "Water",
     "Weigh",
+    "Mist",
+    "Humidity",
+    "Temperature",
+    "Light",
+    "Check",
+    "Inspect",
+    "Measure",
+    "Rotation",
+    "Move",
+    "Environment",
+    "Clean",
+    "Prune",
+    "Support",
+    "Repot",
+    "Propagate",
+    "Flower",
+    "Photo",
+    "Pest",
+    "Other",
+]);
+// Preserve established storage order for retries from older/offline clients.
+const STORED_EVENT_OPTIONS = Object.freeze([
+    "Water",
+    "Weigh",
     "Measure",
     "Humidity",
     "Check",
@@ -255,17 +280,78 @@ const WEB_EVENT_OPTIONS = Object.freeze([
     "Other",
     "Inspect",
     "Light",
+    "Mist",
+    "Move",
+    "Temperature",
+    "Environment",
+    "Propagate",
+    "Support",
 ]);
-
 const BULK_WEB_EVENT_OPTIONS = Object.freeze([
     "Water",
+    "Mist",
     "Check",
+    "Inspect",
     "Rotation",
+    "Move",
+    "Environment",
     "Clean",
     "Prune",
+    "Support",
+    "Propagate",
     "Pest",
     "Other",
-    "Inspect",
+]);
+const MIST_TARGET_OPTIONS = Object.freeze([
+    "Leaves",
+    "Exposed roots",
+    "Soil surface",
+    "Stem / plant body",
+    "Moss / support",
+    "Other",
+]);
+const TEMPERATURE_TARGET_OPTIONS = Object.freeze(["Air", "Soil"]);
+const ENVIRONMENT_ASPECT_OPTIONS = Object.freeze([
+    "Light",
+    "Airflow",
+    "Enclosure",
+    "Heating",
+    "Other",
+]);
+const PROPAGATION_METHOD_OPTIONS = Object.freeze([
+    "Stem cutting",
+    "Leaf cutting",
+    "Offset",
+    "Division",
+    "Seed",
+    "Other",
+]);
+const SUPPORT_ACTION_OPTIONS = Object.freeze(["Add", "Adjust", "Remove"]);
+const HISTORY_CARE_HEADERS = Object.freeze([
+    "Mist targets",
+    "Mist amount (mL)",
+    "Mist details",
+    "Previous location",
+    "New location",
+    "Temperature (°C)",
+    "Temperature target",
+    "Temperature entry unit",
+    "Environment aspect",
+    "Previous setting",
+    "New setting",
+    "Propagation method",
+    "Propagation details",
+    "Support action",
+    "Support details",
+]);
+const APP_SHEET_CARE_HEADERS = Object.freeze(
+    HISTORY_CARE_HEADERS.map((header) =>
+        header === "Temperature (°C)" ? "Temperature" : header
+    )
+);
+const APP_SHEET_BULK_CARE_HEADERS = Object.freeze([
+    ...HISTORY_CARE_HEADERS.slice(0, 5),
+    ...HISTORY_CARE_HEADERS.slice(8),
 ]);
 
 // Retained only to validate stale/offline payloads created before logger 5.16.
@@ -401,9 +487,13 @@ const APP_SHEET_ENTRY_V532_HEADERS = Object.freeze([
     ...APP_SHEET_ENTRY_V525_HEADERS,
     ...HISTORY_HUMIDITY_HEADERS,
 ]);
-const APP_SHEET_ENTRY_HEADERS = Object.freeze([
+const APP_SHEET_ENTRY_V534_HEADERS = Object.freeze([
     ...APP_SHEET_ENTRY_V532_HEADERS,
     ...HISTORY_LIGHT_HEADERS,
+]);
+const APP_SHEET_ENTRY_HEADERS = Object.freeze([
+    ...APP_SHEET_ENTRY_V534_HEADERS,
+    ...APP_SHEET_CARE_HEADERS,
 ]);
 const APP_SHEET_QUEUE_STATUSES = Object.freeze(["Queued", "Retry"]);
 const APP_SHEET_QUEUE_LIMIT = 50;
@@ -490,6 +580,11 @@ const APP_SHEET_BULK_ACTION_OPTIONS = Object.freeze([
     "Pest",
     "Other",
     "Inspect",
+    "Mist",
+    "Move",
+    "Environment",
+    "Propagate",
+    "Support",
 ]);
 
 const APP_SHEET_BULK_V511_HEADERS = Object.freeze([
@@ -563,9 +658,14 @@ const APP_SHEET_BULK_V531_HEADERS = Object.freeze([
     "P37 weight (g)",
 ]);
 
-const APP_SHEET_BULK_HEADERS = Object.freeze([
+const APP_SHEET_BULK_V534_HEADERS = Object.freeze([
     ...APP_SHEET_BULK_V531_HEADERS,
     "P38 weight (g)",
+]);
+
+const APP_SHEET_BULK_HEADERS = Object.freeze([
+    ...APP_SHEET_BULK_V534_HEADERS,
+    ...APP_SHEET_BULK_CARE_HEADERS,
 ]);
 
 const APP_SHEET_BULK_ACTION_INDEX = 3;
@@ -626,6 +726,7 @@ const HISTORY_MEASUREMENT_METHOD_OPTIONS = Object.freeze([
     "Hygrometer",
     "Light app",
     "Lux meter",
+    "Thermometer",
 ]);
 
 // Documented starting sizes. A later Repot entry supersedes these values.
@@ -828,6 +929,15 @@ function formatPlantPageHeader_(sheet) {
 
 /** @type {Readonly<Record<string, readonly [string, string]>>} */
 const WORKBOOK_EVENT_COLORS = Object.freeze({
+    Humidity: Object.freeze(/** @type {const} */ (["#dff5f2", "#24645e"])),
+    Light: Object.freeze(/** @type {const} */ (["#fff0c7", "#684b00"])),
+    Inspect: Object.freeze(/** @type {const} */ (["#dff2e4", "#24543a"])),
+    Mist: Object.freeze(/** @type {const} */ (["#dff5f2", "#24645e"])),
+    Move: Object.freeze(/** @type {const} */ (["#e9e5fc", "#514278"])),
+    Temperature: Object.freeze(/** @type {const} */ (["#fce4d8", "#854329"])),
+    Environment: Object.freeze(/** @type {const} */ (["#e3edd9", "#476036"])),
+    Propagate: Object.freeze(/** @type {const} */ (["#d8f2dd", "#28613a"])),
+    Support: Object.freeze(/** @type {const} */ (["#eee4d9", "#64503a"])),
     Water: Object.freeze(/** @type {const} */ (["#d9eefc", "#174a68"])),
     Weigh: Object.freeze(/** @type {const} */ (["#e9e1f8", "#47306b"])),
     Measure: Object.freeze(/** @type {const} */ (["#dff2e4", "#24543a"])),
@@ -908,6 +1018,15 @@ function getWebAppBootstrap() {
         ])
     );
     const potSizeByPlant = latestPotSizesFromRows_(historyRows);
+    const locations = new Map(
+        recordedLocationRows_(historyRows, refreshedAt, {
+            corrections: historyCorrectionContext_,
+            active: activeHistoryRow_,
+            timestamp: webHistoryTimestamp_,
+        })
+            .slice(1)
+            .map((row) => [cleanText_(row[1]), cleanText_(row[3])])
+    );
     const timeZone = spreadsheet.getSpreadsheetTimeZone();
     const weightReads = webWeightReadModelsFromRows_(
         historyRows,
@@ -996,6 +1115,7 @@ function getWebAppBootstrap() {
                         "Pot setup"
                     )
                 ),
+                currentLocation: locations.get(cleanText_(plantId)) || "",
                 fieldGuideUrl,
                 historyUrl: `${GARDEN_LOGGER.historyUrl}?id=${encodeURIComponent(cleanText_(plantId))}`,
             };
@@ -1162,7 +1282,7 @@ function prepareWebObservation_(spreadsheet, payload, plantRecords) {
 
     const payloadEvents = payload.events;
     const requestedEvents = Array.isArray(payloadEvents)
-        ? WEB_EVENT_OPTIONS.filter((eventName) =>
+        ? STORED_EVENT_OPTIONS.filter((eventName) =>
               payloadEvents.includes(eventName)
           )
         : [];
@@ -1567,6 +1687,7 @@ function processQueuedAppSheetBulkEntries_(spreadsheet) {
     migrateLegacyAppSheetBulkSheet_(bulkSheet, false);
     const bulkHeaders = [
         APP_SHEET_BULK_HEADERS,
+        APP_SHEET_BULK_V534_HEADERS,
         APP_SHEET_BULK_V531_HEADERS,
         APP_SHEET_BULK_V529_HEADERS,
         APP_SHEET_BULK_V528_HEADERS,
@@ -1765,6 +1886,18 @@ function appSheetBulkPayloadsFromRow_(row, roundId) {
     const weightState = includesWeigh ? "Routine" : "";
     const notes = cleanText_(row[APP_SHEET_BULK_NOTES_INDEX]);
     const sharedDetails = {
+        mistTargets: row[62],
+        mistAmountMl: row[63],
+        mistDetails: row[64],
+        moveFrom: row[65],
+        moveTo: row[66],
+        environmentAspect: row[67],
+        environmentFrom: row[68],
+        environmentTo: row[69],
+        propagationMethod: row[70],
+        propagationDetails: row[71],
+        supportAction: row[72],
+        supportDetails: row[73],
         rotationDegrees: row[APP_SHEET_BULK_ROTATION_INDEX],
         condition: cleanText_(row[APP_SHEET_BULK_CONDITION_INDEX]),
         soilMoisture: cleanText_(row[APP_SHEET_BULK_SOIL_MOISTURE_INDEX]),
@@ -2131,6 +2264,7 @@ function installAppSheetBulkSheet() {
     sheet.hideColumns(APP_SHEET_BULK_V526_HEADERS.length + 1, 2);
     sheet.showColumns(APP_SHEET_BULK_V528_HEADERS.length + 1, 3);
 
+    configureCareColumns_(sheet, APP_SHEET_BULK_HEADERS);
     const result = {
         created,
         migrated,
@@ -2163,6 +2297,7 @@ function migrateLegacyAppSheetBulkSheet_(sheet, shouldUpgradeInventory = true) {
 
     if (hasHeaders(APP_SHEET_BULK_HEADERS)) return false;
     const priorSchema = [
+        { headers: APP_SHEET_BULK_V534_HEADERS, lastColumn: "BJ" },
         { headers: APP_SHEET_BULK_V531_HEADERS, lastColumn: "BI" },
         { headers: APP_SHEET_BULK_V529_HEADERS, lastColumn: "BH" },
         { headers: APP_SHEET_BULK_V528_HEADERS, lastColumn: "BF" },
@@ -2341,6 +2476,27 @@ function ensureAppSheetEntryColumns_(sheet, configureColumn = false) {
             );
         }
     });
+    APP_SHEET_CARE_HEADERS.forEach((header, index) => {
+        const column = 38 + index;
+        if (
+            extensionHeaders[6 + index] === header ||
+            column > sheet.getMaxColumns()
+        )
+            return;
+        const destination = sheet.getRange(
+            2,
+            column,
+            Math.max(1, sheet.getLastRow() - 1),
+            1
+        );
+        if (
+            destination.getValues().some((row) => row[0] !== "") ||
+            destination.getFormulas().some((row) => row[0])
+        )
+            throw new Error(
+                `App entries!${columnName_(column)} contains existing data; review before adding care events.`
+            );
+    });
     ensureSheetColumnCapacity_(sheet, APP_SHEET_ENTRY_HEADERS.length);
     const changed = expectedExtension.some(
         (header, index) => extensionHeaders[index] !== header
@@ -2349,6 +2505,7 @@ function ensureAppSheetEntryColumns_(sheet, configureColumn = false) {
         sheet
             .getRange(1, extensionStartColumn, 1, expectedExtension.length)
             .setValues([[...expectedExtension]]);
+        clearCareColumnValidations_(sheet, APP_SHEET_ENTRY_HEADERS);
     }
     if (configureColumn) {
         const dataRowCount = Math.max(1, sheet.getMaxRows() - 1);
@@ -2410,6 +2567,7 @@ function ensureAppSheetEntryColumns_(sheet, configureColumn = false) {
             .getRange(2, 36, dataRowCount, 2)
             .setDataValidation(lightReadingValidation_())
             .setNumberFormat("0.##");
+        configureCareColumns_(sheet, APP_SHEET_ENTRY_HEADERS);
         const nutrientProductColumn =
             APP_SHEET_ENTRY_HEADERS.indexOf("Nutrient product") + 1;
         const nutrientProductValidation = SpreadsheetApp.newDataValidation()
@@ -2501,6 +2659,21 @@ function appSheetPayloadFromRow_(row, requestId) {
         relativeHumidity: row[34],
         ppfd: row[35],
         lux: row[36],
+        mistTargets: row[37],
+        mistAmountMl: row[38],
+        mistDetails: row[39],
+        moveFrom: row[40],
+        moveTo: row[41],
+        temperature: row[42],
+        temperatureTarget: row[43],
+        temperatureUnit: row[44],
+        environmentAspect: row[45],
+        environmentFrom: row[46],
+        environmentTo: row[47],
+        propagationMethod: row[48],
+        propagationDetails: row[49],
+        supportAction: row[50],
+        supportDetails: row[51],
         entrySource: "AppSheet",
     };
 }
@@ -2938,6 +3111,7 @@ function saveBulkCareObservation(payload) {
                 inventoryRevision: payload.inventoryRevision,
                 events: eventNames,
                 notes,
+                ...details,
                 nutrientsUsed: details.nutrientsUsed,
                 nutrientProduct: details.nutrientProduct,
                 nutrientAmount: details.nutrientAmount,
@@ -3261,6 +3435,7 @@ function installGardenLogger() {
     ensureHistoryWaterColumns_(history, true);
     ensureHistoryHumidityColumn_(history, true);
     ensureHistoryLightColumns_(history, true);
+    ensureHistoryCareColumns_(history, true);
     ensureHistoryView_(spreadsheet);
     const appEntries = requireSheet_(
         spreadsheet,
@@ -7004,11 +7179,11 @@ function correctionChangeValues_(changes) {
 function correctionSnapshot_(spreadsheet) {
     const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
     if (
-        GARDEN_LOGGER.historyStoredColumns !== 45 ||
-        history.getMaxColumns() < 45
+        GARDEN_LOGGER.historyStoredColumns !== 60 ||
+        history.getMaxColumns() < 60
     ) {
         throw new Error(
-            "HISTORY_SCHEMA: Expected the installed 45-column History schema."
+            "HISTORY_SCHEMA: Expected the installed 60-column History schema."
         );
     }
     const expected = [
@@ -7024,10 +7199,11 @@ function correctionSnapshot_(spreadsheet) {
         ...HISTORY_WATER_HEADERS,
         ...HISTORY_HUMIDITY_HEADERS,
         ...HISTORY_LIGHT_HEADERS,
+        ...HISTORY_CARE_HEADERS,
     ];
     /** @type {GardenHistoryRow | undefined} */
-    const headers = history.getRange(1, 1, 1, 45).getValues()[0];
-    const headerFormulas = history.getRange(1, 1, 1, 45).getFormulas()[0];
+    const headers = history.getRange(1, 1, 1, 60).getValues()[0];
+    const headerFormulas = history.getRange(1, 1, 1, 60).getFormulas()[0];
     if (
         !headers ||
         !headerFormulas ||
@@ -7041,7 +7217,7 @@ function correctionSnapshot_(spreadsheet) {
         );
     }
     const rowCount = Math.max(0, history.getLastRow() - 1);
-    const range = rowCount ? history.getRange(2, 1, rowCount, 45) : null;
+    const range = rowCount ? history.getRange(2, 1, rowCount, 60) : null;
     /** @type {GardenHistoryRow[]} */
     const values = range ? range.getValues() : [];
     const formulas = range ? range.getFormulas() : [];
@@ -7165,7 +7341,7 @@ function correctionCanonicalRow_(row) {
         !events.includes(row[2]) ||
         (row[9] !== "" && !(row[9] instanceof Date)) ||
         (row[35] !== "" && row[35] !== "Active" && row[35] !== "Removed") ||
-        [4, 5, 6, 10, 21, 39, 41, 42, 43, 44].some(
+        [4, 5, 6, 10, 21, 39, 41, 42, 43, 44, 46, 50].some(
             (index) => row[index] !== "" && typeof row[index] !== "number"
         ) ||
         (row[10] !== "" &&
@@ -7175,7 +7351,9 @@ function correctionCanonicalRow_(row) {
         row.some(
             (value, index) =>
                 !correctionFormulaColumn_(index) &&
-                ![0, 4, 5, 6, 9, 10, 21, 39, 41, 42, 43, 44].includes(index) &&
+                ![0, 4, 5, 6, 9, 10, 21, 39, 41, 42, 43, 44, 46, 50].includes(
+                    index
+                ) &&
                 typeof value !== "string"
         )
     ) {
@@ -7204,6 +7382,12 @@ function correctionEvents_() {
         "Clean",
         "Inspect",
         "Light",
+        "Mist",
+        "Move",
+        "Temperature",
+        "Environment",
+        "Propagate",
+        "Support",
     ];
 }
 
@@ -7214,6 +7398,111 @@ function correctionFieldDefinitions_(event) {
         ["observationDate", 0, "Saved date", "datetime", [], true],
         ["notes", 8, "Notes"],
         ["weight", 4, "Weight", "number", [], true, "g", ["Weigh"]],
+        ["mistTargets", 45, "Mist targets", "text", [], true, "", ["Mist"]],
+        ["mistAmountMl", 46, "Mist amount", "number", [], false, "", ["Mist"]],
+        ["mistDetails", 47, "Mist details", "text", [], false, "", ["Mist"]],
+        ["moveFrom", 48, "Previous location", "text", [], false, "", ["Move"]],
+        ["moveTo", 49, "New location", "text", [], true, "", ["Move"]],
+        [
+            "temperatureC",
+            50,
+            "Temperature (°C)",
+            "number",
+            [],
+            true,
+            "",
+            ["Temperature"],
+        ],
+        [
+            "temperatureTarget",
+            51,
+            "Temperature target",
+            "select",
+            TEMPERATURE_TARGET_OPTIONS,
+            true,
+            "",
+            ["Temperature"],
+        ],
+        [
+            "temperatureUnit",
+            52,
+            "Original temperature unit",
+            "select",
+            ["C", "F"],
+            true,
+            "",
+            ["Temperature"],
+        ],
+        [
+            "environmentAspect",
+            53,
+            "Environment aspect",
+            "select",
+            ENVIRONMENT_ASPECT_OPTIONS,
+            true,
+            "",
+            ["Environment"],
+        ],
+        [
+            "environmentFrom",
+            54,
+            "Previous setting",
+            "text",
+            [],
+            false,
+            "",
+            ["Environment"],
+        ],
+        [
+            "environmentTo",
+            55,
+            "New setting",
+            "text",
+            [],
+            true,
+            "",
+            ["Environment"],
+        ],
+        [
+            "propagationMethod",
+            56,
+            "Propagation method",
+            "select",
+            PROPAGATION_METHOD_OPTIONS,
+            true,
+            "",
+            ["Propagate"],
+        ],
+        [
+            "propagationDetails",
+            57,
+            "Propagation details",
+            "text",
+            [],
+            true,
+            "",
+            ["Propagate"],
+        ],
+        [
+            "supportAction",
+            58,
+            "Support action",
+            "select",
+            SUPPORT_ACTION_OPTIONS,
+            true,
+            "",
+            ["Support"],
+        ],
+        [
+            "supportDetails",
+            59,
+            "Support details",
+            "text",
+            [],
+            true,
+            "",
+            ["Support"],
+        ],
         [
             "ppfd",
             43,
@@ -7811,7 +8100,9 @@ function correctionNumericValue_(definition, input) {
     if (
         typeof input === "string" &&
         input !== "" &&
-        !/^\d+(?:\.\d+)?$/.test(input)
+        !(
+            key === "temperatureC" ? /^-?\d+(?:\.\d+)?$/ : /^\d+(?:\.\d+)?$/
+        ).test(input)
     ) {
         throw correctionValidationError_(
             `INVALID_CORRECTION: ${definition.label} must be a positive number or blank.`
@@ -7821,9 +8112,15 @@ function correctionNumericValue_(definition, input) {
     if (
         (value !== "" &&
             (!Number.isFinite(value) ||
-                value < 0 ||
+                (value < 0 && key !== "temperatureC") ||
                 (value === 0 &&
-                    !["relativeHumidity", "ppfd", "lux"].includes(key)))) ||
+                    ![
+                        "relativeHumidity",
+                        "ppfd",
+                        "lux",
+                        "temperatureC",
+                    ].includes(key)))) ||
+        (key === "temperatureC" && value !== "" && value < -273.15) ||
         (key === "relativeHumidity" && value !== "" && value > 100) ||
         (key === "flowerCount" && value !== "" && !Number.isInteger(value)) ||
         (key === "rotationDegrees" && value !== "" && value > 360)
@@ -7875,6 +8172,32 @@ function correctionValidateDependencies_(row, changes) {
     /** @param {...string} keys @returns {boolean} */
     const changed = (...keys) =>
         keys.some((key) => Object.hasOwn(changes, key));
+    if (
+        [
+            "Mist",
+            "Move",
+            "Temperature",
+            "Environment",
+            "Propagate",
+            "Support",
+        ].includes(row[2])
+    ) {
+        const payload = Object.fromEntries(
+            HISTORY_CARE_FIELDS.map((field, index) => [field, row[45 + index]])
+        );
+        payload["temperature"] = row[50];
+        payload["temperatureUnit"] = "C";
+        const validated = eventDetailsFromPayload_(payload, [row[2]], null);
+        if (row[2] === "Mist") row[45] = validated.mistTargets || "";
+        if (row[2] === "Temperature") {
+            if (!["C", "F"].includes(row[52]))
+                throw correctionValidationError_(
+                    "INVALID_CORRECTION: Temperature entry unit must be C or F."
+                );
+            row[28] = "Measured";
+            row[34] = "Thermometer";
+        }
+    }
     if (row[2] === "Light") {
         if (row[43] === "" && row[44] === "") {
             throw correctionValidationError_(
@@ -8510,6 +8833,7 @@ function prepareHistoryForObservationWrites_(history) {
     ensureHistoryWaterColumns_(history);
     ensureHistoryHumidityColumn_(history);
     ensureHistoryLightColumns_(history);
+    ensureHistoryCareColumns_(history);
 }
 
 /**
@@ -8612,8 +8936,41 @@ function sameCanonicalObservationRow_(actual, expected) {
     // part of the browser request. Everything else below is canonical user
     // input or request provenance and must still match for an idempotent retry.
     const comparableColumns = [
-        0, 1, 2, 4, 5, 6, 7, 8, 15, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27,
-        28, 29, 30, 31, 32, 33, 34, 36, 39, 40, 41, 42, 43, 44,
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        15,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        36,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        ...Array.from({ length: 15 }, (_, index) => 45 + index),
     ];
     return comparableColumns.every(
         (index) =>
@@ -8677,6 +9034,7 @@ function storedObservationRows_(input, requestId, targetRow, recordedAt) {
             eventName === "Humidity" ? details.relativeHumidity : "",
             eventName === "Light" ? details.ppfd : "",
             eventName === "Light" ? details.lux : "",
+            ...historyCareRow_(details, eventName),
         ];
     });
 }
@@ -8827,6 +9185,9 @@ function historyProvenanceRow_(input, requestId, eventName, eventIndex) {
     } else if (eventName === "Weigh") {
         quality = "Measured";
         method = "Scale";
+    } else if (eventName === "Temperature") {
+        quality = "Measured";
+        method = "Thermometer";
     } else if (eventName === "Humidity") {
         quality = "Measured";
         method = "Hygrometer";
@@ -8962,6 +9323,7 @@ function eventDetailsFromPayload_(payload, eventNames, plant) {
     addPhotoDetails_(details, payload, eventNames);
     addPestDetails_(details, payload, eventNames);
     addRotationDetails_(details, payload, eventNames);
+    addCareDetails_(details, payload, eventNames);
     if (eventNames.includes("Humidity")) {
         const raw = payload?.relativeHumidity;
         if (
@@ -9880,6 +10242,10 @@ function webEnvironmentReadModelsFromRows_(historyRows, now) {
     rows.slice(1).forEach((row) => {
         const plantId = cleanText_(row[1]);
         const current = byPlant.get(plantId) || {
+            latestAirTemperature: "",
+            latestAirTemperatureAt: "",
+            latestSoilTemperature: "",
+            latestSoilTemperatureAt: "",
             latestRelativeHumidity: "",
             latestRelativeHumidityAt: "",
             latestPpfd: "",
@@ -9902,6 +10268,14 @@ function webEnvironmentReadModelsFromRows_(historyRows, now) {
         if (typeof row[5] === "number") {
             current.latestRelativeHumidity = row[5];
             current.latestRelativeHumidityAt = observedAt;
+        }
+        if (typeof row[10] === "number") {
+            current.latestAirTemperature = row[10];
+            current.latestAirTemperatureAt = observedAt;
+        }
+        if (typeof row[11] === "number") {
+            current.latestSoilTemperature = row[11];
+            current.latestSoilTemperatureAt = observedAt;
         }
         byPlant.set(plantId, current);
     });
@@ -10213,6 +10587,21 @@ function webHistoryDetails_(row) {
         Weigh: { measurementMethod: 34 },
         Humidity: { relativeHumidity: 42, measurementMethod: 34 },
         Light: { ppfd: 43, lux: 44, measurementMethod: 34 },
+        Mist: { mistTargets: 45, mistAmountMl: 46, mistDetails: 47 },
+        Move: { moveFrom: 48, moveTo: 49 },
+        Temperature: {
+            measurementMethod: 34,
+            temperatureC: 50,
+            temperatureTarget: 51,
+            temperatureUnit: 52,
+        },
+        Environment: {
+            environmentAspect: 53,
+            environmentFrom: 54,
+            environmentTo: 55,
+        },
+        Propagate: { propagationMethod: 56, propagationDetails: 57 },
+        Support: { supportAction: 58, supportDetails: 59 },
         Measure: {
             heightCm: 5,
             widthCm: 6,
@@ -11605,9 +11994,221 @@ function cycleComparisonRows_(history, plantId, potSetup, asOf, helpers) {
     ];
 }
 
+/** @param {GardenSheet} history @param {boolean} [configureColumn] */
+function ensureHistoryCareColumns_(history, configureColumn = false) {
+    ensureHistoryGrid_(history);
+    const start = GARDEN_LOGGER.historyCareStartColumn;
+    const range = history.getRange(1, start, 1, HISTORY_CARE_HEADERS.length);
+    const current = firstDisplayRow_(range).map(cleanText_);
+    HISTORY_CARE_HEADERS.forEach((header, index) => {
+        if (current[index] === header) return;
+        const column = start + index;
+        if (!isReplaceableGeneratedHeader_(current[index], column))
+            throw new Error(
+                `History!${columnName_(column)}1 must be "${header}".`
+            );
+        const destination = history.getRange(
+            2,
+            column,
+            Math.max(1, history.getLastRow() - 1),
+            1
+        );
+        if (
+            destination.getValues().some((row) => row[0] !== "") ||
+            destination.getFormulas().some((row) => row[0])
+        )
+            throw new Error(
+                `History!${columnName_(column)} contains existing data; review before adding care events.`
+            );
+    });
+    if (
+        HISTORY_CARE_HEADERS.some((header, index) => current[index] !== header)
+    ) {
+        range.setValues([[...HISTORY_CARE_HEADERS]]);
+        clearCareColumnValidations_(history, [
+            ...Array(45).fill(""),
+            ...HISTORY_CARE_HEADERS,
+        ]);
+    }
+    if (!configureColumn) return;
+    configureCareColumns_(history, [
+        ...Array(45).fill(""),
+        ...HISTORY_CARE_HEADERS,
+    ]);
+    const rows = Math.max(1, history.getMaxRows() - 1);
+    history
+        .getRange(2, 47, rows, 1)
+        .setDataValidation(
+            SpreadsheetApp.newDataValidation()
+                .requireNumberGreaterThan(0)
+                .setAllowInvalid(false)
+                .build()
+        )
+        .setNumberFormat("0.##");
+    history
+        .getRange(2, 51, rows, 1)
+        .setDataValidation(
+            SpreadsheetApp.newDataValidation()
+                .requireNumberGreaterThanOrEqualTo(-273.15)
+                .setAllowInvalid(false)
+                .build()
+        )
+        .setNumberFormat("0.##");
+}
+
+const HISTORY_CARE_FIELDS = Object.freeze(
+    /** @type {const} */ ([
+        "mistTargets",
+        "mistAmountMl",
+        "mistDetails",
+        "moveFrom",
+        "moveTo",
+        "temperatureC",
+        "temperatureTarget",
+        "temperatureUnit",
+        "environmentAspect",
+        "environmentFrom",
+        "environmentTo",
+        "propagationMethod",
+        "propagationDetails",
+        "supportAction",
+        "supportDetails",
+    ])
+);
+const HISTORY_CARE_EVENTS = Object.freeze([
+    "Mist",
+    "Mist",
+    "Mist",
+    "Move",
+    "Move",
+    "Temperature",
+    "Temperature",
+    "Temperature",
+    "Environment",
+    "Environment",
+    "Environment",
+    "Propagate",
+    "Propagate",
+    "Support",
+    "Support",
+]);
+/** @param {GardenObservationDetails} details @param {string} event */
+function historyCareRow_(details, event) {
+    return HISTORY_CARE_FIELDS.map((field, index) => {
+        const value = details[field];
+        return HISTORY_CARE_EVENTS[index] === event
+            ? typeof value === "number"
+                ? value
+                : safeSheetText_(value)
+            : "";
+    });
+}
+/** @param {unknown} value @param {readonly string[]} options @param {string} label */
+function requiredCareChoice_(value, options, label) {
+    const text = cleanText_(value);
+    if (!options.includes(text))
+        throw new Error(`${label}: choose ${options.join(", ")}.`);
+    return text;
+}
+/** @param {unknown} value @param {string} label */
+function requiredCareText_(value, label) {
+    const text = cleanText_(value);
+    if (!text) throw new Error(`${label} is required.`);
+    return text;
+}
+/** @param {GardenObservationDetails} details @param {GardenEventDetailPayload | null | undefined} payload @param {string[]} events */
+function addCareDetails_(details, payload, events) {
+    if (events.includes("Mist")) {
+        const selected = appSheetEventList_(payload?.mistTargets);
+        if (
+            !selected.length ||
+            selected.some((target) => !MIST_TARGET_OPTIONS.includes(target))
+        )
+            throw new Error("Choose at least one listed mist target.");
+        details.mistTargets = MIST_TARGET_OPTIONS.filter((target) =>
+            selected.includes(target)
+        ).join(", ");
+        const amount = payload?.mistAmountMl;
+        if (
+            amount !== undefined &&
+            amount !== null &&
+            typeof amount !== "string" &&
+            typeof amount !== "number"
+        )
+            throw new Error("Mist amount must be a positive finite number.");
+        details.mistAmountMl = optionalPositiveNumber_(amount, "Mist amount");
+        details.mistDetails = cleanText_(payload?.mistDetails);
+        if (selected.includes("Other") && !details.mistDetails)
+            throw new Error("Describe the other mist target.");
+    }
+    if (events.includes("Move")) {
+        details.moveFrom = cleanText_(payload?.moveFrom);
+        details.moveTo = requiredCareText_(payload?.moveTo, "New location");
+    }
+    if (events.includes("Temperature")) {
+        const raw = payload?.temperature;
+        if (
+            (typeof raw !== "string" && typeof raw !== "number") ||
+            String(raw).trim() === "" ||
+            !Number.isFinite(Number(raw))
+        )
+            throw new Error("Enter a finite temperature reading.");
+        details.temperatureUnit = requiredCareChoice_(
+            payload?.temperatureUnit,
+            ["C", "F"],
+            "Temperature unit"
+        );
+        details.temperatureTarget = requiredCareChoice_(
+            payload?.temperatureTarget,
+            TEMPERATURE_TARGET_OPTIONS,
+            "Temperature target"
+        );
+        const converted =
+            details.temperatureUnit === "F"
+                ? ((Number(raw) - 32) * 5) / 9
+                : Number(raw);
+        if (converted < -273.15)
+            throw new Error("Temperature cannot be below absolute zero.");
+        details.temperatureC = converted;
+    }
+    if (events.includes("Environment")) {
+        details.environmentAspect = requiredCareChoice_(
+            payload?.environmentAspect,
+            ENVIRONMENT_ASPECT_OPTIONS,
+            "Environment aspect"
+        );
+        details.environmentFrom = cleanText_(payload?.environmentFrom);
+        details.environmentTo = requiredCareText_(
+            payload?.environmentTo,
+            "New setting"
+        );
+    }
+    if (events.includes("Propagate")) {
+        details.propagationMethod = requiredCareChoice_(
+            payload?.propagationMethod,
+            PROPAGATION_METHOD_OPTIONS,
+            "Propagation method"
+        );
+        details.propagationDetails = requiredCareText_(
+            payload?.propagationDetails,
+            "Propagation details"
+        );
+    }
+    if (events.includes("Support")) {
+        details.supportAction = requiredCareChoice_(
+            payload?.supportAction,
+            SUPPORT_ACTION_OPTIONS,
+            "Support action"
+        );
+        details.supportDetails = requiredCareText_(
+            payload?.supportDetails,
+            "Support details"
+        );
+    }
+}
 /**
  * Read-only environmental observations. No volatile custom-function input.
- * @param {GardenHistoryRow[]} history Native History A:AS.
+ * @param {GardenHistoryRow[]} history Native History A:BH.
  * @returns {GardenCell[][]}
  * @customfunction
  */
@@ -11639,6 +12240,8 @@ function environmentRows_(history, asOf, helpers) {
             "Recorded method",
             "Original notes / location",
             "Observation ID",
+            "Air temperature (°C)",
+            "Soil temperature (°C)",
         ],
         ...history
             .map((row, index) => ({
@@ -11657,7 +12260,9 @@ function environmentRows_(history, asOf, helpers) {
                     time <= asOf.getTime() &&
                     typeof row[1] === "string" &&
                     row[1].trim() !== "" &&
-                    ["Humidity", "Light"].includes(String(row[2]))
+                    ["Humidity", "Light", "Temperature"].includes(
+                        String(row[2])
+                    )
             )
             .sort(
                 (a, b) =>
@@ -11673,17 +12278,153 @@ function environmentRows_(history, asOf, helpers) {
                 row[34] ?? "",
                 row[8] ?? "",
                 row[26] ?? "",
+                row[2] === "Temperature" && row[51] === "Air"
+                    ? environmentNumber(row[50], Infinity, -Infinity)
+                    : "",
+                row[2] === "Temperature" && row[51] === "Soil"
+                    ? environmentNumber(row[50], Infinity, -Infinity)
+                    : "",
             ])
-            .filter((row) => row[3] !== "" || row[4] !== "" || row[5] !== ""),
+            .filter((row) =>
+                [3, 4, 5, 10, 11].some((column) => row[column] !== "")
+            ),
     ];
 }
 
-/** @param {GardenCell | undefined} value @param {number} [maximum] */
-function environmentNumber(value, maximum = Infinity) {
+/** @param {GardenCell | undefined} value @param {number} [maximum] @param {number} [minimum] */
+function environmentNumber(value, maximum = Infinity, minimum = 0) {
     return typeof value === "number" &&
         Number.isFinite(value) &&
-        value >= 0 &&
+        value >= minimum &&
         value <= maximum
         ? value
         : "";
+}
+
+/**
+ * Latest-location evidence, independent of pot setup and watering.
+ * @param {GardenHistoryRow[]} history Native History A:BH.
+ * @returns {GardenCell[][]}
+ * @customfunction
+ */
+function GARDEN_RECORDED_LOCATIONS(history) {
+    return recordedLocationRows_(history, new Date(), {
+        corrections: historyCorrectionContext_,
+        active: activeHistoryRow_,
+        timestamp: webHistoryTimestamp_,
+    });
+}
+
+/**
+ * @param {GardenHistoryRow[]} history
+ * @param {Date} asOf
+ * @param {{corrections: (rows: GardenHistoryRow[]) => {order: number[], superseded: Set<number>}, active: (row: GardenHistoryRow) => boolean, timestamp: (value: unknown) => number}} helpers
+ * @returns {GardenCell[][]}
+ */
+function recordedLocationRows_(history, asOf, helpers) {
+    const context = helpers.corrections(history);
+    return [
+        [
+            "Observed at",
+            "Plant ID",
+            "Previous location",
+            "Recorded location",
+            "Observation ID",
+        ],
+        ...history
+            .map((row, index) => ({
+                row,
+                index,
+                time: helpers.timestamp(row[0]),
+                order: context.order[index] ?? index,
+            }))
+            .filter(
+                ({ row, index, time }) =>
+                    helpers.active(row) &&
+                    !context.superseded.has(index) &&
+                    time > 0 &&
+                    time <= asOf.getTime() &&
+                    typeof row[1] === "string" &&
+                    row[1].trim() !== "" &&
+                    row[2] === "Move" &&
+                    typeof row[49] === "string" &&
+                    row[49].trim() !== ""
+            )
+            .sort(
+                (a, b) =>
+                    a.time - b.time || a.order - b.order || a.index - b.index
+            )
+            .map(({ row }) => [
+                row[0] ?? "",
+                row[1] ?? "",
+                row[48] ?? "",
+                row[49] ?? "",
+                row[26] ?? "",
+            ]),
+    ];
+}
+
+/** @param {GardenSheet} sheet @param {readonly string[]} headers */
+function configureCareColumns_(sheet, headers) {
+    clearCareColumnValidations_(sheet, headers);
+    const rows = Math.max(1, sheet.getMaxRows() - 1);
+    /** @type {[string, readonly string[]][]} */
+    const choices = [
+        ["Temperature target", TEMPERATURE_TARGET_OPTIONS],
+        ["Temperature entry unit", ["C", "F"]],
+        ["Environment aspect", ENVIRONMENT_ASPECT_OPTIONS],
+        ["Propagation method", PROPAGATION_METHOD_OPTIONS],
+        ["Support action", SUPPORT_ACTION_OPTIONS],
+    ];
+    choices.forEach(([header, options]) => {
+        const column = headers.indexOf(header) + 1;
+        if (column)
+            sheet.getRange(2, column, rows, 1).setDataValidation(
+                SpreadsheetApp.newDataValidation()
+                    .requireValueInList([...options], true)
+                    .setAllowInvalid(false)
+                    .build()
+            );
+    });
+    const amountColumn = headers.indexOf("Mist amount (mL)") + 1;
+    if (amountColumn)
+        sheet
+            .getRange(2, amountColumn, rows, 1)
+            .setDataValidation(
+                SpreadsheetApp.newDataValidation()
+                    .requireNumberGreaterThan(0)
+                    .setAllowInvalid(false)
+                    .build()
+            )
+            .setNumberFormat("0.##");
+    const temperatureColumn = headers.indexOf("Temperature") + 1;
+    if (temperatureColumn)
+        sheet
+            .getRange(2, temperatureColumn, rows, 1)
+            .setDataValidation(
+                SpreadsheetApp.newDataValidation()
+                    .requireNumberGreaterThanOrEqualTo(-459.67)
+                    .setAllowInvalid(false)
+                    .build()
+            )
+            .setNumberFormat("0.##");
+}
+
+/**
+ * Appended Sheets columns inherit the old last-column validation. Only these
+ * contract-owned care columns may be cleared; earlier owner rules stay intact.
+ * @param {GardenSheet} sheet
+ * @param {readonly string[]} headers
+ */
+function clearCareColumnValidations_(sheet, headers) {
+    const first = headers.indexOf("Mist targets") + 1;
+    if (!first) return;
+    sheet
+        .getRange(
+            2,
+            first,
+            Math.max(1, sheet.getMaxRows() - 1),
+            headers.length - first + 1
+        )
+        .clearDataValidations();
 }

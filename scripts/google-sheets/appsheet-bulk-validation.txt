@@ -1,9 +1,40 @@
 AND(
   ISBLANK([P33 weight (g)]),
   ISBLANK([P34 weight (g)]),
-  IN([Round action], LIST("Water", "Weigh", "Water + weigh", "Rotation", "Check", "Inspect", "Clean", "Prune", "Pest", "Other")),
+  IN([Round action], LIST("Weigh", "Water + weigh", "Water", "Mist", "Check", "Inspect", "Rotation", "Move", "Environment", "Clean", "Prune", "Support", "Propagate", "Pest", "Other")),
   OR([Round action] <> "Check", ISNOTBLANK([Soil moisture])),
   OR([Round action] <> "Inspect", ISNOTBLANK([Plant condition])),
+  OR(
+    [Round action] <> "Mist",
+    AND(
+      COUNT([Mist targets]) > 0,
+      COUNT([Mist targets] - LIST("Leaves", "Exposed roots", "Soil surface", "Stem / plant body", "Moss / support", "Other")) = 0,
+      OR(NOT(IN("Other", [Mist targets])), LEN(TRIM([Mist details])) > 0),
+      OR(ISBLANK([Mist amount (mL)]), [Mist amount (mL)] > 0)
+    )
+  ),
+  OR([Round action] <> "Move", LEN(TRIM([New location])) > 0),
+  OR(
+    [Round action] <> "Environment",
+    AND(
+      IN([Environment aspect], LIST("Light", "Airflow", "Enclosure", "Heating", "Other")),
+      LEN(TRIM([New setting])) > 0
+    )
+  ),
+  OR(
+    [Round action] <> "Propagate",
+    AND(
+      IN([Propagation method], LIST("Stem cutting", "Leaf cutting", "Offset", "Division", "Seed", "Other")),
+      LEN(TRIM([Propagation details])) > 0
+    )
+  ),
+  OR(
+    [Round action] <> "Support",
+    AND(
+      IN([Support action], LIST("Add", "Adjust", "Remove")),
+      LEN(TRIM([Support details])) > 0
+    )
+  ),
   OR([Round action] = "Weigh", ISNOTBLANK([Selected plants])),
   OR(
     NOT(IN([Round action], LIST("Weigh", "Water + weigh"))),

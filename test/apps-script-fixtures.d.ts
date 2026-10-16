@@ -161,6 +161,10 @@ export interface AppsScriptTestApi {
         sheet: unknown,
         shouldConfigureColumn?: boolean
     ) => boolean;
+    ensureHistoryCareColumns_: (
+        history: unknown,
+        shouldConfigure?: boolean
+    ) => void;
     ensureHistoryDetailColumns_: (history: unknown) => void;
     ensureHistoryGrid_: (history: unknown) => void;
     ensureHistoryHumidityColumn_: (

@@ -60,7 +60,7 @@ function readPlant(rows, setup = 1) {
  */
 function row(at, event = "Weigh", cells = {}) {
     /** @type {import("../logger-fixtures.d.ts").CellValue[]} */
-    const values = Array.from({ length: 45 }, () => "");
+    const values = Array.from({ length: 60 }, () => "");
     values[0] = new Date(at);
     values[1] = "P01";
     values[2] = event;
@@ -85,7 +85,7 @@ function runtime(historyRows = []) {
     const sheet = (name, values) => ({
         getLastColumn: () => required(values[0]).length,
         getLastRow: () => values.length,
-        getMaxColumns: () => 45,
+        getMaxColumns: () => 60,
         getName: () => name,
         /**
          * @param {number} rowNumber @param {number} column @param {number}
@@ -129,7 +129,7 @@ function runtime(historyRows = []) {
         [
             "History",
             sheet("History", [
-                Array.from({ length: 45 }, () => ""),
+                Array.from({ length: 60 }, () => ""),
                 ...historyRows,
             ]),
         ],
@@ -377,7 +377,7 @@ describe("logger History-backed read models", () => {
                 latestWeightAt: "",
                 weightSeries: { points: [] },
             });
-            expect(historyReads).toHaveBeenCalledExactlyOnceWith(2, 1, 2, 45);
+            expect(historyReads).toHaveBeenCalledExactlyOnceWith(2, 1, 2, 60);
             expect(rows).toStrictEqual(before);
         } finally {
             vi.useRealTimers();
@@ -452,7 +452,7 @@ describe("logger History-backed read models", () => {
                 2,
                 1,
                 rows.length,
-                45
+                60
             );
         } finally {
             vi.useRealTimers();
@@ -1334,5 +1334,71 @@ describe("logger filtered recent History and event details", () => {
         expect(entry.details).not.toHaveProperty("recordedAtIso");
         expect(api.webHistoryDetailValue_({ nested: "value" })).toBe("");
         expect(api.webHistoryDetailValue_(false)).toBe(false);
+    });
+});
+
+describe("temperature bootstrap measurements", () => {
+    it("keeps independent corrected air and soil readings, timestamps, zero and negatives", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        try {
+            vi.setSystemTime(now);
+            const rows = [
+                row("2026-09-06T10:00:00Z", "Temperature", {
+                    26: "air-original",
+                    50: 25,
+                    51: "Air",
+                    52: "C",
+                }),
+                row("2026-09-06T11:00:00Z", "Temperature", {
+                    26: "soil-original",
+                    50: -5,
+                    51: "Soil",
+                    52: "C",
+                }),
+                row("2026-09-06T10:00:00Z", "Temperature", {
+                    26: "air-corrected",
+                    30: "air-original",
+                    50: 0,
+                    51: "Air",
+                    52: "F",
+                }),
+                row("2026-09-06T12:00:00Z", "Temperature", {
+                    35: "Removed",
+                    50: 10,
+                    51: "Soil",
+                }),
+                row("2026-09-07T12:00:00Z", "Temperature", {
+                    50: 20,
+                    51: "Air",
+                }),
+                row("2026-09-06T13:00:00Z", "Temperature", {
+                    50: Infinity,
+                    51: "Soil",
+                }),
+                row("2026-09-06T14:00:00Z", "Check", { 50: 22, 51: "Air" }),
+                row("2026-09-06T15:00:00Z", "Humidity", { 42: 60 }),
+            ];
+            const before = structuredClone(rows);
+            const { api, historyReads } = runtime(rows);
+            const bootstrap = api.getWebAppBootstrap();
+
+            expect(bootstrap.plants[0]).toMatchObject({
+                latestAirTemperature: 0,
+                latestAirTemperatureAt: "2026-09-06T10:00:00.000Z",
+                latestRelativeHumidity: 60,
+                latestRelativeHumidityAt: "2026-09-06T15:00:00.000Z",
+                latestSoilTemperature: -5,
+                latestSoilTemperatureAt: "2026-09-06T11:00:00.000Z",
+            });
+            expect(bootstrap.plants[1]).not.toHaveProperty(
+                "latestAirTemperature"
+            );
+            expect(historyReads).toHaveBeenCalledTimes(1);
+            expect(rows).toStrictEqual(before);
+        } finally {
+            vi.useRealTimers();
+        }
     });
 });

@@ -18,6 +18,125 @@ function calculateSummary(events) {
     );
 }
 
+describe("extended care event summaries", () => {
+    it("preserves zero, negative and corrected temperatures in separate timestamped series", () => {
+        expect.hasAssertions();
+
+        const summary = calculateSummary([
+            {
+                Date: "2026-09-01T10:00:00Z",
+                Event: "Temperature",
+                "Temperature (°C)": 0,
+                "Temperature target": "Air",
+            },
+            {
+                Date: "2026-09-01T11:00:00Z",
+                Event: "Temperature",
+                "Temperature (°C)": -2.5,
+                "Temperature target": "Soil",
+            },
+            {
+                Date: "2026-09-02T12:00:00Z",
+                Event: "Temperature",
+                "Observation ID": "original",
+                "Record status": "Removed",
+                "Temperature (°C)": 99,
+                "Temperature target": "Air",
+            },
+            {
+                "Corrects observation ID": "original",
+                Date: "2026-09-02T12:00:00Z",
+                Event: "Temperature",
+                "Temperature (°C)": 22,
+                "Temperature target": "Air",
+            },
+            {
+                Date: "2026-09-03",
+                Event: "Temperature",
+                "Temperature (°C)": "",
+                "Temperature target": "Air",
+            },
+            {
+                Date: "2026-09-04",
+                Event: "Temperature",
+                "Temperature (°C)": -300,
+                "Temperature target": "Air",
+            },
+            {
+                Date: "2999-09-01",
+                Event: "Temperature",
+                "Temperature (°C)": 40,
+                "Temperature target": "Air",
+            },
+        ]);
+
+        expect(
+            summary.airTemperatureSeries.map(({ value }) => value)
+        ).toStrictEqual([0, 22]);
+        expect(
+            summary.soilTemperatureSeries.map(({ value }) => value)
+        ).toStrictEqual([-2.5]);
+        expect(summary.soilTemperatureSeries[0]?.date.toISOString()).toBe(
+            "2026-09-01T11:00:00.000Z"
+        );
+        expect(summary.latestTemperature?.["Temperature (°C)"]).toBe(22);
+        expect(summary.humiditySeries).toStrictEqual([]);
+        expect(summary.weightSeries).toStrictEqual([]);
+        expect(summary.lastWater).toBeUndefined();
+    });
+
+    it("tracks corrected moves and new actions without resetting watering or setup", () => {
+        expect.hasAssertions();
+
+        const summary = calculateSummary([
+            { Date: "2026-09-01", Event: "Water", "Pot setup": 2 },
+            {
+                Date: "2026-09-02",
+                Event: "Move",
+                "New location": "Shelf",
+                "Observation ID": "move-original",
+                "Pot setup": 2,
+                "Record status": "Removed",
+            },
+            {
+                "Corrects observation ID": "move-original",
+                Date: "2026-09-02",
+                Event: "Move",
+                "New location": "Window",
+                "Pot setup": 2,
+            },
+            {
+                Date: "2999-09-02",
+                Event: "Move",
+                "New location": "Future location",
+                "Pot setup": 2,
+            },
+            ...[
+                "Mist",
+                "Environment",
+                "Propagate",
+                "Support",
+            ].map((Event) => ({
+                Date: "2026-09-03",
+                Event,
+                "Pot setup": 2,
+            })),
+        ]);
+
+        expect(summary.currentLocation).toBe("Window");
+        expect(summary.activePotSetup).toBe(2);
+        expect(summary.lastWater?.["Date"]).toBe("2026-09-01");
+        expect(summary.watering.events).toHaveLength(1);
+        expect(summary.eventCounts).toMatchObject({
+            environments: 1,
+            mists: 1,
+            propagations: 1,
+            supports: 1,
+        });
+        expect(calculateSummary([]).currentLocation).toBe("");
+    });
+});
+
 describe("inspection and light event summaries", () => {
     it("keeps visual inspections separate from legacy checks and excludes removed inspections", () => {
         expect.hasAssertions();

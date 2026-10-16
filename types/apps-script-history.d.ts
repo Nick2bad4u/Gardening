@@ -9,9 +9,17 @@ interface GardenCorrectionLineage {
 }
 
 interface GardenEventDetailPayload {
+    environmentAspect?: unknown;
+    environmentFrom?: unknown;
+    environmentTo?: unknown;
     flowerCount?: unknown;
     flowerDetails?: unknown;
     lux?: unknown;
+    mistAmountMl?: unknown;
+    mistDetails?: unknown;
+    mistTargets?: unknown;
+    moveFrom?: unknown;
+    moveTo?: unknown;
     nutrientAmount?: unknown;
     nutrientProduct?: unknown;
     nutrientsUsed?: unknown;
@@ -20,8 +28,16 @@ interface GardenEventDetailPayload {
     photoUrl?: unknown;
     potSize?: unknown;
     ppfd?: unknown;
+    propagationDetails?: unknown;
+    propagationMethod?: unknown;
     relativeHumidity?: unknown;
     rotationDegrees?: unknown;
+    supportAction?: unknown;
+    supportDetails?: unknown;
+    temperature?: unknown;
+    temperatureC?: unknown;
+    temperatureTarget?: unknown;
+    temperatureUnit?: unknown;
     waterAmount?: unknown;
     wateringApplication?: unknown;
 }
@@ -39,9 +55,17 @@ interface GardenHistorySaveIdentity {
 }
 
 interface GardenObservationDetails {
+    environmentAspect?: string;
+    environmentFrom?: string;
+    environmentTo?: string;
     flowerCount?: GardenOptionalNumber;
     flowerDetails?: string;
     lux?: GardenOptionalNumber;
+    mistAmountMl?: GardenOptionalNumber;
+    mistDetails?: string;
+    mistTargets?: string;
+    moveFrom?: string;
+    moveTo?: string;
     nutrientAmount?: string;
     nutrientProduct?: string;
     nutrientsUsed?: string;
@@ -51,8 +75,15 @@ interface GardenObservationDetails {
     potSize?: string;
     ppfd?: GardenOptionalNumber;
     previousPotSize?: string;
+    propagationDetails?: string;
+    propagationMethod?: string;
     relativeHumidity?: GardenOptionalNumber;
     rotationDegrees?: GardenOptionalNumber;
+    supportAction?: string;
+    supportDetails?: string;
+    temperatureC?: GardenOptionalNumber;
+    temperatureTarget?: string;
+    temperatureUnit?: string;
     waterAmount?: GardenOptionalNumber;
     wateringApplication?: string;
 }
@@ -104,6 +135,8 @@ interface GardenWaterRecord
 }
 
 interface GardenWebEnvironmentReadModel {
+    latestAirTemperature: GardenOptionalNumber;
+    latestAirTemperatureAt: string;
     latestLightAt: string;
     latestLux: GardenOptionalNumber;
     latestLuxAt: string;
@@ -111,6 +144,8 @@ interface GardenWebEnvironmentReadModel {
     latestPpfdAt: string;
     latestRelativeHumidity: GardenOptionalNumber;
     latestRelativeHumidityAt: string;
+    latestSoilTemperature: GardenOptionalNumber;
+    latestSoilTemperatureAt: string;
 }
 
 type GardenWebHistoryDetails = Record<

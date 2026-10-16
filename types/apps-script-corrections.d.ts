@@ -41,18 +41,24 @@ interface GardenCorrectionEntry {
 type GardenCorrectionEvent =
     | "Check"
     | "Clean"
+    | "Environment"
     | "Flower"
     | "Humidity"
     | "Inspect"
     | "Light"
     | "Measure"
+    | "Mist"
+    | "Move"
     | "Note"
     | "Other"
     | "Pest"
     | "Photo"
+    | "Propagate"
     | "Prune"
     | "Repot"
     | "Rotation"
+    | "Support"
+    | "Temperature"
     | "Water"
     | "Weigh";
 interface GardenCorrectionField {
@@ -90,7 +96,22 @@ type GardenCorrectionFieldColumn =
     | 41
     | 42
     | 43
-    | 44;
+    | 44
+    | 45
+    | 46
+    | 47
+    | 48
+    | 49
+    | 50
+    | 51
+    | 52
+    | 53
+    | 54
+    | 55
+    | 56
+    | 57
+    | 58
+    | 59;
 interface GardenCorrectionFieldDefinition extends GardenCorrectionField {
     column: GardenCorrectionFieldColumn;
     events: GardenCorrectionEvent[];
@@ -219,6 +240,21 @@ type GardenCorrectionRowFields = [
     relativeHumidity: GardenOptionalNumber,
     ppfd: GardenOptionalNumber,
     lux: GardenOptionalNumber,
+    mistTargets: string,
+    mistAmountMl: GardenOptionalNumber,
+    mistDetails: string,
+    moveFrom: string,
+    moveTo: string,
+    temperatureC: GardenOptionalNumber,
+    temperatureTarget: string,
+    temperatureUnit: string,
+    environmentAspect: string,
+    environmentFrom: string,
+    environmentTo: string,
+    propagationMethod: string,
+    propagationDetails: string,
+    supportAction: string,
+    supportDetails: string,
 ];
 interface GardenCorrectionRowSnapshot {
     formulas: string[];

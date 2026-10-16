@@ -70,6 +70,23 @@ const historyMeasurementHeaders = [
     "Width (in)",
 ];
 const historyRotationHeaders = ["Rotation (°)"];
+const historyCareHeaders = [
+    "Mist targets",
+    "Mist amount (mL)",
+    "Mist details",
+    "Previous location",
+    "New location",
+    "Temperature (°C)",
+    "Temperature target",
+    "Temperature entry unit",
+    "Environment aspect",
+    "Previous setting",
+    "New setting",
+    "Propagation method",
+    "Propagation details",
+    "Support action",
+    "Support details",
+];
 const historyWaterHeaders = ["Watering application", "Water amount (mL)"];
 
 const appSheetEntryHeaders = [
@@ -109,6 +126,9 @@ const appSheetEntryHeaders = [
     "Relative humidity (%)",
     "PPFD (µmol/m²/s)",
     "Illuminance (lux)",
+    ...historyCareHeaders.map((header) =>
+        header === "Temperature (°C)" ? "Temperature" : header
+    ),
 ];
 
 const appSheetBulkV512Plants = Array.from(
@@ -167,6 +187,8 @@ const appSheetBulkHeaders = [
     "P36 weight (g)",
     "P37 weight (g)",
     "P38 weight (g)",
+    ...historyCareHeaders.slice(0, 5),
+    ...historyCareHeaders.slice(8),
 ];
 const appSheetBulkLegacyHeaders = [
     "Round ID",
@@ -365,6 +387,16 @@ function createDataSheet(name, rows, formulaInputs = []) {
                     }
                     return range;
                 },
+                clearDataValidations() {
+                    dataValidationCalls.push({
+                        column,
+                        columnCount,
+                        row,
+                        rowCount,
+                        validation: null,
+                    });
+                    return range;
+                },
                 getColumn: () => column,
                 getDisplayValue: () =>
                     String(required(select(rows)[0])[0] ?? ""),
@@ -537,7 +569,7 @@ function createHistorySheet(
         }
     }
     const header = Array.from(
-        { length: 45 },
+        { length: 60 },
         () => /** @type {import("../logger-fixtures.d.ts").CellValue} */ ("")
     );
     for (const [index, value] of historyHeaders.entries()) {
@@ -546,6 +578,9 @@ function createHistorySheet(
     header[42] = "Relative humidity (%)";
     header[43] = "PPFD (µmol/m²/s)";
     header[44] = "Illuminance (lux)";
+    for (const [index, value] of historyCareHeaders.entries()) {
+        header[45 + index] = value;
+    }
     header[15] = "Request ID";
     for (const [index, value] of historyDetailHeaders.entries()) {
         header[16 + index] = value;
@@ -567,7 +602,7 @@ function createHistorySheet(
         header,
         ...observations.map(({ requestId, values }) => {
             const row = Array.from(
-                { length: 45 },
+                { length: 60 },
                 () =>
                     /** @type {import("../logger-fixtures.d.ts").CellValue} */ (
                         ""
@@ -603,7 +638,7 @@ function createHistorySheet(
         for (const [rowOffset, currentRow] of values.entries()) {
             const targetRow = row - 1 + rowOffset;
             rows[targetRow] ??= Array.from(
-                { length: 45 },
+                { length: 60 },
                 () =>
                     /** @type {import("../logger-fixtures.d.ts").CellValue} */ (
                         ""
@@ -1829,7 +1864,7 @@ describe("garden logger weight-state inference and dry-down formulas", () => {
             weight,
         }) => {
             const row = Array.from(
-                { length: 45 },
+                { length: 60 },
                 () =>
                     /** @type {import("../logger-fixtures.d.ts").CellValue} */ (
                         ""
@@ -1962,7 +1997,7 @@ describe("garden logger weight-state inference and dry-down formulas", () => {
             weight = "",
         }) => {
             const values = Array.from(
-                { length: 45 },
+                { length: 60 },
                 () =>
                     /** @type {import("../logger-fixtures.d.ts").CellValue} */ (
                         ""
@@ -2067,7 +2102,7 @@ describe("garden logger weight-state inference and dry-down formulas", () => {
          */
         const row = ({ event = "Weigh", observedAt, weight = "" }) => {
             const values = Array.from(
-                { length: 45 },
+                { length: 60 },
                 () =>
                     /** @type {import("../logger-fixtures.d.ts").CellValue} */ (
                         ""
@@ -3931,7 +3966,7 @@ describe("garden logger mobile bootstrap and collection lookups", () => {
         repotValues[9] = new Date("2026-08-10T12:01:00Z");
         repotValues[20] = "5 in";
         const dryWeightValues = Array.from(
-            { length: 45 },
+            { length: 60 },
             () =>
                 /** @type {import("../logger-fixtures.d.ts").CellValue} */ ("")
         );
@@ -3944,7 +3979,7 @@ describe("garden logger mobile bootstrap and collection lookups", () => {
         dryWeightValues[10] = 2;
         dryWeightValues[35] = "Active";
         const higherWeightValues = Array.from(
-            { length: 45 },
+            { length: 60 },
             () =>
                 /** @type {import("../logger-fixtures.d.ts").CellValue} */ ("")
         );
@@ -3958,7 +3993,7 @@ describe("garden logger mobile bootstrap and collection lookups", () => {
         higherWeightValues[29] = "wet-bootstrap";
         higherWeightValues[35] = "Active";
         const firstWaterValues = Array.from(
-            { length: 45 },
+            { length: 60 },
             () =>
                 /** @type {import("../logger-fixtures.d.ts").CellValue} */ ("")
         );
@@ -3969,7 +4004,7 @@ describe("garden logger mobile bootstrap and collection lookups", () => {
         firstWaterValues[29] = "wet-bootstrap";
         firstWaterValues[35] = "Active";
         const closingWaterValues = Array.from(
-            { length: 45 },
+            { length: 60 },
             () =>
                 /** @type {import("../logger-fixtures.d.ts").CellValue} */ ("")
         );
@@ -4097,7 +4132,7 @@ describe("garden logger mobile bootstrap and collection lookups", () => {
         });
         expect(Array.from(bootstrap.recent)).toHaveLength(5);
         expect(structuredClone(history.__rangeReads)).toStrictEqual([
-            { column: 1, columnCount: 45, row: 2, rowCount: 5 },
+            { column: 1, columnCount: 60, row: 2, rowCount: 5 },
         ]);
     });
 
@@ -4629,7 +4664,7 @@ describe("garden logger canonical observation persistence", () => {
         expect(required(history.__rows[1])[16]).toBe("Yes");
         expect(required(history.__rows[5])[20]).toBe("5 in");
         expect(required(history.__rows[8])[25]).toBe("Isolated and treated");
-        expect(history.__rows[1]).toHaveLength(45);
+        expect(history.__rows[1]).toHaveLength(60);
         expect(required(history.__rows[1])[12]).toMatch(/^=IF\(/v);
         expect(required(history.__rows[1])[13]).toMatch(
             /\^\(Water\|Repot\)\$/v
@@ -5190,11 +5225,11 @@ describe("garden logger phone queue batches and per-entry failures", () => {
 
         const historyWrites = workbook.history.__setValuesCalls.filter(
             (call) =>
-                call.row >= 2 && call.column === 1 && call.columnCount === 45
+                call.row >= 2 && call.column === 1 && call.columnCount === 60
         );
 
         expect(structuredClone(historyWrites)).toStrictEqual([
-            { column: 1, columnCount: 45, row: 2, rowCount: 30 },
+            { column: 1, columnCount: 60, row: 2, rowCount: 30 },
         ]);
         expect(flushCount).toBe(1);
         expect(workbook.history.__rangeReads.length).toBeLessThan(20);
@@ -5453,7 +5488,7 @@ describe("garden logger phone queue batches and per-entry failures", () => {
 
         const workbook = createLoggerWorkbook();
         const existingRow = Array.from(
-            { length: 45 },
+            { length: 60 },
             () =>
                 /** @type {import("../logger-fixtures.d.ts").CellValue} */ ("")
         );
@@ -5539,7 +5574,7 @@ describe("garden logger bulk care and watering rounds", () => {
                     (call) => call.column === 1 && call.row >= 2
                 )
             )
-        ).toStrictEqual([{ column: 1, columnCount: 45, row: 2, rowCount: 4 }]);
+        ).toStrictEqual([{ column: 1, columnCount: 60, row: 2, rowCount: 4 }]);
     });
 
     it("validates bulk-care inputs and keeps retry messages actionable", () => {
@@ -5729,7 +5764,7 @@ describe("garden logger bulk care and watering rounds", () => {
         });
         expect(
             structuredClone(workbook.history.__setValuesCalls)
-        ).toStrictEqual([{ column: 1, columnCount: 45, row: 2, rowCount: 30 }]);
+        ).toStrictEqual([{ column: 1, columnCount: 60, row: 2, rowCount: 30 }]);
         expect(flushCount).toBe(1);
         expect(workbook.history.__rows.slice(1)).toHaveLength(30);
         expect(
@@ -6502,9 +6537,9 @@ describe("garden logger AppSheet bulk submission and validation", () => {
         };
 
         expect(context.normalizeAppSheetBulkAction_("")).toBe("Weigh");
-        expect(() => context.normalizeAppSheetBulkAction_("Mist")).toThrow(
-            /must be one of: water, weigh, water \+ weigh, rotation/iv
-        );
+        expect(() =>
+            context.normalizeAppSheetBulkAction_("Temperature")
+        ).toThrow(/must be one of: water, weigh, water \+ weigh, rotation/iv);
         expect(
             structuredClone([...context.appSheetBulkWateredPlants_("")])
         ).toStrictEqual([]);
@@ -7669,7 +7704,7 @@ describe("garden logger light staging guards", () => {
 
             context.ensureHistoryLightColumns_(history, true);
 
-            expect(headers.slice(43)).toStrictEqual([
+            expect(headers.slice(43, 45)).toStrictEqual([
                 "PPFD (µmol/m²/s)",
                 "Illuminance (lux)",
             ]);
@@ -7697,7 +7732,7 @@ describe("garden logger light staging guards", () => {
         (index) => {
             expect.hasAssertions();
 
-            const formulas = Array.from({ length: 45 }, () => "");
+            const formulas = Array.from({ length: 60 }, () => "");
             formulas[index] = '=IF(TRUE,"",1)';
             const history = createHistorySheet([{ values: emptyCells(45) }], {
                 formulaInputs: [[], formulas],
@@ -7743,8 +7778,8 @@ describe("garden logger light staging guards", () => {
             );
             expect(headers).toStrictEqual(appSheetEntryHeaders);
             expect(row.slice(0, 31)).toStrictEqual(before);
-            expect(row.slice(31)).toStrictEqual(emptyCells(6));
-            expect(entries.getMaxColumns()).toBe(37);
+            expect(row.slice(31)).toStrictEqual(emptyCells(21));
+            expect(entries.getMaxColumns()).toBe(52);
         }
     );
 
@@ -8272,6 +8307,7 @@ describe("garden logger humidity and terrarium enrollment", () => {
                     "Hygrometer",
                     "Light app",
                     "Lux meter",
+                    "Thermometer",
                 ],
             },
         });
@@ -8850,7 +8886,7 @@ describe("garden logger AppSheet staging migration and trigger installation", ()
         expect(required(sheet.__rows[1]).slice(0, 56)).toStrictEqual(
             savedRound
         );
-        expect(required(sheet.__rows[1]).slice(56)).toStrictEqual([
+        expect(required(sheet.__rows[1]).slice(56, 62)).toStrictEqual([
             "",
             "",
             "",
@@ -8858,7 +8894,7 @@ describe("garden logger AppSheet staging migration and trigger installation", ()
             "",
             "",
         ]);
-        expect(required(sheet.__rows[0]).slice(54)).toStrictEqual([
+        expect(required(sheet.__rows[0]).slice(54, 62)).toStrictEqual([
             "P31 weight (g)",
             "P32 weight (g)",
             "P33 weight (g)",
@@ -9013,7 +9049,7 @@ describe("garden logger AppSheet staging migration and trigger installation", ()
         });
 
         expect(existingContext.installAppSheetIntake().bulk).toMatchObject({
-            columnCount: 62,
+            columnCount: 74,
             created: false,
             migrated: false,
             plantCount: 36,
@@ -9054,7 +9090,7 @@ describe("garden logger AppSheet staging migration and trigger installation", ()
         });
 
         expect(v514Context.installAppSheetBulkSheet()).toMatchObject({
-            columnCount: 62,
+            columnCount: 74,
             created: false,
             migrated: true,
         });
@@ -9118,7 +9154,7 @@ describe("garden logger AppSheet staging migration and trigger installation", ()
         });
 
         expect(legacyContext.installAppSheetBulkSheet()).toMatchObject({
-            columnCount: 62,
+            columnCount: 74,
             created: false,
             migrated: true,
         });
@@ -9207,7 +9243,7 @@ describe("garden logger AppSheet staging migration and trigger installation", ()
         );
         expect(
             structuredClone(
-                required(v512Sheet.__rows[1]).slice(appSheetBulkNotesIndex)
+                required(v512Sheet.__rows[1]).slice(appSheetBulkNotesIndex, 62)
             )
         ).toStrictEqual([
             ...v512Tail,
@@ -9287,7 +9323,7 @@ describe("garden logger AppSheet staging migration and trigger installation", ()
         );
         expect(
             structuredClone(
-                required(v513Sheet.__rows[1]).slice(appSheetBulkNotesIndex)
+                required(v513Sheet.__rows[1]).slice(appSheetBulkNotesIndex, 62)
             )
         ).toStrictEqual([
             ...v513Tail,
@@ -9795,7 +9831,7 @@ describe("garden logger History snapshots and request status", () => {
         ]);
         populatedHistory.__rows.push(
             Array.from(
-                { length: 45 },
+                { length: 60 },
                 () =>
                     /** @type {import("../logger-fixtures.d.ts").CellValue} */ (
                         ""
@@ -9995,7 +10031,7 @@ describe("garden logger History snapshots and request status", () => {
         ).toMatchObject({ state: "incomplete" });
 
         const older = Array.from(
-            { length: 45 },
+            { length: 60 },
             () =>
                 /** @type {import("../logger-fixtures.d.ts").CellValue} */ ("")
         );
@@ -10004,7 +10040,7 @@ describe("garden logger History snapshots and request status", () => {
         older[2] = "Clean";
         older[9] = new Date("2026-08-15T12:01:00Z");
         const newer = Array.from(
-            { length: 45 },
+            { length: 60 },
             () =>
                 /** @type {import("../logger-fixtures.d.ts").CellValue} */ ("")
         );
@@ -10193,7 +10229,7 @@ describe("garden logger History snapshots and request status", () => {
 
         for (const expectedCount of [
             0,
-            17,
+            23,
             1.5,
         ]) {
             expect(() =>
@@ -10204,7 +10240,7 @@ describe("garden logger History snapshots and request status", () => {
                         requestId,
                     },
                 ])
-            ).toThrow(/integer from 1 to 16/iv);
+            ).toThrow(/integer from 1 to 22/iv);
         }
     });
 
@@ -10307,7 +10343,7 @@ describe("garden logger request reservations and retry reconciliation", () => {
 
         const workbook = createLoggerWorkbook(["P01", "P02"]);
         const partialRow = Array.from(
-            { length: 45 },
+            { length: 60 },
             () =>
                 /** @type {import("../logger-fixtures.d.ts").CellValue} */ ("")
         );
@@ -10316,7 +10352,7 @@ describe("garden logger request reservations and retry reconciliation", () => {
         partialRow[2] = "Weigh";
         partialRow[15] = "garden-partial-batch-12345";
         const conflictRow = Array.from(
-            { length: 45 },
+            { length: 60 },
             () =>
                 /** @type {import("../logger-fixtures.d.ts").CellValue} */ ("")
         );
@@ -10377,7 +10413,7 @@ describe("garden logger request reservations and retry reconciliation", () => {
 
         const workbook = createLoggerWorkbook(["P01"]);
         const reservedRow = Array.from(
-            { length: 45 },
+            { length: 60 },
             () =>
                 /** @type {import("../logger-fixtures.d.ts").CellValue} */ ("")
         );
@@ -10416,7 +10452,7 @@ describe("garden logger request reservations and retry reconciliation", () => {
         expect(required(workbook.history.__rows[1])[4]).toBe(450);
         expect(
             structuredClone(workbook.history.__setValuesCalls)
-        ).toStrictEqual([{ column: 1, columnCount: 45, row: 2, rowCount: 1 }]);
+        ).toStrictEqual([{ column: 1, columnCount: 60, row: 2, rowCount: 1 }]);
     });
 
     it("distinguishes saved, partial, and noncontiguous request reservations", () => {
@@ -10886,7 +10922,7 @@ describe("garden logger workbook installation and History headers", () => {
         expect(
             structuredClone(required(compactHistory.__rows[0]).slice(40, 42))
         ).toStrictEqual(historyWaterHeaders);
-        expect(compactHistory.getMaxColumns()).toBe(45);
+        expect(compactHistory.getMaxColumns()).toBe(60);
 
         const currentHistory = createHistorySheet();
         currentHistory.getMaxRows = () => 5000;
@@ -10991,12 +11027,12 @@ describe("garden logger workbook installation and History headers", () => {
         };
 
         expect(context.ensureHistoryView_(spreadsheet)).toBe(true);
-        expect(historyView.getMaxColumns()).toBe(45);
+        expect(historyView.getMaxColumns()).toBe(60);
         expect(historyView.getRange(1, 1).getFormula()).toContain(
-            "History!A2:AS5000"
+            "History!A2:BH5000"
         );
         expect(historyView.getRange(1, 1).getFormula()).toContain(
-            "SEQUENCE(1,44,2,1)"
+            "SEQUENCE(1,59,2,1)"
         );
         expect(context.ensureHistoryView_(spreadsheet)).toBe(false);
 
@@ -11166,11 +11202,11 @@ describe("garden logger workbook installation and History headers", () => {
         for (const row of narrowHistory.__rows) row.splice(30);
         context.ensureHistoryGrid_(narrowHistory);
 
-        expect(narrowHistory.getMaxColumns()).toBe(45);
+        expect(narrowHistory.getMaxColumns()).toBe(60);
 
         const unvalidatedHistory = createHistorySheet();
         const storedRow = Array.from(
-            { length: 45 },
+            { length: 60 },
             () =>
                 /** @type {import("../logger-fixtures.d.ts").CellValue} */ ("")
         );
@@ -11247,7 +11283,7 @@ describe("garden logger workbook installation and History headers", () => {
 
         const sameObservedAt = new Date("2026-08-25T12:00:00Z");
         const recordedFirst = Array.from(
-            { length: 45 },
+            { length: 60 },
             () =>
                 /** @type {import("../logger-fixtures.d.ts").CellValue} */ ("")
         );
@@ -11257,7 +11293,7 @@ describe("garden logger workbook installation and History headers", () => {
         recordedFirst[4] = null;
         recordedFirst[9] = new Date("2026-08-25T12:01:00Z");
         const recordedSecond = Array.from(
-            { length: 45 },
+            { length: 60 },
             () =>
                 /** @type {import("../logger-fixtures.d.ts").CellValue} */ ("")
         );
@@ -12050,3 +12086,402 @@ function dataSheet(sheet) {
 function emptyCells(length) {
     return Array.from({ length }, () => "");
 }
+
+describe("structured care and temperature events", () => {
+    const care = {
+        environmentAspect: "Light",
+        environmentFrom: "8 hours",
+        environmentTo: "10 hours",
+        mistAmountMl: 2.5,
+        mistDetails: "Light spray",
+        mistTargets: ["Soil surface", "Leaves"],
+        moveFrom: "Lower shelf",
+        moveTo: "Upper shelf",
+        propagationDetails: "One offset separated",
+        propagationMethod: "Offset",
+        supportAction: "Adjust",
+        supportDetails: "Loosened tie",
+        temperature: 32,
+        temperatureTarget: "Soil",
+        temperatureUnit: "F",
+    };
+
+    it("persists six distinct events, canonical temperature and retry identity without watering or setup changes", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook(["P01"]);
+        const context = loadAppsScript(workbook.history, {
+            globals: workbook.globals,
+            spreadsheet: workbook.spreadsheet,
+        });
+        const payload = {
+            ...care,
+            events: [
+                "Mist",
+                "Move",
+                "Temperature",
+                "Environment",
+                "Propagate",
+                "Support",
+            ],
+            observedAt: "2026-10-15T16:00:00Z",
+            plantId: "P01",
+            requestId: "garden-care-all-fixture",
+        };
+
+        expect(context.saveWebObservation(payload)).toMatchObject({
+            historyRows: 6,
+            ok: true,
+        });
+
+        const rows = workbook.history.__rows.slice(1);
+
+        expect(rows.map((row) => row[2])).toStrictEqual(payload.events);
+        expect(
+            rows.every(
+                (row) =>
+                    row.length === 60 &&
+                    row[10] === 1 &&
+                    row[4] === "" &&
+                    row[41] === ""
+            )
+        ).toBe(true);
+        expect(required(rows[0]).slice(45, 48)).toStrictEqual([
+            "Leaves, Soil surface",
+            2.5,
+            "Light spray",
+        ]);
+        expect(required(rows[2]).slice(50, 53)).toStrictEqual([
+            0,
+            "Soil",
+            "F",
+        ]);
+        expect(required(rows[2]).slice(28, 29)).toStrictEqual(["Measured"]);
+        expect(required(rows[2])[34]).toBe("Thermometer");
+        expect(context.getWebAppBootstrap().plants[0]?.currentLocation).toBe(
+            "Upper shelf"
+        );
+        expect(
+            context.saveWebObservation({
+                ...payload,
+                mistTargets: "Leaves; Soil surface",
+            })
+        ).toMatchObject({ duplicate: true });
+        expect(() =>
+            context.saveWebObservation({ ...payload, moveTo: "Window" })
+        ).toThrow(
+            "This retry no longer matches the entry that was already saved."
+        );
+        expect(workbook.history.__rows).toHaveLength(7);
+
+        const recent = context.getRecentWebObservations(10);
+
+        expect(
+            recent.some(
+                (row) =>
+                    row.event === "Temperature" &&
+                    row.details?.temperatureC === 0
+            )
+        ).toBe(true);
+    });
+
+    it.each([
+        { expected: 0, temperature: 0, temperatureUnit: "C" },
+        { expected: -10, temperature: -10, temperatureUnit: "C" },
+        { expected: -10, temperature: 14, temperatureUnit: "F" },
+        { expected: -273.15, temperature: -273.15, temperatureUnit: "C" },
+    ])(
+        "preserves temperature $temperature $temperatureUnit",
+        ({ expected, temperature, temperatureUnit }) => {
+            expect.hasAssertions();
+
+            const workbook = createLoggerWorkbook();
+            const context = loadAppsScript(workbook.history, {
+                globals: workbook.globals,
+                spreadsheet: workbook.spreadsheet,
+            });
+
+            expect(
+                context.saveWebObservation({
+                    events: ["Temperature"],
+                    observedAt: "2026-10-15T16:00:00Z",
+                    plantId: "P01",
+                    requestId: "garden-temperature-fixture",
+                    temperature,
+                    temperatureTarget: "Air",
+                    temperatureUnit,
+                })
+            ).toMatchObject({ ok: true });
+            expect(required(workbook.history.__rows[1])[50]).toBe(expected);
+        }
+    );
+
+    it.each([
+        {
+            event: "Mist",
+            expectedError: "Choose at least one listed mist target.",
+            fields: { mistTargets: [] },
+        },
+        {
+            event: "Mist",
+            expectedError: "Choose at least one listed mist target.",
+            fields: { mistTargets: "Invalid" },
+        },
+        {
+            event: "Mist",
+            expectedError: "Describe the other mist target.",
+            fields: { mistDetails: "", mistTargets: "Other" },
+        },
+        {
+            event: "Mist",
+            expectedError: "Mist amount must be a positive number.",
+            fields: { mistAmountMl: 0, mistTargets: "Leaves" },
+        },
+        {
+            event: "Mist",
+            expectedError: "Mist amount must be a positive finite number.",
+            fields: { mistAmountMl: true, mistTargets: "Leaves" },
+        },
+        {
+            event: "Mist",
+            expectedError: "Mist amount must be a positive number.",
+            fields: { mistAmountMl: Infinity, mistTargets: "Leaves" },
+        },
+        {
+            event: "Move",
+            expectedError: "New location is required.",
+            fields: { moveTo: "" },
+        },
+        {
+            event: "Temperature",
+            expectedError: "Enter a finite temperature reading.",
+            fields: { temperature: "" },
+        },
+        {
+            event: "Temperature",
+            expectedError: "Enter a finite temperature reading.",
+            fields: { temperature: NaN },
+        },
+        {
+            event: "Temperature",
+            expectedError: "Enter a finite temperature reading.",
+            fields: { temperature: Infinity },
+        },
+        {
+            event: "Temperature",
+            expectedError: "Temperature cannot be below absolute zero.",
+            fields: { temperature: -274 },
+        },
+        {
+            event: "Temperature",
+            expectedError: "Temperature unit: choose C, F.",
+            fields: { temperature: 10, temperatureUnit: "K" },
+        },
+        {
+            event: "Temperature",
+            expectedError: "Temperature target: choose Air, Soil.",
+            fields: { temperature: 10, temperatureTarget: "Leaf" },
+        },
+        {
+            event: "Environment",
+            expectedError: "Environment aspect: choose",
+            fields: { environmentAspect: "Invalid" },
+        },
+        {
+            event: "Environment",
+            expectedError: "New setting is required.",
+            fields: { environmentTo: "" },
+        },
+        {
+            event: "Propagate",
+            expectedError: "Propagation method: choose",
+            fields: { propagationMethod: "Invalid" },
+        },
+        {
+            event: "Propagate",
+            expectedError: "Propagation details is required.",
+            fields: { propagationDetails: "" },
+        },
+        {
+            event: "Support",
+            expectedError: "Support action: choose",
+            fields: { supportAction: "Invalid" },
+        },
+        {
+            event: "Support",
+            expectedError: "Support details is required.",
+            fields: { supportDetails: "" },
+        },
+    ])(
+        "rejects invalid $event detail without writes: $fields",
+        ({ event, expectedError, fields }) => {
+            expect.hasAssertions();
+
+            const workbook = createLoggerWorkbook();
+            const context = loadAppsScript(workbook.history, {
+                globals: workbook.globals,
+                spreadsheet: workbook.spreadsheet,
+            });
+
+            expect(() =>
+                context.saveWebObservation({
+                    ...care,
+                    temperatureUnit: "C",
+                    ...fields,
+                    events: [event],
+                    observedAt: "2026-10-15T16:00:00Z",
+                    plantId: "P01",
+                    requestId: "garden-invalid-care-fixture",
+                })
+            ).toThrow(expectedError);
+            expect(workbook.history.__rows).toHaveLength(1);
+        }
+    );
+
+    it("uses shared care values for each selected pot, retains safe literal text and excludes sensor bulk actions", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook(["P01", "P02"]);
+        const context = loadAppsScript(workbook.history, {
+            globals: workbook.globals,
+            spreadsheet: workbook.spreadsheet,
+        });
+        const payload = {
+            ...care,
+            events: [
+                "Mist",
+                "Move",
+                "Environment",
+                "Propagate",
+                "Support",
+            ],
+            mistDetails: "=special",
+            mistTargets: "Other",
+            moveTo: "=window",
+            observedAt: "2026-10-15T16:00:00Z",
+            plantIds: ["P01", "P02"],
+            requestId: "garden-bulk-care-fixture",
+        };
+
+        expect(context.saveBulkCareObservation(payload)).toMatchObject({
+            ok: true,
+            plantCount: 2,
+        });
+        expect(context.saveBulkCareObservation(payload)).toMatchObject({
+            duplicateCount: 2,
+        });
+        expect(workbook.history.__rows).toHaveLength(11);
+        expect(required(workbook.history.__rows[1])[47]).toBe("'=special");
+        expect(required(workbook.history.__rows[2])[49]).toBe("'=window");
+
+        for (const event of [
+            "Temperature",
+            "Humidity",
+            "Light",
+        ])
+            expect(() =>
+                context.saveBulkCareObservation({ ...payload, events: [event] })
+            ).toThrow("Bulk care supports only:");
+    });
+
+    it("maps appended AppSheet single and bulk fields while ignoring unselected stale details", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook();
+        const context = loadAppsScript(workbook.history, {
+            globals: workbook.globals,
+            spreadsheet: workbook.spreadsheet,
+        });
+        const entries = required(workbook.sheets.get("App entries"));
+        const entry = emptyCells(appSheetEntryHeaders.length);
+        entry[0] = "care-staging";
+        entry[2] = "P01";
+        entry[3] = "Temperature";
+        entry[26] = "Queued";
+        entry[42] = 14;
+        entry[43] = "Air";
+        entry[44] = "F";
+        entry[37] = "Invalid stale mist";
+        entries.__rows.push(entry);
+
+        expect(context.processQueuedAppSheetEntries()).toMatchObject({
+            savedCount: 1,
+        });
+        expect(
+            required(workbook.history.__rows[1]).slice(50, 53)
+        ).toStrictEqual([
+            -10,
+            "Air",
+            "F",
+        ]);
+
+        const round = emptyCells(appSheetBulkHeaders.length);
+        round[0] = "care-round";
+        round[3] = "Support";
+        round[4] = "P01";
+        round[72] = "Add";
+        round[73] = "Small stake";
+        const requests = context.appSheetBulkPayloadsFromRow_(
+            round,
+            "care-round"
+        );
+
+        expect(requests[0]?.payload).toMatchObject({
+            events: ["Support"],
+            supportAction: "Add",
+            supportDetails: "Small stake",
+        });
+        expect(
+            context.saveWebObservation(required(requests[0]).payload)
+        ).toMatchObject({ ok: true });
+        expect(
+            required(workbook.history.__rows[2]).slice(58, 60)
+        ).toStrictEqual(["Add", "Small stake"]);
+    });
+
+    it("guards every appended History destination and installs native numeric/enum validation", () => {
+        expect.hasAssertions();
+
+        const history = createHistorySheet();
+        const context = loadAppsScript(history);
+        for (let index = 45; index < 60; index += 1) {
+            const header = required(history.__rows[0]);
+            const original = header[index];
+            header[index] = "Unexpected";
+
+            expect(() => {
+                context.ensureHistoryCareColumns_(history);
+            }).toThrow(/must be/v);
+
+            header[index] = original;
+        }
+        history.__validationCells.add("2:45");
+        for (let column = 46; column <= 60; column += 1)
+            history.__validationCells.add(`2:${column}`);
+        context.ensureHistoryCareColumns_(history, true);
+
+        expect(history.__validationCells.has("2:45")).toBe(true);
+        expect(history.__validationCells.has("2:46")).toBe(false);
+        expect(history.__validationCells.has("2:48")).toBe(false);
+        expect(history.__validationCells.has("2:49")).toBe(false);
+        expect(history.__validationCells.has("2:50")).toBe(false);
+        expect(history.__validationCells.has("2:60")).toBe(false);
+        expect(history.__validationCells.has("2:47")).toBe(true);
+        expect(history.__validationCells.has("2:51")).toBe(true);
+
+        const header = required(history.__rows[0]);
+        header[45] = "";
+        const row = emptyCells(60);
+        row[45] = "Existing";
+        history.__rows.push(row);
+
+        expect(() => {
+            context.ensureHistoryCareColumns_(history);
+        }).toThrow(/existing data/v);
+
+        row[45] = "";
+        context.ensureHistoryCareColumns_(history);
+
+        expect(header[45]).toBe("Mist targets");
+    });
+});

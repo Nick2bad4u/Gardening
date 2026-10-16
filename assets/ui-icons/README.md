@@ -1,6 +1,6 @@
 # Shared interface icons
 
-These 97 standalone multicolor SVGs are generated from the non-portrait symbols
+These 103 standalone multicolor SVGs are generated from the non-portrait symbols
 in [the canonical sprite](../artwork/plant-icons.svg). They cover
 menus, buttons, measurement and care fields, status indicators, and generic
 plant categories. The separate collection portraits live in `../plant-icons/`.

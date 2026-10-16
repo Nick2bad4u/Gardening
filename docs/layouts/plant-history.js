@@ -126,6 +126,21 @@ const HISTORY_HEADERS = Object.freeze([
     "Relative humidity (%)",
     "PPFD (µmol/m²/s)",
     "Illuminance (lux)",
+    "Mist targets",
+    "Mist amount (mL)",
+    "Mist details",
+    "Previous location",
+    "New location",
+    "Temperature (°C)",
+    "Temperature target",
+    "Temperature entry unit",
+    "Environment aspect",
+    "Previous setting",
+    "New setting",
+    "Propagation method",
+    "Propagation details",
+    "Support action",
+    "Support details",
 ]);
 
 const searchParameters = new URLSearchParams(location.search);
@@ -333,6 +348,7 @@ function eventSpecificDetails(event) {
         case "light": {
             return lightReadingDetails(event);
         }
+
         case "pest": {
             const action = displayValue(event["Treatment / action"]);
             return [
@@ -340,6 +356,7 @@ function eventSpecificDetails(event) {
                 action ? `Action: ${action}` : "",
             ].filter(Boolean);
         }
+
         case "repot": {
             const previous = displayValue(
                 event["Previous pot size"],
@@ -363,6 +380,7 @@ function eventSpecificDetails(event) {
                     : `${degrees}° clockwise-equivalent turn`,
             ];
         }
+
         case "water": {
             if (event["Nutrients used"] === "No") return ["Plain water"];
             if (event["Nutrients used"] !== "Yes") return [];
@@ -376,7 +394,7 @@ function eventSpecificDetails(event) {
             ];
         }
         default: {
-            return [];
+            return extendedCareDetails(event, eventName);
         }
     }
 }
@@ -398,6 +416,57 @@ function exportHistory() {
     link.download = `${state.currentPlant["Plant ID"]}-${plantLabel(state.currentPlant).replaceAll("#", "number-")}-history.csv`;
     link.click();
     URL.revokeObjectURL(url);
+}
+
+/** @param {HistoryEvent} event @param {string} eventName */
+function extendedCareDetails(event, eventName) {
+    switch (eventName) {
+        case "environment": {
+            return [
+                displayValue(event["Environment aspect"]),
+                `${displayValue(event["Previous setting"], "Previous setting not recorded")} → ${displayValue(event["New setting"], "New setting not recorded")}`,
+            ].filter(Boolean);
+        }
+        case "mist": {
+            const amount = numericValue(event["Mist amount (mL)"]);
+            return [
+                displayValue(event["Mist targets"]),
+                amount === null ? "" : `${amount} mL mist`,
+                displayValue(event["Mist details"]),
+            ].filter(Boolean);
+        }
+        case "move": {
+            return [
+                `${displayValue(event["Previous location"], "Previous location not recorded")} → ${displayValue(event["New location"], "New location not recorded")}`,
+            ];
+        }
+        case "propagate": {
+            return [
+                displayValue(event["Propagation method"]),
+                displayValue(event["Propagation details"]),
+            ].filter(Boolean);
+        }
+        case "support": {
+            return [
+                displayValue(event["Support action"]),
+                displayValue(event["Support details"]),
+            ].filter(Boolean);
+        }
+        case "temperature": {
+            const value = numericValue(event["Temperature (°C)"]);
+            return value === null
+                ? ["Temperature not recorded"]
+                : [
+                      `${displayValue(event["Temperature target"], "Target not recorded")}: ${value} °C`,
+                      event["Temperature entry unit"] === "F"
+                          ? `Entered in °F (${Number(((value * 9) / 5 + 32).toFixed(2))} °F)`
+                          : "",
+                  ].filter(Boolean);
+        }
+        default: {
+            return [];
+        }
+    }
 }
 
 /**
@@ -569,6 +638,34 @@ function renderCharts(summary) {
         "#humidity-chart-summary",
         `${humidityPoints.length} humidity readings. Recorded observations only; no care target is assigned.`
     );
+    const airTemperaturePoints = summary.airTemperatureSeries.filter((entry) =>
+        inChartRange(entry)
+    );
+    const soilTemperaturePoints = summary.soilTemperatureSeries.filter(
+        (entry) => inChartRange(entry)
+    );
+    renderLineChart(getRequiredElement("#temperature-chart", HTMLElement), {
+        ariaLabel: `Air and soil temperature history for ${plantLabel(state.currentPlant)}`,
+        emptyMessage:
+            "No air or soil temperature readings in this chart range yet.",
+        series: [
+            {
+                className: "series-temperature-air",
+                label: "Air temperature",
+                points: airTemperaturePoints,
+            },
+            {
+                className: "series-temperature-soil",
+                label: "Soil temperature",
+                points: soilTemperaturePoints,
+            },
+        ],
+        unit: "°C",
+    });
+    setText(
+        "#temperature-chart-summary",
+        `${airTemperaturePoints.length} air readings and ${soilTemperaturePoints.length} soil readings. Fahrenheit entries are converted to Celsius.`
+    );
     const heightPoints = summary.heightSeries.filter((entry) =>
         inChartRange(entry)
     );
@@ -640,7 +737,10 @@ function renderCharts(summary) {
                     ? activityClassName(eventName)
                     : "activity-removed",
                 date: parseDate(event["Date"]),
-                label: isActive ? eventLabel : `Removed · ${eventLabel}`,
+                label: [
+                    isActive ? eventLabel : `Removed · ${eventLabel}`,
+                    ...eventSpecificDetails(event),
+                ].join(" · "),
             };
         })
         .filter((event) => inChartRange(event));
@@ -801,6 +901,26 @@ function renderPlant(plant, plants, index, trackerIndex) {
         summary.latestHumidity,
         "Relative humidity (%)",
         "% RH"
+    );
+    setCheckedValue(
+        "#latest-temperature",
+        "#temperature-checked",
+        summary.latestTemperature,
+        "Temperature (°C)",
+        "°C"
+    );
+    if (summary.latestTemperature) {
+        setText(
+            "#temperature-checked",
+            `${displayValue(summary.latestTemperature["Temperature target"], "Target not recorded")} · ${formatDate(summary.latestTemperature["Date"])}`
+        );
+    }
+    setText("#current-location", summary.currentLocation || "Not recorded");
+    setText(
+        "#location-checked",
+        summary.latestMove
+            ? `Moved ${formatDate(summary.latestMove["Date"])}`
+            : "No move logged"
     );
     renderActivitySummary(plant);
     const activeSetupEntries = plant.events.filter(

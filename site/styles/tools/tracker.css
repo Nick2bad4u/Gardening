@@ -1322,11 +1322,13 @@
         stroke: var(--chart-weight);
     }
 
+    & .series-temperature-air,
     & .series-height {
         fill: var(--chart-height);
         stroke: var(--chart-height);
     }
 
+    & .series-temperature-soil,
     & .series-width {
         fill: var(--chart-width);
         stroke: var(--chart-width);
@@ -1359,14 +1361,17 @@
         fill: var(--chart-height);
     }
 
+    & .activity-mist,
     & .activity-water {
         fill: var(--chart-weight);
     }
 
+    & .activity-support,
     & .activity-repot {
         fill: var(--chart-width);
     }
 
+    & .activity-propagate,
     & .activity-flower {
         fill: #c85b93;
     }
@@ -1375,14 +1380,17 @@
         fill: #8068b2;
     }
 
+    & .activity-temperature,
     & .activity-pest {
         fill: var(--warning);
     }
 
+    & .activity-move,
     & .activity-rotation {
         fill: #4169a1;
     }
 
+    & .activity-environment,
     & .activity-clean {
         fill: #477c87;
     }

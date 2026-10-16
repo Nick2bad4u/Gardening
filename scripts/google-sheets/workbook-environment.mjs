@@ -8,8 +8,9 @@ const font = "JetBrains Mono";
 const title = "Light & humidity";
 const helper = "Environment data";
 const humidityLabel = "Relative humidity (%)";
+const observedAtLabel = "Observed at";
 const headers = [
-    "Observed at",
+    observedAtLabel,
     "Plant ID",
     "Event",
     "Estimated PPFD (µmol/m²/s)",
@@ -318,7 +319,7 @@ export function buildWorkbookEnvironmentRequests(snapshot) {
     ]).entries()) {
         formulaRequests.push(
             update(environmentDataSheetId, 0, 12 + index * 2, [
-                ["Observed at", headers[index + 3] ?? ""],
+                [observedAtLabel, headers[index + 3] ?? ""],
             ]),
             update(environmentDataSheetId, 1, 12 + index * 2, [
                 [
@@ -516,7 +517,7 @@ export function buildWorkbookEnvironmentRequests(snapshot) {
 export function environmentAppsScriptSource() {
     return `/**
  * Read-only environmental observations. No volatile custom-function input.
- * @param {GardenHistoryRow[]} history Native History A:AS.
+ * @param {GardenHistoryRow[]} history Native History A:BH.
  * @returns {GardenCell[][]}
  * @customfunction
  */
@@ -536,8 +537,30 @@ function GARDEN_ENVIRONMENT_READINGS(history) {
  */
 ${environmentRows.toString().replace("function environmentRows(", "function environmentRows_(").replaceAll(".toSorted(", ".sort(")}
 
-/** @param {GardenCell | undefined} value @param {number} [maximum] */
+/** @param {GardenCell | undefined} value @param {number} [maximum] @param {number} [minimum] */
 ${environmentNumber.toString()}
+
+/**
+ * Latest-location evidence, independent of pot setup and watering.
+ * @param {GardenHistoryRow[]} history Native History A:BH.
+ * @returns {GardenCell[][]}
+ * @customfunction
+ */
+function GARDEN_RECORDED_LOCATIONS(history) {
+    return recordedLocationRows_(history, new Date(), {
+        corrections: historyCorrectionContext_,
+        active: activeHistoryRow_,
+        timestamp: webHistoryTimestamp_,
+    });
+}
+
+/**
+ * @param {GardenHistoryRow[]} history
+ * @param {Date} asOf
+ * @param {{corrections: (rows: GardenHistoryRow[]) => {order: number[], superseded: Set<number>}, active: (row: GardenHistoryRow) => boolean, timestamp: (value: unknown) => number}} helpers
+ * @returns {GardenCell[][]}
+ */
+${recordedLocationRows.toString().replace("function recordedLocationRows(", "function recordedLocationRows_(").replaceAll(".toSorted(", ".sort(")}
 `;
 }
 
@@ -574,6 +597,8 @@ export function environmentRows(history, asOf, helpers) {
             "Recorded method",
             "Original notes / location",
             "Observation ID",
+            "Air temperature (°C)",
+            "Soil temperature (°C)",
         ],
         ...history
             .map((row, index) => ({
@@ -592,7 +617,11 @@ export function environmentRows(history, asOf, helpers) {
                     time <= asOf.getTime() &&
                     typeof row[1] === "string" &&
                     row[1].trim() !== "" &&
-                    ["Humidity", "Light"].includes(String(row[2]))
+                    [
+                        "Humidity",
+                        "Light",
+                        "Temperature",
+                    ].includes(String(row[2]))
             )
             .toSorted(
                 (a, b) =>
@@ -608,14 +637,81 @@ export function environmentRows(history, asOf, helpers) {
                 row[34] ?? "",
                 row[8] ?? "",
                 row[26] ?? "",
+                row[2] === "Temperature" && row[51] === "Air"
+                    ? environmentNumber(row[50], Infinity, -Infinity)
+                    : "",
+                row[2] === "Temperature" && row[51] === "Soil"
+                    ? environmentNumber(row[50], Infinity, -Infinity)
+                    : "",
             ])
-            .filter((row) => row[3] !== "" || row[4] !== "" || row[5] !== ""),
+            .filter((row) =>
+                [
+                    3,
+                    4,
+                    5,
+                    10,
+                    11,
+                ].some((column) => row[column] !== "")
+            ),
     ];
 }
 
 /** @param {EnvironmentSnapshot} snapshot */
 export function environmentSnapshotDigest(snapshot) {
     return createHash("sha256").update(JSON.stringify(snapshot)).digest("hex");
+}
+
+/**
+ * Project recorded moves in correction-aware observation order. Location is
+ * evidence of where a pot was put, not an inferred current position.
+ *
+ * @param {GardenHistoryRow[]} history
+ * @param {Date} asOf
+ * @param {Parameters<typeof environmentRows>[2]} helpers
+ *
+ * @returns {GardenCell[][]}
+ */
+export function recordedLocationRows(history, asOf, helpers) {
+    const context = helpers.corrections(history);
+    return [
+        [
+            "Observed at",
+            "Plant ID",
+            "Previous location",
+            "Recorded location",
+            "Observation ID",
+        ],
+        ...history
+            .map((row, index) => ({
+                index,
+                order: context.order[index] ?? index,
+                row,
+                time: helpers.timestamp(row[0]),
+            }))
+            .filter(
+                ({ index, row, time }) =>
+                    helpers.active(row) &&
+                    !context.superseded.has(index) &&
+                    time > 0 &&
+                    time <= asOf.getTime() &&
+                    typeof row[1] === "string" &&
+                    row[1].trim() !== "" &&
+                    row[2] === "Move" &&
+                    typeof row[49] === "string" &&
+                    row[49].trim() !== ""
+            )
+            .toSorted(
+                (a, b) =>
+                    a.time - b.time || a.order - b.order || a.index - b.index
+            )
+            .map(({ row }) => [
+                row[0] ?? "",
+                row[1] ?? "",
+                row[48] ?? "",
+                row[49] ?? "",
+                row[26] ?? "",
+            ]),
+    ];
 }
 
 /**
@@ -674,7 +770,7 @@ function chartRequest(
                                 position: "BOTTOM_AXIS",
                                 title:
                                     chartType === "SCATTER"
-                                        ? "Observed at"
+                                        ? observedAtLabel
                                         : "Plant ID",
                             },
                             {
@@ -840,11 +936,14 @@ function dateFormat(sheetId, startRowIndex, endRowIndex, column) {
     };
 }
 
-/** @param {GardenCell | undefined} value @param {number} [maximum] */
-function environmentNumber(value, maximum = Infinity) {
+/**
+ * @param {GardenCell | undefined} value @param {number} [maximum] @param
+ *   {number} [minimum]
+ */
+function environmentNumber(value, maximum = Infinity, minimum = 0) {
     return typeof value === "number" &&
         Number.isFinite(value) &&
-        value >= 0 &&
+        value >= minimum &&
         value <= maximum
         ? value
         : "";

@@ -61,6 +61,21 @@ const headers = [
     "Relative humidity (%)",
     "PPFD (µmol/m²/s)",
     "Illuminance (lux)",
+    "Mist targets",
+    "Mist amount (mL)",
+    "Mist details",
+    "Previous location",
+    "New location",
+    "Temperature (°C)",
+    "Temperature target",
+    "Temperature entry unit",
+    "Environment aspect",
+    "Previous setting",
+    "New setting",
+    "Propagation method",
+    "Propagation details",
+    "Support action",
+    "Support details",
 ];
 
 /**
@@ -130,12 +145,12 @@ function applyUpdate(rows, update, maxRows, timeZone) {
         rowIndex >= maxRows ||
         update.rows.length !== 1 ||
         columnIndex < 0 ||
-        columnIndex + values.length > 45
+        columnIndex + values.length > 60
     ) {
         throw new Error("Invalid update range");
     }
     while (rows.length <= rowIndex)
-        rows.push(Array.from({ length: 45 }, () => cell()));
+        rows.push(Array.from({ length: 60 }, () => cell()));
     for (const [offset, data] of values.entries()) {
         applyCell(
             required(required(rows[rowIndex])[columnIndex + offset]),
@@ -307,7 +322,7 @@ function fixture(
         lastSelectedRow: 2,
         locked: false,
         lockUnavailable: false,
-        maxColumns: 45,
+        maxColumns: 60,
         maxRows: Math.max(100, observations.length + 1),
         missingFormulaReadRow: 0,
         onAlert: () => {},
@@ -564,7 +579,7 @@ function fixture(
  * @returns {import("../logger-correction-fixtures.d.ts").CorrectionCell[]}
  */
 function observation(event = "Weigh", id = "original-1", overrides = {}) {
-    const row = Array.from({ length: 45 }, () => cell());
+    const row = Array.from({ length: 60 }, () => cell());
     const values = {
         0: new Date("2026-09-03T16:23:45.123Z"),
         1: "P01",
@@ -1660,7 +1675,7 @@ describe("atomic saved History corrections", () => {
         const model = fixture();
         model.state.rows.length = 4998;
         for (let index = 2; index < 4998; index += 1)
-            model.state.rows[index] = Array.from({ length: 45 }, () => cell());
+            model.state.rows[index] = Array.from({ length: 60 }, () => cell());
         model.state.rows.push(
             observation("Other", "last-existing", { 1: "P02" })
         );
@@ -2478,9 +2493,9 @@ describe("correction validation and durable receipt boundaries", () => {
 
         expect(() =>
             model.api.getWebCorrectionEntry({ observationId: "original-1" })
-        ).toThrow("45-column");
+        ).toThrow("60-column");
 
-        model.state.maxColumns = 45;
+        model.state.maxColumns = 60;
         stored(model, 1, 1).formula = '="Date"';
 
         expect(() =>
@@ -2894,7 +2909,7 @@ describe("durable pre-batch correction rejection", () => {
             case "HISTORY_CAPACITY": {
                 while (model.state.rows.length < 4999)
                     model.state.rows.push(
-                        Array.from({ length: 45 }, () => cell())
+                        Array.from({ length: 60 }, () => cell())
                     );
                 model.state.rows.push(
                     observation("Other", "capacity-end", { 1: "P02" })
@@ -3126,5 +3141,118 @@ describe("menu exclusion identity recheck", () => {
                 writes: 0,
             });
         }
+    });
+});
+
+describe("structured care corrections", () => {
+    it.each([
+        {
+            changes: { mistDetails: "Moss tray", mistTargets: "Other" },
+            column: 46,
+            event: "Mist",
+            expected: "Other",
+            values: { 45: "Leaves", 46: 2, 47: "" },
+        },
+        {
+            changes: { moveTo: "Desk" },
+            column: 50,
+            event: "Move",
+            expected: "Desk",
+            values: { 48: "Shelf", 49: "Window" },
+        },
+        {
+            changes: { temperatureC: -10, temperatureTarget: "Soil" },
+            column: 51,
+            event: "Temperature",
+            expected: -10,
+            values: {
+                28: "Measured",
+                34: "Thermometer",
+                50: 15,
+                51: "Air",
+                52: "F",
+            },
+        },
+        {
+            changes: { environmentTo: "12h" },
+            column: 56,
+            event: "Environment",
+            expected: "12h",
+            values: { 53: "Light", 54: "8h", 55: "10h" },
+        },
+        {
+            changes: {
+                propagationDetails: "Two divisions",
+                propagationMethod: "Division",
+            },
+            column: 57,
+            event: "Propagate",
+            expected: "Division",
+            values: { 56: "Offset", 57: "One offset" },
+        },
+        {
+            changes: { supportAction: "Adjust", supportDetails: "Loose tie" },
+            column: 59,
+            event: "Support",
+            expected: "Adjust",
+            values: { 58: "Add", 59: "Stake" },
+        },
+    ])(
+        "corrects $event in one append-only row and preserves retry identity",
+        ({ changes, column, event, expected, values }) => {
+            expect.hasAssertions();
+
+            const model = fixture([observation(event, "original-1", values)]);
+            const original = structuredClone(model.state.rows[1]);
+            const payload = prepare(model, changes);
+
+            expect(
+                model.api.saveWebObservationCorrection(payload)
+            ).toMatchObject({ status: "saved" });
+            expect(stored(model, 3, column).value).toBe(expected);
+            expect(stored(model, 2, 36).value).toBe("Removed");
+            expect(stored(model, 3, 11).value).toBe(2);
+            expect(
+                model.api.saveWebObservationCorrection(payload)
+            ).toMatchObject({ status: "saved" });
+            expect(model.state.rows).toHaveLength(3);
+            expect(stored(model, 2, column).value).toBe(
+                original?.[column - 1]?.value
+            );
+        }
+    );
+
+    it("rejects impossible temperature and Other mist without details", () => {
+        expect.hasAssertions();
+
+        const temperature = fixture([
+            observation("Temperature", "original-1", {
+                50: 0,
+                51: "Air",
+                52: "C",
+            }),
+        ]);
+        for (const temperatureC of [
+            -274,
+            "",
+            NaN,
+        ])
+            expect(() => prepare(temperature, { temperatureC })).toThrow(
+                /INVALID_CORRECTION/v
+            );
+
+        expect(() =>
+            prepare(temperature, { temperatureTarget: "Leaf" })
+        ).toThrow("Choose a listed temperature target.");
+
+        const mist = fixture([
+            observation("Mist", "original-1", { 45: "Leaves" }),
+        ]);
+
+        expect(() => prepare(mist, { mistTargets: "Other" })).toThrow(
+            "Describe the other mist target."
+        );
+        expect(temperature.state.rows).toHaveLength(2);
+        expect(mist.state.rows).toHaveLength(2);
     });
 });

@@ -47,6 +47,7 @@ export function appsScriptApi(context) {
         dryDownSerialDate_: null,
         dryOrLowestWeightsFromRows_: null,
         ensureAppSheetEntryColumns_: null,
+        ensureHistoryCareColumns_: null,
         ensureHistoryDetailColumns_: null,
         ensureHistoryGrid_: null,
         ensureHistoryHumidityColumn_: null,

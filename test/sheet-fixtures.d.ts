@@ -2,6 +2,7 @@ import type { CellValue } from "./logger-fixtures.js";
 
 export interface DataRange {
     clearContent: () => DataRange;
+    clearDataValidations: () => DataRange;
     getColumn: () => number;
     getDisplayValue: () => string;
     getDisplayValues: () => string[][];

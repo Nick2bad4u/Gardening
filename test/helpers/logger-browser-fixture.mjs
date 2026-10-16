@@ -5,26 +5,58 @@ const source = await readFile("scripts/google-sheets/Index.html", "utf8");
 const events = [
     "Water",
     "Weigh",
-    "Measure",
+    "Mist",
     "Humidity",
-    "Inspect",
+    "Temperature",
     "Light",
     "Check",
+    "Inspect",
+    "Measure",
     "Rotation",
+    "Move",
+    "Environment",
     "Clean",
     "Prune",
+    "Support",
     "Repot",
+    "Propagate",
     "Flower",
     "Photo",
     "Pest",
     "Other",
 ];
+/** @type {Record<string, Record<string, string | number>>} */
+const eventDetails = {
+    Environment: {
+        environmentAspect: "Airflow",
+        environmentFrom: "Low",
+        environmentTo: "Medium",
+    },
+    Humidity: { relativeHumidity: 76 },
+    Mist: {
+        mistAmountMl: 5,
+        mistDetails: "Measured spray",
+        mistTargets: "Leaves, Exposed roots",
+    },
+    Move: { moveFrom: "Lower shelf", moveTo: "Upper shelf" },
+    Propagate: {
+        propagationDetails: "One rooted offset",
+        propagationMethod: "Offset",
+    },
+    Support: { supportAction: "Adjust", supportDetails: "Loosened tie" },
+    Temperature: {
+        temperatureC: 0,
+        temperatureTarget: "Air",
+        temperatureUnit: "C",
+    },
+};
 /** @type {Record<string, string>} */
 const namedPlants = {
     P05: "Old Man of the Andes",
     P06: "Eastern prickly pear cactus",
 };
 const plants = Array.from({ length: 36 }, (_, index) => ({
+    currentLocation: "Upper shelf",
     currentPotSize:
         index === 35
             ? "Glass jar with cork lid; seller-listed 6.3 × 3.9 in (16 × 10 cm); dimension orientation unverified"
@@ -54,12 +86,16 @@ const plants = Array.from({ length: 36 }, (_, index) => ({
             ? "Probable Fittonia albivenis + Hypoestes phyllostachya; tentative Pilea cf. depressa; fern-like foliage and moss unidentified"
             : "Parodia leninghausii",
     ...(index === 35 && {
+        latestAirTemperature: 0,
+        latestAirTemperatureAt: "2026-09-09T13:00:00Z",
         latestLux: 450,
         latestLuxAt: "2026-09-09T13:00:00Z",
         latestPpfd: 0,
         latestPpfdAt: "2026-09-08T13:00:00Z",
         latestRelativeHumidity: 76,
         latestRelativeHumidityAt: "2026-09-09T13:00:00Z",
+        latestSoilTemperature: -5,
+        latestSoilTemperatureAt: "2026-09-08T13:00:00Z",
     }),
 }));
 const bootstrap = {
@@ -79,10 +115,10 @@ const bootstrap = {
     ),
     plants,
     recent: events.map((event, index) => ({
-        details:
-            event === "Humidity"
-                ? { relativeHumidity: 76 }
-                : { notes: "Synthetic browser fixture; no live observation." },
+        details: {
+            notes: "Synthetic browser fixture; no live observation.",
+            ...eventDetails[event],
+        },
         event,
         name: "Collection plant 1",
         observationId: `fixture-${index}`,

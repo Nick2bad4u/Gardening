@@ -258,8 +258,23 @@ assert.deepEqual(appSheetEntryHeaders, [
     "Relative humidity (%)",
     "PPFD (µmol/m²/s)",
     "Illuminance (lux)",
+    "Mist targets",
+    "Mist amount (mL)",
+    "Mist details",
+    "Previous location",
+    "New location",
+    "Temperature",
+    "Temperature target",
+    "Temperature entry unit",
+    "Environment aspect",
+    "Previous setting",
+    "New setting",
+    "Propagation method",
+    "Propagation details",
+    "Support action",
+    "Support details",
 ]);
-assert.equal(evaluateLogger("GARDEN_LOGGER.historyStoredColumns"), 45);
+assert.equal(evaluateLogger("GARDEN_LOGGER.historyStoredColumns"), 60);
 assert.equal(evaluateLogger("GARDEN_LOGGER.historyHumidityColumn"), 43);
 assert.equal(evaluateLogger("GARDEN_LOGGER.historyLightStartColumn"), 44);
 assert.equal(evaluateLogger("GARDEN_LOGGER.historyLightColumns"), 2);
@@ -267,21 +282,237 @@ assert.deepEqual(strings(evaluateLogger("HISTORY_LIGHT_HEADERS")), [
     "PPFD (µmol/m²/s)",
     "Illuminance (lux)",
 ]);
-assert.equal(appSheetEntryHeaders.length, 37);
+assert.equal(appSheetEntryHeaders.length, 52);
+const careHeaders = [
+    "Mist targets",
+    "Mist amount (mL)",
+    "Mist details",
+    "Previous location",
+    "New location",
+    "Temperature (°C)",
+    "Temperature target",
+    "Temperature entry unit",
+    "Environment aspect",
+    "Previous setting",
+    "New setting",
+    "Propagation method",
+    "Propagation details",
+    "Support action",
+    "Support details",
+];
+assert.equal(evaluateLogger("GARDEN_LOGGER.historyCareStartColumn"), 46);
+assert.deepEqual(strings(evaluateLogger("HISTORY_CARE_HEADERS")), careHeaders);
+assert.deepEqual(
+    appSheetEntryHeaders.slice(37),
+    careHeaders.map((header) =>
+        header === "Temperature (°C)" ? "Temperature" : header
+    )
+);
 const webEventOptions = strings(evaluateLogger("WEB_EVENT_OPTIONS"));
 const bulkWebEventOptions = strings(evaluateLogger("BULK_WEB_EVENT_OPTIONS"));
-for (const event of [
-    "Inspect",
+assert.deepEqual(webEventOptions, [
+    "Water",
+    "Weigh",
+    "Mist",
+    "Humidity",
+    "Temperature",
     "Light",
     "Check",
-    "Humidity",
+    "Inspect",
+    "Measure",
+    "Rotation",
+    "Move",
+    "Environment",
+    "Clean",
+    "Prune",
+    "Support",
+    "Repot",
+    "Propagate",
+    "Flower",
+    "Photo",
+    "Pest",
+    "Other",
+]);
+assert.deepEqual(bulkWebEventOptions, [
+    "Water",
+    "Mist",
+    "Check",
+    "Inspect",
+    "Rotation",
+    "Move",
+    "Environment",
+    "Clean",
+    "Prune",
+    "Support",
+    "Propagate",
+    "Pest",
+    "Other",
+]);
+for (const [constant, options] of [
+    [
+        "MIST_TARGET_OPTIONS",
+        [
+            "Leaves",
+            "Exposed roots",
+            "Soil surface",
+            "Stem / plant body",
+            "Moss / support",
+            "Other",
+        ],
+    ],
+    ["TEMPERATURE_TARGET_OPTIONS", ["Air", "Soil"]],
+    [
+        "ENVIRONMENT_ASPECT_OPTIONS",
+        [
+            "Light",
+            "Airflow",
+            "Enclosure",
+            "Heating",
+            "Other",
+        ],
+    ],
+    [
+        "PROPAGATION_METHOD_OPTIONS",
+        [
+            "Stem cutting",
+            "Leaf cutting",
+            "Offset",
+            "Division",
+            "Seed",
+            "Other",
+        ],
+    ],
+    [
+        "SUPPORT_ACTION_OPTIONS",
+        [
+            "Add",
+            "Adjust",
+            "Remove",
+        ],
+    ],
 ]) {
-    assert.ok(webEventOptions.includes(event));
+    const expression = String(constant);
+    assert.deepEqual(strings(evaluateLogger(expression)), options);
 }
-assert.ok(bulkWebEventOptions.includes("Inspect"));
-assert.ok(bulkWebEventOptions.includes("Check"));
-assert.ok(!bulkWebEventOptions.includes("Light"));
-assert.ok(!bulkWebEventOptions.includes("Humidity"));
+const carePayload = {
+    environmentAspect: "Light",
+    environmentFrom: "10 hours",
+    environmentTo: "12 hours",
+    mistAmountMl: 12,
+    mistDetails: "Light spray",
+    mistTargets: ["Leaves", "Soil surface"],
+    moveFrom: "Shelf",
+    moveTo: "Window",
+    propagationDetails: "Separated one offset",
+    propagationMethod: "Offset",
+    supportAction: "Add",
+    supportDetails: "Small stake",
+    temperature: 32,
+    temperatureTarget: "Air",
+    temperatureUnit: "F",
+};
+const careEvents = [
+    "Mist",
+    "Move",
+    "Temperature",
+    "Environment",
+    "Propagate",
+    "Support",
+];
+const careDetails = loggerFunction("eventDetailsFromPayload_")(
+    carePayload,
+    careEvents,
+    null
+);
+assert.ok(isRecord(careDetails));
+assert.equal(
+    careDetails["temperatureC"],
+    0,
+    "32 °F must remain a valid zero Celsius reading."
+);
+const careEventColumns = [
+    "Mist",
+    "Mist",
+    "Mist",
+    "Move",
+    "Move",
+    "Temperature",
+    "Temperature",
+    "Temperature",
+    "Environment",
+    "Environment",
+    "Environment",
+    "Propagate",
+    "Propagate",
+    "Support",
+    "Support",
+];
+for (const event of [
+    ...careEvents,
+    "Water",
+    "Weigh",
+]) {
+    const row = loggerFunction("historyCareRow_")(careDetails, event);
+    assert.ok(Array.isArray(row));
+    assert.equal(row.length, careHeaders.length);
+    for (const [index, value] of row.entries()) {
+        const header = required(careHeaders[index], "care column header");
+        if (careEventColumns[index] === event) {
+            assert.notEqual(value, "", `${event} must retain ${header}.`);
+        } else {
+            assert.equal(value, "", `${event} must not retain ${header}.`);
+        }
+    }
+}
+for (const event of careEvents) {
+    assert.deepEqual(
+        strings(
+            loggerFunction("buildEventNamesFromList_")(
+                [event],
+                "Routine",
+                "",
+                "",
+                "",
+                "",
+                ""
+            )
+        ),
+        [event],
+        `${event} must not imply Water, Weigh, or Repot.`
+    );
+    assert.throws(() =>
+        loggerFunction("eventDetailsFromPayload_")({}, [event], null)
+    );
+}
+assert.throws(
+    () =>
+        loggerFunction("eventDetailsFromPayload_")(
+            { mistTargets: ["Other"] },
+            ["Mist"],
+            null
+        ),
+    /Describe/v
+);
+assert.throws(
+    () =>
+        loggerFunction("eventDetailsFromPayload_")(
+            {
+                temperature: -274,
+                temperatureTarget: "Soil",
+                temperatureUnit: "C",
+            },
+            ["Temperature"],
+            null
+        ),
+    /absolute zero/v
+);
+const negativeTemperature = loggerFunction("eventDetailsFromPayload_")(
+    { temperature: -2, temperatureTarget: "Soil", temperatureUnit: "C" },
+    ["Temperature"],
+    null
+);
+assert.ok(isRecord(negativeTemperature));
+assert.equal(negativeTemperature["temperatureC"], -2);
 assert.throws(
     () => loggerFunction("validateCheckDetails_")(["Inspect"], "", "Dry"),
     /plant condition/v
@@ -356,7 +587,11 @@ const inspectProvenance = strings(
 assert.equal(inspectProvenance[2], "Observed");
 assert.equal(inspectProvenance[8], "Observed");
 const appSheetBulkHeaders = strings(evaluateLogger("APP_SHEET_BULK_HEADERS"));
-assert.equal(appSheetBulkHeaders.length, 62);
+assert.equal(appSheetBulkHeaders.length, 74);
+assert.deepEqual(appSheetBulkHeaders.slice(62), [
+    ...careHeaders.slice(0, 5),
+    ...careHeaders.slice(8),
+]);
 assert.deepEqual(appSheetBulkHeaders.slice(0, 6), [
     "Round ID",
     "Started at",
@@ -378,7 +613,7 @@ assert.equal(appSheetBulkHeaders[44], "Rotation (°)");
 assert.equal(appSheetBulkHeaders[51], "Nutrient amount");
 assert.equal(appSheetBulkHeaders[52], "Watering application");
 assert.equal(appSheetBulkHeaders[53], "Water amount (mL)");
-assert.deepEqual(appSheetBulkHeaders.slice(54), [
+assert.deepEqual(appSheetBulkHeaders.slice(54, 62), [
     "P31 weight (g)",
     "P32 weight (g)",
     "P33 weight (g)",
