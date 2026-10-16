@@ -6,10 +6,11 @@ workbook. It supports daily browsing, individual observations, collection-wide
 care/weight rounds, save receipts, dashboards, and per-plant charts without
 creating a second gardening database.
 
-The last recorded AppSheet production baseline is **AppSheet 1.100125**, checked
-on October 10, 2026. The [logger runbook](../scripts/google-sheets/README.md)
-records the separate logger deployment. The maintained 5.35.0 contract below
-describes the new schema; the dated records retain their verified historical state.
+The verified production baseline is **AppSheet 1.100129**, saved and checked
+on October 16, 2026, with logger **5.35.0 / immutable version 109**. The
+[logger runbook](../scripts/google-sheets/README.md#october-16-care-event-rollout)
+records the native schema migration and logger deployment. Earlier dated records
+retain their verified historical state.
 
 The owner-only
 [AppSheet editor](https://www.appsheet.com/template/AppDef?appName=GardenPlantTracker-903231205-26-08-25&appId=de6fc182-d01e-427b-b46e-a031d7bc4588&quickStart=False)
@@ -25,9 +26,10 @@ Humidity, Temperature, Light; Check, Inspect, Measure; Rotation, Move,
 Environment; Clean, Prune, Support; Repot, Propagate, Flower; Photo, Pest, Other.
 The [action guide](./logger-actions.md) describes their everyday use.
 
-This maintained contract must be applied to the native workbook before AppSheet
-regenerates the affected tables. It is not a claim that the live app has already
-been regenerated or saved. Preserve every existing column and staging row.
+The native workbook now has this schema, verified in the
+[October 16 logger rollout](../scripts/google-sheets/README.md#october-16-care-event-rollout).
+The [AppSheet rollout receipt](#october-16-care-event-rollout) confirms its saved
+configuration against this contract. Preserve every existing column and staging row.
 
 | Table                    | Maintained physical range | Appended fields                                                 |
 | ------------------------ | ------------------------- | --------------------------------------------------------------- |
@@ -86,6 +88,39 @@ field order, and visibility/required rules together. Regeneration must preserve
 keys, receipts, retired weight guards, creation-only inventory markers, and
 read-only canonical/helper tables. Verify an independent fresh saved-definition
 comparison and empty forms without submitting synthetic production observations.
+
+## October 16 care-event rollout
+
+**AppSheet 1.100129** is saved and runnable following the native workbook
+migration and production logger **5.35.0 / immutable version 109** deployment.
+An ordinary editor Save followed the strict guarded configuration update. A
+fresh independent reload of the complete normalized saved definition matched
+the reviewed plan with **zero differences**.
+
+The saved app exposes **21 single-entry events** and **15 bulk-round actions**.
+History has **63 attributes**, App entries **53**, and App bulk **75**, comprising
+their **60/52/74 physical columns** plus existing virtual/system fields. The
+new fields use event-conditional visibility and requirements, a Mist-target
+EnumList, explicit C/F entry units, and Air/Soil temperature targets. Temperature
+remains excluded from bulk rounds; zero and negative temperatures remain valid
+within the stated lower bound. Other mist targets require details, and the
+remaining new actions enforce their required destination, setting, or description.
+
+The comparison preserved all **11 table bindings**, existing keys, security,
+table write modes, and unrelated configuration. Canonical History and helper
+tables remain read-only; the existing writable staging configuration remains
+intact. The Apps Script bridge is still the only care writer to History. The
+post-deployment trigger check confirmed exactly **one Head
+`processQueuedAppSheetEntries` trigger**, configured as **Minutes timer / Every
+5 minutes**; its inspection dialog was canceled without saving changes. Head
+queue executions completed at **22:33:57 UTC** and **22:38:57 UTC**, and immutable
+version 109 `doGet` / `getWebAppBootstrap` executions completed at **22:32:49 UTC**
+and **22:32:52 UTC** respectively.
+
+The [native rollout receipt](../scripts/google-sheets/README.md#october-16-care-event-rollout)
+records the unchanged **1,880 production observations**, schema preservation,
+temperature-chart rehearsal, and deployment verification. Synthetic observations
+were confined to the disposable workbook/script copy.
 
 ## October 10 observation and terrarium refresh
 

@@ -1,6 +1,6 @@
 # Google Sheets observation logger
 
-The last verified production logger, **5.34.1 / immutable version 108**, supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`. The October 10 mobile heading fix below is the last verified deployment baseline; the preceding logger and environment refresh records its workbook contract. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.35.0 / immutable version 109** supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`. The October 16 care-event rollout below records the current logger and workbook contract. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
@@ -34,9 +34,8 @@ and Support**, making 21 single-plant choices in seven rows of three. Save and
 queue controls sit above Details; compact history includes the plant portrait
 beside the event icon, and chooser descriptions are shorter. See the
 [action guide](../../docs/logger-actions.md) for field choices and examples.
-This section describes the source contract, not a completed production rollout.
-The last verified production baseline remains **5.34.1 / immutable version 108**
-until a new deployment receipt is recorded.
+The [October 16 rollout receipt](#october-16-care-event-rollout) records the
+verified production deployment and workbook preservation checks.
 
 History and History view extend from **A:AS to A:BH (60 columns)**. App entries
 extends from **A:AK to A:AZ (52)**, and App bulk from **A:BJ to A:BV (74)**.
@@ -71,6 +70,70 @@ comparisons and two selected-plant plots. Existing chart identities and position
 are preserved. The website uses one temperature chart with separate Air and Soil
 series, alongside all six new events in activity/history/export views. These
 read-only views do not add another observation input or change watering formulas.
+
+## October 16 care-event rollout
+
+At approximately **22:31 UTC on October 16, 2026**, production logger **5.35.0**
+was deployed as immutable Apps Script **version 109**, preserving the existing
+phone URL and access settings. The signed-in logger reload displays
+**Connected · Logger 5.35.0**. Source commit **`a6ea2c0`** supplies the deployed
+three-file bundle; its verified bundle digest is
+`c22ddc8f8216eb7ec12d24072a8a94bf2280807412022b62d4c53a8d0c0687a8`.
+
+The native workbook migration followed the guarded **54 preparation / 55 formula /
+4 chart** plan after a native backup and disposable-copy rehearsal. Production
+History and History view now have **60 columns (A:BH)**, App entries **52 (A:AZ)**,
+and App bulk **74 (A:BV)**. The earlier columns and ledger positions are preserved.
+The migration installs all 18 care-field validation rules and clears inherited
+validation only from newly appended care ranges before applying those rules.
+
+Readback preserved **1,880 observations, 1,880 unique observation IDs, and 1,534
+request groups**. All **64 tabs, 178 existing charts, and 125 protections** were
+preserved; four temperature charts bring the total to **182**. The preservation
+comparison found no unplanned value, validation, or note changes, and **Integrity
+B12 reports zero formula errors**. No synthetic observation was sent to production.
+
+All **43 native rehearsal steps** passed against the final server source. The
+copy preserved its 1,880 original observations with an unchanged canonical hash
+and appended **30 synthetic rows in 15 request groups**, exclusively on that copy.
+Checks covered zero Celsius, 32°F conversion, a corrected −5°C reading, recorded
+location, and actual queue retries without additional rows. Native evaluation
+also exposed inherited last-column numeric validations; the migration now clears
+new ranges before applying their own rules so text and negative temperatures
+remain valid.
+
+Native empty-to-populated chart rehearsal confirmed that Google may omit an
+empty temperature series from API metadata, then restore its exact range binding
+when the selected plant has readings, without rewriting the chart specification.
+The existing selected Air/Soil charts also recovered their series. Some custom
+series styling and left-axis title/font overrides can be lost when a chart is
+created empty; inspect the appearance and reapply only the planned specification
+after real readings if needed. Chart titles retain the °C unit. Empty
+production temperature charts were not populated with test observations.
+
+**AppSheet 1.100129** is saved and runnable. A fresh independent reload of its
+complete normalized configuration matched the strict reviewed plan with **zero
+differences**. It exposes 21 single-entry event choices and 15 bulk-round actions;
+History/App entries/App bulk have **63/53/75 AppSheet attributes**, including
+existing virtual/system fields over the **60/52/74 physical columns**. Existing
+table modes, bindings, keys, security, and unrelated configuration are preserved.
+The [AppSheet receipt](../../docs/appsheet-companion.md#october-16-care-event-rollout)
+records its conditional field contract. Post-deployment trigger inspection
+confirmed exactly **one Head `processQueuedAppSheetEntries` trigger**, configured
+as **Minutes timer / Every 5 minutes**; the inspection dialog was canceled.
+Version 109 `doGet` completed at **22:32:49 UTC (0.9 seconds)** and
+`getWebAppBootstrap` at **22:32:52 UTC (15.419 seconds)**. Head queue executions
+completed at **22:33:57 UTC (8.07 seconds)** and **22:38:57 UTC (4.976 seconds)**.
+The native environmental and recorded-location functions also completed.
+
+Local validation passed **1,328 logger tests, 384 browser E2E tests, and 48
+Storybook tests**. The merged source passed Sonar, security, and Pages checks;
+Codecov patch coverage was **100%**. The website publishes the new event activity,
+structured history/CSV fields, recorded location, and separate Air/Soil series
+in its temperature chart. Native Sheets retains separate collection and
+selected-plant temperature charts in the existing environmental view. Public
+tracker and P35 history URLs returned HTTP 200, and their served bundles matched
+the tested build byte for byte.
 
 ## October 13 Inspect Integrity repair
 
