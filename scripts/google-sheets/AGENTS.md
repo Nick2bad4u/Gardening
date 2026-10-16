@@ -35,9 +35,8 @@
   is Dry; open-cycle weights remain Routine. Water never implies a weight.
 - Preserve mobile entries until Google's callback; lock writes, escape
   formula-like text, validate URLs, and make bulk retries idempotent per plant.
-- When fresh bootstrap metadata changes cached event choices, refresh the controls
-  and history filters while preserving drafts, selection, focus, and disabled
-  controls during an in-flight save. Test upgrades from an older cached roster.
+- Refresh changed cached event choices and history filters without losing drafts,
+  selections, focus, or save locks. Test upgrades from an older cached roster.
 - Water, Weigh, and Measure use separate rows within one save. Allow Water without
   weight. Bulk water amount applies per pot; never divide it across the selection.
 - Humidity uses Measured / Hygrometer provenance, independent of weight, soil
@@ -54,11 +53,10 @@
   Measured / Lux meter. No quantum-sensor claim, conversion, DLI or inferred care threshold.
   Keep preset/context in Notes. The light fields retain AJ/AK in App entries
   and AR/AS in History; bulk excludes Light/Humidity/Temperature.
-- Mist, Move, Temperature, Environment, Propagate, and Support have event-specific
-  care fields. History is 60 columns (A:BH); App entries is 52 (A:AZ), appending
-  15 fields; App bulk is 74 (A:BV), appending 12 without temperature. Keep all
-  earlier positions and legacy/offline row compatibility. Align retries,
-  corrections, staging mappings, public parsers, and CSV exports.
+- Care fields extend History to A:BH (60), App entries to A:AZ (52), and App bulk
+  to A:BV (74): 15 new columns in each of the first two, 12 without temperature
+  in bulk. Preserve earlier positions and legacy/offline rows; align retries,
+  corrections, staging, public parsers, and CSV exports.
 - Mist requires listed targets and details for Other; measured mL is optional
   and positive. Move requires a destination; its previous location is optional.
   Temperature requires Air/Soil and C/F, stores Celsius, allows zero/negative
@@ -172,8 +170,8 @@
   chart IDs/specs/positions, protections, and relative tab order exactly.
 - Drive copies include the bound script; avoid competing functions. Never replay
   `sortSpecs` when extending History's BasicFilter: it re-sorts the ledger.
-- Native column appends inherit prior-column validation. Clear only new ranges'
-  validations, then apply their own rules; preserve existing-column validations.
+- Native column appends inherit validation. Clear and replace rules only in new
+  ranges; preserve existing-column validations.
 - Align History changes across server constants/row builders, tests/checker,
   public parsers/CSV, runbook, and AppSheet. Run `installGardenLogger()` and
   `installAppSheetIntake()` only after source/tests agree.
@@ -184,6 +182,6 @@
   deployment, preserving the phone URL. Run installers/reinstall the queue trigger
   only for contract changes. Verify `Connected · Logger <version>`, successful
   web-app/trigger executions, and one five-minute `processQueuedAppSheetEntries` trigger.
-- Integration writes belong only in a disposable workbook/script. Verify pre/post
-  canonical row counts, unique observation IDs, request groups, and formulas/errors.
-  Compare exact corrected ranges; one save's event rows intentionally share a request ID.
+- Test writes only in a disposable workbook/script. Compare pre/post canonical
+  counts, unique observation IDs, request groups, formulas/errors, and exact
+  corrected ranges. One save's event rows share a request ID.
