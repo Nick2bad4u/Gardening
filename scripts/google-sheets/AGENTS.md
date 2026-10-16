@@ -35,6 +35,9 @@
   is Dry; open-cycle weights remain Routine. Water never implies a weight.
 - Preserve mobile entries until Google's callback; lock writes, escape
   formula-like text, validate URLs, and make bulk retries idempotent per plant.
+- When fresh bootstrap metadata changes cached event choices, refresh the controls
+  and history filters while preserving drafts, selection, focus, and disabled
+  controls during an in-flight save. Test upgrades from an older cached roster.
 - Water, Weigh, and Measure use separate rows within one save. Allow Water without
   weight. Bulk water amount applies per pot; never divide it across the selection.
 - Humidity uses Measured / Hygrometer provenance, independent of weight, soil

@@ -20545,30 +20545,78 @@
                     });
             }
 
+            function orderedEventNames() {
+                return [...state.bootstrap.events].sort(
+                    (a, b) => EVENT_ORDER.indexOf(a) - EVENT_ORDER.indexOf(b)
+                );
+            }
+
+            function renderEventOptions() {
+                const events = orderedEventNames();
+                const container = $("eventChips");
+                const rendered = [...container.querySelectorAll(".chip")].map(
+                    (button) => button.dataset.event
+                );
+                if (JSON.stringify(rendered) !== JSON.stringify(events)) {
+                    const focusedEvent = container.contains(
+                        document.activeElement
+                    )
+                        ? document.activeElement.dataset.event
+                        : "";
+                    renderEventChips();
+                    if (focusedEvent)
+                        [...container.querySelectorAll(".chip")]
+                            .find(
+                                (button) =>
+                                    button.dataset.event === focusedEvent
+                            )
+                            ?.focus({ preventScroll: true });
+                }
+                const filter = $("recentEvent");
+                const selected = filter.value;
+                const filterEvents = ["", ...events];
+                // A historical filter can outlive a retired input event.
+                if (selected && !filterEvents.includes(selected))
+                    filterEvents.push(selected);
+                if (
+                    JSON.stringify(
+                        [...filter.options].map((option) => option.value)
+                    ) !== JSON.stringify(filterEvents)
+                ) {
+                    filter.replaceChildren(
+                        ...filterEvents.map((eventName) => {
+                            const option = document.createElement("option");
+                            option.value = eventName;
+                            option.textContent = eventName
+                                ? eventLabel(eventName)
+                                : "All events";
+                            return option;
+                        })
+                    );
+                    filter.value = selected;
+                }
+            }
+
             function renderEventChips() {
                 const container = $("eventChips");
                 container.replaceChildren();
-                [...state.bootstrap.events]
-                    .sort(
-                        (a, b) =>
-                            EVENT_ORDER.indexOf(a) - EVENT_ORDER.indexOf(b)
-                    )
-                    .forEach((eventName) => {
-                        const button = createEventChip(
-                            eventName,
-                            state.events.has(eventName)
-                        );
-                        button.addEventListener("click", () =>
-                            toggleEvent(eventName)
-                        );
-                        container.append(button);
-                    });
+                orderedEventNames().forEach((eventName) => {
+                    const button = createEventChip(
+                        eventName,
+                        state.events.has(eventName)
+                    );
+                    button.addEventListener("click", () =>
+                        toggleEvent(eventName)
+                    );
+                    container.append(button);
+                });
                 updateConditionalFields();
             }
 
             function createEventChip(eventName, pressed) {
                 const button = document.createElement("button");
                 button.type = "button";
+                button.disabled = state.saving;
                 button.className = "chip";
                 button.dataset.event = eventName;
                 button.setAttribute("aria-pressed", String(pressed));
@@ -23854,6 +23902,7 @@
                 if (!bootstrapIsUsable(bootstrap)) return false;
                 const selectedPlantId = $("plantSelect").value;
                 state.bootstrap = bootstrap;
+                renderEventOptions();
                 cacheBootstrap(bootstrap);
                 renderGlobalLinks();
                 renderPlantOptions($("plantSearch").value, selectedPlantId);
@@ -24060,7 +24109,7 @@
                         false
                     );
                     step = "building event controls";
-                    renderEventChips();
+                    renderEventOptions();
                     step = "building recent history";
                     setCompactHistory(
                         safeStorageGet(
@@ -24070,12 +24119,7 @@
                         ) === "compact",
                         false
                     );
-                    bootstrap.events.forEach((eventName) => {
-                        const option = document.createElement("option");
-                        option.value = eventName;
-                        option.textContent = eventLabel(eventName);
-                        $("recentEvent").append(option);
-                    });
+
                     const storedRecentLimit = Number(
                         safeStorageGet(localStorage, RECENT_LIMIT_KEY)
                     );

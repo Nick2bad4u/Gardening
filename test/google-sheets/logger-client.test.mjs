@@ -1086,13 +1086,22 @@ describe("garden logger daily progress, filtered History and measured charts", (
         expect(
             queryElement(window.document, "#recentCard", HTMLElement).hidden
         ).toBe(false);
+
+        const expectedEventValues = ["", ...bootstrap.events];
+
         expect(
             queryElements(
                 window.document,
                 "#recentEvent option",
                 HTMLOptionElement
-            ).map((option) => option.value)
-        ).toStrictEqual(["", ...bootstrap.events]);
+            )
+                .map((option) => option.value)
+                .toSorted((left, right) => left.localeCompare(right))
+        ).toStrictEqual(
+            expectedEventValues.toSorted((left, right) =>
+                left.localeCompare(right)
+            )
+        );
 
         changeWorkflowSelect(window, "recentEvent", "Repot");
 
@@ -12063,5 +12072,368 @@ describe("garden logger expanded care events", () => {
 
         expect(meta.textContent).toBe("Shared planter");
         expect(meta.title).toBe(scientificName);
+    });
+});
+
+describe("garden logger cached event roster upgrades", () => {
+    afterEach(restoreLoggerMocks);
+
+    const legacyEvents = bootstrap.events.filter(
+        (event) =>
+            ![
+                "Environment",
+                "Mist",
+                "Move",
+                "Propagate",
+                "Support",
+                "Temperature",
+            ].includes(event)
+    );
+    const orderedEvents = [
+        "Water",
+        "Weigh",
+        "Mist",
+        "Humidity",
+        "Temperature",
+        "Light",
+        "Check",
+        "Inspect",
+        "Measure",
+        "Rotation",
+        "Move",
+        "Environment",
+        "Clean",
+        "Prune",
+        "Support",
+        "Repot",
+        "Propagate",
+        "Flower",
+        "Photo",
+        "Pest",
+        "Other",
+    ];
+
+    it("upgrades fifteen cached event controls to twenty-one without losing the draft, filter or focused event", () => {
+        expect.hasAssertions();
+
+        /**
+         * @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebAppBootstrap">
+         *     | undefined}
+         */
+        let refresh;
+        const { window } = createLoggerWindow({
+            bootstrapBehavior: (handlers) => {
+                refresh = handlers;
+            },
+            storage: {
+                gardenLoggerBootstrapV4: JSON.stringify({
+                    bootstrap: {
+                        ...bootstrap,
+                        events: legacyEvents,
+                        version: "5.34.1",
+                    },
+                    savedAt: Date.now(),
+                }),
+            },
+        });
+
+        expect(
+            queryElements(
+                window.document,
+                "#eventChips .chip",
+                HTMLButtonElement
+            )
+        ).toHaveLength(15);
+
+        const selected = queryElement(
+            window.document,
+            '#eventChips [data-event="Inspect"]',
+            HTMLButtonElement
+        );
+        selected.click();
+        enterWorkflowValue(window, "condition", "Firm leaves");
+        enterWorkflowValue(window, "weight", "430");
+        queryElement(window.document, "#notes", HTMLTextAreaElement).value =
+            "Keep this unfinished note";
+        changeWorkflowSelect(window, "recentEvent", "Water");
+        selected.focus();
+        required(refresh).success({ ...bootstrap, version: "5.35.1" });
+
+        expect(
+            queryElements(
+                window.document,
+                "#eventChips .chip",
+                HTMLButtonElement
+            ).map((button) => button.dataset["event"])
+        ).toStrictEqual(orderedEvents);
+        expect(
+            queryElements(
+                window.document,
+                "#recentEvent option",
+                HTMLOptionElement
+            ).map((option) => option.value)
+        ).toStrictEqual(["", ...orderedEvents]);
+        expect(
+            queryElement(window.document, "#recentEvent", HTMLSelectElement)
+                .value
+        ).toBe("Water");
+        expect(
+            queryElement(
+                window.document,
+                '#eventChips [data-event="Inspect"]',
+                HTMLButtonElement
+            ).getAttribute("aria-pressed")
+        ).toBe("true");
+        expect(
+            queryElement(
+                window.document,
+                '#eventChips [data-event="Weigh"]',
+                HTMLButtonElement
+            ).getAttribute("aria-pressed")
+        ).toBe("true");
+        expect(window.document.activeElement).toBe(
+            queryElement(
+                window.document,
+                '#eventChips [data-event="Inspect"]',
+                HTMLButtonElement
+            )
+        );
+        expect(
+            queryElement(window.document, "#condition", HTMLInputElement).value
+        ).toBe("Firm leaves");
+        expect(
+            queryElement(window.document, "#weight", HTMLInputElement).value
+        ).toBe("430");
+        expect(
+            queryElement(window.document, "#notes", HTMLTextAreaElement).value
+        ).toBe("Keep this unfinished note");
+        expect(
+            queryElement(window.document, "#connectionStatus", HTMLElement)
+                .textContent
+        ).toBe("Connected · Logger 5.35.1");
+    });
+
+    it("keeps bulk care selections, details and field focus through a cached roster upgrade", () => {
+        expect.hasAssertions();
+
+        /**
+         * @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebAppBootstrap">
+         *     | undefined}
+         */
+        let refresh;
+        const { window } = createLoggerWindow({
+            bootstrapBehavior: (handlers) => {
+                refresh = handlers;
+            },
+            storage: {
+                gardenLoggerBootstrapV4: JSON.stringify({
+                    bootstrap: { ...bootstrap, events: legacyEvents },
+                    savedAt: Date.now(),
+                }),
+            },
+        });
+        queryElement(
+            window.document,
+            "#bulkModeTab",
+            HTMLButtonElement
+        ).click();
+        queryElement(
+            window.document,
+            '#bulkEventChips [data-event="Move"]',
+            HTMLButtonElement
+        ).click();
+        const plant = queryElement(
+            window.document,
+            '#bulkPlantList input[value="P01"]',
+            HTMLInputElement
+        );
+        plant.checked = true;
+        plant.dispatchEvent(new window.Event("change", { bubbles: true }));
+        const destination = queryElement(
+            window.document,
+            "#bulkMoveTo",
+            HTMLInputElement
+        );
+        destination.value = "Window shelf";
+        destination.focus();
+        required(refresh).success(bootstrap);
+
+        expect(
+            queryElements(
+                window.document,
+                "#eventChips .chip",
+                HTMLButtonElement
+            )
+        ).toHaveLength(21);
+        expect(
+            queryElement(
+                window.document,
+                "#bulkModeTab",
+                HTMLButtonElement
+            ).getAttribute("aria-selected")
+        ).toBe("true");
+        expect(
+            queryElement(
+                window.document,
+                '#bulkEventChips [data-event="Move"]',
+                HTMLButtonElement
+            ).getAttribute("aria-pressed")
+        ).toBe("true");
+        expect(
+            queryElement(
+                window.document,
+                '#bulkPlantList input[value="P01"]',
+                HTMLInputElement
+            ).checked
+        ).toBe(true);
+        expect(destination.value).toBe("Window shelf");
+        expect(window.document.activeElement).toBe(destination);
+    });
+
+    it("keeps newly discovered event controls locked until an in-flight save finishes", () => {
+        expect.hasAssertions();
+
+        /**
+         * @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebAppBootstrap">
+         *     | undefined}
+         */
+        let refresh;
+        /**
+         * @type {import("../logger-fixtures.d.ts").ScriptHandlers<"saveWebObservation">
+         *     | undefined}
+         */
+        let save;
+        const { behaviors, window } = createLoggerWindow({
+            bootstrapBehavior: (handlers) => {
+                refresh = handlers;
+            },
+            storage: {
+                gardenLoggerBootstrapV4: JSON.stringify({
+                    bootstrap: { ...bootstrap, events: legacyEvents },
+                    savedAt: Date.now(),
+                }),
+            },
+        });
+        behaviors.saveWebObservation = (handlers) => {
+            save = handlers;
+        };
+        enterWorkflowValue(window, "weight", "430");
+        queryElement(window.document, "#notes", HTMLTextAreaElement).value =
+            "In-flight draft";
+        queryElement(
+            window.document,
+            "#entryForm",
+            HTMLFormElement
+        ).dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
+        const pending = window.localStorage.getItem(
+            "gardenLoggerPendingSaveV1"
+        );
+
+        expect(save?.args[0]).toMatchObject({
+            events: ["Weigh"],
+            notes: "In-flight draft",
+            weight: "430",
+        });
+
+        required(refresh).success(bootstrap);
+        const chips = queryElements(
+            window.document,
+            "#eventChips .chip",
+            HTMLButtonElement
+        );
+
+        expect(chips).toHaveLength(21);
+        expect(chips.every((chip) => chip.disabled)).toBe(true);
+
+        queryElement(
+            window.document,
+            '#eventChips [data-event="Mist"]',
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(
+                window.document,
+                '#eventChips [data-event="Mist"]',
+                HTMLButtonElement
+            ).getAttribute("aria-pressed")
+        ).toBe("false");
+        expect(
+            queryElement(window.document, "#weight", HTMLInputElement).value
+        ).toBe("430");
+        expect(
+            queryElement(window.document, "#notes", HTMLTextAreaElement).value
+        ).toBe("In-flight draft");
+        expect(window.localStorage.getItem("gardenLoggerPendingSaveV1")).toBe(
+            pending
+        );
+
+        required(save).success({ message: "Saved" });
+
+        expect(
+            queryElements(
+                window.document,
+                "#eventChips .chip",
+                HTMLButtonElement
+            ).every((chip) => !chip.disabled)
+        ).toBe(true);
+        expect(
+            window.localStorage.getItem("gardenLoggerPendingSaveV1")
+        ).toBeNull();
+    });
+
+    it("retains event control and filter nodes when the refreshed roster is unchanged", () => {
+        expect.hasAssertions();
+
+        /**
+         * @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebAppBootstrap">
+         *     | undefined}
+         */
+        let refresh;
+        const { window } = createLoggerWindow({
+            bootstrapBehavior: (handlers) => {
+                refresh = handlers;
+            },
+            storage: {
+                gardenLoggerBootstrapV4: JSON.stringify({
+                    bootstrap,
+                    savedAt: Date.now(),
+                }),
+            },
+        });
+        const chips = queryElements(
+            window.document,
+            "#eventChips .chip",
+            HTMLButtonElement
+        );
+        const options = queryElements(
+            window.document,
+            "#recentEvent option",
+            HTMLOptionElement
+        );
+        const focused = required(chips[0]);
+        focused.focus();
+        required(refresh).success({
+            ...bootstrap,
+            events: bootstrap.events.toReversed(),
+        });
+
+        expect(
+            queryElements(
+                window.document,
+                "#eventChips .chip",
+                HTMLButtonElement
+            )
+        ).toStrictEqual(chips);
+        expect(
+            queryElements(
+                window.document,
+                "#recentEvent option",
+                HTMLOptionElement
+            )
+        ).toStrictEqual(options);
+        expect(window.document.activeElement).toBe(focused);
     });
 });
