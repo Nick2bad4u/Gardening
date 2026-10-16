@@ -1820,6 +1820,11 @@
                 justify-content: center;
                 padding: 7px 9px;
                 line-height: 1.125;
+                & > span {
+                    min-inline-size: 0;
+                    max-inline-size: 100%;
+                    overflow-wrap: anywhere;
+                }
             }
 
             .chip-icon {
@@ -1846,10 +1851,13 @@
                 background: #a86732;
                 border-color: #a86732;
             }
+            .chip[data-event="Mist"][aria-pressed="true"],
             .chip[data-event="Humidity"][aria-pressed="true"] {
                 background: #286b79;
                 border-color: #286b79;
             }
+            .chip[data-event="Temperature"][aria-pressed="true"],
+            .chip[data-event="Environment"][aria-pressed="true"],
             .chip[data-event="Light"][aria-pressed="true"] {
                 background: #89620f;
                 border-color: #89620f;
@@ -1859,6 +1867,7 @@
                 background: #39746f;
                 border-color: #39746f;
             }
+            .chip[data-event="Move"][aria-pressed="true"],
             .chip[data-event="Rotation"][aria-pressed="true"] {
                 background: #4169a1;
                 border-color: #4169a1;
@@ -1867,6 +1876,8 @@
                 background: #477c87;
                 border-color: #477c87;
             }
+            .chip[data-event="Propagate"][aria-pressed="true"],
+            .chip[data-event="Support"][aria-pressed="true"],
             .chip[data-event="Prune"][aria-pressed="true"] {
                 background: #767b35;
                 border-color: #767b35;
@@ -2310,6 +2321,7 @@
 
             .recent-list {
                 display: grid;
+                grid-template-columns: [entry-start] minmax(0, 1fr) [entry-end];
                 gap: 8px;
             }
 
@@ -2404,6 +2416,7 @@
                     --event-ink: #24543a;
                     --event-accent: #3d9a60;
                 }
+                &[data-event="Mist"],
                 &[data-event="Humidity"] {
                     --event-bg: #dff2f5;
                     --event-ink: #205462;
@@ -2411,11 +2424,14 @@
                 }
                 &[data-event="Inspect"],
                 &[data-event="Light"],
+                &[data-event="Temperature"],
+                &[data-event="Environment"],
                 &[data-event="Check"] {
                     --event-bg: #fff0c7;
                     --event-ink: #684b00;
                     --event-accent: #c58a00;
                 }
+                &[data-event="Move"],
                 &[data-event="Rotation"] {
                     --event-bg: #e3f1f1;
                     --event-ink: #285b5b;
@@ -2426,6 +2442,8 @@
                     --event-ink: #424242;
                     --event-accent: #6e7770;
                 }
+                &[data-event="Propagate"],
+                &[data-event="Support"],
                 &[data-event="Prune"] {
                     --event-bg: #e8f0d9;
                     --event-ink: #3c5724;
@@ -2930,6 +2948,40 @@
             .recent-disclosure[open] > .recent-disclosure-summary::after {
                 content: "−";
             }
+            .recent-compact-portrait {
+                flex: none;
+                inline-size: 26px;
+                block-size: 26px;
+            }
+            .mist-targets {
+                min-inline-size: 0;
+                padding: 0;
+                border: 0;
+            }
+            .mist-target-grid {
+                display: grid;
+                grid-template-columns: repeat(
+                    3,
+                    [target-start] minmax(0, 1fr) [target-end]
+                );
+                gap: 6px;
+            }
+            .mist-target {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                align-items: center;
+                padding: 8px 4px;
+                font-size: 0.875rem;
+                text-align: center;
+                border: 1px solid var(--line);
+                border-radius: 10px;
+                & input {
+                    inline-size: 20px;
+                    block-size: 20px;
+                    min-block-size: 0;
+                }
+            }
             .recent-compact-text {
                 overflow: hidden;
                 text-overflow: ellipsis;
@@ -2968,6 +3020,15 @@
                         padding-inline: 7px;
                         font-size: 0.875rem;
                     }
+                }
+            }
+
+            @media (width <= 520px) {
+                .chip {
+                    flex-direction: column;
+                    gap: 4px;
+                    padding-inline: 4px;
+                    font-size: 0.875rem;
                 }
             }
 
@@ -3014,6 +3075,500 @@
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
         >
+            <symbol
+                id="app-icon-mist"
+                viewBox="0 0 64 64"
+            >
+                <desc id="app-ui-mist-description">
+                    A blue spray bottle releases a fine mist toward a green
+                    leaf.
+                </desc>
+                <defs>
+                    <linearGradient
+                        id="app-ui-mist-bottle"
+                        x1="0"
+                        y1="0"
+                        x2="1"
+                        y2="1"
+                    >
+                        <stop stop-color="#bce3e7" />
+                        <stop
+                            offset="1"
+                            stop-color="#5b9eb6"
+                        />
+                    </linearGradient>
+                    <linearGradient
+                        id="app-ui-mist-leaf"
+                        x1="0"
+                        y1="0"
+                        x2="1"
+                        y2="1"
+                    >
+                        <stop stop-color="#b8dda2" />
+                        <stop
+                            offset="1"
+                            stop-color="#438468"
+                        />
+                    </linearGradient>
+                </defs>
+                <g
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <ellipse
+                        cx="22"
+                        cy="57"
+                        rx="15"
+                        ry="3"
+                        fill="#344c45"
+                        opacity=".16"
+                    />
+                    <path
+                        d="M16 28h12v7l5 7v12a3 3 0 0 1-3 3H12a3 3 0 0 1-3-3V42l7-7Z"
+                        fill="url(#app-ui-mist-bottle)"
+                        stroke="#3d6678"
+                        stroke-width="2"
+                    />
+                    <path
+                        d="M16 27v-7h17v7ZM16 20v-5h8l4 3h8v5h-9"
+                        fill="#e7c58e"
+                        stroke="#866848"
+                        stroke-width="2"
+                    />
+                    <path
+                        d="m26 25 5 7"
+                        stroke="#866848"
+                        stroke-width="3"
+                    />
+                    <path
+                        d="M14 44v8"
+                        stroke="#e9f9f7"
+                        stroke-width="3"
+                    />
+                    <path
+                        d="M40 42c0-10 7-17 17-17 1 12-4 21-14 23Z"
+                        fill="url(#app-ui-mist-leaf)"
+                        stroke="#426e51"
+                        stroke-width="2"
+                    />
+                    <path
+                        d="m40 53 12-21"
+                        fill="none"
+                        stroke="#426e51"
+                        stroke-width="2"
+                    />
+                    <path
+                        d="m41 16 2-2m1 8h3m3-12 2-2m1 11h3m-7 8 2 2"
+                        fill="none"
+                        stroke="#8dc8db"
+                        stroke-width="3"
+                    />
+                </g>
+            </symbol>
+            <symbol
+                id="app-icon-move"
+                viewBox="0 0 64 64"
+            >
+                <desc id="app-ui-move-description">
+                    A leafy terracotta pot sits below a right-pointing arrow for
+                    a location change.
+                </desc>
+                <defs>
+                    <linearGradient
+                        id="app-ui-move-pot"
+                        x1="0"
+                        y1="0"
+                        x2="1"
+                        y2="1"
+                    >
+                        <stop stop-color="#f1bb8d" />
+                        <stop
+                            offset="1"
+                            stop-color="#b96d4d"
+                        />
+                    </linearGradient>
+                    <linearGradient
+                        id="app-ui-move-arrow"
+                        x1="0"
+                        y1="0"
+                        x2="1"
+                        y2="1"
+                    >
+                        <stop stop-color="#c2e0e5" />
+                        <stop
+                            offset="1"
+                            stop-color="#6796ab"
+                        />
+                    </linearGradient>
+                </defs>
+                <g
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <ellipse
+                        cx="25"
+                        cy="57"
+                        rx="16"
+                        ry="3"
+                        fill="#344c45"
+                        opacity=".16"
+                    />
+                    <path
+                        d="M34 8h14V4l12 10-12 10v-5H34Z"
+                        fill="url(#app-ui-move-arrow)"
+                        stroke="#426879"
+                        stroke-width="2"
+                    />
+                    <path
+                        d="M25 40V20"
+                        stroke="#497556"
+                        stroke-width="3"
+                    />
+                    <path
+                        d="M25 28C13 28 9 20 9 15c12-1 18 4 16 13Z"
+                        fill="#91c48c"
+                        stroke="#497556"
+                        stroke-width="2"
+                    />
+                    <path
+                        d="M25 34c0-10 6-15 17-15 0 11-6 16-17 15Z"
+                        fill="#bddaa0"
+                        stroke="#497556"
+                        stroke-width="2"
+                    />
+                    <path
+                        d="m11 40 5 16h19l5-16Z"
+                        fill="url(#app-ui-move-pot)"
+                        stroke="#8d5e42"
+                        stroke-width="2"
+                    />
+                    <rect
+                        x="9"
+                        y="36"
+                        width="33"
+                        height="7"
+                        rx="2"
+                        fill="#e6ad7e"
+                        stroke="#8d5e42"
+                        stroke-width="2"
+                    />
+                    <path
+                        d="m17 46 2 7"
+                        stroke="#f7d7ae"
+                        stroke-width="2"
+                    />
+                </g>
+            </symbol>
+            <symbol
+                id="app-icon-environment"
+                viewBox="0 0 64 64"
+            >
+                <desc id="app-ui-environment-description">
+                    Three adjustable controls represent changes to light,
+                    airflow, and growing conditions.
+                </desc>
+                <defs>
+                    <linearGradient
+                        id="app-ui-environment-panel"
+                        x1="0"
+                        y1="0"
+                        x2="1"
+                        y2="1"
+                    >
+                        <stop stop-color="#d6e4dc" />
+                        <stop
+                            offset="1"
+                            stop-color="#8aa99c"
+                        />
+                    </linearGradient>
+                    <linearGradient
+                        id="app-ui-environment-knob"
+                        x1="0"
+                        y1="0"
+                        x2="1"
+                        y2="1"
+                    >
+                        <stop stop-color="#b8dce5" />
+                        <stop
+                            offset="1"
+                            stop-color="#5d8b9f"
+                        />
+                    </linearGradient>
+                </defs>
+                <g
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <rect
+                        x="7"
+                        y="7"
+                        width="50"
+                        height="50"
+                        rx="9"
+                        fill="url(#app-ui-environment-panel)"
+                        stroke="#526f64"
+                        stroke-width="2"
+                    />
+                    <path
+                        d="M25 19h24M25 32h24M25 45h24"
+                        stroke="#526f64"
+                        stroke-width="3"
+                    />
+                    <circle
+                        cx="18"
+                        cy="19"
+                        r="4"
+                        fill="#f3cc71"
+                        stroke="#997b40"
+                        stroke-width="1.5"
+                    />
+                    <path
+                        d="M18 12v1m0 12v1m-7-7h1m12 0h1"
+                        stroke="#997b40"
+                        stroke-width="1.5"
+                    />
+                    <path
+                        d="M12 31h6q6 0 3-4m-9 8h6q5 0 3 3"
+                        fill="none"
+                        stroke="#4c7c8c"
+                        stroke-width="2"
+                    />
+                    <path
+                        d="M14 49c-2-7 1-11 8-11 0 7-2 11-8 11Z"
+                        fill="#72ac79"
+                        stroke="#497556"
+                        stroke-width="1.5"
+                    />
+                    <circle
+                        cx="40"
+                        cy="19"
+                        r="5"
+                        fill="#f3d794"
+                        stroke="#997b40"
+                        stroke-width="2"
+                    />
+                    <circle
+                        cx="31"
+                        cy="32"
+                        r="5"
+                        fill="url(#app-ui-environment-knob)"
+                        stroke="#426879"
+                        stroke-width="2"
+                    />
+                    <circle
+                        cx="44"
+                        cy="45"
+                        r="5"
+                        fill="#9bcb9a"
+                        stroke="#497556"
+                        stroke-width="2"
+                    />
+                    <path
+                        d="M13 10h35"
+                        stroke="#eff4e7"
+                        stroke-width="2"
+                    />
+                </g>
+            </symbol>
+            <symbol
+                id="app-icon-propagate"
+                viewBox="0 0 64 64"
+            >
+                <desc id="app-ui-propagate-description">
+                    A leafy cutting grows pale branching roots inside a small
+                    blue propagation jar.
+                </desc>
+                <defs>
+                    <linearGradient
+                        id="app-ui-propagate-glass"
+                        x1="0"
+                        y1="0"
+                        x2="1"
+                        y2="1"
+                    >
+                        <stop stop-color="#cce6e7" />
+                        <stop
+                            offset="1"
+                            stop-color="#77aebc"
+                        />
+                    </linearGradient>
+                    <linearGradient
+                        id="app-ui-propagate-leaf"
+                        x1="0"
+                        y1="0"
+                        x2="1"
+                        y2="1"
+                    >
+                        <stop stop-color="#b9dca1" />
+                        <stop
+                            offset="1"
+                            stop-color="#4c9671"
+                        />
+                    </linearGradient>
+                </defs>
+                <g
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <ellipse
+                        cx="32"
+                        cy="58"
+                        rx="18"
+                        ry="3"
+                        fill="#344c45"
+                        opacity=".16"
+                    />
+                    <path
+                        d="M17 31h30v21a5 5 0 0 1-5 5H22a5 5 0 0 1-5-5Z"
+                        fill="url(#app-ui-propagate-glass)"
+                        stroke="#557e88"
+                        stroke-width="2"
+                    />
+                    <path
+                        d="M18 39q14 4 28 0"
+                        fill="none"
+                        stroke="#e0f3ed"
+                        stroke-width="2"
+                    />
+                    <path
+                        d="M32 37V12"
+                        fill="none"
+                        stroke="#497556"
+                        stroke-width="3"
+                    />
+                    <path
+                        d="M32 24C20 24 12 17 12 9c14 0 21 5 20 15ZM32 30c0-12 8-19 21-19 0 13-8 20-21 19Z"
+                        fill="url(#app-ui-propagate-leaf)"
+                        stroke="#497556"
+                        stroke-width="2"
+                    />
+                    <path
+                        d="m32 24-12-8m12 14 13-11"
+                        fill="none"
+                        stroke="#d6e8b9"
+                        stroke-width="1.5"
+                    />
+                    <path
+                        d="M32 37v13m0-8-6 5-2 4m8-6 6 4 2 4m-8-3-3 3"
+                        fill="none"
+                        stroke="#f8eed2"
+                        stroke-width="2"
+                    />
+                    <path
+                        d="M22 44v8"
+                        stroke="#e9f9f7"
+                        stroke-width="2"
+                    />
+                    <path
+                        d="M16 32h32"
+                        stroke="#557e88"
+                        stroke-width="3"
+                    />
+                </g>
+            </symbol>
+            <symbol
+                id="app-icon-support"
+                viewBox="0 0 64 64"
+            >
+                <desc id="app-ui-support-description">
+                    A green plant is secured to a wooden stake with two soft
+                    blue ties above a terracotta pot.
+                </desc>
+                <defs>
+                    <linearGradient
+                        id="app-ui-support-stake"
+                        x1="0"
+                        y1="0"
+                        x2="1"
+                        y2="0"
+                    >
+                        <stop stop-color="#e1c092" />
+                        <stop
+                            offset="1"
+                            stop-color="#a67c52"
+                        />
+                    </linearGradient>
+                    <linearGradient
+                        id="app-ui-support-pot"
+                        x1="0"
+                        y1="0"
+                        x2="1"
+                        y2="1"
+                    >
+                        <stop stop-color="#f1bb8d" />
+                        <stop
+                            offset="1"
+                            stop-color="#b96d4d"
+                        />
+                    </linearGradient>
+                </defs>
+                <g
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <ellipse
+                        cx="32"
+                        cy="58"
+                        rx="18"
+                        ry="3"
+                        fill="#344c45"
+                        opacity=".16"
+                    />
+                    <rect
+                        x="35"
+                        y="5"
+                        width="5"
+                        height="42"
+                        rx="2"
+                        fill="url(#app-ui-support-stake)"
+                        stroke="#8a6747"
+                        stroke-width="1.5"
+                    />
+                    <path
+                        d="M29 45V12"
+                        stroke="#497556"
+                        stroke-width="3"
+                    />
+                    <path
+                        d="M29 24C17 24 10 18 10 11c12-1 21 4 19 13Z"
+                        fill="#91c48c"
+                        stroke="#497556"
+                        stroke-width="2"
+                    />
+                    <path
+                        d="M29 35c0-10 8-17 23-16-1 12-9 17-23 16Z"
+                        fill="#bddaa0"
+                        stroke="#497556"
+                        stroke-width="2"
+                    />
+                    <path
+                        d="M27 26h14m-14 13h14"
+                        stroke="#456e83"
+                        stroke-width="5"
+                    />
+                    <path
+                        d="M27 25h14m-14 13h14"
+                        stroke="#b2dce5"
+                        stroke-width="2"
+                    />
+                    <path
+                        d="m17 46 4 11h22l4-11Z"
+                        fill="url(#app-ui-support-pot)"
+                        stroke="#8d5e42"
+                        stroke-width="2"
+                    />
+                    <rect
+                        x="15"
+                        y="42"
+                        width="34"
+                        height="7"
+                        rx="2"
+                        fill="#e6ad7e"
+                        stroke="#8d5e42"
+                        stroke-width="2"
+                    />
+                </g>
+            </symbol>
             <symbol
                 id="app-icon-cactus"
                 viewBox="0 0 64 64"
@@ -13952,6 +14507,307 @@
 
                             <div class="event-stack">
                                 <div
+                                    id="mistSection"
+                                    class="conditional event-panel"
+                                    ><h3
+                                        ><svg
+                                            viewBox="0 0 64 64"
+                                            class="app-icon"
+                                            aria-hidden="true"
+                                        >
+                                            <use
+                                                href="#app-icon-mist"
+                                            ></use></svg
+                                        >Mist</h3
+                                    ><div class="fields"
+                                        ><fieldset
+                                            id="mistTargets"
+                                            class="field full mist-targets"
+                                            ><legend class="field-label"
+                                                >Where did you mist?</legend
+                                            ><div class="mist-target-grid"
+                                                ><label class="mist-target"
+                                                    ><input
+                                                        type="checkbox"
+                                                        value="Leaves"
+                                                    /><span>Leaves</span></label
+                                                ><label class="mist-target"
+                                                    ><input
+                                                        type="checkbox"
+                                                        value="Exposed roots"
+                                                    /><span
+                                                        >Exposed roots</span
+                                                    ></label
+                                                ><label class="mist-target"
+                                                    ><input
+                                                        type="checkbox"
+                                                        value="Soil surface"
+                                                    /><span
+                                                        >Soil surface</span
+                                                    ></label
+                                                ><label class="mist-target"
+                                                    ><input
+                                                        type="checkbox"
+                                                        value="Stem / plant body"
+                                                    /><span
+                                                        >Stem / plant body</span
+                                                    ></label
+                                                ><label class="mist-target"
+                                                    ><input
+                                                        type="checkbox"
+                                                        value="Moss / support"
+                                                    /><span
+                                                        >Moss / support</span
+                                                    ></label
+                                                ><label class="mist-target"
+                                                    ><input
+                                                        type="checkbox"
+                                                        value="Other"
+                                                    /><span>Other</span></label
+                                                ></div
+                                            ></fieldset
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="mistAmountMl"
+                                                >Measured amount (mL)</label
+                                            ><input
+                                                id="mistAmountMl"
+                                                type="number"
+                                                inputmode="decimal"
+                                                step="any"
+                                                min="0.01"
+                                                placeholder="Optional" /></div
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="mistDetails"
+                                                >Details / other area</label
+                                            ><input
+                                                id="mistDetails"
+                                                maxlength="240" /></div></div
+                                ></div>
+                                <div
+                                    id="moveSection"
+                                    class="conditional event-panel"
+                                    ><h3
+                                        ><svg
+                                            viewBox="0 0 64 64"
+                                            class="app-icon"
+                                            aria-hidden="true"
+                                        >
+                                            <use
+                                                href="#app-icon-move"
+                                            ></use></svg
+                                        >Move</h3
+                                    ><div class="fields"
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="moveFrom"
+                                                >From (optional)</label
+                                            ><input
+                                                id="moveFrom"
+                                                maxlength="240" /></div
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="moveTo"
+                                                >To</label
+                                            ><input
+                                                id="moveTo"
+                                                maxlength="240" /></div></div
+                                ></div>
+                                <div
+                                    id="temperatureSection"
+                                    class="conditional event-panel"
+                                    ><h3
+                                        ><svg
+                                            viewBox="0 0 64 64"
+                                            class="app-icon"
+                                            aria-hidden="true"
+                                        >
+                                            <use
+                                                href="#app-icon-temperature"
+                                            ></use></svg
+                                        >Temperature</h3
+                                    ><div class="fields"
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="temperature"
+                                                >Temperature</label
+                                            ><input
+                                                id="temperature"
+                                                type="number"
+                                                inputmode="decimal"
+                                                step="any" /></div
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="temperatureUnit"
+                                                >Unit</label
+                                            ><select id="temperatureUnit"
+                                                ><option value="F">°F</option
+                                                ><option value="C"
+                                                    >°C</option
+                                                ></select
+                                            ></div
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="temperatureTarget"
+                                                >Measured where?</label
+                                            ><select id="temperatureTarget"
+                                                ><option value=""
+                                                    >Choose…</option
+                                                ><option value="Air">Air</option
+                                                ><option value="Soil"
+                                                    >Soil</option
+                                                ></select
+                                            ></div
+                                        ></div
+                                    ></div
+                                >
+                                <div
+                                    id="environmentSection"
+                                    class="conditional event-panel"
+                                    ><h3
+                                        ><svg
+                                            viewBox="0 0 64 64"
+                                            class="app-icon"
+                                            aria-hidden="true"
+                                        >
+                                            <use
+                                                href="#app-icon-environment"
+                                            ></use></svg
+                                        >Environment</h3
+                                    ><div class="fields"
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="environmentAspect"
+                                                >What changed?</label
+                                            ><select id="environmentAspect"
+                                                ><option value=""
+                                                    >Choose…</option
+                                                ><option value="Light"
+                                                    >Light</option
+                                                ><option value="Airflow"
+                                                    >Airflow</option
+                                                ><option value="Enclosure"
+                                                    >Enclosure</option
+                                                ><option value="Heating"
+                                                    >Heating</option
+                                                ><option value="Other"
+                                                    >Other</option
+                                                ></select
+                                            ></div
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="environmentFrom"
+                                                >Previous setting
+                                                (optional)</label
+                                            ><input
+                                                id="environmentFrom"
+                                                maxlength="240" /></div
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="environmentTo"
+                                                >New setting</label
+                                            ><input
+                                                id="environmentTo"
+                                                maxlength="240" /></div></div
+                                ></div>
+                                <div
+                                    id="propagateSection"
+                                    class="conditional event-panel"
+                                    ><h3
+                                        ><svg
+                                            viewBox="0 0 64 64"
+                                            class="app-icon"
+                                            aria-hidden="true"
+                                        >
+                                            <use
+                                                href="#app-icon-propagate"
+                                            ></use></svg
+                                        >Propagate</h3
+                                    ><div class="fields"
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="propagationMethod"
+                                                >Method</label
+                                            ><select id="propagationMethod"
+                                                ><option value=""
+                                                    >Choose…</option
+                                                ><option value="Stem cutting"
+                                                    >Stem cutting</option
+                                                ><option value="Leaf cutting"
+                                                    >Leaf cutting</option
+                                                ><option value="Offset"
+                                                    >Offset</option
+                                                ><option value="Division"
+                                                    >Division</option
+                                                ><option value="Seed"
+                                                    >Seed</option
+                                                ><option value="Other"
+                                                    >Other</option
+                                                ></select
+                                            ></div
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="propagationDetails"
+                                                >What did you propagate?</label
+                                            ><input
+                                                id="propagationDetails"
+                                                maxlength="240" /></div></div
+                                ></div>
+                                <div
+                                    id="supportSection"
+                                    class="conditional event-panel"
+                                    ><h3
+                                        ><svg
+                                            viewBox="0 0 64 64"
+                                            class="app-icon"
+                                            aria-hidden="true"
+                                        >
+                                            <use
+                                                href="#app-icon-support"
+                                            ></use></svg
+                                        >Support</h3
+                                    ><p class="hint"
+                                        >If the weighed assembly changed, also
+                                        select Repot with the same pot size.</p
+                                    ><div class="fields"
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="supportAction"
+                                                >Action</label
+                                            ><select id="supportAction"
+                                                ><option value=""
+                                                    >Choose…</option
+                                                ><option value="Add">Add</option
+                                                ><option value="Adjust"
+                                                    >Adjust</option
+                                                ><option value="Remove"
+                                                    >Remove</option
+                                                ></select
+                                            ></div
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="supportDetails"
+                                                >Support details</label
+                                            ><input
+                                                id="supportDetails"
+                                                maxlength="240" /></div></div
+                                ></div>
+                                <div
                                     id="waterSection"
                                     class="conditional event-panel"
                                 >
@@ -14462,6 +15318,33 @@
                             </div>
                         </section>
 
+                        <div class="actions">
+                            <button
+                                id="queueButton"
+                                class="primary"
+                                type="button"
+                                ><svg
+                                    viewBox="0 0 64 64"
+                                    class="app-icon"
+                                    aria-hidden="true"
+                                >
+                                    <use href="#app-icon-add"></use></svg
+                                >Add to queue</button
+                            >
+                            <button
+                                id="saveButton"
+                                class="secondary"
+                                type="submit"
+                                ><svg
+                                    viewBox="0 0 64 64"
+                                    class="app-icon"
+                                    aria-hidden="true"
+                                >
+                                    <use href="#app-icon-save"></use></svg
+                                >Save now</button
+                            >
+                        </div>
+
                         <section class="card">
                             <div class="card-title"
                                 ><h2
@@ -14587,32 +15470,6 @@
                             </div>
                         </section>
 
-                        <div class="actions">
-                            <button
-                                id="queueButton"
-                                class="primary"
-                                type="button"
-                                ><svg
-                                    viewBox="0 0 64 64"
-                                    class="app-icon"
-                                    aria-hidden="true"
-                                >
-                                    <use href="#app-icon-add"></use></svg
-                                >Add to queue</button
-                            >
-                            <button
-                                id="saveButton"
-                                class="secondary"
-                                type="submit"
-                                ><svg
-                                    viewBox="0 0 64 64"
-                                    class="app-icon"
-                                    aria-hidden="true"
-                                >
-                                    <use href="#app-icon-save"></use></svg
-                                >Save now</button
-                            >
-                        </div>
                         <section
                             id="plantDetails"
                             class="card plant-details"
@@ -14749,6 +15606,33 @@
                                 aria-label="Choose plants for bulk care"
                             ></div>
                         </section>
+                        <div class="actions">
+                            <button
+                                id="bulkSaveButton"
+                                class="primary"
+                                type="submit"
+                                ><svg
+                                    viewBox="0 0 64 64"
+                                    class="app-icon"
+                                    aria-hidden="true"
+                                >
+                                    <use href="#app-icon-save"></use></svg
+                                >Save bulk care</button
+                            >
+                            <button
+                                id="bulkResetButton"
+                                class="secondary"
+                                type="button"
+                                ><svg
+                                    viewBox="0 0 64 64"
+                                    class="app-icon"
+                                    aria-hidden="true"
+                                >
+                                    <use href="#app-icon-reset"></use></svg
+                                >Clear round</button
+                            >
+                        </div>
+
                         <section class="card">
                             <div class="card-title"
                                 ><h2
@@ -14842,6 +15726,256 @@
                                 </div>
                             </div>
                             <div class="event-stack">
+                                <div
+                                    id="bulkMistSection"
+                                    class="conditional event-panel"
+                                    ><h3
+                                        ><svg
+                                            viewBox="0 0 64 64"
+                                            class="app-icon"
+                                            aria-hidden="true"
+                                        >
+                                            <use
+                                                href="#app-icon-mist"
+                                            ></use></svg
+                                        >Mist</h3
+                                    ><div class="fields"
+                                        ><fieldset
+                                            id="bulkMistTargets"
+                                            class="field full mist-targets"
+                                            ><legend class="field-label"
+                                                >Where did you mist?</legend
+                                            ><div class="mist-target-grid"
+                                                ><label class="mist-target"
+                                                    ><input
+                                                        type="checkbox"
+                                                        value="Leaves"
+                                                    /><span>Leaves</span></label
+                                                ><label class="mist-target"
+                                                    ><input
+                                                        type="checkbox"
+                                                        value="Exposed roots"
+                                                    /><span
+                                                        >Exposed roots</span
+                                                    ></label
+                                                ><label class="mist-target"
+                                                    ><input
+                                                        type="checkbox"
+                                                        value="Soil surface"
+                                                    /><span
+                                                        >Soil surface</span
+                                                    ></label
+                                                ><label class="mist-target"
+                                                    ><input
+                                                        type="checkbox"
+                                                        value="Stem / plant body"
+                                                    /><span
+                                                        >Stem / plant body</span
+                                                    ></label
+                                                ><label class="mist-target"
+                                                    ><input
+                                                        type="checkbox"
+                                                        value="Moss / support"
+                                                    /><span
+                                                        >Moss / support</span
+                                                    ></label
+                                                ><label class="mist-target"
+                                                    ><input
+                                                        type="checkbox"
+                                                        value="Other"
+                                                    /><span>Other</span></label
+                                                ></div
+                                            ></fieldset
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="bulkMistAmountMl"
+                                                >Measured amount (mL)</label
+                                            ><input
+                                                id="bulkMistAmountMl"
+                                                type="number"
+                                                inputmode="decimal"
+                                                step="any"
+                                                min="0.01"
+                                                placeholder="Optional" /></div
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="bulkMistDetails"
+                                                >Details / other area</label
+                                            ><input
+                                                id="bulkMistDetails"
+                                                maxlength="240" /></div></div
+                                ></div>
+                                <div
+                                    id="bulkMoveSection"
+                                    class="conditional event-panel"
+                                    ><h3
+                                        ><svg
+                                            viewBox="0 0 64 64"
+                                            class="app-icon"
+                                            aria-hidden="true"
+                                        >
+                                            <use
+                                                href="#app-icon-move"
+                                            ></use></svg
+                                        >Move</h3
+                                    ><div class="fields"
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="bulkMoveFrom"
+                                                >From (optional)</label
+                                            ><input
+                                                id="bulkMoveFrom"
+                                                maxlength="240" /></div
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="bulkMoveTo"
+                                                >To</label
+                                            ><input
+                                                id="bulkMoveTo"
+                                                maxlength="240" /></div></div
+                                ></div>
+                                <div
+                                    id="bulkEnvironmentSection"
+                                    class="conditional event-panel"
+                                    ><h3
+                                        ><svg
+                                            viewBox="0 0 64 64"
+                                            class="app-icon"
+                                            aria-hidden="true"
+                                        >
+                                            <use
+                                                href="#app-icon-environment"
+                                            ></use></svg
+                                        >Environment</h3
+                                    ><div class="fields"
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="bulkEnvironmentAspect"
+                                                >What changed?</label
+                                            ><select id="bulkEnvironmentAspect"
+                                                ><option value=""
+                                                    >Choose…</option
+                                                ><option value="Light"
+                                                    >Light</option
+                                                ><option value="Airflow"
+                                                    >Airflow</option
+                                                ><option value="Enclosure"
+                                                    >Enclosure</option
+                                                ><option value="Heating"
+                                                    >Heating</option
+                                                ><option value="Other"
+                                                    >Other</option
+                                                ></select
+                                            ></div
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="bulkEnvironmentFrom"
+                                                >Previous setting
+                                                (optional)</label
+                                            ><input
+                                                id="bulkEnvironmentFrom"
+                                                maxlength="240" /></div
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="bulkEnvironmentTo"
+                                                >New setting</label
+                                            ><input
+                                                id="bulkEnvironmentTo"
+                                                maxlength="240" /></div></div
+                                ></div>
+                                <div
+                                    id="bulkPropagateSection"
+                                    class="conditional event-panel"
+                                    ><h3
+                                        ><svg
+                                            viewBox="0 0 64 64"
+                                            class="app-icon"
+                                            aria-hidden="true"
+                                        >
+                                            <use
+                                                href="#app-icon-propagate"
+                                            ></use></svg
+                                        >Propagate</h3
+                                    ><div class="fields"
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="bulkPropagationMethod"
+                                                >Method</label
+                                            ><select id="bulkPropagationMethod"
+                                                ><option value=""
+                                                    >Choose…</option
+                                                ><option value="Stem cutting"
+                                                    >Stem cutting</option
+                                                ><option value="Leaf cutting"
+                                                    >Leaf cutting</option
+                                                ><option value="Offset"
+                                                    >Offset</option
+                                                ><option value="Division"
+                                                    >Division</option
+                                                ><option value="Seed"
+                                                    >Seed</option
+                                                ><option value="Other"
+                                                    >Other</option
+                                                ></select
+                                            ></div
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="bulkPropagationDetails"
+                                                >What did you propagate?</label
+                                            ><input
+                                                id="bulkPropagationDetails"
+                                                maxlength="240" /></div></div
+                                ></div>
+                                <div
+                                    id="bulkSupportSection"
+                                    class="conditional event-panel"
+                                    ><h3
+                                        ><svg
+                                            viewBox="0 0 64 64"
+                                            class="app-icon"
+                                            aria-hidden="true"
+                                        >
+                                            <use
+                                                href="#app-icon-support"
+                                            ></use></svg
+                                        >Support</h3
+                                    ><p class="hint"
+                                        >If the weighed assembly changed, also
+                                        select Repot with the same pot size.</p
+                                    ><div class="fields"
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="bulkSupportAction"
+                                                >Action</label
+                                            ><select id="bulkSupportAction"
+                                                ><option value=""
+                                                    >Choose…</option
+                                                ><option value="Add">Add</option
+                                                ><option value="Adjust"
+                                                    >Adjust</option
+                                                ><option value="Remove"
+                                                    >Remove</option
+                                                ></select
+                                            ></div
+                                        ><div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="bulkSupportDetails"
+                                                >Support details</label
+                                            ><input
+                                                id="bulkSupportDetails"
+                                                maxlength="240" /></div></div
+                                ></div>
                                 <div
                                     id="bulkWaterSection"
                                     class="conditional event-panel"
@@ -15091,32 +16225,6 @@
                                 </div>
                             </div>
                         </section>
-                        <div class="actions">
-                            <button
-                                id="bulkSaveButton"
-                                class="primary"
-                                type="submit"
-                                ><svg
-                                    viewBox="0 0 64 64"
-                                    class="app-icon"
-                                    aria-hidden="true"
-                                >
-                                    <use href="#app-icon-save"></use></svg
-                                >Save bulk care</button
-                            >
-                            <button
-                                id="bulkResetButton"
-                                class="secondary"
-                                type="button"
-                                ><svg
-                                    viewBox="0 0 64 64"
-                                    class="app-icon"
-                                    aria-hidden="true"
-                                >
-                                    <use href="#app-icon-reset"></use></svg
-                                >Clear round</button
-                            >
-                        </div>
                     </form>
 
                     <section
@@ -15508,13 +16616,66 @@
             const QUEUE_EXECUTION_LIMIT_MS = 390000;
             const QUEUE_STATUS_TIMEOUT_MS = 45000;
             const QUEUE_RETRY_DELAYS_MS = [2000, 5000, 10000];
-            const BULK_EVENT_OPTIONS = Object.freeze([
+            const EVENT_ORDER = Object.freeze([
                 "Water",
-                "Inspect",
+                "Weigh",
+                "Mist",
+                "Humidity",
+                "Temperature",
+                "Light",
                 "Check",
+                "Inspect",
+                "Measure",
                 "Rotation",
+                "Move",
+                "Environment",
                 "Clean",
                 "Prune",
+                "Support",
+                "Repot",
+                "Propagate",
+                "Flower",
+                "Photo",
+                "Pest",
+                "Other",
+            ]);
+            const CARE_EVENT_FIELDS = Object.freeze({
+                Mist: ["mistTargets", "mistAmountMl", "mistDetails"],
+                Move: ["moveFrom", "moveTo"],
+                Temperature: [
+                    "temperature",
+                    "temperatureUnit",
+                    "temperatureTarget",
+                ],
+                Environment: [
+                    "environmentAspect",
+                    "environmentFrom",
+                    "environmentTo",
+                ],
+                Propagate: ["propagationMethod", "propagationDetails"],
+                Support: ["supportAction", "supportDetails"],
+            });
+            const MIST_TARGETS = Object.freeze([
+                "Leaves",
+                "Exposed roots",
+                "Soil surface",
+                "Stem / plant body",
+                "Moss / support",
+                "Other",
+            ]);
+            const TEMPERATURE_UNIT_KEY = "gardenLoggerTemperatureUnitV1";
+            const BULK_EVENT_OPTIONS = Object.freeze([
+                "Water",
+                "Mist",
+                "Check",
+                "Inspect",
+                "Rotation",
+                "Move",
+                "Environment",
+                "Clean",
+                "Prune",
+                "Support",
+                "Propagate",
                 "Pest",
                 "Other",
             ]);
@@ -15526,6 +16687,12 @@
             ]);
             const EVENT_ICON_NAMES = Object.freeze({
                 Water: "water",
+                Mist: "mist",
+                Move: "move",
+                Temperature: "temperature",
+                Environment: "environment",
+                Propagate: "propagate",
+                Support: "support",
                 Weigh: "weight",
                 Measure: "dimensions",
                 Humidity: "humidity",
@@ -15973,6 +17140,12 @@
 
             function comparablePayload(payload) {
                 return {
+                    ...Object.fromEntries(
+                        Object.values(CARE_EVENT_FIELDS)
+                            .flat()
+                            .filter((key) => key in payload)
+                            .map((key) => [key, String(payload[key] ?? "")])
+                    ),
                     plantId: payload.plantId,
                     events: [...payload.events].sort(),
                     observedAt: payload.observedAt,
@@ -16047,6 +17220,198 @@
                     (ids.some((id) => ["P31", "P32"].includes(id)) &&
                         payload.inventoryRevision !== "id528")
                 );
+            }
+
+            function concisePlantDescription(plant) {
+                if (/shared planter/i.test(plant.name || ""))
+                    return "Shared planter";
+                return String(plant.scientificName || "")
+                    .replace(/\bprobable\s+/gi, "")
+                    .split(";")[0]
+                    .trim();
+            }
+
+            function careFieldId(key, prefix = "") {
+                return prefix
+                    ? prefix + key[0].toUpperCase() + key.slice(1)
+                    : key;
+            }
+
+            function carePayloadFields(events, prefix = "") {
+                const values = {};
+                Object.entries(CARE_EVENT_FIELDS).forEach(([event, keys]) => {
+                    if (prefix && event === "Temperature") return;
+                    if (!events.has(event)) return;
+                    keys.forEach((key) => {
+                        const input = $(careFieldId(key, prefix));
+                        values[key] =
+                            key === "mistTargets"
+                                ? [...input.querySelectorAll("input:checked")]
+                                      .map((checkbox) => checkbox.value)
+                                      .join("; ")
+                                : input.value.trim();
+                    });
+                });
+                return values;
+            }
+
+            function restoreCareFields(payload = {}, prefix = "") {
+                Object.entries(CARE_EVENT_FIELDS).forEach(([event, keys]) => {
+                    if (prefix && event === "Temperature") return;
+                    keys.forEach((key) => {
+                        const input = $(careFieldId(key, prefix));
+                        if (key === "mistTargets") {
+                            const targets = String(payload[key] || "")
+                                .split(/[;,]/)
+                                .map((value) => value.trim());
+                            input
+                                .querySelectorAll("input")
+                                .forEach((checkbox) => {
+                                    checkbox.checked = targets.includes(
+                                        checkbox.value
+                                    );
+                                });
+                        } else
+                            input.value =
+                                payload[key] ??
+                                (key === "temperatureUnit"
+                                    ? safeStorageGet(
+                                          localStorage,
+                                          TEMPERATURE_UNIT_KEY,
+                                          "F"
+                                      )
+                                    : "");
+                    });
+                });
+            }
+
+            function validateCareDetails(payload) {
+                const has = (event) => payload.events.includes(event);
+                const required = (key, message) => {
+                    if (!String(payload[key] ?? "").trim())
+                        throw new Error(message);
+                };
+                if (has("Mist")) {
+                    const targets = String(payload.mistTargets || "")
+                        .split(/[;,]/)
+                        .map((value) => value.trim())
+                        .filter(Boolean);
+                    if (
+                        !targets.length ||
+                        targets.some((target) => !MIST_TARGETS.includes(target))
+                    )
+                        throw new Error("Choose where you misted.");
+                    if (targets.includes("Other"))
+                        required(
+                            "mistDetails",
+                            "Describe the other area you misted."
+                        );
+                    if (
+                        String(payload.mistAmountMl ?? "").trim() &&
+                        (!Number.isFinite(Number(payload.mistAmountMl)) ||
+                            Number(payload.mistAmountMl) <= 0)
+                    )
+                        throw new Error(
+                            "Mist amount must be a positive number of milliliters."
+                        );
+                }
+                if (has("Move")) required("moveTo", "Enter the new location.");
+                if (has("Temperature")) {
+                    required("temperature", "Enter the temperature reading.");
+                    if (!Number.isFinite(Number(payload.temperature)))
+                        throw new Error("Temperature must be a finite number.");
+                    if (!["C", "F"].includes(payload.temperatureUnit))
+                        throw new Error("Choose Celsius or Fahrenheit.");
+                    if (!["Air", "Soil"].includes(payload.temperatureTarget))
+                        throw new Error("Choose air or soil temperature.");
+                    const celsius =
+                        payload.temperatureUnit === "F"
+                            ? ((Number(payload.temperature) - 32) * 5) / 9
+                            : Number(payload.temperature);
+                    if (celsius < -273.15)
+                        throw new Error(
+                            "Temperature cannot be below absolute zero."
+                        );
+                }
+                if (has("Environment")) {
+                    if (
+                        ![
+                            "Light",
+                            "Airflow",
+                            "Enclosure",
+                            "Heating",
+                            "Other",
+                        ].includes(payload.environmentAspect)
+                    )
+                        throw new Error(
+                            "Choose what changed in the environment."
+                        );
+                    required(
+                        "environmentTo",
+                        "Enter the new environment setting."
+                    );
+                }
+                if (has("Propagate")) {
+                    if (
+                        ![
+                            "Stem cutting",
+                            "Leaf cutting",
+                            "Offset",
+                            "Division",
+                            "Seed",
+                            "Other",
+                        ].includes(payload.propagationMethod)
+                    )
+                        throw new Error("Choose the propagation method.");
+                    required(
+                        "propagationDetails",
+                        "Describe what you propagated."
+                    );
+                }
+                if (has("Support")) {
+                    if (
+                        !["Add", "Adjust", "Remove"].includes(
+                            payload.supportAction
+                        )
+                    )
+                        throw new Error("Choose the support action.");
+                    required("supportDetails", "Describe the support change.");
+                }
+            }
+
+            function careSummary(payload) {
+                return [
+                    payload.events.includes("Mist")
+                        ? [
+                              payload.mistTargets,
+                              payload.mistAmountMl
+                                  ? `${payload.mistAmountMl} mL`
+                                  : "",
+                              payload.mistDetails,
+                          ]
+                              .filter(Boolean)
+                              .join(" · ")
+                        : "",
+                    payload.events.includes("Move")
+                        ? [payload.moveFrom, payload.moveTo]
+                              .filter(Boolean)
+                              .join(" → ")
+                        : "",
+                    payload.events.includes("Temperature")
+                        ? `${payload.temperature} °${payload.temperatureUnit} · ${payload.temperatureTarget}`
+                        : "",
+                    payload.events.includes("Environment")
+                        ? `${payload.environmentAspect}: ${[payload.environmentFrom, payload.environmentTo].filter(Boolean).join(" → ")}`
+                        : "",
+                    payload.events.includes("Propagate")
+                        ? `${payload.propagationMethod}: ${payload.propagationDetails}`
+                        : "",
+                    payload.events.includes("Support")
+                        ? `${payload.supportAction}: ${payload.supportDetails}`
+                        : "",
+                ]
+                    .filter(Boolean)
+                    .join(" · ");
             }
 
             function renderMeasurementControls() {
@@ -16674,6 +18039,7 @@
                 validateCheckDetails(payload);
                 validateHumidityDetails(payload);
                 validateLightDetails(payload);
+                validateCareDetails(payload);
                 if (!payload.plantId)
                     throw new Error("Choose a plant before adding to queue.");
                 if (!events.length)
@@ -16822,6 +18188,7 @@
                         const eventText = eventSummary(payloadEvents);
                         meta.textContent = [
                             eventText,
+                            careSummary({ ...payload, events: payloadEvents }),
                             payload.weight ? `${payload.weight} g` : "",
                             queuedMeasurementText(payload),
                             payloadEvents.includes("Light")
@@ -17677,6 +19044,15 @@
                 const plant = selectedPlant();
                 const plantChanged = state.summaryPlantId !== (plant?.id || "");
                 state.summaryPlantId = plant?.id || "";
+                if (
+                    !$("moveFrom").value ||
+                    $("moveFrom").value ===
+                        $("moveFrom").dataset.suggestedLocation
+                ) {
+                    $("moveFrom").value = plant?.currentLocation || "";
+                    $("moveFrom").dataset.suggestedLocation =
+                        $("moveFrom").value;
+                }
                 if (plantChanged && $("recentScope").value === "plant")
                     refreshRecent();
                 const summary = $("plantSummary");
@@ -17723,7 +19099,8 @@
                 name.textContent = plant.name;
                 const meta = document.createElement("em");
                 meta.className = "plant-meta";
-                meta.textContent = plant.scientificName || "";
+                meta.textContent = concisePlantDescription(plant);
+                meta.title = plant.scientificName || "";
                 const label = document.createElement("div");
                 label.className = "plant-label-badge";
                 setIconLabel(
@@ -17833,7 +19210,35 @@
                         lossHelp,
                     ],
                 ];
+                const temperatureUnit =
+                    safeStorageGet(localStorage, TEMPERATURE_UNIT_KEY, "F") ===
+                    "C"
+                        ? "C"
+                        : "F";
+                const temperatureValue = (value) =>
+                    value === "" || value == null
+                        ? ""
+                        : Number(
+                              (temperatureUnit === "F"
+                                  ? (Number(value) * 9) / 5 + 32
+                                  : Number(value)
+                              ).toFixed(2)
+                          );
                 [
+                    [
+                        "temperature",
+                        "Latest air temperature",
+                        temperatureValue(plant.latestAirTemperature),
+                        `°${temperatureUnit}`,
+                        plant.latestAirTemperatureAt,
+                    ],
+                    [
+                        "temperature",
+                        "Latest soil temperature",
+                        temperatureValue(plant.latestSoilTemperature),
+                        `°${temperatureUnit}`,
+                        plant.latestSoilTemperatureAt,
+                    ],
                     [
                         "humidity",
                         "Latest humidity",
@@ -19005,6 +20410,20 @@
             }
 
             const EVENT_GUIDANCE = Object.freeze({
+                Mist: [
+                    "Choose every area misted. Add a volume only if measured.",
+                ],
+                Move: ["Record the previous and new locations."],
+                Temperature: [
+                    "Enter the measured air or soil temperature in °F or °C.",
+                ],
+                Environment: [
+                    "Record a changed light, airflow, enclosure or heating setting.",
+                ],
+                Propagate: ["Record the method and the material propagated."],
+                Support: [
+                    "Record adding, adjusting or removing a stake, tie or other support.",
+                ],
                 Water: [
                     "Record the application and any measured volume.",
                     "Water does not imply a weight. Select Weigh for a scale reading.",
@@ -19129,16 +20548,21 @@
             function renderEventChips() {
                 const container = $("eventChips");
                 container.replaceChildren();
-                state.bootstrap.events.forEach((eventName) => {
-                    const button = createEventChip(
-                        eventName,
-                        state.events.has(eventName)
-                    );
-                    button.addEventListener("click", () =>
-                        toggleEvent(eventName)
-                    );
-                    container.append(button);
-                });
+                [...state.bootstrap.events]
+                    .sort(
+                        (a, b) =>
+                            EVENT_ORDER.indexOf(a) - EVENT_ORDER.indexOf(b)
+                    )
+                    .forEach((eventName) => {
+                        const button = createEventChip(
+                            eventName,
+                            state.events.has(eventName)
+                        );
+                        button.addEventListener("click", () =>
+                            toggleEvent(eventName)
+                        );
+                        container.append(button);
+                    });
                 updateConditionalFields();
             }
 
@@ -19193,6 +20617,13 @@
                 );
                 [
                     ["waterSection", "Water"],
+                    ["mistSection", "Mist"],
+                    ["moveSection", "Move"],
+                    ["temperatureSection", "Temperature"],
+                    ["environmentSection", "Environment"],
+                    ["propagateSection", "Propagate"],
+                    ["supportSection", "Support"],
+
                     ["lightSection", "Light"],
                     ["humiditySection", "Humidity"],
                     ["rotationSection", "Rotation"],
@@ -19302,6 +20733,26 @@
                         );
                         metrics.append(humidity);
                     }
+                    const temperatureC =
+                        entry.temperatureC ?? entry.details?.temperatureC;
+                    if (temperatureC !== "" && temperatureC != null) {
+                        const unit =
+                            entry.temperatureUnit ||
+                            entry.details?.temperatureUnit ||
+                            "C";
+                        const value =
+                            unit === "F"
+                                ? (Number(temperatureC) * 9) / 5 + 32
+                                : Number(temperatureC);
+                        const temperature = document.createElement("span");
+                        setIconLabel(
+                            temperature,
+                            "temperature",
+                            `${Number(value.toFixed(2))} °${unit} · ${entry.temperatureTarget || entry.details?.temperatureTarget || ""}`,
+                            "app-icon app-icon--small"
+                        );
+                        metrics.append(temperature);
+                    }
                     const lightText = lightReadingText({
                         ppfd: entry.ppfd ?? entry.details?.ppfd,
                         lux: entry.lux ?? entry.details?.lux,
@@ -19368,6 +20819,12 @@
                         `${entry.name || entry.plantId} · ${eventLabel(entry.event)} · ${entry.observedAt}. Show event details`
                     );
                     disclosureSummary.append(
+                        createPlantPortrait(
+                            state.bootstrap?.plants.find(
+                                (plant) => plant.id === entry.plantId
+                            ),
+                            "app-icon recent-compact-portrait"
+                        ),
                         createIcon(
                             eventIconName(entry.event),
                             "app-icon app-icon--small"
@@ -19747,6 +21204,13 @@
                         input.setAttribute("aria-describedby", hint.id);
                         wrapper.append(hint);
                     }
+                    if (field.key === "temperatureC") {
+                        const hint = document.createElement("p");
+                        hint.className = "hint";
+                        hint.textContent =
+                            "Correct the stored reading in Celsius. The original unit below records how it was entered.";
+                        wrapper.append(hint);
+                    }
                     if (field.key === "measurementUnit") {
                         const hint = document.createElement("p");
                         hint.className = "hint";
@@ -19897,6 +21361,16 @@
                     ...correction.context.original.values,
                     ...changes,
                 };
+                validateCareDetails({
+                    ...values,
+                    events: [correction.context.original.event],
+                    ...(values.temperatureC !== undefined
+                        ? {
+                              temperature: values.temperatureC,
+                              temperatureUnit: "C",
+                          }
+                        : {}),
+                });
                 if (correction.context.original.event === "Light")
                     validateLightDetails({ ...values, events: ["Light"] });
                 if (correction.context.original.event === "Inspect")
@@ -20558,6 +22032,22 @@
                     waterAmountMl: "Water amount (mL)",
                     rotationDegrees: "Rotation (°)",
                     relativeHumidity: "Relative humidity (% RH)",
+                    mistTargets: "Where did you mist?",
+                    mistAmountMl: "Measured amount (mL)",
+                    mistDetails: "Details / other area",
+                    moveFrom: "From (optional)",
+                    moveTo: "To",
+                    temperature: "Temperature",
+                    temperatureUnit: "Unit",
+                    temperatureTarget: "Measured where?",
+                    environmentAspect: "What changed?",
+                    environmentFrom: "Previous setting (optional)",
+                    environmentTo: "New setting",
+                    propagationMethod: "Method",
+                    propagationDetails: "What did you propagate?",
+                    supportAction: "Action",
+                    supportDetails: "Support details",
+                    temperatureC: "Temperature (°C)",
                     ppfd: "PPFD app estimate (µmol/m²/s)",
                     lux: "Illuminance (lux)",
                     photoUrl: "Photo URL",
@@ -20587,6 +22077,22 @@
                     waterAmountMl: "water",
                     rotationDegrees: "rotate",
                     relativeHumidity: "humidity",
+                    mistTargets: "mist",
+                    mistAmountMl: "mist",
+                    mistDetails: "mist",
+                    moveFrom: "move",
+                    moveTo: "move",
+                    temperature: "temperature",
+                    temperatureUnit: "temperature",
+                    temperatureTarget: "temperature",
+                    environmentAspect: "environment",
+                    environmentFrom: "environment",
+                    environmentTo: "environment",
+                    propagationMethod: "propagate",
+                    propagationDetails: "propagate",
+                    supportAction: "support",
+                    supportDetails: "support",
+                    temperatureC: "temperature",
                     ppfd: "light",
                     lux: "light",
                     photoUrl: "camera",
@@ -20734,6 +22240,12 @@
             function updateBulkConditionalFields() {
                 [
                     ["bulkWaterSection", "Water"],
+                    ["bulkMistSection", "Mist"],
+                    ["bulkMoveSection", "Move"],
+                    ["bulkEnvironmentSection", "Environment"],
+                    ["bulkPropagateSection", "Propagate"],
+                    ["bulkSupportSection", "Support"],
+
                     ["bulkRotationSection", "Rotation"],
                     ["bulkPestSection", "Pest"],
                 ].forEach(([sectionId, eventName]) => {
@@ -20926,6 +22438,7 @@
                     ...(["P31", "P32"].some((id) => state.bulkSelected.has(id))
                         ? { inventoryRevision: "id528" }
                         : {}),
+                    ...carePayloadFields(state.bulkEvents, "bulk"),
                     plantIds: state.bootstrap.plants
                         .filter((plant) => state.bulkSelected.has(plant.id))
                         .map((plant) => plant.id),
@@ -20948,6 +22461,7 @@
                     notes: $("bulkNotes").value.trim(),
                     entrySource: state.bulkEntrySource,
                 };
+                validateCareDetails(payload);
                 if (
                     state.bulkEvents.has("Water") &&
                     !["Yes", "No"].includes(payload.nutrientsUsed)
@@ -21007,6 +22521,7 @@
             }
 
             function clearBulkRound() {
+                restoreCareFields({}, "bulk");
                 state.bulkSelected.clear();
                 state.bulkEntrySource = "Mobile bulk care";
                 [
@@ -21054,6 +22569,7 @@
                 const pending = readBulkPendingSave();
                 if (!pending) return false;
                 const payload = pending.payload;
+                restoreCareFields(payload, "bulk");
                 state.bulkSelected = new Set(
                     Array.isArray(payload.plantIds) ? payload.plantIds : []
                 );
@@ -21269,6 +22785,7 @@
                     if (!discard) return;
                     clearPendingSave();
                 }
+                restoreCareFields();
                 const keepEvents =
                     options.keepEvents ?? $("keepEvents").checked;
                 if (!keepEvents) state.events.clear();
@@ -21339,6 +22856,7 @@
                         "Choose a valid observation date and time."
                     );
                 return {
+                    ...carePayloadFields(state.events),
                     plantId: $("plantSelect").value,
                     ...(["P31", "P32"].includes($("plantSelect").value)
                         ? { inventoryRevision: "id528" }
@@ -21989,6 +23507,7 @@
                 const pending = readPendingSave();
                 if (!pending) return false;
                 const payload = pending.payload;
+                restoreCareFields(payload);
                 persistPendingSave(pending);
                 renderPlantOptions("", payload.plantId);
                 state.events = new Set(
@@ -22062,6 +23581,7 @@
                         validateCheckDetails(payload);
                         validateHumidityDetails(payload);
                         validateLightDetails(payload);
+                        validateCareDetails(payload);
                     }
                 } catch (error) {
                     showToast(error.message, true);
@@ -22596,6 +24116,15 @@
                 }
             }
 
+            restoreCareFields();
+            $("temperatureUnit").addEventListener("change", () => {
+                safeStorageSet(
+                    localStorage,
+                    TEMPERATURE_UNIT_KEY,
+                    $("temperatureUnit").value
+                );
+                if (state.bootstrap) renderPlantSummary();
+            });
             $("plantSearch").addEventListener("input", (event) =>
                 renderPlantOptions(event.target.value)
             );

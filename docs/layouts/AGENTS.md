@@ -29,7 +29,13 @@
   watering-application class, and AP stores an optional measured water amount
   in milliliters. AQ stores relative humidity (%) from 0 through 100; preserve
   zero and distinguish it from an absent reading. Humidity is independent of
-  watering/weight evidence. Update the parser, tracker, history page, CSV export, and
+  watering/weight evidence. AR:AS holds PPFD and illuminance. AT:BH holds Mist,
+  Move, Temperature, Environment, Propagate, and Support details. Temperature is
+  stored in Celsius with its Air/Soil target and original entry unit; zero and
+  negative values are valid. Keep air and soil chart series separate from humidity
+  and light units. Mist and location changes never reset watering or pot setup.
+  Derive the latest location from active corrected Move records, not removed or
+  future records. Update the parser, tracker, history page, CSV export, and
   logger checks together when that contract changes.
 - Share parsing and calculations through `plant-tracker-data.js` and
   `plant-charts.js`. Keep removed/superseded records, missing values, setup

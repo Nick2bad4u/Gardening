@@ -6,15 +6,86 @@ workbook. It supports daily browsing, individual observations, collection-wide
 care/weight rounds, save receipts, dashboards, and per-plant charts without
 creating a second gardening database.
 
-The latest verified production baseline is **AppSheet 1.100125** with logger
-**5.34.0 / immutable version 107**, checked on October 10, 2026. The observation
-and terrarium refresh below supersedes the earlier dated records.
+The last recorded AppSheet production baseline is **AppSheet 1.100125**, checked
+on October 10, 2026. The [logger runbook](../scripts/google-sheets/README.md)
+records the separate logger deployment. The maintained 5.35.0 contract below
+describes the new schema; the dated records retain their verified historical state.
 
 The owner-only
 [AppSheet editor](https://www.appsheet.com/template/AppDef?appName=GardenPlantTracker-903231205-26-08-25&appId=de6fc182-d01e-427b-b46e-a031d7bc4588&quickStart=False)
 contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
+
+## Maintained 5.35.0 care-event contract
+
+The single-entry event list adds **Mist**, **Move**, **Temperature**,
+**Environment**, **Propagate**, and **Support**. The order is Water, Weigh, Mist;
+Humidity, Temperature, Light; Check, Inspect, Measure; Rotation, Move,
+Environment; Clean, Prune, Support; Repot, Propagate, Flower; Photo, Pest, Other.
+The [action guide](./logger-actions.md) describes their everyday use.
+
+This maintained contract must be applied to the native workbook before AppSheet
+regenerates the affected tables. It is not a claim that the live app has already
+been regenerated or saved. Preserve every existing column and staging row.
+
+| Table                    | Maintained physical range | Appended fields                                                 |
+| ------------------------ | ------------------------- | --------------------------------------------------------------- |
+| History and History view | 60 columns, A:BH          | AT:BH, the 15 canonical care fields below                       |
+| App entries              | 52 columns, A:AZ          | AL:AZ, the same 15 fields; Temperature accepts the entered unit |
+| App bulk                 | 74 columns, A:BV          | BK:BV, the 12 non-temperature care fields                       |
+
+| History column | App entries column | App bulk column | Field                                        |
+| -------------- | ------------------ | --------------- | -------------------------------------------- |
+| AT             | AL                 | BK              | Mist targets                                 |
+| AU             | AM                 | BL              | Mist amount (mL)                             |
+| AV             | AN                 | BM              | Mist details                                 |
+| AW             | AO                 | BN              | Previous location                            |
+| AX             | AP                 | BO              | New location                                 |
+| AY             | AQ                 | —               | Temperature (°C); staging header Temperature |
+| AZ             | AR                 | —               | Temperature target                           |
+| BA             | AS                 | —               | Temperature entry unit                       |
+| BB             | AT                 | BP              | Environment aspect                           |
+| BC             | AU                 | BQ              | Previous setting                             |
+| BD             | AV                 | BR              | New setting                                  |
+| BE             | AW                 | BS              | Propagation method                           |
+| BF             | AX                 | BT              | Propagation details                          |
+| BG             | AY                 | BU              | Support action                               |
+| BH             | AZ                 | BV              | Support details                              |
+
+Keep new fields visible only for their selected event and require their details
+only when that event is selected. The bridge ignores stale hidden fields for
+unselected events. Configure the same rules for supported shared-care rounds:
+
+- **Mist:** EnumList targets Leaves, Exposed roots, Soil surface, Stem / plant
+  body, Moss / support, Other; at least one is required. Other requires Mist
+  details. The optional amount is a positive Decimal measured in mL.
+- **Move:** New location is required text; Previous location is optional text.
+- **Temperature:** required Decimal, target Air or Soil, and entry unit C or F.
+  Do not use a positive-only validator: zero and negative readings are valid.
+  The bridge converts to canonical Celsius and rejects values below absolute
+  zero. History records the entry unit separately. Temperature remains absent
+  from Bulk Log, as do Light and Humidity.
+- **Environment:** required aspect Light, Airflow, Enclosure, Heating, or Other;
+  required New setting and optional Previous setting.
+- **Propagate:** required method Stem cutting, Leaf cutting, Offset, Division,
+  Seed, or Other, plus required Propagation details.
+- **Support:** required action Add, Adjust, or Remove, plus required Support
+  details.
+
+The new events neither create a Water/Weigh event nor reset Pot setup. If a
+support or propagation operation changes the whole weighed configuration,
+record Repot explicitly. Mist amounts are not water-event totals. Current
+location and environmental readings use active, correction-aware history.
+Air and soil temperatures remain separate series in the read-only environmental
+views; no new helper table is an AppSheet input.
+
+Update History event choices/badges and temperature measurement provenance,
+App entries Events, supported App bulk Round action choices/validation, form
+field order, and visibility/required rules together. Regeneration must preserve
+keys, receipts, retired weight guards, creation-only inventory markers, and
+read-only canonical/helper tables. Verify an independent fresh saved-definition
+comparison and empty forms without submitting synthetic production observations.
 
 ## October 10 observation and terrarium refresh
 

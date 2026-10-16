@@ -30,7 +30,7 @@
             : []),
     ].join("\n");
     const historyHeaders =
-        "Date,Plant ID,Event,Weight state,Weight (g),Height (cm),Width (cm),Plant condition,Notes,Pot setup,Record status,Request ID,Relative humidity (%),PPFD (µmol/m²/s),Illuminance (lux),Observation quality,Measurement method,Observation ID,Corrects observation ID,Soil moisture";
+        "Date,Plant ID,Event,Weight state,Weight (g),Height (cm),Width (cm),Plant condition,Notes,Pot setup,Record status,Request ID,Relative humidity (%),PPFD (µmol/m²/s),Illuminance (lux),Observation quality,Measurement method,Observation ID,Corrects observation ID,Soil moisture,Mist targets,Mist amount (mL),Mist details,Previous location,New location,Temperature (°C),Temperature target,Temperature entry unit,Environment aspect,Previous setting,New setting,Propagation method,Propagation details,Support action,Support details";
     /** @type {Record<string, string | number>[]} */
     const lightObservations = [
         {
@@ -86,6 +86,59 @@
         },
         { Event: "Light", Notes: "Missing reading" },
     ];
+    /** @type {Record<string, string | number>[]} */
+    const careObservations = [
+        {
+            Event: "Mist",
+            "Mist amount (mL)": 4,
+            "Mist details": "Fine spray",
+            "Mist targets": "Leaves; Exposed roots",
+        },
+        {
+            Event: "Move",
+            "New location": "Upper shelf",
+            "Observation ID": "move-original",
+            "Previous location": "Lower shelf",
+            "Record status": "Removed",
+        },
+        {
+            "Corrects observation ID": "move-original",
+            Event: "Move",
+            "New location": "Window",
+            "Observation ID": "move-corrected",
+            "Previous location": "Lower shelf",
+        },
+        {
+            Event: "Temperature",
+            Notes: "Zero air",
+            "Temperature (°C)": 0,
+            "Temperature entry unit": "F",
+            "Temperature target": "Air",
+        },
+        {
+            Event: "Temperature",
+            Notes: "Cold soil",
+            "Temperature (°C)": -2.5,
+            "Temperature entry unit": "C",
+            "Temperature target": "Soil",
+        },
+        {
+            "Environment aspect": "Grow light",
+            Event: "Environment",
+            "New setting": "10 hours",
+            "Previous setting": "8 hours",
+        },
+        {
+            Event: "Propagate",
+            "Propagation details": "Two cuttings",
+            "Propagation method": "Stem cutting",
+        },
+        {
+            Event: "Support",
+            "Support action": "Add stake",
+            "Support details": "Loose tie",
+        },
+    ];
     const history = [
         historyHeaders,
         "2026-09-01,P01,Weight,Dry,400,,,Healthy,First dry reading,1,Active,storybook-dry",
@@ -100,24 +153,26 @@
                   "2026-09-03,P38,Humidity,,,,,,Latest reading,1,Active,storybook-humidity-latest,65.5",
               ]
             : []),
-        ...(scenario === "light"
-            ? lightObservations.map((event, index) => {
-                  /** @type {Record<string, string | number>} */
-                  const row = {
-                      Date: `2026-09-${String(index + 5).padStart(2, "0")}`,
-                      "Plant ID": "P02",
-                      "Pot setup": 1,
-                      "Record status": "Active",
-                      ...event,
-                  };
-                  return historyHeaders
-                      .split(",")
-                      .map((header) => row[header] ?? "")
-                      .join(",");
-              })
+        ...(["care-events", "light"].includes(scenario)
+            ? (scenario === "light" ? lightObservations : careObservations).map(
+                  (event, index) => {
+                      /** @type {Record<string, string | number>} */
+                      const row = {
+                          Date: `2026-09-${String(index + 5).padStart(2, "0")}`,
+                          "Plant ID": "P02",
+                          "Pot setup": 1,
+                          "Record status": "Active",
+                          ...event,
+                      };
+                      return historyHeaders
+                          .split(",")
+                          .map((header) => row[header] ?? "")
+                          .join(",");
+                  }
+              )
             : []),
     ].join("\n");
-    if (scenario === "light") {
+    if (["care-events", "light"].includes(scenario)) {
         const nativeCreateObjectURL = URL.createObjectURL.bind(URL);
         /** @param {Blob} blob */
         const captureExport = async (blob) => {

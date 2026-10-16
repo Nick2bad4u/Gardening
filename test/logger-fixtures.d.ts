@@ -43,6 +43,9 @@ export interface LoggerOptions {
 
 export interface ObservationPayload {
     condition?: string;
+    environmentAspect?: string;
+    environmentFrom?: string;
+    environmentTo?: string;
     events?: string[];
     expectedCount?: number;
     flowerCount?: string;
@@ -52,6 +55,12 @@ export interface ObservationPayload {
     measurementMethod?: string;
     measurementQuality?: string;
     measurementUnit?: string;
+    mistAmountMl?: number | string;
+    mistDetails?: string;
+    mistTargets?: string | string[];
+
+    moveFrom?: string;
+    moveTo?: string;
     notes?: string;
     nutrientAmount?: string;
     nutrientProduct?: string;
@@ -65,9 +74,17 @@ export interface ObservationPayload {
     potSetup?: string;
     potSize?: string;
     ppfd?: number | string;
+    propagationDetails?: string;
+    propagationMethod?: string;
     relativeHumidity?: number | string;
     requestId: string;
     rotationDegrees?: string;
+    supportAction?: string;
+    supportDetails?: string;
+    temperature?: number | string;
+    temperatureC?: number | string;
+    temperatureTarget?: string;
+    temperatureUnit?: string;
     weight?: string;
     weightState?: string;
     width?: string;
@@ -87,6 +104,7 @@ export interface PlantSummary {
         waterIntervalCount: number;
     };
     currentImageUrl?: string;
+    currentLocation?: string;
     currentPotSize: string;
     daysSinceWater: number | string;
     dryForecastBasis?: string;
@@ -99,6 +117,8 @@ export interface PlantSummary {
     id: string;
     label: string;
     lastWatered: string;
+    latestAirTemperature?: "" | number;
+    latestAirTemperatureAt?: string;
     latestLightAt?: string;
     latestLux?: "" | number;
     latestLuxAt?: string;
@@ -106,6 +126,8 @@ export interface PlantSummary {
     latestPpfdAt?: string;
     latestRelativeHumidity?: "" | number;
     latestRelativeHumidityAt?: string;
+    latestSoilTemperature?: "" | number;
+    latestSoilTemperatureAt?: string;
     latestWeight: number | string;
     latestWeightAt?: string;
     name: string;

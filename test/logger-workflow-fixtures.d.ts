@@ -9,6 +9,9 @@ export interface WebHistoryDetails {
     correctionReason?: HistoryDetailValue;
     correctsObservationId?: HistoryDetailValue;
     entrySource?: HistoryDetailValue;
+    environmentAspect?: HistoryDetailValue;
+    environmentFrom?: HistoryDetailValue;
+    environmentTo?: HistoryDetailValue;
     flowerCount?: HistoryDetailValue;
     flowerDetails?: HistoryDetailValue;
     height?: number;
@@ -17,7 +20,13 @@ export interface WebHistoryDetails {
     lux?: HistoryDetailValue;
     measurementMethod?: HistoryDetailValue;
     measurementUnit?: string;
+
     medium?: HistoryDetailValue;
+    mistAmountMl?: HistoryDetailValue;
+    mistDetails?: HistoryDetailValue;
+    mistTargets?: HistoryDetailValue;
+    moveFrom?: HistoryDetailValue;
+    moveTo?: HistoryDetailValue;
     notes?: HistoryDetailValue;
     nutrientAmount?: HistoryDetailValue;
     nutrientProduct?: HistoryDetailValue;
@@ -31,12 +40,19 @@ export interface WebHistoryDetails {
     potSize?: HistoryDetailValue;
     ppfd?: HistoryDetailValue;
     previousPotSize?: HistoryDetailValue;
+    propagationDetails?: HistoryDetailValue;
+    propagationMethod?: HistoryDetailValue;
     recordedAtIso?: string;
     recordStatus?: HistoryDetailValue;
     relativeHumidity?: HistoryDetailValue;
     rotationDegrees?: HistoryDetailValue;
     saveGroup?: HistoryDetailValue;
     soilMoisture?: HistoryDetailValue;
+    supportAction?: HistoryDetailValue;
+    supportDetails?: HistoryDetailValue;
+    temperatureC?: HistoryDetailValue;
+    temperatureTarget?: HistoryDetailValue;
+    temperatureUnit?: HistoryDetailValue;
     waterAmount?: HistoryDetailValue;
     wateringApplication?: HistoryDetailValue;
     width?: number;

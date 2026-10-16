@@ -3,6 +3,16 @@ import { siteUrl } from "../../../lib/routes.mjs";
 ---
 
 <section class="metric-grid" aria-label="Latest observations">
+    <article data-accent="activity">
+        <span>Latest temperature</span>
+        <strong id="latest-temperature">—</strong>
+        <small id="temperature-checked">Not checked yet</small>
+    </article>
+    <article data-accent="setup">
+        <span>Last recorded location</span>
+        <strong id="current-location">—</strong>
+        <small id="location-checked">No move logged</small>
+    </article>
     <article data-accent="water">
         <span>
             <svg class="site-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">

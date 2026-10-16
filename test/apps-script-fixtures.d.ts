@@ -124,8 +124,10 @@ export interface AppsScriptTestApi {
         soilMoisture?: unknown
     ) => string[];
     cleanText_: (value: unknown) => string;
+    clearCareColumnValidations_: (sheet: unknown, headers: string[]) => void;
     columnName_: (columnNumber: unknown) => string;
     comparableHistoryValue_: (value: unknown) => number | string;
+    configureCareColumns_: (sheet: unknown, headers: string[]) => void;
     currentLabelForPlant_: (spreadsheet: unknown, plantId: unknown) => string;
     dashboardViewRow_: (
         spreadsheet: unknown,
@@ -161,6 +163,10 @@ export interface AppsScriptTestApi {
         sheet: unknown,
         shouldConfigureColumn?: boolean
     ) => boolean;
+    ensureHistoryCareColumns_: (
+        history: unknown,
+        shouldConfigure?: boolean
+    ) => void;
     ensureHistoryDetailColumns_: (history: unknown) => void;
     ensureHistoryGrid_: (history: unknown) => void;
     ensureHistoryHumidityColumn_: (
@@ -237,6 +243,7 @@ export interface AppsScriptTestApi {
     formulaString_: (value: unknown) => string;
     GARDEN_DRY_DOWN: (history: unknown, plantIds: unknown) => DryDownRow[];
     GARDEN_ENVIRONMENT_READINGS: (history: unknown) => CellValue[][];
+    GARDEN_RECORDED_LOCATIONS: (history: unknown) => CellValue[][];
     getGardenSpreadsheet_: () => object;
     getRecentObservations_: (
         spreadsheet: unknown,
@@ -439,6 +446,18 @@ export interface AppsScriptTestApi {
         plantNames: unknown,
         filters?: unknown
     ) => WebRecentObservation[];
+    recordedLocationRows_: (
+        history: CellValue[][],
+        asOf: Date,
+        helpers: {
+            active: (row: CellValue[]) => boolean;
+            corrections: (rows: CellValue[][]) => {
+                order: number[];
+                superseded: Set<number>;
+            };
+            timestamp: (value: unknown) => number;
+        }
+    ) => CellValue[][];
     refreshBaselineView_: (spreadsheet: unknown, plants: unknown) => void;
     refreshDashboardView_: (spreadsheet: unknown, plants: unknown) => void;
     refreshDryDownModels_: (spreadsheet: unknown) => void;

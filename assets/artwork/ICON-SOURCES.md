@@ -73,3 +73,15 @@ The October 9 revision of the tiny mixed planter portrait for **#6 / P30** follo
 `icon-plant-terrarium` is original schematic repository artwork for **P38 / #12**, revised October 10 to follow the owner's [arrival photographs](../../docs/terrarium.md#arrival-photographs). The rounded glass jar and broad cork lid frame low moss, pink-veined and pale-speckled leaves, trailing greenery, and fern-like foliage. These simplified appearance groups replace the initial question-mark placeholder without confirming botanical identities, depicting a verified recovery, or establishing substrate composition or drainage layers. The source photographs retain the owner's separate rights.
 
 `icon-humidity` remains original schematic repository artwork added for P38 / #12. Its drop and percent marks represent relative humidity, not a watering recommendation. No reference photograph or third-party artwork was used for this symbol.
+
+## Care-event symbols
+
+The October 16 additions `icon-mist`, `icon-move`, `icon-environment`,
+`icon-propagate`, and `icon-support` are original repository vector artwork.
+A spray bottle and leaf,
+a pot and movement arrow, adjustable environmental controls, a rooted cutting,
+and a staked plant distinguish the five actions at small control sizes. They
+use the existing 64-unit canvas and shared material palette without adapting
+third-party images. Temperature readings reuse the existing `icon-temperature`
+thermometer. These symbols describe recorded actions and measurements; they
+do not prescribe care or document a particular plant's condition.

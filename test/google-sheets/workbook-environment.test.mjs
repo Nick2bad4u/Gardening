@@ -10,6 +10,7 @@ import {
     environmentAppsScriptSource,
     environmentRows,
     environmentSheetId,
+    recordedLocationRows,
 } from "../../scripts/google-sheets/workbook-environment.mjs";
 import { required } from "../helpers/required.mjs";
 
@@ -186,6 +187,8 @@ describe("environmental evidence projection", () => {
             "Light app",
             "Top of canopy; preset A",
             "light",
+            "",
+            "",
         ]);
         expect(rows[2]?.slice(3, 8)).toStrictEqual([
             "",
@@ -288,6 +291,8 @@ describe("environmental evidence projection", () => {
                 "",
                 "",
                 "",
+                "",
+                "",
             ],
         ]);
         expect(helpers.corrections([legacy]).order).toStrictEqual([0]);
@@ -339,6 +344,110 @@ describe("environmental evidence projection", () => {
             1,
             2,
         ]);
+    });
+});
+
+describe("temperature and recorded location evidence", () => {
+    it("keeps air and soil separate, retaining zero and subzero Celsius without treating blanks as zero", () => {
+        expect.hasAssertions();
+
+        const rows = environmentRows(
+            [
+                reading("Temperature", { 50: 0, 51: "Air" }),
+                reading("Temperature", { 50: -4.5, 51: "Soil" }),
+                reading("Temperature", { 50: "", 51: "Air" }),
+                reading("Temperature", { 50: "0", 51: "Air" }),
+                reading("Temperature", { 50: Infinity, 51: "Soil" }),
+                reading("Temperature", { 50: 22, 51: "Unknown" }),
+                reading("Water", { 50: 22, 51: "Air" }),
+            ],
+            asOf,
+            helpers
+        );
+
+        expect(rows.slice(1).map((row) => row.slice(10))).toStrictEqual([
+            [0, ""],
+            ["", -4.5],
+        ]);
+        expect(
+            rows
+                .slice(1)
+                .every((row) => row.slice(3, 6).every((value) => value === ""))
+        ).toBe(true);
+    });
+
+    it("excludes removed, superseded, and future temperature and movement observations", () => {
+        expect.hasAssertions();
+
+        const rows = [
+            reading("Temperature", {
+                26: "old",
+                35: "Removed",
+                50: 30,
+                51: "Air",
+            }),
+            reading("Temperature", {
+                26: "corrected",
+                30: "old",
+                50: 20,
+                51: "Soil",
+            }),
+            reading("Temperature", {
+                0: new Date("2026-11-01T00:00:00Z"),
+                50: 10,
+                51: "Air",
+            }),
+            reading("Move", { 26: "move-old", 35: "Removed", 49: "Shelf A" }),
+            reading("Move", {
+                26: "move-new",
+                30: "move-old",
+                48: "Windowsill",
+                49: "Shelf B",
+            }),
+            reading("Move", {
+                0: new Date("2026-11-01T00:00:00Z"),
+                49: "Future shelf",
+            }),
+            reading("Move", { 49: "" }),
+            reading("Water", { 49: "Stale hidden value" }),
+        ];
+        const before = structuredClone(rows);
+
+        expect(
+            environmentRows(rows, asOf, helpers)
+                .slice(1)
+                .map((row) => row.slice(10))
+        ).toStrictEqual([["", 20]]);
+        expect(
+            recordedLocationRows(rows, asOf, helpers)
+                .slice(1)
+                .map((row) => row.slice(2))
+        ).toStrictEqual([
+            [
+                "Windowsill",
+                "Shelf B",
+                "move-new",
+            ],
+        ]);
+        expect(rows).toStrictEqual(before);
+    });
+
+    it("emits native-compatible location projection with stable correction ordering", () => {
+        expect.hasAssertions();
+
+        const generatedContext = vm.createContext({ Date, Map, Set });
+        vm.runInContext(environmentAppsScriptSource(), generatedContext);
+        const generated = /** @type {typeof recordedLocationRows} */ (
+            generatedContext["recordedLocationRows_"]
+        );
+        const rows = [
+            reading("Move", { 49: "Shelf" }),
+            reading("Humidity", { 42: 55 }),
+        ];
+
+        expect(
+            Array.from(generated(rows, asOf, helpers), (row) => Array.from(row))
+        ).toStrictEqual(recordedLocationRows(rows, asOf, helpers));
     });
 });
 

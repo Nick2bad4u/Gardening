@@ -15,14 +15,18 @@ export interface WebsiteFrameProps {
     scenario:
         | "empty"
         | "error"
-        | "humidity"
-        | "light"
         | "loading"
         | "ready"
-        | "retry";
+        | "retry"
+        | ObservationScenario;
     theme: "dark" | "light";
     width: number;
 }
+
+type ObservationScenario =
+    | "care-events"
+    | "humidity"
+    | "light";
 
 export const websiteArgTypes = {
     path: {
@@ -36,6 +40,7 @@ export const websiteArgTypes = {
         description:
             "Synthetic spreadsheet response. Applies to the plant tracker and history pages.",
         options: [
+            "care-events",
             "ready",
             "humidity",
             "light",
@@ -47,7 +52,7 @@ export const websiteArgTypes = {
         table: {
             type: {
                 summary:
-                    "ready | humidity | light | loading | empty | error | retry",
+                    "ready | humidity | light | care-events | loading | empty | error | retry",
             },
         },
     },

@@ -30,6 +30,16 @@ const { manualCare = false } = Astro.props;
         <article class="chart-card">
             <header>
                 <div>
+                    <h3>Temperature</h3>
+                    <p>Air and soil readings shown separately in °C at their recorded times.</p>
+                </div>
+            </header>
+            <div class="chart-canvas" id="temperature-chart"></div>
+            <div class="chart-summary" id="temperature-chart-summary"></div>
+        </article>
+        <article class="chart-card">
+            <header>
+                <div>
                     <h3>Relative humidity</h3>
                     <p>
                         Current readings as logged; no inferred watering instruction or humidity

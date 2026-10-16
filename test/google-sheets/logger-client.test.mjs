@@ -77,6 +77,12 @@ const bootstrap = {
         "Photo",
         "Pest",
         "Other",
+        "Mist",
+        "Move",
+        "Temperature",
+        "Environment",
+        "Propagate",
+        "Support",
     ],
     links: {
         calendar: "https://example.test/calendar",
@@ -8291,7 +8297,7 @@ describe("garden logger local History loading and portraits", () => {
             HTMLImageElement
         );
 
-        expect(images).toHaveLength(3);
+        expect(images).toHaveLength(4);
 
         required(fixture.observers[0]).show(...images);
         await vi.waitFor(() => {
@@ -8315,7 +8321,7 @@ describe("garden logger local History loading and portraits", () => {
         expect(
             queryElement(required(rows[0]), ".recent-plant", HTMLElement)
                 .firstElementChild
-        ).toBe(images[2]);
+        ).toBe(images[3]);
         expect(
             queryElement(
                 required(rows[1]),
@@ -8324,9 +8330,11 @@ describe("garden logger local History loading and portraits", () => {
             ).getAttribute("href")
         ).toBe("#app-icon-plant");
 
-        queryElement(required(rows[0]), "img", HTMLImageElement).dispatchEvent(
-            new window.Event("error")
-        );
+        queryElement(
+            required(rows[0]),
+            ".recent-portrait",
+            HTMLImageElement
+        ).dispatchEvent(new window.Event("error"));
 
         expect(
             queryElement(
@@ -8381,7 +8389,7 @@ describe("garden logger selection and portrait stability", () => {
                 ".activity-counts, .plant-forecast, .weight-chart, .plant-links, .plant-photos"
             )
         ).toBeNull();
-        expect(details.previousElementSibling).toBe(
+        expect(details.previousElementSibling?.previousElementSibling).toBe(
             queryElement(window.document, "#entryForm > .actions", HTMLElement)
         );
         expect(
@@ -11506,7 +11514,9 @@ describe("garden logger refreshed controls", () => {
             ".event-guidance-item",
             HTMLDetailsElement
         )) {
-            expect(queryElements(guide, "li", HTMLElement)).toHaveLength(2);
+            expect(
+                queryElements(guide, "li", HTMLElement).length
+            ).toBeGreaterThan(0);
             expect(queryElements(guide, "summary svg", Element)).toHaveLength(
                 1
             );
@@ -11524,5 +11534,534 @@ describe("garden logger refreshed controls", () => {
         expect(summary).toContain("Sep 1, 2026");
         expect(summary).toContain("Sep 2, 2026");
         expect(summary).toContain("Sep 3, 2026");
+    });
+});
+
+describe("garden logger expanded care events", () => {
+    afterEach(restoreLoggerMocks);
+
+    it.each([
+        { air: "0 °C", soil: "-5 °C", unit: "C" },
+        { air: "32 °F", soil: "23 °F", unit: "F" },
+    ])(
+        "shows independent latest air and soil temperature readings in remembered $unit",
+        ({ air, soil, unit }) => {
+            expect.hasAssertions();
+
+            const { window } = createLoggerWindow({
+                bootstrapData: {
+                    ...bootstrap,
+                    plants: [
+                        {
+                            ...required(bootstrap.plants[0]),
+                            latestAirTemperature: 0,
+                            latestAirTemperatureAt: "2026-09-04T12:00:00Z",
+                            latestSoilTemperature: -5,
+                            latestSoilTemperatureAt: "2026-09-05T12:00:00Z",
+                        },
+                    ],
+                },
+                storage: { gardenLoggerTemperatureUnitV1: unit },
+            });
+            const metrics = queryElements(
+                window.document,
+                "#plantSummary .metric",
+                HTMLElement
+            );
+            const airMetric = required(
+                metrics.find((metric) =>
+                    metric.textContent.includes("Latest air temperature")
+                )
+            );
+            const soilMetric = required(
+                metrics.find((metric) =>
+                    metric.textContent.includes("Latest soil temperature")
+                )
+            );
+
+            expect(airMetric.textContent).toContain(air);
+            expect(airMetric.textContent).toContain("Sep 4, 2026");
+            expect(soilMetric.textContent).toContain(soil);
+            expect(soilMetric.textContent).toContain("Sep 5, 2026");
+
+            changeWorkflowSelect(
+                window,
+                "temperatureUnit",
+                unit === "C" ? "F" : "C"
+            );
+
+            expect(
+                queryElement(window.document, "#plantSummary", HTMLElement)
+                    .textContent
+            ).toContain(unit === "C" ? "32 °F" : "0 °C");
+        }
+    );
+
+    /** @param {Window} window @param {string} event @param {string} [prefix] */
+    function selectEvent(window, event, prefix = "") {
+        queryElement(
+            window.document,
+            `#${prefix ? "bulkEventChips" : "eventChips"} [data-event="${event}"]`,
+            HTMLButtonElement
+        ).click();
+    }
+
+    /** @param {Window} window */
+    function queue(window) {
+        queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        ).click();
+        return parseStoredQueue(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1") ??
+                "[]"
+        );
+    }
+
+    /** @param {Window} window */
+    function submit(window) {
+        queryElement(
+            window.document,
+            "#entryForm",
+            HTMLFormElement
+        ).dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
+    }
+
+    it("places save controls above details and orders all 21 actions by task", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        const doc = window.document;
+
+        expect(
+            queryElements(doc, "#eventChips .chip", HTMLButtonElement).map(
+                (button) => button.dataset["event"]
+            )
+        ).toStrictEqual([
+            "Water",
+            "Weigh",
+            "Mist",
+            "Humidity",
+            "Temperature",
+            "Light",
+            "Check",
+            "Inspect",
+            "Measure",
+            "Rotation",
+            "Move",
+            "Environment",
+            "Clean",
+            "Prune",
+            "Support",
+            "Repot",
+            "Propagate",
+            "Flower",
+            "Photo",
+            "Pest",
+            "Other",
+        ]);
+
+        for (const [button, field] of /** @type {const} */ ([
+            ["saveButton", "observedAtDate"],
+            ["queueButton", "observedAtDate"],
+            ["bulkSaveButton", "bulkObservedAtDate"],
+        ])) {
+            const control = queryElement(doc, `#${button}`, HTMLButtonElement);
+            const detail = queryElement(doc, `#${field}`, HTMLInputElement);
+
+            expect(control.compareDocumentPosition(detail)).toBe(
+                window.Node.DOCUMENT_POSITION_FOLLOWING
+            );
+        }
+
+        expect(
+            doc.querySelector(
+                ':scope #bulkEventChips [data-event="Temperature"]'
+            )
+        ).toBeNull();
+    });
+
+    it("queues multiple mist targets separately from Water and preserves details after reload", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({ online: false });
+        selectEvent(window, "Mist");
+        for (const value of [
+            "Leaves",
+            "Soil surface",
+            "Other",
+        ])
+            queryElement(
+                window.document,
+                `#mistTargets input[value="${value}"]`,
+                HTMLInputElement
+            ).checked = true;
+        enterWorkflowValue(window, "mistDetails", "Outer pot rim");
+        enterWorkflowValue(window, "mistAmountMl", "5");
+
+        expect(required(queue(window)[0]).payload).toMatchObject({
+            events: ["Mist"],
+            mistAmountMl: "5",
+            mistDetails: "Outer pot rim",
+            mistTargets: "Leaves; Soil surface; Other",
+            weight: "",
+        });
+        expect(
+            queryElements(
+                window.document,
+                "#mistTargets input:checked",
+                HTMLInputElement
+            )
+        ).toHaveLength(0);
+
+        const restored = createLoggerWindow({
+            online: false,
+            storage: {
+                gardenLoggerObservationQueueV1: required(
+                    window.localStorage.getItem(
+                        "gardenLoggerObservationQueueV1"
+                    )
+                ),
+            },
+        });
+
+        expect(
+            queryElement(restored.window.document, "#queueList", HTMLElement)
+                .textContent
+        ).toContain("Leaves; Soil surface; Other · 5 mL · Outer pot rim");
+    });
+
+    it("requires mist targets and an explanation of Other before a save or queue", () => {
+        expect.hasAssertions();
+
+        const { calls, window } = createLoggerWindow();
+        selectEvent(window, "Mist");
+
+        expect(queue(window)).toStrictEqual([]);
+        expect(
+            queryElement(window.document, "#toast", HTMLElement).textContent
+        ).toContain("Choose where");
+
+        queryElement(
+            window.document,
+            '#mistTargets input[value="Other"]',
+            HTMLInputElement
+        ).checked = true;
+        submit(window);
+
+        expect(calls.some((call) => call.method === "saveWebObservation")).toBe(
+            false
+        );
+        expect(
+            queryElement(window.document, "#toast", HTMLElement).textContent
+        ).toContain("other area");
+    });
+
+    it.each(["Air", "Soil"])(
+        "queues zero Celsius %s temperature and remembers the unit without remembering a reading",
+        (target) => {
+            expect.hasAssertions();
+
+            const { window } = createLoggerWindow();
+            selectEvent(window, "Temperature");
+            enterWorkflowValue(window, "temperature", "0");
+            changeWorkflowSelect(window, "temperatureTarget", target);
+            changeWorkflowSelect(window, "temperatureUnit", "C");
+
+            expect(required(queue(window)[0]).payload).toMatchObject({
+                events: ["Temperature"],
+                temperature: "0",
+                temperatureTarget: target,
+                temperatureUnit: "C",
+            });
+            expect(
+                queryElement(window.document, "#temperature", HTMLInputElement)
+                    .value
+            ).toBe("");
+
+            const restored = createLoggerWindow({
+                storage: {
+                    gardenLoggerTemperatureUnitV1: required(
+                        window.localStorage.getItem(
+                            "gardenLoggerTemperatureUnitV1"
+                        )
+                    ),
+                },
+            });
+
+            expect(
+                queryElement(
+                    restored.window.document,
+                    "#temperatureUnit",
+                    HTMLSelectElement
+                ).value
+            ).toBe("C");
+            expect(
+                queryElement(
+                    restored.window.document,
+                    "#temperature",
+                    HTMLInputElement
+                ).value
+            ).toBe("");
+        }
+    );
+
+    it("requires a temperature reading and measurement target", () => {
+        expect.hasAssertions();
+
+        const { calls, window } = createLoggerWindow();
+        selectEvent(window, "Temperature");
+        changeWorkflowSelect(window, "temperatureTarget", "Air");
+
+        expect(queue(window)).toStrictEqual([]);
+
+        enterWorkflowValue(window, "temperature", "72");
+        changeWorkflowSelect(window, "temperatureTarget", "");
+        submit(window);
+
+        expect(calls.some((call) => call.method === "saveWebObservation")).toBe(
+            false
+        );
+        expect(
+            queryElement(window.document, "#toast", HTMLElement).textContent
+        ).toContain("air or soil");
+    });
+
+    it.each([
+        {
+            event: "Move",
+            values: { moveFrom: "Lower shelf", moveTo: "Upper shelf" },
+        },
+        {
+            event: "Environment",
+            values: {
+                environmentAspect: "Airflow",
+                environmentFrom: "Low",
+                environmentTo: "Medium",
+            },
+        },
+        {
+            event: "Propagate",
+            values: {
+                propagationDetails: "Separated one rooted offset",
+                propagationMethod: "Offset",
+            },
+        },
+        {
+            event: "Support",
+            values: {
+                supportAction: "Adjust",
+                supportDetails: "Loosened the existing tie",
+            },
+        },
+    ])(
+        "queues and recovers $event details and keeps hidden fields out of later entries",
+        ({ event, values }) => {
+            expect.hasAssertions();
+
+            const { window } = createLoggerWindow();
+            selectEvent(window, event);
+            for (const [key, value] of Object.entries(values)) {
+                const element = queryElement(
+                    window.document,
+                    `#${key}`,
+                    HTMLElement
+                );
+                if (element instanceof HTMLSelectElement)
+                    changeWorkflowSelect(window, key, value);
+                else enterWorkflowValue(window, key, value);
+            }
+            const queued = queue(window);
+            const payload = required(queued[0]).payload;
+
+            expect(payload).toMatchObject({ ...values, events: [event] });
+
+            const restored = createLoggerWindow({
+                pendingSave: {
+                    payload,
+                    requestId: "expanded-care-retry-12345",
+                },
+            });
+            submit(restored.window);
+
+            expect(
+                required(
+                    restored.calls.find(
+                        (call) => call.method === "saveWebObservation"
+                    )
+                ).args[0]
+            ).toMatchObject({
+                ...values,
+                events: [event],
+                requestId: "expanded-care-retry-12345",
+            });
+
+            selectEvent(window, event);
+            selectEvent(window, "Other");
+            queryElement(window.document, "#notes", HTMLTextAreaElement).value =
+                "Unrelated observation";
+            const next = required(queue(window)[1]).payload;
+            for (const key of Object.keys(values))
+                expect(next).not.toHaveProperty(key);
+        }
+    );
+
+    it("saves the five shared care actions together and recovers their exact pending fields", () => {
+        expect.hasAssertions();
+
+        const { calls, window } = createLoggerWindow();
+        queryElement(
+            window.document,
+            "#bulkModeTab",
+            HTMLButtonElement
+        ).click();
+        selectEvent(window, "Water", "bulk");
+        for (const event of [
+            "Mist",
+            "Move",
+            "Environment",
+            "Propagate",
+            "Support",
+        ])
+            selectEvent(window, event, "bulk");
+        queryElement(
+            window.document,
+            '#bulkMistTargets input[value="Leaves"]',
+            HTMLInputElement
+        ).checked = true;
+        const shared = {
+            environmentAspect: "Light",
+            environmentTo: "10 hours",
+            mistTargets: "Leaves",
+            moveTo: "Upper shelf",
+            propagationDetails: "One leaf per plant",
+            propagationMethod: "Leaf cutting",
+            supportAction: "Adjust",
+            supportDetails: "Loosened ties",
+        };
+        for (const [key, value] of Object.entries(shared)) {
+            if (key === "mistTargets") continue;
+            const id = `bulk${key.charAt(0).toUpperCase()}${key.slice(1)}`;
+            if (
+                queryElement(window.document, `#${id}`, HTMLElement) instanceof
+                HTMLSelectElement
+            )
+                changeWorkflowSelect(window, id, value);
+            else enterWorkflowValue(window, id, value);
+        }
+        const checkbox = queryElement(
+            window.document,
+            "#bulkPlantList input[type='checkbox']",
+            HTMLInputElement
+        );
+        checkbox.checked = true;
+        checkbox.dispatchEvent(new window.Event("change", { bubbles: true }));
+        queryElement(
+            window.document,
+            "#bulkWaterForm",
+            HTMLFormElement
+        ).dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
+
+        expect(
+            required(
+                calls.find((call) => call.method === "saveBulkCareObservation")
+            ).args[0]
+        ).toMatchObject({
+            ...shared,
+            events: [
+                "Mist",
+                "Move",
+                "Environment",
+                "Propagate",
+                "Support",
+            ],
+            plantIds: ["P01"],
+        });
+
+        const restored = createLoggerWindow({
+            storage: {
+                gardenLoggerBulkPendingV1: required(
+                    window.localStorage.getItem("gardenLoggerBulkPendingV1")
+                ),
+            },
+        });
+
+        expect(
+            queryElement(
+                restored.window.document,
+                '#bulkMistTargets input[value="Leaves"]',
+                HTMLInputElement
+            ).checked
+        ).toBe(true);
+        expect(
+            queryElement(
+                restored.window.document,
+                "#bulkMoveTo",
+                HTMLInputElement
+            ).value
+        ).toBe("Upper shelf");
+        expect(
+            queryElement(
+                restored.window.document,
+                "#bulkEnvironmentTo",
+                HTMLInputElement
+            ).value
+        ).toBe("10 hours");
+    });
+
+    it("shows a plant portrait beside the event icon in compact history", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            bootstrapData: { ...bootstrap, recent: [recentExample] },
+            storage: { gardenLoggerCompactHistoryV1: "compact" },
+        });
+
+        expect(
+            queryElement(
+                window.document,
+                ".recent-disclosure-summary .recent-compact-portrait",
+                HTMLImageElement
+            ).src
+        ).toContain(".svg");
+        expect(
+            queryElement(
+                window.document,
+                ".recent-disclosure-summary use",
+                Element
+            ).getAttribute("href")
+        ).toBe("#app-icon-weight");
+    });
+
+    it("keeps the chooser description short while retaining the full identification on demand", () => {
+        expect.hasAssertions();
+
+        const scientificName =
+            "Probable Lithops lesliei; variety and cultivar unconfirmed; Probable Lithops salicola; cultivar unconfirmed";
+        const { window } = createLoggerWindow({
+            bootstrapData: {
+                ...bootstrap,
+                plants: [
+                    {
+                        ...required(bootstrap.plants[0]),
+                        name: "Lithops shared planter",
+                        scientificName,
+                    },
+                ],
+            },
+        });
+        const meta = queryElement(
+            window.document,
+            "#plantSummary .plant-meta",
+            HTMLElement
+        );
+
+        expect(meta.textContent).toBe("Shared planter");
+        expect(meta.title).toBe(scientificName);
     });
 });

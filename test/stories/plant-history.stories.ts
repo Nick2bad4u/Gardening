@@ -10,6 +10,8 @@ import {
     websiteCanvas,
 } from "./website-frame.js";
 
+const EVENT_TYPE_LABEL = "Event type";
+
 const meta = {
     afterEach: releaseWebsiteFocus,
     args: {
@@ -67,7 +69,7 @@ export const MeasurementsAndFilters: Story = {
             "Log Water only when the container is actually soaked to runoff."
         );
         await userEvent.selectOptions(
-            canvas.getByRole("combobox", { name: "Event type" }),
+            canvas.getByRole("combobox", { name: EVENT_TYPE_LABEL }),
             "Water"
         );
         await expect(document.querySelectorAll("tbody tr")).toHaveLength(1);
@@ -85,7 +87,7 @@ export const MeasurementsAndFilters: Story = {
             canvas.getByRole("searchbox", { name: "Search this history" })
         );
         await userEvent.selectOptions(
-            canvas.getByRole("combobox", { name: "Event type" }),
+            canvas.getByRole("combobox", { name: EVENT_TYPE_LABEL }),
             "all"
         );
         await expect(document.querySelectorAll("tbody tr")).toHaveLength(4);
@@ -182,7 +184,7 @@ export const TerrariumHumidity: Story = {
             "Not logged"
         );
         await userEvent.selectOptions(
-            canvas.getByRole("combobox", { name: "Event type" }),
+            canvas.getByRole("combobox", { name: EVENT_TYPE_LABEL }),
             "humidity"
         );
         await expect(document.querySelector("tbody")).toHaveTextContent(
@@ -264,7 +266,7 @@ export const InspectionAndLightReadings: Story = {
             document.querySelector("#latest-activity")
         ).toHaveTextContent("Light reading");
         const eventFilter = canvas.getByRole("combobox", {
-            name: "Event type",
+            name: EVENT_TYPE_LABEL,
         });
         await userEvent.selectOptions(eventFilter, "light");
         await expect(document.querySelectorAll("tbody tr")).toHaveLength(6);
@@ -367,4 +369,106 @@ export const InspectionAndLightDesktopDark: Story = {
 export const InspectionAndLightMobileLight: Story = {
     ...InspectionAndLightReadings,
     args: { ...InspectionAndLightReadings.args, theme: "light", width: 390 },
+};
+export const ExtendedCareEvents: Story = {
+    args: {
+        path: "pots/P02/",
+        scenario: "care-events",
+        theme: "dark",
+        width: 390,
+    },
+    play: async ({ canvasElement }) => {
+        const { canvas, document, userEvent } =
+            await websiteCanvas(canvasElement);
+        await waitFor(() =>
+            expect(
+                document.querySelector("#current-location")
+            ).toHaveTextContent("Window")
+        );
+        await expect(
+            document.querySelector("#latest-temperature")
+        ).toHaveTextContent("-2.5 °C");
+        await expect(document.querySelector("#last-watered")).toHaveTextContent(
+            "Not logged"
+        );
+        await expect(
+            document.querySelector("#temperature-chart-summary")
+        ).toHaveTextContent("1 air readings and 1 soil readings");
+        await expect(
+            document.querySelectorAll("#temperature-chart .chart-point")
+        ).toHaveLength(2);
+        await expect(document.querySelector("tbody")).toHaveTextContent(
+            "Fine spray"
+        );
+        await expect(document.querySelector("tbody")).toHaveTextContent(
+            "Lower shelf → Window"
+        );
+        await expect(document.querySelector("tbody")).toHaveTextContent(
+            "8 hours → 10 hours"
+        );
+        await expect(document.querySelector("tbody")).toHaveTextContent(
+            "Two cuttings"
+        );
+        await expect(document.querySelector("tbody")).toHaveTextContent(
+            "Loose tie"
+        );
+        const eventFilter = canvas.getByRole("combobox", {
+            name: EVENT_TYPE_LABEL,
+        });
+        await Promise.all(
+            [
+                "Mist",
+                "Move",
+                "Temperature",
+                "Environment",
+                "Propagate",
+                "Support",
+            ].map(async (name) =>
+                expect(canvas.getByRole("option", { name })).toBeInTheDocument()
+            )
+        );
+        await userEvent.selectOptions(eventFilter, "temperature");
+        await expect(document.querySelector("tbody")).toHaveTextContent(
+            "Air: 0 °C"
+        );
+        await expect(document.querySelector("tbody")).toHaveTextContent(
+            "Entered in °F (32 °F)"
+        );
+        await expect(document.querySelector("tbody")).toHaveTextContent(
+            "Soil: -2.5 °C"
+        );
+        await userEvent.click(
+            canvas.getByRole("button", { name: "Export this plant CSV" })
+        );
+        await waitFor(() =>
+            expect(document.documentElement.dataset["exportedCsv"]).toContain(
+                "Temperature (°C),Temperature target,Temperature entry unit"
+            )
+        );
+        await expect(document.documentElement.dataset["exportedCsv"]).toContain(
+            "Fine spray"
+        );
+        await expect(document.documentElement.dataset["exportedCsv"]).toContain(
+            "Two cuttings"
+        );
+        await expect(document.documentElement.dataset["exportedCsv"]).toContain(
+            "move-original"
+        );
+        await expectNoOverflow(document);
+    },
+};
+
+export const ExtendedCareEventsMobileLight: Story = {
+    ...ExtendedCareEvents,
+    args: { ...ExtendedCareEvents.args, theme: "light" },
+};
+
+export const ExtendedCareEventsDesktop: Story = {
+    ...ExtendedCareEvents,
+    args: { ...ExtendedCareEvents.args, width: 1280 },
+};
+
+export const ExtendedCareEventsDesktopLight: Story = {
+    ...ExtendedCareEvents,
+    args: { ...ExtendedCareEvents.args, theme: "light", width: 1280 },
 };

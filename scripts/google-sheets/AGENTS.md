@@ -2,47 +2,44 @@
 
 ## Runtime and history contract
 
-- This is bound Apps Script. Keep `Index.html` self-contained unless `doGet()`
-  gains templating. `.gs` files share global scope: no Node/browser APIs.
-  Retain ES2023 in `tsconfig.apps-script.json`; align `types/apps-script*.d.ts`
-  without weakening checks for missing globals or invalid fixtures.
+- Bound Apps Script: `.gs` files share global scope without Node/browser APIs.
+  Keep `Index.html` self-contained unless `doGet()` gains templating. Retain
+  ES2023 in `tsconfig.apps-script.json` and align `types/apps-script*.d.ts`
+  without weakening global/fixture checks.
 - Native Apps Script rejects numeric separators; typechecking is not runtime
   proof. Validate new syntax/APIs in a disposable bound script. The cycle
   generator substitutes `sort`/`reverse` for `toSorted`/`toReversed` only on new arrays.
-- History is append-only. One save may create multiple events; P Request ID
-  makes retries idempotent. Keep observation/request/save/batch IDs distinct.
+- History is append-only; one save may create multiple events. P Request ID
+  makes retries idempotent; keep observation/request/save/batch IDs distinct.
   Corrections preview one event, append its replacement and mark the ancestor
-  Removed, retaining provenance. Never delete ledger rows or create a setup for a correction.
+  Removed with provenance. Never delete ledger rows or create a correction setup.
 - Preserve History positions: A:L core observations; M:O formulas; P retry ID;
   Q:Z structured care details; AA:AJ provenance/state; AK:AM entry units and
   inch values; AN rotation degrees; AO watering application; AP measured mL;
   AQ 0–100% RH. Blank differs from zero. Source 5.33.0 appends AR
   `PPFD (µmol/m²/s)` and AS `Illuminance (lux)`, finite nonnegative values.
+  Source 5.35.0 appends AT:BH care fields through column 60, preserving A:AS.
+  Keep normalized Celsius, Air/Soil target, and entry unit separate.
   Verify live rollout and preserve existing headers, data and formulas.
   `installGardenLogger()` can add/verify headers; clearing existing values or
   formulas requires explicit owner authorization.
-- Pot setup is a whole-pot weighing configuration, not pot diameter. A Repot
-  starts the next setup and updates Baselines; old setup readings remain
-  historical and should not affect the new dry/wet average.
+- Pot setup identifies the whole weighed configuration, not diameter. Repot
+  advances it and updates Baselines; exclude old setups from new dry/wet averages.
 
 ## Entry behavior and safety
 
-- Do not ask the user to classify a weight. Keep the canonical `Weight state`
-  field only for backward compatibility, store new weights as `Routine`, and
-  derive state from watering cycles. A weight saved with Water is Wet; when
-  that save has no weight, the first positive reading after Water and within
-  five days is Wet. The last eligible non-Wet weight before the next Water is
-  Dry; later open-cycle weights remain Routine. Water still never implies that
-  a weight exists, and inferred state must not rewrite canonical History.
+- Never ask users to classify weights. Retain `Weight state` for compatibility,
+  store new weights as `Routine`, and derive cycle state without rewriting History.
+  Same-save Water weights are Wet; otherwise use the first positive weight within
+  five days after Water. The last eligible non-Wet weight before the next Water
+  is Dry; open-cycle weights remain Routine. Water never implies a weight.
 - Preserve mobile entries until Google's callback; lock writes, escape
   formula-like text, validate URLs, and make bulk retries idempotent per plant.
-- Water, Weigh, and Measure are event-specific rows even when entered in one
-  save. Water without a weight must remain valid. A bulk water amount is the
-  amount for each applicable pot, not a total to divide across the selection.
-- Humidity is a separate measured event with Hygrometer provenance. Keep it
-  independent of weights, soil moisture, watering cycles, and setup changes.
-  Do not broadcast an enclosure humidity reading through bulk care. App entries
-  appends its humidity field at AI; preserve all earlier staging positions.
+- Water, Weigh, and Measure use separate rows within one save. Allow Water without
+  weight. Bulk water amount applies per pot; never divide it across the selection.
+- Humidity uses Measured / Hygrometer provenance, independent of weight, soil
+  moisture, watering, and setup. Never broadcast it through bulk care. Preserve
+  its App entries AI position and all preceding columns.
 - Inspect requires above-ground Plant condition with Observed / Observed provenance;
   new Check entries require soil moisture and carry no Plant condition. Preserve
   historical condition-only Checks, their corrections, and completed retries.
@@ -52,8 +49,20 @@
 - Light (UI: Light reading) requires PPFD, lux or both; keep blank distinct from zero.
   PPFD uses Estimated / Light app, including combined readings; lux-only uses
   Measured / Lux meter. No quantum-sensor claim, conversion, DLI or inferred care threshold.
-  Keep preset/context in Notes. App entries appends AJ/AK (37 columns); History
-  has 45; App bulk stays 62, excluding Light/Humidity. Align retries, corrections and parsers.
+  Keep preset/context in Notes. The light fields retain AJ/AK in App entries
+  and AR/AS in History; bulk excludes Light/Humidity/Temperature.
+- Mist, Move, Temperature, Environment, Propagate, and Support have event-specific
+  care fields. History is 60 columns (A:BH); App entries is 52 (A:AZ), appending
+  15 fields; App bulk is 74 (A:BV), appending 12 without temperature. Keep all
+  earlier positions and legacy/offline row compatibility. Align retries,
+  corrections, staging mappings, public parsers, and CSV exports.
+- Mist requires listed targets and details for Other; measured mL is optional
+  and positive. Move requires a destination; its previous location is optional.
+  Temperature requires Air/Soil and C/F, stores Celsius, allows zero/negative
+  readings down to absolute zero, and remains single-plant only. Environment
+  requires aspect/new setting; Propagate and Support require their choice/details.
+  None implies Water, a weight, or a setup reset. Record Repot explicitly when
+  the whole weighed configuration changes. Current location uses active history.
 - Progress uses the workbook timezone and a 4 a.m. care-day boundary; drying
   rates use actual observation intervals. Preserve correction ordering and
   exclusions for future, Removed, estimated, invalid, and other-setup readings.
@@ -64,8 +73,8 @@
 
 ## Workbook presentation
 
-- The daily chat/report is the care plan. Keep retired `installDailyCareDashboard()`
-  out of production, menus, refreshes, triggers, and sources.
+- The daily report is the care plan. Exclude retired `installDailyCareDashboard()`
+  from production, menus, refreshes, triggers, and sources.
 - Preserve owner tab order, visibility, formatting, and protections. Quick log
   is hidden for compatibility. Whole-sheet warning protections catch manual
   edits without blocking the logger/AppSheet; keep RO refills A20:I and K20:M
@@ -75,10 +84,9 @@
   `workbook-presentation.mjs` preserves full chart specifications, but the
   native API drops RO chart axis-title colors; edit that chart's remaining
   font in the UI and verify non-font metadata. Keep the theme and data intact.
-- Dashboard check links target Integrity A4:D21. Keep the Integrity formula
-  scan independent of those indicators and free of retired-sheet references.
-  Cover new helper anchors and populated spill ranges when extending the
-  workbook; a zero result is meaningful only for the ranges actually scanned.
+- Dashboard checks link to Integrity A4:D21. Its formula scan excludes those
+  indicators and retired sheets; extend it to new helper anchors and populated
+  spills. Zero errors establishes only that scanned ranges are clear.
 - Keep history headers at A140:L140, its uninterrupted spill at A141:L5139,
   and navigation at A11/A139. Refresh rebuilds rows 1:13 and history; summary
   styles survive, but column widths and selected row heights reset. Reapply
@@ -86,20 +94,18 @@
 
 ## Derived analytics and freshness
 
-- `workbook-analytics.mjs` owns watering summaries, photo/condition/feeding
-  evidence, RO summaries, and the eight-week Watering calendar. These are
-  read-only views, not additional AppSheet input tables. Keep nutrient Yes,
-  No, unknown, and mixed same-day history distinct; a blank empty date means
-  an RO container is "not marked empty," not that it remains full.
+- `workbook-analytics.mjs` owns read-only watering/photo/condition/feeding and
+  RO summaries plus the eight-week Watering calendar, outside AppSheet intake.
+  Distinguish nutrient Yes/No/unknown/mixed same-day history; a blank RO empty
+  date means "not marked empty," never assumed full.
 - Label the latest condition as recorded evidence and retain event, quality,
   method, notes, and timestamp context. A photo-only observation is not proof
   of a physical inspection. Preserve recorded feeding dose units and unknowns;
   past intervals, feeding summaries, and model estimates are not care schedules.
-- `Workbook calculations` contains one correction-aware latest weight/time
-  pair per plant in A:C, the shared clock at E2, and its calendar date at F2.
-  Age-based formulas should share those cells and expose Calculated as of.
-  A cached calculation timestamp is not a fresh observation or an API-read
-  timestamp; keep absolute observation times visible and check freshness.
+- `Workbook calculations` holds correction-aware latest weight/time per plant
+  in A:C, shared clock E2, and calendar date F2. Reuse these for age formulas
+  and expose Calculated as of. Cached calculation time is neither observation
+  nor API-read time; display absolute observations and verify freshness.
 - `Workbook analytics` holds selected-cycle data in A:D and watering-gap
   comparisons in F:H. `cycle-comparison.mjs` generates the maintained
   `GARDEN_CYCLE_COMPARISON` server snippet and formula. Pass native History
@@ -109,7 +115,8 @@
   including indirect references, into custom functions.
 - `workbook-environment.mjs` owns the read-only Light & humidity view and hidden
   Environment data helper. Keep PPFD estimates, lux, and relative humidity in
-  separate units with their own observation timestamps; preserve blank versus zero,
+  separate units with their own observation timestamps. Air and soil temperature
+  also remain separate Celsius series; preserve blank versus zero,
   corrections, and original location/preset notes. Do not infer that older readings
   were taken at canopy height or add either derived sheet as an AppSheet input.
 - Bound lookups to current inventory; regenerate on additions. Compare optimization
@@ -119,23 +126,19 @@
 
 - For chart-only migrations, follow `INSIGHTS-CHARTS.md` and its request builder;
   do not refresh the whole workbook/pages or deploy Apps Script just to add charts.
-- `plant-chart-layout.mjs` copies P01 styling by verified chart role and binding.
-  Retain bindings/colors and axis maxima; derive width from visible A:J columns.
-  Derive floors from fresh plotted minima with a 250 g base and measured
-  headroom. Preserve automatic/existing maxima and verify rendered ticks;
-  native rounding can differ from the configured floor. Keep weight labels
-  off, markers/hover intact, and recheck all captured preconditions.
+- `plant-chart-layout.mjs` copies P01 styling by verified role/binding. Preserve
+  bindings/colors and maxima; use visible A:J width and fresh plotted minima
+  with a 250 g base/measured headroom for floors. Verify rendered ticks despite
+  native rounding; keep weight labels off and markers/hover intact. Recheck preconditions.
 - `plant-page-presentation.mjs` styles A1:J38 with guarded labels, merges,
   formulas, formats, and dimensions. Preserve formulas, evidence, and full
   notes. Never run a broad workbook refresh merely to apply these styles.
 - Chart pixels and row heights are independent. Validate gaps around all four
   charts, A109's status, A139's backlink, and A140's history. Follow the guide's
   scoped row heights; reject hidden boundary rows and avoid sheet-wide autofit.
-- `workbook-upgrade.mjs` is a guarded one-time migration, not a refresh command.
-  Recheck its captured cell preconditions and empty destinations immediately
-  before writing. Apply preparation, then formulas, verify their calculated
-  outputs, and only then create charts. Stop on drift or an already-installed
-  destination instead of clearing cells or replaying the migration blindly.
+- `workbook-upgrade.mjs` is one-time: recheck captured cells and empty destinations
+  immediately before writing. Apply preparation, formulas, verify calculations,
+  then create charts. Stop on drift or installed destinations; never clear/replay.
 - Preserve chart IDs and specifications/positions outside the reviewed changes.
   Basic metadata may omit charts; no-op `findReplace` with
   `include_spreadsheet_in_response: true` and no grid data returns full metadata.
@@ -147,34 +150,33 @@
   same-day entries across setups/applications. Fewer than two dates stays blank.
   Never invent a first interval, plot an unfinished gap, or turn gaps into care
   schedules. Preserve the 5,000-row limit and `plant-colors.json` palette.
-- Empty native charts retain range bindings but can lose series color, labels,
-  and vertical-axis options. Verify an empty-to-populated transition on a copy;
-  once real intervals exist, reapply the planned chart specification if needed.
-  Do not seed production with fake observations or add a styling-only trigger.
+- Empty native charts can lose colors, labels, and vertical-axis options while
+  retaining bindings. Test empty-to-populated transitions on a copy; reapply
+  planned specs after real intervals if needed. No fake production observations
+  or styling-only triggers.
 
 - After behavior/schema changes, run `npm run test:logger`,
   `npm run test:logger:coverage`, and `npm run check:logger`. Synchronize server,
   client, contract checks, AppSheet mappings, and regressions.
-- For `.gs` changes, also run `npm run lint:apps-script` and
-  `npm run typecheck:apps-script`. For client changes, check maintained inline
-  HTML/styles and the client tests. Only the explicit
-  `npm run sync:logger-artwork` command updates generated client icons/revision;
-  website builds leave them unchanged. Inspect synchronized artwork and its
-  published asset dependencies before deploying an authorized logger update.
+- For `.gs`, run `npm run lint:apps-script` and `npm run typecheck:apps-script`.
+  For client changes, check inline HTML/styles and client tests. Only explicit
+  `npm run sync:logger-artwork` updates client icons/revision; site builds do not.
+  Inspect synchronized artwork and published dependencies before deployment.
 - Before live writes, back up in native Drive; freshly read headers, formulas,
   validations, last rows, request IDs, staging schemas, deployment, and triggers.
-- Keep full native before/after metadata and cells in ignored private storage.
-  For derived-view migrations, compare History, staging, RO entries/formulas,
-  chart IDs/specifications/positions, protections, and relative tab order exactly.
-  Rehearse structural changes on a native workbook/script copy.
-- Drive copies include the bound script; update it without competing functions.
-  Never replay `sortSpecs` when extending History's BasicFilter: it re-sorts the ledger.
-- History changes must align `plant-tracker.gs` constants/row builders, logger
-  tests/checker, public parsing/CSV exports, this runbook, and AppSheet columns.
-  Run `installGardenLogger()`/`installAppSheetIntake()` only after source/tests agree.
+- Keep native before/after metadata/cells privately ignored. Rehearse structure
+  on a native workbook/script copy; compare History, staging, RO entries/formulas,
+  chart IDs/specs/positions, protections, and relative tab order exactly.
+- Drive copies include the bound script; avoid competing functions. Never replay
+  `sortSpecs` when extending History's BasicFilter: it re-sorts the ledger.
+- Native column appends inherit prior-column validation. Clear only new ranges'
+  validations, then apply their own rules; preserve existing-column validations.
+- Align History changes across server constants/row builders, tests/checker,
+  public parsers/CSV, runbook, and AppSheet. Run `installGardenLogger()` and
+  `installAppSheetIntake()` only after source/tests agree.
 - `npm run apps-script:status` must show only `plant-tracker.gs`, `Index.html`,
-  and `appsscript.json` in the clasp push set. Updating checked-in code or
-  running `clasp push` does not update the versioned web app by itself.
+  and `appsscript.json`. Neither source edits nor `clasp push` updates the
+  versioned web app.
 - For authorized releases, create an immutable version and update the existing
   deployment, preserving the phone URL. Run installers/reinstall the queue trigger
   only for contract changes. Verify `Connected · Logger <version>`, successful

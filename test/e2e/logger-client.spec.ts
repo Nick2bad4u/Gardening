@@ -48,6 +48,23 @@ const expectCompactHistory = async (page: Readonly<Page>) => {
         "Collection plant 1 · Water · Sep 9, 2026, 10:00 AM. Show event details",
         { exact: true }
     );
+    expect
+        .soft(
+            await disclosure.evaluate((summary) => {
+                const portrait = summary.querySelector(
+                    ".recent-compact-portrait"
+                );
+                const rect = portrait?.getBoundingClientRect();
+                return {
+                    eventIcon: summary
+                        .querySelector(":scope svg use")
+                        ?.getAttribute("href"),
+                    portraitVisible:
+                        rect !== undefined && rect.width > 0 && rect.height > 0,
+                };
+            })
+        )
+        .toStrictEqual({ eventIcon: "#app-icon-water", portraitVisible: true });
     await disclosure.focus();
     await page.keyboard.press("Enter");
     await expect.soft(correct).toBeVisible();
@@ -115,6 +132,60 @@ const expectPortraitAccess = async (page: Readonly<Page>, width: number) => {
     await expect.soft(portrait).toBeFocused();
 };
 
+const expectEventLayout = async (page: Readonly<Page>) => {
+    const layout = await page
+        .getByRole("form", { name: "Single plant entry" })
+        .evaluate((element) => {
+            const chips = [
+                ...element.querySelectorAll(":scope #eventChips button"),
+            ];
+            const save = element.querySelector("#saveButton");
+            const queue = element.querySelector("#queueButton");
+            const details = element.querySelector("#observedAtDate");
+            return {
+                actions: chips.map((chip) => chip.textContent),
+                clipped: chips
+                    .filter((chip) => chip.scrollWidth > chip.clientWidth + 1)
+                    .map((chip) => chip.textContent),
+                saveBeforeDetails:
+                    save !== null &&
+                    queue !== null &&
+                    details !== null &&
+                    save.getBoundingClientRect().top <
+                        details.getBoundingClientRect().top &&
+                    queue.getBoundingClientRect().top <
+                        details.getBoundingClientRect().top,
+            };
+        });
+    expect.soft(layout).toStrictEqual({
+        actions: [
+            "Water",
+            "Weigh",
+            "Mist",
+            "Humidity",
+            "Temperature",
+            "Light reading",
+            "Soil check",
+            "Inspect",
+            "Measure",
+            "Rotation",
+            "Move",
+            "Environment",
+            "Clean",
+            "Prune",
+            "Support",
+            "Repot",
+            "Propagate",
+            "Flower",
+            "Photo",
+            "Pest",
+            "Other",
+        ],
+        clipped: [],
+        saveBeforeDetails: true,
+    });
+};
+
 const expectSeparateFormControls = async (page: Readonly<Page>) => {
     const form = page.getByRole("form", { name: "Single plant entry" });
     await page.getByRole("button", { exact: true, name: "Inspect" }).click();
@@ -159,7 +230,15 @@ const expectTerrariumContext = async (page: Readonly<Page>) => {
     await expect
         .soft(selected)
         .toContainText("dimension orientation unverified");
-    await expect.soft(selected).toContainText("Pilea cf. depressa");
+    await expect
+        .soft(selected.getByRole("emphasis"))
+        .toHaveText("Fittonia albivenis + Hypoestes phyllostachya");
+    await expect
+        .soft(selected.getByRole("emphasis"))
+        .toHaveAttribute(
+            "title",
+            "Probable Fittonia albivenis + Hypoestes phyllostachya; tentative Pilea cf. depressa; fern-like foliage and moss unidentified"
+        );
     await expect.soft(selected).toContainText("N/A");
     await expect
         .poll(() =>
@@ -347,6 +426,7 @@ for (const theme of ["dark", "light"] as const) {
                 page.on("pageerror", recordError);
                 await openLogger(page, width, theme);
                 await expectBalancedLabels(page, theme);
+                await expectEventLayout(page);
                 await expectSeparateFormControls(page);
                 await expectCompactHistory(page);
                 await expectPortraitAccess(page, width);

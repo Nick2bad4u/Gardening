@@ -1,6 +1,6 @@
 # Google Sheets observation logger
 
-Production logger **5.34.1 / immutable version 108** supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`. The October 10 mobile heading fix below is the latest deployment; the preceding logger and environment refresh records the current workbook contract. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+The last verified production logger, **5.34.1 / immutable version 108**, supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`. The October 10 mobile heading fix below is the last verified deployment baseline; the preceding logger and environment refresh records its workbook contract. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
@@ -26,6 +26,51 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## Maintained 5.35.0 care-event update
+
+The maintained source adds **Mist, Move, Temperature, Environment, Propagate,
+and Support**, making 21 single-plant choices in seven rows of three. Save and
+queue controls sit above Details; compact history includes the plant portrait
+beside the event icon, and chooser descriptions are shorter. See the
+[action guide](../../docs/logger-actions.md) for field choices and examples.
+This section describes the source contract, not a completed production rollout.
+The last verified production baseline remains **5.34.1 / immutable version 108**
+until a new deployment receipt is recorded.
+
+History and History view extend from **A:AS to A:BH (60 columns)**. App entries
+extends from **A:AK to A:AZ (52)**, and App bulk from **A:BJ to A:BV (74)**.
+The [AppSheet contract](../../docs/appsheet-companion.md#maintained-5350-care-event-contract)
+lists every appended field. Existing columns, rows, retry IDs, corrections, and
+formula positions remain intact. Temperature accepts Air or Soil and C/F;
+History stores Celsius plus target and entry unit. Temperature, Humidity, and
+Light remain individual observations. The other five new actions support
+shared Bulk care when the same details apply to each selected pot.
+
+No new event implies Water, Weigh, or a pot-setup reset. Mist does not alter
+watering dates or wet anchors. Move supplies the latest recorded location from
+active history. Support or propagation that changes the weighed assembly needs
+an explicit Repot event to start a fresh setup. Corrections, activity history,
+filters, and CSV exports retain all six events and their own fields.
+
+[`care-events-migration.mjs`](care-events-migration.mjs) guards the native schema
+and environmental-view extension. The reviewed 36-container plan has **54
+preparation requests, 55 formula requests, and four chart requests**; generate
+and inspect the plan against fresh captured state rather than assuming those
+counts authorize a write. Rehearse on a native workbook/script copy after a
+backup, apply preparation and formulas before charts, and verify calculated
+results. Native column appends inherit the previous column's validation; the
+planner clears validation only in the newly appended care ranges before applying
+all 18 field-validation rules used by the installers, including temperature
+minimums and target/unit choices. Existing-column validations stay intact. The [migration procedure](WORKBOOK-ANALYTICS.md#care-events-and-temperature-extension)
+covers the footprint and preservation checks.
+
+The retained **Light & humidity** tab adds separate air/soil latest values and
+dates, latest recorded location/date, and four temperature charts: two collection
+comparisons and two selected-plant plots. Existing chart identities and positions
+are preserved. The website uses one temperature chart with separate Air and Soil
+series, alongside all six new events in activity/history/export views. These
+read-only views do not add another observation input or change watering formulas.
 
 ## October 13 Inspect Integrity repair
 
@@ -113,7 +158,7 @@ helper. It provides independently dated PPFD, lux, and RH summaries, three
 collection comparisons, and three selected-plant history charts. Record new light
 readings at the top of the canopy with position and light-state context in Notes;
 older readings retain their recorded location. No conversion or care threshold
-is inferred. See the [environment chart guide](INSIGHTS-CHARTS.md#light-and-humidity-observations).
+is inferred. See the [environment chart guide](INSIGHTS-CHARTS.md#light-humidity-and-temperature-observations).
 
 P38 remains one terrarium history. Its Houseplants overview records qualified
 visual identifications and seller-listed **6.3 × 3.9 in (16 × 10 cm)** jar dimensions
@@ -2195,9 +2240,10 @@ order makes it clear that the weight is the post-watering reading.
 The AppSheet form contract is:
 
 - `Plant ID` is a required Ref to `Plant tracker`; `Events` is a required
-  EnumList containing Water, Weigh, Measure, Check, Rotation, Clean, Prune,
-  Repot, Flower, Photo, Pest, Other, Humidity, Inspect, and Light in the 5.33.0
-  source contract. Production activation is tracked above.
+  EnumList containing the 21 choices in `WEB_EVENT_OPTIONS`: Water, Weigh, Mist,
+  Humidity, Temperature, Light, Check, Inspect, Measure, Rotation, Move,
+  Environment, Clean, Prune, Support, Repot, Propagate, Flower, Photo, Pest, Other.
+  Production activation is tracked separately above.
 - Event-specific fields use `Show_If` and `Required_If` rules. Weigh requires a
   positive weight. Measure requires at least height or width and accepts inches
   or centimeters. Water records whether nutrients were used. Repot requires a
@@ -2205,6 +2251,12 @@ The AppSheet form contract is:
   Rotation accepts 1–360 degrees with a default of 90. Logger 5.32.0 adds
   a required 0–100 relative-humidity reading when Humidity is selected;
   the Decimal field stores percentage points, not a fractional Percent value.
+- Mist requires targets and details for Other; optional measured mL must be
+  positive. Move requires New location. Temperature requires a finite reading,
+  Air/Soil target, and C/F unit, allowing zero and negative readings down to
+  absolute zero. Environment requires aspect and New setting. Propagate and
+  Support require their method/action and details. The bridge ignores stale
+  hidden fields belonging to unselected events.
 - New measurements default to inches, `Measured`, and `Ruler`; the server still
   normalizes chart values to centimeters while preserving the entered unit and
   derived inch values.
@@ -2212,10 +2264,11 @@ The AppSheet form contract is:
   are system fields. Users may inspect the status but must not edit the receipt.
 
 The `App bulk` contract is deliberately narrower and faster: one row is one
-collection-wide Water, Weigh, Water + weigh, Rotation, Inspect, Check, Clean, Prune,
-Pest, or Other round. It stores `Round ID`, observation time, one action
+collection-wide Water, Weigh, Water + weigh, Mist, Check, Inspect, Rotation, Move,
+Environment, Clean, Prune, Support, Propagate, Pest, or Other round. It stores `Round ID`, observation time, one action
 selector, a compact EnumList of selected plant IDs, a hidden legacy weight-state
-field, optional shared care details, and P01-P30 active gram fields. Empty weight fields are
+field, optional shared care details, and active gram fields for P01–P32 and
+P35–P38. The retired P33/P34 columns remain blank-only compatibility fields. Empty weight fields are
 skipped. `processQueuedAppSheetEntries()` combines the selected IDs and
 nonblank weights into no more than one deterministic
 `appsheet-bulk-{Round ID}-{Plant ID}` request per plant and sends the complete
@@ -2224,13 +2277,15 @@ weight becomes one Water + Weigh request; a selected plant without a weight is
 Water-only; a non-selected plant with a weight is Weigh-only. New canonical
 weight rows are stored as `Routine`; current-setup Dry/Wet/Routine labels are
 derived when the workbook, logger, or public tracker reads them.
-Other bulk actions use the selected IDs and their shared rotation, check, pest,
-nutrient, or note fields without fabricating per-plant values.
+Other bulk actions use the selected IDs and their shared event-specific fields
+without fabricating per-plant values. Temperature, Light, and Humidity remain
+individual readings; their fields are absent from bulk staging.
 
 In AppSheet, `Selected plants` is an EnumList of refs whose `Valid_If` is
 `SORT(Plant tracker[Plant ID])`. Keep that expression in place so shared-action
-rounds can select all current P01-P30 records after the source schema changes.
-The `Round action` validation must also cover all 30 active weight fields and require the deprecated P31/P32 fields blank; keep
+rounds can select every current active record after the source schema changes.
+The `Round action` validation must cover all 36 active weight fields and require
+the retired P33/P34 fields blank; keep
 it aligned with [`appsheet-bulk-validation.txt`](./appsheet-bulk-validation.txt).
 The prior P01-P22-only check rejected valid weigh-only rounds for newer plants.
 `Nutrient amount` is Text in AppSheet, matching the Apps Script contract and
@@ -2244,8 +2299,8 @@ logger 5.10 weight-only header safely, then verifies the current headers,
 validation, formatting, and hidden receipt columns.
 
 Keep the `Detailed log` form's column order explicit so receipt fields cannot drift
-back into the entry surface when the source schema changes. The form ends with
-`Treatment / action`, omits `Status`, `Status message`, and `Saved at`, and keeps
+back into the entry surface when the source schema changes. Place the new care
+fields with their event details, omit `Status`, `Status message`, and `Saved at`, and keep
 Save/Cancel at the top for long phone forms. Read-only plant and History cards
 must not expose edit or delete actions; their action bars are limited to useful
 navigation such as `Detailed log`, the field guide, and the referenced plant. The
@@ -2528,16 +2583,17 @@ installable trigger is not required.
   height/width inch conversions; AN stores rotation degrees; AO:AP store
   watering application plus optional measured milliliters; and 5.32.0
   appends relative humidity in AQ. The 5.33.0 source appends PPFD and illuminance
-  in AR:AS and writes the entire A:AS record
-  block in one call so a failed service call cannot
+  in AR:AS. Source 5.35.0 appends 15 care fields in AT:BH, including canonical
+  Celsius, Air/Soil target, and original temperature unit, and writes the entire
+  A:BH record block in one call so a failed service call cannot
   strand a request ID apart from its
   observation. The installer keeps 5,000 History rows available, and workbook
   formulas use that same bound so new observations cannot outgrow the derived
   dashboards silently.
-- The Bulk care tab can append Water, Inspect, Check, Rotation, Clean, Prune, Pest, or
-  Other rows for every selected plant with shared details. Use single-plant
-  mode for weights, measurements, repots, flowers, and photos because those
-  values differ by plant.
+- The Bulk care tab can append Water, Mist, Check, Inspect, Rotation, Move,
+  Environment, Clean, Prune, Support, Propagate, Pest, or Other rows for every selected plant with shared details. Use single-plant
+  mode for weights, measurements, repots, flowers, photos, and Temperature,
+  Light, or Humidity readings because those values differ by plant.
 - Photo events accept Google Photos share links and exact Gyazo capture links.
   **Open Google Photos** hands
   off to the app when the phone/browser supports Google Photos links, otherwise
