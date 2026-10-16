@@ -8172,32 +8172,7 @@ function correctionValidateDependencies_(row, changes) {
     /** @param {...string} keys @returns {boolean} */
     const changed = (...keys) =>
         keys.some((key) => Object.hasOwn(changes, key));
-    if (
-        [
-            "Mist",
-            "Move",
-            "Temperature",
-            "Environment",
-            "Propagate",
-            "Support",
-        ].includes(row[2])
-    ) {
-        const payload = Object.fromEntries(
-            HISTORY_CARE_FIELDS.map((field, index) => [field, row[45 + index]])
-        );
-        payload["temperature"] = row[50];
-        payload["temperatureUnit"] = "C";
-        const validated = eventDetailsFromPayload_(payload, [row[2]], null);
-        if (row[2] === "Mist") row[45] = cleanText_(validated.mistTargets);
-        if (row[2] === "Temperature") {
-            if (!["C", "F"].includes(row[52]))
-                throw correctionValidationError_(
-                    "INVALID_CORRECTION: Temperature entry unit must be C or F."
-                );
-            row[28] = "Measured";
-            row[34] = "Thermometer";
-        }
-    }
+    correctionValidateCareDetails_(row);
     if (row[2] === "Light") {
         if (row[43] === "" && row[44] === "") {
             throw correctionValidationError_(
@@ -8236,6 +8211,36 @@ function correctionValidateDependencies_(row, changes) {
         throw correctionValidationError_(
             "INVALID_CORRECTION: Keep a flower count or details."
         );
+    }
+}
+
+/** @param {GardenCorrectionCanonicalRow} row @returns {void} */
+function correctionValidateCareDetails_(row) {
+    if (
+        [
+            "Mist",
+            "Move",
+            "Temperature",
+            "Environment",
+            "Propagate",
+            "Support",
+        ].includes(row[2])
+    ) {
+        const payload = Object.fromEntries(
+            HISTORY_CARE_FIELDS.map((field, index) => [field, row[45 + index]])
+        );
+        payload["temperature"] = row[50];
+        payload["temperatureUnit"] = "C";
+        const validated = eventDetailsFromPayload_(payload, [row[2]], null);
+        if (row[2] === "Mist") row[45] = cleanText_(validated.mistTargets);
+        if (row[2] === "Temperature") {
+            if (!["C", "F"].includes(row[52]))
+                throw correctionValidationError_(
+                    "INVALID_CORRECTION: Temperature entry unit must be C or F."
+                );
+            row[28] = "Measured";
+            row[34] = "Thermometer";
+        }
     }
 }
 
@@ -12026,13 +12031,13 @@ function ensureHistoryCareColumns_(history, configureColumn = false) {
     ) {
         range.setValues([[...HISTORY_CARE_HEADERS]]);
         clearCareColumnValidations_(history, [
-            ...Array(45).fill(""),
+            ...Array.from({ length: 45 }, () => ""),
             ...HISTORY_CARE_HEADERS,
         ]);
     }
     if (!configureColumn) return;
     configureCareColumns_(history, [
-        ...Array(45).fill(""),
+        ...Array.from({ length: 45 }, () => ""),
         ...HISTORY_CARE_HEADERS,
     ]);
     const rows = Math.max(1, history.getMaxRows() - 1);
@@ -12096,11 +12101,8 @@ const HISTORY_CARE_EVENTS = Object.freeze([
 function historyCareRow_(details, event) {
     return HISTORY_CARE_FIELDS.map((field, index) => {
         const value = details[field];
-        return HISTORY_CARE_EVENTS[index] === event
-            ? typeof value === "number"
-                ? value
-                : safeSheetText_(value)
-            : "";
+        if (HISTORY_CARE_EVENTS[index] !== event) return "";
+        return typeof value === "number" ? value : safeSheetText_(value);
     });
 }
 /** @param {unknown} value @param {readonly string[]} options @param {string} label */
@@ -12118,59 +12120,13 @@ function requiredCareText_(value, label) {
 }
 /** @param {GardenObservationDetails} details @param {GardenEventDetailPayload | null | undefined} payload @param {string[]} events */
 function addCareDetails_(details, payload, events) {
-    if (events.includes("Mist")) {
-        const selected = appSheetEventList_(payload?.mistTargets);
-        if (
-            !selected.length ||
-            selected.some((target) => !MIST_TARGET_OPTIONS.includes(target))
-        )
-            throw new Error("Choose at least one listed mist target.");
-        details.mistTargets = MIST_TARGET_OPTIONS.filter((target) =>
-            selected.includes(target)
-        ).join(", ");
-        const amount = payload?.mistAmountMl;
-        if (
-            amount !== undefined &&
-            amount !== null &&
-            typeof amount !== "string" &&
-            typeof amount !== "number"
-        )
-            throw new Error("Mist amount must be a positive finite number.");
-        details.mistAmountMl = optionalPositiveNumber_(amount, "Mist amount");
-        details.mistDetails = cleanText_(payload?.mistDetails);
-        if (selected.includes("Other") && !details.mistDetails)
-            throw new Error("Describe the other mist target.");
-    }
+    if (events.includes("Mist")) addMistDetails_(details, payload);
     if (events.includes("Move")) {
         details.moveFrom = cleanText_(payload?.moveFrom);
         details.moveTo = requiredCareText_(payload?.moveTo, "New location");
     }
-    if (events.includes("Temperature")) {
-        const raw = payload?.temperature;
-        if (
-            (typeof raw !== "string" && typeof raw !== "number") ||
-            String(raw).trim() === "" ||
-            !Number.isFinite(Number(raw))
-        )
-            throw new Error("Enter a finite temperature reading.");
-        details.temperatureUnit = requiredCareChoice_(
-            payload?.temperatureUnit,
-            ["C", "F"],
-            "Temperature unit"
-        );
-        details.temperatureTarget = requiredCareChoice_(
-            payload?.temperatureTarget,
-            TEMPERATURE_TARGET_OPTIONS,
-            "Temperature target"
-        );
-        const converted =
-            details.temperatureUnit === "F"
-                ? ((Number(raw) - 32) * 5) / 9
-                : Number(raw);
-        if (converted < -273.15)
-            throw new Error("Temperature cannot be below absolute zero.");
-        details.temperatureC = converted;
-    }
+    if (events.includes("Temperature"))
+        addTemperatureDetails_(details, payload);
     if (events.includes("Environment")) {
         details.environmentAspect = requiredCareChoice_(
             payload?.environmentAspect,
@@ -12206,6 +12162,59 @@ function addCareDetails_(details, payload, events) {
         );
     }
 }
+/** @param {GardenObservationDetails} details @param {GardenEventDetailPayload | null | undefined} payload */
+function addMistDetails_(details, payload) {
+    const selected = appSheetEventList_(payload?.mistTargets);
+    if (
+        !selected.length ||
+        selected.some((target) => !MIST_TARGET_OPTIONS.includes(target))
+    )
+        throw new Error("Choose at least one listed mist target.");
+    details.mistTargets = MIST_TARGET_OPTIONS.filter((target) =>
+        selected.includes(target)
+    ).join(", ");
+    const amount = payload?.mistAmountMl;
+    if (
+        amount !== undefined &&
+        amount !== null &&
+        typeof amount !== "string" &&
+        typeof amount !== "number"
+    )
+        throw new Error("Mist amount must be a positive finite number.");
+    details.mistAmountMl = optionalPositiveNumber_(amount, "Mist amount");
+    details.mistDetails = cleanText_(payload?.mistDetails);
+    if (selected.includes("Other") && !details.mistDetails)
+        throw new Error("Describe the other mist target.");
+}
+
+/** @param {GardenObservationDetails} details @param {GardenEventDetailPayload | null | undefined} payload */
+function addTemperatureDetails_(details, payload) {
+    const raw = payload?.temperature;
+    if (
+        (typeof raw !== "string" && typeof raw !== "number") ||
+        String(raw).trim() === "" ||
+        !Number.isFinite(Number(raw))
+    )
+        throw new Error("Enter a finite temperature reading.");
+    details.temperatureUnit = requiredCareChoice_(
+        payload?.temperatureUnit,
+        ["C", "F"],
+        "Temperature unit"
+    );
+    details.temperatureTarget = requiredCareChoice_(
+        payload?.temperatureTarget,
+        TEMPERATURE_TARGET_OPTIONS,
+        "Temperature target"
+    );
+    const converted =
+        details.temperatureUnit === "F"
+            ? ((Number(raw) - 32) * 5) / 9
+            : Number(raw);
+    if (converted < -273.15)
+        throw new Error("Temperature cannot be below absolute zero.");
+    details.temperatureC = converted;
+}
+
 /**
  * Read-only environmental observations. No volatile custom-function input.
  * @param {GardenHistoryRow[]} history Native History A:BH.
