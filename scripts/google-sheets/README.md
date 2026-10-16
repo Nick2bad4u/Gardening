@@ -1,6 +1,6 @@
 # Google Sheets observation logger
 
-Production logger **5.35.0 / immutable version 109** supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`. The October 16 care-event rollout below records the current logger and workbook contract. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.35.1 / immutable version 110** supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`. The October 16 cache-refresh patch below records the current deployment; the initial care-event rollout retains the workbook migration receipt. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
@@ -70,6 +70,42 @@ comparisons and two selected-plant plots. Existing chart identities and position
 are preserved. The website uses one temperature chart with separate Air and Soil
 series, alongside all six new events in activity/history/export views. These
 read-only views do not add another observation input or change watering formulas.
+
+## October 16 cache-refresh patch
+
+Logger **5.35.1 / immutable version 110** was deployed at **23:13:24.654 UTC**
+on October 16, 2026, preserving the production URL. Source patch **`13beb85`**
+fixes returning clients that first load a cached 15-event bootstrap: the fresh
+bootstrap now rebuilds event choices and the history filter while preserving
+entered values, selections, focus, and an active save. At **23:14:42 UTC**, an
+independent API read verified Head and immutable version 110 against the exact
+three-file bundle SHA-256
+`5f200a06738e60e963bfcb2841241600e176cc336578597de720e48140ebdc7e`.
+The signed-in logger displays **Connected · Logger 5.35.1**, **21 event choices**,
+and **22 history-filter options**.
+
+Version 110 `doGet` at **23:13:37 UTC** and `getWebAppBootstrap` at **23:13:40 UTC**
+completed successfully; the Head queue execution at **23:13:57 UTC** also completed.
+Exactly one five-minute `processQueuedAppSheetEntries` trigger remains. Desktop and
+390 px phone checks passed in both themes: Save/Queue precede Details, the P35
+subtitle is Shared planter, and compact history includes plant and event SVGs.
+There were no app errors or horizontal overflow, and no observations were submitted.
+
+The isolated 390 px Edge regression upgraded 15 cached choices to 21 while
+retaining a 430 g entry, drafts, selections, focus, filter, and in-flight payload;
+all 21 choices stayed locked until the save callback, with zero errors. All
+**1,332 logger tests** passed; coverage was **99.54% statements, 98.33% branches,
+100% functions, and 99.74% lines**. Main CI at **`e31b4f6`**, including Pages and
+the Sonar quality gate, passed.
+
+This client patch required no workbook migration or AppSheet configuration change;
+**AppSheet 1.100129** remains current. The **23:14:10 UTC** production read retained
+**1,880 observations, 1,880 unique IDs, and 1,534 request groups**, with zero Integrity
+formula errors and no synthetic observations. An independent public-site check at
+**23:06 UTC** read all 60 History headers and 1,880 rows: the tracker showed 36
+containers, P35 showed 28 records and one Water-filter result, and absent
+temperature/location evidence stayed empty. At 390 px there were no console/page
+errors or horizontal overflow.
 
 ## October 16 care-event rollout
 

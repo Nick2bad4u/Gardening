@@ -7,10 +7,12 @@ care/weight rounds, save receipts, dashboards, and per-plant charts without
 creating a second gardening database.
 
 The verified production baseline is **AppSheet 1.100129**, saved and checked
-on October 16, 2026, with logger **5.35.0 / immutable version 109**. The
+on October 16, 2026, with current logger **5.35.1 / immutable version 110**. The
 [logger runbook](../scripts/google-sheets/README.md#october-16-care-event-rollout)
 records the native schema migration and logger deployment. Earlier dated records
 retain their verified historical state.
+The [cache-refresh patch](../scripts/google-sheets/README.md#october-16-cache-refresh-patch)
+updates returning logger clients without changing AppSheet 1.100129 or its schema.
 
 The owner-only
 [AppSheet editor](https://www.appsheet.com/template/AppDef?appName=GardenPlantTracker-903231205-26-08-25&appId=de6fc182-d01e-427b-b46e-a031d7bc4588&quickStart=False)
