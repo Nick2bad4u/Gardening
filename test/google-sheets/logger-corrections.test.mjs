@@ -3164,6 +3164,68 @@ describe("menu exclusion identity recheck", () => {
 });
 
 describe("structured care corrections", () => {
+    it.each([
+        { column: 61, unit: "" },
+        { column: 61, unit: "Kelvin" },
+        { column: 63, unit: "" },
+        { column: 63, unit: "Kelvin" },
+    ])(
+        "rejects a saved Leaf temperature unit at column $column: $unit before appending",
+        ({ column, unit }) => {
+            expect.hasAssertions();
+
+            const model = fixture([
+                observation("Leaf VPD", "original-1", {
+                    28: "Estimated",
+                    34: "Leaf temperature + air/RH",
+                    60: 20,
+                    61: "C",
+                    62: 25,
+                    63: "C",
+                    64: 50,
+                    65: 0.7544,
+                    66: "Calculated",
+                    [column]: unit,
+                }),
+            ]);
+            const before = structuredClone(model.state.rows);
+
+            expect(() => prepare(model)).toThrow(
+                "Leaf and air entry units must be C or F for supplied temperatures."
+            );
+            expect(model.state.rows).toStrictEqual(before);
+            expect(model.state.writes).toBe(0);
+            expect(model.state.properties.size).toBe(0);
+        }
+    );
+
+    it("corrects a leaf-only temperature while preserving an uncalculated VPD and measured provenance", () => {
+        expect.hasAssertions();
+
+        const model = fixture([
+            observation("Leaf VPD", "original-1", {
+                28: "Measured",
+                34: "IR thermometer",
+                60: 20,
+                61: "F",
+                66: "Not calculated",
+            }),
+        ]);
+        const payload = prepare(model, { leafTemperatureC: 0 });
+
+        expect(model.api.saveWebObservationCorrection(payload)).toMatchObject({
+            status: "saved",
+        });
+        expect(stored(model, 3, 61).value).toBe(0);
+        expect(stored(model, 3, 62).value).toBe("F");
+        expect(stored(model, 3, 63).value).toBe("");
+        expect(stored(model, 3, 65).value).toBe("");
+        expect(stored(model, 3, 66).value).toBe("");
+        expect(stored(model, 3, 67).value).toBe("Not calculated");
+        expect(stored(model, 3, 29).value).toBe("Measured");
+        expect(stored(model, 3, 35).value).toBe("IR thermometer");
+    });
+
     it("inspects, corrects and retries the actual generated Leaf VPD observation identity", () => {
         expect.hasAssertions();
 

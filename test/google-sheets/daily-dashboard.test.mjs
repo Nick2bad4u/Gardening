@@ -323,6 +323,17 @@ function fixture(
 }
 
 describe("scoped daily Dashboard presentation", () => {
+    it("rejects an Integrity indicator without a navigation destination", () => {
+        expect.hasAssertions();
+
+        const { api, sheet } = fixture();
+
+        expect(() => api.dailyCareIndicatorFormula_("Fail", 99, "")).toThrow(
+            "Integrity range is required."
+        );
+        expect(sheet("Dashboard").state.writes).toStrictEqual([]);
+    });
+
     it.each([
         [
             1,
