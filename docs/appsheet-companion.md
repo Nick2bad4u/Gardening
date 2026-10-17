@@ -6,13 +6,11 @@ workbook. It supports daily browsing, individual observations, collection-wide
 care/weight rounds, save receipts, dashboards, and per-plant charts without
 creating a second gardening database.
 
-The verified production baseline is **AppSheet 1.100129**, saved and checked
-on October 16, 2026, with current logger **5.35.1 / immutable version 110**. The
-[logger runbook](../scripts/google-sheets/README.md#october-16-care-event-rollout)
-records the native schema migration and logger deployment. Earlier dated records
-retain their verified historical state.
-The [cache-refresh patch](../scripts/google-sheets/README.md#october-16-cache-refresh-patch)
-updates returning logger clients without changing AppSheet 1.100129 or its schema.
+The verified production baseline is **AppSheet 1.100132**, saved and checked
+on October 17, 2026, with logger **5.36.0 / immutable version 111**. The
+[logger runbook](../scripts/google-sheets/README.md#october-17-leaf-vpd-and-logger-reliability-rollout)
+records the native schema migration, Integrity checks, and logger deployment.
+Earlier dated records retain their verified historical state.
 
 The owner-only
 [AppSheet editor](https://www.appsheet.com/template/AppDef?appName=GardenPlantTracker-903231205-26-08-25&appId=de6fc182-d01e-427b-b46e-a031d7bc4588&quickStart=False)
@@ -25,8 +23,8 @@ editor save as a live application change.
 The source contract replaces **Support** with **Leaf VPD** for new single-entry
 choices. There are still 21 single-entry events; bulk removes Support without
 adding Leaf VPD, leaving 14 AppSheet round actions. Stored Support records and
-fields remain readable, correctable, and retryable. The earlier production
-receipt remains the verified live baseline until this update is deployed.
+fields remain readable, correctable, and retryable. The [October 17 receipt](#october-17-leaf-vpd-rollout)
+confirms the saved production configuration.
 
 Preserve History A:BH and App entries A:AZ, then append these seven fields.
 History/History view become **67 physical columns (A:BO)**, App entries becomes
@@ -133,6 +131,33 @@ field order, and visibility/required rules together. Regeneration must preserve
 keys, receipts, retired weight guards, creation-only inventory markers, and
 read-only canonical/helper tables. Verify an independent fresh saved-definition
 comparison and empty forms without submitting synthetic production observations.
+
+## October 17 Leaf VPD rollout
+
+**AppSheet 1.100132** is saved and runnable alongside logger **5.36.0 / immutable
+version 111**. The saved schema contains **70 History attributes, 60 App entries
+attributes, and 75 App bulk attributes**, including existing virtual/system
+fields over **67/59/74 physical columns**. The update preserves all 11 table
+modes and unrelated configuration; canonical and helper tables remain read-only.
+
+The app exposes **21 current single-entry events** and **14 bulk actions**.
+Leaf VPD replaces Support for new single entries and is absent from bulk.
+Historical Support fields, saved records, and supported correction/retry paths
+remain intact. Leaf temperature and paired-air staging headers remain unitless
+with separate entry units; canonical History stores normalized Celsius. Device,
+Calculated, and leaf-only evidence follow the maintained contract above.
+
+The new form previews were inspected and canceled, leaving **zero unsynced
+changes** and no submitted observations. The native migration preserved all
+**1,880 production observations**, old staging data, and RO records/formulas.
+Version 111 `doGet` and `getWebAppBootstrap` completed at **08:18:13 UTC** and
+**08:18:21 UTC** on October 17; the Head queue execution completed at **08:18:57
+UTC**. Exactly **one five-minute `processQueuedAppSheetEntries` trigger** remains.
+The [full rollout receipt](../scripts/google-sheets/README.md#october-17-leaf-vpd-and-logger-reliability-rollout)
+records native rehearsal, preservation comparisons, and validation results.
+A final post-AppSheet readback again confirmed exact preservation of all 1,880
+observations, old staging/RO formulas and values, 64 tabs, 182 charts, and
+125 protections.
 
 ## October 16 care-event rollout
 
