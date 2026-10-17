@@ -82,7 +82,7 @@ const bootstrap = {
         "Temperature",
         "Environment",
         "Propagate",
-        "Support",
+        "Leaf VPD",
     ],
     links: {
         calendar: "https://example.test/calendar",
@@ -1087,7 +1087,11 @@ describe("garden logger daily progress, filtered History and measured charts", (
             queryElement(window.document, "#recentCard", HTMLElement).hidden
         ).toBe(false);
 
-        const expectedEventValues = ["", ...bootstrap.events];
+        const expectedEventValues = [
+            "",
+            ...bootstrap.events,
+            "Support",
+        ];
 
         expect(
             queryElements(
@@ -4229,9 +4233,25 @@ function createLoggerWindow({
     loggerWindows.add(window);
     // Keep the VM clock aligned with test timers for workbook-day rollover.
     Object.defineProperty(window, "Date", { configurable: true, value: Date });
-    Object.defineProperty(window.navigator, "onLine", {
+    Object.defineProperties(window.navigator, {
+        onLine: { configurable: true, value: online },
+    });
+    // Single-window tests grant uncontended locks immediately, matching the
+    // synchronous Google bridge below. Cross-tab tests supply a shared manager
+    // that retains exclusive ownership until the returned promise settles.
+    Object.defineProperty(window.navigator, "locks", {
         configurable: true,
-        value: online,
+        value: {
+            /**
+             * @param {string} name
+             * @param {{ mode: string; ifAvailable: boolean }} options
+             * @param {(lock: { name: string; mode: string }) => unknown} callback
+             */
+            async request(name, options, callback) {
+                const grantedLock = { mode: options.mode, name };
+                return await callback(grantedLock);
+            },
+        },
     });
     window.setTimeout = trackedLoggerTimeout;
     window.clearTimeout = clearTimeout;
@@ -11664,7 +11684,7 @@ describe("garden logger expanded care events", () => {
             "Environment",
             "Clean",
             "Prune",
-            "Support",
+            "Leaf VPD",
             "Repot",
             "Propagate",
             "Flower",
@@ -11860,10 +11880,11 @@ describe("garden logger expanded care events", () => {
             },
         },
         {
-            event: "Support",
+            event: "Leaf VPD",
             values: {
-                supportAction: "Adjust",
-                supportDetails: "Loosened the existing tie",
+                leafTemperature: "22",
+                leafTemperatureUnit: "C",
+                leafVpdSource: "Calculated",
             },
         },
     ])(
@@ -11918,7 +11939,7 @@ describe("garden logger expanded care events", () => {
         }
     );
 
-    it("saves the five shared care actions together and recovers their exact pending fields", () => {
+    it("saves the four shared care actions together and recovers their exact pending fields", () => {
         expect.hasAssertions();
 
         const { calls, window } = createLoggerWindow();
@@ -11933,7 +11954,6 @@ describe("garden logger expanded care events", () => {
             "Move",
             "Environment",
             "Propagate",
-            "Support",
         ])
             selectEvent(window, event, "bulk");
         queryElement(
@@ -11948,8 +11968,6 @@ describe("garden logger expanded care events", () => {
             moveTo: "Upper shelf",
             propagationDetails: "One leaf per plant",
             propagationMethod: "Leaf cutting",
-            supportAction: "Adjust",
-            supportDetails: "Loosened ties",
         };
         for (const [key, value] of Object.entries(shared)) {
             if (key === "mistTargets") continue;
@@ -11987,7 +12005,6 @@ describe("garden logger expanded care events", () => {
                 "Move",
                 "Environment",
                 "Propagate",
-                "Support",
             ],
             plantIds: ["P01"],
         });
@@ -12075,6 +12092,544 @@ describe("garden logger expanded care events", () => {
     });
 });
 
+/** A shared storage area plus promise-held exclusive locks for two tabs. */
+function createCrossTabLoggerPair() {
+    /** @type {Map<string, string>} */
+    const values = new Map();
+    /** @type {Map<string, Promise<void>>} */
+    const held = new Map();
+    const storage = {
+        /** @param {string} key */
+        getItem: (key) => values.get(key) ?? null,
+        /** @param {number} index */
+        key: (index) => values.keys().toArray()[index] ?? null,
+        get length() {
+            return values.size;
+        },
+        /** @param {string} key */
+        removeItem: (key) => values.delete(key),
+        /** @param {string} key @param {string} value */
+        setItem: (key, value) => values.set(key, value),
+    };
+    const locks = {
+        /**
+         * @param {string} name
+         * @param {{ mode: string; ifAvailable: boolean }} options
+         * @param {(lock: { name: string; mode: string } | null) => unknown} callback
+         */
+        async request(name, options, callback) {
+            await Promise.resolve();
+            if (held.has(name) && options.ifAvailable) return callback(null);
+            while (held.has(name)) await held.get(name);
+
+            const pending = /** @type {PromiseWithResolvers<void>} */ (
+                // eslint-disable-next-line canonical/no-use-extend-native -- Standard ES2024 API supported by the required Node 26 runtime.
+                Promise.withResolvers()
+            );
+            held.set(name, pending.promise);
+            try {
+                const grantedLock = { mode: options.mode, name };
+                return await callback(grantedLock);
+            } finally {
+                held.delete(name);
+                pending.resolve();
+            }
+        },
+    };
+    const create = () =>
+        createLoggerWindow({
+            configureWindow(window) {
+                Object.defineProperty(window, "localStorage", {
+                    value: storage,
+                });
+                Object.defineProperty(window.navigator, "locks", {
+                    value: locks,
+                });
+            },
+        });
+    return { first: create(), second: create(), values };
+}
+
+/** @param {Window} window @param {string} grams */
+function enterQueuedWeight(window, grams) {
+    const input = queryElement(window.document, "#weight", HTMLInputElement);
+    input.value = grams;
+    input.dispatchEvent(new window.Event("input", { bubbles: true }));
+    queryElement(window.document, "#queueButton", HTMLButtonElement).click();
+}
+
+/** Drain only promise jobs used by the browser-lock bridge. */
+async function settleQueueLocks() {
+    for (let index = 0; index < 12; index += 1) await Promise.resolve();
+}
+
+describe("exclusive cross-tab queue coordination", () => {
+    it("preserves both stale tabs' additions and never resurrects a removed observation", async () => {
+        expect.hasAssertions();
+
+        const { first, second, values } = createCrossTabLoggerPair();
+        await settleQueueLocks();
+        enterQueuedWeight(first.window, "431");
+        await settleQueueLocks();
+        enterQueuedWeight(second.window, "432");
+        await settleQueueLocks();
+
+        expect(
+            parseStoredQueue(
+                values.get("gardenLoggerObservationQueueV1") ?? null
+            ).map((entry) => entry.payload.weight)
+        ).toStrictEqual(["431", "432"]);
+
+        queryElement(
+            first.window.document,
+            "[data-remove-queue]",
+            HTMLButtonElement
+        ).click();
+        await settleQueueLocks();
+        enterQueuedWeight(second.window, "433");
+        await settleQueueLocks();
+        const stored = required(values.get("gardenLoggerObservationQueueV1"));
+
+        expect(
+            parseStoredQueue(stored).map((entry) => entry.payload.weight)
+        ).toStrictEqual(["432", "433"]);
+        expect(values.get("gardenLoggerObservationQueueBackupV1")).toBe(stored);
+    });
+
+    it("clears only observations shown when a stale tab confirmed Clear queue", async () => {
+        expect.hasAssertions();
+
+        const { first, second, values } = createCrossTabLoggerPair();
+        await settleQueueLocks();
+        enterQueuedWeight(first.window, "431");
+        await settleQueueLocks();
+        enterQueuedWeight(second.window, "432");
+        await settleQueueLocks();
+        Object.defineProperty(first.window, "confirm", { value: () => true });
+        queryElement(
+            first.window.document,
+            "#queueClearButton",
+            HTMLButtonElement
+        ).click();
+        await settleQueueLocks();
+
+        expect(
+            parseStoredQueue(
+                values.get("gardenLoggerObservationQueueV1") ?? null
+            ).map((entry) => entry.payload.weight)
+        ).toStrictEqual(["432"]);
+    });
+
+    it("holds ownership through a delayed send and ignores its late duplicate callback", async () => {
+        expect.hasAssertions();
+
+        const { first, second, values } = createCrossTabLoggerPair();
+        await settleQueueLocks();
+        enterQueuedWeight(first.window, "431");
+        await settleQueueLocks();
+        /**
+         * @type {Parameters<
+         *           NonNullable<
+         *               import("../logger-fixtures.d.ts").ScriptBehaviors["saveWebObservationBatch"]
+         *           >
+         *       >[0]
+         *     | undefined}
+         */
+        let send;
+        first.behaviors.saveWebObservationBatch = (request) => {
+            send = request;
+        };
+        queryElement(
+            first.window.document,
+            "#queueSendButton",
+            HTMLButtonElement
+        ).click();
+        await settleQueueLocks();
+        const attempted = required(
+            values.get("gardenLoggerObservationQueueV1")
+        );
+        enterQueuedWeight(second.window, "432");
+        await settleQueueLocks();
+
+        expect(values.get("gardenLoggerObservationQueueV1")).toBe(attempted);
+        expect(
+            queryElement(second.window.document, "#weight", HTMLInputElement)
+                .value
+        ).toBe("432");
+        expect(
+            queryElement(
+                second.window.document,
+                "#queueStorageWarning",
+                HTMLElement
+            ).textContent
+        ).toMatch(/another logger tab/v);
+
+        const result = {
+            results: required(send).args[0].map((entry) => ({
+                ok: true,
+                requestId: entry.requestId,
+            })),
+        };
+        required(send).success(result);
+        await settleQueueLocks();
+
+        expect(
+            parseStoredQueue(
+                values.get("gardenLoggerObservationQueueV1") ?? null
+            )
+        ).toHaveLength(0);
+
+        enterQueuedWeight(second.window, "432");
+        await settleQueueLocks();
+        required(send).success(result);
+
+        expect(
+            parseStoredQueue(
+                values.get("gardenLoggerObservationQueueV1") ?? null
+            ).map((entry) => entry.payload.weight)
+        ).toStrictEqual(["432"]);
+    });
+
+    it("keeps ordinary Save available when Web Locks are unavailable", () => {
+        expect.hasAssertions();
+
+        const { calls, window } = createLoggerWindow({
+            configureWindow(browser) {
+                Object.defineProperty(browser.navigator, "locks", {
+                    value: null,
+                });
+            },
+        });
+
+        expect(
+            queryElement(window.document, "#queueButton", HTMLButtonElement)
+                .disabled
+        ).toBe(true);
+        expect(
+            queryElement(window.document, "#saveButton", HTMLButtonElement)
+                .disabled
+        ).toBe(false);
+
+        const weight = queryElement(
+            window.document,
+            "#weight",
+            HTMLInputElement
+        );
+        weight.value = "431";
+        weight.dispatchEvent(new window.Event("input", { bubbles: true }));
+        queryElement(
+            window.document,
+            "#entryForm",
+            HTMLFormElement
+        ).dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
+
+        expect(calls.some((call) => call.method === "saveWebObservation")).toBe(
+            true
+        );
+        expect(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        ).toBeNull();
+    });
+});
+
+/** @param {Window} window */
+function copyLoggerStorage(window) {
+    /** @type {Record<string, string>} */
+    const values = {};
+    for (let index = 0; index < window.localStorage.length; index += 1) {
+        const key = required(window.localStorage.key(index));
+        values[key] = required(window.localStorage.getItem(key));
+    }
+    return values;
+}
+
+/** @param {Window} window */
+function ordinaryDraftKeys(window) {
+    return Object.keys(copyLoggerStorage(window)).filter((key) =>
+        key.startsWith("gardenLoggerEntryDraftV1:")
+    );
+}
+
+describe("ordinary unsent entry recovery", () => {
+    it("retains raw partial values and a fixed time, then resumes only on request", () => {
+        expect.hasAssertions();
+
+        const first = createLoggerWindow();
+        const weight = queryElement(
+            first.window.document,
+            "#weight",
+            HTMLInputElement
+        );
+        const notes = queryElement(
+            first.window.document,
+            "#notes",
+            HTMLTextAreaElement
+        );
+        weight.value = "499";
+        weight.dispatchEvent(
+            new first.window.Event("input", { bubbles: true })
+        );
+        notes.value = "  unfinished note\nkeep spacing  ";
+        notes.dispatchEvent(new first.window.Event("input", { bubbles: true }));
+        const observed = queryElement(
+            first.window.document,
+            "#observedAt",
+            HTMLInputElement
+        );
+        observed.value = "2026-10-15T18:45";
+        observed.dispatchEvent(
+            new first.window.Event("input", { bubbles: true })
+        );
+        const stored = copyLoggerStorage(first.window);
+
+        expect(ordinaryDraftKeys(first.window)).toHaveLength(1);
+
+        const reloaded = createLoggerWindow({ storage: stored });
+
+        expect(
+            queryElement(
+                reloaded.window.document,
+                "#entryDraftBanner",
+                HTMLElement
+            ).hidden
+        ).toBe(false);
+        expect(
+            queryElement(reloaded.window.document, "#weight", HTMLInputElement)
+                .value
+        ).toBe("");
+
+        queryElement(
+            reloaded.window.document,
+            "#entryDraftResume",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(reloaded.window.document, "#weight", HTMLInputElement)
+                .value
+        ).toBe("499");
+        expect(
+            queryElement(
+                reloaded.window.document,
+                "#notes",
+                HTMLTextAreaElement
+            ).value
+        ).toBe(notes.value);
+
+        const restoredTime = queryElement(
+            reloaded.window.document,
+            "#observedAt",
+            HTMLInputElement
+        );
+
+        expect(restoredTime.value).toBe("2026-10-15T18:45");
+        expect(restoredTime.dataset["timeMode"]).toBe("fixed");
+        expect(
+            queryElement(
+                reloaded.window.document,
+                '[data-event="Weigh"]',
+                HTMLButtonElement
+            ).getAttribute("aria-pressed")
+        ).toBe("true");
+        expect(
+            reloaded.calls.some((call) => call.method.startsWith("save"))
+        ).toBe(false);
+        expect(ordinaryDraftKeys(reloaded.window)).toHaveLength(1);
+    });
+
+    it("preserves automatic observation time instead of fixing it to the old draft time", () => {
+        expect.hasAssertions();
+
+        const first = createLoggerWindow();
+        const notes = queryElement(
+            first.window.document,
+            "#notes",
+            HTMLTextAreaElement
+        );
+        notes.value = "Return to this later";
+        notes.dispatchEvent(new first.window.Event("input", { bubbles: true }));
+        const reloaded = createLoggerWindow({
+            storage: copyLoggerStorage(first.window),
+        });
+        queryElement(
+            reloaded.window.document,
+            "#entryDraftResume",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(
+                reloaded.window.document,
+                "#observedAt",
+                HTMLInputElement
+            ).dataset["timeMode"]
+        ).toBe("now");
+        expect(
+            queryElement(
+                reloaded.window.document,
+                "#observedAt",
+                HTMLInputElement
+            ).dataset["timeInstant"]
+        ).toBe("");
+    });
+
+    it("restores an unsent bulk selection and its exact condition without submitting it", () => {
+        expect.hasAssertions();
+
+        const first = createLoggerWindow();
+        queryElement(
+            first.window.document,
+            "#bulkModeTab",
+            HTMLButtonElement
+        ).click();
+        queryElement(
+            first.window.document,
+            "#bulkSelectVisible",
+            HTMLButtonElement
+        ).click();
+        const condition = queryElement(
+            first.window.document,
+            "#bulkCondition",
+            HTMLInputElement
+        );
+        condition.value = "All firm; check one lower leaf later";
+        condition.dispatchEvent(
+            new first.window.Event("input", { bubbles: true })
+        );
+        const reloaded = createLoggerWindow({
+            storage: copyLoggerStorage(first.window),
+        });
+        queryElement(
+            reloaded.window.document,
+            "#entryDraftResume",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(
+                reloaded.window.document,
+                "#bulkWaterForm",
+                HTMLFormElement
+            ).hidden
+        ).toBe(false);
+        expect(
+            queryElement(
+                reloaded.window.document,
+                "#bulkCondition",
+                HTMLInputElement
+            ).value
+        ).toBe(condition.value);
+        expect(
+            queryElements(
+                reloaded.window.document,
+                "#bulkPlantList input:checked",
+                HTMLInputElement
+            )
+        ).toHaveLength(2);
+        expect(
+            reloaded.calls.some((call) => call.method.startsWith("save"))
+        ).toBe(false);
+    });
+
+    it("keeps tabs' drafts separate and discards only the selected retained draft", async () => {
+        expect.hasAssertions();
+
+        const { first, second, values } = createCrossTabLoggerPair();
+        await settleQueueLocks();
+        for (const [logger, text] of /** @type {const} */ ([
+            [first, "First tab draft"],
+            [second, "Second tab draft"],
+        ])) {
+            const notes = queryElement(
+                logger.window.document,
+                "#notes",
+                HTMLTextAreaElement
+            );
+            notes.value = text;
+            notes.dispatchEvent(
+                new logger.window.Event("input", { bubbles: true })
+            );
+        }
+        await settleQueueLocks();
+
+        expect(
+            values
+                .keys()
+                .filter((key) => key.startsWith("gardenLoggerEntryDraftV1:"))
+                .toArray()
+        ).toHaveLength(2);
+
+        const reloaded = createLoggerWindow({
+            storage: Object.fromEntries(values),
+        });
+        const selected = queryElement(
+            reloaded.window.document,
+            "#entryDraftChoice",
+            HTMLSelectElement
+        ).value;
+        const notes = queryElement(
+            reloaded.window.document,
+            "#notes",
+            HTMLTextAreaElement
+        );
+        notes.value = "Current entry stays here";
+        notes.dispatchEvent(
+            new reloaded.window.Event("input", { bubbles: true })
+        );
+        queryElement(
+            reloaded.window.document,
+            "#entryDraftDiscard",
+            HTMLButtonElement
+        ).click();
+
+        expect(reloaded.window.localStorage.getItem(selected)).toBeNull();
+        expect(ordinaryDraftKeys(reloaded.window)).toHaveLength(2);
+        expect(notes.value).toBe("Current entry stays here");
+    });
+
+    it("clears its draft after durable queueing but preserves it when queue persistence fails", () => {
+        expect.hasAssertions();
+
+        const first = createLoggerWindow();
+        const notes = queryElement(
+            first.window.document,
+            "#notes",
+            HTMLTextAreaElement
+        );
+        notes.value = "Retain until queued";
+        notes.dispatchEvent(new first.window.Event("input", { bubbles: true }));
+
+        expect(ordinaryDraftKeys(first.window)).toHaveLength(1);
+
+        enterQueuedWeight(first.window, "431");
+
+        expect(ordinaryDraftKeys(first.window)).toHaveLength(0);
+
+        notes.value = "Keep after failure";
+        notes.dispatchEvent(new first.window.Event("input", { bubbles: true }));
+        const setItem = first.window.localStorage.setItem.bind(
+            first.window.localStorage
+        );
+        vi.spyOn(first.window.localStorage, "setItem").mockImplementation(
+            (key, value) => {
+                if (key === "gardenLoggerObservationQueueV1")
+                    throw new Error("Storage full");
+                setItem(key, value);
+            }
+        );
+        enterQueuedWeight(first.window, "432");
+
+        expect(ordinaryDraftKeys(first.window)).toHaveLength(1);
+        expect(notes.value).toBe("Keep after failure");
+        expect(
+            queryElement(first.window.document, "#weight", HTMLInputElement)
+                .value
+        ).toBe("432");
+    });
+});
+
 describe("garden logger cached event roster upgrades", () => {
     afterEach(restoreLoggerMocks);
 
@@ -12082,10 +12637,10 @@ describe("garden logger cached event roster upgrades", () => {
         (event) =>
             ![
                 "Environment",
+                "Leaf VPD",
                 "Mist",
                 "Move",
                 "Propagate",
-                "Support",
                 "Temperature",
             ].includes(event)
     );
@@ -12104,7 +12659,7 @@ describe("garden logger cached event roster upgrades", () => {
         "Environment",
         "Clean",
         "Prune",
-        "Support",
+        "Leaf VPD",
         "Repot",
         "Propagate",
         "Flower",
@@ -12172,7 +12727,11 @@ describe("garden logger cached event roster upgrades", () => {
                 "#recentEvent option",
                 HTMLOptionElement
             ).map((option) => option.value)
-        ).toStrictEqual(["", ...orderedEvents]);
+        ).toStrictEqual([
+            "",
+            ...orderedEvents,
+            "Support",
+        ]);
         expect(
             queryElement(window.document, "#recentEvent", HTMLSelectElement)
                 .value
@@ -12435,5 +12994,320 @@ describe("garden logger cached event roster upgrades", () => {
             )
         ).toStrictEqual(options);
         expect(window.document.activeElement).toBe(focused);
+    });
+});
+
+describe("leaf VPD entry and history capacity", () => {
+    afterEach(restoreLoggerMocks);
+
+    it.each([
+        { air: "25", humidity: "50", leaf: "22", result: "1.06", unit: "C" },
+        { air: "77", humidity: "50", leaf: "71.6", result: "1.06", unit: "F" },
+        { air: "25", humidity: "100", leaf: "0", result: "-2.56", unit: "C" },
+    ])(
+        "queues raw paired readings in $unit and previews a signed estimate",
+        ({ air, humidity, leaf, result, unit }) => {
+            expect.hasAssertions();
+
+            const { window } = createLoggerWindow();
+            queryElement(
+                window.document,
+                '[data-event="Leaf VPD"]',
+                HTMLButtonElement
+            ).click();
+            changeWorkflowSelect(window, "leafTemperatureUnit", unit);
+            changeWorkflowSelect(window, "leafAirTemperatureUnit", unit);
+            enterWorkflowValue(window, "leafTemperature", leaf);
+            enterWorkflowValue(window, "leafAirTemperature", air);
+            enterWorkflowValue(window, "leafHumidity", humidity);
+            enterWorkflowValue(window, "leafVpd", "9.99");
+
+            expect(
+                queryElement(window.document, "#leafVpdPreview", HTMLElement)
+                    .textContent
+            ).toContain(`${result} kPa`);
+
+            queryElement(
+                window.document,
+                "#queueButton",
+                HTMLButtonElement
+            ).click();
+            const payload = required(
+                parseStoredQueue(
+                    window.localStorage.getItem(
+                        "gardenLoggerObservationQueueV1"
+                    )
+                )[0]
+            ).payload;
+
+            expect(payload).toMatchObject({
+                events: ["Leaf VPD"],
+                leafAirTemperature: air,
+                leafHumidity: humidity,
+                leafTemperature: leaf,
+                leafTemperatureUnit: unit,
+                leafVpdSource: "Calculated",
+            });
+            expect(payload).not.toHaveProperty("leafVpd");
+        }
+    );
+
+    it("accepts a device-reported zero without requiring temperature context", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        queryElement(
+            window.document,
+            '[data-event="Leaf VPD"]',
+            HTMLButtonElement
+        ).click();
+        changeWorkflowSelect(window, "leafVpdSource", "Device");
+        enterWorkflowValue(window, "leafVpd", "0");
+        queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        ).click();
+
+        const queueValue = window.localStorage.getItem(
+            "gardenLoggerObservationQueueV1"
+        );
+
+        expect(required(parseStoredQueue(queueValue)[0]).payload).toMatchObject(
+            { leafVpd: "0", leafVpdSource: "Device" }
+        );
+    });
+
+    it("allows leaf temperature alone and refuses incomplete paired context", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        queryElement(
+            window.document,
+            '[data-event="Leaf VPD"]',
+            HTMLButtonElement
+        ).click();
+        changeWorkflowSelect(window, "leafTemperatureUnit", "C");
+        enterWorkflowValue(window, "leafTemperature", "0");
+        enterWorkflowValue(window, "leafHumidity", "0");
+        queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            parseStoredQueue(
+                window.localStorage.getItem("gardenLoggerObservationQueueV1") ??
+                    "[]"
+            )
+        ).toHaveLength(0);
+        expect(
+            queryElement(window.document, "#toast", HTMLElement).textContent
+        ).toContain("paired air temperature");
+
+        enterWorkflowValue(window, "leafHumidity", "");
+
+        expect(
+            queryElement(window.document, "#leafVpdPreview", HTMLElement)
+                .textContent
+        ).toContain("VPD not calculated");
+
+        queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            parseStoredQueue(
+                window.localStorage.getItem("gardenLoggerObservationQueueV1")
+            )
+        ).toHaveLength(1);
+    });
+
+    it.each([
+        4999,
+        4900,
+        100,
+        0,
+    ])(
+        "shows refreshed capacity with %s rows remaining while keeping entry controls available",
+        (remainingRows) => {
+            expect.hasAssertions();
+
+            const { window } = createLoggerWindow({
+                bootstrapData: {
+                    ...bootstrap,
+                    historyCapacity: {
+                        remainingRows,
+                        supportedLastRow: 5000,
+                        supportedObservationRows: 4999,
+                        usedRows: 4999 - remainingRows,
+                    },
+                },
+            });
+            const status = queryElement(
+                window.document,
+                "#historyCapacityStatus",
+                HTMLElement
+            );
+
+            expect(status.hidden).toBe(false);
+            expect(status.textContent).toContain("at last refresh");
+            expect(status.classList.contains("queue-storage-warning")).toBe(
+                remainingRows <= 500
+            );
+            expect(
+                queryElement(window.document, "#saveButton", HTMLButtonElement)
+                    .disabled
+            ).toBe(false);
+        }
+    );
+
+    it("preserves legacy Support pending entries while hiding Support from new entry choices", () => {
+        expect.hasAssertions();
+
+        const original = createLoggerWindow();
+        enterQueuedWeight(original.window, "430");
+        const originalPayload = required(
+            parseStoredQueue(
+                original.window.localStorage.getItem(
+                    "gardenLoggerObservationQueueV1"
+                )
+            )[0]
+        ).payload;
+        const { calls, window } = createLoggerWindow({
+            pendingSave: {
+                payload: {
+                    ...originalPayload,
+                    events: ["Support"],
+                    observedAt: "2026-10-15T18:45:00.000Z",
+                    plantId: "P01",
+                    potSetup: "1",
+                    supportAction: "Adjust",
+                    supportDetails: "Loosened existing tie",
+                    weight: "",
+                },
+                requestId: "legacy-support-request-12345",
+            },
+        });
+
+        expect(
+            window.document.querySelector('#eventChips [data-event="Support"]')
+        ).toBeNull();
+        expect(
+            queryElement(window.document, "#supportDetails", HTMLInputElement)
+                .value
+        ).toBe("Loosened existing tie");
+
+        queryElement(
+            window.document,
+            "#entryForm",
+            HTMLFormElement
+        ).dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
+
+        expect(
+            required(calls.find((call) => call.method === "saveWebObservation"))
+                .args[0]
+        ).toMatchObject({
+            events: ["Support"],
+            requestId: "legacy-support-request-12345",
+            supportDetails: "Loosened existing tie",
+        });
+    });
+
+    it("keeps bulk data after a transient pending cleanup failure and continues retaining later input", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        queryElement(
+            window.document,
+            "#bulkModeTab",
+            HTMLButtonElement
+        ).click();
+        const notes = queryElement(
+            window.document,
+            "#bulkNotes",
+            HTMLTextAreaElement
+        );
+        notes.value = "Preserve bulk draft";
+        notes.dispatchEvent(new window.Event("input", { bubbles: true }));
+        const remove = window.localStorage.removeItem.bind(window.localStorage);
+        vi.spyOn(window.localStorage, "removeItem")
+            .mockImplementationOnce(() => {
+                throw new Error("Temporary storage failure");
+            })
+            .mockImplementation(remove);
+        queryElement(
+            window.document,
+            "#bulkResetButton",
+            HTMLButtonElement
+        ).click();
+
+        expect(notes.value).toBe("Preserve bulk draft");
+
+        notes.value = "Retain later bulk input";
+        notes.dispatchEvent(new window.Event("input", { bubbles: true }));
+        const retained = ordinaryDraftKeys(window).map((key) =>
+            window.localStorage.getItem(key)
+        );
+
+        expect(retained.join(" ")).toContain("Retain later bulk input");
+
+        queryElement(
+            window.document,
+            "#singleModeTab",
+            HTMLButtonElement
+        ).click();
+        const singleNotes = queryElement(
+            window.document,
+            "#notes",
+            HTMLTextAreaElement
+        );
+        singleNotes.value = "Retain later single input";
+        singleNotes.dispatchEvent(new window.Event("input", { bubbles: true }));
+
+        expect(
+            ordinaryDraftKeys(window)
+                .map((key) => window.localStorage.getItem(key))
+                .join(" ")
+        ).toContain("Retain later single input");
+    });
+
+    it("resumes raw mist target checkboxes with an ordinary unsent draft", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        queryElement(
+            window.document,
+            '[data-event="Mist"]',
+            HTMLButtonElement
+        ).click();
+        const target = queryElement(
+            window.document,
+            '#mistTargets input[value="Exposed roots"]',
+            HTMLInputElement
+        );
+        target.checked = true;
+        target.dispatchEvent(new window.Event("change", { bubbles: true }));
+        const reloaded = createLoggerWindow({
+            storage: copyLoggerStorage(window),
+        });
+        queryElement(
+            reloaded.window.document,
+            "#entryDraftResume",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(
+                reloaded.window.document,
+                '#mistTargets input[value="Exposed roots"]',
+                HTMLInputElement
+            ).checked
+        ).toBe(true);
     });
 });

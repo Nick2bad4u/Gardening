@@ -16,6 +16,7 @@ import {
     parseJson,
     required,
 } from "./build-data.mjs";
+import { workbookIntegrityIndicatorFormula } from "./google-sheets/workbook-integrity.mjs";
 import { LOGGER_VERSION } from "./logger-version.mjs";
 
 const source = await readFile(
@@ -37,6 +38,9 @@ const context = vm.createContext({
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
 assert.equal(evaluateLogger("GARDEN_LOGGER.version"), LOGGER_VERSION);
+// Published formulas end at sheet row 5000: one header plus 4999 observations.
+assert.equal(evaluateLogger("GARDEN_LOGGER.historyCapacityRows"), 5000);
+assert.match(source, /History!A2:A5000/v);
 for (const name of [
     "getWebCorrectionEntry",
     "previewWebObservationCorrection",
@@ -273,8 +277,15 @@ assert.deepEqual(appSheetEntryHeaders, [
     "Propagation details",
     "Support action",
     "Support details",
+    "Leaf temperature",
+    "Leaf temperature entry unit",
+    "Paired air temperature",
+    "Paired air temperature entry unit",
+    "Paired relative humidity (%)",
+    "Leaf VPD (kPa)",
+    "Leaf VPD source",
 ]);
-assert.equal(evaluateLogger("GARDEN_LOGGER.historyStoredColumns"), 60);
+assert.equal(evaluateLogger("GARDEN_LOGGER.historyStoredColumns"), 67);
 assert.equal(evaluateLogger("GARDEN_LOGGER.historyHumidityColumn"), 43);
 assert.equal(evaluateLogger("GARDEN_LOGGER.historyLightStartColumn"), 44);
 assert.equal(evaluateLogger("GARDEN_LOGGER.historyLightColumns"), 2);
@@ -282,7 +293,7 @@ assert.deepEqual(strings(evaluateLogger("HISTORY_LIGHT_HEADERS")), [
     "PPFD (µmol/m²/s)",
     "Illuminance (lux)",
 ]);
-assert.equal(appSheetEntryHeaders.length, 52);
+assert.equal(appSheetEntryHeaders.length, 59);
 const careHeaders = [
     "Mist targets",
     "Mist amount (mL)",
@@ -299,14 +310,19 @@ const careHeaders = [
     "Propagation details",
     "Support action",
     "Support details",
+    "Leaf temperature (°C)",
+    "Leaf temperature entry unit",
+    "Paired air temperature (°C)",
+    "Paired air temperature entry unit",
+    "Paired relative humidity (%)",
+    "Leaf VPD (kPa)",
+    "Leaf VPD source",
 ];
 assert.equal(evaluateLogger("GARDEN_LOGGER.historyCareStartColumn"), 46);
 assert.deepEqual(strings(evaluateLogger("HISTORY_CARE_HEADERS")), careHeaders);
 assert.deepEqual(
     appSheetEntryHeaders.slice(37),
-    careHeaders.map((header) =>
-        header === "Temperature (°C)" ? "Temperature" : header
-    )
+    careHeaders.map((header) => header.replace(" (°C)", ""))
 );
 const webEventOptions = strings(evaluateLogger("WEB_EVENT_OPTIONS"));
 const bulkWebEventOptions = strings(evaluateLogger("BULK_WEB_EVENT_OPTIONS"));
@@ -316,6 +332,7 @@ assert.deepEqual(webEventOptions, [
     "Mist",
     "Humidity",
     "Temperature",
+    "Leaf VPD",
     "Light",
     "Check",
     "Inspect",
@@ -325,7 +342,6 @@ assert.deepEqual(webEventOptions, [
     "Environment",
     "Clean",
     "Prune",
-    "Support",
     "Repot",
     "Propagate",
     "Flower",
@@ -343,7 +359,6 @@ assert.deepEqual(bulkWebEventOptions, [
     "Environment",
     "Clean",
     "Prune",
-    "Support",
     "Propagate",
     "Pest",
     "Other",
@@ -446,6 +461,7 @@ const careEventColumns = [
     "Propagate",
     "Support",
     "Support",
+    ...Array.from({ length: 7 }, () => "Leaf VPD"),
 ];
 for (const event of [
     ...careEvents,
@@ -590,7 +606,7 @@ const appSheetBulkHeaders = strings(evaluateLogger("APP_SHEET_BULK_HEADERS"));
 assert.equal(appSheetBulkHeaders.length, 74);
 assert.deepEqual(appSheetBulkHeaders.slice(62), [
     ...careHeaders.slice(0, 5),
-    ...careHeaders.slice(8),
+    ...careHeaders.slice(8, 15),
 ]);
 assert.deepEqual(appSheetBulkHeaders.slice(0, 6), [
     "Round ID",
@@ -1326,4 +1342,11 @@ function loggerFunction(name) {
 function strings(value) {
     assert.ok(arrayOf(isString)(value), "Expected logger string array.");
     return [...value];
+}
+
+for (const status of /** @type {const} */ (["Fail", "Action"])) {
+    assert.equal(
+        loggerFunction("dailyCareIndicatorFormula_")(status, 99, "A4:H21"),
+        workbookIntegrityIndicatorFormula(status, 99)
+    );
 }

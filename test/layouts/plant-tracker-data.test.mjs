@@ -18,6 +18,99 @@ function calculateSummary(events) {
     );
 }
 
+describe("leaf VPD observations", () => {
+    it("keeps recorded zero and negative VPD separate from missing values and unrelated air readings", () => {
+        expect.hasAssertions();
+
+        const summary = calculateSummary([
+            {
+                Date: "2026-09-01T10:00:00Z",
+                Event: "Leaf VPD",
+                "Leaf temperature (°C)": 0,
+                "Leaf VPD (kPa)": 0,
+                "Leaf VPD source": "Device",
+                "Paired air temperature (°C)": 0,
+                "Paired relative humidity (%)": 100,
+            },
+            {
+                Date: "2026-09-01T11:00:00Z",
+                Event: "Leaf VPD",
+                "Leaf temperature (°C)": 18,
+                "Leaf VPD (kPa)": -0.3155,
+                "Leaf VPD source": "Calculated",
+                "Paired air temperature (°C)": 22,
+                "Paired relative humidity (%)": 90,
+            },
+            {
+                Date: "2026-09-02",
+                Event: "Leaf VPD",
+                "Leaf temperature (°C)": 20,
+                "Leaf VPD source": "Not calculated",
+            },
+            {
+                Date: "2026-09-02",
+                Event: "Temperature",
+                "Temperature (°C)": 22,
+                "Temperature target": "Air",
+            },
+            {
+                Date: "2026-09-02",
+                Event: "Humidity",
+                "Relative humidity (%)": 65,
+            },
+            {
+                Date: "2026-09-03",
+                Event: "Leaf VPD",
+                "Leaf temperature (°C)": 99,
+                "Leaf VPD (kPa)": 9,
+                "Observation ID": "leaf-original",
+                "Record status": "Removed",
+            },
+            {
+                "Corrects observation ID": "leaf-original",
+                Date: "2026-09-03",
+                Event: "Leaf VPD",
+                "Leaf temperature (°C)": 21,
+                "Leaf VPD (kPa)": 0.8,
+                "Leaf VPD source": "Device",
+            },
+            {
+                Date: "2999-09-01",
+                Event: "Leaf VPD",
+                "Leaf temperature (°C)": 40,
+                "Leaf VPD (kPa)": 2,
+            },
+            { Date: "2026-09-04", Event: "Support", "Support action": "Stake" },
+        ]);
+
+        expect(
+            summary.leafTemperatureSeries.map(({ value }) => value)
+        ).toStrictEqual([
+            0,
+            18,
+            20,
+            21,
+        ]);
+        expect(summary.leafVpdSeries.map(({ value }) => value)).toStrictEqual([
+            0,
+            -0.3155,
+            0.8,
+        ]);
+        expect(summary.leafVpdSeries[1]?.date.toISOString()).toBe(
+            "2026-09-01T11:00:00.000Z"
+        );
+        expect(
+            summary.airTemperatureSeries.map(({ value }) => value)
+        ).toStrictEqual([22]);
+        expect(summary.humiditySeries.map(({ value }) => value)).toStrictEqual([
+            65,
+        ]);
+        expect(summary.eventCounts).toMatchObject({ leafVpd: 4, supports: 1 });
+        expect(summary.lastWater).toBeUndefined();
+        expect(calculateSummary([]).leafVpdSeries).toStrictEqual([]);
+    });
+});
+
 describe("extended care event summaries", () => {
     it("preserves zero, negative and corrected temperatures in separate timestamped series", () => {
         expect.hasAssertions();

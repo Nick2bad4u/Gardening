@@ -141,6 +141,13 @@ const HISTORY_HEADERS = Object.freeze([
     "Propagation details",
     "Support action",
     "Support details",
+    "Leaf temperature (°C)",
+    "Leaf temperature entry unit",
+    "Paired air temperature (°C)",
+    "Paired air temperature entry unit",
+    "Paired relative humidity (%)",
+    "Leaf VPD (kPa)",
+    "Leaf VPD source",
 ]);
 
 const searchParameters = new URLSearchParams(location.search);
@@ -427,6 +434,9 @@ function extendedCareDetails(event, eventName) {
                 `${displayValue(event["Previous setting"], "Previous setting not recorded")} → ${displayValue(event["New setting"], "New setting not recorded")}`,
             ].filter(Boolean);
         }
+        case "leaf vpd": {
+            return leafVpdDetails(event);
+        }
         case "mist": {
             const amount = numericValue(event["Mist amount (mL)"]);
             return [
@@ -514,6 +524,47 @@ function latestMatching(events, predicate) {
         sortedEvents(events, false).findLast((event) => predicate(event)) ??
         null
     );
+}
+
+/** @param {HistoryEvent} event */
+function leafVpdDetails(event) {
+    const details = [];
+    /** @type {readonly (readonly [string, string, string])[]} */
+    const temperatureFields = [
+        [
+            "Leaf temperature (°C)",
+            "Leaf",
+            "Leaf temperature entry unit",
+        ],
+        [
+            "Paired air temperature (°C)",
+            "Paired air",
+            "Paired air temperature entry unit",
+        ],
+    ];
+    for (const [
+        field,
+        label,
+        unitField,
+    ] of temperatureFields) {
+        const value = numericValue(event[field]);
+        if (value !== null) {
+            const enteredUnit =
+                event[unitField] === "F"
+                    ? ` · entered in °F (${Number(((value * 9) / 5 + 32).toFixed(2))} °F)`
+                    : "";
+            details.push(`${label}: ${value} °C${enteredUnit}`);
+        }
+    }
+    const humidity = numericValue(event["Paired relative humidity (%)"]);
+    if (humidity !== null) details.push(`Paired humidity: ${humidity}% RH`);
+    const vpd = numericValue(event["Leaf VPD (kPa)"]);
+    const source = displayValue(event["Leaf VPD source"]);
+    details.push(
+        vpd === null ? "Leaf VPD not recorded" : `Leaf VPD: ${vpd} kPa`
+    );
+    if (source) details.push(`Source: ${source}`);
+    return details;
 }
 
 /** @param {HistoryEvent} event */
@@ -644,10 +695,13 @@ function renderCharts(summary) {
     const soilTemperaturePoints = summary.soilTemperatureSeries.filter(
         (entry) => inChartRange(entry)
     );
+    const leafTemperaturePoints = summary.leafTemperatureSeries.filter(
+        (entry) => inChartRange(entry)
+    );
     renderLineChart(getRequiredElement("#temperature-chart", HTMLElement), {
-        ariaLabel: `Air and soil temperature history for ${plantLabel(state.currentPlant)}`,
+        ariaLabel: `Air, soil and leaf temperature history for ${plantLabel(state.currentPlant)}`,
         emptyMessage:
-            "No air or soil temperature readings in this chart range yet.",
+            "No air, soil or leaf temperature readings in this chart range yet.",
         series: [
             {
                 className: "series-temperature-air",
@@ -659,12 +713,57 @@ function renderCharts(summary) {
                 label: "Soil temperature",
                 points: soilTemperaturePoints,
             },
+            {
+                className: "series-temperature-leaf",
+                label: "Leaf temperature",
+                points: leafTemperaturePoints,
+            },
         ],
         unit: "°C",
     });
     setText(
         "#temperature-chart-summary",
-        `${airTemperaturePoints.length} air readings and ${soilTemperaturePoints.length} soil readings. Fahrenheit entries are converted to Celsius.`
+        `${airTemperaturePoints.length} air readings and ${soilTemperaturePoints.length} soil readings; ${leafTemperaturePoints.length} leaf readings. Fahrenheit entries are converted to Celsius.`
+    );
+    const leafVpdPoints = summary.leafVpdSeries.filter((entry) =>
+        inChartRange(entry)
+    );
+    getRequiredElement("#leaf-vpd-card", HTMLElement).hidden =
+        summary.leafVpdSeries.length === 0;
+    renderLineChart(getRequiredElement("#leaf-vpd-chart", HTMLElement), {
+        ariaLabel: `Leaf VPD history for ${plantLabel(state.currentPlant)}`,
+        emptyMessage: "No leaf VPD readings in this chart range.",
+        series: [
+            {
+                className: "series-leaf-vpd-device",
+                label: "Leaf VPD · Device",
+                points: leafVpdPoints.filter(
+                    (point) => point.event["Leaf VPD source"] === "Device"
+                ),
+            },
+            {
+                className: "series-leaf-vpd-calculated",
+                label: "Leaf VPD · Calculated",
+                points: leafVpdPoints.filter(
+                    (point) => point.event["Leaf VPD source"] === "Calculated"
+                ),
+            },
+            {
+                className: "series-leaf-vpd-unspecified",
+                label: "Leaf VPD · Source not recorded",
+                points: leafVpdPoints.filter(
+                    (point) =>
+                        !["Calculated", "Device"].includes(
+                            String(point.event["Leaf VPD source"])
+                        )
+                ),
+            },
+        ],
+        unit: "kPa",
+    });
+    setText(
+        "#leaf-vpd-chart-summary",
+        `${leafVpdPoints.length} recorded leaf VPD readings. Sources are shown separately; no care target is assigned.`
     );
     const heightPoints = summary.heightSeries.filter((entry) =>
         inChartRange(entry)

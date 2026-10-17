@@ -30,6 +30,13 @@ interface GardenEntryPayload {
     flowerDetails?: unknown;
     height?: unknown;
     inventoryRevision?: unknown;
+    leafAirTemperature?: unknown;
+    leafAirTemperatureUnit?: unknown;
+    leafHumidity?: unknown;
+    leafTemperature?: unknown;
+    leafTemperatureUnit?: unknown;
+    leafVpd?: unknown;
+    leafVpdSource?: unknown;
     lux?: unknown;
     measurementMethod?: unknown;
     measurementQuality?: unknown;
@@ -110,7 +117,10 @@ interface GardenPreparedWebObservation {
 
 interface GardenWebObservationFailure {
     duplicate?: never;
-    errorCode: "HISTORY_CONFLICT" | "VALIDATION";
+    errorCode:
+        | "HISTORY_CAPACITY"
+        | "HISTORY_CONFLICT"
+        | "VALIDATION";
     historyRows?: never;
     message: string;
     ok: false;

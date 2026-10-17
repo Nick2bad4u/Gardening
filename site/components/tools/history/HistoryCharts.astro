@@ -31,11 +31,23 @@ const { manualCare = false } = Astro.props;
             <header>
                 <div>
                     <h3>Temperature</h3>
-                    <p>Air and soil readings shown separately in °C at their recorded times.</p>
+                    <p>
+                        Air, soil and leaf readings shown separately in °C at their recorded times.
+                    </p>
                 </div>
             </header>
             <div class="chart-canvas" id="temperature-chart"></div>
             <div class="chart-summary" id="temperature-chart-summary"></div>
+        </article>
+        <article class="chart-card" id="leaf-vpd-card" hidden>
+            <header>
+                <div>
+                    <h3>Leaf VPD</h3>
+                    <p>Device readings and calculations from paired observations, in kPa.</p>
+                </div>
+            </header>
+            <div class="chart-canvas" id="leaf-vpd-chart"></div>
+            <div class="chart-summary" id="leaf-vpd-chart-summary"></div>
         </article>
         <article class="chart-card">
             <header>

@@ -14,6 +14,13 @@ interface GardenEventDetailPayload {
     environmentTo?: unknown;
     flowerCount?: unknown;
     flowerDetails?: unknown;
+    leafAirTemperature?: unknown;
+    leafAirTemperatureUnit?: unknown;
+    leafHumidity?: unknown;
+    leafTemperature?: unknown;
+    leafTemperatureUnit?: unknown;
+    leafVpd?: unknown;
+    leafVpdSource?: unknown;
     lux?: unknown;
     mistAmountMl?: unknown;
     mistDetails?: unknown;
@@ -60,6 +67,13 @@ interface GardenObservationDetails {
     environmentTo?: string;
     flowerCount?: GardenOptionalNumber;
     flowerDetails?: string;
+    leafAirTemperatureC?: GardenOptionalNumber;
+    leafAirTemperatureUnit?: string;
+    leafHumidity?: GardenOptionalNumber;
+    leafTemperatureC?: GardenOptionalNumber;
+    leafTemperatureUnit?: string;
+    leafVpd?: GardenOptionalNumber;
+    leafVpdSource?: string;
     lux?: GardenOptionalNumber;
     mistAmountMl?: GardenOptionalNumber;
     mistDetails?: string;

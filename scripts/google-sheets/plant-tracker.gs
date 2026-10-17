@@ -17,7 +17,7 @@
    installDailyCareDashboard, GARDEN_CYCLE_COMPARISON, GARDEN_ENVIRONMENT_READINGS, GARDEN_RECORDED_LOCATIONS */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.35.1",
+    version: "5.36.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -67,7 +67,7 @@ const GARDEN_LOGGER = Object.freeze({
     historyLightStartColumn: 44,
     historyLightColumns: 2,
     historyCareStartColumn: 46,
-    historyStoredColumns: 60,
+    historyStoredColumns: 67,
     historyCapacityRows: 5000,
     lockTimeoutMs: 5000,
     spreadsheetUrl:
@@ -246,6 +246,7 @@ const WEB_EVENT_OPTIONS = Object.freeze([
     "Mist",
     "Humidity",
     "Temperature",
+    "Leaf VPD",
     "Light",
     "Check",
     "Inspect",
@@ -255,7 +256,6 @@ const WEB_EVENT_OPTIONS = Object.freeze([
     "Environment",
     "Clean",
     "Prune",
-    "Support",
     "Repot",
     "Propagate",
     "Flower",
@@ -286,6 +286,7 @@ const STORED_EVENT_OPTIONS = Object.freeze([
     "Environment",
     "Propagate",
     "Support",
+    "Leaf VPD",
 ]);
 const BULK_WEB_EVENT_OPTIONS = Object.freeze([
     "Water",
@@ -297,7 +298,6 @@ const BULK_WEB_EVENT_OPTIONS = Object.freeze([
     "Environment",
     "Clean",
     "Prune",
-    "Support",
     "Propagate",
     "Pest",
     "Other",
@@ -343,15 +343,20 @@ const HISTORY_CARE_HEADERS = Object.freeze([
     "Propagation details",
     "Support action",
     "Support details",
+    "Leaf temperature (°C)",
+    "Leaf temperature entry unit",
+    "Paired air temperature (°C)",
+    "Paired air temperature entry unit",
+    "Paired relative humidity (%)",
+    "Leaf VPD (kPa)",
+    "Leaf VPD source",
 ]);
 const APP_SHEET_CARE_HEADERS = Object.freeze(
-    HISTORY_CARE_HEADERS.map((header) =>
-        header === "Temperature (°C)" ? "Temperature" : header
-    )
+    HISTORY_CARE_HEADERS.map((header) => header.replace(" (°C)", ""))
 );
 const APP_SHEET_BULK_CARE_HEADERS = Object.freeze([
     ...HISTORY_CARE_HEADERS.slice(0, 5),
-    ...HISTORY_CARE_HEADERS.slice(8),
+    ...HISTORY_CARE_HEADERS.slice(8, 15),
 ]);
 
 // Retained only to validate stale/offline payloads created before logger 5.16.
@@ -584,7 +589,6 @@ const APP_SHEET_BULK_ACTION_OPTIONS = Object.freeze([
     "Move",
     "Environment",
     "Propagate",
-    "Support",
 ]);
 
 const APP_SHEET_BULK_V511_HEADERS = Object.freeze([
@@ -727,6 +731,9 @@ const HISTORY_MEASUREMENT_METHOD_OPTIONS = Object.freeze([
     "Light app",
     "Lux meter",
     "Thermometer",
+    "IR thermometer",
+    "VPD meter",
+    "Leaf temperature + air/RH",
 ]);
 
 // Documented starting sizes. A later Repot entry supersedes these values.
@@ -1126,6 +1133,7 @@ function getWebAppBootstrap() {
 
     return {
         version: GARDEN_LOGGER.version,
+        historyCapacity: historyCapacityStatus_(historyRows),
         timeZone,
         serverTime: refreshedAt.toISOString(),
         dayKey: weightReads.dayKey,
@@ -1979,7 +1987,10 @@ function appSheetBulkPayloadsFromRow_(row, roundId) {
 /** @param {unknown} value @returns {string} */
 function normalizeAppSheetBulkAction_(value) {
     const action = cleanText_(value) || "Weigh";
-    if (!APP_SHEET_BULK_ACTION_OPTIONS.includes(action)) {
+    if (
+        action !== "Support" &&
+        !APP_SHEET_BULK_ACTION_OPTIONS.includes(action)
+    ) {
         throw new Error(
             `Round action must be one of: ${APP_SHEET_BULK_ACTION_OPTIONS.join(", ")}.`
         );
@@ -2674,6 +2685,13 @@ function appSheetPayloadFromRow_(row, requestId) {
         propagationDetails: row[49],
         supportAction: row[50],
         supportDetails: row[51],
+        leafTemperature: row[52],
+        leafTemperatureUnit: row[53],
+        leafAirTemperature: row[54],
+        leafAirTemperatureUnit: row[55],
+        leafHumidity: row[56],
+        leafVpd: row[57],
+        leafVpdSource: row[58],
         entrySource: "AppSheet",
     };
 }
@@ -2840,6 +2858,7 @@ function saveWebObservationBatch(payloads) {
 
     const lockedAt = Date.now();
     let writeTiming = {
+        capacityBlocked: false,
         validationCleanupMs: 0,
         validationRowsCleared: 0,
         historyWriteMs: 0,
@@ -2850,19 +2869,20 @@ function saveWebObservationBatch(payloads) {
             prepared,
             results
         );
-        prepared
-            .filter(
-                (item) =>
-                    results[item.index]?.ok &&
-                    item.value.observation.eventNames.includes("Repot")
-            )
-            .forEach((item) =>
-                updateBaselinePotSetup_(
-                    spreadsheet,
-                    item.value.observation.plantId,
-                    item.value.observation.potSetup
+        if (!writeTiming.capacityBlocked)
+            prepared
+                .filter(
+                    (item) =>
+                        results[item.index]?.ok &&
+                        item.value.observation.eventNames.includes("Repot")
                 )
-            );
+                .forEach((item) =>
+                    updateBaselinePotSetup_(
+                        spreadsheet,
+                        item.value.observation.plantId,
+                        item.value.observation.potSetup
+                    )
+                );
     } finally {
         const flushStartedAt = Date.now();
         try {
@@ -2935,7 +2955,7 @@ function batchObservationResult_(results) {
  */
 function appendPreparedWebObservationBatch_(spreadsheet, items, results) {
     const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
-    prepareHistoryForObservationWrites_(history);
+    assertHeaders_(history, HISTORY_HEADERS, 1);
     const snapshot = historyObservationSnapshot_(history);
     let nextRow = Math.max(snapshot.lastReservedRow + 1, 2);
     /** @type {{targetRow: number; storedRows: GardenHistoryRow[]}[]} */
@@ -2946,6 +2966,7 @@ function appendPreparedWebObservationBatch_(spreadsheet, items, results) {
     /** @type {{index: number; prepared: GardenPreparedWebObservation; result: GardenEntryWriteResult}[]} */
     const pendingResults = [];
     const writeTiming = {
+        capacityBlocked: false,
         validationCleanupMs: 0,
         validationRowsCleared: 0,
         historyWriteMs: 0,
@@ -3023,6 +3044,33 @@ function appendPreparedWebObservationBatch_(spreadsheet, items, results) {
         }
     });
 
+    const exceedsCapacity =
+        repairs.some(
+            ({ targetRow, storedRows }) =>
+                targetRow + storedRows.length - 1 >
+                GARDEN_LOGGER.historyCapacityRows
+        ) ||
+        (newRows.length > 0 &&
+            newRowsStart + newRows.length - 1 >
+                GARDEN_LOGGER.historyCapacityRows);
+    if (exceedsCapacity) {
+        pendingResults.forEach(({ index, prepared }) => {
+            results[index] = {
+                ok: false,
+                requestId: prepared.observation.requestId,
+                plantId: prepared.observation.plantId,
+                plantName: prepared.plant.name,
+                retryable: false,
+                errorCode: "HISTORY_CAPACITY",
+                message: historyCapacityError_().message,
+            };
+        });
+        writeTiming.capacityBlocked = true;
+        return writeTiming;
+    }
+    if (!pendingResults.length) return writeTiming;
+    prepareHistoryForObservationWrites_(history);
+
     repairs.forEach(({ targetRow, storedRows }) => {
         const timing = writeStoredObservationRows_(
             history,
@@ -3058,7 +3106,15 @@ function historyObservationSnapshot_(history) {
 
     /** @type {GardenHistoryRow[]} */
     const storedRows = history
-        .getRange(2, 1, rowCount, GARDEN_LOGGER.historyStoredColumns)
+        .getRange(
+            2,
+            1,
+            rowCount,
+            Math.min(
+                GARDEN_LOGGER.historyStoredColumns,
+                history.getMaxColumns()
+            )
+        )
         .getValues();
     let lastReservedRow = 1;
     storedRows.forEach((values, index) => {
@@ -3168,14 +3224,16 @@ function normalizeBulkWebEvents_(events) {
         throw new Error("Choose at least one bulk-care event.");
     }
     const invalid = requested.filter(
-        (eventName) => !BULK_WEB_EVENT_OPTIONS.includes(eventName)
+        (eventName) =>
+            eventName !== "Support" &&
+            !BULK_WEB_EVENT_OPTIONS.includes(eventName)
     );
     if (invalid.length) {
         throw new Error(
             `Bulk care supports only: ${BULK_WEB_EVENT_OPTIONS.join(", ")}.`
         );
     }
-    return BULK_WEB_EVENT_OPTIONS.filter((eventName) =>
+    return [...BULK_WEB_EVENT_OPTIONS, "Support"].filter((eventName) =>
         requested.includes(eventName)
     );
 }
@@ -5509,18 +5567,30 @@ function dailyCareWeekFormula_(detailRow, column, bounds) {
  * @returns {string}
  */
 function dailyCareIndicatorFormula_(status, sheetId, range) {
+    const statusRanges = ["Integrity!$C$5:$C$21", "Integrity!$G$5:$G$14"];
+    const statuses = ["Pass", "Fail", "Action", "Info"];
+    if (!range) throw new Error("Integrity range is required.");
+    const countTerms = statusRanges.map(
+        (range) => `COUNTIF(${range},"${status}")`
+    );
+    const availableTerms = statusRanges.flatMap((range) =>
+        statuses.map((value) => `COUNTIF(${range},"${value}")`)
+    );
+    const count = `SUM(${countTerms.join(",")})`;
+    const requiredStatuses = [
+        ...Array.from(
+            { length: 17 },
+            (_, index) => `ISFORMULA(Integrity!C${index + 5})`
+        ),
+        ...Array.from(
+            { length: 10 },
+            (_, index) => `ISFORMULA(Integrity!G${index + 5})`
+        ),
+    ];
+    const available = `AND(SUM(${availableTerms.join(",")})=27,${requiredStatuses.join(",")})`;
     const empty = status === "Fail" ? "0 · Healthy" : "0 · None outstanding";
     const label = status === "Fail" ? " failed check" : " follow-up check";
-    const available = dailyCareChecksAvailableFormula_("Integrity!$C$5:$C$21");
-    return `=HYPERLINK("#gid=${sheetId}&range=${range}",IFERROR(IF(${available},IF(COUNTIF(Integrity!$C$5:$C$21,"${status}")=0,"${empty}",COUNTIF(Integrity!$C$5:$C$21,"${status}")&"${label}"&IF(COUNTIF(Integrity!$C$5:$C$21,"${status}")=1,"","s")),"Checks unavailable"),"Checks unavailable"))`;
-}
-
-/** @param {string} range @returns {string} */
-function dailyCareChecksAvailableFormula_(range) {
-    const counts = ["Pass", "Fail", "Action", "Info"].map(
-        (status) => `COUNTIF(${range},"${status}")`
-    );
-    return `SUM(${counts.join(",")})=ROWS(${range})`;
+    return `=HYPERLINK("#gid=${sheetId}&range=${range}",IFERROR(IF(${available},IF(${count}=0,"${empty}",${count}&"${label}"&IF(${count}=1,"","s")),"Checks unavailable"),"Checks unavailable"))`;
 }
 
 /** @param {GardenSheet} dashboard @returns {GardenRange[]} */
@@ -6003,7 +6073,9 @@ function dailyCareIndicatorStyles_(sheet, indicators) {
             rules.push(
                 SpreadsheetApp.newConditionalFormatRule()
                     .whenFormulaSatisfied(
-                        `=AND(${dailyCareChecksAvailableFormula_('INDIRECT("Integrity!C5:C21")')},COUNTIF(INDIRECT("Integrity!C5:C21"),"${status}")${healthy ? "=0" : ">0"})`
+                        healthy
+                            ? `=LEFT(${range.split(":")[0]},2)="0 "`
+                            : `=AND(ISNUMBER(SEARCH(" check",${range.split(":")[0]})),LEFT(${range.split(":")[0]},2)<>"0 ")`
                     )
                     .setBackground(healthy ? "#edf4ee" : issueBackground)
                     .setFontColor(healthy ? "#173c2b" : issueForeground)
@@ -6178,7 +6250,7 @@ function refreshDashboardView_(spreadsheet, plants) {
                 dailyCareIndicatorFormula_(
                     "Fail",
                     integrity.getSheetId(),
-                    "A4:D21"
+                    "A4:H21"
                 ),
             ],
             [
@@ -6186,7 +6258,7 @@ function refreshDashboardView_(spreadsheet, plants) {
                 dailyCareIndicatorFormula_(
                     "Action",
                     integrity.getSheetId(),
-                    "A4:D21"
+                    "A4:H21"
                 ),
             ]
         );
@@ -7179,11 +7251,11 @@ function correctionChangeValues_(changes) {
 function correctionSnapshot_(spreadsheet) {
     const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
     if (
-        GARDEN_LOGGER.historyStoredColumns !== 60 ||
-        history.getMaxColumns() < 60
+        GARDEN_LOGGER.historyStoredColumns !== 67 ||
+        history.getMaxColumns() < 67
     ) {
         throw new Error(
-            "HISTORY_SCHEMA: Expected the installed 60-column History schema."
+            "HISTORY_SCHEMA: Expected the installed 67-column History schema."
         );
     }
     const expected = [
@@ -7202,8 +7274,8 @@ function correctionSnapshot_(spreadsheet) {
         ...HISTORY_CARE_HEADERS,
     ];
     /** @type {GardenHistoryRow | undefined} */
-    const headers = history.getRange(1, 1, 1, 60).getValues()[0];
-    const headerFormulas = history.getRange(1, 1, 1, 60).getFormulas()[0];
+    const headers = history.getRange(1, 1, 1, 67).getValues()[0];
+    const headerFormulas = history.getRange(1, 1, 1, 67).getFormulas()[0];
     if (
         !headers ||
         !headerFormulas ||
@@ -7217,7 +7289,7 @@ function correctionSnapshot_(spreadsheet) {
         );
     }
     const rowCount = Math.max(0, history.getLastRow() - 1);
-    const range = rowCount ? history.getRange(2, 1, rowCount, 60) : null;
+    const range = rowCount ? history.getRange(2, 1, rowCount, 67) : null;
     /** @type {GardenHistoryRow[]} */
     const values = range ? range.getValues() : [];
     const formulas = range ? range.getFormulas() : [];
@@ -7341,7 +7413,7 @@ function correctionCanonicalRow_(row) {
         !events.includes(row[2]) ||
         (row[9] !== "" && !(row[9] instanceof Date)) ||
         (row[35] !== "" && row[35] !== "Active" && row[35] !== "Removed") ||
-        [4, 5, 6, 10, 21, 39, 41, 42, 43, 44, 46, 50].some(
+        [4, 5, 6, 10, 21, 39, 41, 42, 43, 44, 46, 50, 60, 62, 64, 65].some(
             (index) => row[index] !== "" && typeof row[index] !== "number"
         ) ||
         (row[10] !== "" &&
@@ -7351,9 +7423,10 @@ function correctionCanonicalRow_(row) {
         row.some(
             (value, index) =>
                 !correctionFormulaColumn_(index) &&
-                ![0, 4, 5, 6, 9, 10, 21, 39, 41, 42, 43, 44, 46, 50].includes(
-                    index
-                ) &&
+                ![
+                    0, 4, 5, 6, 9, 10, 21, 39, 41, 42, 43, 44, 46, 50, 60, 62,
+                    64, 65,
+                ].includes(index) &&
                 typeof value !== "string"
         )
     ) {
@@ -7388,6 +7461,7 @@ function correctionEvents_() {
         "Environment",
         "Propagate",
         "Support",
+        "Leaf VPD",
     ];
 }
 
@@ -7395,6 +7469,76 @@ function correctionEvents_() {
 function correctionFieldDefinitions_(event) {
     /** @type {GardenCorrectionFieldSpec[]} */
     const specifications = [
+        [
+            "leafTemperatureC",
+            60,
+            "Leaf temperature (°C)",
+            "number",
+            [],
+            false,
+            "",
+            ["Leaf VPD"],
+        ],
+        [
+            "leafTemperatureUnit",
+            61,
+            "Leaf temperature entry unit",
+            "select",
+            ["C", "F"],
+            false,
+            "",
+            ["Leaf VPD"],
+        ],
+        [
+            "leafAirTemperatureC",
+            62,
+            "Paired air temperature (°C)",
+            "number",
+            [],
+            false,
+            "",
+            ["Leaf VPD"],
+        ],
+        [
+            "leafAirTemperatureUnit",
+            63,
+            "Paired air temperature entry unit",
+            "select",
+            ["C", "F"],
+            false,
+            "",
+            ["Leaf VPD"],
+        ],
+        [
+            "leafHumidity",
+            64,
+            "Paired relative humidity (%)",
+            "number",
+            [],
+            false,
+            "",
+            ["Leaf VPD"],
+        ],
+        [
+            "leafVpd",
+            65,
+            "Leaf VPD (kPa)",
+            "number",
+            [],
+            false,
+            "",
+            ["Leaf VPD"],
+        ],
+        [
+            "leafVpdSource",
+            66,
+            "Leaf VPD source",
+            "select",
+            ["Device", "Calculated", "Not calculated"],
+            false,
+            "",
+            ["Leaf VPD"],
+        ],
         ["observationDate", 0, "Saved date", "datetime", [], true],
         ["notes", 8, "Notes"],
         ["weight", 4, "Weight", "number", [], true, "g", ["Weigh"]],
@@ -8101,7 +8245,14 @@ function correctionNumericValue_(definition, input) {
         typeof input === "string" &&
         input !== "" &&
         !(
-            key === "temperatureC" ? /^-?\d+(?:\.\d+)?$/ : /^\d+(?:\.\d+)?$/
+            [
+                "temperatureC",
+                "leafTemperatureC",
+                "leafAirTemperatureC",
+                "leafVpd",
+            ].includes(key)
+                ? /^-?\d+(?:\.\d+)?$/
+                : /^\d+(?:\.\d+)?$/
         ).test(input)
     ) {
         throw correctionValidationError_(
@@ -8112,13 +8263,23 @@ function correctionNumericValue_(definition, input) {
     if (
         (value !== "" &&
             (!Number.isFinite(value) ||
-                (value < 0 && key !== "temperatureC") ||
+                (value < 0 &&
+                    ![
+                        "temperatureC",
+                        "leafTemperatureC",
+                        "leafAirTemperatureC",
+                        "leafVpd",
+                    ].includes(key)) ||
                 (value === 0 &&
                     ![
                         "relativeHumidity",
                         "ppfd",
                         "lux",
                         "temperatureC",
+                        "leafTemperatureC",
+                        "leafAirTemperatureC",
+                        "leafVpd",
+                        "leafHumidity",
                     ].includes(key)))) ||
         (key === "temperatureC" && value !== "" && value < -273.15) ||
         (key === "relativeHumidity" && value !== "" && value > 100) ||
@@ -8172,6 +8333,10 @@ function correctionValidateDependencies_(row, changes) {
     /** @param {...string} keys @returns {boolean} */
     const changed = (...keys) =>
         keys.some((key) => Object.hasOwn(changes, key));
+    if (row[2] === "Leaf VPD" && changed("leafVpd") && row[66] !== "Device")
+        throw correctionValidationError_(
+            "INVALID_CORRECTION: Calculated Leaf VPD must be recomputed from leaf temperature and paired air/RH."
+        );
     correctionValidateCareDetails_(row);
     if (row[2] === "Light") {
         if (row[43] === "" && row[44] === "") {
@@ -8216,6 +8381,32 @@ function correctionValidateDependencies_(row, changes) {
 
 /** @param {GardenCorrectionCanonicalRow} row @returns {void} */
 function correctionValidateCareDetails_(row) {
+    if (row[2] === "Leaf VPD") {
+        /** @type {GardenObservationDetails} */
+        const details = {};
+        addLeafVpdDetails_(details, {
+            leafTemperature: row[60],
+            leafTemperatureUnit: "C",
+            leafAirTemperature: row[62],
+            leafAirTemperatureUnit: "C",
+            leafHumidity: row[64],
+            leafVpd: row[66] === "Device" ? row[65] : "",
+            leafVpdSource:
+                row[66] === "Not calculated" ? "Calculated" : row[66],
+        });
+        if (
+            (row[60] !== "" && !["C", "F"].includes(row[61])) ||
+            (row[62] !== "" && !["C", "F"].includes(row[63]))
+        )
+            throw correctionValidationError_(
+                "INVALID_CORRECTION: Leaf and air entry units must be C or F for supplied temperatures."
+            );
+        row[65] = details.leafVpd ?? "";
+        row[66] = details.leafVpdSource ?? "";
+        const provenance = leafReadingProvenance_(details.leafVpdSource);
+        row[28] = provenance.quality;
+        row[34] = provenance.method;
+    }
     if (
         [
             "Mist",
@@ -8775,7 +8966,7 @@ function archiveQuickLogRow_(quickLog, rowNumber) {
  */
 function appendObservation_(spreadsheet, input) {
     const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
-    prepareHistoryForObservationWrites_(history);
+    assertHeaders_(history, HISTORY_HEADERS, 1);
 
     const requestId = normalizeRequestId_(input.requestId);
     const existingRequestRows = historyRowsForRequest_(history, requestId);
@@ -8786,7 +8977,10 @@ function appendObservation_(spreadsheet, input) {
                 firstExistingRow,
                 1,
                 existingRequestRows.length,
-                GARDEN_LOGGER.historyStoredColumns
+                Math.min(
+                    GARDEN_LOGGER.historyStoredColumns,
+                    history.getMaxColumns()
+                )
             )
             .getValues();
         const existingResult = existingObservationResult_(
@@ -8814,6 +9008,8 @@ function appendObservation_(spreadsheet, input) {
         targetRow,
         recordedAt
     );
+    assertHistoryWriteCapacity_(targetRow, storedRows.length);
+    prepareHistoryForObservationWrites_(history);
     writeStoredObservationRows_(history, targetRow, storedRows);
     return observationWriteResult_(
         input,
@@ -8822,6 +9018,33 @@ function appendObservation_(spreadsheet, input) {
         recordedAt,
         false
     );
+}
+
+/** @returns {Error} */
+function historyCapacityError_() {
+    return new Error(
+        `HISTORY_CAPACITY: This save exceeds supported History row ${GARDEN_LOGGER.historyCapacityRows}. Extend the workbook formulas and validated capacity before saving more observations.`
+    );
+}
+
+/** @param {number} targetRow @param {number} rowCount @returns {void} */
+function assertHistoryWriteCapacity_(targetRow, rowCount) {
+    if (targetRow + rowCount - 1 > GARDEN_LOGGER.historyCapacityRows)
+        throw historyCapacityError_();
+}
+
+/** @param {GardenHistoryRow[]} historyRows */
+function historyCapacityStatus_(historyRows) {
+    const lastReservedRow = historyRows.length + 1;
+    return {
+        supportedLastRow: GARDEN_LOGGER.historyCapacityRows,
+        supportedObservationRows: GARDEN_LOGGER.historyCapacityRows - 1,
+        usedRows: Math.max(0, lastReservedRow - 1),
+        remainingRows: Math.max(
+            0,
+            GARDEN_LOGGER.historyCapacityRows - lastReservedRow
+        ),
+    };
 }
 
 /**
@@ -8975,7 +9198,10 @@ function sameCanonicalObservationRow_(actual, expected) {
         42,
         43,
         44,
-        ...Array.from({ length: 15 }, (_, index) => 45 + index),
+        ...Array.from(
+            { length: HISTORY_CARE_FIELDS.length },
+            (_, index) => 45 + index
+        ),
     ];
     return comparableColumns.every(
         (index) =>
@@ -9069,6 +9295,7 @@ function historyDetailRow_(details, eventName) {
  * @param {GardenHistoryRow[]} storedRows
  */
 function writeStoredObservationRows_(history, targetRow, storedRows) {
+    assertHistoryWriteCapacity_(targetRow, storedRows.length);
     const requiredLastRow = targetRow + storedRows.length - 1;
     if (requiredLastRow > history.getMaxRows()) {
         history.insertRowsAfter(
@@ -9193,6 +9420,10 @@ function historyProvenanceRow_(input, requestId, eventName, eventIndex) {
     } else if (eventName === "Temperature") {
         quality = "Measured";
         method = "Thermometer";
+    } else if (eventName === "Leaf VPD") {
+        const provenance = leafReadingProvenance_(input.details?.leafVpdSource);
+        quality = provenance.quality;
+        method = provenance.method;
     } else if (eventName === "Humidity") {
         quality = "Measured";
         method = "Hygrometer";
@@ -9206,7 +9437,7 @@ function historyProvenanceRow_(input, requestId, eventName, eventIndex) {
     }
 
     return [
-        `${requestId}:${eventIndex + 1}:${eventName.toLowerCase()}`,
+        `${requestId}:${eventIndex + 1}:${eventName.toLowerCase().replace(/ /g, "-")}`,
         safeSheetText_(input.entrySource || "Apps Script"),
         quality,
         requestId,
@@ -9612,7 +9843,8 @@ function readHistorySnapshot_(spreadsheet) {
     while (
         lastDataIndex >= 0 &&
         !cleanText_(rows[lastDataIndex]?.[0]) &&
-        !cleanText_(rows[lastDataIndex]?.[1])
+        !cleanText_(rows[lastDataIndex]?.[1]) &&
+        !cleanText_(rows[lastDataIndex]?.[GARDEN_LOGGER.requestIdColumn - 1])
     ) {
         lastDataIndex -= 1;
     }
@@ -10541,7 +10773,7 @@ function normalizeWebHistoryFilters_(filters, plantNames) {
     const event = cleanText_(selected.event);
     if (plantId && !plantNames.has(plantId))
         throw new Error("Unknown History plant ID.");
-    if (event && !WEB_EVENT_OPTIONS.includes(event))
+    if (event && !STORED_EVENT_OPTIONS.includes(event))
         throw new Error("Unknown History event.");
     return { plantId, event };
 }
@@ -10607,6 +10839,16 @@ function webHistoryDetails_(row) {
         },
         Propagate: { propagationMethod: 56, propagationDetails: 57 },
         Support: { supportAction: 58, supportDetails: 59 },
+        "Leaf VPD": {
+            leafTemperatureC: 60,
+            leafTemperatureUnit: 61,
+            leafAirTemperatureC: 62,
+            leafAirTemperatureUnit: 63,
+            leafHumidity: 64,
+            leafVpd: 65,
+            leafVpdSource: 66,
+            measurementMethod: 34,
+        },
         Measure: {
             heightCm: 5,
             widthCm: 6,
@@ -10799,7 +11041,11 @@ function lastHistoryDataRow_(history) {
 function lastHistoryReservedRow_(history) {
     const lastObservationRow = lastHistoryDataRow_(history);
     const rowCount = Math.max(0, history.getLastRow() - 1);
-    if (rowCount === 0) return lastObservationRow;
+    if (
+        rowCount === 0 ||
+        history.getMaxColumns() < GARDEN_LOGGER.requestIdColumn
+    )
+        return lastObservationRow;
     const requestIds = history
         .getRange(2, GARDEN_LOGGER.requestIdColumn, rowCount, 1)
         .getDisplayValues();
@@ -10816,7 +11062,11 @@ function lastHistoryReservedRow_(history) {
  */
 function historyRowsForRequest_(history, requestId) {
     const rowCount = Math.max(0, history.getLastRow() - 1);
-    if (rowCount === 0) return [];
+    if (
+        rowCount === 0 ||
+        history.getMaxColumns() < GARDEN_LOGGER.requestIdColumn
+    )
+        return [];
     return history
         .getRange(2, GARDEN_LOGGER.requestIdColumn, rowCount, 1)
         .createTextFinder(requestId)
@@ -12078,6 +12328,13 @@ const HISTORY_CARE_FIELDS = Object.freeze(
         "propagationDetails",
         "supportAction",
         "supportDetails",
+        "leafTemperatureC",
+        "leafTemperatureUnit",
+        "leafAirTemperatureC",
+        "leafAirTemperatureUnit",
+        "leafHumidity",
+        "leafVpd",
+        "leafVpdSource",
     ])
 );
 const HISTORY_CARE_EVENTS = Object.freeze([
@@ -12096,6 +12353,13 @@ const HISTORY_CARE_EVENTS = Object.freeze([
     "Propagate",
     "Support",
     "Support",
+    "Leaf VPD",
+    "Leaf VPD",
+    "Leaf VPD",
+    "Leaf VPD",
+    "Leaf VPD",
+    "Leaf VPD",
+    "Leaf VPD",
 ]);
 /** @param {GardenObservationDetails} details @param {string} event */
 function historyCareRow_(details, event) {
@@ -12120,6 +12384,7 @@ function requiredCareText_(value, label) {
 }
 /** @param {GardenObservationDetails} details @param {GardenEventDetailPayload | null | undefined} payload @param {string[]} events */
 function addCareDetails_(details, payload, events) {
+    if (events.includes("Leaf VPD")) addLeafVpdDetails_(details, payload);
     if (events.includes("Mist")) addMistDetails_(details, payload);
     if (events.includes("Move")) {
         details.moveFrom = cleanText_(payload?.moveFrom);
@@ -12215,9 +12480,107 @@ function addTemperatureDetails_(details, payload) {
     details.temperatureC = converted;
 }
 
+/** @param {unknown} value @param {string} label @returns {GardenOptionalNumber} */
+function leafOptionalNumber_(value, label) {
+    if (value === undefined || value === null || value === "") return "";
+    if (
+        (typeof value !== "number" && typeof value !== "string") ||
+        String(value).trim() === "" ||
+        !Number.isFinite(Number(value))
+    )
+        throw new Error(`${label} must be a finite number.`);
+    return Number(value);
+}
+
+/** @param {unknown} value @param {unknown} unit @param {string} label @returns {{value: GardenOptionalNumber, unit: string}} */
+function leafTemperature_(value, unit, label) {
+    const entered = leafOptionalNumber_(value, label);
+    if (entered === "") return { value: "", unit: "" };
+    const entryUnit = requiredCareChoice_(unit, ["C", "F"], `${label} unit`);
+    const celsius = entryUnit === "F" ? ((entered - 32) * 5) / 9 : entered;
+    if (celsius < -50 || celsius > 100)
+        throw new Error(
+            `${label} must be within the supported -50 to 100 °C range.`
+        );
+    return { value: celsius, unit: entryUnit };
+}
+
+/** @param {string | undefined} source */
+function leafReadingProvenance_(source) {
+    if (source === "Device")
+        return { quality: "Measured", method: "VPD meter" };
+    if (source === "Calculated")
+        return { quality: "Estimated", method: "Leaf temperature + air/RH" };
+    return { quality: "Measured", method: "IR thermometer" };
+}
+
+/** @param {GardenObservationDetails} details @param {GardenEventDetailPayload | null | undefined} payload */
+function addLeafVpdDetails_(details, payload) {
+    const source = requiredCareChoice_(
+        cleanText_(payload?.leafVpdSource) || "Calculated",
+        ["Device", "Calculated"],
+        "Leaf VPD source"
+    );
+    const leaf = leafTemperature_(
+        payload?.leafTemperature,
+        payload?.leafTemperatureUnit,
+        "Leaf temperature"
+    );
+    const air = leafTemperature_(
+        payload?.leafAirTemperature,
+        payload?.leafAirTemperatureUnit,
+        "Paired air temperature"
+    );
+    const humidity = leafOptionalNumber_(
+        payload?.leafHumidity,
+        "Paired relative humidity"
+    );
+    const direct = leafOptionalNumber_(payload?.leafVpd, "Leaf VPD");
+    if (humidity !== "" && (humidity < 0 || humidity > 100))
+        throw new Error("Paired relative humidity must be between 0 and 100%.");
+    details.leafTemperatureC = leaf.value;
+    details.leafTemperatureUnit = leaf.unit;
+    details.leafAirTemperatureC = air.value;
+    details.leafAirTemperatureUnit = air.unit;
+    details.leafHumidity = humidity;
+    if (source === "Device") {
+        if (direct === "" || direct < 0)
+            throw new Error(
+                "Device Leaf VPD requires a nonnegative reading in kPa."
+            );
+        details.leafVpd = direct;
+        details.leafVpdSource = "Device";
+        return;
+    }
+    if (direct !== "")
+        throw new Error(
+            "Calculated Leaf VPD must not include a supplied VPD reading."
+        );
+    if (leaf.value === "")
+        throw new Error("Calculated Leaf VPD requires a leaf temperature.");
+    if ((air.value === "") !== (humidity === ""))
+        throw new Error(
+            "Pair the same observation's air temperature and relative humidity, or leave both blank."
+        );
+    details.leafVpd = "";
+    details.leafVpdSource = "Not calculated";
+    if (typeof air.value === "number" && typeof humidity === "number") {
+        /** @param {number} temperature */
+        const saturation = (temperature) =>
+            0.6108 * Math.exp((17.27 * temperature) / (temperature + 237.3));
+        details.leafVpd =
+            Math.round(
+                (saturation(leaf.value) -
+                    (humidity / 100) * saturation(air.value)) *
+                    10000
+            ) / 10000;
+        details.leafVpdSource = "Calculated";
+    }
+}
+
 /**
  * Read-only environmental observations. No volatile custom-function input.
- * @param {GardenHistoryRow[]} history Native History A:BH.
+ * @param {GardenHistoryRow[]} history Native History A:BO.
  * @returns {GardenCell[][]}
  * @customfunction
  */
@@ -12312,7 +12675,7 @@ function environmentNumber(value, maximum = Infinity, minimum = 0) {
 
 /**
  * Latest-location evidence, independent of pot setup and watering.
- * @param {GardenHistoryRow[]} history Native History A:BH.
+ * @param {GardenHistoryRow[]} history Native History A:BO.
  * @returns {GardenCell[][]}
  * @customfunction
  */
@@ -12381,6 +12744,9 @@ function configureCareColumns_(sheet, headers) {
     const choices = [
         ["Temperature target", TEMPERATURE_TARGET_OPTIONS],
         ["Temperature entry unit", ["C", "F"]],
+        ["Leaf temperature entry unit", ["C", "F"]],
+        ["Paired air temperature entry unit", ["C", "F"]],
+        ["Leaf VPD source", ["Device", "Calculated", "Not calculated"]],
         ["Environment aspect", ENVIRONMENT_ASPECT_OPTIONS],
         ["Propagation method", PROPAGATION_METHOD_OPTIONS],
         ["Support action", SUPPORT_ACTION_OPTIONS],
@@ -12395,6 +12761,53 @@ function configureCareColumns_(sheet, headers) {
                     .build()
             );
     });
+    const leafTemperatures = [
+        "Leaf temperature",
+        "Paired air temperature",
+        "Leaf temperature (°C)",
+        "Paired air temperature (°C)",
+    ];
+    leafTemperatures.forEach((header) => {
+        const column = headers.indexOf(header) + 1;
+        if (column)
+            sheet
+                .getRange(2, column, rows, 1)
+                .setDataValidation(
+                    SpreadsheetApp.newDataValidation()
+                        .requireNumberBetween(
+                            header.endsWith("(°C)") ? -50 : -58,
+                            header.endsWith("(°C)") ? 100 : 212
+                        )
+                        .setAllowInvalid(false)
+                        .build()
+                )
+                .setNumberFormat("0.####");
+    });
+    const leafHumidityColumn =
+        headers.indexOf("Paired relative humidity (%)") + 1;
+    if (leafHumidityColumn)
+        sheet
+            .getRange(2, leafHumidityColumn, rows, 1)
+            .setDataValidation(
+                SpreadsheetApp.newDataValidation()
+                    .requireNumberBetween(0, 100)
+                    .setAllowInvalid(false)
+                    .build()
+            )
+            .setNumberFormat("0.##");
+    const leafVpdColumn = headers.indexOf("Leaf VPD (kPa)") + 1;
+    if (leafVpdColumn) {
+        const range = sheet
+            .getRange(2, leafVpdColumn, rows, 1)
+            .setNumberFormat("0.####");
+        if (headers.includes("Leaf temperature"))
+            range.setDataValidation(
+                SpreadsheetApp.newDataValidation()
+                    .requireNumberGreaterThanOrEqualTo(0)
+                    .setAllowInvalid(false)
+                    .build()
+            );
+    }
     const amountColumn = headers.indexOf("Mist amount (mL)") + 1;
     if (amountColumn)
         sheet

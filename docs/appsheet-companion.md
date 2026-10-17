@@ -20,7 +20,50 @@ contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
 
+## Maintained 5.36.0 Leaf VPD contract
+
+The source contract replaces **Support** with **Leaf VPD** for new single-entry
+choices. There are still 21 single-entry events; bulk removes Support without
+adding Leaf VPD, leaving 14 AppSheet round actions. Stored Support records and
+fields remain readable, correctable, and retryable. The earlier production
+receipt remains the verified live baseline until this update is deployed.
+
+Preserve History A:BH and App entries A:AZ, then append these seven fields.
+History/History view become **67 physical columns (A:BO)**, App entries becomes
+**59 (A:BG)**, and App bulk remains **74 (A:BV)** with no new fields.
+
+| History | App entries | History header                    | Staging header                    |
+| ------- | ----------- | --------------------------------- | --------------------------------- |
+| BI      | BA          | Leaf temperature (°C)             | Leaf temperature                  |
+| BJ      | BB          | Leaf temperature entry unit       | Leaf temperature entry unit       |
+| BK      | BC          | Paired air temperature (°C)       | Paired air temperature            |
+| BL      | BD          | Paired air temperature entry unit | Paired air temperature entry unit |
+| BM      | BE          | Paired relative humidity (%)      | Paired relative humidity (%)      |
+| BN      | BF          | Leaf VPD (kPa)                    | Leaf VPD (kPa)                    |
+| BO      | BG          | Leaf VPD source                   | Leaf VPD source                   |
+
+Staging temperature inputs retain the entered units for the bridge to normalize;
+History temperatures are canonical Celsius. Configure **Device** and **Calculated**
+source choices and conditional required fields without treating blank as zero.
+Device requires finite, nonnegative displayed leaf VPD; its temperature/humidity
+context is optional. Calculated requires leaf temperature and either both paired
+air temperature/RH or neither. Leaf-temperature-only saves leave VPD blank with
+source **Not calculated**. Signed calculated values are valid. The −50 to 100°C
+calculator domain is a technical constraint, not a care target or device limit.
+See the [action guide](./logger-actions.md#leaf-vpd-and-leaf-temperature) for
+recording examples and the sourced equation.
+
+Keep Leaf VPD absent from bulk choices and staging. Hide Support from new event
+choices while preserving its columns, historical enum compatibility, saved
+requests, and correction/retry routes. Do not regenerate or change unrelated
+tables. Continue the existing bridge-only History writer and read-only helper
+modes; the separate sensor-history import planner does not create an AppSheet
+observation table.
+
 ## Maintained 5.35.0 care-event contract
+
+This is the original care-event schema; the 5.36.0 extension above adds leaf
+fields and retires Support from new choices without deleting its stored fields.
 
 The single-entry event list adds **Mist**, **Move**, **Temperature**,
 **Environment**, **Propagate**, and **Support**. The order is Water, Weigh, Mist;

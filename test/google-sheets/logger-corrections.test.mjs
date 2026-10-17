@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 import { describe, expect, it } from "vitest";
 
+import { appsScriptApi } from "../helpers/apps-script-api.mjs";
 import {
     correctionRpc,
     loggerCorrectionApi,
@@ -76,6 +77,13 @@ const headers = [
     "Propagation details",
     "Support action",
     "Support details",
+    "Leaf temperature (°C)",
+    "Leaf temperature entry unit",
+    "Paired air temperature (°C)",
+    "Paired air temperature entry unit",
+    "Paired relative humidity (%)",
+    "Leaf VPD (kPa)",
+    "Leaf VPD source",
 ];
 
 /**
@@ -145,12 +153,12 @@ function applyUpdate(rows, update, maxRows, timeZone) {
         rowIndex >= maxRows ||
         update.rows.length !== 1 ||
         columnIndex < 0 ||
-        columnIndex + values.length > 60
+        columnIndex + values.length > 67
     ) {
         throw new Error("Invalid update range");
     }
     while (rows.length <= rowIndex)
-        rows.push(Array.from({ length: 60 }, () => cell()));
+        rows.push(Array.from({ length: 67 }, () => cell()));
     for (const [offset, data] of values.entries()) {
         applyCell(
             required(required(rows[rowIndex])[columnIndex + offset]),
@@ -322,7 +330,7 @@ function fixture(
         lastSelectedRow: 2,
         locked: false,
         lockUnavailable: false,
-        maxColumns: 60,
+        maxColumns: 67,
         maxRows: Math.max(100, observations.length + 1),
         missingFormulaReadRow: 0,
         onAlert: () => {},
@@ -571,6 +579,17 @@ function fixture(
     return { api, context, state };
 }
 
+/** @param {unknown} value */
+function generatedCanonicalCell(value) {
+    if (
+        typeof value !== "string" &&
+        typeof value !== "number" &&
+        !(value instanceof Date)
+    )
+        throw new TypeError("Unexpected canonical cell value");
+    return cell(value);
+}
+
 /**
  * @param {string} [event]
  * @param {string} [id]
@@ -579,7 +598,7 @@ function fixture(
  * @returns {import("../logger-correction-fixtures.d.ts").CorrectionCell[]}
  */
 function observation(event = "Weigh", id = "original-1", overrides = {}) {
-    const row = Array.from({ length: 60 }, () => cell());
+    const row = Array.from({ length: 67 }, () => cell());
     const values = {
         0: new Date("2026-09-03T16:23:45.123Z"),
         1: "P01",
@@ -1675,7 +1694,7 @@ describe("atomic saved History corrections", () => {
         const model = fixture();
         model.state.rows.length = 4998;
         for (let index = 2; index < 4998; index += 1)
-            model.state.rows[index] = Array.from({ length: 60 }, () => cell());
+            model.state.rows[index] = Array.from({ length: 67 }, () => cell());
         model.state.rows.push(
             observation("Other", "last-existing", { 1: "P02" })
         );
@@ -2493,9 +2512,9 @@ describe("correction validation and durable receipt boundaries", () => {
 
         expect(() =>
             model.api.getWebCorrectionEntry({ observationId: "original-1" })
-        ).toThrow("60-column");
+        ).toThrow("67-column");
 
-        model.state.maxColumns = 60;
+        model.state.maxColumns = 67;
         stored(model, 1, 1).formula = '="Date"';
 
         expect(() =>
@@ -2909,7 +2928,7 @@ describe("durable pre-batch correction rejection", () => {
             case "HISTORY_CAPACITY": {
                 while (model.state.rows.length < 4999)
                     model.state.rows.push(
-                        Array.from({ length: 60 }, () => cell())
+                        Array.from({ length: 67 }, () => cell())
                     );
                 model.state.rows.push(
                     observation("Other", "capacity-end", { 1: "P02" })
@@ -3145,7 +3164,112 @@ describe("menu exclusion identity recheck", () => {
 });
 
 describe("structured care corrections", () => {
+    it("inspects, corrects and retries the actual generated Leaf VPD observation identity", () => {
+        expect.hasAssertions();
+
+        const model = fixture([]);
+        const writer = appsScriptApi(model.context);
+        const events = ["Leaf VPD"];
+        const rows = writer.storedObservationRows_(
+            {
+                condition: "",
+                currentLabel: "A1",
+                details: writer.eventDetailsFromPayload_(
+                    { leafVpd: 0, leafVpdSource: "Device" },
+                    events,
+                    null
+                ),
+                entrySource: "Mobile logger",
+                eventNames: events,
+                height: "",
+                notes: "Generated canonical row",
+                observationDate: new Date("2026-09-03T16:23:45.123Z"),
+                plantId: "P01",
+                potSetup: 2,
+                requestId: "leaf-generated-request-001",
+                weight: "",
+                weightState: "Routine",
+                width: "",
+            },
+            "leaf-generated-request-001",
+            2,
+            new Date("2026-09-03T16:24:01Z")
+        );
+        const saved = required(rows[0]);
+        const observationId = String(saved[26]);
+        model.state.rows.push(saved.map(generatedCanonicalCell));
+
+        expect(observationId).toBe("leaf-generated-request-001:1:leaf-vpd");
+        expect(
+            model.api.getWebCorrectionEntry({ observationId }).original
+                .observationId
+        ).toBe(observationId);
+
+        const payload = prepare(model, { leafVpd: 1.2 }, observationId);
+        const receipt = model.api.saveWebObservationCorrection(payload);
+
+        expect(receipt).toMatchObject({ status: "saved" });
+        expect(model.api.saveWebObservationCorrection(payload)).toStrictEqual(
+            receipt
+        );
+        expect(stored(model, 3, 31).value).toBe(observationId);
+        expect(stored(model, 3, 66).value).toBe(1.2);
+        expect(model.state.rows).toHaveLength(3);
+    });
+
+    it("recomputes Leaf VPD from corrected paired inputs and rejects replacing a calculated value", () => {
+        expect.hasAssertions();
+
+        const model = fixture([
+            observation("Leaf VPD", "original-1", {
+                28: "Estimated",
+                34: "Leaf temperature + air/RH",
+                60: 25,
+                61: "C",
+                62: 25,
+                63: "C",
+                64: 50,
+                65: 1.5839,
+                66: "Calculated",
+            }),
+        ]);
+
+        expect(() => prepare(model, { leafVpd: 5 })).toThrow(
+            "Calculated Leaf VPD must be recomputed"
+        );
+
+        const payload = prepare(model, {
+            leafHumidity: 100,
+            leafTemperatureC: 20,
+        });
+
+        expect(model.api.saveWebObservationCorrection(payload)).toMatchObject({
+            status: "saved",
+        });
+        expect(stored(model, 3, 66).value).toBe(-0.8295);
+        expect(stored(model, 3, 67).value).toBe("Calculated");
+        expect(stored(model, 3, 29).value).toBe("Estimated");
+        expect(stored(model, 3, 35).value).toBe("Leaf temperature + air/RH");
+    });
+
     it.each([
+        {
+            changes: { leafTemperatureC: 20 },
+            column: 61,
+            event: "Leaf VPD",
+            expected: 20,
+            values: {
+                28: "Estimated",
+                34: "Leaf temperature + air/RH",
+                60: 25,
+                61: "C",
+                62: 25,
+                63: "C",
+                64: 50,
+                65: 1.5839,
+                66: "Calculated",
+            },
+        },
         {
             changes: { mistDetails: "Moss tray", mistTargets: "Other" },
             column: 46,

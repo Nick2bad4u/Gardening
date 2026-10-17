@@ -17,7 +17,7 @@ const events = [
     "Environment",
     "Clean",
     "Prune",
-    "Support",
+    "Leaf VPD",
     "Repot",
     "Propagate",
     "Flower",
@@ -33,6 +33,15 @@ const eventDetails = {
         environmentTo: "Medium",
     },
     Humidity: { relativeHumidity: 76 },
+    "Leaf VPD": {
+        leafAirTemperatureC: 25,
+        leafAirTemperatureUnit: "C",
+        leafHumidity: 50,
+        leafTemperatureC: 22,
+        leafTemperatureUnit: "C",
+        leafVpd: 1.0597,
+        leafVpdSource: "Calculated",
+    },
     Mist: {
         mistAmountMl: 5,
         mistDetails: "Measured spray",
@@ -43,7 +52,6 @@ const eventDetails = {
         propagationDetails: "One rooted offset",
         propagationMethod: "Offset",
     },
-    Support: { supportAction: "Adjust", supportDetails: "Loosened tie" },
     Temperature: {
         temperatureC: 0,
         temperatureTarget: "Air",
@@ -102,6 +110,12 @@ const bootstrap = {
     dayKey: "2026-09-09",
     dayStartHour: 4,
     events,
+    historyCapacity: {
+        remainingRows: 4499,
+        supportedLastRow: 5000,
+        supportedObservationRows: 4999,
+        usedRows: 500,
+    },
     links: Object.fromEntries(
         [
             "calendar",
@@ -133,11 +147,18 @@ const bootstrap = {
     weighedTodayPlantIds: ["P05", "P38"],
 };
 
-/** Build the actual logger with a deterministic, entirely local service bridge. */
-export function loggerBrowserFixture() {
+/**
+ * Build the actual logger with a deterministic, entirely local service bridge.
+ *
+ * @param {{ preserveQueue?: boolean; holdBatch?: boolean }} [options]
+ */
+export function loggerBrowserFixture({
+    holdBatch = false,
+    preserveQueue = false,
+} = {}) {
     const bridge = `<script>
         const fixtureBootstrap = ${JSON.stringify(bootstrap)};
-        localStorage.setItem("gardenLoggerObservationQueueV1", JSON.stringify(
+        if (!${String(preserveQueue)} || !localStorage.getItem("gardenLoggerObservationQueueV1")) localStorage.setItem("gardenLoggerObservationQueueV1", JSON.stringify(
             ["P06", "P38"].map((plantId) => ({
                 addedAt: "2026-09-09T14:00:00Z",
                 payload: {
@@ -159,7 +180,12 @@ export function loggerBrowserFixture() {
                 getWebAppBootstrap() { success(fixtureBootstrap); },
                 getRecentWebObservations() { success(fixtureBootstrap.recent); },
                 saveWebObservation() { failure({ message: "Fixture writes are disabled." }); },
-                saveWebObservationBatch() { failure({ message: "Fixture writes are disabled." }); },
+                saveWebObservationBatch(requests) {
+                    if (!${String(holdBatch)}) { failure({ message: "Fixture writes are disabled." }); return; }
+                    document.documentElement.dataset.fixtureBatch = String(Number(document.documentElement.dataset.fixtureBatch || "0") + 1);
+                    window.addEventListener("fixture-confirm-batch", () => success({ results: requests.map((request) => ({ok: true, requestId: request.requestId})) }), {once: true});
+                },
+                getWebBatchSaveStatus(requests) { success(requests.map((request) => ({requestId: typeof request === "string" ? request : request.requestId, state: "missing"}))); },
                 saveBulkCareObservation() { failure({ message: "Fixture writes are disabled." }); }
             };
             return chain;

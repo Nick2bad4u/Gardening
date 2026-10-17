@@ -1316,18 +1316,22 @@
         }
     }
 
+    & .series-temperature-leaf,
+    & .series-leaf-vpd-device,
     & .series-humidity,
     & .series-weight {
         fill: var(--chart-weight);
         stroke: var(--chart-weight);
     }
 
+    & .series-leaf-vpd-calculated,
     & .series-temperature-air,
     & .series-height {
         fill: var(--chart-height);
         stroke: var(--chart-height);
     }
 
+    & .series-leaf-vpd-unspecified,
     & .series-temperature-soil,
     & .series-width {
         fill: var(--chart-width);
@@ -1380,6 +1384,7 @@
         fill: #8068b2;
     }
 
+    & .activity-leaf-vpd,
     & .activity-temperature,
     & .activity-pest {
         fill: var(--warning);

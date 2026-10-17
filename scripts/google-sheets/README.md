@@ -12,6 +12,12 @@ all read from that shared history.
 
 For everyday use, see the [watering strategy](../../docs/watering-strategy.md), [weighing strategy](../../docs/weighing-strategy.md), and [complete action guide](../../docs/logger-actions.md). The daily chat report and generated report page provide the adaptive care plan. The retired Daily care sheet is no longer a source or a second schedule.
 
+The [sensor import runbook](SENSOR-IMPORT.md) covers the separate Garden Sensor
+History workbook and private original-export archive. Local preparation commands
+verify source hashes, deduplicate overlapping readings, and calculate hourly
+summaries. An operator verifies the explicit workbook import; sensor data does
+not enter plant History.
+
 The [Insights chart guide](INSIGHTS-CHARTS.md) covers the dry-down explorer at
 **Insights A226**, its plant selector in **B228**, and the collection comparisons
 for retained water, measured loss, forecast windows, and model evidence. The
@@ -27,7 +33,65 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## Maintained 5.36.0 logger and import improvements
+
+The maintained source adds **Leaf VPD**, ordinary form-draft recovery, coordinated
+queue access across tabs, a History capacity guard, and independent Integrity
+checks for missing calculations and identity coverage. The sensor workbook gains
+a repeatable read-only import planner. Production remains at the version recorded
+above until a fresh rollout receipt confirms deployment; this section describes
+the source contract.
+
+**Leaf VPD** replaces Support among new single-plant choices, keeping the grid at 21. Mobile bulk has 12 shared-care choices; AppSheet bulk has 14 actions including
+its weighing modes. Existing Support history, queued requests, retries, and
+corrections retain their original fields and behavior. Leaf VPD is single-plant
+only and does not imply watering, a weight, or a pot-setup change.
+
+History and History view append **BI:BO**, reaching **67 columns (A:BO)**. App
+entries appends **BA:BG**, reaching **59 (A:BG)**; App bulk stays **74 (A:BV)**.
+The seven fields preserve leaf temperature and entry unit, paired air temperature
+and entry unit, paired relative humidity, leaf VPD in kPa, and its source. The
+[AppSheet contract](../../docs/appsheet-companion.md#maintained-5360-leaf-vpd-contract)
+lists their exact headers. The [action guide](../../docs/logger-actions.md#leaf-vpd-and-leaf-temperature)
+explains Device, Calculated, and leaf-temperature-only entries, the cited equation,
+and the difference between an instrument reading and a calculation. Never fill
+paired air/humidity context from an unrelated earlier sensor observation.
+
+Ordinary single-plant and bulk forms retain local drafts with explicit **Resume
+draft / Discard draft** controls; pending-save recovery takes priority. Drafts
+are neither queued observations nor proof of a saved record. Queue mutations
+reload the latest stored queue under an exclusive Web Lock, held through sending
+or reconciliation. Another tab gets a retry explanation rather than overwriting
+newer state. If locks are unavailable or denied, queue reads and Save now remain
+available while queue mutations are disabled. Storage events and tab focus refresh
+the displayed queue. No queue editor or Undo action is added.
+
+The canonical ledger supports **4,999 observation slots** in rows **2:5000**.
+Capacity metadata reports used and remaining slots; one multi-event save may
+consume several. The writer preflights the complete batch before appending or
+changing setup state, so a capacity failure cannot partially archive that batch.
+Retries of already-confirmed requests do not require new slots. Extend every
+bounded formula/projection and its checks before increasing the supported limit.
+
+[`workbook-integrity.mjs`](workbook-integrity.mjs) adds **Integrity E4:H14**:
+required formula anchors, canonical/projected observation-ID coverage, active
+plant-ID coverage across derived summaries, and History capacity. The Dashboard
+links cover **A4:H21** and count all 27 maintained statuses; a missing status shows
+**Checks unavailable**. Formula-error counts remain separate: an empty or deleted
+formula must not masquerade as zero errors. The guarded planner requires fresh
+captured cells, native rehearsal, and verified calculated outputs before a live
+write; it is not a blanket workbook refresh.
+
+The [sensor import runbook](SENSOR-IMPORT.md#repeatable-native-workbook-plan)
+describes verified original archives, complete hourly reconstruction, native
+precondition checks, no-op detection, one-batch requests, and uncertain-write
+reconciliation. Its Node commands never call Google write APIs. Sensor samples
+remain in Garden Sensor History, outside the plant-care ledger and phone queue.
+
 ## Maintained 5.35.0 care-event update
+
+This is the original care-event contract; the 5.36.0 extension above replaces
+Support for new choices while retaining its stored fields and historical use.
 
 The maintained source adds **Mist, Move, Temperature, Environment, Propagate,
 and Support**, making 21 single-plant choices in seven rows of three. Save and
@@ -2341,7 +2405,7 @@ The AppSheet form contract is:
 - `Plant ID` is a required Ref to `Plant tracker`; `Events` is a required
   EnumList containing the 21 choices in `WEB_EVENT_OPTIONS`: Water, Weigh, Mist,
   Humidity, Temperature, Light, Check, Inspect, Measure, Rotation, Move,
-  Environment, Clean, Prune, Support, Repot, Propagate, Flower, Photo, Pest, Other.
+  Environment, Clean, Prune, Leaf VPD, Repot, Propagate, Flower, Photo, Pest, Other.
   Production activation is tracked separately above.
 - Event-specific fields use `Show_If` and `Required_If` rules. Weigh requires a
   positive weight. Measure requires at least height or width and accepts inches
@@ -2354,7 +2418,8 @@ The AppSheet form contract is:
   positive. Move requires New location. Temperature requires a finite reading,
   Air/Soil target, and C/F unit, allowing zero and negative readings down to
   absolute zero. Environment requires aspect and New setting. Propagate and
-  Support require their method/action and details. The bridge ignores stale
+  historical Support require their method/action and details. Leaf VPD uses
+  its Device/Calculated mode and paired-input rules above. The bridge ignores stale
   hidden fields belonging to unselected events.
 - New measurements default to inches, `Measured`, and `Ruler`; the server still
   normalizes chart values to centimeters while preserving the entered unit and
@@ -2364,7 +2429,7 @@ The AppSheet form contract is:
 
 The `App bulk` contract is deliberately narrower and faster: one row is one
 collection-wide Water, Weigh, Water + weigh, Mist, Check, Inspect, Rotation, Move,
-Environment, Clean, Prune, Support, Propagate, Pest, or Other round. It stores `Round ID`, observation time, one action
+Environment, Clean, Prune, Propagate, Pest, or Other round. It stores `Round ID`, observation time, one action
 selector, a compact EnumList of selected plant IDs, a hidden legacy weight-state
 field, optional shared care details, and active gram fields for P01–P32 and
 P35–P38. The retired P33/P34 columns remain blank-only compatibility fields. Empty weight fields are
@@ -2377,7 +2442,7 @@ Water-only; a non-selected plant with a weight is Weigh-only. New canonical
 weight rows are stored as `Routine`; current-setup Dry/Wet/Routine labels are
 derived when the workbook, logger, or public tracker reads them.
 Other bulk actions use the selected IDs and their shared event-specific fields
-without fabricating per-plant values. Temperature, Light, and Humidity remain
+without fabricating per-plant values. Leaf VPD, Temperature, Light, and Humidity remain
 individual readings; their fields are absent from bulk staging.
 
 In AppSheet, `Selected plants` is an EnumList of refs whose `Valid_If` is
@@ -2683,16 +2748,16 @@ installable trigger is not required.
   watering application plus optional measured milliliters; and 5.32.0
   appends relative humidity in AQ. The 5.33.0 source appends PPFD and illuminance
   in AR:AS. Source 5.35.0 appends 15 care fields in AT:BH, including canonical
-  Celsius, Air/Soil target, and original temperature unit, and writes the entire
-  A:BH record block in one call so a failed service call cannot
+  Celsius, Air/Soil target, and original temperature unit. Source 5.36.0 appends
+  BI:BO for Leaf VPD and writes the A:BO record block in one call so a failed service call cannot
   strand a request ID apart from its
   observation. The installer keeps 5,000 History rows available, and workbook
   formulas use that same bound so new observations cannot outgrow the derived
   dashboards silently.
 - The Bulk care tab can append Water, Mist, Check, Inspect, Rotation, Move,
-  Environment, Clean, Prune, Support, Propagate, Pest, or Other rows for every selected plant with shared details. Use single-plant
+  Environment, Clean, Prune, Propagate, Pest, or Other rows for every selected plant with shared details. Use single-plant
   mode for weights, measurements, repots, flowers, photos, and Temperature,
-  Light, or Humidity readings because those values differ by plant.
+  Light, Humidity, or Leaf VPD readings because those values differ by plant.
 - Photo events accept Google Photos share links and exact Gyazo capture links.
   **Open Google Photos** hands
   off to the app when the phone/browser supports Google Photos links, otherwise
