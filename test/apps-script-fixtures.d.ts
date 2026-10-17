@@ -57,6 +57,7 @@ export interface AppsScriptTestApi {
         items: unknown,
         results: unknown
     ) => {
+        capacityBlocked: boolean;
         historyWriteMs: number;
         validationCleanupMs: number;
         validationRowsCleared: number;
@@ -601,6 +602,7 @@ export interface BatchResult {
     results: {
         duplicate?: boolean;
         error?: string;
+        errorCode?: string;
         historyRows?: number;
         message?: string;
         ok: boolean;

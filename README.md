@@ -32,9 +32,12 @@ P38 / #12 is the [Terrarium container](https://nick2bad4u.github.io/Gardening/co
   per-plant history URLs, dry/wet baselines, calculations, charts, and direct
   links back to the editable workbook
 - [Garden Entry Logger](https://script.google.com/macros/s/AKfycbytpdMto4ZAqOf49igDNoGYr-J6fmSRDNJOKP4-dKDFRmM2YkTCKJp3kmhrD4gOJShF/exec) —
-  the signed-in mobile logger with a durable one-call queue, independent
-  Wet weights, remembered nutrient details, a 12-event grid, and generic bulk
-  care including 90° rotations
+  the signed-in mobile logger with a durable queue, measured care events,
+  remembered nutrient details, and shared bulk-care rounds; the
+  [logger runbook](scripts/google-sheets/README.md) records deployed versions
+- [Sensor CSV imports](scripts/google-sheets/SENSOR-IMPORT.md) — the separate
+  sensor-history workbook, private original exports, hourly summaries, and
+  reviewed import planning without adding sensor samples to plant History
 - [AppSheet garden companion](docs/appsheet-companion.md) — signed-in phone and
   desktop entry, save receipts, image-first plant cards, watering-age badges,
   all eight collection Insights charts, and interactive per-plant measurement

@@ -45,6 +45,95 @@ function dailyApi(value) {
 const errorScan =
     "=SUM(ARRAYFORMULA(N(ISERROR(History!A2:AP5000))),ARRAYFORMULA(N(ISERROR(Dashboard!A1:X254))),ARRAYFORMULA(N(ISERROR(Baselines!A2:AJ1000))))";
 
+/**
+ * Execute the generated indicator's small formula subset against fixture cells.
+ * Unknown syntax fails rather than silently accepting an untested expression.
+ *
+ * @param {string} formula
+ * @param {ReturnType<typeof dailySheet>["state"]} integrity
+ * @param {Record<string, unknown>} [displayed]
+ *
+ * @returns {unknown}
+ */
+function evaluateIndicator(formula, integrity, displayed = {}) {
+    const expression = formula
+        .slice(1)
+        .replaceAll(
+            /COUNTIF\(Integrity!\$(?<column>[CG])\$(?<first>\d+):\$[CG]\$(?<last>\d+),"(?<status>\w+)"\)/gv,
+            (
+                _,
+                /** @type {string} */ column,
+                /** @type {string} */ first,
+                /** @type {string} */ last,
+                /** @type {string} */ status
+            ) => {
+                let count = 0;
+                for (let row = Number(first); row <= Number(last); row++)
+                    if (integrity.calculated.get(`${column}${row}`) === status)
+                        count++;
+                return String(count);
+            }
+        )
+        .replaceAll(
+            /ISFORMULA\(Integrity!(?<cell>[CG]\d+)\)/gv,
+            (_, /** @type {string} */ cell) =>
+                String(String(integrity.cells.get(cell) ?? "").startsWith("="))
+        )
+        .replaceAll(
+            /"[^"]*"|\b(?:A3|D3)\b|<>|=|&|\b[A-Z]+(?=\()/gv,
+            (token) => {
+                switch (token) {
+                    case "&": {
+                        return "+";
+                    }
+                    case "<>": {
+                        return "!==";
+                    }
+                    case "=": {
+                        return "===";
+                    }
+                    case "IF": {
+                        return "choose";
+                    }
+                    default: {
+                        if (Object.hasOwn(displayed, token))
+                            return JSON.stringify(displayed[token]);
+                        return token.startsWith('"')
+                            ? token
+                            : token.toLowerCase();
+                    }
+                }
+            }
+        );
+    return vm.runInNewContext(expression, {
+        and: (/** @type {unknown[]} */ ...values) => values.every(Boolean),
+        choose: (
+            /** @type {boolean} */ condition,
+            /** @type {unknown} */ yes,
+            /** @type {unknown} */ no
+        ) => (condition ? yes : no),
+        hyperlink: (/** @type {string} */ _url, /** @type {unknown} */ label) =>
+            label,
+        iferror: (/** @type {unknown} */ value) => value,
+        isnumber: (/** @type {unknown} */ value) =>
+            typeof value === "number" && Number.isFinite(value),
+        left: (/** @type {unknown} */ value, /** @type {number} */ length) =>
+            String(value).slice(0, length),
+        search: (
+            /** @type {string} */ needle,
+            /** @type {unknown} */ value
+        ) => {
+            const index = String(value).indexOf(needle);
+            return index === -1 ? NaN : index + 1;
+        },
+        sum: (/** @type {number[]} */ ...values) => {
+            let result = 0;
+            for (const value of values) result += value;
+            return result;
+        },
+    });
+}
+
 function fixture(
     ids = [
         "P01",
@@ -182,6 +271,10 @@ function fixture(
         integrity.state.calculated.set(`B${row}`, row === 13 ? 1 : 0);
         integrity.state.calculated.set(`C${row}`, "Pass");
     }
+    for (let row = 5; row <= 14; row++) {
+        integrity.api.getRange(row, 7).setFormula('=IF(TRUE,"Pass","Fail")');
+        integrity.state.calculated.set(`G${row}`, "Pass");
+    }
     for (const [index, id] of ids.entries()) {
         tracker.api
             .getRange(index + 2, 1, 1, 2)
@@ -230,6 +323,17 @@ function fixture(
 }
 
 describe("scoped daily Dashboard presentation", () => {
+    it("rejects an Integrity indicator without a navigation destination", () => {
+        expect.hasAssertions();
+
+        const { api, sheet } = fixture();
+
+        expect(() => api.dailyCareIndicatorFormula_("Fail", 99, "")).toThrow(
+            "Integrity range is required."
+        );
+        expect(sheet("Dashboard").state.writes).toStrictEqual([]);
+    });
+
     it.each([
         [
             1,
@@ -616,7 +720,15 @@ describe("scoped daily Dashboard presentation", () => {
         );
         expect(observations).toContain("0 · None outstanding");
         expect(data).toContain("Checks unavailable");
-        expect(data).toContain("=ROWS(Integrity!$C$5:$C$21)");
+        expect(data).toContain(")=27");
+        expect(data).toContain('COUNTIF(Integrity!$G$5:$G$14,"Fail")');
+        expect(data).toContain("ISFORMULA(Integrity!G14)");
+        expect(evaluateIndicator(data, sheet("Integrity").state)).toBe(
+            "0 · Healthy"
+        );
+        expect(evaluateIndicator(observations, sheet("Integrity").state)).toBe(
+            "1 follow-up check"
+        );
         expect(sheet("Daily care").state.cells.get("A22")).toBe(
             '=IF(Integrity!A5="","",Integrity!A5)'
         );
@@ -721,7 +833,7 @@ describe("scoped daily Dashboard presentation", () => {
         const rules = sheet("Daily care").state.rules;
 
         expect(sheet("Daily care").api.getRange("A3").getFormula()).toContain(
-            'COUNTIF(Integrity!$C$5:$C$21,"Fail")&" failed check"&IF(COUNTIF(Integrity!$C$5:$C$21,"Fail")=1,"","s")'
+            'SUM(COUNTIF(Integrity!$C$5:$C$21,"Fail"),COUNTIF(Integrity!$G$5:$G$14,"Fail"))&" failed check"'
         );
         expect(rules.map((rule) => rule.background)).toStrictEqual([
             "#edf4ee",
@@ -733,9 +845,70 @@ describe("scoped daily Dashboard presentation", () => {
             "#d8eadc",
             "#d9eaf6",
         ]);
-        expect(rules[0]?.formula).toContain(
-            '=ROWS(INDIRECT("Integrity!C5:C21"))'
+        expect(
+            evaluateIndicator(
+                sheet("Daily care").api.getRange("A3").getFormula(),
+                sheet("Integrity").state
+            )
+        ).toBe("1 failed check");
+        expect(rules[0]?.formula).toBe('=LEFT(A3,2)="0 "');
+        expect(rules[1]?.formula).toBe(
+            '=AND(ISNUMBER(SEARCH(" check",A3)),LEFT(A3,2)<>"0 ")'
         );
+    });
+
+    it("colors failures and actions from the added G checks and leaves unavailable checks uncolored", () => {
+        expect.hasAssertions();
+
+        const { api, sheet } = fixture();
+        const integrity = sheet("Integrity").state;
+        integrity.calculated.set("G5", "Fail");
+        integrity.calculated.set("G14", "Action");
+        api.installDailyCareDashboard();
+        const daily = sheet("Daily care");
+        const failed = daily.api.getRange("A3").getFormula();
+        const actions = daily.api.getRange("D3").getFormula();
+        const values = {
+            A3: evaluateIndicator(failed, integrity),
+            D3: evaluateIndicator(actions, integrity),
+        };
+        const colors = daily.state.rules
+            .slice(0, 4)
+            .filter(
+                (rule) =>
+                    evaluateIndicator(rule.formula, integrity, values) === true
+            )
+            .map((rule) => rule.background);
+
+        expect(values).toStrictEqual({
+            A3: "1 failed check",
+            D3: "1 follow-up check",
+        });
+        expect(colors).toStrictEqual(["#f8d4d4", "#fff0c7"]);
+
+        integrity.cells.set("G5", "Pass");
+        integrity.calculated.set("G5", "Pass");
+        const unavailable = {
+            A3: evaluateIndicator(failed, integrity),
+            D3: evaluateIndicator(actions, integrity),
+        };
+
+        expect(unavailable).toStrictEqual({
+            A3: "Checks unavailable",
+            D3: "Checks unavailable",
+        });
+        expect(
+            daily.state.rules
+                .slice(0, 4)
+                .filter(
+                    (rule) =>
+                        evaluateIndicator(
+                            rule.formula,
+                            integrity,
+                            unavailable
+                        ) === true
+                )
+        ).toStrictEqual([]);
     });
 
     it.each([

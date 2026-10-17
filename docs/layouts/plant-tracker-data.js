@@ -614,6 +614,25 @@ export function calculateSummary(sourceEvents, plantId = "") {
         (event) =>
             String(event["Temperature target"] ?? "").toLowerCase() === "soil"
     );
+    const leafEvents = currentEvents.filter((event) => {
+        const date = parseDate(event["Date"]);
+        return (
+            date !== null &&
+            date.getTime() <= Date.now() &&
+            String(event["Event"] ?? "")
+                .trim()
+                .toLowerCase() === "leaf vpd"
+        );
+    });
+    const leafTemperatureSeries = measurementSeries(
+        leafEvents,
+        "Leaf temperature (°C)",
+        (event) => {
+            const value = numericValue(event["Leaf temperature (°C)"]);
+            return value !== null && value >= -273.15;
+        }
+    );
+    const leafVpdSeries = measurementSeries(leafEvents, "Leaf VPD (kPa)");
     const latestCondition = newest(
         currentEvents,
         (event) => String(event["Condition / soil"] ?? "").trim() !== ""
@@ -726,6 +745,7 @@ export function calculateSummary(sourceEvents, plantId = "") {
             environments: environmentEvents.length,
             flowers: flowerEvents.length,
             inspections: inspectEvents.length,
+            leafVpd: leafEvents.length,
             mists: mistEvents.length,
             moves: moveEvents.length,
             nutrients: nutrientEvents.length,
@@ -761,6 +781,8 @@ export function calculateSummary(sourceEvents, plantId = "") {
         latestWeight,
         latestWeightValue,
         latestWidth,
+        leafTemperatureSeries,
+        leafVpdSeries,
         manualCare: isManualCare,
         observationSpanDays:
             datedEvents.length > 1

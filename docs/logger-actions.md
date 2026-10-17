@@ -1,9 +1,9 @@
 # Spreadsheet and Logger Actions
 
 Use this guide to choose an action, record measurements, and correct saved care
-entries. The maintained logger adds Mist, Move, Temperature, Environment, Propagate, and
-Support alongside the existing care actions. Air and soil temperatures stay
-separate in history and charts.
+entries. The maintained 5.36.0 logger adds **Leaf VPD** in place of Support for
+new entries. Existing Support records, corrections, and queued retries remain
+supported. Air, soil, and leaf measurements keep their own context.
 The [deployment record](../scripts/google-sheets/README.md) keeps the
 logger version and production details.
 
@@ -42,7 +42,7 @@ in P35's note. Find each planter's members in the [container guide](./containers
 
 ## The 21 Selectable Actions
 
-The maintained 5.35.0 single-plant form exposes these 21 event choices. Fields listed as required here describe the detailed web/AppSheet writer; Quick log offers a smaller set of structured fields.
+The maintained 5.36.0 single-plant form exposes these 21 event choices. Fields listed as required here describe the detailed web/AppSheet writer; Quick log offers a smaller set of structured fields.
 
 | Action        | When to use it                                                                        | Details and effects                                                                                                                                                                             |
 | ------------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -60,7 +60,7 @@ The maintained 5.35.0 single-plant form exposes these 21 event choices. Fields l
 | Environment   | You changed light, airflow, enclosure, or heating settings.                           | Choose the aspect and enter New setting; Previous setting is optional. Describes a change, not a sensor measurement.                                                                            |
 | 🧽 Clean      | You cleaned something associated with this pot.                                       | Lightweight dated event; explain what was cleaned in Notes. No automatic treatment or weight correction follows.                                                                                |
 | ✂️ Prune      | You removed or trimmed plant material.                                                | Lightweight dated event; describe what was removed and why in Notes. It does not automatically adjust a weight baseline.                                                                        |
-| Support       | You added, adjusted, or removed a stake, tie, or other support.                       | Requires Add, Adjust, or Remove plus details. If the weighed configuration changed, also record Repot to start a new setup.                                                                     |
+| Leaf VPD      | You recorded a displayed leaf VPD or measured leaf temperature.                       | Choose a device reading or calculation. Device mode requires the displayed kPa; calculation requires leaf temperature, with paired air temperature and humidity together or neither.            |
 | 🪴 Repot      | The plant was repotted or its relevant medium/configuration was deliberately changed. | The detailed form requires the new pot-size text, retains the previous size, and advances Pot setup. Record medium separately. The same physical size can still have a new setup.               |
 | Propagate     | You took a cutting, separated an offset, divided a plant, or sowed seed.              | Requires method and details. Records the activity against the selected source pot; does not create a new inventory entry.                                                                       |
 | 🌸 Flower     | You want to record flowering, buds, or a flowering change.                            | Requires a positive whole-number flower count, descriptive flower details, or both. For no open flowers or spent blooms, use the description; zero is not accepted as a positive count.         |
@@ -154,7 +154,7 @@ when useful. A single reading is not a measured daily light integral or a
 watering instruction. See the [sources](#sources-and-implementation-references).
 
 History appends these values in **AR:AS**; detailed App entries staging appends
-them in **AJ:AK**. Light, Humidity, and Temperature remain individual observations and are
+them in **AJ:AK**. Light, Humidity, Temperature, and Leaf VPD remain individual observations and are
 not shared Bulk care actions.
 
 ## Mist, Movement, and Environment
@@ -184,16 +184,55 @@ and the entry unit, so air and soil readings have separate histories and chart
 series. These measurements do not alter watering dates or weight references.
 Temperature is an individual observation, not a shared Bulk care measurement.
 
-## Propagation and Supports
+## Leaf VPD and Leaf Temperature
+
+Use **Leaf VPD** for one plant and one observation time. Choose the mode that
+matches the evidence:
+
+- **Device:** enter the leaf VPD displayed by the instrument in kPa. Zero is
+  valid; negative device readings are rejected. Leaf temperature, paired air
+  temperature, and paired relative humidity are optional context. The displayed
+  value is retained as Device evidence rather than replaced by a calculation.
+- **Calculated:** enter leaf temperature in °C or °F. Add **both** air temperature
+  and relative humidity from the same measurement context to calculate leaf VPD.
+  With neither paired input, the event records leaf temperature only, leaves VPD
+  blank, and labels its source **Not calculated**. One paired input without the
+  other is incomplete.
+
+The calculation uses Celsius temperatures and percentage-point humidity:
+`e(T) = 0.6108 × exp(17.27 × T / (T + 237.3))`, then
+`leaf VPD = e(leaf temperature) − (RH / 100) × e(air temperature)` in kPa. The
+saturation-pressure equation and humidity relation come from
+[FAO's meteorological-data guidance](https://www.fao.org/4/x0490e/x0490e07.htm);
+using leaf temperature for the leaf-side saturation term is the logger's explicit
+calculation. Calculated results retain their sign, including negative values, and are rounded
+to four decimal places rather than silently clamped to zero.
+
+The calculator accepts −50 to 100°C after unit conversion; this is its technical
+input domain, **not a plant-care range or instrument specification**. Blank stays
+missing and zero stays a reading. Do not combine a leaf reading with an unrelated
+older air or humidity reading; the paired values describe this observation, not
+an inferred link to the latest separate events. Leaf VPD does not set watering
+thresholds, change watering dates, or prescribe a daily target.
+
+AC Infinity's [VPD Thermometer product page](https://acinfinity.com/vpd-thermometer-handheld-environmental-monitor/)
+describes a device that displays both leaf and air VPD alongside temperatures and
+humidity. That supports recording a displayed leaf value; it does not establish
+which exact meter model is owned. Record the device and useful measurement context
+in Notes when known. Keep imported sensor-channel VPD separate from this plant's
+leaf observation unless its channel meaning is established.
+
+## Propagation and Historical Supports
 
 **Propagate** offers Stem cutting, Leaf cutting, Offset, Division, Seed, and
 Other. Describe what you did and which plant material was involved. The event
 belongs to the selected pot; separately enroll a new container when it needs its
 own history.
 
-**Support** offers Add, Adjust, and Remove. Describe the stake, tie, trellis, or
-other support. Neither Support nor Propagate automatically starts a new weighing
-setup. If the assembly on the scale changes materially, record **Repot** as well,
+**Support** is retained for historical records, corrections, and existing queued
+retries, with its Add, Adjust, or Remove action and details. New observations use
+**Other** with a note for support work. Neither a support operation nor Propagate
+automatically starts a new weighing setup. If the assembly on the scale changes materially, record **Repot** as well,
 using the same pot size if appropriate, to establish the new setup explicitly.
 
 ## Dimensions, Condition, and Repot Details
@@ -244,12 +283,12 @@ Do not add private account details, addresses, or other unnecessary personal inf
 
 ## Which Actions Support Bulk Entry
 
-| Surface                      | Supported round                                                                                                               | Important distinction                                                                                                                                                            |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Mobile Bulk care             | Water, Mist, Check, Inspect, Rotation, Move, Environment, Clean, Prune, Support, Propagate, Pest, Other                       | Inspect requires the entered shared condition for each selected plant. Use single-plant mode when observations differ; Temperature, Light, and Humidity are individual readings. |
-| Mobile single-plant queue    | Separate detailed entries for several pots                                                                                    | This is how to collect different individual weights before sending the queue together. It is not one shared weight applied to every pot.                                         |
-| AppSheet Bulk Log            | Water, Weigh, Water + weigh, Mist, Check, Inspect, Rotation, Move, Environment, Clean, Prune, Support, Propagate, Pest, Other | Has dedicated per-plant weight fields; Inspect requires selected plants and shared condition. Temperature, Light, and Humidity are individual readings.                          |
-| Quick log bulk Event control | Applies an Event selection to input rows or clears those selections                                                           | Choosing an event across rows does not mean those observations were saved. Review and save the intended rows.                                                                    |
+| Surface                      | Supported round                                                                                                      | Important distinction                                                                                                                                                                      |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Mobile Bulk care             | Water, Mist, Check, Inspect, Rotation, Move, Environment, Clean, Prune, Propagate, Pest, Other                       | Inspect requires the entered shared condition for each selected plant. Use single-plant mode when observations differ; Leaf VPD, Temperature, Light, and Humidity are individual readings. |
+| Mobile single-plant queue    | Separate detailed entries for several pots                                                                           | This is how to collect different individual weights before sending the queue together. It is not one shared weight applied to every pot.                                                   |
+| AppSheet Bulk Log            | Water, Weigh, Water + weigh, Mist, Check, Inspect, Rotation, Move, Environment, Clean, Prune, Propagate, Pest, Other | Has dedicated per-plant weight fields; Inspect requires selected plants and shared condition. Leaf VPD, Temperature, Light, and Humidity are individual readings.                          |
+| Quick log bulk Event control | Applies an Event selection to input rows or clears those selections                                                  | Choosing an event across rows does not mean those observations were saved. Review and save the intended rows.                                                                              |
 
 In AppSheet **Weigh** rounds, populated per-plant weight fields determine the weighed plants. **Water** requires selected watered plants. **Water + weigh** requires selected watered plants and at least one entered weight; the bridge handles each plant's actual combination. A selected watered pot can have no weight, and an entered weight can belong to a pot that was not watered. Do not assume every weight field belongs to the watered selection.
 
@@ -270,6 +309,25 @@ Shared bulk details must really be shared. In particular, a common water-volume 
 | Move to another plant                 | Reassigns that event to the selected plant and its valid pot setup, preserving the original entry in the audit trail.                  |
 | Delete entry                          | Removes the event from active history and calculations; a deletion record preserves its provenance and retry receipt.                  |
 | Exclude selected History observations | The Sheets menu previews selected records and marks confirmed exclusions Removed while retaining the audit trail.                      |
+
+The maintained logger can retain an unfinished ordinary single-plant or bulk
+form. **Resume draft** restores it; **Discard draft** removes it deliberately. A draft
+is not a queued request or a saved History record. Restoring it does not rewrite
+a submitted request or change its retry identity.
+
+Queue changes coordinate across logger tabs in the same browser where the Web
+Locks API is available. If another tab owns a queue mutation or send, the logger
+asks you to wait and retry while retaining your current entry. If that browser
+cannot provide the lock, the queue stays readable and **Save now** remains usable,
+but queue changes are disabled with an explanation. Storage events and returning
+to the tab refresh its queue view. This does not synchronize separate phones or
+browser profiles.
+
+History currently supports **4,999 observation rows** below its header. A save
+can create several event rows. The server checks the whole batch against remaining
+capacity before appending, so a capacity rejection does not leave half of the
+batch saved. Keep the retained request recoverable and have the supported workbook
+ranges extended before retrying; do not delete historical rows to make room.
 
 Retry the existing request after a connection problem rather than immediately creating a new observation. The queue and bridge use request identities to avoid duplicating a confirmed save. In AppSheet, use the receipt and supported retry/correction path; staging rows are not a second editable History.
 

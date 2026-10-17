@@ -59,6 +59,9 @@ export const MeasurementsAndFilters: Story = {
             document.querySelector("#weight-chart svg")
         ).toBeInTheDocument();
         await expect(
+            document.querySelector("#leaf-vpd-card")
+        ).not.toBeVisible();
+        await expect(
             canvas.getByText(
                 "Elapsed days between recorded soak-to-runoff events."
             )
@@ -396,7 +399,7 @@ export const ExtendedCareEvents: Story = {
         ).toHaveTextContent("1 air readings and 1 soil readings");
         await expect(
             document.querySelectorAll("#temperature-chart .chart-point")
-        ).toHaveLength(2);
+        ).toHaveLength(5);
         await expect(document.querySelector("tbody")).toHaveTextContent(
             "Fine spray"
         );
@@ -423,6 +426,7 @@ export const ExtendedCareEvents: Story = {
                 "Environment",
                 "Propagate",
                 "Support",
+                "Leaf VPD",
             ].map(async (name) =>
                 expect(canvas.getByRole("option", { name })).toBeInTheDocument()
             )
@@ -437,6 +441,40 @@ export const ExtendedCareEvents: Story = {
         await expect(document.querySelector("tbody")).toHaveTextContent(
             "Soil: -2.5 °C"
         );
+        await userEvent.selectOptions(eventFilter, "leaf vpd");
+        await expect(document.querySelectorAll("tbody tr")).toHaveLength(3);
+        await expect(document.querySelector("tbody")).toHaveTextContent(
+            "Leaf VPD: 0 kPa"
+        );
+        await expect(document.querySelector("tbody")).toHaveTextContent(
+            "Leaf VPD: -0.3155 kPa"
+        );
+        await expect(document.querySelector("tbody")).toHaveTextContent(
+            "Paired humidity: 100% RH"
+        );
+        await expect(document.querySelector("tbody")).toHaveTextContent(
+            "Source: Not calculated"
+        );
+        await expect(document.querySelector("tbody")).toHaveTextContent(
+            "Leaf VPD not recorded"
+        );
+        await expect(document.querySelector("tbody")).toHaveTextContent(
+            "Leaf: 0 °C · entered in °F (32 °F)"
+        );
+        await expect(
+            document.querySelectorAll("#leaf-vpd-chart .chart-point")
+        ).toHaveLength(2);
+        await expect(document.querySelector("#leaf-vpd-card")).toBeVisible();
+        await expect(
+            document.querySelectorAll(
+                "#leaf-vpd-chart .chart-point.series-leaf-vpd-device"
+            )
+        ).toHaveLength(1);
+        await expect(
+            document.querySelectorAll(
+                "#leaf-vpd-chart .chart-point.series-leaf-vpd-calculated"
+            )
+        ).toHaveLength(1);
         await userEvent.click(
             canvas.getByRole("button", { name: "Export this plant CSV" })
         );
@@ -454,6 +492,46 @@ export const ExtendedCareEvents: Story = {
         await expect(document.documentElement.dataset["exportedCsv"]).toContain(
             "move-original"
         );
+        await expect(document.documentElement.dataset["exportedCsv"]).toContain(
+            "Leaf VPD (kPa),Leaf VPD source"
+        );
+        await expect(document.documentElement.dataset["exportedCsv"]).toContain(
+            "Negative calculated VPD"
+        );
+        const [header, ...records] = (
+            document.documentElement.dataset["exportedCsv"] ?? ""
+        )
+            .trim()
+            .split("\r\n");
+        const exportedHeaders = (header ?? "").trim().split(",");
+        const leafRecords = records.map((line) =>
+            Object.fromEntries(
+                line.split(",").map((value, index) => [
+                    exportedHeaders[index] ?? "",
+                    value,
+                ])
+            )
+        );
+        await expect(
+            leafRecords.find((row) => row["Notes"] === "Zero device VPD")
+        ).toMatchObject({
+            "Leaf temperature (°C)": "0",
+            "Leaf VPD (kPa)": "0",
+            "Leaf VPD source": "Device",
+            "Paired air temperature (°C)": "0",
+            "Paired relative humidity (%)": "100",
+        });
+        await expect(
+            leafRecords.find(
+                (row) => row["Notes"] === "Leaf only without pairing"
+            )
+        ).toMatchObject({
+            "Leaf temperature (°C)": "20",
+            "Leaf VPD (kPa)": "",
+            "Leaf VPD source": "Not calculated",
+            "Paired air temperature (°C)": "",
+            "Paired relative humidity (%)": "",
+        });
         await expectNoOverflow(document);
     },
 };

@@ -173,7 +173,7 @@ const expectEventLayout = async (page: Readonly<Page>) => {
             "Environment",
             "Clean",
             "Prune",
-            "Support",
+            "Leaf VPD",
             "Repot",
             "Propagate",
             "Flower",

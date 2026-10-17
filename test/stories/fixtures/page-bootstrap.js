@@ -30,7 +30,7 @@
             : []),
     ].join("\n");
     const historyHeaders =
-        "Date,Plant ID,Event,Weight state,Weight (g),Height (cm),Width (cm),Plant condition,Notes,Pot setup,Record status,Request ID,Relative humidity (%),PPFD (µmol/m²/s),Illuminance (lux),Observation quality,Measurement method,Observation ID,Corrects observation ID,Soil moisture,Mist targets,Mist amount (mL),Mist details,Previous location,New location,Temperature (°C),Temperature target,Temperature entry unit,Environment aspect,Previous setting,New setting,Propagation method,Propagation details,Support action,Support details";
+        "Date,Plant ID,Event,Weight state,Weight (g),Height (cm),Width (cm),Plant condition,Notes,Pot setup,Record status,Request ID,Relative humidity (%),PPFD (µmol/m²/s),Illuminance (lux),Observation quality,Measurement method,Observation ID,Corrects observation ID,Soil moisture,Mist targets,Mist amount (mL),Mist details,Previous location,New location,Temperature (°C),Temperature target,Temperature entry unit,Environment aspect,Previous setting,New setting,Propagation method,Propagation details,Support action,Support details,Leaf temperature (°C),Leaf temperature entry unit,Paired air temperature (°C),Paired air temperature entry unit,Paired relative humidity (%),Leaf VPD (kPa),Leaf VPD source";
     /** @type {Record<string, string | number>[]} */
     const lightObservations = [
         {
@@ -137,6 +137,35 @@
             Event: "Support",
             "Support action": "Add stake",
             "Support details": "Loose tie",
+        },
+        {
+            Event: "Leaf VPD",
+            "Leaf temperature (°C)": 0,
+            "Leaf temperature entry unit": "F",
+            "Leaf VPD (kPa)": 0,
+            "Leaf VPD source": "Device",
+            Notes: "Zero device VPD",
+            "Paired air temperature (°C)": 0,
+            "Paired air temperature entry unit": "C",
+            "Paired relative humidity (%)": 100,
+        },
+        {
+            Event: "Leaf VPD",
+            "Leaf temperature (°C)": 18,
+            "Leaf temperature entry unit": "C",
+            "Leaf VPD (kPa)": -0.3155,
+            "Leaf VPD source": "Calculated",
+            Notes: "Negative calculated VPD",
+            "Paired air temperature (°C)": 22,
+            "Paired air temperature entry unit": "C",
+            "Paired relative humidity (%)": 90,
+        },
+        {
+            Event: "Leaf VPD",
+            "Leaf temperature (°C)": 20,
+            "Leaf temperature entry unit": "C",
+            "Leaf VPD source": "Not calculated",
+            Notes: "Leaf only without pairing",
         },
     ];
     const history = [

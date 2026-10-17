@@ -1877,6 +1877,7 @@
                 border-color: #477c87;
             }
             .chip[data-event="Propagate"][aria-pressed="true"],
+            .chip[data-event="Leaf VPD"][aria-pressed="true"],
             .chip[data-event="Support"][aria-pressed="true"],
             .chip[data-event="Prune"][aria-pressed="true"] {
                 background: #767b35;
@@ -2443,6 +2444,7 @@
                     --event-accent: #6e7770;
                 }
                 &[data-event="Propagate"],
+                &[data-event="Leaf VPD"],
                 &[data-event="Support"],
                 &[data-event="Prune"] {
                     --event-bg: #e8f0d9;
@@ -13983,6 +13985,38 @@
 
         <main class="app">
             <section
+                id="entryDraftBanner"
+                class="correction-banner"
+                aria-label="Unsent entry drafts"
+                hidden
+            >
+                <p
+                    id="entryDraftStatus"
+                    aria-label="Unsent draft status"
+                    role="status"
+                    aria-live="polite"
+                ></p>
+                <div class="correction-actions">
+                    <label
+                        id="entryDraftChoiceLabel"
+                        hidden
+                        >Retained draft<select id="entryDraftChoice"></select
+                    ></label>
+                    <button
+                        id="entryDraftResume"
+                        class="secondary"
+                        type="button"
+                        >Resume draft</button
+                    >
+                    <button
+                        id="entryDraftDiscard"
+                        class="secondary"
+                        type="button"
+                        >Discard draft</button
+                    >
+                </div>
+            </section>
+            <section
                 id="correctionBanner"
                 class="correction-banner"
                 aria-label="Saved History correction"
@@ -14187,6 +14221,13 @@
                             Refresh
                         </button>
                     </div>
+                    <p
+                        id="historyCapacityStatus"
+                        aria-label="History capacity"
+                        class="hint"
+                        role="status"
+                        hidden
+                    ></p>
                     <form
                         id="entryForm"
                         aria-label="Single plant entry"
@@ -14529,11 +14570,13 @@
                                                 ><label class="mist-target"
                                                     ><input
                                                         type="checkbox"
+                                                        id="mistTarget1"
                                                         value="Leaves"
                                                     /><span>Leaves</span></label
                                                 ><label class="mist-target"
                                                     ><input
                                                         type="checkbox"
+                                                        id="mistTarget2"
                                                         value="Exposed roots"
                                                     /><span
                                                         >Exposed roots</span
@@ -14541,6 +14584,7 @@
                                                 ><label class="mist-target"
                                                     ><input
                                                         type="checkbox"
+                                                        id="mistTarget3"
                                                         value="Soil surface"
                                                     /><span
                                                         >Soil surface</span
@@ -14548,6 +14592,7 @@
                                                 ><label class="mist-target"
                                                     ><input
                                                         type="checkbox"
+                                                        id="mistTarget4"
                                                         value="Stem / plant body"
                                                     /><span
                                                         >Stem / plant body</span
@@ -14555,6 +14600,7 @@
                                                 ><label class="mist-target"
                                                     ><input
                                                         type="checkbox"
+                                                        id="mistTarget5"
                                                         value="Moss / support"
                                                     /><span
                                                         >Moss / support</span
@@ -14562,6 +14608,7 @@
                                                 ><label class="mist-target"
                                                     ><input
                                                         type="checkbox"
+                                                        id="mistTarget6"
                                                         value="Other"
                                                     /><span>Other</span></label
                                                 ></div
@@ -14807,6 +14854,132 @@
                                                 id="supportDetails"
                                                 maxlength="240" /></div></div
                                 ></div>
+                                <div
+                                    id="leafVpdSection"
+                                    class="conditional event-panel"
+                                >
+                                    <h3
+                                        ><svg
+                                            viewBox="0 0 64 64"
+                                            class="app-icon"
+                                            aria-hidden="true"
+                                        >
+                                            <use
+                                                href="#app-icon-temperature"
+                                            ></use></svg
+                                        >Leaf VPD</h3
+                                    >
+                                    <p class="hint"
+                                        >An infrared thermometer measures leaf
+                                        temperature. VPD needs leaf temperature,
+                                        paired air temperature and humidity, or
+                                        the result displayed by a VPD device.
+                                        Use readings from this observation;
+                                        older readings are not filled in.</p
+                                    >
+                                    <div class="field">
+                                        <label
+                                            class="field-label"
+                                            for="leafVpdSource"
+                                            >Reading mode</label
+                                        >
+                                        <select id="leafVpdSource">
+                                            <option value="Calculated"
+                                                >Calculate from readings</option
+                                            >
+                                            <option value="Device"
+                                                >Device-reported VPD</option
+                                            >
+                                        </select>
+                                    </div>
+                                    <div
+                                        id="leafVpdDeviceField"
+                                        class="field"
+                                        hidden
+                                    >
+                                        <label
+                                            class="field-label"
+                                            for="leafVpd"
+                                            >Device VPD (kPa)</label
+                                        >
+                                        <input
+                                            id="leafVpd"
+                                            type="number"
+                                            inputmode="decimal"
+                                            min="0"
+                                            step="any"
+                                        />
+                                    </div>
+                                    <div class="fields">
+                                        <div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="leafTemperature"
+                                                >Leaf temperature</label
+                                            ><input
+                                                id="leafTemperature"
+                                                type="number"
+                                                inputmode="decimal"
+                                                step="any"
+                                        /></div>
+                                        <div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="leafTemperatureUnit"
+                                                >Leaf temperature unit</label
+                                            ><select id="leafTemperatureUnit"
+                                                ><option value="F">°F</option
+                                                ><option value="C"
+                                                    >°C</option
+                                                ></select
+                                            ></div
+                                        >
+                                        <div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="leafAirTemperature"
+                                                >Paired air temperature</label
+                                            ><input
+                                                id="leafAirTemperature"
+                                                type="number"
+                                                inputmode="decimal"
+                                                step="any"
+                                        /></div>
+                                        <div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="leafAirTemperatureUnit"
+                                                >Air temperature unit</label
+                                            ><select id="leafAirTemperatureUnit"
+                                                ><option value="F">°F</option
+                                                ><option value="C"
+                                                    >°C</option
+                                                ></select
+                                            ></div
+                                        >
+                                        <div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="leafHumidity"
+                                                >Paired relative humidity
+                                                (%)</label
+                                            ><input
+                                                id="leafHumidity"
+                                                type="number"
+                                                inputmode="decimal"
+                                                min="0"
+                                                max="100"
+                                                step="any"
+                                        /></div>
+                                    </div>
+                                    <p
+                                        id="leafVpdPreview"
+                                        aria-label="Leaf VPD preview"
+                                        class="hint"
+                                        role="status"
+                                        aria-live="polite"
+                                    ></p>
+                                </div>
                                 <div
                                     id="waterSection"
                                     class="conditional event-panel"
@@ -15749,11 +15922,13 @@
                                                 ><label class="mist-target"
                                                     ><input
                                                         type="checkbox"
+                                                        id="bulkMistTarget1"
                                                         value="Leaves"
                                                     /><span>Leaves</span></label
                                                 ><label class="mist-target"
                                                     ><input
                                                         type="checkbox"
+                                                        id="bulkMistTarget2"
                                                         value="Exposed roots"
                                                     /><span
                                                         >Exposed roots</span
@@ -15761,6 +15936,7 @@
                                                 ><label class="mist-target"
                                                     ><input
                                                         type="checkbox"
+                                                        id="bulkMistTarget3"
                                                         value="Soil surface"
                                                     /><span
                                                         >Soil surface</span
@@ -15768,6 +15944,7 @@
                                                 ><label class="mist-target"
                                                     ><input
                                                         type="checkbox"
+                                                        id="bulkMistTarget4"
                                                         value="Stem / plant body"
                                                     /><span
                                                         >Stem / plant body</span
@@ -15775,6 +15952,7 @@
                                                 ><label class="mist-target"
                                                     ><input
                                                         type="checkbox"
+                                                        id="bulkMistTarget5"
                                                         value="Moss / support"
                                                     /><span
                                                         >Moss / support</span
@@ -15782,6 +15960,7 @@
                                                 ><label class="mist-target"
                                                     ><input
                                                         type="checkbox"
+                                                        id="bulkMistTarget6"
                                                         value="Other"
                                                     /><span>Other</span></label
                                                 ></div
@@ -16567,6 +16746,10 @@
                 queueSendSummary: null,
                 queueStorageAvailable: true,
                 queueStorageWarning: "",
+                queueLockPending: false,
+                queueLockHeld: false,
+                queueLockUnavailable: false,
+                queueLockMessage: "",
                 viewportRepairTimer: null,
                 bootstrapTimer: null,
                 bootstrapAttempt: 0,
@@ -16581,6 +16764,17 @@
             };
 
             const PENDING_SAVE_KEY = "gardenLoggerPendingSaveV1";
+            const ENTRY_DRAFT_PREFIX = "gardenLoggerEntryDraftV1:";
+            const ENTRY_DRAFT_LOCK = "gardenLoggerEntryDraftsV1";
+            const entryDrafts = {
+                ready: false,
+                restoring: false,
+                warning: "",
+                baselines: { single: "", bulk: "" },
+                revisions: { single: 0, bulk: 0 },
+                current: { single: null, bulk: null },
+                retained: [],
+            };
             const ROUND_STATE_KEY = "gardenLoggerRoundStateV1";
             const NUTRIENT_STATE_KEY = "gardenLoggerNutrientStateV1";
             const BULK_PENDING_KEY = "gardenLoggerBulkPendingV1";
@@ -16607,6 +16801,7 @@
                 "gardenLoggerObservationQueueBackupV1";
             const OBSERVATION_QUEUE_RECOVERY_KEY =
                 "gardenLoggerObservationQueueRecoveryV1";
+            const OBSERVATION_QUEUE_LOCK = "gardenLoggerObservationQueueV1";
             const BOOTSTRAP_CACHE_KEY = "gardenLoggerBootstrapV4";
             const BOOTSTRAP_CACHE_MAX_AGE_MS = 6 * 60 * 60 * 1000;
             const BOOTSTRAP_TIMEOUT_MS = 20000;
@@ -16631,7 +16826,7 @@
                 "Environment",
                 "Clean",
                 "Prune",
-                "Support",
+                "Leaf VPD",
                 "Repot",
                 "Propagate",
                 "Flower",
@@ -16654,6 +16849,15 @@
                 ],
                 Propagate: ["propagationMethod", "propagationDetails"],
                 Support: ["supportAction", "supportDetails"],
+                "Leaf VPD": [
+                    "leafTemperature",
+                    "leafTemperatureUnit",
+                    "leafAirTemperature",
+                    "leafAirTemperatureUnit",
+                    "leafHumidity",
+                    "leafVpd",
+                    "leafVpdSource",
+                ],
             });
             const MIST_TARGETS = Object.freeze([
                 "Leaves",
@@ -16674,7 +16878,6 @@
                 "Environment",
                 "Clean",
                 "Prune",
-                "Support",
                 "Propagate",
                 "Pest",
                 "Other",
@@ -16693,6 +16896,7 @@
                 Environment: "environment",
                 Propagate: "propagate",
                 Support: "support",
+                "Leaf VPD": "temperature",
                 Weigh: "weight",
                 Measure: "dimensions",
                 Humidity: "humidity",
@@ -16785,6 +16989,347 @@
                         bulkEvents: [...state.bulkEvents],
                     })
                 );
+                retainOrdinaryDraft(state.entryMode);
+            }
+
+            function ordinaryDraftSnapshot(mode) {
+                const bulk = mode === "bulk";
+                const form = $(bulk ? "bulkWaterForm" : "entryForm");
+                const timeId = bulk ? "bulkObservedAt" : "observedAt";
+                const ignored = new Set([
+                    "plantSearch",
+                    "bulkSearch",
+                    "keepEvents",
+                    "advanceAfterQueue",
+                    timeId,
+                    `${timeId}Date`,
+                    `${timeId}Time`,
+                ]);
+                return {
+                    mode,
+                    events: [...(bulk ? state.bulkEvents : state.events)],
+                    plantIds: bulk
+                        ? [...state.bulkSelected]
+                        : [$("plantSelect").value],
+                    values: Object.fromEntries(
+                        [...form.querySelectorAll("input, select, textarea")]
+                            .filter(
+                                (control) =>
+                                    control.id && !ignored.has(control.id)
+                            )
+                            .map((control) => [
+                                control.id,
+                                control.type === "checkbox"
+                                    ? control.checked
+                                    : control.multiple
+                                      ? [...control.selectedOptions].map(
+                                            (option) => option.value
+                                        )
+                                      : control.value,
+                            ])
+                    ),
+                    time: {
+                        mode: $(timeId).dataset.timeMode || "now",
+                        value:
+                            $(timeId).dataset.timeMode === "fixed"
+                                ? $(timeId).value
+                                : "",
+                        instant: $(timeId).dataset.timeInstant || "",
+                    },
+                };
+            }
+
+            function withEntryDraftLock(action) {
+                const failed = () => {
+                    entryDrafts.warning =
+                        "This browser could not retain the unsent draft. Keep the entry open and use Save now or Queue before leaving.";
+                    renderEntryDraftBanner();
+                };
+                try {
+                    if (typeof navigator.locks?.request !== "function") {
+                        failed();
+                        return;
+                    }
+                    navigator.locks
+                        .request(
+                            ENTRY_DRAFT_LOCK,
+                            { mode: "exclusive" },
+                            action
+                        )
+                        .catch(failed);
+                } catch (error) {
+                    failed();
+                }
+            }
+
+            function writeOrdinaryDraft(draft) {
+                const serialized = JSON.stringify(draft);
+                localStorage.setItem(draft.key, serialized);
+                if (localStorage.getItem(draft.key) !== serialized)
+                    throw new Error("The unsent draft could not be verified.");
+            }
+
+            function retainOrdinaryDraft(mode) {
+                if (!entryDrafts.ready || entryDrafts.restoring || state.saving)
+                    return entryDrafts.current[mode];
+                const snapshot = ordinaryDraftSnapshot(mode);
+                const content = JSON.stringify(snapshot);
+                if (
+                    content === entryDrafts.baselines[mode] &&
+                    !entryDrafts.current[mode]
+                )
+                    return null;
+                if (
+                    entryDrafts.current[mode]?.content === content &&
+                    !entryDrafts.warning
+                )
+                    return entryDrafts.current[mode];
+                const draft = {
+                    key:
+                        entryDrafts.current[mode]?.key ||
+                        `${ENTRY_DRAFT_PREFIX}${createRequestId()}`,
+                    revision: ++entryDrafts.revisions[mode],
+                    content,
+                    updatedAt: new Date().toISOString(),
+                    snapshot,
+                };
+                entryDrafts.current[mode] = draft;
+                withEntryDraftLock(() => {
+                    if (entryDrafts.current[mode] !== draft) return;
+                    writeOrdinaryDraft(draft);
+                    entryDrafts.warning = "";
+                    scanEntryDrafts();
+                });
+                return draft;
+            }
+
+            function readOrdinaryDraft(key) {
+                const serialized = localStorage.getItem(key);
+                if (!serialized) return null;
+                const draft = JSON.parse(serialized);
+                if (
+                    draft?.key !== key ||
+                    !["single", "bulk"].includes(draft.snapshot?.mode) ||
+                    !Array.isArray(draft.snapshot.events) ||
+                    !Array.isArray(draft.snapshot.plantIds) ||
+                    !draft.snapshot.values ||
+                    !["now", "fixed"].includes(draft.snapshot.time?.mode) ||
+                    draft.content !== JSON.stringify(draft.snapshot)
+                )
+                    throw new Error(
+                        "An unsent draft could not be read safely."
+                    );
+                return draft;
+            }
+
+            function scanEntryDrafts() {
+                if (!entryDrafts.ready) return;
+                const retained = [];
+                try {
+                    for (
+                        let index = 0;
+                        index < localStorage.length;
+                        index += 1
+                    ) {
+                        const key = localStorage.key(index);
+                        if (!key?.startsWith(ENTRY_DRAFT_PREFIX)) continue;
+                        if (
+                            Object.values(entryDrafts.current).some(
+                                (draft) => draft?.key === key
+                            )
+                        )
+                            continue;
+                        const draft = readOrdinaryDraft(key);
+                        if (draft) retained.push(draft);
+                    }
+                    entryDrafts.retained = retained.sort((left, right) =>
+                        right.updatedAt.localeCompare(left.updatedAt)
+                    );
+                } catch (error) {
+                    entryDrafts.warning =
+                        "An unsent draft could not be read safely. Its stored data was preserved; restore browser storage access before recovering it.";
+                }
+                renderEntryDraftBanner();
+            }
+
+            function renderEntryDraftBanner() {
+                const select = $("entryDraftChoice");
+                const previous = select.value;
+                const keys = entryDrafts.retained.map((draft) => draft.key);
+                if (
+                    JSON.stringify(
+                        [...select.options].map((option) => option.value)
+                    ) !== JSON.stringify(keys)
+                ) {
+                    select.replaceChildren();
+                    entryDrafts.retained.forEach((draft) => {
+                        const option = document.createElement("option");
+                        option.value = draft.key;
+                        option.textContent = `${draft.snapshot.mode === "bulk" ? "Bulk care" : draft.snapshot.plantIds[0] || "Entry"} · ${draft.snapshot.events.join(", ") || "Unfinished entry"} · ${formattedTimestamp(draft.updatedAt)}`;
+                        select.append(option);
+                    });
+                    select.value = keys.includes(previous)
+                        ? previous
+                        : keys[0] || "";
+                }
+                const count = entryDrafts.retained.length;
+                $("entryDraftBanner").hidden = !count && !entryDrafts.warning;
+                $("entryDraftStatus").textContent =
+                    entryDrafts.warning ||
+                    `${count} unsent ${count === 1 ? "draft is" : "drafts are"} stored in this browser. Resume to review; nothing is sent automatically.`;
+                $("entryDraftChoiceLabel").hidden = count < 2;
+                for (const id of ["entryDraftResume", "entryDraftDiscard"]) {
+                    $(id).hidden = !count;
+                    $(id).disabled =
+                        state.saving ||
+                        Boolean(state.pendingSave) ||
+                        Boolean(safeStorageGet(localStorage, BULK_PENDING_KEY));
+                }
+            }
+
+            function forgetOrdinaryDraft(reference) {
+                if (!reference?.key) return;
+                const mode = reference.snapshot.mode;
+                if (
+                    entryDrafts.current[mode]?.key === reference.key &&
+                    entryDrafts.current[mode]?.revision === reference.revision
+                )
+                    entryDrafts.current[mode] = null;
+                withEntryDraftLock(() => {
+                    const stored = readOrdinaryDraft(reference.key);
+                    if (
+                        stored?.revision === reference.revision &&
+                        stored.content === reference.content
+                    ) {
+                        localStorage.removeItem(reference.key);
+                        if (localStorage.getItem(reference.key) !== null)
+                            throw new Error(
+                                "The retained draft could not be cleared."
+                            );
+                    }
+                    scanEntryDrafts();
+                });
+            }
+
+            function restoreOrdinaryDraftSnapshot(snapshot) {
+                const bulk = snapshot.mode === "bulk";
+                entryDrafts.restoring = true;
+                try {
+                    if (bulk) {
+                        state.bulkSelected = new Set(snapshot.plantIds);
+                        state.bulkEvents = new Set(snapshot.events);
+                    } else {
+                        renderPlantOptions("", snapshot.plantIds[0]);
+                        state.events = new Set(snapshot.events);
+                    }
+                    const form = $(bulk ? "bulkWaterForm" : "entryForm");
+                    for (const control of form.querySelectorAll(
+                        "input, select, textarea"
+                    )) {
+                        const value = snapshot.values[control.id];
+                        if (value === undefined) continue;
+                        if (control.type === "checkbox")
+                            control.checked = value === true;
+                        else if (control.multiple && Array.isArray(value)) {
+                            for (const option of control.options)
+                                option.selected = value.includes(option.value);
+                        } else if (typeof value === "string")
+                            control.value = value;
+                    }
+                    const timeId = bulk ? "bulkObservedAt" : "observedAt";
+                    if (snapshot.time.mode === "now")
+                        setObservationTime(timeId);
+                    else {
+                        $(timeId).value = snapshot.time.value;
+                        $(timeId).dataset.timeMode = "fixed";
+                        $(timeId).dataset.timeValue = snapshot.time.value;
+                        $(timeId).dataset.timeInstant = snapshot.time.instant;
+                        syncObservationTimeParts(timeId);
+                        renderObservationTimeHint(timeId);
+                    }
+                    if (bulk) {
+                        renderBulkPlants($("bulkSearch").value);
+                        renderBulkEventChips();
+                        updateNutrientFields(
+                            "bulk",
+                            $("bulkNutrientsUsed").value
+                        );
+                    } else {
+                        renderEventChips();
+                        renderMeasurementControls();
+                        updateNutrientFields("", $("nutrientsUsed").value);
+                        renderWeightFeedback();
+                    }
+                    setEntryMode(snapshot.mode);
+                } finally {
+                    entryDrafts.restoring = false;
+                }
+            }
+
+            function resumeOrdinaryDraft() {
+                if (state.saving || state.pendingSave || readBulkPendingSave())
+                    return;
+                const selected = entryDrafts.retained.find(
+                    (draft) => draft.key === $("entryDraftChoice").value
+                );
+                if (!selected) return;
+                withEntryDraftLock(() => {
+                    const source = readOrdinaryDraft(selected.key);
+                    if (
+                        !source ||
+                        source.revision !== selected.revision ||
+                        source.content !== selected.content
+                    ) {
+                        scanEntryDrafts();
+                        showToast(
+                            "That draft changed in another tab. Review the refreshed draft list before resuming.",
+                            true,
+                            10000
+                        );
+                        return;
+                    }
+                    if (
+                        source.snapshot.plantIds.some(
+                            (id) =>
+                                id &&
+                                !state.bootstrap.plants.some(
+                                    (plant) => plant.id === id
+                                )
+                        )
+                    ) {
+                        showToast(
+                            "This draft includes a plant outside the current list. Its data is retained; refresh the plant list before resuming.",
+                            true,
+                            10000
+                        );
+                        return;
+                    }
+                    const mode = source.snapshot.mode;
+                    const current = entryDrafts.current[mode];
+                    if (current) writeOrdinaryDraft(current);
+                    const resumed = {
+                        ...source,
+                        key: `${ENTRY_DRAFT_PREFIX}${createRequestId()}`,
+                        revision: ++entryDrafts.revisions[mode],
+                        updatedAt: new Date().toISOString(),
+                    };
+                    writeOrdinaryDraft(resumed);
+                    localStorage.removeItem(source.key);
+                    entryDrafts.current[mode] = resumed;
+                    restoreOrdinaryDraftSnapshot(source.snapshot);
+                    entryDrafts.warning = "";
+                    scanEntryDrafts();
+                    $(mode === "bulk" ? "bulkNotes" : "notes").focus();
+                });
+            }
+
+            function discardOrdinaryDraft() {
+                if (state.saving || state.pendingSave || readBulkPendingSave())
+                    return;
+                const selected = entryDrafts.retained.find(
+                    (draft) => draft.key === $("entryDraftChoice").value
+                );
+                if (selected) forgetOrdinaryDraft(selected);
             }
 
             function restoreRoundState() {
@@ -16799,7 +17344,11 @@
                     }
                     if (saved && $("keepEvents").checked) {
                         state.events = new Set(
-                            Array.isArray(saved.events) ? saved.events : []
+                            Array.isArray(saved.events)
+                                ? saved.events.filter(
+                                      (event) => event !== "Support"
+                                  )
+                                : []
                         );
                     }
                     state.bulkEvents = new Set(
@@ -17111,12 +17660,15 @@
                     button.disabled = saving;
                 });
                 $("saveButton").disabled = saving;
-                $("queueButton").disabled = saving;
+                $("queueButton").disabled = saving || queueWritesBlocked();
                 $("clearButton").disabled = saving;
-                $("queueSendButton").disabled = saving || !state.queue.length;
-                $("queueClearButton").disabled = saving || !state.queue.length;
+                $("queueSendButton").disabled =
+                    saving || queueWritesBlocked() || !state.queue.length;
+                $("queueClearButton").disabled =
+                    saving || queueWritesBlocked() || !state.queue.length;
                 $("bulkSaveButton").disabled = saving;
                 $("bulkResetButton").disabled = saving;
+                renderEntryDraftBanner();
                 setIconLabel(
                     $("saveButton"),
                     saving ? "upload" : "save",
@@ -17240,10 +17792,16 @@
             function carePayloadFields(events, prefix = "") {
                 const values = {};
                 Object.entries(CARE_EVENT_FIELDS).forEach(([event, keys]) => {
-                    if (prefix && event === "Temperature") return;
+                    if (prefix && ["Temperature", "Leaf VPD"].includes(event))
+                        return;
                     if (!events.has(event)) return;
                     keys.forEach((key) => {
                         const input = $(careFieldId(key, prefix));
+                        if (
+                            key === "leafVpd" &&
+                            $("leafVpdSource").value !== "Device"
+                        )
+                            return;
                         values[key] =
                             key === "mistTargets"
                                 ? [...input.querySelectorAll("input:checked")]
@@ -17257,7 +17815,8 @@
 
             function restoreCareFields(payload = {}, prefix = "") {
                 Object.entries(CARE_EVENT_FIELDS).forEach(([event, keys]) => {
-                    if (prefix && event === "Temperature") return;
+                    if (prefix && ["Temperature", "Leaf VPD"].includes(event))
+                        return;
                     keys.forEach((key) => {
                         const input = $(careFieldId(key, prefix));
                         if (key === "mistTargets") {
@@ -17274,13 +17833,19 @@
                         } else
                             input.value =
                                 payload[key] ??
-                                (key === "temperatureUnit"
+                                ([
+                                    "temperatureUnit",
+                                    "leafTemperatureUnit",
+                                    "leafAirTemperatureUnit",
+                                ].includes(key)
                                     ? safeStorageGet(
                                           localStorage,
                                           TEMPERATURE_UNIT_KEY,
                                           "F"
                                       )
-                                    : "");
+                                    : key === "leafVpdSource"
+                                      ? "Calculated"
+                                      : "");
                     });
                 });
             }
@@ -17377,10 +17942,145 @@
                         throw new Error("Choose the support action.");
                     required("supportDetails", "Describe the support change.");
                 }
+                if (has("Leaf VPD")) validateLeafVpdDetails(payload);
+            }
+
+            function leafReadingCelsius(value, unit) {
+                return unit === "F"
+                    ? ((Number(value) - 32) * 5) / 9
+                    : Number(value);
+            }
+
+            function validateLeafVpdDetails(payload) {
+                const present = (key) =>
+                    String(payload[key] ?? "").trim() !== "";
+                const source = payload.leafVpdSource || "Calculated";
+                if (
+                    !["Device", "Calculated", "Not calculated"].includes(source)
+                )
+                    throw new Error(
+                        "Choose how the leaf VPD reading was obtained."
+                    );
+                if (source === "Device") {
+                    if (
+                        !present("leafVpd") ||
+                        !Number.isFinite(Number(payload.leafVpd)) ||
+                        Number(payload.leafVpd) < 0
+                    )
+                        throw new Error(
+                            "Enter the device's nonnegative VPD reading in kPa."
+                        );
+                } else {
+                    if (!present("leafTemperature"))
+                        throw new Error("Enter the leaf temperature reading.");
+                    if (
+                        present("leafAirTemperature") !==
+                        present("leafHumidity")
+                    )
+                        throw new Error(
+                            "Enter paired air temperature and humidity together, or leave both blank for a leaf-temperature-only observation."
+                        );
+                }
+                for (const [key, unitKey, label] of [
+                    [
+                        "leafTemperature",
+                        "leafTemperatureUnit",
+                        "Leaf temperature",
+                    ],
+                    [
+                        "leafAirTemperature",
+                        "leafAirTemperatureUnit",
+                        "Paired air temperature",
+                    ],
+                ]) {
+                    if (!present(key)) continue;
+                    if (!["C", "F"].includes(payload[unitKey]))
+                        throw new Error(
+                            `Choose Celsius or Fahrenheit for ${label.toLowerCase()}.`
+                        );
+                    const value = leafReadingCelsius(
+                        payload[key],
+                        payload[unitKey]
+                    );
+                    if (!Number.isFinite(value) || value < -50 || value > 100)
+                        throw new Error(
+                            `${label} must be between -50 and 100 °C (-58 and 212 °F).`
+                        );
+                }
+                if (
+                    present("leafHumidity") &&
+                    (!Number.isFinite(Number(payload.leafHumidity)) ||
+                        Number(payload.leafHumidity) < 0 ||
+                        Number(payload.leafHumidity) > 100)
+                )
+                    throw new Error(
+                        "Paired relative humidity must be between 0 and 100%."
+                    );
+            }
+
+            function leafVpdReadingText(payload) {
+                const source = payload.leafVpdSource || "Calculated";
+                const values = [];
+                if (String(payload.leafTemperature ?? "").trim())
+                    values.push(
+                        `${payload.leafTemperature} °${payload.leafTemperatureUnit} leaf`
+                    );
+                if (source === "Device" && String(payload.leafVpd ?? "").trim())
+                    values.push(
+                        `${Number(payload.leafVpd).toFixed(2)} kPa · device-reported`
+                    );
+                else if (
+                    String(payload.leafAirTemperature ?? "").trim() &&
+                    String(payload.leafHumidity ?? "").trim()
+                ) {
+                    const leaf = leafReadingCelsius(
+                        payload.leafTemperature,
+                        payload.leafTemperatureUnit
+                    );
+                    const air = leafReadingCelsius(
+                        payload.leafAirTemperature,
+                        payload.leafAirTemperatureUnit
+                    );
+                    const saturation = (temperature) =>
+                        0.6108 *
+                        Math.exp((17.27 * temperature) / (temperature + 237.3));
+                    const value =
+                        saturation(leaf) -
+                        (Number(payload.leafHumidity) / 100) * saturation(air);
+                    if (Number.isFinite(value))
+                        values.push(
+                            `${value.toFixed(2)} kPa · calculated estimate`
+                        );
+                } else if (source !== "Device")
+                    values.push("VPD not calculated");
+                return values.join(" · ");
+            }
+
+            function renderLeafVpdPreview() {
+                const device = $("leafVpdSource").value === "Device";
+                $("leafVpdDeviceField").hidden = !device;
+                const fields = Object.fromEntries(
+                    CARE_EVENT_FIELDS["Leaf VPD"].map((key) => [
+                        key,
+                        $(key).value,
+                    ])
+                );
+                try {
+                    validateLeafVpdDetails(fields);
+                    $("leafVpdPreview").textContent =
+                        leafVpdReadingText(fields);
+                } catch (error) {
+                    $("leafVpdPreview").textContent = device
+                        ? "Enter the VPD shown by the device. Leaf temperature, air temperature and humidity are optional context."
+                        : "Enter leaf temperature. Add paired air temperature and humidity to estimate VPD, or leave both blank to save leaf temperature only.";
+                }
             }
 
             function careSummary(payload) {
                 return [
+                    payload.events.includes("Leaf VPD")
+                        ? leafVpdReadingText(payload)
+                        : "",
                     payload.events.includes("Mist")
                         ? [
                               payload.mistTargets,
@@ -17519,6 +18219,9 @@
             }
 
             function readObservationQueue() {
+                // Merely opening another tab must not overwrite either queue
+                // copy. Repairs are writes and require the same exclusive lock.
+                const repair = state.queueLockHeld;
                 let primary = null;
                 let backup = null;
                 try {
@@ -17527,10 +18230,11 @@
                     if (primary === null && backup === null) return [];
                     if (primary === null) {
                         const queue = parseObservationQueue(backup || "[]");
-                        localStorage.setItem(
-                            OBSERVATION_QUEUE_KEY,
-                            backup || "[]"
-                        );
+                        if (repair)
+                            localStorage.setItem(
+                                OBSERVATION_QUEUE_KEY,
+                                backup || "[]"
+                            );
                         state.queueStorageWarning =
                             "The main phone queue was missing, so the logger restored its verified backup. Review the entries before sending.";
                         return queue;
@@ -17539,10 +18243,11 @@
                     try {
                         const queue = parseObservationQueue(primary);
                         try {
-                            localStorage.setItem(
-                                OBSERVATION_QUEUE_BACKUP_KEY,
-                                primary
-                            );
+                            if (repair)
+                                localStorage.setItem(
+                                    OBSERVATION_QUEUE_BACKUP_KEY,
+                                    primary
+                                );
                         } catch (backupError) {
                             state.queueStorageWarning =
                                 "The queue is saved, but its extra browser backup could not be refreshed.";
@@ -17550,21 +18255,109 @@
                         return queue;
                     } catch (primaryError) {
                         const queue = parseObservationQueue(backup || "[]");
-                        localStorage.setItem(
-                            OBSERVATION_QUEUE_KEY,
-                            backup || "[]"
-                        );
+                        if (repair)
+                            localStorage.setItem(
+                                OBSERVATION_QUEUE_KEY,
+                                backup || "[]"
+                            );
                         state.queueStorageWarning =
                             "The main phone queue was damaged, so the logger restored its verified backup. Review the entries before sending.";
-                        preserveBrokenQueue(primary, backup, primaryError);
+                        if (repair)
+                            preserveBrokenQueue(primary, backup, primaryError);
                         return queue;
                     }
                 } catch (error) {
                     state.queueStorageAvailable = false;
                     state.queueStorageWarning =
                         "Phone storage is unavailable or the queue could not be recovered. Do not start a weighing round in queue mode until browser storage is available.";
-                    preserveBrokenQueue(primary, backup, error);
+                    if (repair) preserveBrokenQueue(primary, backup, error);
                     return [];
+                }
+            }
+
+            function queueWritesBlocked() {
+                return (
+                    state.queueLockPending ||
+                    state.queueLockHeld ||
+                    state.queueLockUnavailable ||
+                    typeof navigator.locks?.request !== "function"
+                );
+            }
+
+            function refreshQueueFromStorage() {
+                if (state.queueLockHeld || state.queueLockPending) return;
+                const previous = JSON.stringify(state.queue);
+                state.queue = readObservationQueue();
+                if (JSON.stringify(state.queue) !== previous)
+                    renderObservationQueue();
+            }
+
+            // The browser keeps this exclusive lock until release() resolves
+            // its callback promise, including across Google callbacks/retries.
+            // Closing the tab releases the lock; attempted request IDs remain
+            // in storage for the next tab's idempotent History reconciliation.
+            function withObservationQueueLock(action, { quiet = false } = {}) {
+                if (state.queueLockHeld || state.queueLockPending) return;
+                const unavailable = () => {
+                    state.queueLockPending = false;
+                    state.queueLockUnavailable = true;
+                    state.queueLockMessage =
+                        "This browser cannot safely coordinate the phone queue. Queued entries remain readable; use Save now or open the logger in a browser with queue support.";
+                    renderObservationQueue();
+                    if (!quiet) showToast(state.queueLockMessage, true, 12000);
+                };
+                if (typeof navigator.locks?.request !== "function") {
+                    unavailable();
+                    return;
+                }
+                state.queueLockPending = true;
+                renderObservationQueue();
+                try {
+                    navigator.locks
+                        .request(
+                            OBSERVATION_QUEUE_LOCK,
+                            { mode: "exclusive", ifAvailable: true },
+                            (lock) => {
+                                state.queueLockPending = false;
+                                if (!lock) {
+                                    state.queueLockMessage =
+                                        "The queue is in use in another logger tab. Wait for that operation to finish, then try again. Your current entry is unchanged.";
+                                    refreshQueueFromStorage();
+                                    renderObservationQueue();
+                                    if (!quiet)
+                                        showToast(
+                                            state.queueLockMessage,
+                                            true,
+                                            10000
+                                        );
+                                    return;
+                                }
+                                state.queueLockHeld = true;
+                                state.queueLockMessage = "";
+                                return new Promise((resolve) => {
+                                    let released = false;
+                                    const release = () => {
+                                        if (released) return;
+                                        released = true;
+                                        state.queueLockHeld = false;
+                                        renderObservationQueue();
+                                        resolve();
+                                    };
+                                    try {
+                                        state.queue = readObservationQueue();
+                                        // A true result transfers release to a
+                                        // bounded send/reconciliation session.
+                                        if (action(release) !== true) release();
+                                    } catch (error) {
+                                        release();
+                                        showToast(error.message, true, 12000);
+                                    }
+                                });
+                            }
+                        )
+                        .catch(unavailable);
+                } catch (error) {
+                    unavailable();
                 }
             }
 
@@ -17572,6 +18365,10 @@
                 nextQueue,
                 { requireBackup = false } = {}
             ) {
+                if (!state.queueLockHeld)
+                    throw new Error(
+                        "The phone queue cannot change without its exclusive browser lock."
+                    );
                 if (!state.queueStorageAvailable) {
                     throw new Error(
                         "Phone storage is unavailable. The queue was not changed, and the current form was kept."
@@ -18126,6 +18923,9 @@
             function renderObservationQueue() {
                 const card = $("queueCard");
                 const list = $("queueList");
+                const focusedRequest =
+                    document.activeElement?.dataset?.removeQueue;
+                const blocked = state.saving || queueWritesBlocked();
                 const count = state.queue.length;
                 const sendSession = state.queueSendSession;
                 if (
@@ -18158,8 +18958,13 @@
                         : `${weighedPlantIds.size} of ${plantCount} plants have a weight safely queued.`;
                 }
                 const warning = $("queueStorageWarning");
-                warning.textContent = state.queueStorageWarning;
-                warning.hidden = !state.queueStorageWarning;
+                warning.textContent = [
+                    state.queueStorageWarning,
+                    state.queueLockMessage,
+                ]
+                    .filter(Boolean)
+                    .join(" ");
+                warning.hidden = !warning.textContent;
                 list.replaceChildren();
 
                 if (!count) {
@@ -18219,15 +19024,16 @@
                         remove.append(
                             createIcon("trash", "app-icon app-icon--small")
                         );
-                        remove.disabled = state.saving;
+                        remove.disabled = blocked;
                         item.append(main, remove);
                         list.append(item);
                     });
                 }
 
-                card.hidden = !count && !state.queueStorageWarning;
-                $("queueSendButton").disabled = state.saving || !count;
-                $("queueClearButton").disabled = state.saving || !count;
+                card.hidden = !count && !warning.textContent;
+                $("queueButton").disabled = blocked;
+                $("queueSendButton").disabled = blocked || !count;
+                $("queueClearButton").disabled = blocked || !count;
                 const queueSendLabel = sendSession
                     ? sendSession.retryIndex
                         ? `Retrying ${sendSession.currentIds.length}…`
@@ -18241,6 +19047,17 @@
                     queueSendLabel
                 );
                 renderQueuedPlantIndicators(weighedPlantIds);
+                if (focusedRequest && !blocked) {
+                    const replacement = Array.from(
+                        list.querySelectorAll("[data-remove-queue]")
+                    ).find(
+                        (button) =>
+                            button.dataset.removeQueue === focusedRequest
+                    );
+                    (replacement || $("queueButton")).focus({
+                        preventScroll: true,
+                    });
+                }
             }
 
             function renderQueuedPlantIndicators(
@@ -18355,47 +19172,60 @@
                     );
                     return;
                 }
-                if (state.queue.length >= 50) {
-                    showToast(
-                        "Send the current 50 entries before adding more.",
-                        true
-                    );
-                    return;
-                }
-
                 try {
                     const payload = payloadFromForm();
                     validateQueuedPayload(payload);
+                    const draftReference = retainOrdinaryDraft("single");
                     const fingerprint = payloadFingerprint(payload);
-                    if (
-                        state.queue.some(
-                            (entry) =>
-                                payloadFingerprint(entry.payload) ===
-                                fingerprint
+                    const automaticTime =
+                        $("observedAt").dataset.timeMode === "now";
+                    const plantName = selectedPlant().name;
+                    withObservationQueueLock(() => {
+                        if (state.saving) return;
+                        if (state.queue.length >= 50)
+                            throw new Error(
+                                "Send the current 50 entries before adding more."
+                            );
+                        if (
+                            state.queue.some(
+                                (entry) =>
+                                    payloadFingerprint(entry.payload) ===
+                                    fingerprint
+                            )
+                        ) {
+                            throw new Error(
+                                "This exact observation is already in the phone queue."
+                            );
+                        }
+                        const nextQueue = [
+                            ...state.queue,
+                            {
+                                requestId: createRequestId(),
+                                payload,
+                                addedAt: new Date().toISOString(),
+                            },
+                        ];
+                        state.queueSendSummary = null;
+                        persistObservationQueue(nextQueue);
+                        forgetOrdinaryDraft(draftReference);
+                        if (state.pendingSave && state.pendingSave.replaceable)
+                            clearPendingSave();
+                        showToast(`${plantName} added to the phone queue.`);
+                        // Acquiring the browser lock is asynchronous. Do not
+                        // clear changes entered after the Queue click.
+                        const currentPayload = payloadFromForm();
+                        if (
+                            automaticTime &&
+                            $("observedAt").dataset.timeMode === "now"
                         )
-                    ) {
-                        throw new Error(
-                            "This exact observation is already in the phone queue."
-                        );
-                    }
-                    const nextQueue = [
-                        ...state.queue,
-                        {
-                            requestId: createRequestId(),
-                            payload,
-                            addedAt: new Date().toISOString(),
-                        },
-                    ];
-                    state.queueSendSummary = null;
-                    persistObservationQueue(nextQueue);
-                    if (state.pendingSave && state.pendingSave.replaceable)
-                        clearPendingSave();
-                    renderObservationQueue();
-                    showToast(
-                        `${selectedPlant().name} added to the phone queue.`
-                    );
-                    clearEntry({ afterSave: true });
-                    if ($("advanceAfterQueue").checked) advancePlant();
+                            currentPayload.observedAt = payload.observedAt;
+                        if (
+                            payloadFingerprint(currentPayload) === fingerprint
+                        ) {
+                            clearEntry({ afterSave: true, draftHandled: true });
+                            if ($("advanceAfterQueue").checked) advancePlant();
+                        }
+                    });
                 } catch (error) {
                     showToast(error.message, true, 8000);
                 }
@@ -18403,7 +19233,8 @@
 
             function removeQueuedObservation(requestId) {
                 if (state.saving) return;
-                try {
+                withObservationQueueLock(() => {
+                    if (state.saving) return;
                     state.queueSendSummary = null;
                     persistObservationQueue(
                         state.queue.filter(
@@ -18411,27 +19242,33 @@
                         )
                     );
                     renderObservationQueue();
-                } catch (error) {
-                    showToast(error.message, true, 9000);
-                }
+                });
             }
 
             function clearObservationQueue() {
                 if (state.saving || !state.queue.length) return;
+                const displayedIds = new Set(
+                    state.queue.map((entry) => entry.requestId)
+                );
                 if (
                     !window.confirm(
                         `Clear all ${state.queue.length} observations from this phone without sending them?`
                     )
                 )
                     return;
-                try {
+                withObservationQueueLock(() => {
+                    if (state.saving) return;
                     state.queueSendSummary = null;
-                    persistObservationQueue([]);
+                    // Clear only the entries the user actually reviewed in
+                    // this tab, never a newer entry added in another tab.
+                    persistObservationQueue(
+                        state.queue.filter(
+                            (entry) => !displayedIds.has(entry.requestId)
+                        )
+                    );
                     renderObservationQueue();
                     showToast("Phone queue cleared.");
-                } catch (error) {
-                    showToast(error.message, true, 9000);
-                }
+                });
             }
 
             function clearSaveTimer() {
@@ -20424,6 +21261,9 @@
                 Support: [
                     "Record adding, adjusting or removing a stake, tie or other support.",
                 ],
+                "Leaf VPD": [
+                    "Record leaf temperature, paired air and humidity, or a VPD device's displayed result.",
+                ],
                 Water: [
                     "Record the application and any measured volume.",
                     "Water does not imply a weight. Select Weigh for a scale reading.",
@@ -20522,7 +21362,9 @@
 
             function formatEventHints() {
                 document
-                    .querySelectorAll(".event-panel p.hint")
+                    .querySelectorAll(
+                        '.event-panel p.hint:not([role="status"])'
+                    )
                     .forEach((paragraph) => {
                         const hint = document.createElement("div");
                         hint.className = "hint event-hint";
@@ -20546,12 +21388,16 @@
             }
 
             function orderedEventNames() {
-                return [...state.bootstrap.events].sort(
-                    (a, b) => EVENT_ORDER.indexOf(a) - EVENT_ORDER.indexOf(b)
-                );
+                return state.bootstrap.events
+                    .filter((event) => event !== "Support")
+                    .sort(
+                        (a, b) =>
+                            EVENT_ORDER.indexOf(a) - EVENT_ORDER.indexOf(b)
+                    );
             }
 
             function renderEventOptions() {
+                renderHistoryCapacity();
                 const events = orderedEventNames();
                 const container = $("eventChips");
                 const rendered = [...container.querySelectorAll(".chip")].map(
@@ -20574,7 +21420,7 @@
                 }
                 const filter = $("recentEvent");
                 const selected = filter.value;
-                const filterEvents = ["", ...events];
+                const filterEvents = ["", ...events, "Support"];
                 // A historical filter can outlive a retired input event.
                 if (selected && !filterEvents.includes(selected))
                     filterEvents.push(selected);
@@ -20611,6 +21457,31 @@
                     container.append(button);
                 });
                 updateConditionalFields();
+            }
+
+            function renderHistoryCapacity() {
+                const element = $("historyCapacityStatus");
+                const capacity = state.bootstrap?.historyCapacity;
+                if (
+                    !capacity ||
+                    ![
+                        capacity.usedRows,
+                        capacity.remainingRows,
+                        capacity.supportedObservationRows,
+                    ].every((value) => Number.isInteger(value) && value >= 0)
+                ) {
+                    element.hidden = true;
+                    return;
+                }
+                element.hidden = false;
+                element.classList.toggle(
+                    "queue-storage-warning",
+                    capacity.remainingRows <= 500
+                );
+                element.textContent =
+                    capacity.remainingRows === 0
+                        ? "History space at last refresh: no rows remaining. New observations need a capacity increase; completed requests can still be retried safely."
+                        : `History space at last refresh: ${capacity.usedRows.toLocaleString()} of ${capacity.supportedObservationRows.toLocaleString()} rows used · ${capacity.remainingRows.toLocaleString()} remaining.${capacity.remainingRows <= 500 ? " Plan a capacity increase before the remaining rows fill." : ""}`;
             }
 
             function createEventChip(eventName, pressed) {
@@ -20671,6 +21542,7 @@
                     ["environmentSection", "Environment"],
                     ["propagateSection", "Propagate"],
                     ["supportSection", "Support"],
+                    ["leafVpdSection", "Leaf VPD"],
 
                     ["lightSection", "Light"],
                     ["humiditySection", "Humidity"],
@@ -20695,6 +21567,7 @@
                 );
                 $("soilMoistureField").hidden = !state.events.has("Check");
                 renderEventGuidance("eventGuidance", state.events);
+                renderLeafVpdPreview();
                 updateNutrientFields("", $("nutrientsUsed").value);
             }
 
@@ -20800,6 +21673,35 @@
                             "app-icon app-icon--small"
                         );
                         metrics.append(temperature);
+                    }
+                    if (entry.event === "Leaf VPD") {
+                        const details = { ...entry.details, ...entry };
+                        const parts = [];
+                        if (
+                            details.leafTemperatureC !== "" &&
+                            details.leafTemperatureC != null
+                        ) {
+                            const unit = details.leafTemperatureUnit || "C";
+                            const celsius = Number(details.leafTemperatureC);
+                            const value =
+                                unit === "F" ? (celsius * 9) / 5 + 32 : celsius;
+                            parts.push(
+                                `${Number(value.toFixed(2))} °${unit} leaf`
+                            );
+                        }
+                        if (details.leafVpd !== "" && details.leafVpd != null)
+                            parts.push(
+                                `${Number(details.leafVpd).toFixed(2)} kPa · ${details.leafVpdSource === "Device" ? "device-reported" : "calculated estimate"}`
+                            );
+                        else parts.push("VPD not calculated");
+                        const reading = document.createElement("span");
+                        setIconLabel(
+                            reading,
+                            "temperature",
+                            parts.join(" · "),
+                            "app-icon app-icon--small"
+                        );
+                        metrics.append(reading);
                     }
                     const lightText = lightReadingText({
                         ppfd: entry.ppfd ?? entry.details?.ppfd,
@@ -21252,7 +22154,13 @@
                         input.setAttribute("aria-describedby", hint.id);
                         wrapper.append(hint);
                     }
-                    if (field.key === "temperatureC") {
+                    if (
+                        [
+                            "temperatureC",
+                            "leafTemperatureC",
+                            "leafAirTemperatureC",
+                        ].includes(field.key)
+                    ) {
                         const hint = document.createElement("p");
                         hint.className = "hint";
                         hint.textContent =
@@ -21416,6 +22324,18 @@
                         ? {
                               temperature: values.temperatureC,
                               temperatureUnit: "C",
+                          }
+                        : {}),
+                    ...(values.leafTemperatureC !== undefined
+                        ? {
+                              leafTemperature: values.leafTemperatureC,
+                              leafTemperatureUnit: "C",
+                          }
+                        : {}),
+                    ...(values.leafAirTemperatureC !== undefined
+                        ? {
+                              leafAirTemperature: values.leafAirTemperatureC,
+                              leafAirTemperatureUnit: "C",
                           }
                         : {}),
                 });
@@ -22095,6 +23015,13 @@
                     propagationDetails: "What did you propagate?",
                     supportAction: "Action",
                     supportDetails: "Support details",
+                    leafTemperatureC: "Leaf temperature (°C)",
+                    leafTemperatureUnit: "Entered leaf temperature unit",
+                    leafAirTemperatureC: "Paired air temperature (°C)",
+                    leafAirTemperatureUnit: "Entered air temperature unit",
+                    leafHumidity: "Paired relative humidity (%)",
+                    leafVpd: "Leaf VPD (kPa)",
+                    leafVpdSource: "VPD source",
                     temperatureC: "Temperature (°C)",
                     ppfd: "PPFD app estimate (µmol/m²/s)",
                     lux: "Illuminance (lux)",
@@ -22140,6 +23067,13 @@
                     propagationDetails: "propagate",
                     supportAction: "support",
                     supportDetails: "support",
+                    leafTemperatureC: "temperature",
+                    leafTemperatureUnit: "temperature",
+                    leafAirTemperatureC: "temperature",
+                    leafAirTemperatureUnit: "temperature",
+                    leafHumidity: "humidity",
+                    leafVpd: "humidity",
+                    leafVpdSource: "note",
                     temperatureC: "temperature",
                     ppfd: "light",
                     lux: "light",
@@ -22569,25 +23503,48 @@
             }
 
             function clearBulkRound() {
-                restoreCareFields({}, "bulk");
-                state.bulkSelected.clear();
-                state.bulkEntrySource = "Mobile bulk care";
-                [
-                    "bulkCondition",
-                    "bulkSoilMoisture",
-                    "bulkPestIssue",
-                    "bulkPestTreatment",
-                    "bulkNotes",
-                ].forEach((id) => ($(id).value = ""));
-                $("bulkRotationDegrees").value = "90";
-                $("bulkWateringApplication").value =
-                    WATERING_APPLICATION_OPTIONS[0];
-                $("bulkWaterAmount").value = "";
-                setObservationTime("bulkObservedAt");
-                localStorage.removeItem(BULK_PENDING_KEY);
-                renderBulkPlants($("bulkSearch").value);
-                renderBulkEventChips();
-                updateNutrientFields("bulk", $("bulkNutrientsUsed").value);
+                const draftReference = entryDrafts.current.bulk;
+                try {
+                    localStorage.removeItem(BULK_PENDING_KEY);
+                    if (localStorage.getItem(BULK_PENDING_KEY) !== null)
+                        throw new Error(
+                            "Pending request cleanup could not be verified."
+                        );
+                } catch (error) {
+                    showToast(
+                        "The saved bulk request could not be cleared from browser storage. Its entry and recovery data were kept; restore storage access before continuing.",
+                        true,
+                        12000
+                    );
+                    return;
+                }
+                entryDrafts.restoring = true;
+                try {
+                    restoreCareFields({}, "bulk");
+                    state.bulkSelected.clear();
+                    state.bulkEntrySource = "Mobile bulk care";
+                    [
+                        "bulkCondition",
+                        "bulkSoilMoisture",
+                        "bulkPestIssue",
+                        "bulkPestTreatment",
+                        "bulkNotes",
+                    ].forEach((id) => ($(id).value = ""));
+                    $("bulkRotationDegrees").value = "90";
+                    $("bulkWateringApplication").value =
+                        WATERING_APPLICATION_OPTIONS[0];
+                    $("bulkWaterAmount").value = "";
+                    setObservationTime("bulkObservedAt");
+                    renderBulkPlants($("bulkSearch").value);
+                    renderBulkEventChips();
+                    updateNutrientFields("bulk", $("bulkNutrientsUsed").value);
+                    entryDrafts.baselines.bulk = JSON.stringify(
+                        ordinaryDraftSnapshot("bulk")
+                    );
+                } finally {
+                    entryDrafts.restoring = false;
+                }
+                forgetOrdinaryDraft(draftReference);
             }
 
             function readBulkPendingSave() {
@@ -22623,8 +23580,10 @@
                 );
                 state.bulkEvents = new Set(
                     Array.isArray(payload.events) && payload.events.length
-                        ? payload.events.filter((eventName) =>
-                              BULK_EVENT_OPTIONS.includes(eventName)
+                        ? payload.events.filter(
+                              (eventName) =>
+                                  BULK_EVENT_OPTIONS.includes(eventName) ||
+                                  eventName === "Support"
                           )
                         : ["Water"]
                 );
@@ -22706,7 +23665,11 @@
                     pending = null;
                 }
                 if (!pending) {
-                    pending = { requestId: createRequestId(), payload };
+                    pending = {
+                        requestId: createRequestId(),
+                        payload,
+                        ordinaryDraft: retainOrdinaryDraft("bulk"),
+                    };
                 }
                 try {
                     localStorage.setItem(
@@ -22778,10 +23741,30 @@
             function completeBulkSave(result, requestId) {
                 const current = readBulkPendingSave();
                 if (!current || current.requestId !== requestId) return false;
+                const draftReference = current.ordinaryDraft;
+                const keepNewDraft =
+                    entryDrafts.current.bulk &&
+                    (entryDrafts.current.bulk.key !== draftReference?.key ||
+                        entryDrafts.current.bulk.revision !==
+                            draftReference?.revision);
                 invalidateSaveAttempt();
-                localStorage.removeItem(BULK_PENDING_KEY);
+                try {
+                    localStorage.removeItem(BULK_PENDING_KEY);
+                    if (localStorage.getItem(BULK_PENDING_KEY) !== null)
+                        throw new Error(
+                            "Pending request cleanup could not be verified."
+                        );
+                } catch (error) {
+                    showToast(
+                        "The bulk-care round reached History, but its browser recovery data could not be cleared. The entry was kept; restore storage access and retry safely.",
+                        true,
+                        12000
+                    );
+                    return false;
+                }
                 showToast(result.message);
-                clearBulkRound();
+                forgetOrdinaryDraft(draftReference);
+                if (!keepNewDraft) clearBulkRound();
                 refreshSavedPlantData();
                 return true;
             }
@@ -22833,42 +23816,54 @@
                     if (!discard) return;
                     clearPendingSave();
                 }
-                restoreCareFields();
-                const keepEvents =
-                    options.keepEvents ?? $("keepEvents").checked;
-                if (!keepEvents) state.events.clear();
-                [
-                    "weight",
-                    "height",
-                    "width",
-                    "relativeHumidity",
-                    "ppfd",
-                    "lux",
-                    "condition",
-                    "soilMoisture",
-                    "notes",
-                    "potSize",
-                    "medium",
-                    "flowerCount",
-                    "flowerDetails",
-                    "photoUrl",
-                    "pestIssue",
-                    "pestTreatment",
-                ].forEach((id) => {
-                    $(id).value = "";
-                });
-                $("rotationDegrees").value = "90";
-                $("wateringApplication").value =
-                    WATERING_APPLICATION_OPTIONS[0];
-                $("waterAmount").value = "";
-                $("measurementUnit").value = state.measurementUnit;
-                $("measurementQuality").value = state.measurementQuality;
-                $("measurementMethod").value = state.measurementMethod;
-                renderMeasurementControls();
-                setObservationTime("observedAt");
-                persistRoundState();
-                renderEventChips();
-                renderWeightFeedback();
+                const draftReference = options.draftHandled
+                    ? null
+                    : entryDrafts.current.single;
+                entryDrafts.restoring = true;
+                try {
+                    restoreCareFields();
+                    const keepEvents =
+                        options.keepEvents ?? $("keepEvents").checked;
+                    if (!keepEvents) state.events.clear();
+                    [
+                        "weight",
+                        "height",
+                        "width",
+                        "relativeHumidity",
+                        "ppfd",
+                        "lux",
+                        "condition",
+                        "soilMoisture",
+                        "notes",
+                        "potSize",
+                        "medium",
+                        "flowerCount",
+                        "flowerDetails",
+                        "photoUrl",
+                        "pestIssue",
+                        "pestTreatment",
+                    ].forEach((id) => {
+                        $(id).value = "";
+                    });
+                    $("rotationDegrees").value = "90";
+                    $("wateringApplication").value =
+                        WATERING_APPLICATION_OPTIONS[0];
+                    $("waterAmount").value = "";
+                    $("measurementUnit").value = state.measurementUnit;
+                    $("measurementQuality").value = state.measurementQuality;
+                    $("measurementMethod").value = state.measurementMethod;
+                    renderMeasurementControls();
+                    setObservationTime("observedAt");
+                    entryDrafts.baselines.single = JSON.stringify(
+                        ordinaryDraftSnapshot("single")
+                    );
+                    persistRoundState();
+                    renderEventChips();
+                    renderWeightFeedback();
+                } finally {
+                    entryDrafts.restoring = false;
+                }
+                forgetOrdinaryDraft(draftReference);
             }
 
             function advancePlant() {
@@ -22956,6 +23951,14 @@
                     );
                     return;
                 }
+                withObservationQueueLock((release) => {
+                    if (state.saving || !state.queue.length) return false;
+                    startObservationQueueSend(release);
+                    return true;
+                });
+            }
+
+            function startObservationQueueSend(release) {
                 clearSaveTimer();
                 state.saveAttempt += 1;
                 state.queueSendSummary = null;
@@ -22970,6 +23973,7 @@
                     hardTimer: null,
                     statusTimer: null,
                     retryTimer: null,
+                    releaseLock: release,
                 };
                 state.saveStartedAt = Date.now();
                 state.saveTimeoutMs = QUEUE_EXECUTION_LIMIT_MS;
@@ -23390,6 +24394,7 @@
                 state.saveAttempt += 1;
                 state.saveStartedAt = 0;
                 state.saveTimeoutMs = 0;
+                session.releaseLock();
                 setSaving(false);
                 renderObservationQueue();
                 $("connectionStatus").textContent = remaining
@@ -23400,6 +24405,22 @@
             }
 
             function reconcileObservationQueue(requestIds, options = {}) {
+                withObservationQueueLock(
+                    (release) =>
+                        reconcileLockedObservationQueue(
+                            requestIds,
+                            options,
+                            release
+                        ),
+                    { quiet: true }
+                );
+            }
+
+            function reconcileLockedObservationQueue(
+                requestIds,
+                options,
+                release
+            ) {
                 const currentIds = new Set(
                     state.queue.map((entry) => entry.requestId)
                 );
@@ -23416,9 +24437,22 @@
                 const descriptors = state.queue
                     .filter((entry) => ids.includes(entry.requestId))
                     .map(queueStatusDescriptor);
+                let active = true;
+                const finish = () => {
+                    if (!active) return;
+                    active = false;
+                    clearTimeout(timer);
+                    release();
+                };
+                const timer = setTimeout(finish, QUEUE_STATUS_TIMEOUT_MS);
 
                 google.script.run
                     .withSuccessHandler((statuses) => {
+                        if (!active) return;
+                        if (!Array.isArray(statuses)) {
+                            finish();
+                            return;
+                        }
                         const statusByRequest = new Map(
                             statuses.map((status) => [status.requestId, status])
                         );
@@ -23448,6 +24482,7 @@
                         try {
                             persistObservationQueue(nextQueue);
                         } catch (error) {
+                            finish();
                             renderObservationQueue();
                             showToast(
                                 "History was checked, but the phone could not update its queue copy. The retained request IDs are safe to check or send again.",
@@ -23456,6 +24491,7 @@
                             );
                             return;
                         }
+                        finish();
                         renderObservationQueue();
                         if (recovered) {
                             showToast(
@@ -23465,9 +24501,12 @@
                         }
                     })
                     .withFailureHandler(() => {
+                        if (!active) return;
+                        finish();
                         renderObservationQueue();
                     })
                     .getWebBatchSaveStatus(descriptors);
+                return true;
             }
 
             function refreshSavedPlantData() {
@@ -23665,6 +24704,7 @@
                         requestId: createRequestId(),
                         payload,
                         startedAt: new Date().toISOString(),
+                        ordinaryDraft: retainOrdinaryDraft("single"),
                     };
                 }
                 pending.advanceAfterSave = advanceAfterSave;
@@ -23740,11 +24780,20 @@
                 const advanceAfterSave = Boolean(
                     state.pendingSave.advanceAfterSave
                 );
+                const draftReference = state.pendingSave.ordinaryDraft;
+                const keepNewDraft =
+                    entryDrafts.current.single &&
+                    (entryDrafts.current.single.key !== draftReference?.key ||
+                        entryDrafts.current.single.revision !==
+                            draftReference?.revision);
                 invalidateSaveAttempt();
                 clearPendingSave();
                 showToast(result.message);
-                clearEntry({ afterSave: true });
-                if (advanceAfterSave) advancePlant();
+                forgetOrdinaryDraft(draftReference);
+                if (!keepNewDraft) {
+                    clearEntry({ afterSave: true, draftHandled: true });
+                    if (advanceAfterSave) advancePlant();
+                }
                 refreshSavedPlantData();
                 return true;
             }
@@ -23786,6 +24835,7 @@
             }
 
             function resumeInterruptedWork() {
+                refreshQueueFromStorage();
                 if (!state.bootstrap) return;
                 updateWorkflowClock();
                 if (!browserIsOnline()) {
@@ -24147,7 +25197,16 @@
                         reconcileObservationQueue(attemptedQueue, {
                             allowRetryIfMissing: true,
                         });
+                    else withObservationQueueLock(() => {}, { quiet: true });
                     state.bootstrapReady = true;
+                    entryDrafts.baselines.single = JSON.stringify(
+                        ordinaryDraftSnapshot("single")
+                    );
+                    entryDrafts.baselines.bulk = JSON.stringify(
+                        ordinaryDraftSnapshot("bulk")
+                    );
+                    entryDrafts.ready = true;
+                    scanEntryDrafts();
                     state.bootstrapRetries = 0;
                     renderWeightFeedback();
                     updateWorkflowClock();
@@ -24301,6 +25360,10 @@
                 updateConditionalFields();
                 renderWeightFeedback();
             });
+            CARE_EVENT_FIELDS["Leaf VPD"].forEach((id) => {
+                $(id).addEventListener("input", renderLeafVpdPreview);
+                $(id).addEventListener("change", renderLeafVpdPreview);
+            });
             ["height", "width"].forEach((id) => {
                 $(id).addEventListener("input", () => {
                     if ($(id).value) toggleEvent("Measure", true);
@@ -24421,6 +25484,17 @@
             window.addEventListener("pageshow", () =>
                 scheduleInterruptedWorkCheck()
             );
+            window.addEventListener("storage", (event) => {
+                if (event.key?.startsWith(ENTRY_DRAFT_PREFIX))
+                    scanEntryDrafts();
+                if (
+                    event.key === OBSERVATION_QUEUE_KEY ||
+                    event.key === OBSERVATION_QUEUE_BACKUP_KEY
+                ) {
+                    state.queueLockMessage = "";
+                    refreshQueueFromStorage();
+                }
+            });
             window.addEventListener("focus", () =>
                 scheduleInterruptedWorkCheck()
             );
@@ -24458,6 +25532,24 @@
                     9000
                 );
             });
+
+            for (const [mode, formId] of [
+                ["single", "entryForm"],
+                ["bulk", "bulkWaterForm"],
+            ]) {
+                for (const eventName of ["input", "change", "click"])
+                    $(formId).addEventListener(eventName, () =>
+                        retainOrdinaryDraft(mode)
+                    );
+            }
+            $("entryDraftResume").addEventListener(
+                "click",
+                resumeOrdinaryDraft
+            );
+            $("entryDraftDiscard").addEventListener(
+                "click",
+                discardOrdinaryDraft
+            );
 
             [
                 ["correctionResume", "edit"],

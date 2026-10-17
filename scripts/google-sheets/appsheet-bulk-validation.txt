@@ -1,7 +1,10 @@
 AND(
   ISBLANK([P33 weight (g)]),
   ISBLANK([P34 weight (g)]),
-  IN([Round action], LIST("Weigh", "Water + weigh", "Water", "Mist", "Check", "Inspect", "Rotation", "Move", "Environment", "Clean", "Prune", "Support", "Propagate", "Pest", "Other")),
+  OR(
+    IN([Round action], LIST("Weigh", "Water + weigh", "Water", "Mist", "Check", "Inspect", "Rotation", "Move", "Environment", "Clean", "Prune", "Propagate", "Pest", "Other")),
+    AND([Status] = "Saved", [Round action] = "Support")
+  ),
   OR([Round action] <> "Check", ISNOTBLANK([Soil moisture])),
   OR([Round action] <> "Inspect", ISNOTBLANK([Plant condition])),
   OR(

@@ -37,6 +37,12 @@
   Derive the latest location from active corrected Move records, not removed or
   future records. Update the parser, tracker, history page, CSV export, and
   logger checks together when that contract changes.
+- BI:BO appends leaf temperature/unit, paired air temperature/unit, paired RH,
+  leaf VPD, and source. Canonical temperatures are Celsius; distinguish Device,
+  Calculated, and Not calculated, and preserve signed calculated VPD and valid
+  zero versus absent readings. Never borrow earlier sensor values as paired data.
+  Leaf VPD replaces Support only in new choices; retain historical Support,
+  corrections, and retry visibility. Leaf measurements do not change care cycles.
 - Share parsing and calculations through `plant-tracker-data.js` and
   `plant-charts.js`. Keep removed/superseded records, missing values, setup
   boundaries, actual timestamps, and incomplete watering cycles consistent

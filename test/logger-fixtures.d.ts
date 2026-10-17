@@ -11,6 +11,12 @@ export interface Bootstrap {
     dayKey?: string;
     dayStartHour?: number;
     events: string[];
+    historyCapacity?: {
+        remainingRows: number;
+        supportedLastRow: number;
+        supportedObservationRows: number;
+        usedRows: number;
+    };
     links: Record<string, string>;
     plants: PlantSummary[];
     recent: (Record<string, number | string> | WebRecentObservation)[];
@@ -51,6 +57,15 @@ export interface ObservationPayload {
     flowerCount?: string;
     flowerDetails?: string;
     height?: string;
+    leafAirTemperature?: number | string;
+    leafAirTemperatureC?: number | string;
+    leafAirTemperatureUnit?: string;
+    leafHumidity?: number | string;
+    leafTemperature?: number | string;
+    leafTemperatureC?: number | string;
+    leafTemperatureUnit?: string;
+    leafVpd?: number | string;
+    leafVpdSource?: string;
     lux?: number | string;
     measurementMethod?: string;
     measurementQuality?: string;

@@ -13,12 +13,19 @@ const source = readFileSync(
     new URL("../../scripts/google-sheets/plant-tracker.gs", import.meta.url),
     "utf8"
 );
-const schema =
+const currentSchema =
     /** @type {import("../../scripts/google-sheets/care-events-migration.mjs").CareEventsSchema} */ (
         vm.runInNewContext(
             `${source}\nJSON.parse(JSON.stringify({history:[...HISTORY_HEADERS,"Plant / planter","Trend anchor","Days after anchor",GARDEN_LOGGER.requestIdHeader,...HISTORY_DETAIL_HEADERS,...HISTORY_PROVENANCE_HEADERS,...HISTORY_MEASUREMENT_HEADERS,...HISTORY_ROTATION_HEADERS,...HISTORY_WATER_HEADERS,...HISTORY_HUMIDITY_HEADERS,...HISTORY_LIGHT_HEADERS,...HISTORY_CARE_HEADERS],entries:APP_SHEET_ENTRY_HEADERS,bulk:APP_SHEET_BULK_HEADERS}))`
         )
     );
+// This one-time migration targets the historical 5.35.0 contract. Later
+// append-only fields belong to their own migration and must not expand this one.
+const schema = {
+    bulk: currentSchema.bulk.slice(0, 74),
+    entries: currentSchema.entries.slice(0, 52),
+    history: currentSchema.history.slice(0, 60),
+};
 
 /** @returns {import("../../scripts/google-sheets/care-events-migration.mjs").CareEventsSnapshot} */
 function fixture() {
@@ -163,6 +170,22 @@ function fixture() {
 }
 
 describe("care event workbook migration", () => {
+    it("retains the historical 60/52/74 schema ending in Support details", () => {
+        expect.hasAssertions();
+        expect(
+            Object.values(schema).map((headers) => headers.length)
+        ).toStrictEqual([
+            74,
+            52,
+            60,
+        ]);
+        expect(
+            Object.values(schema).every(
+                (headers) => headers.at(-1) === "Support details"
+            )
+        ).toBe(true);
+    });
+
     it("matches the maintained installer native validation rules for every appended care field", () => {
         expect.hasAssertions();
 
@@ -176,16 +199,18 @@ describe("care event workbook migration", () => {
                         requireValueInList(values) { condition = {type: "ONE_OF_LIST", values}; return this; },
                         requireNumberGreaterThan(value) { condition = {type: "NUMBER_GREATER", values: [String(value)]}; return this; },
                         requireNumberGreaterThanOrEqualTo(value) { condition = {type: "NUMBER_GREATER_THAN_EQ", values: [String(value)]}; return this; },
+                        requireNumberBetween(minimum, maximum) { condition = {type: "NUMBER_BETWEEN", values: [String(minimum), String(maximum)]}; return this; },
                         setAllowInvalid(value) { if (value !== false) throw Error("Native validation must remain strict"); return this; },
                         build() { return condition; },
                     };
                 },
             };
-            for (const [name, headers] of Object.entries(${JSON.stringify(schema)})) {
+            const historical = ${JSON.stringify(schema)};
+            for (const [name, headers] of Object.entries(${JSON.stringify(currentSchema)})) {
                 const rules = new Map();
                 const sheet = {
                     getMaxRows() { return 5000; },
-                    getMaxColumns() { return 60; },
+                    getMaxColumns() { return 67; },
                     getRange(row, column, height, width) {
                         return {
                             getDisplayValues() { return [headers.slice(column - 1, column - 1 + width)]; },
@@ -197,7 +222,7 @@ describe("care event workbook migration", () => {
                 };
                 if (name === "history") ensureHistoryCareColumns_(sheet, true);
                 else configureCareColumns_(sheet, headers);
-                installed[name] = [...rules.values()].sort((a,b) => a.column - b.column);
+                installed[name] = [...rules.values()].filter(rule => rule.column < historical[name].length).sort((a,b) => a.column - b.column);
             }
             JSON.stringify(installed);
         `);

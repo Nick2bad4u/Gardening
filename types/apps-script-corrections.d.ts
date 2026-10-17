@@ -45,6 +45,7 @@ type GardenCorrectionEvent =
     | "Flower"
     | "Humidity"
     | "Inspect"
+    | "Leaf VPD"
     | "Light"
     | "Measure"
     | "Mist"
@@ -111,7 +112,14 @@ type GardenCorrectionFieldColumn =
     | 56
     | 57
     | 58
-    | 59;
+    | 59
+    | 60
+    | 61
+    | 62
+    | 63
+    | 64
+    | 65
+    | 66;
 interface GardenCorrectionFieldDefinition extends GardenCorrectionField {
     column: GardenCorrectionFieldColumn;
     events: GardenCorrectionEvent[];
@@ -255,6 +263,13 @@ type GardenCorrectionRowFields = [
     propagationDetails: string,
     supportAction: string,
     supportDetails: string,
+    leafTemperatureC: GardenOptionalNumber,
+    leafTemperatureUnit: string,
+    leafAirTemperatureC: GardenOptionalNumber,
+    leafAirTemperatureUnit: string,
+    leafHumidity: GardenOptionalNumber,
+    leafVpd: GardenOptionalNumber,
+    leafVpdSource: string,
 ];
 interface GardenCorrectionRowSnapshot {
     formulas: string[];
