@@ -209,7 +209,7 @@ describe("care event workbook migration", () => {
             for (const [name, headers] of Object.entries(${JSON.stringify(currentSchema)})) {
                 const rules = new Map();
                 const sheet = {
-                    getMaxRows() { return 5000; },
+                    getMaxRows() { return GARDEN_LOGGER.historyCapacityRows; },
                     getMaxColumns() { return 67; },
                     getRange(row, column, height, width) {
                         return {

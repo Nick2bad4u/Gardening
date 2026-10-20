@@ -24,6 +24,7 @@ export interface Bootstrap {
     timeZone?: string;
     version: string;
     weighedTodayPlantIds?: string[];
+    workbookCalculation?: { calculatedAt?: string; status: string };
 }
 
 export type CellValue =
@@ -177,6 +178,7 @@ export interface ScriptArguments {
     previewWebObservationCorrection: Parameters<
         LoggerCorrectionApi["previewWebObservationCorrection"]
     >;
+    recalculateGardenWorkbook: [];
     saveBulkCareObservation: [payload: ObservationPayload];
     saveWebObservation: [payload: ObservationPayload];
     saveWebObservationBatch: [payloads: ObservationPayload[]];

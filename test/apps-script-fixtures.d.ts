@@ -26,6 +26,71 @@ export interface ActivitySummary {
     totalWeights: number;
     waterIntervalCount: number;
 }
+
+export interface AnalyticsApi {
+    acquireGardenAnalyticsLease_: () => null | string;
+    finishAppSheetQueueRun_: (
+        spreadsheet: object,
+        summary: { ok: boolean; savedCount: number }
+    ) => { analytics: { status: string }; ok: boolean; savedCount: number };
+    gardenAnalyticsCellsRequest_: (
+        sheet: object,
+        column: number,
+        width: number,
+        rows: CellValue[][],
+        timeZone: string,
+        dateSerials?: Map<number, number>
+    ) => {
+        updateCells: {
+            fields: string;
+            range: {
+                endColumnIndex: number;
+                endRowIndex: number;
+                startColumnIndex: number;
+                startRowIndex: number;
+            };
+            rows: {
+                values: {
+                    userEnteredValue?: {
+                        numberValue?: number;
+                        stringValue?: string;
+                    };
+                }[];
+            }[];
+        };
+    };
+    gardenAnalyticsOutputs_: (
+        history: CellValue[][],
+        plant: CellValue,
+        setup: CellValue,
+        asOf: Date,
+        timeZone: string,
+        dateSerials?: Map<number, number>
+    ) => {
+        cycles: CellValue[][];
+        environment: CellValue[][];
+        locations: CellValue[][];
+        models: CellValue[][];
+    };
+
+    gardenAnalyticsPayloadBytes_: (value: string) => number;
+    recalculateGardenWorkbook: () => { calculatedAt?: string; status: string };
+    refreshGardenAnalytics: () => { status: string };
+    refreshGardenAnalytics_: (spreadsheet: object) => {
+        calculatedAt?: string;
+        historyRows?: number;
+        status: string;
+    };
+    refreshGardenAnalyticsSafely_: (spreadsheet: object) => {
+        message?: string;
+        status: string;
+    };
+    releaseGardenAnalyticsLease_: (lease: string) => void;
+    workbookCalculationStatus_: (spreadsheet: object) => {
+        calculatedAt?: string;
+        status: string;
+    };
+}
 export interface AppendResult {
     duplicate: boolean;
     eventNames: string[];
@@ -130,6 +195,7 @@ export interface AppsScriptTestApi {
     comparableHistoryValue_: (value: unknown) => number | string;
     configureCareColumns_: (sheet: unknown, headers: string[]) => void;
     currentLabelForPlant_: (spreadsheet: unknown, plantId: unknown) => string;
+    dashboardMinimumWeightFormula_: (row: number) => string;
     dashboardViewRow_: (
         spreadsheet: unknown,
         plant: unknown,
@@ -138,6 +204,7 @@ export interface AppsScriptTestApi {
     dashboardWeightCountFormula_: (row: number) => string;
     dateSortValue_: (value: unknown) => number;
     doGet: () => object;
+    dryDownCycles_: (records: DryDownRecordFixture[]) => DryDownCycleFixture[];
     dryDownModelFormula_: () => string;
     dryDownModelsFromHistory_: (
         historyRows: unknown,
@@ -193,6 +260,11 @@ export interface AppsScriptTestApi {
         history: unknown,
         shouldConfigureColumn?: boolean
     ) => undefined;
+    ensurePlantHistoryWriteCapacity_: (
+        spreadsheet: unknown,
+        history: unknown,
+        writes: { storedRows: CellValue[][]; targetRow: number }[]
+    ) => void;
     ensureQuickLogWaterColumns_: (
         quickLog: unknown,
         shouldConfigureColumns?: boolean
@@ -274,6 +346,7 @@ export interface AppsScriptTestApi {
             { rowNumber: number; values: CellValue[] }[]
         >;
     };
+    historyPlantIds_: (history: unknown) => string[];
     historyProvenanceRow_: (
         input: unknown,
         requestId: unknown,
@@ -683,3 +756,23 @@ export type WebPayload = {
     plantId?: string;
     requestId?: string;
 };
+
+interface DryDownCycleFixture {
+    beforeDry: DryDownRecordFixture | undefined;
+    dry: DryDownRecordFixture | null;
+    next: DryDownRecordFixture | undefined;
+    points: DryDownRecordFixture[];
+    water: DryDownRecordFixture;
+    wet: DryDownRecordFixture | undefined;
+}
+
+interface DryDownRecordFixture {
+    application: string;
+    date: number;
+    estimated: boolean;
+    event: string;
+    index: number;
+    save: string;
+    setup: number;
+    weight: number;
+}

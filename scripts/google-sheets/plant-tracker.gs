@@ -10,14 +10,14 @@
    installAppSheetQueueTrigger, saveWebObservation, saveWebObservationBatch,
    saveBulkCareObservation, saveBulkWaterObservation, getRecentWebObservations,
    getWebSaveStatus, getWebBatchSaveStatus, installGardenLogger, installAppSheetIntake,
-   refreshGardenWorkbook, refreshGardenWorkbookPages01To10,
+   refreshGardenWorkbook, refreshGardenAnalytics, recalculateGardenWorkbook, refreshGardenWorkbookPages01To10,
    refreshGardenWorkbookPages11To20, refreshGardenWorkbookPages21To30,
    refreshGardenWorkbookPages31To32, refreshGardenWorkbookPages33To34,
    refreshGardenWorkbookPages35To36,
-   installDailyCareDashboard, GARDEN_CYCLE_COMPARISON, GARDEN_ENVIRONMENT_READINGS, GARDEN_RECORDED_LOCATIONS */
+   dryDownModelFormula_, installDailyCareDashboard, GARDEN_CYCLE_COMPARISON, GARDEN_ENVIRONMENT_READINGS, GARDEN_RECORDED_LOCATIONS */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.36.0",
+    version: "5.37.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -68,7 +68,7 @@ const GARDEN_LOGGER = Object.freeze({
     historyLightColumns: 2,
     historyCareStartColumn: 46,
     historyStoredColumns: 67,
-    historyCapacityRows: 5000,
+    historyCapacityRows: 50001,
     lockTimeoutMs: 5000,
     spreadsheetUrl:
         "https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit",
@@ -841,6 +841,8 @@ const DASHBOARD_VIEW_HEADERS = Object.freeze([
     "Average change across last 3 weights (g)",
     "Last 3 readings loss (g/day)",
     "Curve inspection",
+    "Lowest weight in last 90 days (g)",
+    "Latest minus 90-day minimum (g)",
 ]);
 
 const WEIGHT_DIFFERENCE_NOTE =
@@ -966,6 +968,7 @@ function onOpen() {
         .addItem("Verify logger", "installGardenLogger")
         .addItem("Verify AppSheet intake", "installAppSheetIntake")
         .addItem("Refresh workbook views", "refreshGardenWorkbook")
+        .addItem("Recalculate workbook", "recalculateGardenWorkbook")
         .addSeparator()
         .addItem("Open Quick log", "openQuickLog")
         .addItem("Open History", "openHistory")
@@ -1134,6 +1137,7 @@ function getWebAppBootstrap() {
     return {
         version: GARDEN_LOGGER.version,
         historyCapacity: historyCapacityStatus_(historyRows),
+        workbookCalculation: workbookCalculationStatus_(spreadsheet),
         timeZone,
         serverTime: refreshedAt.toISOString(),
         dayKey: weightReads.dayKey,
@@ -1647,10 +1651,14 @@ function appSheetQueueSummary_(
 /** @param {GardenSpreadsheet} spreadsheet @param {GardenEntryQueueSummary} entrySummary */
 function finishAppSheetQueueRun_(spreadsheet, entrySummary) {
     const bulkSummary = processQueuedAppSheetBulkEntries_(spreadsheet);
+    // All intake writers have released their canonical script lock. Analytics
+    // failures never turn a saved observation or receipt into a failed save.
+    const analytics = refreshGardenAnalyticsSafely_(spreadsheet);
     const summary = {
         ...entrySummary,
         ok: entrySummary.ok && bulkSummary.ok,
         bulk: bulkSummary,
+        analytics,
     };
     console.info(
         JSON.stringify({
@@ -3069,6 +3077,12 @@ function appendPreparedWebObservationBatch_(spreadsheet, items, results) {
         return writeTiming;
     }
     if (!pendingResults.length) return writeTiming;
+    ensurePlantHistoryWriteCapacity_(spreadsheet, history, [
+        ...repairs,
+        ...(newRows.length
+            ? [{ targetRow: newRowsStart, storedRows: newRows }]
+            : []),
+    ]);
     prepareHistoryForObservationWrites_(history);
 
     repairs.forEach(({ targetRow, storedRows }) => {
@@ -3967,6 +3981,36 @@ function dryDownRecordsShareSave_(left, right) {
         : left.date === right.date;
 }
 
+/**
+ * Locate the first sorted weight at or after a date/index boundary.
+ * @param {DryDownRecord[]} weights
+ * @param {number} date
+ * @param {number} index
+ * @param {boolean} [after]
+ * @returns {number}
+ */
+function dryDownWeightBoundary_(weights, date, index, after = false) {
+    let low = 0;
+    let high = weights.length;
+    while (low < high) {
+        const middle = Math.floor((low + high) / 2);
+        const record = weights[middle];
+        if (!record) {
+            throw new Error("Missing weight at a calculated cycle boundary.");
+        }
+        if (
+            record.date < date ||
+            (record.date === date &&
+                (record.index < index || (after && record.index === index)))
+        ) {
+            low = middle + 1;
+        } else {
+            high = middle;
+        }
+    }
+    return low;
+}
+
 /** @param {DryDownRecord[]} records @returns {GardenDryDownCycle[]} */
 function dryDownCycles_(records) {
     const ordered = records
@@ -3984,41 +4028,57 @@ function dryDownCycles_(records) {
     const cycles = waterings.map((water, index) => {
         const next = waterings[index + 1];
         // Save identity wins over row ordering (Weigh can precede Water).
-        /** @param {DryDownRecord} r @returns {boolean} */
-        const within = (r) =>
-            (!next ||
-                r.date < next.date ||
-                (r.date === next.date && r.index < next.index)) &&
-            (!next || !dryDownRecordsShareSave_(r, next));
-        const sameSave = weights.findLast(
-            (r) =>
-                r.date >= water.date &&
-                r.date <= water.date + WET_WEIGHT_WINDOW_DAYS &&
-                dryDownRecordsShareSave_(r, water) &&
-                within(r)
+        const end = next
+            ? dryDownWeightBoundary_(weights, next.date, next.index)
+            : weights.length;
+        const windowEnd = Math.min(
+            end,
+            dryDownWeightBoundary_(
+                weights,
+                water.date + WET_WEIGHT_WINDOW_DAYS,
+                Infinity
+            )
         );
-        const wet =
-            sameSave ||
-            weights.find(
-                (r) =>
-                    (r.date > water.date ||
-                        (r.date === water.date && r.index > water.index)) &&
-                    r.date <= water.date + WET_WEIGHT_WINDOW_DAYS &&
-                    within(r)
-            );
-        const points = wet
-            ? weights.filter(
-                  (r) =>
-                      (r.date > wet.date ||
-                          (r.date === wet.date && r.index >= wet.index)) &&
-                      within(r)
-              )
-            : weights.filter(
-                  (r) =>
-                      (r.date > water.date ||
-                          (r.date === water.date && r.index > water.index)) &&
-                      within(r)
-              );
+        const windowStart = dryDownWeightBoundary_(
+            weights,
+            water.date,
+            -Infinity
+        );
+        const afterWater = dryDownWeightBoundary_(
+            weights,
+            water.date,
+            water.index,
+            true
+        );
+        /** @param {DryDownRecord} r @returns {boolean} */
+        const outsideNextSave = (r) =>
+            !next || !dryDownRecordsShareSave_(r, next);
+        /** @type {DryDownRecord | undefined} */
+        let wet;
+        for (let i = windowEnd - 1; i >= windowStart; i -= 1) {
+            const record = weights[i];
+            if (
+                record &&
+                dryDownRecordsShareSave_(record, water) &&
+                outsideNextSave(record)
+            ) {
+                wet = record;
+                break;
+            }
+        }
+        if (!wet) {
+            for (let i = afterWater; i < windowEnd; i += 1) {
+                const record = weights[i];
+                if (record && outsideNextSave(record)) {
+                    wet = record;
+                    break;
+                }
+            }
+        }
+        const start = wet
+            ? dryDownWeightBoundary_(weights, wet.date, wet.index)
+            : afterWater;
+        const points = weights.slice(start, end).filter(outsideNextSave);
         return { water, next, wet, points, dry: null, beforeDry: undefined };
     });
     const wetIndices = new Set(
@@ -4027,17 +4087,30 @@ function dryDownCycles_(records) {
     /** @type {DryDownRecord | null} */
     let previous = null;
     cycles.forEach((cycle) => {
-        cycle.beforeDry = weights.findLast(
-            (r) =>
-                (!previous ||
-                    r.date > previous.date ||
-                    (r.date === previous.date && r.index > previous.index)) &&
-                (r.date < cycle.water.date ||
-                    (r.date === cycle.water.date &&
-                        r.index < cycle.water.index)) &&
-                !wetIndices.has(r.index) &&
-                !dryDownRecordsShareSave_(r, cycle.water)
+        const start = previous
+            ? dryDownWeightBoundary_(
+                  weights,
+                  previous.date,
+                  previous.index,
+                  true
+              )
+            : 0;
+        const end = dryDownWeightBoundary_(
+            weights,
+            cycle.water.date,
+            cycle.water.index
         );
+        for (let i = end - 1; i >= start; i -= 1) {
+            const record = weights[i];
+            if (
+                record &&
+                !wetIndices.has(record.index) &&
+                !dryDownRecordsShareSave_(record, cycle.water)
+            ) {
+                cycle.beforeDry = record;
+                break;
+            }
+        }
         previous = cycle.water;
     });
     cycles.forEach((cycle, index) => {
@@ -4755,12 +4828,451 @@ function dryDownModelsFromHistory_(historyRows, plantIds, timeZone) {
 
 /** @returns {string} */
 function dryDownModelFormula_() {
-    return `=GARDEN_DRY_DOWN({ARRAYFORMULA(N(History!A2:A5000)),History!B2:E5000,History!K2:K5000,History!P2:P5000,History!AD2:AD5000,History!AJ2:AJ5000,History!AO2:AO5000,History!AC2:AC5000,History!AI2:AI5000,History!AA2:AA5000,History!AE2:AE5000},'Plant tracker'!A2:A${APP_SHEET_BULK_PLANTS.length + 1})`;
+    return `=GARDEN_DRY_DOWN({ARRAYFORMULA(N(History!A2:A${GARDEN_LOGGER.historyCapacityRows})),History!B2:E${GARDEN_LOGGER.historyCapacityRows},History!K2:K${GARDEN_LOGGER.historyCapacityRows},History!P2:P${GARDEN_LOGGER.historyCapacityRows},History!AD2:AD${GARDEN_LOGGER.historyCapacityRows},History!AJ2:AJ${GARDEN_LOGGER.historyCapacityRows},History!AO2:AO${GARDEN_LOGGER.historyCapacityRows},History!AC2:AC${GARDEN_LOGGER.historyCapacityRows},History!AI2:AI${GARDEN_LOGGER.historyCapacityRows},History!AA2:AA${GARDEN_LOGGER.historyCapacityRows},History!AE2:AE${GARDEN_LOGGER.historyCapacityRows}},'Plant tracker'!A2:A${APP_SHEET_BULK_PLANTS.length + 1})`;
 }
 
 /** @param {number} row @param {string} column @returns {string} */
 function dryDownLookupFormula_(row, column) {
-    return `XLOOKUP($A${row},'Dry-down models'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Dry-down models'!$${column}$2:$${column}$${APP_SHEET_BULK_PLANTS.length + 1},"")`;
+    return guardedDryDownFormula_(
+        `XLOOKUP($A${row},'Dry-down models'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Dry-down models'!$${column}$2:$${column}$${APP_SHEET_BULK_PLANTS.length + 1},"")`,
+        `$A${row}`
+    );
+}
+
+/** @param {string} expression @param {string} plant @returns {string} */
+function guardedDryDownFormula_(expression, plant) {
+    const end = APP_SHEET_BULK_PLANTS.length + 1;
+    const clock = "'Workbook calculations'!$E$2";
+    const calculated = "'Workbook calculations'!$H$2";
+    const ready = `AND('Workbook calculations'!$I$2="Ready",ISNUMBER(${calculated}),${calculated}>0,${clock}>=${calculated},(${clock}-${calculated})*1440<=15,XLOOKUP(${plant},'Dry-down models'!$A$2:$A$${end},'Dry-down models'!$B$2:$B$${end},0)=XLOOKUP(${plant},Baselines!$A$2:$A$${end},Baselines!$T$2:$T$${end},-1))`;
+    return `IF(${ready},${expression},"")`;
+}
+
+/** @param {GardenSpreadsheet} spreadsheet @returns {{status: string, calculatedAt?: string}} */
+function workbookCalculationStatus_(spreadsheet) {
+    try {
+        const sheet = spreadsheet.getSheetByName(
+            GARDEN_LOGGER.workbookCalculationsSheet
+        );
+        if (!sheet) return { status: "Unavailable" };
+        const [calculatedAt, status] =
+            sheet.getRange("H2:I2").getValues()[0] || [];
+        return {
+            status: cleanText_(status) || "Awaiting native refresh",
+            ...(calculatedAt instanceof Date &&
+            Number.isFinite(calculatedAt.getTime())
+                ? { calculatedAt: calculatedAt.toISOString() }
+                : {}),
+        };
+    } catch (error) {
+        console.error(String(error));
+        return { status: "Unavailable" };
+    }
+}
+
+/** Backward-compatible analytics action. @returns {GardenAnalyticsRefreshResult} */
+function refreshGardenAnalytics() {
+    return recalculateGardenWorkbook();
+}
+
+/** Refresh calculations without rebuilding layout or changing observations.
+ * Callable from the workbook menu, an assigned drawing, and the mobile logger.
+ * @returns {GardenAnalyticsRefreshResult}
+ */
+function recalculateGardenWorkbook() {
+    const spreadsheet = getGardenSpreadsheet_();
+    spreadsheet.toast("Recalculating workbook…", "Garden calculations", 8);
+    const result = refreshGardenAnalyticsSafely_(spreadsheet);
+    spreadsheet.toast(
+        result.status === "Ready"
+            ? "Workbook calculations refreshed from History."
+            : result.status === "Busy"
+              ? "Another save or calculation is running. Try again shortly."
+              : "Recalculation failed. Previous results and saved observations are retained; retry the refresh.",
+        "Garden calculations",
+        8
+    );
+    return result;
+}
+
+/**
+ * Web apps have no document lock. Reserve a cross-context refresh lease under
+ * the writer lock, then immediately release that lock before reading History.
+ * Eight minutes exceeds Apps Script's six-minute execution limit, so a crashed
+ * execution cannot leave a permanent reservation or overlap its replacement.
+ * @returns {string | null}
+ */
+function acquireGardenAnalyticsLease_() {
+    const lock = LockService.getScriptLock();
+    if (!lock.tryLock(1)) return null;
+    try {
+        const properties = PropertiesService.getScriptProperties();
+        const key = "gardenAnalyticsRefreshLeaseV1";
+        const current = properties.getProperty(key);
+        const expiresAt = current ? Number(current.split(":")[0]) : 0;
+        if (Number.isFinite(expiresAt) && expiresAt > Date.now()) return null;
+        const lease = `${Date.now() + 480000}:${Utilities.getUuid()}`;
+        properties.setProperty(key, lease);
+        return lease;
+    } finally {
+        lock.releaseLock();
+    }
+}
+
+/** @param {string} lease @returns {void} */
+function releaseGardenAnalyticsLease_(lease) {
+    const lock = LockService.getScriptLock();
+    // A save can temporarily delay cleanup. The bounded lease still recovers.
+    if (!lock.tryLock(1)) return;
+    try {
+        const properties = PropertiesService.getScriptProperties();
+        const key = "gardenAnalyticsRefreshLeaseV1";
+        if (properties.getProperty(key) === lease)
+            properties.deleteProperty(key);
+    } finally {
+        lock.releaseLock();
+    }
+}
+
+/** @param {GardenSpreadsheet} spreadsheet @returns {GardenAnalyticsRefreshResult} */
+function refreshGardenAnalyticsSafely_(spreadsheet) {
+    try {
+        return refreshGardenAnalytics_(spreadsheet);
+    } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        console.error(
+            JSON.stringify({ operation: "refreshGardenAnalytics", message })
+        );
+        return { status: "Refresh failed", message };
+    }
+}
+
+/**
+ * A cross-context lease serializes derived refreshes. The full-ledger read and
+ * publication never hold the canonical writer lock.
+ * @param {GardenSpreadsheet} spreadsheet
+ * @returns {GardenAnalyticsRefreshResult}
+ */
+function refreshGardenAnalytics_(spreadsheet) {
+    const lease = acquireGardenAnalyticsLease_();
+    if (!lease) return { status: "Busy" };
+    let calculations;
+    try {
+        calculations = requireSheet_(
+            spreadsheet,
+            GARDEN_LOGGER.workbookCalculationsSheet
+        );
+        ensureSheetColumnCapacity_(calculations, 11);
+        calculations.getRange("I2").setValue("Refreshing");
+        SpreadsheetApp.flush();
+        const asOf = new Date();
+        const timeZone = spreadsheet.getSpreadsheetTimeZone();
+        const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
+        const rowCount = Math.max(0, history.getLastRow() - 1);
+        if (rowCount > GARDEN_LOGGER.historyCapacityRows - 1)
+            throw new Error(
+                "History exceeds the supported analytics capacity."
+            );
+        const rows = rowCount
+            ? history
+                  .getRange(2, 1, rowCount, GARDEN_LOGGER.historyStoredColumns)
+                  .getValues()
+            : [];
+        const selectedPlant = cleanText_(
+            requireSheet_(spreadsheet, "Insights").getRange("B228").getValue()
+        );
+        const baselineRows = requireSheet_(
+            spreadsheet,
+            GARDEN_LOGGER.baselinesSheet
+        )
+            .getRange(2, 1, APP_SHEET_BULK_PLANTS.length, 20)
+            .getValues();
+        const selectedSetup =
+            baselineRows.find(
+                (row) => cleanText_(row[0]) === selectedPlant
+            )?.[19] ?? "";
+        const dateSerials = new Map();
+        const outputs = gardenAnalyticsOutputs_(
+            rows,
+            selectedPlant,
+            selectedSetup,
+            asOf,
+            timeZone,
+            dateSerials
+        );
+        const specifications = [
+            {
+                name: GARDEN_LOGGER.dryDownModelsSheet,
+                column: 1,
+                width: DRY_DOWN_MODEL_HEADERS.length,
+                rows: outputs.models,
+            },
+            {
+                name: "Workbook analytics",
+                column: 1,
+                width: 4,
+                rows: outputs.cycles,
+            },
+            {
+                name: "Environment data",
+                column: 1,
+                width: 12,
+                rows: outputs.environment,
+            },
+            {
+                name: "Environment data",
+                column: 23,
+                width: 5,
+                rows: outputs.locations,
+            },
+        ];
+        const requests = specifications.map((output) => {
+            const sheet = requireSheet_(spreadsheet, output.name);
+            ensureSheetColumnCapacity_(sheet, output.column + output.width - 1);
+            ensureSheetRowCapacity_(sheet, output.rows.length);
+            return gardenAnalyticsCellsRequest_(
+                sheet,
+                output.column,
+                output.width,
+                output.rows,
+                timeZone,
+                dateSerials
+            );
+        });
+        requests.push({
+            updateCells: {
+                range: {
+                    sheetId: calculations.getSheetId(),
+                    startRowIndex: 0,
+                    endRowIndex: 2,
+                    startColumnIndex: 7,
+                    endColumnIndex: 11,
+                },
+                rows: [
+                    {
+                        values: [
+                            "Analytics calculated at",
+                            "Analytics status",
+                            "Cycle plant ID",
+                            "Cycle pot setup",
+                        ].map((value) => correctionCell_(value, timeZone)),
+                    },
+                    {
+                        values: [
+                            asOf,
+                            "Ready",
+                            selectedPlant,
+                            selectedSetup,
+                        ].map((value) => correctionCell_(value, timeZone)),
+                    },
+                ],
+                fields: "userEnteredValue",
+            },
+        });
+        requests.push({
+            repeatCell: {
+                range: {
+                    sheetId: calculations.getSheetId(),
+                    startRowIndex: 1,
+                    endRowIndex: 2,
+                    startColumnIndex: 7,
+                    endColumnIndex: 8,
+                },
+                cell: {
+                    userEnteredFormat: {
+                        numberFormat: {
+                            type: "DATE_TIME",
+                            pattern: "mmm d, yyyy h:mm:ss AM/PM",
+                        },
+                    },
+                },
+                fields: "userEnteredFormat.numberFormat",
+            },
+        });
+        requests.push({
+            updateCells: {
+                range: {
+                    sheetId: calculations.getSheetId(),
+                    startRowIndex: 1,
+                    endRowIndex: 2,
+                    startColumnIndex: 4,
+                    endColumnIndex: 5,
+                },
+                rows: [
+                    {
+                        values: [
+                            { userEnteredValue: { formulaValue: "=NOW()" } },
+                        ],
+                    },
+                ],
+                fields: "userEnteredValue",
+            },
+        });
+        // One atomic commit publishes all four outputs, clears their old tails,
+        // and advances the successful timestamp. A lost reply cannot expose a
+        // mixed-generation result; the next scheduled run safely recomputes.
+        const payloadBytes = gardenAnalyticsPayloadBytes_(
+            JSON.stringify({ requests })
+        );
+        // Stay below Apps Script's 50 MB request limit with headroom for the
+        // native API envelope. Never truncate canonical evidence to fit a cache.
+        if (payloadBytes > 40000000)
+            throw new Error(
+                "Analytics output exceeds the 40 MB atomic refresh limit. Keep the previous snapshot and review the output size."
+            );
+        correctionBatchUpdate_(spreadsheet, requests);
+        SpreadsheetApp.flush();
+        return {
+            status: "Ready",
+            calculatedAt: asOf.toISOString(),
+            historyRows: rowCount,
+            payloadBytes,
+        };
+    } catch (error) {
+        try {
+            calculations?.getRange("I2").setValue("Refresh failed");
+        } catch (statusError) {
+            console.error(String(statusError));
+        }
+        throw error;
+    } finally {
+        try {
+            releaseGardenAnalyticsLease_(lease);
+        } catch (error) {
+            console.error(`Analytics lease cleanup delayed: ${String(error)}`);
+        }
+    }
+}
+
+/** @param {string} value @returns {number} */
+function gardenAnalyticsPayloadBytes_(value) {
+    let bytes = 0;
+    for (const character of value) {
+        const code = character.codePointAt(0) || 0;
+        bytes += code <= 127 ? 1 : code <= 2047 ? 2 : code <= 65535 ? 3 : 4;
+    }
+    return bytes;
+}
+
+/**
+ * Keep the existing algorithms and canonical correction context intact.
+ * @param {GardenHistoryRow[]} history
+ * @param {GardenCell} plantId
+ * @param {GardenCell} setup
+ * @param {Date} asOf
+ * @param {string} timeZone
+ * @param {Map<number, number>} [dateSerials]
+ */
+function gardenAnalyticsOutputs_(
+    history,
+    plantId,
+    setup,
+    asOf,
+    timeZone,
+    dateSerials = new Map()
+) {
+    const projection = history.map((row) => [
+        row[0],
+        row[1],
+        row[2],
+        row[3],
+        row[4],
+        row[10],
+        row[15],
+        row[29],
+        row[35],
+        row[40],
+        row[28],
+        row[34],
+        row[26],
+        row[30],
+    ]);
+    const dryDown = projection.map((row) => {
+        const date = row[0];
+        if (!(date instanceof Date))
+            return [typeof date === "number" ? date : 0, ...row.slice(1)];
+        const key = date.getTime();
+        if (!dateSerials.has(key))
+            dateSerials.set(key, dryDownSerialDate_(date, timeZone));
+        return [dateSerials.get(key), ...row.slice(1)];
+    });
+    const correctionContext = historyCorrectionContext_(history);
+    const environmentHelpers = {
+        corrections: () => correctionContext,
+        active: activeHistoryRow_,
+        timestamp: webHistoryTimestamp_,
+    };
+    return {
+        models: [
+            [...DRY_DOWN_MODEL_HEADERS],
+            ...GARDEN_DRY_DOWN(
+                dryDown,
+                APP_SHEET_BULK_PLANTS.map((id) => [id])
+            ),
+        ],
+        cycles: cycleComparisonRows_(projection, plantId, setup, asOf, {
+            recordsByPlant: dryDownRecordsByPlant_,
+            cycles: dryDownCycles_,
+            dateLabel: (days) =>
+                Utilities.formatDate(
+                    new Date(days * 86400000),
+                    timeZone,
+                    "yyyy-MM-dd"
+                ),
+        }),
+        environment: environmentRows_(history, asOf, environmentHelpers),
+        locations: recordedLocationRows_(history, asOf, environmentHelpers),
+    };
+}
+
+/**
+ * The range deliberately includes the previous tail: updateCells clears any
+ * uncovered cells in this owned rectangle without touching neighboring data.
+ * @param {GardenSheet} sheet
+ * @param {number} column
+ * @param {number} width
+ * @param {GardenCell[][]} rows
+ * @param {string} timeZone
+ * @param {Map<number, number>} [dateSerials]
+ * @returns {GardenCorrectionSheetsRequest}
+ */
+function gardenAnalyticsCellsRequest_(
+    sheet,
+    column,
+    width,
+    rows,
+    timeZone,
+    dateSerials = new Map()
+) {
+    if (rows.some((row) => row.length !== width))
+        throw new Error("Invalid analytics output width.");
+    return {
+        updateCells: {
+            range: {
+                sheetId: sheet.getSheetId(),
+                startRowIndex: 0,
+                endRowIndex: Math.max(rows.length, sheet.getLastRow()),
+                startColumnIndex: column - 1,
+                endColumnIndex: column + width - 1,
+            },
+            rows: rows.map((row) => ({
+                values: row.map((value) => {
+                    if (!(value instanceof Date))
+                        return correctionCell_(value, timeZone);
+                    const key = value.getTime();
+                    if (!dateSerials.has(key))
+                        dateSerials.set(
+                            key,
+                            dryDownSerialDate_(value, timeZone)
+                        );
+                    return {
+                        userEnteredValue: { numberValue: dateSerials.get(key) },
+                    };
+                }),
+            })),
+            fields: "userEnteredValue",
+        },
+    };
 }
 
 /** @param {GardenSpreadsheet} spreadsheet @returns {void} */
@@ -4773,15 +5285,8 @@ function refreshDryDownModels_(spreadsheet) {
     sheet
         .getRange(1, 1, 1, DRY_DOWN_MODEL_HEADERS.length)
         .setValues([[...DRY_DOWN_MODEL_HEADERS]]);
-    sheet
-        .getRange(
-            2,
-            1,
-            APP_SHEET_BULK_PLANTS.length,
-            DRY_DOWN_MODEL_HEADERS.length
-        )
-        .clearContent();
-    sheet.getRange("A2").setFormula(dryDownModelFormula_());
+    // Analytics are published together by refreshGardenAnalytics_. Never
+    // reinstall a large custom-function argument or clear the last good result.
     sheet
         .getRange(`H2:J${APP_SHEET_BULK_PLANTS.length + 1}`)
         .setNumberFormat("mmm d, yyyy");
@@ -4791,7 +5296,7 @@ function refreshDryDownModels_(spreadsheet) {
     sheet
         .getRange("A1")
         .setNote(
-            "Read-only derived models. Recalculates from active History; no editable observations. Keep this helper disconnected from AppSheet."
+            "Read-only derived models. Refreshed with the other analytics every five minutes or through Recalculate workbook. See Workbook calculations H2:I2 for calculation time/status. Keep disconnected from AppSheet."
         );
     sheet.hideSheet();
 }
@@ -4913,7 +5418,7 @@ function installWateringRecommendations() {
                 plants.map((_, index) =>
                     ["O", "P"].map(
                         (modelColumn) =>
-                            `=XLOOKUP($${idColumn}${headerRow + index + 1},'Dry-down models'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Dry-down models'!$${modelColumn}$2:$${modelColumn}$${APP_SHEET_BULK_PLANTS.length + 1},"")`
+                            `=${guardedDryDownFormula_(`XLOOKUP($${idColumn}${headerRow + index + 1},'Dry-down models'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Dry-down models'!$${modelColumn}$2:$${modelColumn}$${APP_SHEET_BULK_PLANTS.length + 1},"")`, `$${idColumn}${headerRow + index + 1}`)}`
                     )
                 )
             );
@@ -4969,22 +5474,22 @@ function formatWateringRecommendationColumns_(sheet, headerRow, column, count) {
 // Match the public growth-series policy without changing canonical evidence.
 /** @returns {string} */
 function measuredDimensionCondition_() {
-    return '(((LOWER(TRIM(History!$AC$2:$AC$5000))="measured")+((LOWER(TRIM(History!$AC$2:$AC$5000))="corrected")*(LOWER(TRIM(History!$AI$2:$AI$5000))="ruler")))>0)*(REGEXMATCH(LOWER(History!$AI$2:$AI$5000),"estimat")=FALSE)';
+    return `(((LOWER(TRIM(History!$AC$2:$AC$${GARDEN_LOGGER.historyCapacityRows}))="measured")+((LOWER(TRIM(History!$AC$2:$AC$${GARDEN_LOGGER.historyCapacityRows}))="corrected")*(LOWER(TRIM(History!$AI$2:$AI$${GARDEN_LOGGER.historyCapacityRows}))="ruler")))>0)*(REGEXMATCH(LOWER(History!$AI$2:$AI$${GARDEN_LOGGER.historyCapacityRows}),"estimat")=FALSE)`;
 }
 
 /** @param {number} row @returns {string} */
 function remeasureStatusFormula_(row) {
-    return `=LET(lastEstimate,IFNA(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Measure",REGEXMATCH(LOWER(History!$AC$2:$AC$5000&" "&History!$AI$2:$AI$5000),"estimat"),History!$AJ$2:$AJ$5000<>"Removed")),0),lastMeasured,IFNA(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Measure",${measuredDimensionCondition_()},History!$AJ$2:$AJ$5000<>"Removed")),0),IF(lastEstimate>lastMeasured,"Due now",IF(lastMeasured>0,"Current","No measurement")))`;
+    return `=LET(lastEstimate,IFNA(MAX(FILTER(History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},History!$C$2:$C$${GARDEN_LOGGER.historyCapacityRows}="Measure",REGEXMATCH(LOWER(History!$AC$2:$AC$${GARDEN_LOGGER.historyCapacityRows}&" "&History!$AI$2:$AI$${GARDEN_LOGGER.historyCapacityRows}),"estimat"),History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed")),0),lastMeasured,IFNA(MAX(FILTER(History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},History!$C$2:$C$${GARDEN_LOGGER.historyCapacityRows}="Measure",${measuredDimensionCondition_()},History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed")),0),IF(lastEstimate>lastMeasured,"Due now",IF(lastMeasured>0,"Current","No measurement")))`;
 }
 
 /** @returns {string} */
 function appPlantChartsFormula_() {
-    return `=IFNA(LET(eligible,ARRAYFORMULA(${measuredDimensionCondition_()}),heights,ARRAYFORMULA(IF(eligible,History!AL2:AL5000,"")),widths,ARRAYFORMULA(IF(eligible,History!AM2:AM5000,"")),FILTER({History!A2:A5000,History!B2:B5000,History!E2:E5000,ARRAYFORMULA(IF(History!E2:E5000="","",History!E2:E5000/453.59237)),heights,widths,History!O2:O5000,ARRAYFORMULA(IF(History!O2:O5000="","",History!E2:E5000))},History!AJ2:AJ5000<>"Removed",History!B2:B5000<>"",((History!E2:E5000<>"")+(heights<>"")+(widths<>""))>0)),"")`;
+    return `=IFNA(LET(eligible,ARRAYFORMULA(${measuredDimensionCondition_()}),heights,ARRAYFORMULA(IF(eligible,History!AL2:AL${GARDEN_LOGGER.historyCapacityRows},"")),widths,ARRAYFORMULA(IF(eligible,History!AM2:AM${GARDEN_LOGGER.historyCapacityRows},"")),FILTER({History!A2:A${GARDEN_LOGGER.historyCapacityRows},History!B2:B${GARDEN_LOGGER.historyCapacityRows},History!E2:E${GARDEN_LOGGER.historyCapacityRows},ARRAYFORMULA(IF(History!E2:E${GARDEN_LOGGER.historyCapacityRows}="","",History!E2:E${GARDEN_LOGGER.historyCapacityRows}/453.59237)),heights,widths,History!O2:O${GARDEN_LOGGER.historyCapacityRows},ARRAYFORMULA(IF(History!O2:O${GARDEN_LOGGER.historyCapacityRows}="","",History!E2:E${GARDEN_LOGGER.historyCapacityRows}))},History!AJ2:AJ${GARDEN_LOGGER.historyCapacityRows}<>"Removed",History!B2:B${GARDEN_LOGGER.historyCapacityRows}<>"",((History!E2:E${GARDEN_LOGGER.historyCapacityRows}<>"")+(heights<>"")+(widths<>""))>0)),"")`;
 }
 
 /** @param {string} plantId @returns {string} */
 function plantChartHelperFormula_(plantId) {
-    return `=IFNA(SORT(FILTER({'App plant charts'!A2:A5000,'App plant charts'!C2:C5000,ARRAYFORMULA(IF('App plant charts'!E2:E5000="","",'App plant charts'!E2:E5000*2.54)),ARRAYFORMULA(IF('App plant charts'!F2:F5000="","",'App plant charts'!F2:F5000*2.54))},'App plant charts'!B2:B5000="${formulaString_(plantId)}"),1,TRUE),"")`;
+    return `=IFNA(SORT(SORTN(FILTER({'App plant charts'!A2:A${GARDEN_LOGGER.historyCapacityRows},'App plant charts'!C2:C${GARDEN_LOGGER.historyCapacityRows},ARRAYFORMULA(IF('App plant charts'!E2:E${GARDEN_LOGGER.historyCapacityRows}="","",'App plant charts'!E2:E${GARDEN_LOGGER.historyCapacityRows}*2.54)),ARRAYFORMULA(IF('App plant charts'!F2:F${GARDEN_LOGGER.historyCapacityRows}="","",'App plant charts'!F2:F${GARDEN_LOGGER.historyCapacityRows}*2.54))},'App plant charts'!B2:B${GARDEN_LOGGER.historyCapacityRows}="${formulaString_(plantId)}"),4999,0,1,FALSE),1,TRUE),"")`;
 }
 
 /** @param {number} row @returns {string} */
@@ -5097,20 +5602,20 @@ function baselineViewRow_(rowNumber, plant) {
         `=IF(AF${row}<>"",LET(early,${dryDownLookupFormula_(row, "I")},late,${dryDownLookupFormula_(row, "J")},IF(late<'Workbook calculations'!$F$2,"Inspect / reweigh now","Reweigh "&TEXT(early,"mmm d")&"–"&TEXT(late,"mmm d"))),${dryDownLookupFormula_(row, "K")})`,
         `=IF(OR(AE${row}="",C${row}<=0),"",AE${row}/C${row})`,
         `=IF(MAX(N(O${row}),N(AA${row}))=0,"No anchor",IF(N(O${row})>=N(AA${row}),"Water","Repot"))`,
-        `=IFNA(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Water",History!$K$2:$K$5000=$T${row},History!$AJ$2:$AJ$5000<>"Removed")),"")`,
-        `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$5000,History!$H$2:$H$5000},History!$B$2:$B$5000=$A${row},REGEXMATCH(History!$C$2:$C$5000,"^(Check|Inspect)$"),History!$H$2:$H$5000<>"",History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE),1,2),"Not recorded")`,
-        `=IFNA(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},REGEXMATCH(History!$C$2:$C$5000,"^(Check|Inspect)$"),History!$H$2:$H$5000<>"",History!$AJ$2:$AJ$5000<>"Removed")),"")`,
-        `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$5000,History!$AH$2:$AH$5000},History!$B$2:$B$5000=$A${row},History!$K$2:$K$5000=$T${row},History!$AH$2:$AH$5000<>"",History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE),1,2),"Not recorded")`,
+        `=IFNA(MAX(FILTER(History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},History!$C$2:$C$${GARDEN_LOGGER.historyCapacityRows}="Water",History!$K$2:$K$${GARDEN_LOGGER.historyCapacityRows}=$T${row},History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed")),"")`,
+        `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},History!$H$2:$H$${GARDEN_LOGGER.historyCapacityRows}},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},REGEXMATCH(History!$C$2:$C$${GARDEN_LOGGER.historyCapacityRows},"^(Check|Inspect)$"),History!$H$2:$H$${GARDEN_LOGGER.historyCapacityRows}<>"",History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed"),1,FALSE),1,2),"Not recorded")`,
+        `=IFNA(MAX(FILTER(History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},REGEXMATCH(History!$C$2:$C$${GARDEN_LOGGER.historyCapacityRows},"^(Check|Inspect)$"),History!$H$2:$H$${GARDEN_LOGGER.historyCapacityRows}<>"",History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed")),"")`,
+        `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},History!$AH$2:$AH$${GARDEN_LOGGER.historyCapacityRows}},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},History!$K$2:$K$${GARDEN_LOGGER.historyCapacityRows}=$T${row},History!$AH$2:$AH$${GARDEN_LOGGER.historyCapacityRows}<>"",History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed"),1,FALSE),1,2),"Not recorded")`,
         `=LET(flags,TEXTJOIN(" · ",TRUE,IF(H${row}<>"Calibrated",H${row},""),IF(AND(J${row}<>"OK",J${row}<>"No trend",J${row}<>"No current-cycle alert",J${row}<>"Owner-confirmed normal"),J${row},""),IF(K${row}="Due now","Remeasure due",""),IF(REGEXMATCH(AG${row},"Overdue"),"Dry forecast overdue","")),IF(flags="","No current flags",flags))`,
-        `=IFNA(MAX(FILTER(History!$K$2:$K$5000,History!$B$2:$B$5000=$A${row},History!$AJ$2:$AJ$5000<>"Removed")),1)`,
+        `=IFNA(MAX(FILTER(History!$K$2:$K$${GARDEN_LOGGER.historyCapacityRows},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed")),1)`,
         currentCyclePointCountFormula_(row),
-        `=COUNTIFS(History!$B$2:$B$5000,$A${row},History!$E$2:$E$5000,">0",History!$K$2:$K$5000,$T${row},History!$AJ$2:$AJ$5000,"<>Removed")`,
+        `=COUNTIFS(History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows},$A${row},History!$E$2:$E$${GARDEN_LOGGER.historyCapacityRows},">0",History!$K$2:$K$${GARDEN_LOGGER.historyCapacityRows},$T${row},History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows},"<>Removed")`,
         completedDryWeightFormula_(row),
-        `=COUNTIFS(History!$B$2:$B$5000,$A${row},History!$C$2:$C$5000,"Water",History!$K$2:$K$5000,$T${row},History!$AJ$2:$AJ$5000,"<>Removed")`,
+        `=COUNTIFS(History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows},$A${row},History!$C$2:$C$${GARDEN_LOGGER.historyCapacityRows},"Water",History!$K$2:$K$${GARDEN_LOGGER.historyCapacityRows},$T${row},History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows},"<>Removed")`,
         latestWetWeightFormula_(row),
         `=IF(OR(W${row}="",Y${row}="",Y${row}<=W${row}),"",Y${row}-W${row})`,
-        `=IFNA(MAX(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Repot",History!$K$2:$K$5000=$T${row},History!$AJ$2:$AJ$5000<>"Removed")),"")`,
-        `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$5000,History!$AC$2:$AC$5000},History!$B$2:$B$5000=$A${row},History!$C$2:$C$5000="Measure",History!$AJ$2:$AJ$5000<>"Removed"),1,FALSE),1,2),"No measurement")`,
+        `=IFNA(MAX(FILTER(History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},History!$C$2:$C$${GARDEN_LOGGER.historyCapacityRows}="Repot",History!$K$2:$K$${GARDEN_LOGGER.historyCapacityRows}=$T${row},History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed")),"")`,
+        `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},History!$AC$2:$AC$${GARDEN_LOGGER.historyCapacityRows}},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},History!$C$2:$C$${GARDEN_LOGGER.historyCapacityRows}="Measure",History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed"),1,FALSE),1,2),"No measurement")`,
         `=XLOOKUP($A${row},'Plant tracker'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Plant tracker'!$AJ$2:$AJ$${APP_SHEET_BULK_PLANTS.length + 1},"Not recorded")`,
         `=XLOOKUP($A${row},'Plant tracker'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Plant tracker'!$AI$2:$AI$${APP_SHEET_BULK_PLANTS.length + 1},"cm")`,
         currentCurveLossFormula_(row),
@@ -5208,7 +5713,14 @@ function refreshBaselineView_(spreadsheet, plants) {
 /** Count numeric scale readings, using the same exclusions as the summary. */
 /** @param {number} row @returns {string} */
 function dashboardWeightCountFormula_(row) {
-    return `=IF(TRIM($B${row})="","",SUMPRODUCT(IFERROR(N(EXACT(TRIM(History!$B$2:$B$5000),TRIM($B${row})))*N(EXACT(TRIM(History!$C$2:$C$5000),"Weigh"))*N(EXACT(TRIM(History!$AJ$2:$AJ$5000),"Removed")=FALSE)*N(ISNUMBER(History!$E$2:$E$5000))*N(History!$E$2:$E$5000>0)*N(REGEXMATCH(History!$AC$2:$AC$5000&" "&History!$AI$2:$AI$5000,"(?i)estimat")=FALSE),0)))`;
+    return `=IF(TRIM($B${row})="","",SUMPRODUCT(IFERROR(N(EXACT(TRIM(History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}),TRIM($B${row})))*N(EXACT(TRIM(History!$C$2:$C$${GARDEN_LOGGER.historyCapacityRows}),"Weigh"))*N(EXACT(TRIM(History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}),"Removed")=FALSE)*N(ISNUMBER(History!$E$2:$E$${GARDEN_LOGGER.historyCapacityRows}))*N(History!$E$2:$E$${GARDEN_LOGGER.historyCapacityRows}>0)*N(REGEXMATCH(History!$AC$2:$AC$${GARDEN_LOGGER.historyCapacityRows}&" "&History!$AI$2:$AI$${GARDEN_LOGGER.historyCapacityRows},"(?i)estimat")=FALSE),0)))`;
+}
+
+/** Rolling measured minimum for the same whole-pot setup as the latest reading. */
+/** @param {number} row @returns {string} */
+function dashboardMinimumWeightFormula_(row) {
+    const end = APP_SHEET_BULK_PLANTS.length + 1;
+    return `=IFNA(LET(setup,XLOOKUP($B${row},Baselines!$A$2:$A$${end},Baselines!$T$2:$T$${end},""),clock,'Workbook calculations'!$E$2,MIN(FILTER(History!$E$2:$E$${GARDEN_LOGGER.historyCapacityRows},EXACT(TRIM(History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}),$B${row}),EXACT(TRIM(History!$C$2:$C$${GARDEN_LOGGER.historyCapacityRows}),"Weigh"),History!$K$2:$K$${GARDEN_LOGGER.historyCapacityRows}=setup,History!$K$2:$K$${GARDEN_LOGGER.historyCapacityRows}<>"",EXACT(TRIM(History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}),"Removed")=FALSE,ISNUMBER(History!$E$2:$E$${GARDEN_LOGGER.historyCapacityRows}),History!$E$2:$E$${GARDEN_LOGGER.historyCapacityRows}>0,ISNUMBER(History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows}),History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows}>0,History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows}>=clock-90,History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows}<=clock,REGEXMATCH(History!$AC$2:$AC$${GARDEN_LOGGER.historyCapacityRows}&" "&History!$AI$2:$AI$${GARDEN_LOGGER.historyCapacityRows},"(?i)estimat")=FALSE))),"")`;
 }
 
 /**
@@ -5450,7 +5962,7 @@ function dailyCareErrorScanFormula_(formula) {
         );
     }
     const installed =
-        /ARRAYFORMULA\(N\(ISERROR\(Dashboard!A1:T(\d+)\)\)\),ARRAYFORMULA\(N\(ISERROR\(Dashboard!U1:X1\)\)\),ARRAYFORMULA\(N\(ISERROR\(Dashboard!U4:X\1\)\)\)(,ARRAYFORMULA\(IFERROR\(N\(ISERROR\(Dashboard!Y1:(?:Z|AE)\1\)\),0\)\))?/u.exec(
+        /ARRAYFORMULA\(N\(ISERROR\(Dashboard!A1:T(\d+)\)\)\),ARRAYFORMULA\(N\(ISERROR\(Dashboard!U1:X1\)\)\),ARRAYFORMULA\(N\(ISERROR\(Dashboard!U4:X\1\)\)\)(,ARRAYFORMULA\(IFERROR\(N\(ISERROR\(Dashboard!Y1:(?:Z|AE|AG)\1\)\),0\)\))?/u.exec(
             formula
         );
     if (
@@ -5539,7 +6051,10 @@ function dailyCareWeekFormula_(detailRow, column, bounds) {
         `XLOOKUP(plant,Baselines!$A$2:$A$${bounds.baseline},Baselines!$${field}$2:$${field}$${bounds.baseline},"")`;
     /** @param {string} field @returns {string} */
     const model = (field) =>
-        `XLOOKUP(plant,'Dry-down models'!$A$2:$A$${bounds.model},'Dry-down models'!$${field}$2:$${field}$${bounds.model},"")`;
+        guardedDryDownFormula_(
+            `XLOOKUP(plant,'Dry-down models'!$A$2:$A$${bounds.model},'Dry-down models'!$${field}$2:$${field}$${bounds.model},"")`,
+            "plant"
+        );
     const offset = `${GARDEN_LOGGER.dayStartHour}/24`;
     return [
         `=IF($B${detailRow}="","",IFERROR(LET(plant,$B${detailRow},day,${column}$6,today,$B$6,weight,$D${detailRow},weighed,$E${detailRow},`,
@@ -6111,9 +6626,9 @@ function dashboardViewRow_(spreadsheet, plant, index) {
         `=Baselines!AG${baselineRow}`,
         `='Plant tracker'!I${trackerRow}`,
         `='Plant tracker'!K${trackerRow}`,
-        `=COUNTIFS(History!$B$2:$B$5000,$B${dashboardRow},History!$C$2:$C$5000,"Water",History!$AJ$2:$AJ$5000,"<>Removed")`,
-        `=COUNTIFS(History!$B$2:$B$5000,$B${dashboardRow},History!$C$2:$C$5000,"Measure",History!$AJ$2:$AJ$5000,"<>Removed")`,
-        `=IFERROR(AVERAGE('Watering intervals'!${columnName_(index * 3 + 3)}$2:${columnName_(index * 3 + 3)}$5000),"—")`,
+        `=COUNTIFS(History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows},$B${dashboardRow},History!$C$2:$C$${GARDEN_LOGGER.historyCapacityRows},"Water",History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows},"<>Removed")`,
+        `=COUNTIFS(History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows},$B${dashboardRow},History!$C$2:$C$${GARDEN_LOGGER.historyCapacityRows},"Measure",History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows},"<>Removed")`,
+        `=IFERROR(AVERAGE(IFNA(LET(dates,SORT(UNIQUE(ARRAYFORMULA(INT(FILTER(History!$A$2:$A${GARDEN_LOGGER.historyCapacityRows},History!$B$2:$B${GARDEN_LOGGER.historyCapacityRows}="${formulaString_(plant.id)}",History!$C$2:$C${GARDEN_LOGGER.historyCapacityRows}="Water",History!$AJ$2:$AJ${GARDEN_LOGGER.historyCapacityRows}<>"Removed",ISNUMBER(History!$A$2:$A${GARDEN_LOGGER.historyCapacityRows}),History!$A$2:$A${GARDEN_LOGGER.historyCapacityRows}>0)))),1,TRUE),count,ROWS(dates),IF(count<2,"",ARRAYFORMULA(FILTER(dates,SEQUENCE(count)>1)-FILTER(dates,SEQUENCE(count)<count)))),"")),"—")`,
         `=Baselines!H${baselineRow}`,
         `=Baselines!I${baselineRow}`,
         `=Baselines!J${baselineRow}`,
@@ -6125,7 +6640,12 @@ function dashboardViewRow_(spreadsheet, plant, index) {
         dashboardWeightCountFormula_(dashboardRow),
         ...["Q", "R", "S", "T", "U", "V"].map(
             (column) =>
-                `=IFNA(INDEX('Dry-down models'!${column}$2:${column}$${APP_SHEET_BULK_PLANTS.length + 1},MATCH($B${dashboardRow},'Dry-down models'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},0)),"")`
+                `=${guardedDryDownFormula_(`IFNA(INDEX('Dry-down models'!${column}$2:${column}$${APP_SHEET_BULK_PLANTS.length + 1},MATCH($B${dashboardRow},'Dry-down models'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},0)),"")`, `$B${dashboardRow}`)}`
+        ),
+        dashboardMinimumWeightFormula_(dashboardRow),
+        currentWeightDifferenceFormula_(
+            `G${dashboardRow}`,
+            `AF${dashboardRow}`
         ),
     ];
 }
@@ -6207,11 +6727,11 @@ function refreshDashboardView_(spreadsheet, plants) {
         ],
         [
             "Logs this month",
-            `=COUNTIFS(History!$A$2:$A$5000,">="&EOMONTH('Workbook calculations'!$F$2,-1)+1,History!$AJ$2:$AJ$5000,"<>Removed")`,
+            `=COUNTIFS(History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},">="&EOMONTH('Workbook calculations'!$F$2,-1)+1,History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows},"<>Removed")`,
         ],
         [
             "Waterings this month",
-            `=COUNTIFS(History!$C$2:$C$5000,"Water",History!$A$2:$A$5000,">="&EOMONTH('Workbook calculations'!$F$2,-1)+1,History!$AJ$2:$AJ$5000,"<>Removed")`,
+            `=COUNTIFS(History!$C$2:$C$${GARDEN_LOGGER.historyCapacityRows},"Water",History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},">="&EOMONTH('Workbook calculations'!$F$2,-1)+1,History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows},"<>Removed")`,
         ],
         [
             "Remeasure due",
@@ -6219,15 +6739,15 @@ function refreshDashboardView_(spreadsheet, plants) {
         ],
         [
             "Last observation",
-            `=IFNA(TEXT(MAX(FILTER(History!$A$2:$A$5000,History!$AJ$2:$AJ$5000<>"Removed")),"mmm d, yyyy"),"—")`,
+            `=IFNA(TEXT(MAX(FILTER(History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed")),"mmm d, yyyy"),"—")`,
         ],
         [
             "Active source rows",
-            `=COUNTIFS(History!$A$2:$A$5000,"<>",History!$AJ$2:$AJ$5000,"<>Removed")`,
+            `=COUNTIFS(History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},"<>",History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows},"<>Removed")`,
         ],
         [
             "Weight readings",
-            `=COUNTIFS(History!$E$2:$E$5000,">0",History!$AJ$2:$AJ$5000,"<>Removed")`,
+            `=COUNTIFS(History!$E$2:$E$${GARDEN_LOGGER.historyCapacityRows},">0",History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows},"<>Removed")`,
         ],
         [
             "Forecast ready",
@@ -6333,6 +6853,26 @@ function refreshDashboardView_(spreadsheet, plants) {
     sheet.setColumnWidth(22, 240);
     formatWateringRecommendationColumns_(sheet, 6, 23, plants.length);
     refreshRecentWeightColumns_(sheet, 6, 26, "B", plants.length);
+    sheet
+        .getRange(6, 32, 1, 2)
+        .setBackground("#174a68")
+        .setNotes([
+            [
+                "Lowest active numeric measured weight for the current pot setup within the 90 days ending at Workbook calculations E2 (inclusive). Removed, future, estimated and other-setup readings are excluded. Blank means no eligible reading. This historical minimum is not proof of dry soil or a watering trigger.",
+                "Latest measured weight minus the lowest eligible measured weight in the last 90 days for the current pot setup. Blank means either value is unavailable. Zero is retained. This comparison is not a soil-moisture measurement or a watering instruction.",
+            ],
+        ]);
+    sheet
+        .getRange(7, 32, plants.length, 2)
+        .setBackground("#edf5fb")
+        .setFontColor("#174a68")
+        .setWrap(true);
+    sheet.getRange(7, 32, plants.length, 1).setNumberFormat("0.0");
+    sheet
+        .getRange(7, 33, plants.length, 1)
+        .setNumberFormat("+0.0;-0.0;0.0")
+        .setFontWeight("bold");
+    sheet.setColumnWidths(32, 2, 180);
 }
 
 /**
@@ -6362,7 +6902,7 @@ function refreshRecentWeightColumns_(
             Array.from({ length: count }, (_, index) =>
                 ["Q", "R", "S", "T", "U", "V"].map(
                     (source) =>
-                        `=IFNA(INDEX('Dry-down models'!${source}$2:${source}$${APP_SHEET_BULK_PLANTS.length + 1},MATCH($${plantColumn}${header + 1 + index},'Dry-down models'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},0)),"")`
+                        `=${guardedDryDownFormula_(`IFNA(INDEX('Dry-down models'!${source}$2:${source}$${APP_SHEET_BULK_PLANTS.length + 1},MATCH($${plantColumn}${header + 1 + index},'Dry-down models'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},0)),"")`, `$${plantColumn}${header + 1 + index}`)}`
                 )
             )
         )
@@ -6388,7 +6928,7 @@ function refreshRecentWeightColumns_(
 /** @param {string} plantId @returns {string} */
 function plantPageHistoryFormula_(plantId) {
     const id = formulaString_(plantId);
-    return `=IF(COUNTIFS(History!$B$2:$B$5000,"${id}",History!$A$2:$A$5000,"<>")=0,"",IFNA(LET(plant,"${id}",rows,SORT(FILTER({History!$A$2:$A$5000,History!$C$2:$C$5000,History!$D$2:$D$5000,History!$E$2:$E$5000,History!$F$2:$F$5000,History!$G$2:$G$5000,History!$H$2:$H$5000,History!$I$2:$I$5000,History!$AC$2:$AC$5000,History!$AI$2:$AI$5000,History!$J$2:$J$5000,History!$AJ$2:$AJ$5000,History!$X$2:$X$5000},History!$B$2:$B$5000=plant,History!$A$2:$A$5000<>""),1,FALSE,11,FALSE),dates,CHOOSECOLS(rows,1),events,CHOOSECOLS(rows,2),recordedStates,CHOOSECOLS(rows,3),weights,CHOOSECOLS(rows,4),heights,CHOOSECOLS(rows,5),widths,CHOOSECOLS(rows,6),conditions,CHOOSECOLS(rows,7),notes,CHOOSECOLS(rows,8),qualities,CHOOSECOLS(rows,9),methods,CHOOSECOLS(rows,10),statuses,CHOOSECOLS(rows,12),states,MAP(events,weights,recordedStates,statuses,LAMBDA(event,w,recordedState,status,IF(status="Removed","Removed",IF(event<>"Weigh","",IF(w="","",IF(recordedState="","Routine",recordedState)))))),pounds,MAP(weights,LAMBDA(w,IF(w="","",w/453.59237))),quality,MAP(qualities,methods,LAMBDA(q,m,IF(q="",m,IF(m="",q,q&" · "&m)))),HSTACK(dates,events,states,pounds,weights,heights,widths,conditions,notes,quality,statuses,MAP(CHOOSECOLS(rows,13),LAMBDA(url,IF(url="","",HYPERLINK(url,"Open photo")))))),""))`;
+    return `=IF(COUNTIFS(History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows},"${id}",History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},"<>")=0,"",IFNA(LET(plant,"${id}",rows,SORT(FILTER({History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},History!$C$2:$C$${GARDEN_LOGGER.historyCapacityRows},History!$D$2:$D$${GARDEN_LOGGER.historyCapacityRows},History!$E$2:$E$${GARDEN_LOGGER.historyCapacityRows},History!$F$2:$F$${GARDEN_LOGGER.historyCapacityRows},History!$G$2:$G$${GARDEN_LOGGER.historyCapacityRows},History!$H$2:$H$${GARDEN_LOGGER.historyCapacityRows},History!$I$2:$I$${GARDEN_LOGGER.historyCapacityRows},History!$AC$2:$AC$${GARDEN_LOGGER.historyCapacityRows},History!$AI$2:$AI$${GARDEN_LOGGER.historyCapacityRows},History!$J$2:$J$${GARDEN_LOGGER.historyCapacityRows},History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows},History!$X$2:$X$${GARDEN_LOGGER.historyCapacityRows}},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=plant,History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows}<>""),1,FALSE,11,FALSE),dates,CHOOSECOLS(rows,1),events,CHOOSECOLS(rows,2),recordedStates,CHOOSECOLS(rows,3),weights,CHOOSECOLS(rows,4),heights,CHOOSECOLS(rows,5),widths,CHOOSECOLS(rows,6),conditions,CHOOSECOLS(rows,7),notes,CHOOSECOLS(rows,8),qualities,CHOOSECOLS(rows,9),methods,CHOOSECOLS(rows,10),statuses,CHOOSECOLS(rows,12),states,MAP(events,weights,recordedStates,statuses,LAMBDA(event,w,recordedState,status,IF(status="Removed","Removed",IF(event<>"Weigh","",IF(w="","",IF(recordedState="","Routine",recordedState)))))),pounds,MAP(weights,LAMBDA(w,IF(w="","",w/453.59237))),quality,MAP(qualities,methods,LAMBDA(q,m,IF(q="",m,IF(m="",q,q&" · "&m)))),HSTACK(dates,events,states,pounds,weights,heights,widths,conditions,notes,quality,statuses,MAP(CHOOSECOLS(rows,13),LAMBDA(url,IF(url="","",HYPERLINK(url,"Open photo")))))),""))`;
 }
 
 /** @param {GardenSpreadsheet} spreadsheet @param {string} plantId @returns {GardenSheet} */
@@ -6429,8 +6969,15 @@ function refreshPlantPage_(spreadsheet, plants, index, plant) {
     ensureSheetColumnCapacity_(sheet, 18);
     const historyHeaderRow = 140;
     const historyStartRow = historyHeaderRow + 1;
-    const contentRows =
-        historyHeaderRow + GARDEN_LOGGER.historyCapacityRows - 1;
+    const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
+    const plantRows = historyPlantIds_(history).filter(
+        (id) => id === plant.id
+    ).length;
+    const contentRows = Math.max(
+        5139,
+        historyHeaderRow + plantRows,
+        sheet.getMaxRows()
+    );
     ensureSheetRowCapacity_(sheet, contentRows);
     sheet.getRange(1, 1, 12, 13).breakApart();
     const filter = sheet.getFilter();
@@ -6825,6 +7372,11 @@ function saveWebObservationCorrection(request) {
         replacement[30] = payload.observationId;
         replacement[31] = payload.reason;
         replacement[35] = payload.action === "remove" ? "Removed" : "Active";
+        ensurePlantHistoryWriteCapacity_(
+            snapshot.spreadsheet,
+            snapshot.history,
+            [{ targetRow, storedRows: [replacement] }]
+        );
         /** @type {GardenCorrectionSheetsRequest[]} */
         const requests = [];
         if (targetRow > snapshot.history.getMaxRows()) {
@@ -9009,6 +9561,9 @@ function appendObservation_(spreadsheet, input) {
         recordedAt
     );
     assertHistoryWriteCapacity_(targetRow, storedRows.length);
+    ensurePlantHistoryWriteCapacity_(spreadsheet, history, [
+        { targetRow, storedRows },
+    ]);
     prepareHistoryForObservationWrites_(history);
     writeStoredObservationRows_(history, targetRow, storedRows);
     return observationWriteResult_(
@@ -9045,6 +9600,58 @@ function historyCapacityStatus_(historyRows) {
             GARDEN_LOGGER.historyCapacityRows - lastReservedRow
         ),
     };
+}
+
+/** @param {GardenSheet} history @returns {string[]} */
+function historyPlantIds_(history) {
+    const rowCount = Math.max(0, history.getLastRow() - 1);
+    return rowCount
+        ? history
+              .getRange(2, 2, rowCount, 1)
+              .getValues()
+              .map((row) => cleanText_(row[0]))
+        : [];
+}
+
+/**
+ * Reserve per-plant spill space before committing canonical observations. Removed
+ * and incomplete rows still occupy space. Repairs replace existing reservations.
+ * The installed 5139-row pages cover small ledgers without another History read.
+ * @param {GardenSpreadsheet} spreadsheet
+ * @param {GardenSheet} history
+ * @param {{targetRow: number; storedRows: GardenHistoryRow[]}[]} writes
+ * @returns {void}
+ */
+function ensurePlantHistoryWriteCapacity_(spreadsheet, history, writes) {
+    const lastRow = Math.max(
+        history.getLastRow(),
+        ...writes.map(
+            ({ targetRow, storedRows }) => targetRow + storedRows.length - 1
+        )
+    );
+    if (lastRow <= 5000) return;
+    const plantIds = historyPlantIds_(history);
+    const affected = new Set();
+    writes.forEach(({ targetRow, storedRows }) => {
+        storedRows.forEach((row, index) => {
+            const plantId = cleanText_(row[1]);
+            plantIds[targetRow + index - 2] = plantId;
+            affected.add(plantId);
+        });
+    });
+    /** @type {Map<string, number>} */
+    const counts = new Map();
+    plantIds.forEach((plantId) => {
+        if (affected.has(plantId))
+            counts.set(plantId, (counts.get(plantId) || 0) + 1);
+    });
+    counts.forEach((count, plantId) => {
+        if (count > 4999)
+            ensureSheetRowCapacity_(
+                plantPageSheet_(spreadsheet, plantId),
+                140 + count
+            );
+    });
 }
 
 /**
@@ -10276,29 +10883,59 @@ function correctionRecordContext_(records) {
     records.forEach((record) => {
         if (record.id) byId.set(record.id, byId.has(record.id) ? null : record);
     });
-    /** @type {Set<number>} */
-    const superseded = new Set();
+    // Null means an invalid lineage, not a root: every affected caller must
+    // retain its own index. Memoize objects so duplicate IDs stay ambiguous.
+    /** @type {Map<GardenCorrectionLineage, number | null>} */
+    const roots = new Map();
     const order = records.map((record) => {
-        const ancestors = [];
-        const visited = new Set([record]);
+        /** @type {GardenCorrectionLineage[]} */
+        const path = [];
+        const visited = new Set();
         let original = record;
-        while (original.corrects) {
+        /** @type {number | null} */
+        let root = null;
+        while (true) {
+            if (roots.has(original)) {
+                root = roots.get(original) ?? null;
+                break;
+            }
+            if (visited.has(original)) break;
+            visited.add(original);
+            path.push(original);
+            if (!original.corrects) {
+                root = original.index;
+                break;
+            }
             const previous = byId.get(original.corrects);
             if (
                 !previous ||
-                visited.has(previous) ||
                 previous.active ||
                 previous.plant !== record.plant ||
                 previous.event !== record.event ||
                 previous.setup !== record.setup
             )
-                return record.index;
-            ancestors.push(previous.index);
-            visited.add(previous);
+                break;
             original = previous;
         }
-        if (record.active) ancestors.forEach((index) => superseded.add(index));
-        return original.index;
+        path.forEach((ancestor) => roots.set(ancestor, root));
+        return root ?? record.index;
+    });
+    /** @type {Set<number>} */
+    const superseded = new Set();
+    const expanded = new Set();
+    records.forEach((record) => {
+        if (!record.active || roots.get(record) === null) return;
+        let original = record;
+        while (original.corrects) {
+            const previous = byId.get(original.corrects);
+            if (!previous) break;
+            superseded.add(previous.index);
+            // This valid ancestor's remaining chain was already marked by
+            // another active correction. Shared tails need only one walk.
+            if (expanded.has(previous)) break;
+            expanded.add(previous);
+            original = previous;
+        }
     });
     return { order, superseded };
 }
@@ -11461,6 +12098,7 @@ function ensureHistoryView_(spreadsheet) {
         GARDEN_LOGGER.historyViewSheet
     );
     ensureSheetColumnCapacity_(historyView, GARDEN_LOGGER.historyStoredColumns);
+    ensureSheetRowCapacity_(historyView, GARDEN_LOGGER.historyCapacityRows);
     const lastColumn = columnName_(GARDEN_LOGGER.historyStoredColumns);
     const remainingColumns = GARDEN_LOGGER.historyStoredColumns - 1;
     const lastRow = GARDEN_LOGGER.historyCapacityRows;
@@ -12129,7 +12767,7 @@ function columnName_(columnNumber) {
 
 /**
  * Compare the current and last two completed watering cycles in one pot setup.
- * @param {GardenHistoryRow[]} history Native History A:AP range including dates.
+ * @param {GardenHistoryRow[]} history Native History A:AP, including dates.
  * @param {GardenCell} plantId Selected plant ID.
  * @param {GardenCell} potSetup Current Baselines pot setup.
  * @returns {GardenCell[][]}
@@ -12225,13 +12863,25 @@ function cycleComparisonRows_(history, plantId, potSetup, asOf, helpers) {
                     (record.save !== "" && record.save === repot.save)))
     );
     const selected = helpers.cycles(inSetup).slice(-3).reverse();
+    // Cap by observation time before merging elapsed-day domains. A recent
+    // short cycle must not be displaced by larger elapsed days in an old one.
+    const visiblePoints = new Set(
+        selected
+            .flatMap((cycle) => cycle.points)
+            .sort(
+                (left, right) =>
+                    right.date - left.date || right.index - left.index
+            )
+            .slice(0, 4999)
+    );
     const headers = ["Days since watering", "", "", ""];
     /** @type {Map<number, GardenCell[]>} */
     const rows = new Map();
     for (const [index, cycle] of selected.entries()) {
         const role = ["Current", "Previous", "Older"][index] ?? "Older";
         headers[index + 1] = `${role} · ${helpers.dateLabel(cycle.water.date)}`;
-        for (const point of cycle.points) {
+        const points = cycle.points.filter((point) => visiblePoints.has(point));
+        for (const point of points) {
             const elapsed = point.date - cycle.water.date;
             const values = rows.get(elapsed) ?? [elapsed, "", "", ""];
             values[index + 1] = point.weight;
@@ -12580,7 +13230,7 @@ function addLeafVpdDetails_(details, payload) {
 
 /**
  * Read-only environmental observations. No volatile custom-function input.
- * @param {GardenHistoryRow[]} history Native History A:BO.
+ * @param {GardenHistoryRow[]} history Native History A:BH.
  * @returns {GardenCell[][]}
  * @customfunction
  */
@@ -12675,7 +13325,7 @@ function environmentNumber(value, maximum = Infinity, minimum = 0) {
 
 /**
  * Latest-location evidence, independent of pot setup and watering.
- * @param {GardenHistoryRow[]} history Native History A:BO.
+ * @param {GardenHistoryRow[]} history Native History A:BH.
  * @returns {GardenCell[][]}
  * @customfunction
  */
@@ -12705,13 +13355,13 @@ function recordedLocationRows_(history, asOf, helpers) {
         ],
         ...history
             .map((row, index) => ({
-                row,
                 index,
-                time: helpers.timestamp(row[0]),
                 order: context.order[index] ?? index,
+                row,
+                time: helpers.timestamp(row[0]),
             }))
             .filter(
-                ({ row, index, time }) =>
+                ({ index, row, time }) =>
                     helpers.active(row) &&
                     !context.superseded.has(index) &&
                     time > 0 &&

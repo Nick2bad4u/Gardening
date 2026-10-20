@@ -821,6 +821,24 @@ describe("scoped daily Dashboard presentation", () => {
         ).toThrow("Unexpected Integrity");
     });
 
+    it("accepts the rolling-weight AG tail without adding KPI dependencies", () => {
+        expect.hasAssertions();
+
+        const { api } = fixture();
+        const existing = errorScan.replace(
+            "Dashboard!A1:X254",
+            "Dashboard!A1:Z254"
+        );
+        const formula = api
+            .dailyCareErrorScanFormula_(existing)
+            .replace("Y1:Z254", "Y1:AG254");
+
+        expect(api.dailyCareErrorScanFormula_(formula)).toBe(formula);
+        expect(() =>
+            api.dailyCareErrorScanFormula_(`${formula}+Dashboard!U3`)
+        ).toThrow("Unexpected Integrity");
+    });
+
     it("counts a failed zero-count witness check and colors actions separately", () => {
         expect.hasAssertions();
 

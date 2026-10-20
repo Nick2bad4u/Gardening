@@ -111,9 +111,9 @@ const bootstrap = {
     dayStartHour: 4,
     events,
     historyCapacity: {
-        remainingRows: 4499,
-        supportedLastRow: 5000,
-        supportedObservationRows: 4999,
+        remainingRows: 49_500,
+        supportedLastRow: 50_001,
+        supportedObservationRows: 50_000,
         usedRows: 500,
     },
     links: Object.fromEntries(
@@ -178,6 +178,13 @@ export function loggerBrowserFixture({
                 withSuccessHandler(callback) { success = callback; return chain; },
                 withFailureHandler(callback) { failure = callback; return chain; },
                 getWebAppBootstrap() { success(fixtureBootstrap); },
+                recalculateGardenWorkbook() {
+                    document.documentElement.dataset.fixtureRecalculations = String(Number(document.documentElement.dataset.fixtureRecalculations || "0") + 1);
+                    window.addEventListener("fixture-confirm-recalculation", (event) => {
+                        if (event.detail === "network") failure({message: "Connection lost"});
+                        else success(event.detail);
+                    }, {once: true});
+                },
                 getRecentWebObservations() { success(fixtureBootstrap.recent); },
                 saveWebObservation() { failure({ message: "Fixture writes are disabled." }); },
                 saveWebObservationBatch(requests) {

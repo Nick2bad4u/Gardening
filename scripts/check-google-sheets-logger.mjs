@@ -16,6 +16,14 @@ import {
     parseJson,
     required,
 } from "./build-data.mjs";
+import {
+    dashboardMinimumWeightFormula,
+    dashboardWeightWindowHeaders,
+} from "./google-sheets/dashboard-weight-window.mjs";
+import {
+    chartObservationLimit,
+    historyLastRow,
+} from "./google-sheets/history-capacity-config.mjs";
 import { workbookIntegrityIndicatorFormula } from "./google-sheets/workbook-integrity.mjs";
 import { LOGGER_VERSION } from "./logger-version.mjs";
 
@@ -38,9 +46,22 @@ const context = vm.createContext({
 });
 vm.runInContext(source, context, { filename: "plant-tracker.gs" });
 assert.equal(evaluateLogger("GARDEN_LOGGER.version"), LOGGER_VERSION);
-// Published formulas end at sheet row 5000: one header plus 4999 observations.
-assert.equal(evaluateLogger("GARDEN_LOGGER.historyCapacityRows"), 5000);
-assert.match(source, /History!A2:A5000/v);
+// Bound runtime and native planners share one supported ledger endpoint.
+assert.equal(
+    evaluateLogger("GARDEN_LOGGER.historyCapacityRows"),
+    historyLastRow
+);
+assert.ok(
+    String(evaluateLogger("dryDownModelFormula_()")).includes(
+        `History!A2:A${historyLastRow}`
+    )
+);
+assert.ok(
+    String(evaluateLogger('plantChartHelperFormula_("P01")')).includes(
+        `,${chartObservationLimit},0,1,FALSE)`
+    )
+);
+assert.doesNotMatch(source, /History![^\n]*?5000(?!1)/v);
 for (const name of [
     "getWebCorrectionEntry",
     "previewWebObservationCorrection",
@@ -759,7 +780,13 @@ assert.deepEqual(
 );
 
 assert.match(source, /LockService\.getScriptLock\(\)/v);
+// Only the independent analytics refresh may hold a document lock. Canonical
+// writers must keep their shared script lock across web and sheet entry points.
 assert.doesNotMatch(source, /LockService\.getDocumentLock\(\)/v);
+assert.match(
+    source,
+    /function refreshGardenAnalytics_\(spreadsheet\) \{\s+const lease = acquireGardenAnalyticsLease_\(\)/v
+);
 assert.match(source, /function getWebSaveStatus\(payload\)/v);
 assert.match(source, /function savedRequestStatus_\(history, requestId\)/v);
 assert.match(source, /setFaviconUrl\(GARDEN_LOGGER\.faviconUrl\)/v);
@@ -811,13 +838,34 @@ assert.match(html, /plant\.recommendedWaterDate/v);
 assert.match(html, /plant\.wateringGuidance/v);
 assert.match(source, /function installWateringRecommendations\(\)/v);
 assert.equal(vm.runInContext("BASELINE_VIEW_HEADERS.length", context), 36);
-assert.equal(vm.runInContext("DASHBOARD_VIEW_HEADERS.length", context), 31);
+assert.equal(vm.runInContext("DASHBOARD_VIEW_HEADERS.length", context), 33);
 assert.equal(evaluateLogger("DASHBOARD_VIEW_HEADERS[4]"), "Days since water");
 assert.equal(
     evaluateLogger("DASHBOARD_VIEW_HEADERS[24]"),
     "Weight measurements"
 );
 assert.match(source, /function installDashboardWeightCounts\(\)/v);
+assert.deepEqual(
+    strings(evaluateLogger("DASHBOARD_VIEW_HEADERS.slice(31)")),
+    dashboardWeightWindowHeaders
+);
+for (const index of [
+    0,
+    strings(evaluateLogger("APP_SHEET_BULK_PLANTS")).length - 1,
+]) {
+    const row = index + 7;
+    const dashboardRow = strings(
+        evaluateLogger(
+            `dashboardViewRow_({ getSheetByName: () => ({ getSheetId: () => 1 }) }, { id: "P01", trackerRow: 2 }, ${index})`
+        )
+    );
+    assert.equal(dashboardRow.length, 33);
+    assert.equal(dashboardRow[31], dashboardMinimumWeightFormula(row));
+    assert.equal(
+        dashboardRow[32],
+        `=IF(AND(ISNUMBER(G${row}),G${row}>0,ISNUMBER(AF${row}),AF${row}>0),G${row}-AF${row},"")`
+    );
+}
 assert.equal(vm.runInContext("DRY_DOWN_MODEL_HEADERS.length", context), 22);
 assert.deepEqual(strings(evaluateLogger("BASELINE_VIEW_HEADERS.slice(-2)")), [
     "Recommended water date",

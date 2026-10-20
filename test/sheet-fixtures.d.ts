@@ -49,6 +49,7 @@ export interface DataSheet {
     ) => DataRange;
     hideColumns: (column: number, count?: number) => DataSheet;
     insertColumnsAfter: (column: number, count: number) => DataSheet;
+    insertRowsAfter: (row: number, count: number) => DataSheet;
     setColumnWidth: (column: number, width: number) => DataSheet;
     setColumnWidths: (
         column: number,

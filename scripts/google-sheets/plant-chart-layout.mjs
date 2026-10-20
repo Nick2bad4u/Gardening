@@ -502,7 +502,12 @@ function validateBindings(chart, role, sheetId, plantIndex) {
         throw new Error(`Unexpected chart shape: ${role.title}`);
     const isInterval = role.type === "COLUMN";
     const firstRow = isInterval ? 0 : 11;
-    const endRow = isInterval ? 5000 : 1000;
+    const endRow = isInterval
+        ? 5000
+        : required(required(basic.domains[0]).domain.sourceRange.sources[0])
+              .endRowIndex;
+    if (!isInterval && endRow !== 1000 && endRow !== 5011)
+        throw new Error(`Unexpected source binding: ${role.title}`);
     const sourceSheet = isInterval ? wateringIntervalSheetId : sheetId;
     const offset = isInterval ? plantIndex * 3 : 0;
     const bindings = [

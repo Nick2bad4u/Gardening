@@ -4401,6 +4401,9 @@ function createScriptRunner(behaviors, calls) {
             previewWebObservationCorrection(request) {
                 invoke("previewWebObservationCorrection", [request]);
             },
+            recalculateGardenWorkbook() {
+                invoke("recalculateGardenWorkbook", []);
+            },
             /** @param {import("../logger-fixtures.d.ts").ObservationPayload} payload */
             saveBulkCareObservation(payload) {
                 invoke("saveBulkCareObservation", [payload]);
@@ -13127,13 +13130,19 @@ describe("leaf VPD entry and history capacity", () => {
     });
 
     it.each([
-        4999,
-        4900,
-        100,
-        0,
+        { expected: "0% used", remainingRows: 50_000 },
+        { expected: "<1% used", remainingRows: 49_999 },
+        { expected: "<1% used", remainingRows: 49_501 },
+        { expected: "1% used", remainingRows: 49_500 },
+        { expected: "4% used", remainingRows: 48_120 },
+        { expected: "99% used", remainingRows: 501 },
+        { expected: "99% used", remainingRows: 500 },
+        { expected: ">99% used", remainingRows: 499 },
+        { expected: ">99% used", remainingRows: 1 },
+        { expected: "100% used · Full", remainingRows: 0 },
     ])(
-        "shows refreshed capacity with %s rows remaining while keeping entry controls available",
-        (remainingRows) => {
+        "shows compact refreshed capacity with $remainingRows rows remaining while keeping entry controls available",
+        ({ expected, remainingRows }) => {
             expect.hasAssertions();
 
             const { window } = createLoggerWindow({
@@ -13141,9 +13150,9 @@ describe("leaf VPD entry and history capacity", () => {
                     ...bootstrap,
                     historyCapacity: {
                         remainingRows,
-                        supportedLastRow: 5000,
-                        supportedObservationRows: 4999,
-                        usedRows: 4999 - remainingRows,
+                        supportedLastRow: 50_001,
+                        supportedObservationRows: 50_000,
+                        usedRows: 50_000 - remainingRows,
                     },
                 },
             });
@@ -13154,7 +13163,18 @@ describe("leaf VPD entry and history capacity", () => {
             );
 
             expect(status.hidden).toBe(false);
-            expect(status.textContent).toContain("at last refresh");
+            expect(status.textContent).toBe(`History · ${expected}`);
+            expect(status.title).toContain(
+                `History space at last refresh: ${(50_000 - remainingRows).toLocaleString()} of 50,000 rows used · ${remainingRows.toLocaleString()} remaining.`
+            );
+            expect(status.getAttribute("aria-label")).toBe(status.title);
+
+            expect(
+                status.title.includes(
+                    "completed requests can still be retried safely"
+                )
+            ).toBe(remainingRows === 0);
+
             expect(status.classList.contains("queue-storage-warning")).toBe(
                 remainingRows <= 500
             );
@@ -13164,6 +13184,96 @@ describe("leaf VPD entry and history capacity", () => {
             ).toBe(false);
         }
     );
+
+    it.each([
+        undefined,
+        {
+            remainingRows: 0,
+            supportedLastRow: 1,
+            supportedObservationRows: 0,
+            usedRows: 0,
+        },
+        {
+            remainingRows: -1,
+            supportedLastRow: 50_001,
+            supportedObservationRows: 50_000,
+            usedRows: 50_001,
+        },
+        {
+            remainingRows: 100,
+            supportedLastRow: 50_001,
+            supportedObservationRows: 50_000,
+            usedRows: NaN,
+        },
+    ])(
+        "shows an explicit unavailable state for invalid capacity metadata: %j",
+        (historyCapacity) => {
+            expect.hasAssertions();
+
+            const { window } = createLoggerWindow({
+                bootstrapData: {
+                    ...bootstrap,
+                    ...(historyCapacity && { historyCapacity }),
+                },
+            });
+            const status = queryElement(
+                window.document,
+                "#historyCapacityStatus",
+                HTMLElement
+            );
+
+            expect(status.hidden).toBe(false);
+            expect(status.textContent).toBe("History · Capacity unavailable");
+            expect(status.getAttribute("aria-label")).toBe(status.title);
+            expect(status.title).toContain("Refresh to try again");
+            expect(status.classList.contains("queue-storage-warning")).toBe(
+                false
+            );
+        }
+    );
+
+    it("decorates both Mist target groups without changing their labels or submitted values", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        const targets = [
+            "Leaves",
+            "Exposed roots",
+            "Soil surface",
+            "Stem / plant body",
+            "Moss / support",
+            "Other",
+        ];
+        for (const group of ["mistTargets", "bulkMistTargets"]) {
+            const labels = queryElements(
+                window.document,
+                `#${group} label`,
+                HTMLElement
+            );
+
+            expect(labels).toHaveLength(targets.length);
+
+            for (const [index, label] of labels.entries()) {
+                expect(label.textContent.trim()).toBe(targets[index]);
+                expect(
+                    queryElement(label, "input", HTMLInputElement).value
+                ).toBe(targets[index]);
+
+                const icon = label.querySelector("svg");
+
+                expect(icon?.getAttribute("aria-hidden")).toBe("true");
+
+                const reference = icon
+                    ?.querySelector("use")
+                    ?.getAttribute("href");
+
+                expect(
+                    window.document.querySelector(reference ?? "missing-icon")
+                        ?.localName
+                ).toBe("symbol");
+            }
+        }
+    });
 
     it("preserves legacy Support pending entries while hiding Support from new entry choices", () => {
         expect.hasAssertions();
@@ -13309,5 +13419,223 @@ describe("leaf VPD entry and history capacity", () => {
                 HTMLInputElement
             ).checked
         ).toBe(true);
+    });
+});
+
+describe("manual workbook recalculation", () => {
+    it("shows the saved successful timestamp while retaining a failed snapshot status", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            bootstrapData: {
+                ...bootstrap,
+                workbookCalculation: {
+                    calculatedAt: "2026-10-20T05:00:00Z",
+                    status: "Refresh failed",
+                },
+            },
+        });
+        const status = queryElement(
+            window.document,
+            "#workbookCalculationStatus",
+            HTMLElement
+        );
+
+        expect(status.textContent).toContain(
+            "latest workbook calculation failed"
+        );
+        expect(status.textContent).toContain("Last confirmed calculation:");
+    });
+
+    it("preserves the draft and focus while preventing duplicate requests, then displays confirmed freshness", () => {
+        expect.hasAssertions();
+
+        const { behaviors, calls, window } = createLoggerWindow();
+        const button = queryElement(
+            window.document,
+            "#recalculateWorkbookButton",
+            HTMLButtonElement
+        );
+        const status = queryElement(
+            window.document,
+            "#workbookCalculationStatus",
+            HTMLElement
+        );
+        const notes = queryElement(
+            window.document,
+            "#notes",
+            HTMLTextAreaElement
+        );
+        notes.value = "Keep my unfinished observation";
+        notes.focus();
+        /** @type {((response: unknown) => void) | undefined} */
+        let confirm;
+        behaviors.recalculateGardenWorkbook = ({ success }) => {
+            confirm = success;
+        };
+        button.click();
+        button.click();
+
+        expect(button.disabled).toBe(true);
+        expect(button.getAttribute("aria-busy")).toBe("true");
+        expect(status.textContent).toContain("Recalculating workbook");
+        expect(
+            calls.filter(({ method }) => method === "recalculateGardenWorkbook")
+        ).toHaveLength(1);
+
+        required(confirm)({
+            calculatedAt: "2026-10-20T05:00:00Z",
+            status: "Ready",
+        });
+
+        expect(button.disabled).toBe(false);
+        expect(status.textContent).toContain("Workbook calculations refreshed");
+        expect(status.textContent).toContain("Last confirmed calculation:");
+        expect(notes.value).toBe("Keep my unfinished observation");
+        expect(window.document.activeElement).toBe(notes);
+        expect(
+            calls.filter(({ method }) => method === "saveWebObservation")
+        ).toHaveLength(0);
+
+        const successText = status.textContent.split(
+            "Last confirmed calculation:",
+            2
+        )[1];
+        behaviors.recalculateGardenWorkbook = ({ success }) => {
+            success({ status: "Refresh failed" });
+        };
+        button.click();
+
+        expect(status.textContent).toContain("Recalculation failed");
+        expect(
+            status.textContent.split("Last confirmed calculation:", 2)[1]
+        ).toBe(successText);
+    });
+
+    it.each([
+        "Busy",
+        "Refresh failed",
+        "invalid",
+        "network",
+    ])("reports %s without claiming success or losing the draft", (outcome) => {
+        expect.hasAssertions();
+
+        const { behaviors, window } = createLoggerWindow();
+        behaviors.recalculateGardenWorkbook = ({ failure, success }) => {
+            if (outcome === "network") failure(new Error("Connection lost"));
+            else success({ status: outcome });
+        };
+        const notes = queryElement(
+            window.document,
+            "#notes",
+            HTMLTextAreaElement
+        );
+        notes.value = "Still here";
+        const button = queryElement(
+            window.document,
+            "#recalculateWorkbookButton",
+            HTMLButtonElement
+        );
+        button.click();
+
+        expect(button.disabled).toBe(false);
+
+        const status = queryElement(
+            window.document,
+            "#workbookCalculationStatus",
+            HTMLElement
+        ).textContent;
+
+        expect(status).not.toContain("calculations refreshed");
+        expect(status).not.toContain("Last confirmed calculation:");
+        expect(status).toContain(
+            outcome === "Busy"
+                ? "workbook is busy"
+                : outcome === "Refresh failed"
+                  ? "Recalculation failed"
+                  : "did not confirm"
+        );
+        expect(notes.value).toBe("Still here");
+    });
+
+    it("keeps offline and active-save requests local without unlocking a save", () => {
+        expect.hasAssertions();
+
+        const { calls, window } = createLoggerWindow({ online: false });
+        const button = queryElement(
+            window.document,
+            "#recalculateWorkbookButton",
+            HTMLButtonElement
+        );
+        button.click();
+
+        expect(
+            queryElement(
+                window.document,
+                "#workbookCalculationStatus",
+                HTMLElement
+            ).textContent
+        ).toContain("Offline");
+
+        Object.defineProperty(window.navigator, "onLine", {
+            configurable: true,
+            value: true,
+        });
+        window.eval("setSaving(true)");
+        button.click();
+
+        expect(
+            queryElement(
+                window.document,
+                "#workbookCalculationStatus",
+                HTMLElement
+            ).textContent
+        ).toContain("entry is being saved");
+        expect(
+            queryElement(window.document, "#saveButton", HTMLButtonElement)
+                .disabled
+        ).toBe(true);
+        expect(
+            calls.filter(({ method }) => method === "recalculateGardenWorkbook")
+        ).toHaveLength(0);
+    });
+
+    it("reports an uncertain timeout and ignores a late reply after a retry", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        const { behaviors, window } = createLoggerWindow();
+        /** @type {((response: unknown) => void) | undefined} */
+        let lateReply;
+        behaviors.recalculateGardenWorkbook = ({ success }) => {
+            lateReply = success;
+        };
+        const button = queryElement(
+            window.document,
+            "#recalculateWorkbookButton",
+            HTMLButtonElement
+        );
+        button.click();
+        vi.advanceTimersByTime(90_000);
+        const status = queryElement(
+            window.document,
+            "#workbookCalculationStatus",
+            HTMLElement
+        );
+
+        expect(status.textContent).toContain("may still be running");
+        expect(button.disabled).toBe(false);
+
+        behaviors.recalculateGardenWorkbook = ({ success }) => {
+            success({ status: "Busy" });
+        };
+        button.click();
+        required(lateReply)({
+            calculatedAt: "2026-10-20T05:00:00Z",
+            status: "Ready",
+        });
+
+        expect(status.textContent).toContain("workbook is busy");
+        expect(status.textContent).not.toContain("Last confirmed calculation");
     });
 });

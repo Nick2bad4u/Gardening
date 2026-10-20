@@ -352,10 +352,10 @@ describe("dry-down formulas and workbook installation", () => {
         const charts = context.appPlantChartsFormula_();
 
         expect(charts).toContain(eligibility);
-        expect(charts).toContain("History!E2:E5000");
-        expect(charts).toContain('History!AJ2:AJ5000<>"Removed"');
+        expect(charts).toContain("History!E2:E50001");
+        expect(charts).toContain('History!AJ2:AJ50001<>"Removed"');
         expect(context.plantChartHelperFormula_("P02")).toContain(
-            'B2:B5000="P02"'
+            'B2:B50001="P02"'
         );
     });
 
@@ -558,7 +558,14 @@ describe("dry-down formulas and workbook installation", () => {
             33,
             34,
         ]);
-        expect(calls.filter((c) => c.method === "setFormula")).toHaveLength(4);
+        expect(calls.filter((c) => c.method === "setFormula")).toHaveLength(3);
+        expect(
+            calls.some(
+                (c) =>
+                    c.name === "Dry-down models" &&
+                    ["clearContent", "setFormula"].includes(c.method)
+            )
+        ).toBe(false);
         expect(
             calls
                 .filter((c) => c.method === "clearContent")
@@ -1578,6 +1585,96 @@ function dateValue(value) {
     return value;
 }
 
+/** @param {DryDownRecord} left @param {DryDownRecord} right */
+function hasSharedSave(left, right) {
+    return left.save && right.save
+        ? left.save === right.save
+        : left.date === right.date;
+}
+
+// Deliberately retain the unbounded reference algorithm as a parity oracle for
+// the indexed implementation's exact ordering and inclusive/exclusive edges.
+/** @param {DryDownRecord[]} records @returns {GardenDryDownCycle[]} */
+function referenceDryDownCycles(records) {
+    const ordered = records
+        .filter((r) => Number.isFinite(r.date) && r.date > 0)
+        .toSorted((a, b) => a.date - b.date || a.index - b.index);
+    const weights = ordered.filter(
+        (r) =>
+            r.event === "Weigh" &&
+            Number.isFinite(r.weight) &&
+            r.weight > 0 &&
+            !r.estimated
+    );
+    const waterings = ordered.filter((r) => r.event === "Water");
+    const cycles = waterings.map((water, index) => {
+        const next = waterings[index + 1];
+        // Save identity wins over row ordering (Weigh can precede Water).
+        /** @param {DryDownRecord} r @returns {boolean} */
+        const isWithin = (r) =>
+            (!next ||
+                r.date < next.date ||
+                (r.date === next.date && r.index < next.index)) &&
+            (!next || !hasSharedSave(r, next));
+        const sameSave = weights.findLast(
+            (r) =>
+                r.date >= water.date &&
+                r.date <= water.date + 5 &&
+                hasSharedSave(r, water) &&
+                isWithin(r)
+        );
+        const wet =
+            sameSave ??
+            weights.find(
+                (r) =>
+                    (r.date > water.date ||
+                        (r.date === water.date && r.index > water.index)) &&
+                    r.date <= water.date + 5 &&
+                    isWithin(r)
+            );
+        const points = wet
+            ? weights.filter(
+                  (r) =>
+                      (r.date > wet.date ||
+                          (r.date === wet.date && r.index >= wet.index)) &&
+                      isWithin(r)
+              )
+            : weights.filter(
+                  (r) =>
+                      (r.date > water.date ||
+                          (r.date === water.date && r.index > water.index)) &&
+                      isWithin(r)
+              );
+        return { next, points, water, wet };
+    });
+    const wetIndices = new Set(
+        cycles
+            .map((cycle) => cycle.wet?.index)
+            .filter((index) => index !== undefined)
+    );
+    /** @type {GardenDryDownCycle[]} */
+    const completedCycles = cycles.map((cycle, index) => {
+        const previous = waterings[index - 1];
+        const beforeDry = weights.findLast(
+            (record) =>
+                (!previous ||
+                    record.date > previous.date ||
+                    (record.date === previous.date &&
+                        record.index > previous.index)) &&
+                (record.date < cycle.water.date ||
+                    (record.date === cycle.water.date &&
+                        record.index < cycle.water.index)) &&
+                !wetIndices.has(record.index) &&
+                !hasSharedSave(record, cycle.water)
+        );
+        return { ...cycle, beforeDry, dry: null };
+    });
+    for (const [index, cycle] of completedCycles.entries()) {
+        cycle.dry = completedCycles[index + 1]?.beforeDry ?? null;
+    }
+    return completedCycles;
+}
+
 /** @param {InstallerCall} call @returns {string[][]} */
 function writtenCells(call) {
     const values = call.value;
@@ -1592,3 +1689,140 @@ function writtenCells(call) {
         throw new TypeError("Expected recorded string cells");
     return values;
 }
+
+describe("indexed dry-down cycle boundaries", () => {
+    it("matches the unbounded reference across deterministic mixed and tied histories", () => {
+        expect.hasAssertions();
+
+        const context = runtime();
+        for (let seed = 0; seed < 80; seed += 1) {
+            /** @type {DryDownRecord[]} */
+            const records = Array.from({ length: 160 }, (_, index) => ({
+                application: "",
+                date: epoch + Math.floor(index / ((seed % 5) + 1)) / 2,
+                estimated: (index + seed) % 11 === 0,
+                event:
+                    (index + seed) % 7 === 0
+                        ? "Water"
+                        : (index + seed) % 13 === 0
+                          ? "Inspect"
+                          : "Weigh",
+                index: index % 9 === 0 ? index - 0.5 : index,
+                save:
+                    (index + seed) % 3 === 0
+                        ? ""
+                        : `save-${Math.floor(index / 4)}`,
+                setup: 1,
+                weight: (index + seed) % 17 === 0 ? 0 : 200 - (index % 90),
+            }));
+            records.push({
+                ...required(records[0]),
+                date: NaN,
+                index: 200,
+            });
+            records.reverse();
+            const before = structuredClone(records);
+
+            expect(
+                structuredClone(context.dryDownCycles_(records))
+            ).toStrictEqual(referenceDryDownCycles(records));
+            expect(
+                context.dryDownCycles_(records).flatMap((cycle) => cycle.points)
+            ).not.toContainEqual(expect.objectContaining({ estimated: true }));
+            expect(records).toStrictEqual(before);
+        }
+    });
+
+    it("keeps same-save weights before Water, the five-day endpoint, and distinct tied pre-water readings", () => {
+        expect.hasAssertions();
+
+        /**
+         * @param {number} date @param {number} index @param {string} event
+         * @param {string} save @returns {DryDownRecord}
+         */
+        const record = (date, index, event, save) => ({
+            application: "",
+            date: epoch + date,
+            estimated: false,
+            event,
+            index,
+            save,
+            setup: 1,
+            weight: event === "Weigh" ? 100 + index : 0,
+        });
+        const records = [
+            record(0, 0, "Weigh", "first"),
+            record(0, 1, "Water", "first"),
+            record(4, 2, "Weigh", "before-second"),
+            record(4, 3, "Water", "second"),
+            record(9, 4, "Weigh", "after-second"),
+            record(10, 5, "Water", "third"),
+            record(16, 6, "Weigh", "too-late"),
+            record(20, 7, "Water", "fourth"),
+            record(20, 8, "Weigh", "fourth"),
+        ];
+        const cycles = runtime().dryDownCycles_(records);
+
+        expect(structuredClone(cycles)).toStrictEqual(
+            referenceDryDownCycles(records)
+        );
+        expect(cycles.map((cycle) => cycle.wet?.index)).toStrictEqual([
+            0,
+            4,
+            undefined,
+            8,
+        ]);
+        expect(cycles.map((cycle) => cycle.beforeDry?.index)).toStrictEqual([
+            undefined,
+            2,
+            undefined,
+            6,
+        ]);
+    });
+
+    it("preserves full model outputs with estimated, future, removed, setup and correction history", () => {
+        expect.hasAssertions();
+
+        const optimized = runtime();
+        const reference = runtime();
+        overrideAppsScript(reference, "dryDownCycles_", referenceDryDownCycles);
+        const history = [
+            ...completed(0, 0.2, { setup: 1 }),
+            ...completed(20, 0.2, { setup: 2 }),
+            row(35, "Water", "", { removed: true, setup: 2 }),
+            weight(36, 999, { quality: "Estimated", setup: 2 }),
+            ...current(
+                40,
+                [
+                    0,
+                    2,
+                    4,
+                ],
+                0.2,
+                { setup: 2 }
+            ),
+            [
+                ...weight(44, 150, { removed: true, setup: 2 }),
+                "old-reading",
+                "",
+            ],
+            [
+                ...weight(44, 145, { setup: 2 }),
+                "replacement-reading",
+                "old-reading",
+            ],
+            weight(10_000, 999, { setup: 2 }),
+            row(10_001, "Water", "", { setup: 2 }),
+        ];
+
+        expect(
+            structuredClone(
+                optimized.GARDEN_DRY_DOWN(history, [["P01"], ["P02"]])
+            )
+        ).toStrictEqual(
+            structuredClone(
+                reference.GARDEN_DRY_DOWN(history, [["P01"], ["P02"]])
+            )
+        );
+    });
+});

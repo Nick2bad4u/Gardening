@@ -33,6 +33,171 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## Maintained 5.37.0 capacity and mobile display update
+
+Checked-in source **5.37.0** supports **50,000 observation slots** in History
+rows **2:50001**. Final native workbook rehearsal and production release are pending;
+production remains **5.36.0 / immutable version 111** until the workbook migration
+and matching deployment are verified. Source changes alone do not extend the
+live workbook's supported capacity.
+
+The **October 18 disposable-copy rehearsal** allocated **18,371,651 cells across
+64 sheets** after removing its temporary probes. All **1,882 original History
+records** and **961 numeric History N results** were preserved. Reference values
+calculated locally with the unchanged model algorithms were written only to the
+copy: native **Integrity E4:H14** then showed Pass/Info throughout (**F5 = 0**),
+with no errors in the four captured output anchors. A native cached-setup mismatch
+probe hid the old Baselines guidance and showed **Waiting for refresh** on the
+cycle explorer. The copy was restored to derived setup **1** and **Workbook
+calculations I2 = Awaiting native refresh**. All three chart repair requests were
+accepted; the P29/P30 watering series persisted. The selected-cycle chart
+**907202610** currently omits its gated-empty series and needs verification after
+a successful native refresh. P38 dimension series are legitimately empty because
+no height/width observations exist; this is independent of refresh readiness.
+
+Native custom-function trials hit argument transport and execution limits, so
+the maintained implementation computes the four derived snapshots with ordinary
+Apps Script. An authorized ordinary Apps Script refresh has **not yet run** in
+the copy. The local reference-value check above verifies native consumers, not
+the refresh execution path. Full native refresh verification, performance with
+50,000 populated observations, and daily trigger-runtime quota headroom remain
+release gates.
+
+One save may create several observation rows. The writer preflights the whole
+batch before appending or changing setup state; already-confirmed request retries
+need no new slots. Full History views, evidence tables, calculations, and
+descriptive summaries use the complete ledger. Chart helpers display the latest
+**4,999 relevant points**, in chronological order. Cycle comparisons select points
+by absolute observation time before aligning elapsed days. Watering summaries
+retain all completed gaps, including older intervals outside the chart window.
+
+**Dry-down models**, cycle comparison in **Workbook analytics A:D**,
+**Environment data A:L**, and recorded locations in **Environment data W:AA**
+are calculated together from the complete ledger. The existing five-minute
+AppSheet queue trigger refreshes them; **Garden logger → Recalculate workbook**
+provides an explicit refresh. A five-minute trigger is a refresh attempt cadence,
+not an immediate recalculation guarantee. The model algorithm and all-history
+correction context are retained. Ordinary formulas continue to project the
+results into Baselines, Dashboard, plant pages, and AppSheet.
+
+**Workbook calculations H2:K2** records the last successful calculation time,
+refresh state, calculated cycle plant ID, and pot setup. The four snapshots and
+their successful metadata publish in one atomic Sheets update. Failed refreshes
+retain the preceding results and successful timestamp, with **Refresh failed**
+status. The cycle explorer hides cached series and role labels until their
+calculated plant/setup match the selection, the state is **Ready**, and the
+timestamp is no more than 15 minutes behind the shared clock. Its visible status
+distinguishes **Waiting for refresh**, **Refreshing**, and **Refresh failed**.
+Integrity checks include the snapshot state, freshness, headers, and selected
+identity; a saved observation and a refreshed analytics snapshot are distinct.
+
+Direct dry-down model consumers in Baselines, Dashboard, and insights also
+require **Ready**, a valid calculation timestamp within 15 minutes, and a cached
+model pot setup matching the current **Baselines T** value. After Repot, a failed
+refresh, or stale calculations, they withhold cached dry anchors and model-based
+guidance until a matching successful refresh is available.
+
+Plant-page history still starts at **A141** under **A140:L140**. Each page keeps a
+minimum of **5,139 rows** and grows with its actual observation count, through
+**row 50,140** if all 50,000 observations belong to one pot. Keep the full history
+spill unobstructed; do not allocate 50,000 rows to every wide chart helper or
+every plant page. The three plant weight/dimension chart bindings extend through
+row **5,011**, covering their header and 4,999 plotted rows.
+
+[`history-capacity-config.mjs`](history-capacity-config.mjs) defines the Node-side
+limits, mirrored by the bound logger. The guarded
+[`history-capacity.mjs`](history-capacity.mjs) planner extends maintained formula
+inputs, full projections, and chart bindings while preserving recorded data and
+chart identities. Before production changes, create a native Drive backup,
+capture fresh formulas and full metadata, review total cell allocation, and
+rehearse on a disposable workbook/script copy. Recheck captured preconditions
+immediately before applying preparation, formulas, then chart specifications.
+Verify the full-history summaries and bounded charts before enabling the larger
+save limit with the matching snapshot refresh and plant-page allocator. Keep
+historical migration planners at their original explicit bounds.
+
+The publisher rejects an encoded snapshot request above **40,000,000 UTF-8
+bytes** before publication. Verify representative full-scale native refresh
+duration, payload size, and daily trigger-runtime quota consumption before
+release; passing local calculation tests or staying below the payload guard
+does not establish native runtime or daily quota headroom.
+
+The mobile capacity line becomes **History · 4% used**, with exact counts and
+last-refresh context retained in its tooltip and screen-reader label.
+**<1%** and **>99%** avoid misleading rounding near the boundaries; a full ledger
+and unavailable capacity have explicit labels. Both single-plant and bulk Mist
+target options gain decorative icons while retaining their labels and values.
+
+### Manual workbook recalculation
+
+**Garden logger → Recalculate workbook**, the Dashboard button, and the mobile
+logger's **Recalculate workbook** control call the same calculation action.
+The action recomputes the four derived analytics snapshots from History and
+refreshes the shared calculation clock. Dependent native formulas and charts
+then update through Google Sheets. It does not rebuild workbook presentation or
+rewrite observations and pending entries.
+
+The mobile control reports progress, a confirmed calculation time, another
+refresh already running, or a failure. It preserves unfinished entries and the
+last successful timestamp. A lost response is reported as unconfirmed; it does
+not automatically repeat the request. The existing **Refresh** control still
+reloads summaries without initiating workbook recalculation.
+
+The server uses a short script-lock-protected lease shared by menu, mobile, and
+scheduled calls. The lock is released before reading and calculating History,
+so a recalculation does not hold the observation writer's lock. The lease
+expires after eight minutes if an execution terminates unexpectedly.
+
+The Dashboard drawing is assigned to `recalculateGardenWorkbook` without
+parentheses. Google executes an assigned drawing only in a desktop browser;
+use the mobile logger's control on a phone. See
+[Google's menu and drawing documentation](https://developers.google.com/apps-script/guides/menus).
+
+### October 20 candidate verification
+
+The combined candidate includes the pending capacity expansion, compact mobile
+capacity display, Mist icons, Dashboard 90-day formula source, and manual
+recalculation controls. Local verification passed **2,069 unit tests** and
+**52 Chromium/Edge logger browser tests** across light/dark themes and six widths.
+The logger coverage run passed **1,690 tests**, with **99.68% line coverage** and
+**98.13% branch coverage**. Type checks, the Pages build, and generated-site
+checks also passed. These checks do not establish native workbook execution.
+
+Two calculation paths now reuse indexed results while retaining the existing
+model rules. For a 50,000-record single-plant fixture, complete cycle output was
+identical and local calculation time fell from **6,258 ms to 80 ms**. A
+50,000-record correction chain resolved in **82 ms**, with full local analytics
+in **284 ms**. Independent review compared 3,000 malformed lineage graphs and
+3,000 mixed/tied cycle histories with the preceding implementations; all outputs
+matched. These are Node measurements, not Apps Script timings.
+
+The candidate's three deployment files were uploaded to the existing disposable
+bound script and read back exactly. Its Dashboard drawing is assigned to
+`recalculateGardenWorkbook`. Native execution remains pending the copied
+script's Google authorization; the calculation status remains **Awaiting native
+refresh**. Full refresh timing, quota headroom, canonical/staging preservation,
+and the selected-cycle chart's recovery after a gated-empty state still require
+native verification before production rollout.
+
+The October 20 dependency audit found no production dependencies and no
+production audit findings. The full development-tooling audit reported 58
+package findings from three underlying advisories. Accepted residuals are
+limited to the reviewed tooling inputs:
+
+- [`braces` 3.0.3](https://github.com/advisories/GHSA-vfj7-8cjw-p6xm) has no
+  patched release; the reviewed tools do not receive attacker-controlled nested
+  brace patterns.
+- [`basic-ftp` 5.3.1](https://github.com/advisories/GHSA-c475-qrg2-pj4r) is
+  reachable through FTP-hosted proxy configuration, which is absent from this
+  repository and the inspected proxy environment. Its parent requires the
+  affected major version.
+- [KaTeX 0.16.47](https://github.com/advisories/GHSA-238p-pmpm-9mq7) is confined
+  to Markdown lint tooling. The site does not render math with KaTeX, and the
+  advisory also requires existing prototype pollution.
+
+Reassess these residuals if inputs, proxy configuration, dependencies, or site
+rendering change. Do not use a forceful dependency update to bypass review.
+
 ## Maintained 5.36.0 logger and import improvements
 
 The maintained source adds **Leaf VPD**, ordinary form-draft recovery, coordinated
@@ -66,12 +231,9 @@ newer state. If locks are unavailable or denied, queue reads and Save now remain
 available while queue mutations are disabled. Storage events and tab focus refresh
 the displayed queue. No queue editor or Undo action is added.
 
-The canonical ledger supports **4,999 observation slots** in rows **2:5000**.
-Capacity metadata reports used and remaining slots; one multi-event save may
-consume several. The writer preflights the complete batch before appending or
-changing setup state, so a capacity failure cannot partially archive that batch.
-Retries of already-confirmed requests do not require new slots. Extend every
-bounded formula/projection and its checks before increasing the supported limit.
+The deployed 5.36.0 ledger supports **4,999 observation slots** in rows
+**2:5000**. The [5.37.0 capacity update](#maintained-5370-capacity-and-mobile-display-update)
+above describes the maintained expansion and its pending native migration.
 
 [`workbook-integrity.mjs`](workbook-integrity.mjs) adds **Integrity E4:H14**:
 required formula anchors, canonical/projected observation-ID coverage, active
@@ -324,6 +486,54 @@ preserved. No Apps Script deployment was needed; the existing deployment still
 points to immutable version **108**. The native backup is named **Garden Plant
 Tracker — before Inspect Integrity repair — 2026-10-13** in **Garden Plant Tracker
 Backups**.
+
+## Dashboard 90-day weight comparison
+
+The addition went live at **04:31:34 UTC on October 11, 2026** after a native
+Drive backup and workbook-copy rehearsal. The production Dashboard has 33
+columns; **AF6:AG42** contains the two headers and 36 container rows. These are
+native Sheet formulas, so no logger deployment or manual refresh is required.
+
+Dashboard columns **AF:AG** add **Lowest weight in last 90 days (g)** and
+**Latest minus 90-day minimum (g)** for all 36 current container allocations.
+The minimum uses positive numeric Weigh observations for the current pot setup,
+from the shared `Workbook calculations!E2` timestamp minus 90 days through that
+timestamp, inclusive. Removed, future, estimated, invalid, and other-setup
+readings are excluded. A missing eligible minimum stays blank.
+
+The difference is the existing latest measured weight in column G minus the
+minimum in AF. Positive values show grams above the minimum; an exact match
+shows `0.0`. Both columns update from History and the shared calculation clock.
+This historical minimum is a comparison reference, not proof of dry soil or a
+watering trigger. The existing completed-cycle dry reference and difference in
+H:I retain their separate meaning.
+
+`dashboard-weight-window.mjs` provides the guarded, additive native migration.
+It appends only AF:AG, matches the blue weight-column formatting, extends the
+Dashboard filter and its Integrity error-scan tail, and preserves the excluded
+Dashboard KPI cells that would create circular references. Rehearse on a native
+copy and reread its exact preconditions immediately before applying it. The
+maintained Apps Script Dashboard builder includes the same formulas for future
+rebuilds. This formula-only workbook addition needs no AppSheet regeneration or
+versioned phone-logger deployment. The historical installer retains its original
+5,000-row bounds; the maintained formula generator uses the shared capacity
+configuration for future rebuilds.
+
+Native rehearsal covered eight formula scenarios using 28 synthetic rows on a
+separate test tab in the disposable copy. It verified the inclusive cutoff,
+future/Removed/estimated/invalid/other-setup exclusions, correction replacement,
+blank results, fractional grams, and numeric zero differences. All 36 production
+results matched an independent calculation from the then-current History records.
+At verification, P01 showed **349.0 g / +14.5 g** and P02 **321.0 g / +45.0 g**.
+
+The final migration also restored the conditional-format, banding, and collapsed
+column-group boundaries that Sheets otherwise expands when appending columns,
+and explicitly kept AF:AG visible. All 64 tabs, 178 charts, 125 protections,
+existing Dashboard cells, staging tables, and RO entries/formulas were preserved.
+History retained exactly **1,798 rows**, **1,798 unique observation IDs**, and
+**1,482 request groups**, with no changed values or formulas. Integrity B12
+returned **0** formula errors. At that verification the production logger was
+**5.34.1 / immutable version 108**, with its single five-minute queue trigger.
 
 ## October 10 mobile heading fix
 
@@ -2710,7 +2920,9 @@ plant pages; they do not write to canonical `History` or the AppSheet staging
 tables.
 
 The maintained page builder places history headers at **A140:L140**, its formula at
-**A141**, and retains capacity through **row 5139**. It preserves the summaries
+**A141**, and retains at least **5,139 rows**. Source 5.37.0 grows each page to
+**140 plus that pot's actual observation count**, up to **row 50,140**, while
+preserving any existing extra allocation. It preserves the summaries
 and chart annotations in **rows 14:138**, while rebuilding the top header and
 history. Keep those history spill cells free of manually entered content.
 For the analytics migration, use the guarded request builder instead of a full
@@ -2807,9 +3019,11 @@ installable trigger is not required.
   Celsius, Air/Soil target, and original temperature unit. Source 5.36.0 appends
   BI:BO for Leaf VPD and writes the A:BO record block in one call so a failed service call cannot
   strand a request ID apart from its
-  observation. The installer keeps 5,000 History rows available, and workbook
-  formulas use that same bound so new observations cannot outgrow the derived
-  dashboards silently.
+  observation. Source 5.37.0 provides **50,001 History rows**, including the
+  header, and full-ledger formula inputs use that same bound. Apply the
+  [guarded capacity migration](history-capacity.mjs)
+  before enabling the larger save limit; chart windows remain bounded without
+  limiting the full-history summaries.
 - The Bulk care tab can append Water, Mist, Check, Inspect, Rotation, Move,
   Environment, Clean, Prune, Propagate, Pest, or Other rows for every selected plant with shared details. Use single-plant
   mode for weights, measurements, repots, flowers, photos, and Temperature,
@@ -2876,11 +3090,13 @@ curve still needs evidence; the model does not invent a history for a new pot.
   retained only after the current curve is supported. These are inspection
   prompts, not diagnoses or watering instructions.
 
-One hidden **Dry-down models** sheet runs `GARDEN_DRY_DOWN` over the bounded
-History inputs and spills the results for all current tracked containers. The function reads
-only its arguments, does not change cells or contact external services, and
-recalculates when the referenced History data changes. This follows Google's
-[range-based custom-function guidance](https://developers.google.com/apps-script/guides/sheets/functions).
+The original hidden **Dry-down models** sheet ran `GARDEN_DRY_DOWN` as a
+range-based custom function. Maintained 5.37.0 retains the calculation but invokes
+it from the ordinary Apps Script snapshot refresh described in the
+[capacity migration](history-capacity.mjs). This avoids sending the expanded
+ledger through the native custom-function transport. Results update after a
+successful scheduled or explicit analytics refresh; inspect the calculation
+timestamp and status when assessing freshness.
 Ordinary formulas in the existing Baselines fields feed Dashboard, plant
 pages, and AppSheet. Keep this helper disconnected from AppSheet; all existing
 History and staging contracts are unchanged. The original learning rollout used
@@ -2925,7 +3141,7 @@ The verified live derived schema is:
 | Sheet                    | Recommended water date | Watering guidance | Total derived fields |
 | ------------------------ | ---------------------- | ----------------- | -------------------- |
 | Baselines                | AI                     | AJ                | 36                   |
-| Dashboard                | W                      | X                 | 31                   |
+| Dashboard                | W                      | X                 | 33                   |
 | Dry-down models (hidden) | O                      | P                 | 22                   |
 
 After a native Drive backup and fresh preflight, `installWateringRecommendations()`

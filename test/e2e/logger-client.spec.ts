@@ -360,6 +360,54 @@ const expectSummaryWithoutOverlap = async (
         .toStrictEqual([]);
 };
 
+const expectMistTargetControls = async (
+    page: Readonly<Page>,
+    mode: "Bulk care" | "Single plant"
+) => {
+    await page.getByRole("tab", { exact: true, name: mode }).click();
+    await page.getByRole("button", { exact: true, name: "Mist" }).click();
+    const targets = page.getByRole("group", { name: "Where did you mist?" });
+    await expect.soft(targets.getByRole("checkbox")).toHaveCount(6);
+    const leaves = targets.getByRole("checkbox", {
+        exact: true,
+        name: "Leaves",
+    });
+    await leaves.focus();
+    await page.keyboard.press("Space");
+    await expect.soft(leaves).toBeChecked();
+    expect
+        .soft(
+            await targets.evaluate((element) =>
+                Array.from(
+                    element.querySelectorAll('svg[aria-hidden="true"]'),
+                    (icon) => {
+                        const bounds = icon.getBoundingClientRect();
+                        return (
+                            bounds.width > 0 &&
+                            bounds.left >= 0 &&
+                            bounds.right <= innerWidth
+                        );
+                    }
+                )
+            )
+        )
+        .toStrictEqual([
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+        ]);
+    await expect
+        .poll(() =>
+            page.evaluate(
+                () => document.documentElement.scrollWidth <= innerWidth
+            )
+        )
+        .toBe(true);
+};
+
 for (const theme of ["dark", "light"] as const) {
     for (const width of [
         320,
@@ -370,6 +418,37 @@ for (const theme of ["dark", "light"] as const) {
         1280,
     ]) {
         test.describe(`${theme} ${width}px logger`, { tag: "@logger" }, () => {
+            test("mist target icons and compact history capacity stay accessible", async ({
+                page,
+            }, testInfo) => {
+                const errors: string[] = [];
+                page.on("pageerror", (error) => {
+                    errors.push(error.message);
+                });
+                await openLogger(page, width, theme);
+                const capacity = page.getByRole("status", {
+                    exact: true,
+                    name: "History space at last refresh: 500 of 50,000 rows used · 49,500 remaining.",
+                });
+                await expect.soft(capacity).toHaveText("History · 1% used");
+                await capacity.screenshot({
+                    path: testInfo.outputPath("history-capacity.png"),
+                });
+                await expectMistTargetControls(page, "Single plant");
+                await page
+                    .getByRole("group", { name: "Where did you mist?" })
+                    .screenshot({
+                        path: testInfo.outputPath("single-mist-targets.png"),
+                    });
+                await expectMistTargetControls(page, "Bulk care");
+                await page
+                    .getByRole("group", { name: "Where did you mist?" })
+                    .screenshot({
+                        path: testInfo.outputPath("bulk-mist-targets.png"),
+                    });
+                expect.soft(errors).toStrictEqual([]);
+            });
+
             test("long plant names and progress badges never overlap", async ({
                 page,
             }, testInfo) => {
@@ -438,5 +517,174 @@ for (const theme of ["dark", "light"] as const) {
                 expect.soft(errors).toStrictEqual([]);
             });
         });
+    }
+}
+
+const beginWorkbookRecalculation = async (page: Readonly<Page>) => {
+    const button = page.getByRole("button", {
+        exact: true,
+        name: "Recalculate workbook",
+    });
+    await button.focus();
+    await page.keyboard.press("Enter");
+    const pendingButton = page.getByRole("button", {
+        exact: true,
+        name: "Recalculating…",
+    });
+    await expect.soft(pendingButton).toBeDisabled();
+    await expect.soft(pendingButton).toHaveAttribute("aria-busy", "true");
+    await expect
+        .soft(
+            page
+                .getByRole("status")
+                .filter({ hasText: "Recalculating workbook…" })
+        )
+        .toBeVisible();
+};
+
+const confirmWorkbookRecalculation = async (page: Readonly<Page>) => {
+    await page.evaluate(() =>
+        dispatchEvent(
+            new CustomEvent("fixture-confirm-recalculation", {
+                detail: {
+                    calculatedAt: "2026-09-09T14:00:00Z",
+                    status: "Ready",
+                },
+            })
+        )
+    );
+    await expect
+        .soft(
+            page.getByRole("button", {
+                exact: true,
+                name: "Recalculate workbook",
+            })
+        )
+        .toBeEnabled();
+    await expect
+        .soft(
+            page
+                .getByRole("status")
+                .filter({ hasText: "Last confirmed calculation:" })
+        )
+        .toBeVisible();
+};
+
+for (const theme of ["dark", "light"] as const) {
+    for (const width of [390, 1280]) {
+        test.describe(
+            `manual workbook recalculation ${theme} ${width}px`,
+            { tag: "@logger" },
+            () => {
+                test("preserves drafts and focus through a pending request and success", async ({
+                    page,
+                }, testInfo) => {
+                    const errors: string[] = [];
+                    const recordError = (error: Readonly<Error>) => {
+                        errors.push(error.message);
+                    };
+                    page.on("pageerror", recordError);
+                    await openLogger(page, width, theme);
+                    const notes = page.getByRole("textbox", {
+                        exact: true,
+                        name: "Notes",
+                    });
+                    await notes.fill("Keep this unfinished entry");
+                    await beginWorkbookRecalculation(page);
+                    await notes.focus();
+                    await confirmWorkbookRecalculation(page);
+                    await expect
+                        .soft(notes)
+                        .toHaveValue("Keep this unfinished entry");
+                    await expect.soft(notes).toBeFocused();
+                    await expect
+                        .poll(() =>
+                            page.evaluate(
+                                () =>
+                                    document.documentElement.scrollWidth <=
+                                    innerWidth
+                            )
+                        )
+                        .toBe(true);
+                    await page
+                        .getByRole("status")
+                        .filter({ hasText: "Last confirmed calculation:" })
+                        .screenshot({
+                            path: testInfo.outputPath(
+                                "workbook-recalculation.png"
+                            ),
+                        });
+                    page.off("pageerror", recordError);
+                    expect.soft(errors).toStrictEqual([]);
+                });
+
+                for (const outcome of [
+                    "Busy",
+                    "Refresh failed",
+                    "network",
+                ]) {
+                    test(`preserves the last success and draft after ${outcome}`, async ({
+                        page,
+                    }) => {
+                        await openLogger(page, width, theme);
+                        const notes = page.getByRole("textbox", {
+                            exact: true,
+                            name: "Notes",
+                        });
+                        await notes.fill("Keep this unfinished entry");
+                        await beginWorkbookRecalculation(page);
+                        await confirmWorkbookRecalculation(page);
+                        await beginWorkbookRecalculation(page);
+                        await page.evaluate(
+                            (result) =>
+                                dispatchEvent(
+                                    new CustomEvent(
+                                        "fixture-confirm-recalculation",
+                                        {
+                                            detail:
+                                                result === "network"
+                                                    ? result
+                                                    : { status: result },
+                                        }
+                                    )
+                                ),
+                            outcome
+                        );
+                        const status = page
+                            .getByRole("status")
+                            .filter({ hasText: "Last confirmed calculation:" });
+                        await expect
+                            .soft(status)
+                            .toContainText(
+                                outcome === "Busy"
+                                    ? "workbook is busy"
+                                    : outcome === "Refresh failed"
+                                      ? "Recalculation failed"
+                                      : "did not confirm"
+                            );
+                        await expect
+                            .soft(notes)
+                            .toHaveValue("Keep this unfinished entry");
+                        await expect
+                            .soft(
+                                page.getByRole("button", {
+                                    exact: true,
+                                    name: "Recalculate workbook",
+                                })
+                            )
+                            .toBeEnabled();
+                        await expect
+                            .poll(() =>
+                                page.evaluate(
+                                    () =>
+                                        document.documentElement.scrollWidth <=
+                                        innerWidth
+                                )
+                            )
+                            .toBe(true);
+                    });
+                }
+            }
+        );
     }
 }

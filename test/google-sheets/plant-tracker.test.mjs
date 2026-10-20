@@ -322,6 +322,7 @@ const expectedPlantImageUrls = Object.fromEntries(
  * @returns {import("../sheet-fixtures.d.ts").DataSheet}
  */
 function createDataSheet(name, rows, formulaInputs = []) {
+    let maxRows = Math.max(rows.length, 100);
     const formulas = formulaInputs.map((currentRow) =>
         currentRow.map((value) => {
             if (typeof value !== "string")
@@ -358,7 +359,7 @@ function createDataSheet(name, rows, formulaInputs = []) {
                 ...rows.map((row) => row.length),
                 ...formulas.map((row) => row.length)
             ),
-        getMaxRows: () => Math.max(rows.length, 100),
+        getMaxRows: () => maxRows,
         getName: () => name,
         getParent: () => parent,
         getProtections: () => protections,
@@ -483,6 +484,10 @@ function createDataSheet(name, rows, formulaInputs = []) {
                     ...Array.from({ length: count }, () => "")
                 );
             }
+            return sheet;
+        },
+        insertRowsAfter(_row, count) {
+            maxRows += count;
             return sheet;
         },
         setColumnWidth: () => sheet,
@@ -2210,7 +2215,7 @@ describe("garden logger weight-state inference and dry-down formulas", () => {
         ).toStrictEqual(["Wet"]);
     });
 
-    it("builds deterministic dry-weight and forecast formulas for the workbook views", () => {
+    it("builds deterministic dry-weight and forecast formulas for Baselines", () => {
         expect.hasAssertions();
 
         const context = loadAppsScript(createHistorySheet([]));
@@ -2231,12 +2236,6 @@ describe("garden logger weight-state inference and dry-down formulas", () => {
         expect(baselineRow.join(" ")).not.toMatch(
             /NOW\(|TODAY\(|\$[A-Z]+:\$[A-Z]+/v
         );
-        expect(context.plantPageHistoryFormula_("P01")).toContain(
-            'HYPERLINK(url,"Open photo")'
-        );
-        expect(context.plantPageHistoryFormula_("P01")).toContain(
-            "History!$X$2:$X$5000"
-        );
 
         const modelColumns = /** @type {[number, string][]} */ ([
             [22, "C"],
@@ -2246,9 +2245,14 @@ describe("garden logger weight-state inference and dry-down formulas", () => {
             [31, "H"],
         ]);
         for (const [index, column] of modelColumns) {
-            expect(baselineRow[index]).toBe(
-                `=XLOOKUP($A2,'Dry-down models'!$A$2:$A$37,'Dry-down models'!$${column}$2:$${column}$37,"")`
+            expect(baselineRow[index]).toContain(
+                `XLOOKUP($A2,'Dry-down models'!$A$2:$A$37,'Dry-down models'!$${column}$2:$${column}$37,"")`
             );
+            expect(baselineRow[index]).toContain(
+                "'Workbook calculations'!$I$2=\"Ready\""
+            );
+            expect(baselineRow[index]).toContain("*1440<=15");
+            expect(baselineRow[index]).toContain("Baselines!$T$2:$T$37,-1)");
         }
 
         expect(baselineRow[25]).toContain('Y2<=W2),"",Y2-W2');
@@ -2259,11 +2263,31 @@ describe("garden logger weight-state inference and dry-down formulas", () => {
         expect(baselineRow[11]).toContain('TEXT(late,"mmm d")');
         expect(baselineRow[32]).toContain("learned cycle");
         expect(baselineRow[33]).toMatch(/DATE\(9999,12,31\)/v);
+    });
+
+    it("retains a bounded nonvolatile historical dry-down custom-function formula", () => {
+        expect.hasAssertions();
+
+        const context = loadAppsScript(createHistorySheet([]));
+
         expect(context.dryDownModelFormula_()).toContain("=GARDEN_DRY_DOWN(");
-        expect(context.dryDownModelFormula_()).toContain("History!AJ2:AJ5000");
+        expect(context.dryDownModelFormula_()).toContain("History!AJ2:AJ50001");
         expect(context.dryDownModelFormula_()).not.toMatch(/NOW\(|TODAY\(/v);
+    });
+
+    it("projects the full plant history with photo links and recorded weight states", () => {
+        expect.hasAssertions();
+
+        const context = loadAppsScript(createHistorySheet([]));
+
         expect(context.plantPageHistoryFormula_("P01")).toContain(
-            "History!$D$2:$D$5000"
+            'HYPERLINK(url,"Open photo")'
+        );
+        expect(context.plantPageHistoryFormula_("P01")).toContain(
+            "History!$X$2:$X$50001"
+        );
+        expect(context.plantPageHistoryFormula_("P01")).toContain(
+            "History!$D$2:$D$50001"
         );
         expect(context.plantPageHistoryFormula_("P01")).toContain(
             "recordedStates"
@@ -2287,9 +2311,9 @@ describe("garden logger weight-state inference and dry-down formulas", () => {
 
         for (const column of [15, 16]) {
             expect(baselineRow[column]).toContain(
-                'REGEXMATCH(History!$C$2:$C$5000,"^(Check|Inspect)$")'
+                'REGEXMATCH(History!$C$2:$C$50001,"^(Check|Inspect)$")'
             );
-            expect(baselineRow[column]).toContain('History!$H$2:$H$5000<>""');
+            expect(baselineRow[column]).toContain('History!$H$2:$H$50001<>""');
         }
     });
 
@@ -2299,10 +2323,10 @@ describe("garden logger weight-state inference and dry-down formulas", () => {
         const context = loadAppsScript(createHistorySheet());
 
         expect(context.plantPageHistoryFormula_("P33")).toMatch(
-            /^=IF\(COUNTIFS\(History!\$B\$2:\$B\$5000,"P33",History!\$A\$2:\$A\$5000,"<>"\)=0,"",IFNA\(LET/v
+            /^=IF\(COUNTIFS\(History!\$B\$2:\$B\$50001,"P33",History!\$A\$2:\$A\$50001,"<>"\)=0,"",IFNA\(LET/v
         );
         expect(context.plantPageHistoryFormula_("P34")).toContain(
-            'History!$B$2:$B$5000,"P34"'
+            'History!$B$2:$B$50001,"P34"'
         );
     });
 
@@ -2414,7 +2438,7 @@ describe("garden logger workbook refresh and navigation", () => {
 
         expect(structuredClone(context.refreshGardenWorkbook())).toStrictEqual({
             baselineColumns: 36,
-            dashboardColumns: 31,
+            dashboardColumns: 33,
             loggerVersion: LOGGER_VERSION,
             plantPages: 2,
         });
@@ -2602,7 +2626,7 @@ describe("garden logger workbook refresh and navigation", () => {
             0
         );
 
-        expect(row).toHaveLength(31);
+        expect(row).toHaveLength(33);
         expect(row[0]).toBe('=HYPERLINK("#gid=12345","View")');
         expect(row[5]).toBe("=Baselines!D2");
         expect(row[6]).toBe("=Baselines!C2");
@@ -2611,6 +2635,10 @@ describe("garden logger workbook refresh and navigation", () => {
             '=IF(AND(ISNUMBER(G7),G7>0,ISNUMBER(H7),H7>0),G7-H7,"")'
         );
         expect(row[9]).toBe("=Baselines!AF2");
+        expect(row[31]).toBe(context.dashboardMinimumWeightFormula_(7));
+        expect(row[32]).toBe(
+            '=IF(AND(ISNUMBER(G7),G7>0,ISNUMBER(AF7),AF7>0),G7-AF7,"")'
+        );
 
         /** @type {number[][]} */
         const inserts = [];
@@ -3053,7 +3081,9 @@ describe("garden logger workbook formatting", () => {
         ]);
         const spreadsheet = {
             getSheetByName: (/** @type {string} */ name) =>
-                sheets.get(name) ?? null,
+                name === "History"
+                    ? createHistorySheet([])
+                    : (sheets.get(name) ?? null),
             getSheets: () => sheets.values().toArray(),
         };
         const context = loadAppsScript(createHistorySheet([]), {
@@ -3518,7 +3548,7 @@ describe("scoped Dashboard weight count installer", () => {
             0
         );
 
-        expect(row).toHaveLength(31);
+        expect(row).toHaveLength(33);
         expect(row[13]).toContain('"Water"');
         expect(row[14]).toContain('"Measure"');
         expect(row[22]).toBe("=Baselines!AI2");
@@ -3527,14 +3557,14 @@ describe("scoped Dashboard weight count installer", () => {
 
         const formula = context.dashboardWeightCountFormula_(7);
 
-        expect(formula).toContain('EXACT(TRIM(History!$C$2:$C$5000),"Weigh")');
+        expect(formula).toContain('EXACT(TRIM(History!$C$2:$C$50001),"Weigh")');
         expect(formula).toContain(
-            'EXACT(TRIM(History!$AJ$2:$AJ$5000),"Removed")=FALSE'
+            'EXACT(TRIM(History!$AJ$2:$AJ$50001),"Removed")=FALSE'
         );
-        expect(formula).toContain("ISNUMBER(History!$E$2:$E$5000)");
-        expect(formula).toContain("History!$E$2:$E$5000>0");
+        expect(formula).toContain("ISNUMBER(History!$E$2:$E$50001)");
+        expect(formula).toContain("History!$E$2:$E$50001>0");
         expect(formula).toContain(
-            'History!$AC$2:$AC$5000&" "&History!$AI$2:$AI$5000,"(?i)estimat"'
+            'History!$AC$2:$AC$50001&" "&History!$AI$2:$AI$50001,"(?i)estimat"'
         );
         expect(formula).not.toContain("History!$K");
     });
@@ -4908,7 +4938,7 @@ describe("garden logger canonical observation persistence", () => {
             column: 38,
             columnCount: 2,
             row: 2,
-            rowCount: 4999,
+            rowCount: 50_000,
         });
         expect(
             [...workbook.history.__validationCells].some((key) =>
@@ -5921,14 +5951,14 @@ function seedHistoryCapacity(workbook, lastRow) {
     marker[1] = "P01";
     marker[2] = "Note";
     marker[15] = "garden-existing-capacity-marker";
-    workbook.history.getMaxRows = () => 6000;
+    workbook.history.getMaxRows = () => 60_000;
 }
 
 describe("garden logger supported History capacity", () => {
     it.each([
-        4999,
-        5000,
-        5001,
+        50_000,
+        50_001,
+        50_002,
     ])(
         "preflights the whole batch at last reserved sheet row %s",
         (lastRow) => {
@@ -5968,7 +5998,7 @@ describe("garden logger supported History capacity", () => {
         expect.hasAssertions();
 
         const workbook = createLoggerWorkbook(["P01", "P02"]);
-        seedHistoryCapacity(workbook, 4998);
+        seedHistoryCapacity(workbook, 49_999);
         const context = loadAppsScript(workbook.history, {
             globals: workbook.globals,
             spreadsheet: workbook.spreadsheet,
@@ -5982,19 +6012,19 @@ describe("garden logger supported History capacity", () => {
         expect(workbook.history.__setValuesCalls).toContainEqual({
             column: 1,
             columnCount: 67,
-            row: 4999,
+            row: 50_000,
             rowCount: 2,
         });
-        expect(workbook.history.__rows).toHaveLength(5000);
+        expect(workbook.history.__rows).toHaveLength(50_001);
     });
 
     it("rejects a multi-event single save before grid/header/validation changes, but allows the final slot", () => {
         expect.hasAssertions();
 
         const workbook = createLoggerWorkbook();
-        seedHistoryCapacity(workbook, 4999);
+        seedHistoryCapacity(workbook, 50_000);
         let insertedRows = 0;
-        workbook.history.getMaxRows = () => 4999;
+        workbook.history.getMaxRows = () => 50_000;
         workbook.history.insertRowsAfter = (_row, count) => {
             insertedRows += count;
         };
@@ -6018,7 +6048,7 @@ describe("garden logger supported History capacity", () => {
         expect(workbook.history.__setValuesCalls).toStrictEqual([]);
         expect(workbook.history.__clearDataValidationCalls).toStrictEqual([]);
 
-        workbook.history.getMaxRows = () => 6000;
+        workbook.history.getMaxRows = () => 60_000;
         const last = capacityNote("garden-capacity-final-slot-12345");
         const saved = context.saveWebObservation(last);
         const writes = workbook.history.__setValuesCalls.length;
@@ -6034,7 +6064,7 @@ describe("garden logger supported History capacity", () => {
             historyRows: 1,
             ok: true,
         });
-        expect(workbook.history.__rows).toHaveLength(5000);
+        expect(workbook.history.__rows).toHaveLength(50_001);
         expect(workbook.history.__setValuesCalls).toHaveLength(writes);
         expect(() =>
             context.saveWebObservation(
@@ -6047,7 +6077,7 @@ describe("garden logger supported History capacity", () => {
         expect.hasAssertions();
 
         const workbook = createLoggerWorkbook();
-        seedHistoryCapacity(workbook, 4998);
+        seedHistoryCapacity(workbook, 49_999);
         const context = loadAppsScript(workbook.history, {
             globals: workbook.globals,
             spreadsheet: workbook.spreadsheet,
@@ -6086,7 +6116,7 @@ describe("garden logger supported History capacity", () => {
         expect.hasAssertions();
 
         const workbook = createLoggerWorkbook();
-        seedHistoryCapacity(workbook, 4999);
+        seedHistoryCapacity(workbook, 50_000);
         const baselines = required(workbook.sheets.get("Baselines"));
         const before = structuredClone(baselines.__rows);
         const context = loadAppsScript(workbook.history, {
@@ -6113,8 +6143,8 @@ describe("garden logger supported History capacity", () => {
         expect.hasAssertions();
 
         const workbook = createLoggerWorkbook();
-        seedHistoryCapacity(workbook, 4999);
-        required(workbook.history.__rows[4998])[35] = "Removed";
+        seedHistoryCapacity(workbook, 50_000);
+        required(workbook.history.__rows[49_999])[35] = "Removed";
         const reservation = emptyCells(60);
         reservation[15] = "garden-capacity-reservation-12345";
         workbook.history.__rows.push(reservation);
@@ -6126,9 +6156,9 @@ describe("garden logger supported History capacity", () => {
 
         expect(structuredClone(bootstrap.historyCapacity)).toStrictEqual({
             remainingRows: 0,
-            supportedLastRow: 5000,
-            supportedObservationRows: 4999,
-            usedRows: 4999,
+            supportedLastRow: 50_001,
+            supportedObservationRows: 50_000,
+            usedRows: 50_000,
         });
         expect(() =>
             context.saveWebObservation(
@@ -6140,14 +6170,14 @@ describe("garden logger supported History capacity", () => {
                 capacityNote("garden-capacity-reservation-12345")
             )
         ).toMatchObject({ duplicate: false, ok: true });
-        expect(workbook.history.__rows).toHaveLength(5000);
+        expect(workbook.history.__rows).toHaveLength(50_001);
     });
 
     it("rejects mobile bulk rounds without partially saving their plants", () => {
         expect.hasAssertions();
 
         const workbook = createLoggerWorkbook(["P01", "P02"]);
-        seedHistoryCapacity(workbook, 4999);
+        seedHistoryCapacity(workbook, 50_000);
         const context = loadAppsScript(workbook.history, {
             globals: workbook.globals,
             spreadsheet: workbook.spreadsheet,
@@ -6162,14 +6192,14 @@ describe("garden logger supported History capacity", () => {
             })
         ).toThrow(/HISTORY_CAPACITY/v);
         expect(workbook.history.__setValuesCalls).toStrictEqual([]);
-        expect(workbook.history.__rows).toHaveLength(4999);
+        expect(workbook.history.__rows).toHaveLength(50_000);
     });
 
     it("keeps an oversized AppSheet entry staged without writing any event rows", () => {
         expect.hasAssertions();
 
         const workbook = createLoggerWorkbook();
-        seedHistoryCapacity(workbook, 4999);
+        seedHistoryCapacity(workbook, 50_000);
         const entry = emptyCells(appSheetEntryHeaders.length);
         entry[0] = "CAPACITY123";
         entry[1] = new Date("2026-08-16T12:00:00Z");
@@ -6200,7 +6230,7 @@ describe("garden logger supported History capacity", () => {
         expect.hasAssertions();
 
         const workbook = createLoggerWorkbook(["P01", "P02"]);
-        seedHistoryCapacity(workbook, 4999);
+        seedHistoryCapacity(workbook, 50_000);
         const round = emptyCells(appSheetBulkHeaders.length);
         round[0] = "CAPACITY-BULK123";
         round[1] = new Date("2026-08-16T12:00:00Z");
@@ -6223,6 +6253,138 @@ describe("garden logger supported History capacity", () => {
         expect(round[appSheetBulkStatusIndex]).toBe("Needs correction");
         expect(workbook.history.__setValuesCalls).toStrictEqual([]);
     });
+});
+
+describe("plant history spill allocation", () => {
+    it("keeps small saves free of projection reads and grows only concentrated plant pages including Removed and reservations", () => {
+        expect.hasAssertions();
+
+        const history = createHistorySheet([]);
+        const context = loadAppsScript(history);
+        const small = {
+            getLastRow: () => 12,
+            getRange: () => {
+                throw new Error("Unexpected read");
+            },
+        };
+        context.ensurePlantHistoryWriteCapacity_({}, small, [
+            { storedRows: [["", "P01"]], targetRow: 13 },
+        ]);
+        const ids = Array.from({ length: 4999 }, () => ["P01"]);
+        ids.push(["P02"]);
+        const source = {
+            getLastRow: () => ids.length + 1,
+            getRange: () => ({ getValues: () => ids }),
+        };
+        const page = createDataSheet("P01", [[""]]);
+        page.insertRowsAfter(100, 5039);
+        /** @type {string[]} */
+        const requested = [];
+        const spreadsheet = {
+            getSheetByName: (/** @type {string} */ name) => {
+                requested.push(name);
+                return name === "P01" ? page : null;
+            },
+        };
+        context.ensurePlantHistoryWriteCapacity_(spreadsheet, source, [
+            {
+                storedRows: [
+                    ["", "P01"],
+                    ["", "P01"],
+                ],
+                targetRow: 5002,
+            },
+            // Completing an existing reservation does not consume a second slot.
+            { storedRows: [["", "P01"]], targetRow: 2 },
+        ]);
+
+        expect(page.getMaxRows()).toBe(5141);
+        expect(requested).toStrictEqual(["P01"]);
+        expect(context.historyPlantIds_(history)).toHaveLength(0);
+
+        const concentrated = {
+            getLastRow: () => 50_000,
+            getRange: () => ({
+                getValues: () => Array.from({ length: 49_999 }, () => ["P01"]),
+            }),
+        };
+        context.ensurePlantHistoryWriteCapacity_(spreadsheet, concentrated, [
+            { storedRows: [["", "P01"]], targetRow: 50_001 },
+        ]);
+
+        expect(page.getMaxRows()).toBe(50_140);
+    });
+
+    it("rejects a missing plant page before reserving spill space", () => {
+        expect.hasAssertions();
+
+        const context = loadAppsScript(createHistorySheet([]));
+        const history = {
+            getLastRow: () => 5001,
+            getRange: () => ({
+                getValues: () => Array.from({ length: 5000 }, () => ["P01"]),
+            }),
+        };
+        const spreadsheet = { getSheetByName: () => null, getSheets: () => [] };
+
+        expect(() => {
+            context.ensurePlantHistoryWriteCapacity_(spreadsheet, history, [
+                { storedRows: [["", "P01"]], targetRow: 5002 },
+            ]);
+        }).toThrow("Workbook page for P01 is missing");
+    });
+
+    it.each([false, true])(
+        "allocates a growing plant page before a %s batch save, and preserves canonical rows on allocation failure",
+        (batch) => {
+            expect.hasAssertions();
+
+            const workbook = createLoggerWorkbook();
+            seedHistoryCapacity(workbook, 5000);
+            for (let index = 1; index < 5000; index += 1) {
+                const row = required(workbook.history.__rows[index]);
+                row[1] = "P01";
+                row[35] = "Removed";
+            }
+            const page = createDataSheet("P01", [[""]]);
+            page.insertRowsAfter(100, 5039);
+            workbook.sheets.set("P01", page);
+            const context = loadAppsScript(workbook.history, {
+                globals: workbook.globals,
+                spreadsheet: workbook.spreadsheet,
+            });
+            const insert = page.insertRowsAfter;
+            page.insertRowsAfter = () => {
+                throw new Error("Projection allocation failed");
+            };
+            const payload = capacityNote("garden-concentrated-12345");
+            const save = () =>
+                batch
+                    ? context.saveWebObservationBatch([payload])
+                    : context.saveWebObservation(payload);
+
+            expect(save).toThrow("Projection allocation failed");
+            expect(workbook.history.__rows).toHaveLength(5000);
+            expect(workbook.history.__setValuesCalls).toStrictEqual([]);
+
+            page.insertRowsAfter = (row, count) => {
+                expect(workbook.history.__setValuesCalls).toStrictEqual([]);
+
+                return insert(row, count);
+            };
+
+            expect(save()).toMatchObject({ ok: true });
+            expect(page.getMaxRows()).toBe(5140);
+            expect(workbook.history.__rows).toHaveLength(5001);
+
+            page.insertRowsAfter = () => {
+                throw new Error("Completed retry must not grow");
+            };
+
+            expect(save()).toMatchObject({ ok: true });
+            expect(workbook.history.__rows).toHaveLength(5001);
+        }
+    );
 });
 
 describe("garden logger AppSheet entry intake", () => {
@@ -11021,7 +11183,7 @@ describe("garden logger request reservations and retry reconciliation", () => {
             width: "",
         });
 
-        expect(inserted).toBe(4999);
+        expect(inserted).toBe(50_000);
 
         const duplicateRequestId = "garden-valid-duplicate-12345";
         const duplicateInput = {
@@ -11364,7 +11526,7 @@ describe("garden logger workbook installation and History headers", () => {
         expect(context.ensureHistoryView_(spreadsheet)).toBe(true);
         expect(historyView.getMaxColumns()).toBe(67);
         expect(historyView.getRange(1, 1).getFormula()).toContain(
-            "History!A2:BO5000"
+            "History!A2:BO50001"
         );
         expect(historyView.getRange(1, 1).getFormula()).toContain(
             "SEQUENCE(1,66,2,1)"
