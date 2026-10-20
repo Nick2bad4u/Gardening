@@ -631,13 +631,14 @@ function createHistorySheet(
      * @param {number} columnCount
      */
     function rangeValues(row, column, rowCount, columnCount) {
-        return Array.from({ length: rowCount }, (_, rowOffset) =>
-            Array.from(
-                { length: columnCount },
-                (_, columnOffset) =>
-                    rows[row - 1 + rowOffset]?.[column - 1 + columnOffset] ?? ""
-            )
-        );
+        return Array.from({ length: rowCount }, (_, rowOffset) => {
+            const sourceRow = rows[row - 1 + rowOffset] ?? [];
+            const values = emptyCells(columnCount);
+            const end = Math.min(sourceRow.length, column - 1 + columnCount);
+            for (let index = column - 1; index < end; index += 1)
+                values[index - column + 1] = sourceRow[index] ?? "";
+            return values;
+        });
     }
 
     /**
@@ -5944,8 +5945,11 @@ function capacityNote(requestId, plantId = "P01") {
  *   lastRow
  */
 function seedHistoryCapacity(workbook, lastRow) {
+    // Range reads pad absent cells to "", just like Sheets. Keep each unused
+    // row distinct without allocating millions of blank cells that snapshots
+    // would then clone and compare; real writes still land at the 50k boundary.
     while (workbook.history.__rows.length < lastRow)
-        workbook.history.__rows.push(emptyCells(60));
+        workbook.history.__rows.push([]);
     const marker = required(workbook.history.__rows[lastRow - 1]);
     marker[0] = new Date("2026-08-15T12:00:00Z");
     marker[1] = "P01";
@@ -5955,6 +5959,55 @@ function seedHistoryCapacity(workbook, lastRow) {
 }
 
 describe("garden logger supported History capacity", () => {
+    it("reads independent rectangular cells from compact capacity rows", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook();
+        seedHistoryCapacity(workbook, 50_000);
+        const range = workbook.history.getRange(49_998, 15, 3, 3);
+        const values = range.getValues();
+
+        expect(values).toStrictEqual([
+            [
+                "",
+                "",
+                "",
+            ],
+            [
+                "",
+                "",
+                "",
+            ],
+            [
+                "",
+                "garden-existing-capacity-marker",
+                "",
+            ],
+        ]);
+
+        required(values[0])[0] = "Changed local read";
+        required(values[2])[1] = "Changed local marker";
+
+        expect(range.getValues()).toStrictEqual([
+            [
+                "",
+                "",
+                "",
+            ],
+            [
+                "",
+                "",
+                "",
+            ],
+            [
+                "",
+                "garden-existing-capacity-marker",
+                "",
+            ],
+        ]);
+        expect(workbook.history.getLastRow()).toBe(50_000);
+    });
+
     it.each([
         50_000,
         50_001,
@@ -12581,7 +12634,10 @@ function dataSheet(sheet) {
  *   {import("../logger-fixtures.d.ts").CellValue[]}
  */
 function emptyCells(length) {
-    return Array.from({ length }, () => "");
+    /** @type {import("../logger-fixtures.d.ts").CellValue[]} */
+    const cells = [];
+    cells.length = length;
+    return cells.fill("");
 }
 
 describe("structured care and temperature events", () => {

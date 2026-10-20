@@ -929,15 +929,22 @@ function replacementDateCell(request) {
  * @param {"formula" | "value"} property
  */
 function selectedMatrix(rows, row, column, rowCount, columnCount, property) {
-    return Array.from({ length: rowCount }, (_, offset) =>
-        Array.from(
+    return Array.from({ length: rowCount }, (_, offset) => {
+        const storedRow = rows[row + offset - 1];
+        // Native Sheets returns blank primitives for empty grid cells. Keep
+        // each returned row independent without allocating rich mock cells.
+        if (storedRow === undefined) {
+            /** @type {string[]} */
+            const emptyRow = [];
+            emptyRow.length = columnCount;
+            return emptyRow.fill("");
+        }
+        return Array.from(
             { length: columnCount },
             (_unused, columnOffset) =>
-                (rows[row + offset - 1]?.[column + columnOffset - 1] ?? cell())[
-                    property
-                ]
-        )
-    );
+                storedRow[column + columnOffset - 1]?.[property] ?? ""
+        );
+    });
 }
 
 /** @param {number} serial @param {string} timeZone @returns {Date} */
@@ -1752,9 +1759,9 @@ describe("atomic saved History corrections", () => {
         expect.hasAssertions();
 
         const model = fixture();
+        // Empty physical slots stay sparse in the backing mock. The last
+        // populated row still makes native getLastRow() report row 50000.
         model.state.rows.length = 49_999;
-        for (let index = 2; index < 49_999; index += 1)
-            model.state.rows[index] = Array.from({ length: 67 }, () => cell());
         model.state.rows.push(
             observation("Other", "last-existing", { 1: "P02" })
         );
@@ -1766,6 +1773,7 @@ describe("atomic saved History corrections", () => {
         expect(stored(model, 50_001, 27).value).toBe(
             result.replacementObservationId
         );
+        expect(stored(model, 50_000, 27).value).toBe("last-existing");
 
         const next = prepare(
             model,

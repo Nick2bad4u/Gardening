@@ -100,6 +100,16 @@ const expectRestoredDraft = async (page: Readonly<Page>) => {
         )
         .toBe(true);
 };
+const expectHistoryCapacity = async (page: Readonly<Page>) => {
+    const description =
+        "History space at last refresh: 500 of 50,000 rows used · 49,500 remaining.";
+    const capacity = page.getByRole("status", {
+        exact: true,
+        name: description,
+    });
+    await expect.soft(capacity).toHaveText("History · 1% used");
+    await expect.soft(capacity).toHaveAttribute("title", description);
+};
 
 test.describe(
     "logger queue ownership and unsent drafts",
@@ -217,13 +227,7 @@ test.describe(
                         })
                         .click();
                     await expectRestoredDraft(page);
-                    await expect
-                        .soft(
-                            page.getByRole("status", {
-                                name: "History capacity",
-                            })
-                        )
-                        .toContainText("4,499 remaining");
+                    await expectHistoryCapacity(page);
                 });
             }
         }

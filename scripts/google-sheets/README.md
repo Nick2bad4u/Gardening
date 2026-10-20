@@ -159,7 +159,7 @@ The combined candidate includes the pending capacity expansion, compact mobile
 capacity display, Mist icons, Dashboard 90-day formula source, and manual
 recalculation controls. Local verification passed **2,069 unit tests** and
 **52 Chromium/Edge logger browser tests** across light/dark themes and six widths.
-The logger coverage run passed **1,690 tests**, with **99.68% line coverage** and
+The logger coverage run passed **1,695 tests**, with **99.68% line coverage** and
 **98.13% branch coverage**. Type checks, the Pages build, and generated-site
 checks also passed. These checks do not establish native workbook execution.
 
