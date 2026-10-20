@@ -22,6 +22,10 @@ const asOf = new Date("2026-10-18T04:30:00Z");
  *     calculationStatus?: string;
  *     failBatch?: boolean;
  *     failStatus?: boolean;
+ *     failCalculationRead?: boolean;
+ *     failLeaseCleanup?: boolean;
+ *     cleanupBusy?: boolean;
+ *     missingSelectedBaseline?: boolean;
  *     historyLastRow?: number;
  *     selectedPlant?: string;
  *     selectedSetup?: number | string;
@@ -33,6 +37,8 @@ function fixture(options = {}) {
         observation(36, "Move"),
     ];
     const writes = vi.fn();
+    const logError = vi.fn();
+    const nativeFormatDate = vi.fn(formatDate);
     const historyRead = vi.fn(() => {
         if (isLocked)
             throw new Error("History read must not hold the writer lock");
@@ -45,13 +51,19 @@ function fixture(options = {}) {
         if (options.failBatch === true) throw new Error("Derived batch failed");
     });
     let isLocked = false;
+    let lockAttempts = 0;
     const getScriptLock = vi.fn(() => ({
         releaseLock: () => {
             isLocked = false;
             releaseLock();
         },
         tryLock: () => {
-            if (options.busy === true) return false;
+            lockAttempts += 1;
+            if (
+                options.busy === true ||
+                (lockAttempts === 2 && options.cleanupBusy === true)
+            )
+                return false;
             isLocked = true;
             return true;
         },
@@ -83,23 +95,29 @@ function fixture(options = {}) {
                 /** @param {(string | number)[]} range */
                 getRange: (...range) => ({
                     getValue: () => options.selectedPlant ?? "P01",
-                    getValues: () =>
-                        name === "Workbook calculations"
-                            ? [
-                                  [
-                                      options.calculationTime ?? "",
-                                      options.calculationStatus ?? "",
-                                  ],
-                              ]
-                            : name === "History"
-                              ? historyRead()
-                              : [
-                                    [
-                                        options.selectedPlant ?? "P01",
-                                        ...Array.from({ length: 18 }, () => ""),
-                                        options.selectedSetup ?? 1,
-                                    ],
+                    getValues: () => {
+                        if (name === "Workbook calculations") {
+                            if (options.failCalculationRead === true)
+                                throw new Error(
+                                    "Calculation status read unavailable"
+                                );
+                            return [
+                                [
+                                    options.calculationTime ?? "",
+                                    options.calculationStatus ?? "",
                                 ],
+                            ];
+                        }
+                        if (name === "History") return historyRead();
+                        if (options.missingSelectedBaseline === true) return [];
+                        return [
+                            [
+                                options.selectedPlant ?? "P01",
+                                ...Array.from({ length: 18 }, () => ""),
+                                options.selectedSetup ?? 1,
+                            ],
+                        ];
+                    },
                     /** @param {unknown} value */
                     setValue: (value) => {
                         if (options.failStatus === true)
@@ -120,7 +138,7 @@ function fixture(options = {}) {
         toast: vi.fn(),
     };
     const context = vm.createContext({
-        console: { error: vi.fn(), info: vi.fn() },
+        console: { error: logError, info: vi.fn() },
         Date,
         Error,
         LockService: {
@@ -134,7 +152,11 @@ function fixture(options = {}) {
         PropertiesService: {
             getScriptProperties: () => ({
                 /** @param {string} key */
-                deleteProperty: (key) => properties.delete(key),
+                deleteProperty: (key) => {
+                    if (options.failLeaseCleanup === true)
+                        throw new Error("Lease storage unavailable");
+                    return properties.delete(key);
+                },
                 /** @param {string} key */
                 getProperty: (key) => properties.get(key) ?? null,
                 /** @param {string} key @param {string} value */
@@ -144,7 +166,10 @@ function fixture(options = {}) {
         Set,
         Sheets: { Spreadsheets: { batchUpdate } },
         SpreadsheetApp: { flush: vi.fn(), openById: () => spreadsheet },
-        Utilities: { formatDate, getUuid: () => "fixture-lease" },
+        Utilities: {
+            formatDate: nativeFormatDate,
+            getUuid: () => "fixture-lease",
+        },
     });
     vm.runInContext(source, context, { filename: fileURLToPath(sourceUrl) });
     /** @type {(keyof import("../apps-script-fixtures.js").AnalyticsApi)[]} */
@@ -174,6 +199,8 @@ function fixture(options = {}) {
         context,
         getScriptLock,
         historyRead,
+        logError,
+        nativeFormatDate,
         properties,
         releaseLock,
         sheets,
@@ -366,6 +393,51 @@ describe("scheduled analytics materialization", () => {
         expect(test.batchUpdate).toHaveBeenCalledTimes(1);
     });
 
+    it("normalizes a thrown service-adapter string and preserves the previous snapshot", () => {
+        expect.hasAssertions();
+
+        const test = fixture({
+            calculationStatus: "Ready",
+            calculationTime: asOf,
+        });
+
+        // A JavaScript adapter can throw a primitive. Exercise the boundary
+        // through an actual VM exception rather than replacing the wrapper.
+        test.batchUpdate.mockImplementationOnce(() => {
+            vm.runInContext(
+                'throw "Sheets backend temporarily unavailable"',
+                test.context
+            );
+        });
+
+        const result = structuredClone(
+            test.api.refreshGardenAnalyticsSafely_(test.spreadsheet)
+        );
+
+        expect(result).toStrictEqual({
+            message: "Sheets backend temporarily unavailable",
+            status: "Refresh failed",
+        });
+        expect(test.writes.mock.calls).toStrictEqual([
+            [
+                "Workbook calculations",
+                ["I2"],
+                "Refreshing",
+            ],
+            [
+                "Workbook calculations",
+                ["I2"],
+                "Refresh failed",
+            ],
+        ]);
+        expect(
+            test.api.workbookCalculationStatus_(test.spreadsheet).calculatedAt
+        ).toBe(asOf.toISOString());
+        expect(test.properties.has("gardenAnalyticsRefreshLeaseV1")).toBe(
+            false
+        );
+    });
+
     it("preserves queue save receipts and success when analytics fails after bulk processing", () => {
         expect.hasAssertions();
 
@@ -406,6 +478,170 @@ describe("scheduled analytics materialization", () => {
             expect(test.historyRead).not.toHaveBeenCalled();
         }
     );
+
+    it.each([
+        {
+            batches: 0,
+            busy: true,
+            message:
+                "Another save or calculation is running. Try again shortly.",
+            status: "Busy",
+        },
+        {
+            batches: 1,
+            failBatch: true,
+            message:
+                "Recalculation failed. Previous results and saved observations are retained; retry the refresh.",
+            status: "Refresh failed",
+        },
+    ])(
+        "reports a manual $status result without claiming completion",
+        ({ batches, message, status, ...options }) => {
+            expect.hasAssertions();
+
+            const test = fixture(options);
+            const result = test.api.recalculateGardenWorkbook();
+
+            expect(result.status).toBe(status);
+            expect(result).not.toHaveProperty("calculatedAt");
+            expect(test.batchUpdate).toHaveBeenCalledTimes(batches);
+            expect(test.spreadsheet.toast).toHaveBeenLastCalledWith(
+                message,
+                "Garden calculations",
+                8
+            );
+        }
+    );
+
+    it("reports unavailable metadata when the native read fails without changing the snapshot", () => {
+        expect.hasAssertions();
+
+        const test = fixture({
+            calculationStatus: "Ready",
+            calculationTime: asOf,
+            failCalculationRead: true,
+        });
+        const result = structuredClone(
+            test.api.workbookCalculationStatus_(test.spreadsheet)
+        );
+
+        expect(result).toStrictEqual({ status: "Unavailable" });
+        expect(test.logError).toHaveBeenCalledWith(
+            "Error: Calculation status read unavailable"
+        );
+        expect(test.writes).not.toHaveBeenCalled();
+        expect(test.batchUpdate).not.toHaveBeenCalled();
+    });
+
+    it("releases its reservation if the calculation sheet is missing and reports no available snapshot", () => {
+        expect.hasAssertions();
+
+        const test = fixture();
+
+        test.sheets.delete("Workbook calculations");
+
+        const result = test.api.refreshGardenAnalyticsSafely_(test.spreadsheet);
+
+        expect(result.status).toBe("Refresh failed");
+        expect(test.properties.has("gardenAnalyticsRefreshLeaseV1")).toBe(
+            false
+        );
+        expect(test.historyRead).not.toHaveBeenCalled();
+        expect(test.batchUpdate).not.toHaveBeenCalled();
+        expect(
+            test.api.workbookCalculationStatus_(test.spreadsheet).status
+        ).toBe("Unavailable");
+    });
+
+    it("retains successful publication and a bounded reservation if a save blocks lease cleanup", () => {
+        expect.hasAssertions();
+
+        const startedAt = Date.now();
+        let currentTime = startedAt;
+        const clock = vi
+            .spyOn(Date, "now")
+            .mockImplementation(() => currentTime);
+        try {
+            const test = fixture({ cleanupBusy: true });
+            const result = test.api.recalculateGardenWorkbook();
+            const lease = test.properties.get("gardenAnalyticsRefreshLeaseV1");
+            const expiresAt = Number(lease?.split(":", 1)[0]);
+
+            expect(result.status).toBe("Ready");
+            expect(result.calculatedAt).toMatch(/^\d{4}-\d{2}-\d{2}T/v);
+            expect(expiresAt).toBe(startedAt + 480_000);
+            expect(test.api.recalculateGardenWorkbook().status).toBe("Busy");
+            expect(test.batchUpdate).toHaveBeenCalledTimes(1);
+            // The second refresh acquired and released the script lock. Its
+            // Busy result therefore comes from the retained valid lease.
+            expect(test.releaseLock).toHaveBeenCalledTimes(2);
+
+            currentTime = expiresAt + 1;
+            const recovered = test.api.recalculateGardenWorkbook();
+
+            expect(recovered.status).toBe("Ready");
+            expect(test.batchUpdate).toHaveBeenCalledTimes(2);
+            expect(test.properties.has("gardenAnalyticsRefreshLeaseV1")).toBe(
+                false
+            );
+        } finally {
+            clock.mockRestore();
+        }
+    });
+
+    it("keeps a committed snapshot successful when lease cleanup storage fails", () => {
+        expect.hasAssertions();
+
+        const test = fixture({ failLeaseCleanup: true });
+        const result = test.api.recalculateGardenWorkbook();
+
+        expect(result.status).toBe("Ready");
+        expect(result.calculatedAt).toMatch(/^\d{4}-\d{2}-\d{2}T/v);
+        expect(test.batchUpdate).toHaveBeenCalledTimes(1);
+        expect(test.properties.get("gardenAnalyticsRefreshLeaseV1")).toMatch(
+            /^\d+:fixture-lease$/v
+        );
+        expect(test.logError).toHaveBeenCalledWith(
+            "Analytics lease cleanup delayed: Error: Lease storage unavailable"
+        );
+        expect(test.releaseLock).toHaveBeenCalledTimes(2);
+    });
+
+    it("publishes empty cycle identity when the selected plant has no current baseline", () => {
+        expect.hasAssertions();
+
+        const test = fixture({
+            missingSelectedBaseline: true,
+            selectedPlant: "P99",
+        });
+        const result = test.api.recalculateGardenWorkbook();
+        const metadataRows = expect.arrayContaining([
+            {
+                values: [
+                    { userEnteredValue: { numberValue: expect.any(Number) } },
+                    { userEnteredValue: { stringValue: "Ready" } },
+                    { userEnteredValue: { stringValue: "P99" } },
+                    {},
+                ],
+            },
+        ]);
+        const metadataCells = expect.objectContaining({ rows: metadataRows });
+        const metadataRequest = expect.objectContaining({
+            updateCells: metadataCells,
+        });
+        const expectedBatch = expect.objectContaining({
+            requests: expect.arrayContaining([metadataRequest]),
+        });
+
+        expect(result.status).toBe("Ready");
+        expect(test.batchUpdate).toHaveBeenCalledWith(
+            expectedBatch,
+            "disposable-fixture"
+        );
+        expect(test.properties.has("gardenAnalyticsRefreshLeaseV1")).toBe(
+            false
+        );
+    });
 
     it("supports an empty ledger and explicit menu refresh", () => {
         expect.hasAssertions();
@@ -539,7 +775,13 @@ describe("scheduled analytics materialization", () => {
         expect.hasAssertions();
 
         const test = fixture();
-        const history = [observation(0, "Light")];
+        const first = observation(0, "Light");
+        const second = observation(36, "Humidity");
+        const sharedDate = new Date("2025-01-01T00:00:00Z");
+        first[0] = sharedDate;
+        second[0] = sharedDate;
+        second[42] = 40;
+        const history = [first, second];
         const serials = new Map();
         const outputs = test.api.gardenAnalyticsOutputs_(
             history,
@@ -568,6 +810,72 @@ describe("scheduled analytics materialization", () => {
                 ?.numberValue
         ).toBe(serials.get(timestamp));
         expect(serials.size).toBe(1);
+
+        const conversions = test.nativeFormatDate.mock.calls.filter(
+            (formatCall) => formatCall[2] === "Z"
+        );
+
+        expect(conversions).toHaveLength(1);
+        expect(
+            request.updateCells.rows[2]?.values[0]?.userEnteredValue
+                ?.numberValue
+        ).toBe(serials.get(timestamp));
+    });
+
+    it("preserves numeric Sheet serial dates and excludes invalid stored dates from models", () => {
+        expect.hasAssertions();
+
+        const test = fixture();
+        const events = [
+            "Water",
+            "Weigh",
+            "Weigh",
+            "Water",
+            "Weigh",
+            "Weigh",
+        ];
+        const dates = [
+            46_000,
+            46_000,
+            46_001,
+            46_002,
+            46_002,
+            "invalid date",
+        ];
+        const weights = [
+            "",
+            1000,
+            900,
+            "",
+            1000,
+            100,
+        ];
+        const history = events.map((event, index) => {
+            const row = observation(index, event);
+            row[0] = dates[index] ?? "";
+            row[1] = "P01";
+            row[4] = weights[index] ?? "";
+            return row;
+        });
+        const cache = new Map();
+        const result = test.api.gardenAnalyticsOutputs_(
+            history,
+            "P01",
+            1,
+            asOf,
+            "UTC",
+            cache
+        );
+        const model = result.models.find(([id]) => id === "P01");
+
+        expect(structuredClone(model?.slice(0, 4))).toStrictEqual([
+            "P01",
+            1,
+            900,
+            1000,
+        ]);
+        expect(cache.size).toBe(0);
+        expect(history[5]?.[0]).toBe("invalid date");
     });
 
     it("counts UTF-8 bytes and rejects an oversized atomic payload without publishing", () => {
@@ -575,8 +883,8 @@ describe("scheduled analytics materialization", () => {
 
         const test = fixture();
 
-        expect(test.api.gardenAnalyticsPayloadBytes_("Aé水🌱")).toBe(
-            Buffer.byteLength("Aé水🌱")
+        expect(test.api.gardenAnalyticsPayloadBytes_("\0Aé水🌱")).toBe(
+            Buffer.byteLength("\0Aé水🌱")
         );
 
         test.context["gardenAnalyticsPayloadBytes_"] = () => 40_000_001;

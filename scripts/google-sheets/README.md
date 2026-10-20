@@ -157,10 +157,10 @@ use the mobile logger's control on a phone. See
 
 The combined candidate includes the pending capacity expansion, compact mobile
 capacity display, Mist icons, Dashboard 90-day formula source, and manual
-recalculation controls. Local verification passed **2,069 unit tests** and
+recalculation controls. Initial local verification passed **2,069 unit tests** and
 **52 Chromium/Edge logger browser tests** across light/dark themes and six widths.
-The logger coverage run passed **1,695 tests**, with **99.68% line coverage** and
-**98.13% branch coverage**. Type checks, the Pages build, and generated-site
+The expanded logger coverage run passed **1,705 tests**, with **99.81% line coverage** and
+**98.54% branch coverage**. Type checks, the Pages build, and generated-site
 checks also passed. These checks do not establish native workbook execution.
 
 Two calculation paths now reuse indexed results while retaining the existing

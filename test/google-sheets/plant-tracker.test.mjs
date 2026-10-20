@@ -2995,6 +2995,7 @@ describe("garden logger workbook formatting", () => {
             /** @type {string} */ name,
             { hasFilter = false, id = 1 } = {}
         ) => {
+            let maxRows = 20;
             const getRange = (
                 /** @type {number} */ row,
                 /** @type {number} */ column,
@@ -3052,13 +3053,18 @@ describe("garden logger workbook formatting", () => {
                           }
                         : null,
                 getMaxColumns: () => 5,
-                getMaxRows: () => 20,
+                getMaxRows: () => maxRows,
                 getName: () => name,
                 getRange,
                 getSheetId: () => id,
                 hideSheet: () => {},
                 insertColumnsAfter: () => {},
-                insertRowsAfter: () => {},
+                insertRowsAfter: (
+                    /** @type {number} */ _afterPosition,
+                    /** @type {number} */ howMany
+                ) => {
+                    maxRows += howMany;
+                },
                 setColumnWidth: () => {},
                 setColumnWidths: () => {},
                 setConditionalFormatRules: (/** @type {unknown[]} */ rules) => {
@@ -3080,14 +3086,17 @@ describe("garden logger workbook formatting", () => {
             ["P02", makeSheet("P02", { id: 102 })],
             ["Workbook calculations", makeSheet("Workbook calculations")],
         ]);
+        const history = createHistorySheet(
+            Array.from({ length: 5101 }, (_, index) => ({
+                values: ["", index < 5001 ? "P01" : "P02"],
+            }))
+        );
         const spreadsheet = {
             getSheetByName: (/** @type {string} */ name) =>
-                name === "History"
-                    ? createHistorySheet([])
-                    : (sheets.get(name) ?? null),
+                name === "History" ? history : (sheets.get(name) ?? null),
             getSheets: () => sheets.values().toArray(),
         };
-        const context = loadAppsScript(createHistorySheet([]), {
+        const context = loadAppsScript(history, {
             SpreadsheetApp: {
                 flush: () => {},
                 newConditionalFormatRule: () => ruleBuilder,
@@ -3117,15 +3126,23 @@ describe("garden logger workbook formatting", () => {
         context.refreshPlantPage_(spreadsheet, plants, 0, plants[0]);
         context.refreshPlantPage_(spreadsheet, plants, 1, plants[1]);
 
+        // Page growth follows each plant's own records, not the whole ledger.
         expect(
-            ["P01", "P02"].map((name) =>
-                required(conditionalWrites.get(name)).filter((rule) =>
-                    oldRules.includes(
-                        /** @type {ReturnType<typeof existingRule>} */ (rule)
-                    )
-                )
-            )
-        ).toStrictEqual([retainedRules, retainedRules]);
+            ["P01", "P02"].map((name) => ({
+                maxRows: required(sheets.get(name)).getMaxRows(),
+                retainedRules: required(conditionalWrites.get(name)).filter(
+                    (rule) =>
+                        oldRules.includes(
+                            /** @type {ReturnType<typeof existingRule>} */ (
+                                rule
+                            )
+                        )
+                ),
+            }))
+        ).toStrictEqual([
+            { maxRows: 5141, retainedRules },
+            { maxRows: 5139, retainedRules },
+        ]);
         expect(structuredClone(removedFilters)).toStrictEqual(["P01"]);
         expect(
             headerWrites.get("Workbook calculations:E2:undefined:setFormula")
@@ -3145,13 +3162,13 @@ describe("garden logger workbook formatting", () => {
 
         for (const [index, plant] of plants.entries()) {
             const baselineRow = index + 2;
-            // All 4,999 possible source records fit below the chart/status area,
+            // At least 4,999 source records fit below the chart/status area,
             // including the old 97th-record collision and later observations.
             for (const observations of [
                 96,
                 97,
                 150,
-                4999,
+                plant.id === "P01" ? 5001 : 4999,
             ]) {
                 expect(
                     rangeRequests.some(

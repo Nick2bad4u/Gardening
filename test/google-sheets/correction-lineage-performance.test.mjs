@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 import { describe, expect, it } from "vitest";
 
@@ -14,12 +15,13 @@ import { describe, expect, it } from "vitest";
  * }} Lineage
  */
 
-const source = readFileSync(
-    new URL("../../scripts/google-sheets/plant-tracker.gs", import.meta.url),
-    "utf8"
+const sourceUrl = new URL(
+    "../../scripts/google-sheets/plant-tracker.gs",
+    import.meta.url
 );
+const source = readFileSync(sourceUrl, "utf8");
 const context = vm.createContext({ Map, Set });
-vm.runInContext(source, context);
+vm.runInContext(source, context, { filename: fileURLToPath(sourceUrl) });
 const api =
     /**
      * @type {{
@@ -192,6 +194,44 @@ describe("correction lineage resolution at full capacity", () => {
         expect(
             normalizedContext(api.correctionRecordContext_(reversed))
         ).toStrictEqual(normalizedContext(originalContext(reversed)));
+    });
+
+    it("keeps physical ordering for a cyclic ancestry without superseding its removed records", () => {
+        expect.hasAssertions();
+
+        const records = [
+            record(0, { corrects: "observation-1" }),
+            record(1, { corrects: "observation-0" }),
+            record(2, { active: true, corrects: "observation-1" }),
+            record(3, { corrects: "" }),
+            record(4, { active: true }),
+        ];
+        const reversed = records.toReversed();
+
+        expect(
+            normalizedContext(api.correctionRecordContext_(records))
+        ).toStrictEqual({
+            order: [
+                0,
+                1,
+                2,
+                3,
+                3,
+            ],
+            superseded: [3],
+        });
+        expect(
+            normalizedContext(api.correctionRecordContext_(reversed))
+        ).toStrictEqual({
+            order: [
+                3,
+                3,
+                2,
+                1,
+                0,
+            ],
+            superseded: [3],
+        });
     });
 
     it("matches the original resolver across deterministic mixed valid and malformed graphs", () => {
