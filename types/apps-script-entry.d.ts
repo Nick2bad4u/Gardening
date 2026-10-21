@@ -1,3 +1,15 @@
+interface GardenAnalyticsRefreshResult {
+    calculatedAt?: string;
+    historyRows?: number;
+    message?: string;
+    payloadBytes?: number;
+    skipped?: true;
+    status:
+        | "Busy"
+        | "Ready"
+        | "Refresh failed";
+}
+
 interface GardenBatchStatusRequest {
     expectedCount?: number;
     plantId?: string;

@@ -148,7 +148,9 @@ export function buildWorkbookUpgradeRequests(snapshot, factories) {
         ),
         ...buildWateringCalendarRequests(snapshot, { clockReference: clock })
     );
-    const cycleFormula = cycleComparisonFormula();
+    const cycleFormula = cycleComparisonFormula({
+        historyLastRow: 5000,
+    });
     formulaRequests.push(
         update(calculationsSheetId, 0, 0, [
             [
@@ -764,7 +766,9 @@ function addPlantPages(context, pages, factories) {
                 column,
                 `=XLOOKUP($A${index + 2},'Workbook calculations'!$A$2:$A$${inventoryEnd},'Workbook calculations'!$${source}$2:$${source}$${inventoryEnd},"")`
             );
-        const intervals = wateringSummaryFormulas(plant.id);
+        const intervals = wateringSummaryFormulas(plant.id, {
+            historyLastRow: 5000,
+        });
         const gapColumn = columnName(index * 3 + 2);
         const gapRange = `'Watering intervals'!$${gapColumn}$2:$${gapColumn}$5000`;
         formulaRequests.push(
@@ -778,7 +782,9 @@ function addPlantPages(context, pages, factories) {
                 ],
             ])
         );
-        const evidence = plantEvidenceFormulas(plant.id, clock);
+        const evidence = plantEvidenceFormulas(plant.id, clock, {
+            historyLastRow: 5000,
+        });
         const summary = [
             [
                 14,

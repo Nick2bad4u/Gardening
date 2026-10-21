@@ -308,10 +308,12 @@ function conflictingActionPayload(payload, action) {
  *
  * @param {import("../logger-correction-fixtures.d.ts").CorrectionCell[][]} [observations]
  * @param {string} [timeZone]
+ * @param {number} [historyCapacity]
  */
 function fixture(
     observations = [observation()],
-    timeZone = "America/New_York"
+    timeZone = "America/New_York",
+    historyCapacity = 50_001
 ) {
     const state = {
         acquisitions: 0,
@@ -334,6 +336,8 @@ function fixture(
         maxRows: Math.max(100, observations.length + 1),
         missingFormulaReadRow: 0,
         onAlert: () => {},
+        pageGrowthFails: false,
+        pageRows: 5139,
         /** @type {(string | number)[][]} */
         plants: [
             [
@@ -430,23 +434,38 @@ function fixture(
         getActiveSheet: () => ({ getName: () => state.sheetName }),
         getId: () => "disposable-workbook",
         getSheetByName: (/** @type {string} */ name) =>
-            name === "History"
-                ? history
-                : name === "Plant tracker"
-                  ? inventorySheet(
-                        name,
-                        state.plants,
-                        Array.from(
-                            { length: 15 },
-                            (_, index) => `Column ${index}`
-                        )
-                    )
-                  : name === "Baselines"
-                    ? inventorySheet(name, state.baselines, [
-                          "Plant ID",
-                          "Pot setup",
-                      ])
-                    : null,
+            name === "P35" || name === "P01"
+                ? {
+                      getMaxRows: () => state.pageRows,
+                      insertRowsAfter: (
+                          /** @type {number} */ _row,
+                          /** @type {number} */ count
+                      ) => {
+                          if (state.pageGrowthFails)
+                              throw new Error("Projection allocation failed");
+
+                          expect(state.writes).toBe(0);
+
+                          state.pageRows += count;
+                      },
+                  }
+                : name === "History"
+                  ? history
+                  : name === "Plant tracker"
+                    ? inventorySheet(
+                          name,
+                          state.plants,
+                          Array.from(
+                              { length: 15 },
+                              (_, index) => `Column ${index}`
+                          )
+                      )
+                    : name === "Baselines"
+                      ? inventorySheet(name, state.baselines, [
+                            "Plant ID",
+                            "Pot setup",
+                        ])
+                      : null,
         getSpreadsheetTimeZone: () => timeZone,
         toast: () => {},
     };
@@ -574,7 +593,14 @@ function fixture(
                     : `${wallClock(date, zone)} ${zone}`,
         },
     });
-    vm.runInContext(source, context, { filename: fileURLToPath(sourceUrl) });
+    vm.runInContext(
+        source.replace(
+            "historyCapacityRows: 50001",
+            () => `historyCapacityRows: ${historyCapacity}`
+        ),
+        context,
+        { filename: fileURLToPath(sourceUrl) }
+    );
     const api = loggerCorrectionApi(context);
     return { api, context, state };
 }
@@ -903,15 +929,22 @@ function replacementDateCell(request) {
  * @param {"formula" | "value"} property
  */
 function selectedMatrix(rows, row, column, rowCount, columnCount, property) {
-    return Array.from({ length: rowCount }, (_, offset) =>
-        Array.from(
+    return Array.from({ length: rowCount }, (_, offset) => {
+        const storedRow = rows[row + offset - 1];
+        // Native Sheets returns blank primitives for empty grid cells. Keep
+        // each returned row independent without allocating rich mock cells.
+        if (storedRow === undefined) {
+            /** @type {string[]} */
+            const emptyRow = [];
+            emptyRow.length = columnCount;
+            return emptyRow.fill("");
+        }
+        return Array.from(
             { length: columnCount },
             (_unused, columnOffset) =>
-                (rows[row + offset - 1]?.[column + columnOffset - 1] ?? cell())[
-                    property
-                ]
-        )
-    );
+                storedRow[column + columnOffset - 1]?.[property] ?? ""
+        );
+    });
 }
 
 /** @param {number} serial @param {string} timeZone @returns {Date} */
@@ -1688,24 +1721,59 @@ describe("atomic saved History corrections", () => {
         }
     );
 
-    it("uses row 5000 exactly and rejects row 5001 without mutation", () => {
+    it("grows the correction plant spill including Removed ancestors before atomic mutation and skips growth for completed retries", () => {
         expect.hasAssertions();
 
         const model = fixture();
-        model.state.rows.length = 4998;
-        for (let index = 2; index < 4998; index += 1)
-            model.state.rows[index] = Array.from({ length: 67 }, () => cell());
+        for (let index = 1; index < 4999; index += 1) {
+            const removed = Array.from({ length: 67 }, () => cell());
+            removed[1] = cell("P01");
+            removed[35] = cell("Removed");
+            model.state.rows.push(removed);
+        }
+        model.state.maxRows = 5001;
+        const payload = prepare(model);
+        model.state.pageGrowthFails = true;
+
+        expect(() => model.api.saveWebObservationCorrection(payload)).toThrow(
+            "Projection allocation failed"
+        );
+        expect(model.state.writes).toBe(0);
+        expect(model.state.properties.size).toBe(0);
+        expect(stored(model, 2, 36).value).toBe("Active");
+
+        model.state.pageGrowthFails = false;
+        const result = model.api.saveWebObservationCorrection(payload);
+
+        expect(model.state.pageRows).toBe(5140);
+
+        model.state.pageGrowthFails = true;
+
+        expect(model.api.saveWebObservationCorrection(payload)).toStrictEqual(
+            result
+        );
+        expect(model.state.writes).toBe(1);
+    });
+
+    it("uses row 50001 exactly and rejects row 50002 without mutation", () => {
+        expect.hasAssertions();
+
+        const model = fixture();
+        // Empty physical slots stay sparse in the backing mock. The last
+        // populated row still makes native getLastRow() report row 50000.
+        model.state.rows.length = 49_999;
         model.state.rows.push(
             observation("Other", "last-existing", { 1: "P02" })
         );
-        model.state.maxRows = 4999;
+        model.state.maxRows = 50_000;
         const payload = prepare(model);
         const result = model.api.saveWebObservationCorrection(payload);
 
-        expect(model.state.maxRows).toBe(5000);
-        expect(stored(model, 5000, 27).value).toBe(
+        expect(model.state.maxRows).toBe(50_001);
+        expect(stored(model, 50_001, 27).value).toBe(
             result.replacementObservationId
         );
+        expect(stored(model, 50_000, 27).value).toBe("last-existing");
 
         const next = prepare(
             model,
@@ -1721,7 +1789,7 @@ describe("atomic saved History corrections", () => {
             result
         );
         expect(model.state.writes).toBe(1);
-    });
+    }, 20_000);
 
     it("rejects duplicate identities, reused request namespaces, changed originals and wrong schema", () => {
         expect.hasAssertions();
@@ -2922,7 +2990,11 @@ describe("durable pre-batch correction rejection", () => {
     ])("records deterministic %s only during save", (code) => {
         expect.hasAssertions();
 
-        const model = fixture();
+        const model = fixture(
+            undefined,
+            undefined,
+            code === "HISTORY_CAPACITY" ? 5000 : 50_001
+        );
         const payload = prepare(model);
         switch (code) {
             case "HISTORY_CAPACITY": {

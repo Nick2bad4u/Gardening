@@ -435,7 +435,7 @@ describe("one-time native workbook audit repair", () => {
         const helperFormula = required(helperRow.values[0]).userEnteredValue
             .formulaValue;
 
-        expect(helperFormula).toContain('History!AJ2:AJ5000<>"Removed"');
+        expect(helperFormula).toContain('History!AJ2:AJ50001<>"Removed"');
     });
 
     /**

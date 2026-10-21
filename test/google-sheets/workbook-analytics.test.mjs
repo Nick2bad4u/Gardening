@@ -217,14 +217,20 @@ describe("guarded watering calendar installation", () => {
 });
 
 describe("native derived formula contracts", () => {
-    it("uses the correct helper triplet at both ends and never invents an empty interval", () => {
+    it("summarizes complete History independently of the plotted interval window", () => {
         expect.hasAssertions();
 
         const first = wateringSummaryFormulas("P01");
         const last = wateringSummaryFormulas("P30");
 
-        expect(first.count).toBe("=COUNT('Watering intervals'!$C$2:$C$5000)");
-        expect(last.count).toBe("=COUNT('Watering intervals'!$CL$2:$CL$5000)");
+        expect(first.count).toContain('History!$B$2:$B$50001="P01"');
+        expect(first.count).toContain("=IFNA(ROWS(");
+        expect(last.count).toContain('History!$B$2:$B$50001="P30"');
+        expect(last.count).toContain("),0)");
+        expect(Object.values(first).join(" ")).not.toContain(
+            "Watering intervals"
+        );
+        expect(Object.values(first).join(" ")).not.toContain("SORTN");
 
         for (const value of [
             first.latest,
@@ -245,8 +251,8 @@ describe("native derived formula contracts", () => {
 
         const formulas = plantEvidenceFormulas("P01", clock);
         for (const formula of Object.values(formulas)) {
-            expect(formula).toContain('History!$AJ$2:$AJ$5000<>"Removed"');
-            expect(formula).toContain(`History!$A$2:$A$5000<=${clock}`);
+            expect(formula).toContain('History!$AJ$2:$AJ$50001<>"Removed"');
+            expect(formula).toContain(`History!$A$2:$A$50001<=${clock}`);
             expect(formula).not.toMatch(/(?:NOW|TODAY)\(/v);
         }
 
@@ -256,9 +262,9 @@ describe("native derived formula contracts", () => {
         expect(formulas.conditionEvidence).toContain(
             '="Photo","Photo-only observation"'
         );
-        expect(formulas.conditionEvidence).toContain("History!$AC$2:$AC$5000");
-        expect(formulas.conditionEvidence).toContain("History!$AI$2:$AI$5000");
-        expect(formulas.conditionNotes).toContain("History!$I$2:$I$5000");
+        expect(formulas.conditionEvidence).toContain("History!$AC$2:$AC$50001");
+        expect(formulas.conditionEvidence).toContain("History!$AI$2:$AI$50001");
+        expect(formulas.conditionNotes).toContain("History!$I$2:$I$50001");
         expect(formulas.conditionEvidence).not.toContain("Physical inspection");
     });
 
@@ -268,17 +274,17 @@ describe("native derived formula contracts", () => {
         const formulas = plantEvidenceFormulas("P01");
 
         expect(formulas.feedDose).toContain(
-            'IF(History!$S$2:$S$5000="","Unknown",History!$S$2:$S$5000)'
+            'IF(History!$S$2:$S$50001="","Unknown",History!$S$2:$S$50001)'
         );
-        expect(formulas.feedProduct).toContain('History!$Q$2:$Q$5000="Yes"');
+        expect(formulas.feedProduct).toContain('History!$Q$2:$Q$50001="Yes"');
         expect(formulas.plainWaterEventsSinceFeed).toContain(
-            'History!$Q$2:$Q$5000="No"'
-        );
-        expect(formulas.plainWaterEventsSinceFeed).toContain(
-            'History!$C$2:$C$5000="Water"'
+            'History!$Q$2:$Q$50001="No"'
         );
         expect(formulas.plainWaterEventsSinceFeed).toContain(
-            "History!$A$2:$A$5000>lastDate"
+            'History!$C$2:$C$50001="Water"'
+        );
+        expect(formulas.plainWaterEventsSinceFeed).toContain(
+            "History!$A$2:$A$50001>lastDate"
         );
         expect(formulas.plainWaterEventsSinceFeed).toContain(")),0)))");
     });
@@ -289,10 +295,10 @@ describe("native derived formula contracts", () => {
         const { conditionEvidence } = plantEvidenceFormulas("P01", clock);
 
         expect(conditionEvidence).toContain(
-            'IF(History!$C$2:$C$5000="Photo","Photo-only observation",IF((History!$C$2:$C$5000="Check")*REGEXMATCH(History!$I$2:$I$5000&"","(?i)photo[- ]only"),"Photo-only Check record",History!$C$2:$C$5000&" record"))'
+            'IF(History!$C$2:$C$50001="Photo","Photo-only observation",IF((History!$C$2:$C$50001="Check")*REGEXMATCH(History!$I$2:$I$50001&"","(?i)photo[- ]only"),"Photo-only Check record",History!$C$2:$C$50001&" record"))'
         );
-        expect(conditionEvidence).toContain("History!$AC$2:$AC$5000");
-        expect(conditionEvidence).toContain("History!$AI$2:$AI$5000");
+        expect(conditionEvidence).toContain("History!$AC$2:$AC$50001");
+        expect(conditionEvidence).toContain("History!$AI$2:$AI$50001");
         expect(conditionEvidence).not.toContain("Physical");
     });
 
@@ -302,14 +308,14 @@ describe("native derived formula contracts", () => {
         const formulas = plantEvidenceFormulas("P01", clock);
 
         expect(formulas.plainWaterEventsSinceFeed).toContain(
-            "lastDate,IFNA(MAX(FILTER(History!$A$2:$A$5000"
+            "lastDate,IFNA(MAX(FILTER(History!$A$2:$A$50001"
         );
         expect(formulas.plainWaterEventsSinceFeed).toContain(
-            'History!$Q$2:$Q$5000="No",History!$A$2:$A$5000>lastDate'
+            'History!$Q$2:$Q$50001="No",History!$A$2:$A$50001>lastDate'
         );
         expect(formulas.plainWaterEventsSinceFeed).not.toContain("ROW(");
         expect(formulas.plainWaterEventsSinceFeed).not.toContain("=lastDate");
-        expect(formulas.feedProduct).toContain("ROW(History!$A$2:$A$5000)");
+        expect(formulas.feedProduct).toContain("ROW(History!$A$2:$A$50001)");
         expect(formulas.feedProduct).toContain("1,FALSE,2,FALSE");
     });
 
@@ -322,10 +328,10 @@ describe("native derived formula contracts", () => {
         );
 
         expect(plainWaterEventsSinceFeed).toContain(
-            'History!$Q$2:$Q$5000="Yes")),""),IF(lastDate="","",IFNA(ROWS('
+            'History!$Q$2:$Q$50001="Yes")),""),IF(lastDate="","",IFNA(ROWS('
         );
         expect(plainWaterEventsSinceFeed).toContain(
-            "History!$A$2:$A$5000>lastDate)),0)))"
+            "History!$A$2:$A$50001>lastDate)),0)))"
         );
         expect(plainWaterEventsSinceFeed).not.toMatch(/^=IFNA\(LET/v);
     });

@@ -1,5 +1,7 @@
+import { historyLastRow as defaultHistoryLastRow } from "./history-capacity-config.mjs";
 import { plantColor } from "./plant-chart-colors.mjs";
 import palette from "./plant-colors.json" with { type: "json" };
+import { fullHistoryWateringGaps } from "./watering-intervals.mjs";
 
 export const wateringCalendarSheetId = 907_202_606;
 
@@ -70,7 +72,9 @@ export function buildWateringCalendarRequests(
         )
             throw new Error(`Unexpected History header: ${label}`);
     }
-    const formulas = wateringCalendarFormulas(clockReference);
+    const formulas = wateringCalendarFormulas(clockReference, {
+        historyLastRow: 5000,
+    });
     const range = {
         endColumnIndex: 57,
         endRowIndex: 34,
@@ -312,35 +316,42 @@ export function buildWateringCalendarRequests(
  *
  * @param {string} plantId
  * @param {string} [clockReference]
+ * @param {{ historyLastRow?: number }} [options]
  */
-export function plantEvidenceFormulas(plantId, clockReference) {
+export function plantEvidenceFormulas(
+    plantId,
+    clockReference,
+    { historyLastRow = defaultHistoryLastRow } = {}
+) {
+    const range = (/** @type {string} */ column) =>
+        history(column, historyLastRow);
     const observation = (
         /** @type {string} */ condition,
         /** @type {string} */ value
-    ) => latest(plantId, condition, value, clockReference);
-    const photo = `${history("X")}<>""`;
-    const condition = `${history("H")}<>""`;
-    const feed = `${history("C")}="Water",${history("Q")}="Yes"`;
+    ) => latest(plantId, condition, value, clockReference, historyLastRow);
+    const photo = `${range("X")}<>""`;
+    const condition = `${range("H")}<>""`;
+    const feed = `${range("C")}="Water",${range("Q")}="Yes"`;
     const originalOrUnknown = (/** @type {string} */ column) =>
-        `ARRAYFORMULA(IF(${history(column)}="","Unknown",${history(column)}))`;
-    const url = observation(photo, history("X")).slice(1);
+        `ARRAYFORMULA(IF(${range(column)}="","Unknown",${range(column)}))`;
+    const url = observation(photo, range("X")).slice(1);
     return {
-        condition: observation(condition, history("H")),
-        conditionDate: observation(condition, history("A")),
+        condition: observation(condition, range("H")),
+        conditionDate: observation(condition, range("A")),
         conditionEvidence: observation(
             condition,
-            `ARRAYFORMULA(IF(${history("C")}="Photo","Photo-only observation",IF((${history("C")}="Check")*REGEXMATCH(${history("I")}&"","(?i)photo[- ]only"),"Photo-only Check record",${history("C")}&" record"))&IF(${history("AC")}<>""," · "&${history("AC")},"")&IF(${history("AI")}<>""," · "&${history("AI")},""))`
+            `ARRAYFORMULA(IF(${range("C")}="Photo","Photo-only observation",IF((${range("C")}="Check")*REGEXMATCH(${range("I")}&"","(?i)photo[- ]only"),"Photo-only Check record",${range("C")}&" record"))&IF(${range("AC")}<>""," · "&${range("AC")},"")&IF(${range("AI")}<>""," · "&${range("AI")},""))`
         ),
         conditionNotes: observation(
             condition,
-            `ARRAYFORMULA(IF(${history("I")}="","",${history("I")}))`
+            `ARRAYFORMULA(IF(${range("I")}="","",${range("I")}))`
         ),
-        feedDate: observation(feed, history("A")),
+        feedDate: observation(feed, range("A")),
         feedDose: observation(feed, originalOrUnknown("S")),
         feedProduct: observation(feed, originalOrUnknown("R")),
-        photoDate: observation(photo, history("A")),
+        photoDate: observation(photo, range("A")),
         photoLink: `=LET(url,${url},IF(url="","",HYPERLINK(url,"Open latest photo")))`,
-        plainWaterEventsSinceFeed: `=LET(lastDate,IFNA(MAX(FILTER(${history("A")},${active(plantId, clockReference)},${feed})),""),IF(lastDate="","",IFNA(ROWS(FILTER(${history("A")},${active(plantId, clockReference)},${history("C")}="Water",${history("Q")}="No",${history("A")}>lastDate)),0)))`,
+        plainWaterEventsSinceFeed: `=LET(lastDate,IFNA(MAX(FILTER(${range("A")},${active(plantId, clockReference, historyLastRow)},${feed})),""),IF(lastDate="","",IFNA(ROWS(FILTER(${range("A")},${active(plantId, clockReference, historyLastRow)},${range("C")}="Water",${range("Q")}="No",${range("A")}>lastDate)),0)))`,
     };
 }
 
@@ -377,13 +388,19 @@ export function roSummaryFormulas() {
  * per plant feeds its 56 cells; missing nutrient history is never plain water.
  *
  * @param {string} clockReference
+ * @param {{ historyLastRow?: number }} [options]
  */
-export function wateringCalendarFormulas(clockReference) {
+export function wateringCalendarFormulas(
+    clockReference,
+    { historyLastRow = defaultHistoryLastRow } = {}
+) {
+    const range = (/** @type {string} */ column) =>
+        history(column, historyLastRow);
     validateClock(clockReference);
     return {
         dates: `=SEQUENCE(1,56,INT(${clockReference})-55,1)`,
         plantRows: palette.map(({ id }) => ({
-            formula: `=LET(records,IFNA(FILTER({${history("A")},${history("Q")}},${active(id, clockReference)},${history("C")}="Water",${history("A")}>=(INT(${clockReference})-55),${history("A")}<(INT(${clockReference})+1)),{0,""}),days,ARRAYFORMULA(INT(INDEX(records,0,1))),nutrients,INDEX(records,0,2),MAP(SEQUENCE(1,56,INT(${clockReference})-55,1),LAMBDA(day,LET(flags,IFNA(FILTER(nutrients,days=day),"__NO_WATER__"),fed,SUM(ARRAYFORMULA(N(flags="Yes"))),plain,SUM(ARRAYFORMULA(N(flags="No"))),unknown,SUM(ARRAYFORMULA(N((flags<>"Yes")*(flags<>"No")))),IF(INDEX(flags,1,1)="__NO_WATER__","",IF((N(fed>0)+N(plain>0)+N(unknown>0))>1,"Mixed",IF(fed>0,"Fed",IF(plain>0,"Plain","Unknown"))))))))`,
+            formula: `=LET(records,IFNA(FILTER({${range("A")},${range("Q")}},${active(id, clockReference, historyLastRow)},${range("C")}="Water",${range("A")}>=(INT(${clockReference})-55),${range("A")}<(INT(${clockReference})+1)),{0,""}),days,ARRAYFORMULA(INT(INDEX(records,0,1))),nutrients,INDEX(records,0,2),MAP(SEQUENCE(1,56,INT(${clockReference})-55,1),LAMBDA(day,LET(flags,IFNA(FILTER(nutrients,days=day),"__NO_WATER__"),fed,SUM(ARRAYFORMULA(N(flags="Yes"))),plain,SUM(ARRAYFORMULA(N(flags="No"))),unknown,SUM(ARRAYFORMULA(N((flags<>"Yes")*(flags<>"No")))),IF(INDEX(flags,1,1)="__NO_WATER__","",IF((N(fed>0)+N(plain>0)+N(unknown>0))>1,"Mixed",IF(fed>0,"Fed",IF(plain>0,"Plain","Unknown"))))))))`,
             plantId: id,
         })),
         startDate: `=INT(${clockReference})-55`,
@@ -391,18 +408,20 @@ export function wateringCalendarFormulas(clockReference) {
 }
 
 /**
- * Completed calendar-day gaps reuse the installed, same-day-deduplicated
- * helper. With no completed gap the descriptive statistics remain blank and
- * count is 0.
+ * Descriptive statistics consume all completed gaps, independently of the
+ * bounded chart. With no completed gap statistics stay blank and count is 0.
  *
  * @param {string} plantId
+ * @param {{ historyLastRow?: number }} [options]
  */
-export function wateringSummaryFormulas(plantId) {
-    const column = columnName(plantIndex(plantId) * 3 + 2);
-    const range = `'Watering intervals'!$${column}$2:$${column}$5000`;
-    const values = `FILTER(${range},ISNUMBER(${range}),${range}>0)`;
+export function wateringSummaryFormulas(
+    plantId,
+    { historyLastRow = defaultHistoryLastRow } = {}
+) {
+    plantIndex(plantId);
+    const values = `LET(allGaps,${fullHistoryWateringGaps(plantId, { historyLastRow })},FILTER(allGaps,ISNUMBER(allGaps),allGaps>0))`;
     return {
-        count: `=COUNT(${range})`,
+        count: `=IFNA(ROWS(${values}),0)`,
         latest: `=IFNA(LET(gaps,${values},INDEX(gaps,ROWS(gaps))),"")`,
         maximum: `=IFNA(MAX(${values}),"")`,
         median: `=IFNA(MEDIAN(${values}),"")`,
@@ -410,23 +429,17 @@ export function wateringSummaryFormulas(plantId) {
     };
 }
 
-/** @param {string} plantId @param {string} [clockReference] */
-function active(plantId, clockReference) {
+/**
+ * @param {string} plantId @param {string} [clockReference] @param {number}
+ *   [lastRow]
+ */
+function active(plantId, clockReference, lastRow = defaultHistoryLastRow) {
+    const range = (/** @type {string} */ column) => history(column, lastRow);
     plantIndex(plantId);
     if (clockReference !== undefined) validateClock(clockReference);
     const cutoff =
-        clockReference === undefined
-            ? ""
-            : `,${history("A")}<=${clockReference}`;
-    return `${history("B")}="${plantId}",${history("AJ")}<>"Removed",ISNUMBER(${history("A")}),${history("A")}>0${cutoff}`;
-}
-
-/** @param {number} index */
-function columnName(index) {
-    let result = "";
-    for (let value = index + 1; value > 0; value = Math.floor((value - 1) / 26))
-        result = String.fromCodePoint(65 + ((value - 1) % 26)) + result;
-    return result;
+        clockReference === undefined ? "" : `,${range("A")}<=${clockReference}`;
+    return `${range("B")}="${plantId}",${range("AJ")}<>"Removed",ISNUMBER(${range("A")}),${range("A")}>0${cutoff}`;
 }
 
 /** @param {string} formulaValue */
@@ -434,9 +447,11 @@ function formula(formulaValue) {
     return { userEnteredValue: { formulaValue } };
 }
 
-/** @param {string} column */
-function history(column) {
-    return `History!$${column}$2:$${column}$5000`;
+/** @param {string} column @param {number} [lastRow] */
+function history(column, lastRow = defaultHistoryLastRow) {
+    if (!Number.isSafeInteger(lastRow) || lastRow < 2)
+        throw new Error("History range must include observation rows");
+    return `History!$${column}$2:$${column}$${lastRow}`;
 }
 
 /**
@@ -448,9 +463,17 @@ function history(column) {
  * @param {string} condition
  * @param {string} value
  * @param {string} [clockReference]
+ * @param {number} [lastRow]
  */
-function latest(plantId, condition, value, clockReference) {
-    return `=IFNA(INDEX(SORT(FILTER({${history("A")},ROW(${history("A")}),${value}},${active(plantId, clockReference)},${condition}),1,FALSE,2,FALSE),1,3),"")`;
+function latest(
+    plantId,
+    condition,
+    value,
+    clockReference,
+    lastRow = defaultHistoryLastRow
+) {
+    const range = (/** @type {string} */ column) => history(column, lastRow);
+    return `=IFNA(INDEX(SORT(FILTER({${range("A")},ROW(${range("A")}),${value}},${active(plantId, clockReference, lastRow)},${condition}),1,FALSE,2,FALSE),1,3),"")`;
 }
 
 /** @param {string} plantId */

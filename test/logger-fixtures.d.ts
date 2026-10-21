@@ -7,6 +7,22 @@ import type {
     WebWeightSeries,
 } from "./logger-workflow-fixtures.js";
 
+export interface AnalyticsReadOptions {
+    dateTimeRenderOption: "FORMATTED_STRING" | "SERIAL_NUMBER";
+    majorDimension: "ROWS";
+    ranges: string[];
+    valueRenderOption: "UNFORMATTED_VALUE";
+}
+
+export interface AnalyticsReadResponse {
+    spreadsheetId: string;
+    valueRanges: {
+        majorDimension: string;
+        range: string;
+        values?: CellValue[][];
+    }[];
+}
+
 export interface Bootstrap {
     dayKey?: string;
     dayStartHour?: number;
@@ -24,6 +40,7 @@ export interface Bootstrap {
     timeZone?: string;
     version: string;
     weighedTodayPlantIds?: string[];
+    workbookCalculation?: { calculatedAt?: string; status: string };
 }
 
 export type CellValue =
@@ -177,6 +194,7 @@ export interface ScriptArguments {
     previewWebObservationCorrection: Parameters<
         LoggerCorrectionApi["previewWebObservationCorrection"]
     >;
+    recalculateGardenWorkbook: [];
     saveBulkCareObservation: [payload: ObservationPayload];
     saveWebObservation: [payload: ObservationPayload];
     saveWebObservationBatch: [payloads: ObservationPayload[]];

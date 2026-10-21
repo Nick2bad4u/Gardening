@@ -7,6 +7,9 @@ import {
     cycleComparisonAppsScriptSource,
     cycleComparisonFormula,
     cycleComparisonRows,
+    cycleSnapshotReadyCondition,
+    cycleSnapshotStatusFormula,
+    gateCycleSnapshotFormula,
 } from "../../scripts/google-sheets/cycle-comparison.mjs";
 
 const sourceUrl = new URL(
@@ -109,6 +112,15 @@ function comparisonApi(exported) {
     return api.GARDEN_CYCLE_COMPARISON;
 }
 
+function generatedComparisonApi() {
+    const isolated = vm.createContext({ Date, Map, Set });
+    vm.runInContext(source, isolated);
+    vm.runInContext(cycleComparisonAppsScriptSource(), isolated);
+    const exported = /** @type {Record<string, unknown>} */ (isolated);
+    installReadOnlyServices(exported);
+    return comparisonApi(exported);
+}
+
 /** @param {Record<string, unknown>} exported */
 function installReadOnlyServices(exported) {
     exported["SpreadsheetApp"] = {
@@ -163,6 +175,137 @@ function nativeHistory(projectedRows) {
 }
 
 describe("watering cycle comparison", () => {
+    it("gates cached cycle consumers by freshness and calculated plant identity", () => {
+        expect.hasAssertions();
+
+        const condition = cycleSnapshotReadyCondition();
+        const sourceFormula = '=VSTACK(A2:A5000,"")';
+        const gated = gateCycleSnapshotFormula(sourceFormula);
+        const status = cycleSnapshotStatusFormula();
+
+        expect(condition).toContain("$J$2='Insights'!$B$228");
+        expect(condition).toContain("$K$2=IFNA(XLOOKUP(");
+        expect(condition).toContain("Baselines!T2:T37");
+        expect(condition).toContain('$I$2="Ready"');
+        expect(condition).toContain("ISNUMBER('Workbook calculations'!$H$2)");
+        expect(condition).toContain("$H$2>0");
+        expect(condition).toContain("$H$2<='Workbook calculations'!$E$2");
+        expect(condition).toContain(
+            "$E$2-'Workbook calculations'!$H$2<=15/1440"
+        );
+        expect(gated).toBe(`=IF(${condition},VSTACK(A2:A5000,""),"")`);
+        expect(status).toContain("Waiting for refresh");
+        expect(status).toContain("Refresh failed");
+        expect(status).toContain("last calculated");
+        expect(() => gateCycleSnapshotFormula("cached value")).toThrow(
+            "requires a formula"
+        );
+        expect(() =>
+            cycleSnapshotReadyCondition({ inventoryLastRow: 1 })
+        ).toThrow("bounded inventory");
+    });
+
+    it("keeps the newest absolute observations when a shorter current cycle follows a long old cycle", () => {
+        expect.hasAssertions();
+
+        const history = [
+            row(0, "Water"),
+            ...Array.from({ length: 5000 }, (_, index) =>
+                row((index + 1) / 1000, "Weigh", index + 100)
+            ),
+            row(10, "Water"),
+            row(10, "Weigh", 9999),
+        ];
+        const result = cycleComparisonRows(
+            history,
+            "P01",
+            1,
+            date(30),
+            helpers
+        );
+        const chartRows = result.slice(1);
+
+        expect(result).toHaveLength(5000);
+        expect(chartRows[0]).toStrictEqual([
+            0,
+            9999,
+            "",
+            "",
+        ]);
+        expect(chartRows.map((record) => record[2])).not.toContain(100);
+        expect(chartRows.map((record) => record[2])).not.toContain(101);
+        expect(chartRows[1]?.[2]).toBe(102);
+        expect(chartRows.at(-1)?.[2]).toBe(5099);
+        expect(calculate(history)).toStrictEqual(result);
+
+        const nativeResult = generatedComparisonApi()(
+            nativeHistory(history),
+            "P01",
+            1
+        );
+
+        expect(structuredClone(nativeResult)).toStrictEqual(result);
+        expect(history).toHaveLength(5003);
+    });
+
+    it("matches the historical wrapper across correction lineage and same-save cycle boundaries", () => {
+        expect.hasAssertions();
+
+        const history = [
+            row(0, "Water", "", { save: "first" }),
+            row(0, "Weigh", 200, { save: "first" }),
+            row(3, "Weigh", 180, {
+                observation: "old",
+                removed: true,
+                save: "before",
+            }),
+            row(3, "Water", "", { save: "second" }),
+            row(3, "Weigh", 220, { save: "second" }),
+            row(3, "Weigh", 181, {
+                corrects: "old",
+                observation: "replacement",
+                save: "before",
+            }),
+        ];
+        const run = generatedComparisonApi();
+        const legacy = structuredClone(run(nativeHistory(history), "P01", 1));
+
+        expect(legacy).toStrictEqual(
+            cycleComparisonRows(history, "P01", 1, date(30), helpers)
+        );
+        expect(legacy[2]).toStrictEqual([
+            3,
+            "",
+            181,
+            "",
+        ]);
+    });
+
+    it("handles 50000 populated rows with the same newest-point window in the generated calculation", () => {
+        expect.hasAssertions();
+
+        const history = [
+            row(0, "Water"),
+            ...Array.from({ length: 49_999 }, (_, index) =>
+                row((index + 1) / 10_000, "Weigh", index + 100)
+            ),
+        ];
+        const run = generatedComparisonApi();
+        const result = cycleComparisonRows(
+            history,
+            "P01",
+            1,
+            date(30),
+            helpers
+        );
+        const legacy = structuredClone(run(nativeHistory(history), "P01", 1));
+
+        expect(result).toStrictEqual(legacy);
+        expect(result).toHaveLength(5000);
+        expect(result[1]?.[1]).toBe(45_100);
+        expect(result.at(-1)?.[1]).toBe(50_098);
+    });
+
     it("compares the current and last two completed cycles with real elapsed days", () => {
         expect.hasAssertions();
 
@@ -417,7 +560,14 @@ describe("watering cycle comparison", () => {
 
         const formula = cycleComparisonFormula();
 
-        expect(formula).toContain("History!A2:AP5000");
+        expect(formula).toContain("History!A2:AP50001");
+        expect(
+            cycleComparisonFormula({
+                historyLastRow: 5000,
+            })
+        ).toBe(
+            "=GARDEN_CYCLE_COMPARISON(History!A2:AP5000,'Insights'!$B$228,IFNA(XLOOKUP('Insights'!$B$228,Baselines!A2:A31,Baselines!T2:T31),\"\"))"
+        );
         expect(formula).toContain("'Insights'!$B$228");
         expect(formula).toContain("Baselines!T2:T31");
         expect(formula).not.toMatch(/NOW\(|TODAY\(|ARRAYFORMULA\(N/v);

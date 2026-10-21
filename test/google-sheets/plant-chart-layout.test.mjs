@@ -185,6 +185,41 @@ function fixture() {
 }
 
 describe("native plant chart template and spacing", () => {
+    it("preserves the expanded 4999-point bindings when applying chart presentation", () => {
+        expect.hasAssertions();
+
+        const snapshot = fixture();
+        const bindings = snapshot.metadata.sheets.flatMap((sheet) =>
+            (sheet.charts ?? []).flatMap((chart) =>
+                chart.spec.basicChart.chartType === "COLUMN"
+                    ? []
+                    : [
+                          required(chart.spec.basicChart.domains[0]).domain,
+                          ...(chart.spec.basicChart.series ?? []).map(
+                              (series) => series.series
+                          ),
+                      ]
+            )
+        );
+        for (const binding of bindings)
+            required(binding.sourceRange.sources[0]).endRowIndex = 5011;
+        const result = buildPlantChartLayoutRequests(snapshot);
+        const lineCharts = result.expectedCharts.filter(
+            (chart) => chart.spec.basicChart.chartType !== "COLUMN"
+        );
+
+        expect(lineCharts).toHaveLength(palette.length * 3);
+        expect(
+            lineCharts.map(
+                (chart) =>
+                    required(
+                        required(chart.spec.basicChart.domains[0]).domain
+                            .sourceRange.sources[0]
+                    ).endRowIndex
+            )
+        ).toStrictEqual(Array.from({ length: palette.length * 3 }, () => 5011));
+    });
+
     it("fits the visible page edge and lowers the preferred floor for lighter recorded pots", () => {
         expect.hasAssertions();
 

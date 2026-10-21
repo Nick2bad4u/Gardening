@@ -1,3 +1,7 @@
+import {
+    chartObservationLimit,
+    historyLastRow as defaultHistoryLastRow,
+} from "./history-capacity-config.mjs";
 import { plantColor } from "./plant-chart-colors.mjs";
 import palette from "./plant-colors.json" with { type: "json" };
 
@@ -148,7 +152,8 @@ export function buildWateringIntervalRequests({ cells, metadata }) {
                                     note: "Distinct active Water dates, sorted oldest first. Same-day entries combine. All watering applications and pot setups are included. First date has no interval. Calendar-day differences, not a recommended schedule.",
                                     userEnteredValue: {
                                         formulaValue: wateringIntervalFormula(
-                                            plant.id
+                                            plant.id,
+                                            { historyLastRow: 5000 }
                                         ),
                                     },
                                 },
@@ -472,14 +477,34 @@ export function buildWateringIntervalStyleRepairRequests(
 }
 
 /**
- * Calendar dates follow the workbook time zone, including date-only imports.
+ * Complete distinct-date gaps across all setups. Blank means fewer than two
+ * active Water dates; consumers must not convert that absence into zero days.
  *
  * @param {string} plantId
+ * @param {{ historyLastRow?: number }} [options]
  */
-export function wateringIntervalFormula(plantId) {
-    if (palette.every((plant) => plant.id !== plantId))
-        throw new Error(`Unknown plant: ${plantId}`);
-    return `=IFNA(LET(dates,SORT(UNIQUE(ARRAYFORMULA(INT(FILTER(History!$A$2:$A$5000,History!$B$2:$B$5000="${plantId}",History!$C$2:$C$5000="Water",History!$AJ$2:$AJ$5000<>"Removed",ISNUMBER(History!$A$2:$A$5000),History!$A$2:$A$5000>0)))),1,TRUE),count,ROWS(dates),IF(count<2,{"","",""},LET(previous,FILTER(dates,SEQUENCE(count)<count),current,FILTER(dates,SEQUENCE(count)>1),HSTACK(previous,current,ARRAYFORMULA(current-previous))))),{"","",""})`;
+export function fullHistoryWateringGaps(
+    plantId,
+    { historyLastRow = defaultHistoryLastRow } = {}
+) {
+    const dates = wateringDatesExpression(plantId, historyLastRow);
+    return `IFNA(LET(dates,${dates},count,ROWS(dates),IF(count<2,"",ARRAYFORMULA(FILTER(dates,SEQUENCE(count)>1)-FILTER(dates,SEQUENCE(count)<count)))),"")`;
+}
+
+/**
+ * Calendar dates follow the workbook time zone, including date-only imports.
+ * The complete ledger determines gaps; only the latest completed gaps are
+ * plotted, in chronological order.
+ *
+ * @param {string} plantId
+ * @param {{ historyLastRow?: number }} [options]
+ */
+export function wateringIntervalFormula(
+    plantId,
+    { historyLastRow = defaultHistoryLastRow } = {}
+) {
+    const dates = wateringDatesExpression(plantId, historyLastRow);
+    return `=IFNA(LET(dates,${dates},count,ROWS(dates),IF(count<2,{"","",""},LET(previous,FILTER(dates,SEQUENCE(count)<count),current,FILTER(dates,SEQUENCE(count)>1),intervals,HSTACK(previous,current,ARRAYFORMULA(current-previous)),SORT(SORTN(intervals,${chartObservationLimit},0,2,FALSE),2,TRUE)))),{"","",""})`;
 }
 
 /** @param {number} column */
@@ -493,15 +518,6 @@ function columnName(column) {
         name = String.fromCodePoint(65 + ((value - 1) % 26)) + name;
     return name;
 }
-
-/**
- * @typedef {{
- *     position: string;
- *     title?: string;
- *     format?: Record<string, unknown>;
- *     viewWindowOptions?: Record<string, unknown>;
- * }} IntervalRepairAxis
- */
 
 /** @param {IntervalRepairAxis[]} axes @param {string} plantId */
 function intervalRepairAxes(axes, plantId) {
@@ -519,6 +535,15 @@ function intervalRepairAxes(axes, plantId) {
         ? axes.map((axis) => (axis.position === "LEFT_AXIS" ? restored : axis))
         : [...axes, restored];
 }
+
+/**
+ * @typedef {{
+ *     position: string;
+ *     title?: string;
+ *     format?: Record<string, unknown>;
+ *     viewWindowOptions?: Record<string, unknown>;
+ * }} IntervalRepairAxis
+ */
 
 /**
  * @param {import("../../test/workbook-fixtures.d.ts").WorkbookSnapshot["metadata"]} metadata
@@ -556,4 +581,15 @@ function intervalRepairRangeMatches(data, column) {
         range.startColumnIndex === column &&
         range.endColumnIndex === column + 1
     );
+}
+
+/** @param {string} plantId @param {number} lastRow */
+function wateringDatesExpression(plantId, lastRow) {
+    if (!/^P\d{2}$/v.test(plantId))
+        throw new Error(`Invalid plant ID: ${plantId}`);
+    if (!Number.isSafeInteger(lastRow) || lastRow < 2)
+        throw new Error("History range must include observation rows");
+    const range = (/** @type {string} */ column) =>
+        `History!$${column}$2:$${column}$${lastRow}`;
+    return `SORT(UNIQUE(ARRAYFORMULA(INT(FILTER(${range("A")},${range("B")}="${plantId}",${range("C")}="Water",${range("AJ")}<>"Removed",ISNUMBER(${range("A")}),${range("A")}>0)))),1,TRUE)`;
 }

@@ -3,10 +3,48 @@ import { describe, expect, it } from "vitest";
 import { plantColor } from "../../scripts/google-sheets/plant-chart-colors.mjs";
 import {
     buildWateringIntervalStyleRepairRequests,
+    fullHistoryWateringGaps,
+    wateringIntervalFormula,
     wateringIntervalSheetId,
     wateringIntervalTitle,
 } from "../../scripts/google-sheets/watering-intervals.mjs";
 import { required } from "../helpers/required.mjs";
+
+describe("full-history watering gaps and bounded plots", () => {
+    it("reads all active Water dates while only the plot selects the latest completed gaps", () => {
+        expect.hasAssertions();
+
+        const gaps = fullHistoryWateringGaps("P38");
+        const plot = wateringIntervalFormula("P38");
+
+        expect(gaps).toContain("History!$A$2:$A$50001");
+        expect(gaps).toContain('History!$AJ$2:$AJ$50001<>"Removed"');
+        expect(gaps).toContain('History!$B$2:$B$50001="P38"');
+        expect(gaps).toContain("SORT(UNIQUE(ARRAYFORMULA(INT(FILTER(");
+        expect(gaps).toContain('IF(count<2,""');
+        expect(gaps).not.toContain("SORTN");
+        expect(plot).toContain("History!$A$2:$A$50001");
+        expect(plot).toContain("SORT(SORTN(intervals,4999,0,2,FALSE),2,TRUE)");
+        expect(plot).toContain('IF(count<2,{"","",""}');
+    });
+
+    it("keeps historical input bounds explicit and rejects invalid identifiers or ranges", () => {
+        expect.hasAssertions();
+
+        expect(
+            wateringIntervalFormula("P01", { historyLastRow: 5000 })
+        ).toContain("History!$A$2:$A$5000,");
+        expect(
+            fullHistoryWateringGaps("P01", { historyLastRow: 5000 })
+        ).toContain("History!$A$2:$A$5000,");
+        expect(() => wateringIntervalFormula('P01"')).toThrow(
+            "Invalid plant ID"
+        );
+        expect(() =>
+            fullHistoryWateringGaps("P01", { historyLastRow: 1 })
+        ).toThrow("History range");
+    });
+});
 
 function fixture() {
     return {

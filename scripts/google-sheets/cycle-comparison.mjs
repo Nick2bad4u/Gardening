@@ -1,3 +1,8 @@
+import {
+    chartObservationLimit,
+    historyLastRow as defaultHistoryLastRow,
+} from "./history-capacity-config.mjs";
+
 /**
  * Derived cycle comparison for the native workbook. The calculation reuses the
  * bound logger's correction resolver and cycle boundaries; it is not a
@@ -25,7 +30,7 @@
  */
 export function cycleComparisonAppsScriptSource() {
     // Apps Script's deployed parser rejects numeric separators, and its V8
-    // runtime need not provide Node's copying array methods. Both sorts below
+    // runtime need not provide Node's copying array methods. The sorts below
     // operate on new arrays, as does the sliced cycle reversal.
     const calculation = cycleComparisonRows
         .toString()
@@ -33,11 +38,14 @@ export function cycleComparisonAppsScriptSource() {
             "function cycleComparisonRows(",
             "function cycleComparisonRows_("
         )
+        .replaceAll("chartObservationLimit", () =>
+            String(chartObservationLimit)
+        )
         .replaceAll(".toSorted(", ".sort(")
         .replaceAll(".toReversed()", ".reverse()");
     return `/**
  * Compare the current and last two completed watering cycles in one pot setup.
- * @param {GardenHistoryRow[]} history Native History A:AP range including dates.
+ * @param {GardenHistoryRow[]} history Native History A:AP, including dates.
  * @param {GardenCell} plantId Selected plant ID.
  * @param {GardenCell} potSetup Current Baselines pot setup.
  * @returns {GardenCell[][]}
@@ -69,7 +77,8 @@ ${calculation}
 }
 
 /**
- * Build the live dependency formula. No NOW/TODAY input: Google Sheets rejects
+ * Build the historical custom-function formula. New capacity migrations use an
+ * ordinary Apps Script snapshot refresh. No NOW/TODAY input: Sheets rejects
  * volatile custom-function arguments. History, selector, and current setup all
  * remain explicit dependencies; the wrapper excludes future rows at
  * evaluation.
@@ -83,7 +92,7 @@ ${calculation}
  * @returns {string}
  */
 export function cycleComparisonFormula({
-    historyLastRow = 5000,
+    historyLastRow = defaultHistoryLastRow,
     inventoryLastRow = 31,
     plantCell = "'Insights'!$B$228",
 } = {}) {
@@ -95,8 +104,7 @@ export function cycleComparisonFormula({
         throw new Error(
             "Cycle comparison requires bounded inventory and History ranges"
         );
-    const end = historyLastRow;
-    return `=GARDEN_CYCLE_COMPARISON(History!A2:AP${end},${plantCell},IFNA(XLOOKUP(${plantCell},Baselines!A2:A${inventoryLastRow},Baselines!T2:T${inventoryLastRow}),""))`;
+    return `=GARDEN_CYCLE_COMPARISON(History!A2:AP${historyLastRow},${plantCell},IFNA(XLOOKUP(${plantCell},Baselines!A2:A${inventoryLastRow},Baselines!T2:T${inventoryLastRow}),""))`;
 }
 
 /**
@@ -180,6 +188,17 @@ export function cycleComparisonRows(history, plantId, potSetup, asOf, helpers) {
                     (record.save !== "" && record.save === repot.save)))
     );
     const selected = helpers.cycles(inSetup).slice(-3).toReversed();
+    // Cap by observation time before merging elapsed-day domains. A recent
+    // short cycle must not be displaced by larger elapsed days in an old one.
+    const visiblePoints = new Set(
+        selected
+            .flatMap((cycle) => cycle.points)
+            .toSorted(
+                (left, right) =>
+                    right.date - left.date || right.index - left.index
+            )
+            .slice(0, chartObservationLimit)
+    );
     const headers = [
         "Days since watering",
         "",
@@ -196,7 +215,8 @@ export function cycleComparisonRows(history, plantId, potSetup, asOf, helpers) {
                 "Older",
             ][index] ?? "Older";
         headers[index + 1] = `${role} · ${helpers.dateLabel(cycle.water.date)}`;
-        for (const point of cycle.points) {
+        const points = cycle.points.filter((point) => visiblePoints.has(point));
+        for (const point of points) {
             const elapsed = point.date - cycle.water.date;
             const values = rows.get(elapsed) ?? [
                 elapsed,
@@ -224,4 +244,49 @@ export function cycleComparisonRows(history, plantId, potSetup, asOf, helpers) {
                   ],
               ]),
     ];
+}
+
+/**
+ * A cached cycle is usable only for its calculated plant and setup while the
+ * shared snapshot is ready and fresh. Sheet serial timestamps use days.
+ *
+ * @param {{ inventoryLastRow?: number }} [options]
+ *
+ * @returns {string} Condition expression without a leading equals sign.
+ */
+export function cycleSnapshotReadyCondition({ inventoryLastRow = 37 } = {}) {
+    if (!Number.isSafeInteger(inventoryLastRow) || inventoryLastRow < 2)
+        throw new Error("Cycle snapshot requires a bounded inventory range");
+    const state = "'Workbook calculations'!";
+    const selector = "'Insights'!$B$228";
+    const setup = `IFNA(XLOOKUP(${selector},Baselines!A2:A${inventoryLastRow},Baselines!T2:T${inventoryLastRow}),"")`;
+    return `AND(${state}$I$2="Ready",ISNUMBER(${state}$H$2),${state}$H$2>0,${state}$H$2<=${state}$E$2,${state}$E$2-${state}$H$2<=15/1440,${state}$J$2=${selector},${state}$K$2=${setup})`;
+}
+
+/**
+ * Visible cycle status: delayed selection changes must not relabel old data.
+ *
+ * @param {{ inventoryLastRow?: number }} [options]
+ *
+ * @returns {string}
+ */
+export function cycleSnapshotStatusFormula(options = {}) {
+    const state = "'Workbook calculations'!";
+    const timestamp = `IF(ISNUMBER(${state}$H$2)," · last calculated "&TEXT(${state}$H$2,"yyyy-mm-dd hh:mm"),"")`;
+    return `=IF(${cycleSnapshotReadyCondition(options)},"Calculated as of "&TEXT(${state}$H$2,"yyyy-mm-dd hh:mm"),IF(${state}$I$2="Refresh failed","Refresh failed",IF(${state}$I$2="Refreshing","Refreshing","Waiting for refresh"))&${timestamp})`;
+}
+
+/**
+ * Hide cached cycle consumers until their identity and freshness match.
+ * Existing chart sentinels remain part of the unchanged ready expression.
+ *
+ * @param {string} formula
+ * @param {{ inventoryLastRow?: number }} [options]
+ *
+ * @returns {string}
+ */
+export function gateCycleSnapshotFormula(formula, options = {}) {
+    if (!formula.startsWith("=") || formula.length < 2)
+        throw new Error("Cycle snapshot gate requires a formula");
+    return `=IF(${cycleSnapshotReadyCondition(options)},${formula.slice(1)},"")`;
 }
