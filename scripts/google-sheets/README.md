@@ -1,6 +1,6 @@
 # Google Sheets observation logger
 
-Production logger **5.36.0 / immutable version 111** supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`. The October 17 rollout below records the current logger, Leaf VPD schema, and Integrity checks; the October 16 receipts retain the earlier deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.37.0 / immutable version 112** supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`, and **50,000 History observation slots**. The October 20–21 rollout below records the capacity migration and working workbook/mobile recalculation controls; the October 17 and earlier receipts retain the schema and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
@@ -35,12 +35,12 @@ under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-
 
 ## Maintained 5.37.0 capacity and mobile display update
 
-Checked-in source **5.37.0** supports **50,000 observation slots** in History
-rows **2:50001**. Final native verification and production release remain pending.
-A fresh production check at **01:27 UTC on October 21** confirmed
-**5.36.0 / immutable version 111**; the workbook migration and matching deployment
-have not been released. Source changes alone do not extend the live workbook's
-supported capacity.
+Production **5.37.0 / immutable version 112** supports **50,000 observation slots**
+in History rows **2:50001**. The guarded workbook migration and matching deployment
+are complete at the existing mobile URL. Native readback and both recalculation
+controls passed; the dated production receipt below records the preserved ledger,
+trigger, and calculation checks. Corresponding source and website publication are
+tracked in [PR #25](https://github.com/Nick2bad4u/Gardening/pull/25).
 
 The **October 18 disposable-copy rehearsal** allocated **18,371,651 cells across
 64 sheets** after removing its temporary probes. All **1,882 original History
@@ -62,9 +62,10 @@ the maintained implementation computes the four derived snapshots with ordinary
 Apps Script. Authorized native refreshes have now completed on the copy with
 both the original ledger and a synthetic 50,000-record environment scenario.
 The environment scenario published successfully but failed the daily
-trigger-runtime release gate. Representative full-scale coverage, runtime and
-quota headroom, copy restoration, and final release checks remain required;
-the dated verification below separates the completed evidence from those gates.
+trigger-runtime gate. The later representative full-scale scenario passed its
+runtime and quota checks, and the copy was restored before production migration.
+The environment-heavy workload remains outside the verified daily quota envelope;
+the dated verification below retains that limitation alongside the completed rollout.
 
 One save may create several observation rows. The writer preflights the whole
 batch before appending or changing setup state; already-confirmed request retries
@@ -110,7 +111,7 @@ observation. Conservative type/error guards retain the original History N
 formula for atypical inputs; zero-anchor and blank-weight behavior are unchanged.
 The migration replaces only captured existing **N** formulas, leaving **M/O** and
 recorded observations intact, and does not prefill 50,000 N formulas. The helper
-uses **50,002 rows × 9 columns**; the planned **65-sheet** workbook allocates
+uses **50,002 rows × 9 columns**; the migrated **65-sheet** workbook allocates
 **18,821,669 cells**, or **19,811,691** including worst-case single-plant page
 growth. Integrity checks its exact canonical formulas and ownership labels.
 
@@ -172,15 +173,15 @@ use the mobile logger's control on a phone. See
 
 ### October 20–21 candidate verification
 
-The combined candidate includes the pending capacity expansion, compact mobile
+The released logger includes the capacity expansion, compact mobile
 capacity display, Mist icons, Dashboard 90-day formula source, and manual
 recalculation controls. Initial local verification passed **2,069 unit tests** and
 **52 Chromium/Edge logger browser tests** across light/dark themes and six widths.
 The final local logger run passed **1,824 tests across 46 files**, with **99.80%
 line**, **99.58% statement**, **98.53% branch**, and **100% function coverage**.
 Type checks, the Pages build, generated-site checks, and secret checks also
-passed. Final provider patch-coverage confirmation remains pending. These local
-checks do not establish native workbook execution.
+passed. Commit **735f5c8** also passed CI, Codecov, and Sonar checks. Native workbook
+execution was verified separately as recorded below.
 
 Two calculation paths now reuse indexed results while retaining the existing
 model rules. For a 50,000-record single-plant fixture, complete cycle output was
@@ -258,15 +259,37 @@ All six native clock, formula, timestamp-format, metadata, and Ready-state check
 passed at **02:32 UTC**.
 
 A [fresh production backup](https://docs.google.com/spreadsheets/d/1p2RuXP0boaESO-DmxIBtDpnjkhi-lyutpod8Y02QB6Y/edit)
-was created at approximately **02:28 UTC**. Production remains untouched at
-**5.36.0 / immutable version 111**, with **64 sheets**, **182 charts**, and **5,000
-History rows**. Fresh production capture is complete with **1,996 unique
-observations** and **1,632 request groups**; these are distinct from the copy's
-unchanged **1,882 original observations**. The prepared migration contains
-**61 preparation**, **5,773 formula**, and **153 chart requests**. Immediate
-production preflight, final copy restoration and temporary-helper cleanup,
-provider checks, and the guarded migration, deployment, and readback remain
-pending.
+was created at approximately **02:28 UTC on October 21**. After exact copy
+restoration and fresh production preflight, the migration applied **61
+preparation**, **5,773 formula**, and **153 chart requests**. A large chart batch
+timed out without saving; fresh readback identified the remaining **152** requests,
+which were applied in batches of 10 and then 20. Production now has **65 sheets**,
+**182 charts**, and **50,001 History rows**. Its hidden anchor index contains
+**194 anchors across 54 plant/setup groups**.
+
+Production **5.37.0 / immutable version 112** retains the existing deployment URL.
+All three deployed files matched commit **735f5c8**. The ledger retains **1,996
+unique observations** and **1,632 request groups**, distinct from the copy's
+**1,882 original observations**. All **3,992 native N/O results** matched before
+and after, including **1,025 numeric results in each column**. All **3,015,067
+stored cells** in History rows **5001:50001** remained empty. Comparison of
+**266,014 captured stored cells** passed with zero mismatches. The metadata
+comparison accounts for native protection/color serialization; a separate native
+witness confirmed that P38's omitted height/width chart series have no measured
+values.
+
+Both the Dashboard drawing assigned to `recalculateGardenWorkbook` and the actual
+mobile **Recalculate workbook** control succeeded. The mobile logger showed
+**Connected · 5.37.0** and a successful calculation at **03:15:52 UTC on October
+21** (**11:15:52 p.m. on October 20, America/New_York**). Native calculation metadata
+was **Ready**, and Integrity showed **F5 = 0** with passing checks. The drawing
+execution completed in **8.227 seconds** and the mobile execution in **12.049
+seconds**. The production trigger screen showed exactly one Head
+`processQueuedAppSheetEntries` trigger every five minutes; scheduled runs at
+**03:13:57** and **03:18:57 UTC** completed in **17.496** and **7.426 seconds**.
+The production workbook migration and logger deployment are complete.
+Corresponding source and website publication are tracked in
+[PR #25](https://github.com/Nick2bad4u/Gardening/pull/25).
 
 The October 20 dependency audit found no production dependencies and no
 production audit findings. The full development-tooling audit reported 58
@@ -320,9 +343,9 @@ newer state. If locks are unavailable or denied, queue reads and Save now remain
 available while queue mutations are disabled. Storage events and tab focus refresh
 the displayed queue. No queue editor or Undo action is added.
 
-The deployed 5.36.0 ledger supports **4,999 observation slots** in rows
+At the 5.36.0 release, the ledger supported **4,999 observation slots** in rows
 **2:5000**. The [5.37.0 capacity update](#maintained-5370-capacity-and-mobile-display-update)
-above describes the maintained expansion and its pending native migration.
+above records the completed expansion to **50,000 slots**.
 
 [`workbook-integrity.mjs`](workbook-integrity.mjs) adds **Integrity E4:H14**:
 required formula anchors, canonical/projected observation-ID coverage, active
