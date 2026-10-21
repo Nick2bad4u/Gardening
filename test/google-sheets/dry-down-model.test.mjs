@@ -16,8 +16,9 @@ const sourceUrl = new URL(
     import.meta.url
 );
 const source = fs.readFileSync(sourceUrl, "utf8");
-function runtime() {
-    const context = vm.createContext({ console, Date, Map, Set });
+/** @param {Record<string, unknown>} [globals] */
+function runtime(globals = {}) {
+    const context = vm.createContext({ console, Date, Map, Set, ...globals });
     vm.runInContext(source, context, { filename: fileURLToPath(sourceUrl) });
     return appsScriptApi(context);
 }
@@ -465,9 +466,24 @@ describe("dry-down formulas and workbook installation", () => {
     it("installs a single hidden model spill and only replaces forecast-related Baselines cells", () => {
         expect.hasAssertions();
 
-        const context = runtime();
         /** @type {InstallerCall[]} */
         const calls = [];
+        const context = runtime({
+            Sheets: {
+                Spreadsheets: {
+                    batchUpdate: (
+                        /** @type {unknown} */ request,
+                        /** @type {string} */ workbookId
+                    ) => {
+                        calls.push({
+                            method: "anchorBatch",
+                            name: workbookId,
+                            value: JSON.stringify(request),
+                        });
+                    },
+                },
+            },
+        });
         const makeSheet = (/** @type {string} */ name) => ({
             autoResizeRows: (/** @type {number[]} */ ...args) => {
                 calls.push({ args, method: "autoResizeRows", name });
@@ -500,6 +516,7 @@ describe("dry-down formulas and workbook installation", () => {
                 }
                 return range;
             },
+            getSheetId: () => 1,
             hideSheet: () => {
                 calls.push({ method: "hideSheet", name });
             },
@@ -513,7 +530,9 @@ describe("dry-down formulas and workbook installation", () => {
         });
         const sheets = new Map([["Baselines", makeSheet("Baselines")]]);
         const spreadsheet = {
+            getId: () => "test-dry-down-workbook",
             getSheetByName: (/** @type {string} */ name) => sheets.get(name),
+            getSheets: () => sheets.values().toArray(),
             insertSheet: (/** @type {string} */ name) => {
                 const sheet = makeSheet(name);
                 sheets.set(name, sheet);
@@ -576,6 +595,14 @@ describe("dry-down formulas and workbook installation", () => {
                 )
         ).toBe(true);
         expect(calls.some((c) => c.name === "History")).toBe(false);
+        expect(
+            calls.filter((call) => call.method === "anchorBatch")
+        ).toMatchObject([
+            {
+                name: "test-dry-down-workbook",
+                value: expect.stringContaining('"sheetId":907202613'),
+            },
+        ]);
         expect(calls).toContainEqual({
             args: [2, 1],
             method: "autoResizeRows",

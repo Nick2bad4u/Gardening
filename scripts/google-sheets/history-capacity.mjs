@@ -20,6 +20,11 @@ const plantColorData = "Plant color data";
 const wateringIntervals = "Watering intervals";
 const workbookAnalytics = "Workbook analytics";
 const workbookCalculations = "Workbook calculations";
+const historyAnchors = "History anchors";
+const historyAnchorsSheetId = 907_202_613;
+const historyAnchorsLastRow = historyLastRow + 1;
+const historyAnchorsColumns = 9;
+const historyAnchorsMarker = "Garden History anchor index v1";
 const oldLastRow = 5000;
 const cellBudget = 20_000_000;
 const knownMissingSeriesCharts = new Map([
@@ -82,17 +87,22 @@ export function buildHistoryCapacityRequests(snapshot, options) {
     );
     const { allocatedCellsAfter, allocatedCellsBefore, prepareRequests } =
         prepareWorkbook(snapshot);
-    const edits = formulaEdits(snapshot, options.activePlantIds);
+    const edits = [
+        ...historyAnchorHelperEdits(),
+        ...formulaEdits(snapshot, options.activePlantIds),
+    ];
     addAnalyticsMetadata(snapshot, edits);
     addIntegrityEdits(snapshot, edits);
     /** @type {Record<string, unknown>[]} */
     const formulaRequests = [];
     for (const edit of edits) {
         const sheet = sheets.get(edit.sheet);
-        if (!sheet) throw new Error("Missing edit sheet");
-        formulaRequests.push(
-            write(sheet.properties.sheetId, edit.row, edit.column, edit.after)
-        );
+        const sheetId =
+            edit.sheet === historyAnchors
+                ? historyAnchorsSheetId
+                : sheet?.properties.sheetId;
+        if (sheetId === undefined) throw new Error("Missing edit sheet");
+        formulaRequests.push(write(sheetId, edit.row, edit.column, edit.after));
     }
     const chartRequests = chartChanges(snapshot);
     return {
@@ -216,7 +226,14 @@ function addIntegrityEdits(snapshot, edits) {
                 () => `"${String(edit.after).replaceAll('"', '""')}"`
             );
     }
-    anchorCheck = `=SUM(${anchorCheck.slice(1)},IFERROR(N(NOT(${cycleSnapshotReadyCondition({ inventoryLastRow: 37 })})),1))`;
+    const helperChecks = historyAnchorHelperEdits().map((edit) => {
+        const reference = `'${historyAnchors}'!${columnName(edit.column)}${edit.row + 1}`;
+        const expected = String(edit.after).replaceAll('"', '""');
+        return String(edit.after).startsWith("=")
+            ? `N(IFERROR(FORMULATEXT(${reference}),"")<>"${expected}")`
+            : `IFERROR(N(${reference}<>"${expected}"),1)`;
+    });
+    anchorCheck = `=SUM(${anchorCheck.slice(1)},${helperChecks.join(",")},IFERROR(N(NOT(${cycleSnapshotReadyCondition({ inventoryLastRow: 37 })})),1))`;
     if (anchorCheck !== check.value.formulaValue)
         edits.push({
             after: anchorCheck,
@@ -570,11 +587,131 @@ function gatedModelConsumer(formula, cell) {
     return gated;
 }
 
+/** @param {number} row */
+function groupedHistoryAnchorFormula(row) {
+    const prefix = `'${historyAnchors}'!`;
+    const directory = (/** @type {string} */ column) =>
+        `${prefix}$${column}$3:INDEX(${prefix}$${column}$3:$${column}$${historyAnchorsLastRow},MAX(1,${prefix}$D$4))`;
+    const dates = `${prefix}$F$3:$F$${historyAnchorsLastRow}`;
+    const boundedDates = `INDEX(${dates},firstAnchor):INDEX(${dates},lastAnchor)`;
+    const lookup = `LET(groupKey,B${row}&"|"&TEXT(K${row},"0"),firstAnchor,XLOOKUP(groupKey,${directory("G")},${directory("H")},0,0,2),lastAnchor,XLOOKUP(groupKey,${directory("G")},${directory("I")},0,0,2),anchor,IF(firstAnchor=0,0,XLOOKUP(A${row},${boundedDates},${boundedDates},0,-1,2)),IF(anchor=0,"",anchor))`;
+    const fast = `IF(OR(B${row}="",E${row}="",K${row}=""),"",IF(${prefix}$D$3=0,"",${lookup}))`;
+    return `=IF(${prefix}$D$2,${fast},${historyAnchorFormula(row, historyLastRow).slice(1)})`;
+}
+
 /** @param {number} row @param {number} lastRow */
 function historyAnchorFormula(row, lastRow) {
     const range = (/** @type {string} */ column) =>
         `$${column}$2:$${column}$${lastRow}`;
     return `=IF(OR(B${row}="",E${row}="",K${row}=""),"",LET(anchor,IFNA(MAX(FILTER(${range("A")},${range("B")}=B${row},${range("K")}=K${row},${range("A")}<=A${row},REGEXMATCH(${range("C")},"^(Water|Repot)$"),${range("AJ")}<>"Removed")),0),IF(anchor=0,"",anchor)))`;
+}
+
+/** @returns {import("../../types/history-capacity.d.ts").HistoryCapacityEdit[]} */
+function historyAnchorHelperEdits() {
+    const source = historyAnchorSource;
+    const empty = [
+        "A",
+        "B",
+        "C",
+        "E",
+        "K",
+        "AJ",
+    ]
+        .map((column) => `(${source(column)}="")`)
+        .join("*");
+    const valid = [
+        `ISNUMBER(${source("A")})`,
+        `ISTEXT(${source("B")})`,
+        `(${source("B")}<>"")`,
+        `ISTEXT(${source("C")})`,
+        `(${source("C")}<>"")`,
+        `ISNUMBER(${source("K")})`,
+        `(ISNUMBER(${source("E")})+(${source("E")}=""))`,
+        `(ISTEXT(${source("AJ")})+(${source("AJ")}=""))`,
+    ].join("*");
+    const canonical = `REGEXMATCH(${source("B")},"^P[0-9]{2}$")*ISNUMBER(${source("K")})*(${source("K")}>=1)*(${source("K")}<=999999999)*(${source("K")}=INT(${source("K")}))`;
+    const bounded = historyAnchorHelperRange;
+    const keys = bounded("E");
+    const entries = /** @type {[number, number, string][]} */ ([
+        [
+            0,
+            0,
+            historyAnchorsMarker,
+        ],
+        [
+            1,
+            0,
+            "Raw timestamp",
+        ],
+        [
+            1,
+            1,
+            "Raw plant",
+        ],
+        [
+            1,
+            2,
+            "Raw setup",
+        ],
+        [
+            0,
+            3,
+            `=IFERROR(SUMPRODUCT(N(((${empty})+(${valid}))>0))=ROWS(${source("A")}),FALSE)`,
+        ],
+        [
+            1,
+            3,
+            `=IF($D$1,IFERROR(SUMPRODUCT(N(((${empty})+(${canonical}))>0))=ROWS(${source("A")}),FALSE),FALSE)`,
+        ],
+        [
+            2,
+            3,
+            `=IF($D$2,SUMPRODUCT(N(REGEXMATCH(${source("C")},"^(Water|Repot)$"))*N(${source("AJ")}<>"Removed")),0)`,
+        ],
+        [
+            3,
+            3,
+            `=IF(AND($D$2,$D$3>0),COUNTUNIQUE(${keys}),0)`,
+        ],
+        [
+            2,
+            0,
+            `=IF($D$2,IFNA(FILTER({${source("A")},${source("B")},${source("K")}},REGEXMATCH(${source("C")},"^(Water|Repot)$"),${source("AJ")}<>"Removed"),{"","",""}),{"","",""})`,
+        ],
+        [
+            2,
+            4,
+            `=IF(AND($D$2,$D$3>0),SORT(ARRAYFORMULA({${bounded("B")}&"|"&TEXT(${bounded("C")},"0"),${bounded("A")}}),1,TRUE,2,TRUE),{"",""})`,
+        ],
+        [
+            1,
+            6,
+            `=IF(AND($D$2,$D$3>0),QUERY({${keys},SEQUENCE($D$3)},"select Col1,min(Col2),max(Col2) where Col1 is not null group by Col1 order by Col1 label Col1 'Key',min(Col2) 'First',max(Col2) 'Last'",0),{"Key","First","Last"})`,
+        ],
+    ]);
+    return entries.map(
+        ([
+            row,
+            column,
+            after,
+        ]) => ({
+            after,
+            before: "",
+            column,
+            row,
+            sheet: historyAnchors,
+        })
+    );
+}
+
+/** @param {string} column */
+function historyAnchorHelperRange(column) {
+    return `$${column}$3:INDEX($${column}$3:$${column}$${historyAnchorsLastRow},MAX(1,$D$3))`;
+}
+
+/** @param {string} column */
+function historyAnchorSource(column) {
+    return `History!$${column}$2:$${column}$${historyLastRow}`;
 }
 
 /** @param {string} formula @param {string[]} ids */
@@ -705,7 +842,7 @@ function prepareWorkbook(snapshot) {
     /** @type {Record<string, unknown>[]} */
     const prepareRequests = [];
     let allocatedCellsBefore = 0;
-    let allocatedCellsAfter = 0;
+    let allocatedCellsAfter = historyAnchorsLastRow * historyAnchorsColumns;
     for (const sheet of snapshot.metadata.sheets) {
         const { gridProperties, sheetId, title } = sheet.properties;
         const target = fullSheets.get(title) ?? gridProperties.rowCount;
@@ -795,6 +932,31 @@ function prepareWorkbook(snapshot) {
         }
         extendMetadata(sheet, target, prepareRequests);
     }
+    prepareRequests.push(
+        {
+            addSheet: {
+                properties: {
+                    gridProperties: {
+                        columnCount: historyAnchorsColumns,
+                        rowCount: historyAnchorsLastRow,
+                    },
+                    hidden: true,
+                    sheetId: historyAnchorsSheetId,
+                    title: historyAnchors,
+                },
+            },
+        },
+        {
+            addProtectedRange: {
+                protectedRange: {
+                    description:
+                        "Derived History anchor index; maintain through the logger.",
+                    range: { sheetId: historyAnchorsSheetId },
+                    warningOnly: true,
+                },
+            },
+        }
+    );
     // At most 50,000 observations can belong to one plant. Existing 4,999-slot
     // pages only need extra rows after that threshold; reserve the worst case.
     const growthReserve = (historyObservationCapacity - 4999) * 22;
@@ -1011,7 +1173,7 @@ function transformFormula(formula, cell, ids) {
             formula !== historyAnchorFormula(cell.row + 1, oldLastRow)
         )
             throw new Error("Unrecognized canonical derived formula");
-        return historyAnchorFormula(cell.row + 1, historyLastRow);
+        return groupedHistoryAnchorFormula(cell.row + 1);
     }
     if (cell.sheet === "Integrity") {
         result = outsideStrings(result, (part) =>
@@ -1300,6 +1462,14 @@ function validateGrid(sheet) {
 
 /** @param {import("../../types/history-capacity.d.ts").HistoryCapacitySnapshot} snapshot */
 function validateSheets(snapshot) {
+    if (
+        snapshot.metadata.sheets.some(
+            (sheet) =>
+                sheet.properties.title === historyAnchors ||
+                sheet.properties.sheetId === historyAnchorsSheetId
+        )
+    )
+        throw new Error("History anchor helper destination already exists");
     if (snapshot.metadata.sheets.length !== 64)
         throw new Error("Expected the reviewed 64-tab workbook");
     /** @type {Set<string>} */

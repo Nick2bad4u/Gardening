@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import vm from "node:vm";
 import { describe, expect, it } from "vitest";
 
 import {
@@ -617,6 +619,228 @@ function missingSeriesFixture() {
     return { ...result, repairs };
 }
 
+describe("history anchor helper migration", () => {
+    it("reserves helper cells and concentrated plant-page growth together", () => {
+        expect.hasAssertions();
+
+        const { options, snapshot } = fixture();
+        const containers = required(
+            snapshot.metadata.sheets.find(
+                (sheet) => sheet.properties.title === "Containers"
+            )
+        );
+        containers.properties.gridProperties.rowCount += 8000;
+        required(
+            snapshot.readRanges.find((range) => range.sheet === "Containers")
+        ).endRow += 8000;
+
+        // The extra 208,000 cells fit without the helper but exceed the complete
+        // migration's budget when its 450,018 cells are included.
+        expect(() => buildHistoryCapacityRequests(snapshot, options)).toThrow(
+            "including plant-page growth"
+        );
+    });
+
+    it("creates the guarded hidden anchor helper before writing only captured History N formulas", () => {
+        expect.hasAssertions();
+
+        const { options, snapshot } = fixture();
+        const original = required(
+            snapshot.cells.find(
+                (cell) =>
+                    cell.sheet === "History" &&
+                    cell.column === 13 &&
+                    cell.row > 0
+            )
+        );
+        snapshot.cells.push({
+            column: 13,
+            row: 4998,
+            sheet: "History",
+            value: {
+                formulaValue: required(original.value.formulaValue).replaceAll(
+                    /(?<=(?<!\$)[ABEK])2\b/gv,
+                    "4999"
+                ),
+            },
+        });
+        const plan = buildHistoryCapacityRequests(snapshot, options);
+        const helperEdits = plan.edits.filter(
+            (edit) => edit.sheet === "History anchors"
+        );
+        const historyEdits = plan.edits.filter(
+            (edit) => edit.sheet === "History"
+        );
+
+        expect(plan.prepareRequests).toContainEqual({
+            addSheet: {
+                properties: {
+                    gridProperties: { columnCount: 9, rowCount: 50_002 },
+                    hidden: true,
+                    sheetId: 907_202_613,
+                    title: "History anchors",
+                },
+            },
+        });
+        expect(plan.prepareRequests).toContainEqual({
+            addProtectedRange: {
+                protectedRange: {
+                    description:
+                        "Derived History anchor index; maintain through the logger.",
+                    range: { sheetId: 907_202_613 },
+                    warningOnly: true,
+                },
+            },
+        });
+        expect(helperEdits).toHaveLength(11);
+        expect(helperEdits.every((edit) => edit.before === "")).toBe(true);
+        expect(plan.edits.slice(0, helperEdits.length)).toStrictEqual(
+            helperEdits
+        );
+        expect(
+            historyEdits.map((edit) => [edit.row, edit.column])
+        ).toStrictEqual([
+            [1, 13],
+            [4998, 13],
+        ]);
+
+        for (const edit of historyEdits) {
+            expect(edit.after).toContain("=IF('History anchors'!$D$2,");
+            expect(edit.after).toContain(
+                `XLOOKUP(A${edit.row + 1},INDEX('History anchors'!$F$3:$F$50002,firstAnchor):INDEX('History anchors'!$F$3:$F$50002,lastAnchor)`
+            );
+            expect(edit.after).toContain(
+                String(edit.before).replaceAll("5000", "50001").slice(1)
+            );
+        }
+        const integrity = String(
+            required(
+                plan.edits.find(
+                    (edit) =>
+                        edit.sheet === "Integrity" &&
+                        edit.row === 4 &&
+                        edit.column === 5
+                )
+            ).after
+        );
+        const helperFormulas = helperEdits.filter((entry) =>
+            String(entry.after).startsWith("=")
+        );
+        for (const edit of helperFormulas) {
+            expect(integrity).toContain(
+                String(edit.after).replaceAll('"', '""')
+            );
+
+            const index = plan.edits.indexOf(edit);
+
+            expect(plan.formulaRequests[index]).toMatchObject({
+                updateCells: {
+                    start: {
+                        columnIndex: edit.column,
+                        rowIndex: edit.row,
+                        sheetId: 907_202_613,
+                    },
+                },
+            });
+        }
+
+        expect(integrity).toContain("Garden History anchor index v1");
+    });
+
+    it.each([
+        ["title", "History anchors"],
+        ["sheetId", 907_202_613],
+    ])(
+        "rejects an occupied anchor-helper %s without reusing its cells",
+        (property, value) => {
+            expect.hasAssertions();
+
+            const { options, snapshot } = fixture();
+            const existing = required(
+                snapshot.metadata.sheets.find(
+                    (sheet) => sheet.properties.title === "Containers"
+                )
+            );
+            Reflect.set(existing.properties, property, value);
+
+            expect(() =>
+                buildHistoryCapacityRequests(snapshot, options)
+            ).toThrow("History anchor helper destination already exists");
+        }
+    );
+
+    it("keeps helper anchors and existing-row replacements byte-identical to the bound logger", () => {
+        expect.hasAssertions();
+
+        const { options, snapshot } = fixture();
+        const plan = buildHistoryCapacityRequests(snapshot, options);
+        const context = vm.createContext({});
+        vm.runInContext(
+            readFileSync(
+                new URL(
+                    "../../scripts/google-sheets/plant-tracker.gs",
+                    import.meta.url
+                ),
+                "utf8"
+            ),
+            context
+        );
+        const native =
+            /**
+             * @type {{
+             *     formulas: Record<string, string>;
+             *     history: string;
+             *     marker: string;
+             *     sheetId: number;
+             *     title: string;
+             * }}
+             */ (
+                JSON.parse(
+                    String(
+                        vm.runInContext(
+                            "JSON.stringify({formulas: historyAnchorSheetFormulas_(), history: historyAnchorFormula_(2), marker: GARDEN_LOGGER.historyAnchorsMarker, sheetId: GARDEN_LOGGER.historyAnchorsSheetId, title: GARDEN_LOGGER.historyAnchorsSheet})",
+                            context
+                        )
+                    )
+                )
+            );
+        const formulas = Object.fromEntries(
+            plan.edits
+                .filter(
+                    (edit) =>
+                        edit.sheet === "History anchors" &&
+                        String(edit.after).startsWith("=")
+                )
+                .map((edit) => [
+                    `${String.fromCodePoint(65 + edit.column)}${edit.row + 1}`,
+                    edit.after,
+                ])
+        );
+
+        expect(formulas).toStrictEqual(native.formulas);
+        expect(JSON.stringify(formulas)).not.toContain("'History'!");
+        expect(
+            required(
+                plan.edits.find(
+                    (edit) => edit.sheet === "History" && edit.row === 1
+                )
+            ).after
+        ).toBe(native.history);
+        expect(native.title).toBe("History anchors");
+        expect(native.sheetId).toBe(907_202_613);
+        expect(native.marker).toBe(
+            required(
+                plan.edits.find(
+                    (edit) =>
+                        edit.sheet === native.title &&
+                        edit.row === 0 &&
+                        edit.column === 0
+                )
+            ).after
+        );
+    });
+});
+
 describe("history capacity migration", () => {
     it("accepts recalculated effective values while rejecting canonical value and validation drift", () => {
         expect.hasAssertions();
@@ -702,7 +926,10 @@ describe("history capacity migration", () => {
         expect(plan.observationCapacity).toBe(50_000);
         expect(plan.historyLastRow).toBe(50_001);
         expect(plan.allocatedCellsBefore).toBe(7_749_766);
-        expect(plan.allocatedCellsAfter).toBe(18_371_651);
+        expect(plan.allocatedCellsAfter).toBe(18_821_669);
+        expect(plan.allocatedCellsAfter + (50_000 - 4999) * 22).toBe(
+            19_811_691
+        );
         expect(snapshot).toStrictEqual(original);
 
         const grows = plan.prepareRequests.filter(

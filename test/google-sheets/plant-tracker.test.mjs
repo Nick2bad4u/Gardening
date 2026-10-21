@@ -1,7 +1,7 @@
 import * as fs from "node:fs";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { LOGGER_VERSION } from "../../scripts/logger-version.mjs";
 import {
@@ -3121,6 +3121,7 @@ describe("garden logger workbook formatting", () => {
             },
         ];
 
+        vi.spyOn(context, "ensureHistoryAnchors_").mockImplementation(() => {});
         context.refreshBaselineView_(spreadsheet, plants);
         context.refreshDashboardView_(spreadsheet, plants);
         context.refreshPlantPage_(spreadsheet, plants, 0, plants[0]);
@@ -11458,8 +11459,11 @@ describe("garden logger workbook installation and History headers", () => {
             },
         });
 
+        vi.spyOn(context, "ensureHistoryAnchors_").mockImplementation(() => {});
         context.installGardenLogger();
         context.installGardenLogger();
+
+        expect(context.ensureHistoryAnchors_).toHaveBeenCalledTimes(2);
 
         expect(required(calls.properties)["gardenLoggerVersion"]).toBe(
             LOGGER_VERSION

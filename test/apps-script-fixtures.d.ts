@@ -267,6 +267,7 @@ export interface AppsScriptTestApi {
         sheet: unknown,
         shouldConfigureColumn?: boolean
     ) => boolean;
+    ensureHistoryAnchors_: (spreadsheet: object) => void;
     ensureHistoryCareColumns_: (
         history: unknown,
         shouldConfigure?: boolean
@@ -377,6 +378,10 @@ export interface AppsScriptTestApi {
     };
     getWebBatchSaveStatus: (requests: unknown) => SaveStatus[];
     getWebSaveStatus: (payload: unknown) => SaveStatus;
+    historyAnchorFormula_: (rowNumber: number) => string;
+    historyAnchorOriginalFormula_: (rowNumber: number) => string;
+    historyAnchorSheetFormulas_: () => Record<string, string>;
+    historyHelperFormulas_: (rowNumber: number) => string[];
     historyObservationSnapshot_: (history: unknown) => {
         lastReservedRow: number;
         rowsByRequest: Map<

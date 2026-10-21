@@ -69,6 +69,9 @@ const GARDEN_LOGGER = Object.freeze({
     historyCareStartColumn: 46,
     historyStoredColumns: 67,
     historyCapacityRows: 50001,
+    historyAnchorsSheet: "History anchors",
+    historyAnchorsSheetId: 907202613,
+    historyAnchorsMarker: "Garden History anchor index v1",
     analyticsMinimumScheduledAgeMs: 480000,
     lockTimeoutMs: 5000,
     spreadsheetUrl:
@@ -3509,6 +3512,7 @@ function installGardenLogger() {
     ensureHistoryHumidityColumn_(history, true);
     ensureHistoryLightColumns_(history, true);
     ensureHistoryCareColumns_(history, true);
+    ensureHistoryAnchors_(spreadsheet);
     ensureHistoryView_(spreadsheet);
     const appEntries = requireSheet_(
         spreadsheet,
@@ -5993,6 +5997,7 @@ function latestMeasuredWeightFormula_(row, valueColumn) {
 /** Install only derived calculations; never write canonical or staging data. */
 /** @param {GardenSpreadsheet} spreadsheet @param {GardenWorkbookViewPlant[]} plants */
 function refreshWorkbookCalculations_(spreadsheet, plants) {
+    ensureHistoryAnchors_(spreadsheet);
     const existing = spreadsheet.getSheetByName(
         GARDEN_LOGGER.workbookCalculationsSheet
     );
@@ -10468,12 +10473,173 @@ function observationWriteResult_(
  * @param {number} rowNumber
  */
 function historyHelperFormulas_(rowNumber) {
-    const lastRow = GARDEN_LOGGER.historyCapacityRows;
     return [
         `=IF(B${rowNumber}="","",IFNA(XLOOKUP(B${rowNumber},'Plant tracker'!$A$2:$A$100,'Plant tracker'!$B$2:$B$100)&IF(L${rowNumber}<>""," · "&L${rowNumber},""),B${rowNumber}))`,
-        `=IF(OR(B${rowNumber}="",E${rowNumber}="",K${rowNumber}=""),"",LET(anchor,IFNA(MAX(FILTER($A$2:$A$${lastRow},$B$2:$B$${lastRow}=B${rowNumber},$K$2:$K$${lastRow}=K${rowNumber},$A$2:$A$${lastRow}<=A${rowNumber},REGEXMATCH($C$2:$C$${lastRow},"^(Water|Repot)$"),$AJ$2:$AJ$${lastRow}<>"Removed")),0),IF(anchor=0,"",anchor)))`,
+        historyAnchorFormula_(rowNumber),
         `=IF(OR(A${rowNumber}="",N${rowNumber}=""),"",A${rowNumber}-N${rowNumber})`,
     ];
+}
+
+/** The original raw-history semantics remain the fallback for atypical cells.
+ * @param {number} rowNumber @returns {string}
+ */
+function historyAnchorOriginalFormula_(rowNumber) {
+    const lastRow = GARDEN_LOGGER.historyCapacityRows;
+    return `=IF(OR(B${rowNumber}="",E${rowNumber}="",K${rowNumber}=""),"",LET(anchor,IFNA(MAX(FILTER($A$2:$A$${lastRow},$B$2:$B$${lastRow}=B${rowNumber},$K$2:$K$${lastRow}=K${rowNumber},$A$2:$A$${lastRow}<=A${rowNumber},REGEXMATCH($C$2:$C$${lastRow},"^(Water|Repot)$"),$AJ$2:$AJ$${lastRow}<>"Removed")),0),IF(anchor=0,"",anchor)))`;
+}
+
+/** Binary searches are safe only under the shared canonical-type guard.
+ * @param {number} rowNumber @returns {string}
+ */
+function historyAnchorFormula_(rowNumber) {
+    const prefix = `'${GARDEN_LOGGER.historyAnchorsSheet}'!`;
+    const last = GARDEN_LOGGER.historyCapacityRows + 1;
+    const bounded = (/** @type {string} */ column) =>
+        `${prefix}$${column}$3:INDEX(${prefix}$${column}$3:$${column}$${last},MAX(1,${prefix}$D$4))`;
+    const dates = `${prefix}$F$3:$F$${last}`;
+    const boundedDates = `INDEX(${dates},firstAnchor):INDEX(${dates},lastAnchor)`;
+    const lookup = `LET(groupKey,B${rowNumber}&"|"&TEXT(K${rowNumber},"0"),firstAnchor,XLOOKUP(groupKey,${bounded("G")},${bounded("H")},0,0,2),lastAnchor,XLOOKUP(groupKey,${bounded("G")},${bounded("I")},0,0,2),anchor,IF(firstAnchor=0,0,XLOOKUP(A${rowNumber},${boundedDates},${boundedDates},0,-1,2)),IF(anchor=0,"",anchor))`;
+    const fast = `IF(OR(B${rowNumber}="",E${rowNumber}="",K${rowNumber}=""),"",IF(${prefix}$D$3=0,"",${lookup}))`;
+    return `=IF(${prefix}$D$2,${fast},${historyAnchorOriginalFormula_(rowNumber).slice(1)})`;
+}
+
+/** Shared raw anchors, sorted dates, and group directory; no correction-model filtering.
+ * @returns {Record<string, string>}
+ */
+function historyAnchorSheetFormulas_() {
+    const source = (/** @type {string} */ column) =>
+        `History!$${column}$2:$${column}$${GARDEN_LOGGER.historyCapacityRows}`;
+    const empty = ["A", "B", "C", "E", "K", "AJ"]
+        .map((column) => `(${source(column)}="")`)
+        .join("*");
+    const valid = [
+        `ISNUMBER(${source("A")})`,
+        `ISTEXT(${source("B")})`,
+        `(${source("B")}<>"")`,
+        `ISTEXT(${source("C")})`,
+        `(${source("C")}<>"")`,
+        `ISNUMBER(${source("K")})`,
+        `(ISNUMBER(${source("E")})+(${source("E")}=""))`,
+        `(ISTEXT(${source("AJ")})+(${source("AJ")}=""))`,
+    ].join("*");
+    const canonical = `REGEXMATCH(${source("B")},"^P[0-9]{2}$")*ISNUMBER(${source("K")})*(${source("K")}>=1)*(${source("K")}<=999999999)*(${source("K")}=INT(${source("K")}))`;
+    const bounded = (/** @type {string} */ column) =>
+        `$${column}$3:INDEX($${column}$3:$${column}$${GARDEN_LOGGER.historyCapacityRows + 1},MAX(1,$D$3))`;
+    const keys = bounded("E");
+    return {
+        D1: `=IFERROR(SUMPRODUCT(N(((${empty})+(${valid}))>0))=ROWS(${source("A")}),FALSE)`,
+        D2: `=IF($D$1,IFERROR(SUMPRODUCT(N(((${empty})+(${canonical}))>0))=ROWS(${source("A")}),FALSE),FALSE)`,
+        D3: `=IF($D$2,SUMPRODUCT(N(REGEXMATCH(${source("C")},"^(Water|Repot)$"))*N(${source("AJ")}<>"Removed")),0)`,
+        D4: `=IF(AND($D$2,$D$3>0),COUNTUNIQUE(${keys}),0)`,
+        A3: `=IF($D$2,IFNA(FILTER({${source("A")},${source("B")},${source("K")}},REGEXMATCH(${source("C")},"^(Water|Repot)$"),${source("AJ")}<>"Removed"),{"","",""}),{"","",""})`,
+        E3: `=IF(AND($D$2,$D$3>0),SORT(ARRAYFORMULA({${bounded("B")}&"|"&TEXT(${bounded("C")},"0"),${bounded("A")}}),1,TRUE,2,TRUE),{"",""})`,
+        G2: `=IF(AND($D$2,$D$3>0),QUERY({${keys},SEQUENCE($D$3)},"select Col1,min(Col2),max(Col2) where Col1 is not null group by Col1 order by Col1 label Col1 'Key',min(Col2) 'First',max(Col2) 'Last'",0),{"Key","First","Last"})`,
+    };
+}
+
+/** Installs or repairs only the marked derived helper; never fills History N.
+ * @param {GardenSpreadsheet} spreadsheet @returns {void}
+ */
+function ensureHistoryAnchors_(spreadsheet) {
+    const title = GARDEN_LOGGER.historyAnchorsSheet;
+    const existing = spreadsheet.getSheetByName(title);
+    const sheetId =
+        existing?.getSheetId() ?? GARDEN_LOGGER.historyAnchorsSheetId;
+    if (
+        existing &&
+        existing.getRange("A1").getValue() !==
+            GARDEN_LOGGER.historyAnchorsMarker
+    )
+        throw new Error("History anchors has an unexpected ownership marker.");
+    const sheets = spreadsheet.getSheets();
+    if (!existing && sheets.some((sheet) => sheet.getSheetId() === sheetId))
+        throw new Error("History anchors sheet ID is already in use.");
+    const rows = GARDEN_LOGGER.historyCapacityRows + 1;
+    if (
+        existing &&
+        (existing.getMaxColumns() !== 9 || existing.getMaxRows() > rows)
+    )
+        throw new Error("History anchors has unexpected grid dimensions.");
+    const allocated = sheets.reduce(
+        (sum, sheet) => sum + sheet.getMaxRows() * sheet.getMaxColumns(),
+        0
+    );
+    const added = (rows - (existing?.getMaxRows() ?? 0)) * 9;
+    if (allocated + added > 20000000)
+        throw new Error(
+            "History anchors would exceed the workbook cell limit."
+        );
+    /** @type {GardenCorrectionSheetsRequest[]} */
+    const requests = [];
+    const properties = {
+        sheetId,
+        title,
+        hidden: true,
+        gridProperties: { rowCount: rows, columnCount: 9 },
+    };
+    if (existing)
+        requests.push({
+            updateSheetProperties: {
+                properties,
+                fields: "hidden,gridProperties.rowCount",
+            },
+        });
+    else
+        requests.push(
+            { addSheet: { properties } },
+            {
+                addProtectedRange: {
+                    protectedRange: {
+                        range: { sheetId },
+                        description: "Read-only raw History anchor index",
+                        warningOnly: true,
+                    },
+                },
+            }
+        );
+    requests.push({
+        updateCells: {
+            range: {
+                sheetId,
+                startRowIndex: 0,
+                endRowIndex: rows,
+                startColumnIndex: 0,
+                endColumnIndex: 9,
+            },
+            fields: "userEnteredValue",
+        },
+    });
+    const values = {
+        A1: GARDEN_LOGGER.historyAnchorsMarker,
+        A2: "Raw timestamp",
+        B2: "Raw plant",
+        C2: "Raw setup",
+        ...historyAnchorSheetFormulas_(),
+    };
+    Object.entries(values).forEach(([address, value]) => {
+        requests.push({
+            updateCells: {
+                start: {
+                    sheetId,
+                    rowIndex: Number(address.slice(1)) - 1,
+                    columnIndex: address.charCodeAt(0) - 65,
+                },
+                rows: [
+                    {
+                        values: [
+                            {
+                                userEnteredValue: value.startsWith("=")
+                                    ? { formulaValue: value }
+                                    : { stringValue: value },
+                            },
+                        ],
+                    },
+                ],
+                fields: "userEnteredValue",
+            },
+        });
+    });
+    correctionBatchUpdate_(spreadsheet, requests);
 }
 
 /**

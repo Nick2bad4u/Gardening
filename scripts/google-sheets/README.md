@@ -36,8 +36,7 @@ under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-
 ## Maintained 5.37.0 capacity and mobile display update
 
 Checked-in source **5.37.0** supports **50,000 observation slots** in History
-rows **2:50001**. Representative full-scale rehearsal and production release
-remain pending.
+rows **2:50001**. Final native verification and production release remain pending.
 A fresh production check at **01:27 UTC on October 21** confirmed
 **5.36.0 / immutable version 111**; the workbook migration and matching deployment
 have not been released. Source changes alone do not extend the live workbook's
@@ -105,6 +104,16 @@ model pot setup matching the current **Baselines T** value. After Repot, a faile
 refresh, or stale calculations, they withhold cached dry anchors and model-based
 guidance until a matching successful refresh is available.
 
+The hidden **History anchors** helper groups raw Water/Repot anchors by plant and
+pot setup, then uses binary searches for the latest anchor at or before each
+observation. Conservative type/error guards retain the original History N
+formula for atypical inputs; zero-anchor and blank-weight behavior are unchanged.
+The migration replaces only captured existing **N** formulas, leaving **M/O** and
+recorded observations intact, and does not prefill 50,000 N formulas. The helper
+uses **50,002 rows × 9 columns**; the planned **65-sheet** workbook allocates
+**18,821,669 cells**, or **19,811,691** including worst-case single-plant page
+growth. Integrity checks its exact canonical formulas and ownership labels.
+
 Plant-page history still starts at **A141** under **A140:L140**. Each page keeps a
 minimum of **5,139 rows** and grows with its actual observation count, through
 **row 50,140** if all 50,000 observations belong to one pot. Keep the full history
@@ -167,11 +176,11 @@ The combined candidate includes the pending capacity expansion, compact mobile
 capacity display, Mist icons, Dashboard 90-day formula source, and manual
 recalculation controls. Initial local verification passed **2,069 unit tests** and
 **52 Chromium/Edge logger browser tests** across light/dark themes and six widths.
-The final local logger run passed **1,808 tests across 45 files**, with **99.79%
-line**, **99.57% statement**, **98.52% branch**, and **100% function coverage**.
-The local patch-coverage estimate is **97.82%**; provider confirmation is pending.
-Type checks, the Pages build, and generated-site checks also passed. These checks
-do not establish native workbook execution.
+The final local logger run passed **1,824 tests across 46 files**, with **99.80%
+line**, **99.58% statement**, **98.53% branch**, and **100% function coverage**.
+Type checks, the Pages build, generated-site checks, and secret checks also
+passed. Final provider patch-coverage confirmation remains pending. These local
+checks do not establish native workbook execution.
 
 Two calculation paths now reuse indexed results while retaining the existing
 model rules. For a 50,000-record single-plant fixture, complete cycle output was
@@ -233,11 +242,31 @@ At **01:40:41 UTC**, restoration after the environment scenario matched all
 matched and **3,015,067 tail cells** were empty. The **1,882 unique observations**
 and **1,536 request groups** had zero mismatches. Native **P31/P38** checks also
 verified the repaired **Insights A231** model notes, then restored selector P27.
-At **01:43 UTC**, the copy began loading a representative 50,000-record scenario
-with real **History M:O** formulas. Its native results and full-queue quota proof
-remain pending, along with final copy restoration, removal of temporary helpers,
-provider checks, and the guarded production migration, deployment, and readback.
-Production remains untouched at **5.36.0 / immutable version 111**.
+
+The representative **50,000-record** mixed scenario exercised real **History M:O**
+formulas. After the grouped-anchor change, all **100,000 N/O values** matched the
+independent raw-anchor reference exactly in **21.698 seconds**. The complete
+maintained scheduled handler reached Ready in **21.232 seconds**, publishing
+**6,139,527 bytes**, with
+calculation timestamp **02:27:11.381 UTC**. The intervening queue run took
+**3.710 seconds** and retained that calculation timestamp. Both runs preserved
+the staging tables and the **50,000 History records**. At 144 refresh/skip pairs
+per day, this projects **59.8608 minutes** of the **90-minute daily trigger
+budget**, leaving **30.1392 minutes (33.488%)** for other trigger work. This passes
+the representative runtime gate; the environment-heavy limitation above remains.
+All six native clock, formula, timestamp-format, metadata, and Ready-state checks
+passed at **02:32 UTC**.
+
+A [fresh production backup](https://docs.google.com/spreadsheets/d/1p2RuXP0boaESO-DmxIBtDpnjkhi-lyutpod8Y02QB6Y/edit)
+was created at approximately **02:28 UTC**. Production remains untouched at
+**5.36.0 / immutable version 111**, with **64 sheets**, **182 charts**, and **5,000
+History rows**. Fresh production capture is complete with **1,996 unique
+observations** and **1,632 request groups**; these are distinct from the copy's
+unchanged **1,882 original observations**. The prepared migration contains
+**61 preparation**, **5,773 formula**, and **153 chart requests**. Immediate
+production preflight, final copy restoration and temporary-helper cleanup,
+provider checks, and the guarded migration, deployment, and readback remain
+pending.
 
 The October 20 dependency audit found no production dependencies and no
 production audit findings. The full development-tooling audit reported 58
