@@ -17,7 +17,7 @@
    dryDownModelFormula_, installDailyCareDashboard, GARDEN_CYCLE_COMPARISON, GARDEN_ENVIRONMENT_READINGS, GARDEN_RECORDED_LOCATIONS */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.37.0",
+    version: "5.37.1",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -4921,15 +4921,14 @@ function recalculateGardenWorkbook() {
     const spreadsheet = getGardenSpreadsheet_();
     spreadsheet.toast("Recalculating workbook…", "Garden calculations", 8);
     const result = refreshGardenAnalyticsSafely_(spreadsheet);
-    spreadsheet.toast(
-        result.status === "Ready"
-            ? "Workbook calculations refreshed from History."
-            : result.status === "Busy"
-              ? "Another save or calculation is running. Try again shortly."
-              : "Recalculation failed. Previous results and saved observations are retained; retry the refresh.",
-        "Garden calculations",
-        8
-    );
+    let message =
+        "Recalculation failed. Previous results and saved observations are retained; retry the refresh.";
+    if (result.status === "Ready") {
+        message = "Workbook calculations refreshed from History.";
+    } else if (result.status === "Busy") {
+        message = "Another save or calculation is running. Try again shortly.";
+    }
+    spreadsheet.toast(message, "Garden calculations", 8);
     return result;
 }
 
@@ -5209,6 +5208,46 @@ function gardenAnalyticsReadFallback_(history, rows, fallback) {
 }
 
 /**
+ * Reconcile one validated pair, restoring dates or recording native fallback.
+ * @param {GardenHistoryRow} row
+ * @param {GardenAnalyticsPrimitive} right
+ * @param {number} target
+ * @param {number} index
+ * @param {string} timeZone
+ * @param {Map<number, (number | null)[] | null>} offsetsByDay
+ * @param {Map<number, number[]>} fallback
+ * @returns {void}
+ */
+function gardenAnalyticsApplyPairedCell_(
+    row,
+    right,
+    target,
+    index,
+    timeZone,
+    offsetsByDay,
+    fallback
+) {
+    const left = row[target];
+    const dateLike = typeof left === "number" && typeof right === "string";
+    if (!dateLike && left !== right)
+        throw new Error(
+            "Paired analytics History reads disagree; retry a stable snapshot."
+        );
+    const hashText = typeof left === "string" && left.startsWith("#");
+    if (!dateLike && !hashText) return;
+    const date =
+        target === 0 && typeof left === "number"
+            ? gardenAnalyticsSerialDate_(left, timeZone, offsetsByDay)
+            : null;
+    if (date) row[target] = date;
+    else {
+        const indices = fallback.get(target) ?? [];
+        indices.push(index);
+        fallback.set(target, indices);
+    }
+}
+
+/**
  * Read only consumed columns. Paired date renders distinguish native Dates from
  * ordinary numbers without an expensive native number-format read. Never parse
  * the localized display string. Hash-prefixed cells are read natively because
@@ -5260,32 +5299,15 @@ function gardenAnalyticsHistoryRows_(spreadsheet, history, rowCount, timeZone) {
             const [, , column, width] = block;
             for (const [index, row] of rows.entries()) {
                 for (let offset = 0; offset < width; offset += 1) {
-                    const target = column + offset;
-                    const left = row[target] ?? "";
-                    const right = values[index]?.[offset] ?? "";
-                    const dateLike =
-                        typeof left === "number" && typeof right === "string";
-                    if (!dateLike && left !== right)
-                        throw new Error(
-                            "Paired analytics History reads disagree; retry a stable snapshot."
-                        );
-                    const hashText =
-                        typeof left === "string" && left.startsWith("#");
-                    if (!dateLike && !hashText) continue;
-                    const date =
-                        target === 0 && typeof left === "number"
-                            ? gardenAnalyticsSerialDate_(
-                                  left,
-                                  timeZone,
-                                  offsetsByDay
-                              )
-                            : null;
-                    if (date) row[target] = date;
-                    else {
-                        const indices = fallback.get(target) ?? [];
-                        indices.push(index);
-                        fallback.set(target, indices);
-                    }
+                    gardenAnalyticsApplyPairedCell_(
+                        row,
+                        values[index]?.[offset] ?? "",
+                        column + offset,
+                        index,
+                        timeZone,
+                        offsetsByDay,
+                        fallback
+                    );
                 }
             }
         }
@@ -5519,7 +5541,10 @@ function gardenAnalyticsPayloadBytes_(value) {
     let bytes = 0;
     for (const character of value) {
         const code = character.codePointAt(0) || 0;
-        bytes += code <= 127 ? 1 : code <= 2047 ? 2 : code <= 65535 ? 3 : 4;
+        if (code <= 127) bytes += 1;
+        else if (code <= 2047) bytes += 2;
+        else if (code <= 65535) bytes += 3;
+        else bytes += 4;
     }
     return bytes;
 }
@@ -5886,16 +5911,15 @@ function installWateringRecommendations() {
                     ? DASHBOARD_VIEW_HEADERS.slice(column - 1, column + 1)
                     : ["Recommended water date", "Watering guidance"],
             ]);
-        sheet
-            .getRange(headerRow + 1, column, plants.length, 2)
-            .setValues(
-                plants.map((_, index) =>
-                    ["O", "P"].map(
-                        (modelColumn) =>
-                            `=${guardedDryDownFormula_(`XLOOKUP($${idColumn}${headerRow + index + 1},'Dry-down models'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Dry-down models'!$${modelColumn}$2:$${modelColumn}$${APP_SHEET_BULK_PLANTS.length + 1},"")`, `$${idColumn}${headerRow + index + 1}`)}`
-                    )
-                )
-            );
+        sheet.getRange(headerRow + 1, column, plants.length, 2).setValues(
+            plants.map((_, index) =>
+                ["O", "P"].map((modelColumn) => {
+                    const plantReference = `$${idColumn}${headerRow + index + 1}`;
+                    const lookup = `XLOOKUP(${plantReference},'Dry-down models'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Dry-down models'!$${modelColumn}$2:$${modelColumn}$${APP_SHEET_BULK_PLANTS.length + 1},"")`;
+                    return `=${guardedDryDownFormula_(lookup, plantReference)}`;
+                })
+            )
+        );
         formatWateringRecommendationColumns_(
             sheet,
             headerRow,
@@ -7113,10 +7137,11 @@ function dashboardViewRow_(spreadsheet, plant, index) {
         `=Baselines!AI${baselineRow}`,
         `=Baselines!AJ${baselineRow}`,
         dashboardWeightCountFormula_(dashboardRow),
-        ...["Q", "R", "S", "T", "U", "V"].map(
-            (column) =>
-                `=${guardedDryDownFormula_(`IFNA(INDEX('Dry-down models'!${column}$2:${column}$${APP_SHEET_BULK_PLANTS.length + 1},MATCH($B${dashboardRow},'Dry-down models'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},0)),"")`, `$B${dashboardRow}`)}`
-        ),
+        ...["Q", "R", "S", "T", "U", "V"].map((column) => {
+            const plantReference = `$B${dashboardRow}`;
+            const lookup = `IFNA(INDEX('Dry-down models'!${column}$2:${column}$${APP_SHEET_BULK_PLANTS.length + 1},MATCH(${plantReference},'Dry-down models'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},0)),"")`;
+            return `=${guardedDryDownFormula_(lookup, plantReference)}`;
+        }),
         dashboardMinimumWeightFormula_(dashboardRow),
         currentWeightDifferenceFormula_(
             `G${dashboardRow}`,
@@ -7375,10 +7400,11 @@ function refreshRecentWeightColumns_(
         .getRange(header + 1, column, count, 6)
         .setValues(
             Array.from({ length: count }, (_, index) =>
-                ["Q", "R", "S", "T", "U", "V"].map(
-                    (source) =>
-                        `=${guardedDryDownFormula_(`IFNA(INDEX('Dry-down models'!${source}$2:${source}$${APP_SHEET_BULK_PLANTS.length + 1},MATCH($${plantColumn}${header + 1 + index},'Dry-down models'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},0)),"")`, `$${plantColumn}${header + 1 + index}`)}`
-                )
+                ["Q", "R", "S", "T", "U", "V"].map((source) => {
+                    const plantReference = `$${plantColumn}${header + 1 + index}`;
+                    const lookup = `IFNA(INDEX('Dry-down models'!${source}$2:${source}$${APP_SHEET_BULK_PLANTS.length + 1},MATCH(${plantReference},'Dry-down models'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},0)),"")`;
+                    return `=${guardedDryDownFormula_(lookup, plantReference)}`;
+                })
             )
         )
         .setBackground("#edf5fb")
