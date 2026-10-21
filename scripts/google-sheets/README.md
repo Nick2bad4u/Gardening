@@ -1,6 +1,6 @@
 # Google Sheets observation logger
 
-Production logger **5.37.0 / immutable version 112** supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`, and **50,000 History observation slots**. The October 20–21 rollout below records the capacity migration and working workbook/mobile recalculation controls; the October 17 and earlier receipts retain the schema and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.37.1 / immutable version 113** supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`, and **50,000 History observation slots**. The October 20–21 rollout below records the capacity migration, working workbook/mobile recalculation controls, and verified maintenance deployment; the October 17 and earlier receipts retain the schema and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
@@ -35,7 +35,7 @@ under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-
 
 ## Maintained 5.37.0 capacity and mobile display update
 
-Production **5.37.0 / immutable version 112** supports **50,000 observation slots**
+The **5.37.0 / immutable version 112** rollout added **50,000 observation slots**
 in History rows **2:50001**. The guarded workbook migration and matching deployment
 are complete at the existing mobile URL. Native readback and both recalculation
 controls passed; the dated production receipt below records the preserved ledger,
@@ -309,6 +309,42 @@ limited to the reviewed tooling inputs:
 
 Reassess these residuals if inputs, proxy configuration, dependencies, or site
 rendering change. Do not use a forceful dependency update to bypass review.
+
+### October 21 maintenance verification
+
+Logger **5.37.1 / immutable version 113** was deployed at **04:20:49 UTC on
+October 21, 2026**, preserving the existing URL, access settings, and three-file
+deployment. Fresh API reads matched both Head and the immutable version to
+source commit **5632d5a**. The behavior-preserving cleanup in
+[PR #26](https://github.com/Nick2bad4u/Gardening/pull/26) simplified paired-cell
+validation, UTF-8 counting, and formula construction. Its PR checks passed;
+main-branch Sonar analysis of merge **4bedf51** passed with **16 total findings**,
+including **5 critical** and **7 major**, under the unchanged quality gate.
+The final local logger suite passed **1,824 tests** with **98.56% branch coverage**.
+
+Fresh before/after comparison preserved all entered values and formulas across
+**468,000 cell positions** in **History A1:BO5000**, **App entries A1:BG1000**, and
+**App bulk A1:BV1000**, including implied blank cells. All **1,996 unique
+observations** and **1,632 request groups** matched, with **zero mismatches**.
+No observations were submitted during verification. The capacity migration's
+separate tail, formatting, chart, and native formula checks above remain its
+structural verification record.
+
+The actual Dashboard button completed in **10.584 seconds** and the mobile
+button in **9.169 seconds**. The phone confirmed **Connected · Logger 5.37.1**;
+its calculation succeeded at **04:24:53 UTC**, and native metadata read back
+**Ready**, **P27**, setup **1**, with **Integrity F5 = 0**. Anchor guards remained
+TRUE, with **194 anchors / 54 groups**. Existing Action rows still describe
+**24 uncalibrated plants** and **one current setup without an anchor**; these are
+observation gaps, not formula errors. Both phone themes fit the 390-pixel test
+viewport without horizontal overflow.
+
+The single five-minute queue trigger remains unchanged. Its **04:23:57 UTC**
+execution completed in **5.142 seconds**. Google marked the first mobile
+bootstrap request Unknown after **60.573 seconds**; one read-only retry succeeded
+in **13.517 seconds**. The automatic summary refresh after recalculation completed
+in **79.389 seconds**, beyond the client's delayed-response notice. Recalculation
+itself was confirmed independently; startup/summary latency remains variable.
 
 ## Maintained 5.36.0 logger and import improvements
 
