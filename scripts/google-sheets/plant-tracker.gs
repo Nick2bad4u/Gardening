@@ -5227,7 +5227,7 @@ function gardenAnalyticsApplyPairedCell_(
     offsetsByDay,
     fallback
 ) {
-    const left = row[target] ?? "";
+    const left = row[target];
     const dateLike = typeof left === "number" && typeof right === "string";
     if (!dateLike && left !== right)
         throw new Error(
