@@ -69,6 +69,7 @@ const GARDEN_LOGGER = Object.freeze({
     historyCareStartColumn: 46,
     historyStoredColumns: 67,
     historyCapacityRows: 50001,
+    analyticsMinimumScheduledAgeMs: 480000,
     lockTimeoutMs: 5000,
     spreadsheetUrl:
         "https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit",
@@ -1653,7 +1654,7 @@ function finishAppSheetQueueRun_(spreadsheet, entrySummary) {
     const bulkSummary = processQueuedAppSheetBulkEntries_(spreadsheet);
     // All intake writers have released their canonical script lock. Analytics
     // failures never turn a saved observation or receipt into a failed save.
-    const analytics = refreshGardenAnalyticsSafely_(spreadsheet);
+    const analytics = refreshScheduledGardenAnalytics_(spreadsheet);
     const summary = {
         ...entrySummary,
         ok: entrySummary.ok && bulkSummary.ok,
@@ -4748,6 +4749,38 @@ function applyDryDownForecast_(
     return model;
 }
 
+// Apps Script service calls dominate full-ledger conversion; reuse native V8
+// formatters within this execution, while still resolving DST for each instant.
+/** @type {Map<string, Intl.DateTimeFormat | null>} */
+const dryDownTimeZoneFormatters_ = new Map();
+
+/** @param {Date} date @param {string} timeZone @returns {string | null} */
+function dryDownNativeTimeZoneOffset_(date, timeZone) {
+    if (!dryDownTimeZoneFormatters_.has(timeZone)) {
+        let formatter = null;
+        try {
+            formatter = new Intl.DateTimeFormat("en-US", {
+                timeZone,
+                timeZoneName: "longOffset",
+            });
+        } catch {
+            // Preserve Utilities behavior for zones/runtime options Intl rejects.
+        }
+        dryDownTimeZoneFormatters_.set(timeZone, formatter);
+    }
+    const formatter = dryDownTimeZoneFormatters_.get(timeZone);
+    if (formatter && typeof formatter.formatToParts === "function") {
+        const offset = formatter
+            .formatToParts(date)
+            .find((part) => part.type === "timeZoneName")?.value;
+        if (offset === "GMT" || offset === "UTC") return "+0000";
+        const match = offset?.match(/^(?:GMT|UTC)([+-])(\d{2}):(\d{2})$/);
+        if (match) return match[0].slice(3).replace(":", "");
+        // Historical offsets with seconds must retain Utilities' minute policy.
+    }
+    return null;
+}
+
 /** @param {GardenCell} value @param {string} timeZone @returns {number} */
 function dryDownSerialDate_(value, timeZone) {
     if (
@@ -4758,9 +4791,10 @@ function dryDownSerialDate_(value, timeZone) {
         return 0;
     const date = new Date(value);
     if (!value || !Number.isFinite(date.getTime())) return 0;
-    const offset = Utilities.formatDate(date, timeZone, "Z").match(
-        /^([+-])(\d{2})(\d{2})$/
-    );
+    const offset = (
+        dryDownNativeTimeZoneOffset_(date, timeZone) ??
+        Utilities.formatDate(date, timeZone, "Z")
+    ).match(/^([+-])(\d{2})(\d{2})$/);
     let minutes = 0;
     if (offset) {
         minutes = Number(offset[2]) * 60 + Number(offset[3]);
@@ -4935,6 +4969,24 @@ function releaseGardenAnalyticsLease_(lease) {
 }
 
 /** @param {GardenSpreadsheet} spreadsheet @returns {GardenAnalyticsRefreshResult} */
+function refreshScheduledGardenAnalytics_(spreadsheet) {
+    const snapshot = workbookCalculationStatus_(spreadsheet);
+    const calculatedAt = snapshot.calculatedAt;
+    const age = Date.now() - Date.parse(calculatedAt || "");
+    // Intake still runs every five minutes. Reuse only a recent successful
+    // snapshot; manual refreshes bypass this quota-conscious cadence guard.
+    if (
+        snapshot.status === "Ready" &&
+        calculatedAt &&
+        Number.isFinite(age) &&
+        age >= 0 &&
+        age < GARDEN_LOGGER.analyticsMinimumScheduledAgeMs
+    )
+        return { status: "Ready", calculatedAt, skipped: true };
+    return refreshGardenAnalyticsSafely_(spreadsheet);
+}
+
+/** @param {GardenSpreadsheet} spreadsheet @returns {GardenAnalyticsRefreshResult} */
 function refreshGardenAnalyticsSafely_(spreadsheet) {
     try {
         return refreshGardenAnalytics_(spreadsheet);
@@ -4945,6 +4997,313 @@ function refreshGardenAnalyticsSafely_(spreadsheet) {
         );
         return { status: "Refresh failed", message };
     }
+}
+
+// Exactly the 22 columns consumed by the four analytics outputs and their
+// correction resolver. Omitted formula/helper columns remain blank in the rows.
+/** @type {readonly GardenAnalyticsHistoryBlock[]} */
+const GARDEN_ANALYTICS_HISTORY_BLOCKS = Object.freeze([
+    ["A", "A", 0, 1],
+    ["B", "E", 1, 4],
+    ["I", "I", 8, 1],
+    ["K", "K", 10, 1],
+    ["P", "P", 15, 1],
+    ["AA", "AA", 26, 1],
+    ["AC", "AE", 28, 3],
+    ["AI", "AJ", 34, 2],
+    ["AO", "AO", 40, 1],
+    ["AQ", "AS", 42, 3],
+    ["AW", "AZ", 48, 4],
+]);
+
+/** @param {unknown} value @returns {Record<string, unknown>} */
+function gardenAnalyticsReadObject_(value) {
+    if (!value || typeof value !== "object" || Array.isArray(value))
+        throw new Error("Invalid analytics History response object.");
+    return /** @type {Record<string, unknown>} */ (value);
+}
+
+/** @param {unknown} value @returns {GardenAnalyticsPrimitive} */
+function gardenAnalyticsReadPrimitive_(value) {
+    if (value === undefined || value === null) return "";
+    if (
+        typeof value === "string" ||
+        typeof value === "boolean" ||
+        (typeof value === "number" && Number.isFinite(value))
+    )
+        return value;
+    throw new Error("Invalid analytics History response cell.");
+}
+
+/**
+ * Consume validated blocks while the API response is in this short-lived scope.
+ * @param {string} spreadsheetId
+ * @param {readonly GardenAnalyticsHistoryBlock[]} blocks
+ * @param {number} rowCount
+ * @param {"SERIAL_NUMBER" | "FORMATTED_STRING"} render
+ * @param {(block: GardenAnalyticsHistoryBlock, values: GardenAnalyticsPrimitive[][]) => void} consume
+ */
+function gardenAnalyticsReadValues_(
+    spreadsheetId,
+    blocks,
+    rowCount,
+    render,
+    consume
+) {
+    if (
+        typeof Sheets === "undefined" ||
+        typeof Sheets.Spreadsheets?.Values?.batchGet !== "function"
+    )
+        throw new Error(
+            "Advanced Sheets values service is unavailable for analytics."
+        );
+    const response = gardenAnalyticsReadObject_(
+        Sheets.Spreadsheets.Values.batchGet(spreadsheetId, {
+            ranges: blocks.map(
+                ([first, last]) => `'History'!${first}2:${last}${rowCount + 1}`
+            ),
+            majorDimension: "ROWS",
+            valueRenderOption: "UNFORMATTED_VALUE",
+            dateTimeRenderOption: render,
+        })
+    );
+    const ranges = response["valueRanges"];
+    if (
+        response["spreadsheetId"] !== spreadsheetId ||
+        !Array.isArray(ranges) ||
+        ranges.length !== blocks.length
+    )
+        throw new Error(
+            "Incomplete or wrong-workbook analytics History response."
+        );
+    for (const [index, block] of blocks.entries()) {
+        const [first, last, , width] = block;
+        const range = gardenAnalyticsReadObject_(ranges[index]);
+        const suffix = `!${first}2:${last}${rowCount + 1}`;
+        if (
+            (range["range"] !== `'History'${suffix}` &&
+                range["range"] !== `History${suffix}`) ||
+            range["majorDimension"] !== "ROWS"
+        )
+            throw new Error(
+                "Analytics History range or orientation differs from the request."
+            );
+        const values = range["values"] ?? [];
+        if (!Array.isArray(values) || values.length > rowCount)
+            throw new Error(
+                "Analytics History response exceeds requested rows."
+            );
+        consume(
+            block,
+            values.map((row) => {
+                if (!Array.isArray(row) || row.length > width)
+                    throw new Error(
+                        "Analytics History response exceeds requested columns."
+                    );
+                return row.map((cell) => gardenAnalyticsReadPrimitive_(cell));
+            })
+        );
+    }
+}
+
+/** @param {number} milliseconds @param {string} timeZone @returns {number | null} */
+function gardenAnalyticsNativeOffset_(milliseconds, timeZone) {
+    const date = new Date(milliseconds);
+    if (!Number.isFinite(date.getTime())) return null;
+    const offset = dryDownNativeTimeZoneOffset_(date, timeZone);
+    if (offset === null) return null;
+    return (
+        (Number(offset.slice(1, 3)) * 60 + Number(offset.slice(3, 5))) *
+        (offset[0] === "-" ? -1 : 1) *
+        60000
+    );
+}
+
+/**
+ * Invert a proven date-like serial only when its local wall time has one native
+ * instant. Fold/gap times and historical second offsets use native cell reads.
+ * @param {number} serial
+ * @param {string} timeZone
+ * @param {Map<number, (number | null)[] | null>} offsetsByDay
+ * @returns {Date | null}
+ */
+function gardenAnalyticsSerialDate_(serial, timeZone, offsetsByDay) {
+    const wall = Math.round((serial - 25569) * 86400000);
+    if (!Number.isFinite(wall) || !Number.isFinite(new Date(wall).getTime()))
+        return null;
+    const day = Math.floor(wall / 86400000);
+    if (!offsetsByDay.has(day)) {
+        const offsets = [-36, 12, 36].map((hour) =>
+            gardenAnalyticsNativeOffset_(
+                day * 86400000 + hour * 3600000,
+                timeZone
+            )
+        );
+        offsetsByDay.set(
+            day,
+            offsets.includes(null) ? null : [...new Set(offsets)]
+        );
+    }
+    const offsets = offsetsByDay.get(day);
+    if (!offsets) return null;
+    /** @type {number[]} */
+    const candidates = [];
+    for (const offset of offsets) {
+        if (offset === null) return null;
+        const instant = wall - offset;
+        const actualOffset = gardenAnalyticsNativeOffset_(instant, timeZone);
+        if (actualOffset === null) return null;
+        if (instant + actualOffset === wall) candidates.push(instant);
+    }
+    const [instant] = candidates;
+    return candidates.length === 1 && instant !== undefined
+        ? new Date(instant)
+        : null;
+}
+
+/**
+ * @param {GardenSheet} history
+ * @param {GardenHistoryRow[]} rows
+ * @param {Map<number, number[]>} fallback
+ */
+function gardenAnalyticsReadFallback_(history, rows, fallback) {
+    for (const [column, indices] of fallback) {
+        /** @type {{start: number, end: number}[]} */
+        const groups = [];
+        for (const index of indices) {
+            const previous = groups.at(-1);
+            if (previous && previous.end + 1 === index) previous.end = index;
+            else groups.push({ start: index, end: index });
+        }
+        for (const { start, end } of groups) {
+            /** @type {unknown} */
+            const native = history
+                .getRange(start + 2, column + 1, end - start + 1, 1)
+                .getValues();
+            if (!Array.isArray(native) || native.length !== end - start + 1)
+                throw new Error(
+                    "Native analytics fallback has unexpected row dimensions."
+                );
+            native.forEach((row, offset) => {
+                if (!Array.isArray(row) || row.length !== 1)
+                    throw new Error(
+                        "Native analytics fallback has unexpected column dimensions."
+                    );
+                const target = rows[start + offset];
+                if (!target)
+                    throw new Error(
+                        "Native analytics fallback row is outside History."
+                    );
+                const value = row[0];
+                target[column] =
+                    value instanceof Date
+                        ? value
+                        : gardenAnalyticsReadPrimitive_(value);
+            });
+        }
+    }
+}
+
+/**
+ * Read only consumed columns. Paired date renders distinguish native Dates from
+ * ordinary numbers without an expensive native number-format read. Never parse
+ * the localized display string. Hash-prefixed cells are read natively because
+ * API error diagnostics and literal text must both retain their native value.
+ * @param {GardenSpreadsheet} spreadsheet
+ * @param {GardenSheet} history
+ * @param {number} rowCount
+ * @param {string} timeZone
+ * @returns {GardenHistoryRow[]}
+ */
+function gardenAnalyticsHistoryRows_(spreadsheet, history, rowCount, timeZone) {
+    if (
+        !Number.isInteger(rowCount) ||
+        rowCount < 0 ||
+        rowCount >= GARDEN_LOGGER.historyCapacityRows
+    )
+        throw new Error("History exceeds the supported analytics capacity.");
+    if (!rowCount) return [];
+    const spreadsheetId = spreadsheet.getId();
+    const blocks = GARDEN_ANALYTICS_HISTORY_BLOCKS;
+    /** @type {GardenHistoryRow[]} */
+    const rows = Array.from({ length: rowCount }, () =>
+        Array.from({ length: GARDEN_LOGGER.historyStoredColumns }, () => "")
+    );
+    gardenAnalyticsReadValues_(
+        spreadsheetId,
+        blocks,
+        rowCount,
+        "SERIAL_NUMBER",
+        (block, values) => {
+            const [, , column, width] = block;
+            for (const [index, row] of rows.entries()) {
+                for (let offset = 0; offset < width; offset += 1)
+                    row[column + offset] = values[index]?.[offset] ?? "";
+            }
+        }
+    );
+    const firstDates = rows.map((row) => row[0]);
+    /** @type {Map<number, number[]>} */
+    const fallback = new Map();
+    /** @type {Map<number, (number | null)[] | null>} */
+    const offsetsByDay = new Map();
+    gardenAnalyticsReadValues_(
+        spreadsheetId,
+        blocks,
+        rowCount,
+        "FORMATTED_STRING",
+        (block, values) => {
+            const [, , column, width] = block;
+            for (const [index, row] of rows.entries()) {
+                for (let offset = 0; offset < width; offset += 1) {
+                    const target = column + offset;
+                    const left = row[target] ?? "";
+                    const right = values[index]?.[offset] ?? "";
+                    const dateLike =
+                        typeof left === "number" && typeof right === "string";
+                    if (!dateLike && left !== right)
+                        throw new Error(
+                            "Paired analytics History reads disagree; retry a stable snapshot."
+                        );
+                    const hashText =
+                        typeof left === "string" && left.startsWith("#");
+                    if (!dateLike && !hashText) continue;
+                    const date =
+                        target === 0 && typeof left === "number"
+                            ? gardenAnalyticsSerialDate_(
+                                  left,
+                                  timeZone,
+                                  offsetsByDay
+                              )
+                            : null;
+                    if (date) row[target] = date;
+                    else {
+                        const indices = fallback.get(target) ?? [];
+                        indices.push(index);
+                        fallback.set(target, indices);
+                    }
+                }
+            }
+        }
+    );
+    gardenAnalyticsReadFallback_(history, rows, fallback);
+    gardenAnalyticsReadValues_(
+        spreadsheetId,
+        [["A", "A", 0, 1]],
+        rowCount,
+        "SERIAL_NUMBER",
+        (_block, values) => {
+            if (
+                firstDates.some(
+                    (value, index) => value !== (values[index]?.[0] ?? "")
+                )
+            )
+                throw new Error(
+                    "History timestamps changed between analytics reads; discard this snapshot."
+                );
+        }
+    );
+    return rows;
 }
 
 /**
@@ -4963,8 +5322,9 @@ function refreshGardenAnalytics_(spreadsheet) {
             GARDEN_LOGGER.workbookCalculationsSheet
         );
         ensureSheetColumnCapacity_(calculations, 11);
-        calculations.getRange("I2").setValue("Refreshing");
-        SpreadsheetApp.flush();
+        // Keep the preceding snapshot and its state until atomic publication.
+        // An early status write forces dependent workbook formulas to recalculate
+        // before the full History read and again when the new snapshot arrives.
         const asOf = new Date();
         const timeZone = spreadsheet.getSpreadsheetTimeZone();
         const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
@@ -4973,11 +5333,12 @@ function refreshGardenAnalytics_(spreadsheet) {
             throw new Error(
                 "History exceeds the supported analytics capacity."
             );
-        const rows = rowCount
-            ? history
-                  .getRange(2, 1, rowCount, GARDEN_LOGGER.historyStoredColumns)
-                  .getValues()
-            : [];
+        const rows = gardenAnalyticsHistoryRows_(
+            spreadsheet,
+            history,
+            rowCount,
+            timeZone
+        );
         const selectedPlant = cleanText_(
             requireSheet_(spreadsheet, "Insights").getRange("B228").getValue()
         );
@@ -5026,11 +5387,11 @@ function refreshGardenAnalytics_(spreadsheet) {
                 rows: outputs.locations,
             },
         ];
-        const requests = specifications.map((output) => {
+        const requests = specifications.flatMap((output) => {
             const sheet = requireSheet_(spreadsheet, output.name);
             ensureSheetColumnCapacity_(sheet, output.column + output.width - 1);
             ensureSheetRowCapacity_(sheet, output.rows.length);
-            return gardenAnalyticsCellsRequest_(
+            return gardenAnalyticsCellsRequests_(
                 sheet,
                 output.column,
                 output.width,
@@ -5130,7 +5491,12 @@ function refreshGardenAnalytics_(spreadsheet) {
         };
     } catch (error) {
         try {
-            calculations?.getRange("I2").setValue("Refresh failed");
+            if (calculations) {
+                calculations.getRange("I2").setValue("Refresh failed");
+                // Commit failure before releasing the lease so this buffered
+                // write cannot overwrite a later refresh's Ready publication.
+                SpreadsheetApp.flush();
+            }
         } catch (statusError) {
             console.error(String(statusError));
         }
@@ -5234,7 +5600,7 @@ function gardenAnalyticsOutputs_(
  * @param {GardenCell[][]} rows
  * @param {string} timeZone
  * @param {Map<number, number>} [dateSerials]
- * @returns {GardenCorrectionSheetsRequest}
+ * @returns {GardenAnalyticsCellsRequest}
  */
 function gardenAnalyticsCellsRequest_(
     sheet,
@@ -5273,6 +5639,110 @@ function gardenAnalyticsCellsRequest_(
             fields: "userEnteredValue",
         },
     };
+}
+
+/**
+ * Compress columns whose serialized data cells are identical. Clear the owned
+ * rectangle first, then restore headers, repeated values and variable blocks in
+ * the same atomic batch. Empty cells remain genuinely empty; formats survive.
+ * @param {GardenSheet} sheet
+ * @param {number} column
+ * @param {number} width
+ * @param {GardenCell[][]} rows
+ * @param {string} timeZone
+ * @param {Map<number, number>} [dateSerials]
+ * @returns {GardenCorrectionSheetsRequest[]}
+ */
+function gardenAnalyticsCellsRequests_(
+    sheet,
+    column,
+    width,
+    rows,
+    timeZone,
+    dateSerials = new Map()
+) {
+    const baseline = gardenAnalyticsCellsRequest_(
+        sheet,
+        column,
+        width,
+        rows,
+        timeZone,
+        dateSerials
+    );
+    if (rows.length < 128) return [baseline];
+    const original = baseline.updateCells;
+    const header = original.rows[0];
+    const first = original.rows[1];
+    if (!header || !first) return [baseline];
+    const constant = Array.from({ length: width }, (_, index) => {
+        const encoded = JSON.stringify(first.values[index]);
+        return original.rows
+            .slice(2)
+            .every((row) => JSON.stringify(row.values[index]) === encoded);
+    });
+    if (!constant.some(Boolean)) return [baseline];
+    /** @type {GardenCorrectionSheetsRequest[]} */
+    const candidates = [
+        {
+            updateCells: {
+                range: { ...original.range },
+                rows: [],
+                fields: "userEnteredValue",
+            },
+        },
+        {
+            updateCells: {
+                start: {
+                    sheetId: original.range.sheetId,
+                    rowIndex: 0,
+                    columnIndex: column - 1,
+                },
+                rows: [header],
+                fields: "userEnteredValue",
+            },
+        },
+    ];
+    for (let index = 0; index < width;) {
+        if (constant[index]) {
+            const cell = first.values[index];
+            if (cell?.userEnteredValue)
+                candidates.push({
+                    repeatCell: {
+                        range: {
+                            sheetId: original.range.sheetId,
+                            startRowIndex: 1,
+                            endRowIndex: rows.length,
+                            startColumnIndex: column - 1 + index,
+                            endColumnIndex: column + index,
+                        },
+                        cell,
+                        fields: "userEnteredValue",
+                    },
+                });
+            index++;
+            continue;
+        }
+        const start = index;
+        while (index < width && !constant[index]) index++;
+        const end = index;
+        candidates.push({
+            updateCells: {
+                start: {
+                    sheetId: original.range.sheetId,
+                    rowIndex: 1,
+                    columnIndex: column - 1 + start,
+                },
+                rows: original.rows.slice(1).map((row) => ({
+                    values: row.values.slice(start, end),
+                })),
+                fields: "userEnteredValue",
+            },
+        });
+    }
+    return gardenAnalyticsPayloadBytes_(JSON.stringify(candidates)) <
+        gardenAnalyticsPayloadBytes_(JSON.stringify([baseline]))
+        ? candidates
+        : [baseline];
 }
 
 /** @param {GardenSpreadsheet} spreadsheet @returns {void} */

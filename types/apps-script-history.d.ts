@@ -1,3 +1,28 @@
+/** Required shape produced by the analytics CellData serialization oracle. */
+type GardenAnalyticsCellsRequest = Omit<
+    GardenCorrectionSheetsRequest,
+    "updateCells"
+> & {
+    updateCells: {
+        fields: string;
+        range: GoogleAppsScript.Sheets.Schema.GridRange;
+        rows: { values: GardenCorrectionCellData[] }[];
+    };
+};
+
+/** Validated range coordinates for the analytics History reader. */
+type GardenAnalyticsHistoryBlock = readonly [
+    firstColumn: string,
+    lastColumn: string,
+    column: number,
+    width: number,
+];
+
+type GardenAnalyticsPrimitive =
+    | boolean
+    | number
+    | string;
+
 interface GardenCorrectionLineage {
     active: boolean;
     corrects: string;

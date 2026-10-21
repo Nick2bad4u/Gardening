@@ -7,6 +7,22 @@ import type {
     WebWeightSeries,
 } from "./logger-workflow-fixtures.js";
 
+export interface AnalyticsReadOptions {
+    dateTimeRenderOption: "FORMATTED_STRING" | "SERIAL_NUMBER";
+    majorDimension: "ROWS";
+    ranges: string[];
+    valueRenderOption: "UNFORMATTED_VALUE";
+}
+
+export interface AnalyticsReadResponse {
+    spreadsheetId: string;
+    valueRanges: {
+        majorDimension: string;
+        range: string;
+        values?: CellValue[][];
+    }[];
+}
+
 export interface Bootstrap {
     dayKey?: string;
     dayStartHour?: number;

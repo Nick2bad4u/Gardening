@@ -36,10 +36,12 @@ under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-
 ## Maintained 5.37.0 capacity and mobile display update
 
 Checked-in source **5.37.0** supports **50,000 observation slots** in History
-rows **2:50001**. Final native workbook rehearsal and production release are pending;
-production remains **5.36.0 / immutable version 111** until the workbook migration
-and matching deployment are verified. Source changes alone do not extend the
-live workbook's supported capacity.
+rows **2:50001**. Representative full-scale rehearsal and production release
+remain pending.
+A fresh production check at **01:27 UTC on October 21** confirmed
+**5.36.0 / immutable version 111**; the workbook migration and matching deployment
+have not been released. Source changes alone do not extend the live workbook's
+supported capacity.
 
 The **October 18 disposable-copy rehearsal** allocated **18,371,651 cells across
 64 sheets** after removing its temporary probes. All **1,882 original History
@@ -48,20 +50,22 @@ calculated locally with the unchanged model algorithms were written only to the
 copy: native **Integrity E4:H14** then showed Pass/Info throughout (**F5 = 0**),
 with no errors in the four captured output anchors. A native cached-setup mismatch
 probe hid the old Baselines guidance and showed **Waiting for refresh** on the
-cycle explorer. The copy was restored to derived setup **1** and **Workbook
+cycle explorer. That rehearsal ended at derived setup **1** and **Workbook
 calculations I2 = Awaiting native refresh**. All three chart repair requests were
-accepted; the P29/P30 watering series persisted. The selected-cycle chart
-**907202610** currently omits its gated-empty series and needs verification after
-a successful native refresh. P38 dimension series are legitimately empty because
-no height/width observations exist; this is independent of refresh readiness.
+accepted; the P29/P30 watering series persisted. The later October 20 native
+refresh restored selected-cycle chart **907202610** to the exact planned
+**38 series**, including its left axis and original position, without another
+chart repair. P38 dimension series remain legitimately empty because no
+height/width observations exist; this is independent of refresh readiness.
 
 Native custom-function trials hit argument transport and execution limits, so
 the maintained implementation computes the four derived snapshots with ordinary
-Apps Script. An authorized ordinary Apps Script refresh has **not yet run** in
-the copy. The local reference-value check above verifies native consumers, not
-the refresh execution path. Full native refresh verification, performance with
-50,000 populated observations, and daily trigger-runtime quota headroom remain
-release gates.
+Apps Script. Authorized native refreshes have now completed on the copy with
+both the original ledger and a synthetic 50,000-record environment scenario.
+The environment scenario published successfully but failed the daily
+trigger-runtime release gate. Representative full-scale coverage, runtime and
+quota headroom, copy restoration, and final release checks remain required;
+the dated verification below separates the completed evidence from those gates.
 
 One save may create several observation rows. The writer preflights the whole
 batch before appending or changing setup state; already-confirmed request retries
@@ -82,12 +86,16 @@ results into Baselines, Dashboard, plant pages, and AppSheet.
 
 **Workbook calculations H2:K2** records the last successful calculation time,
 refresh state, calculated cycle plant ID, and pot setup. The four snapshots and
-their successful metadata publish in one atomic Sheets update. Failed refreshes
+their successful metadata publish in one atomic Sheets update. During computation,
+the preceding snapshot keeps its existing status and timestamp; the execution
+lease prevents overlapping refreshes. This avoids an intermediate status write
+that would trigger another workbook recalculation. Failed refreshes
 retain the preceding results and successful timestamp, with **Refresh failed**
 status. The cycle explorer hides cached series and role labels until their
 calculated plant/setup match the selection, the state is **Ready**, and the
 timestamp is no more than 15 minutes behind the shared clock. Its visible status
-distinguishes **Waiting for refresh**, **Refreshing**, and **Refresh failed**.
+distinguishes **Waiting for refresh** and **Refresh failed**; the mobile action
+shows its own in-progress state while its request is running.
 Integrity checks include the snapshot state, freshness, headers, and selected
 identity; a saved observation and a refreshed analytics snapshot are distinct.
 
@@ -153,15 +161,17 @@ parentheses. Google executes an assigned drawing only in a desktop browser;
 use the mobile logger's control on a phone. See
 [Google's menu and drawing documentation](https://developers.google.com/apps-script/guides/menus).
 
-### October 20 candidate verification
+### October 20–21 candidate verification
 
 The combined candidate includes the pending capacity expansion, compact mobile
 capacity display, Mist icons, Dashboard 90-day formula source, and manual
 recalculation controls. Initial local verification passed **2,069 unit tests** and
 **52 Chromium/Edge logger browser tests** across light/dark themes and six widths.
-The expanded logger coverage run passed **1,705 tests**, with **99.81% line coverage** and
-**98.54% branch coverage**. Type checks, the Pages build, and generated-site
-checks also passed. These checks do not establish native workbook execution.
+The final local logger run passed **1,808 tests across 45 files**, with **99.79%
+line**, **99.57% statement**, **98.52% branch**, and **100% function coverage**.
+The local patch-coverage estimate is **97.82%**; provider confirmation is pending.
+Type checks, the Pages build, and generated-site checks also passed. These checks
+do not establish native workbook execution.
 
 Two calculation paths now reuse indexed results while retaining the existing
 model rules. For a 50,000-record single-plant fixture, complete cycle output was
@@ -173,11 +183,61 @@ matched. These are Node measurements, not Apps Script timings.
 
 The candidate's three deployment files were uploaded to the existing disposable
 bound script and read back exactly. Its Dashboard drawing is assigned to
-`recalculateGardenWorkbook`. Native execution remains pending the copied
-script's Google authorization; the calculation status remains **Awaiting native
-refresh**. Full refresh timing, quota headroom, canonical/staging preservation,
-and the selected-cycle chart's recovery after a gated-empty state still require
-native verification before production rollout.
+`recalculateGardenWorkbook`, and Google authorization for the copy is complete.
+The first ordinary native refresh of its **1,882 original observations** reached
+**Ready** in **35.731 seconds**. Before/after hashes of History, App entries, and
+App bulk matched, and the copy had **zero installed triggers**. The successful
+snapshot restored the selected-cycle chart after its gated-empty state; captured
+P27 consumers matched the materialized model, and Integrity remained Pass/Info
+with **F5 = 0**. A subsequent native profile using the date-formatting improvement
+and one atomic publication completed in **10.510 seconds**.
+
+The **October 21 environment scenario** populated the disposable copy with
+**50,000 synthetic observations**. The initial native refresh reached **Ready** in
+**78.013 seconds**, publishing **26,129,765 UTF-8 bytes**. The subsequent reader
+and publisher improvements below reduce this cost while preserving the outputs.
+
+At **01:02 UTC on October 21**, the maintained paired Sheets reader read the
+50,000-record environment ledger in **8.724 seconds**, with the complete native
+read/calculation comparison taking **11.191 seconds**. All four output hashes
+matched the native reference exactly. Separate native in-memory 50,000-record
+trials at **01:08 UTC** calculated the concentrated single-plant scenario in
+**1.240 seconds** (**1.728 seconds** including generation and serialization), and
+the correction chain in **1.723 seconds** (**2.485 seconds** total). Those trials
+exclude Sheets reads, publication, queue intake, and dependent formulas.
+
+The compressed `CellData` publisher completed the native environment refresh in
+**26.527 seconds**, including **10.995 seconds** for the Sheets publication call.
+Its payload was **12,281,158 bytes**, down from approximately **26.13 MB**. Native
+readback at **01:25 UTC** matched all four output matrices exactly in values,
+types, and hashes across their complete allocated output ranges, including
+unused cells remaining blank. The shared clock, dependent formula, timestamp
+format, and Ready metadata checks all passed. Compression preserves the
+`CellData` publication contract; the rejected RAW-values alternative lost
+formatting and left dependent results stale.
+
+The maintained scheduler now requires a Ready snapshot to be at least eight
+minutes old before its scheduled refresh, so analytics normally refresh every
+ten minutes while queue intake continues every five minutes. Manual recalculation
+remains immediate, and the existing 15-minute freshness gate is unchanged.
+The complete native environment queue run took **46.304 seconds**; the intervening
+run that skipped analytics took **3.011 seconds**. Repeating that pair projects
+**118.356 minutes per day**, which **fails the environment scenario's daily
+trigger-runtime gate**. A separate maintained refresh profile took **36.853
+seconds**, including **9.616 seconds** reading, **0.968 seconds** calculating, and
+**19.935 seconds** publishing, confirming variable large-write cost. A successful
+publication is not evidence of sufficient daily quota headroom.
+
+At **01:40:41 UTC**, restoration after the environment scenario matched all
+**335,000 original values** and **335,000 formats**; **45,001 tail-row formats**
+matched and **3,015,067 tail cells** were empty. The **1,882 unique observations**
+and **1,536 request groups** had zero mismatches. Native **P31/P38** checks also
+verified the repaired **Insights A231** model notes, then restored selector P27.
+At **01:43 UTC**, the copy began loading a representative 50,000-record scenario
+with real **History M:O** formulas. Its native results and full-queue quota proof
+remain pending, along with final copy restoration, removal of temporary helpers,
+provider checks, and the guarded production migration, deployment, and readback.
+Production remains untouched at **5.36.0 / immutable version 111**.
 
 The October 20 dependency audit found no production dependencies and no
 production audit findings. The full development-tooling audit reported 58

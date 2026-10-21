@@ -32,7 +32,11 @@ export interface AnalyticsApi {
     finishAppSheetQueueRun_: (
         spreadsheet: object,
         summary: { ok: boolean; savedCount: number }
-    ) => { analytics: { status: string }; ok: boolean; savedCount: number };
+    ) => {
+        analytics: { calculatedAt?: string; skipped?: true; status: string };
+        ok: boolean;
+        savedCount: number;
+    };
     gardenAnalyticsCellsRequest_: (
         sheet: object,
         column: number,
@@ -43,22 +47,25 @@ export interface AnalyticsApi {
     ) => {
         updateCells: {
             fields: string;
-            range: {
-                endColumnIndex: number;
-                endRowIndex: number;
-                startColumnIndex: number;
-                startRowIndex: number;
-            };
-            rows: {
-                values: {
-                    userEnteredValue?: {
-                        numberValue?: number;
-                        stringValue?: string;
-                    };
-                }[];
-            }[];
+            range: AnalyticsCellRange;
+            rows: { values: AnalyticsCellData[] }[];
         };
     };
+    gardenAnalyticsCellsRequests_: (
+        sheet: object,
+        column: number,
+        width: number,
+        rows: CellValue[][],
+        timeZone: string,
+        dateSerials?: Map<number, number>
+    ) => AnalyticsCellsRequest[];
+    gardenAnalyticsHistoryRows_: (
+        spreadsheet: { getId: () => string },
+        history: object,
+        rowCount: number,
+        timeZone: string
+    ) => CellValue[][];
+
     gardenAnalyticsOutputs_: (
         history: CellValue[][],
         plant: CellValue,
@@ -72,7 +79,6 @@ export interface AnalyticsApi {
         locations: CellValue[][];
         models: CellValue[][];
     };
-
     gardenAnalyticsPayloadBytes_: (value: string) => number;
     recalculateGardenWorkbook: () => { calculatedAt?: string; status: string };
     refreshGardenAnalytics: () => { status: string };
@@ -91,6 +97,36 @@ export interface AnalyticsApi {
         status: string;
     };
 }
+export interface AnalyticsCellData {
+    userEnteredValue?: {
+        formulaValue?: string;
+        numberValue?: number;
+        stringValue?: string;
+    };
+}
+
+export interface AnalyticsCellRange {
+    endColumnIndex: number;
+    endRowIndex: number;
+    sheetId: number;
+    startColumnIndex: number;
+    startRowIndex: number;
+}
+
+export interface AnalyticsCellsRequest {
+    repeatCell?: {
+        cell: AnalyticsCellData;
+        fields: string;
+        range: AnalyticsCellRange;
+    };
+    updateCells?: {
+        fields: string;
+        range?: AnalyticsCellRange;
+        rows: { values: AnalyticsCellData[] }[];
+        start?: { columnIndex: number; rowIndex: number; sheetId: number };
+    };
+}
+
 export interface AppendResult {
     duplicate: boolean;
     eventNames: string[];
@@ -317,6 +353,8 @@ export interface AppsScriptTestApi {
     GARDEN_DRY_DOWN: (history: unknown, plantIds: unknown) => DryDownRow[];
     GARDEN_ENVIRONMENT_READINGS: (history: unknown) => CellValue[][];
     GARDEN_RECORDED_LOCATIONS: (history: unknown) => CellValue[][];
+    gardenAnalyticsHistoryRows_: AnalyticsApi["gardenAnalyticsHistoryRows_"];
+    gardenAnalyticsOutputs_: AnalyticsApi["gardenAnalyticsOutputs_"];
     getGardenSpreadsheet_: () => object;
     getRecentObservations_: (
         spreadsheet: unknown,

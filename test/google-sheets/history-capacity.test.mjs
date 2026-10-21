@@ -1093,6 +1093,54 @@ describe("history capacity migration", () => {
         expect(manualReview.after).toContain("'Plant tracker'!$AD$2:$AD$37");
     });
 
+    it.each(["P31", "P38"])(
+        "extends the legacy Insights model note to include %s",
+        (plant) => {
+            expect.hasAssertions();
+
+            const { options, snapshot } = fixture();
+            const before =
+                "=IFNA(INDEX('Dry-down models'!P2:P31,MATCH(B228,'Dry-down models'!A2:A37,0)),\"Collecting evidence\")";
+            snapshot.cells.push({
+                column: 0,
+                row: 230,
+                sheet: "Insights",
+                value: { formulaValue: before },
+            });
+            const plan = buildHistoryCapacityRequests(snapshot, options);
+            const edit = required(
+                plan.edits.find(
+                    (entry) =>
+                        entry.sheet === "Insights" &&
+                        entry.row === 230 &&
+                        entry.column === 0
+                )
+            );
+            const returnRange = required(
+                /INDEX\('Dry-down models'!P2:P(?<end>\d+),MATCH/v.exec(
+                    String(edit.after)
+                )
+            );
+            const lookupRange = required(
+                /MATCH\(B228,'Dry-down models'!A2:A(?<end>\d+),0\)/v.exec(
+                    String(edit.after)
+                )
+            );
+            const returnCount = Number(returnRange.groups?.["end"]) - 1;
+            const lookupCount = Number(lookupRange.groups?.["end"]) - 1;
+            const modelIndex = options.activePlantIds.indexOf(plant);
+
+            expect(edit.before).toBe(before);
+            expect(returnCount).toBe(lookupCount);
+            expect(modelIndex).toBeGreaterThanOrEqual(30);
+            expect(modelIndex).toBeLessThan(returnCount);
+            expect(edit.after).toContain(
+                "'Workbook calculations'!$I$2=\"Ready\""
+            );
+            expect(edit.after).not.toContain("P2:P31");
+        }
+    );
+
     it("clears exactly the four guarded UDF anchors and monitors materialized freshness and identity", () => {
         expect.hasAssertions();
 

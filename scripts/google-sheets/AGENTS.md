@@ -1,71 +1,67 @@
-# Logger instructions
+# Logger
 
 ## Runtime/history
 
 - `.gs`: shared global scope, no Node/browser APIs. `Index.html` stays self-contained
   unless `doGet()` gains templating. Keep `tsconfig.apps-script.json` ES2023,
   `types/apps-script*.d.ts` aligned, and global/fixture checks.
-- Apps Script rejects numeric separators; validate syntax/APIs in a
-  disposable bound script, not just typechecking. Cycle generation substitutes
-  `sort`/`reverse` for `toSorted`/`toReversed` only on new arrays.
+- Apps Script rejects numeric separators. Beyond typechecking, validate syntax/APIs
+  in a disposable bound script. Cycle generation uses `sort`/`reverse` instead of
+  `toSorted`/`toReversed` only on new arrays.
 - History is append-only; distinguish observation/request/save/batch IDs.
-  P Request ID groups one save's events; retries are idempotent.
-  Corrections preview one event, append its replacement, and mark its ancestor
+  P Request ID groups save events for idempotent retries.
+  Corrections preview one event, append replacement, mark its ancestor
   Removed with provenance. Never delete rows or create correction setups.
 - Preserve History: A:L observations; M:O formulas; P retry ID; Q:Z structured care;
   AA:AJ provenance/state; AK:AM entry units/inches; AN rotation degrees;
   AO watering application; AP measured mL; AQ 0–100% RH. Blank differs from zero.
   5.33.0 appends finite nonnegative AR `PPFD (µmol/m²/s)`/AS `Illuminance (lux)`.
   AT:BH care; 5.36.0 appends BI:BO leaf fields, preserving A:BH.
-  Separate canonical Celsius/targets/original units. Verify live rollout;
+  Separate canonical Celsius/targets/original units. Verify rollout;
   preserve headers/data/formulas. `installGardenLogger()` may add/verify headers;
   Clearing values/formulas needs explicit owner approval.
-- Setup means whole weighed configuration, not diameter. Repot advances it/updates
-  Baselines; exclude old setups from new dry/wet averages.
+- Setup means whole weighed configuration, not diameter. Record changes explicitly
+  as Repot, advancing setup/updating Baselines; exclude old setups from dry/wet averages.
 
 ## Entry safety
 
-- Never ask users to classify weights. Retain `Weight state`; new weights are
-  `Routine`. Derive cycle state without rewriting History: same-save Water weights
-  are Wet, otherwise first positive weight within five days after Water.
-  Last eligible non-Wet weight before next Water is Dry;
-  open-cycle weights stay Routine. Water never implies weight.
+- Never ask weight classification. Retain `Weight state`; new weights: `Routine`.
+  Derive without rewriting History: Wet = same-save Water weight, otherwise first
+  positive weight within five days after Water; Dry = last eligible non-Wet weight
+  before next Water. Open-cycle weights stay Routine. Water never implies weight.
 - Preserve entries until callback; lock writes, escape formula-like text, validate
   URLs, keep per-plant retries idempotent. Queue writes reload under a Web Lock
   through send/reconcile; fail closed without locks, preserving Save now.
   Drafts need Resume/Discard; pending-save recovery takes priority.
-- Before mutation, preflight batches against 50,000 History slots (rows 2:50001).
+- Preflight batches before mutation: 50,000 History slots (rows 2:50001).
   Align logger/`history-capacity-config.mjs`; migrate full-history projections before
-  raising the write limit. Retries need no slots.
-- Refresh cached choices/history filters without losing drafts/selections/focus/
+  raising write limits. Retries need no slots.
+- Refresh cached choices/filters without losing drafts/selections/focus/
   save locks. Test older cached-roster upgrades.
-- Water, Weigh, and Measure use separate rows per save. Bulk water amount is per
-  pot; never divide it across the selection.
+- Water/Weigh/Measure use separate rows per save. Bulk water amount is per pot.
 - Humidity: Measured / Hygrometer, independent of weight/soil moisture/watering/
   setup. Preserve App entries AI and preceding columns.
-- Inspect requires above-ground condition, Observed / Observed provenance;
-  new Check requires soil moisture without condition. Preserve condition-only
-  legacy Checks/corrections/retries. Ignore stale unselected AppSheet fields.
+- Inspect: required above-ground condition, Observed / Observed provenance.
+  New Check: required soil moisture, no condition. Preserve condition-only legacy
+  Checks/corrections/retries. Ignore stale unselected AppSheet fields.
   Bulk Inspect: selected plants/shared condition; summaries retain both names.
-- Light (UI: Light reading) requires PPFD/lux/both.
-  PPFD uses Estimated / Light app, including combined readings; lux-only uses
-  Measured / Lux meter. No quantum-sensor claim/conversion/DLI/inferred care threshold.
+- Light (UI: Light reading): PPFD/lux/both required. PPFD (also combined) uses
+  Estimated / Light app; lux-only uses Measured / Lux meter.
+  No quantum-sensor claim/conversion/DLI/inferred care threshold.
   Preset/context stays in Notes; light fields stay App entries AJ/AK, History AR/AS.
   No bulk Light/Humidity/Temperature.
-- History A:BO/67; App entries A:BG/59; App bulk A:BV/74. Staging leaf/air
-  temperatures use unitless headers plus entry units; History uses °C headers.
+- History A:BO/67; App entries A:BG/59; App bulk A:BV/74. Leaf/air temperatures:
+  staging uses unitless headers plus entry units; History uses °C headers.
   Preserve positions/offline rows and aligned retries/corrections.
   Leaf VPD replaces new Support choices, never its history/retries.
 - Mist: listed targets, details for Other, optional positive measured mL.
   Move: required destination, optional previous location. Temperature: Air/Soil
   and C/F, stored Celsius, zero/negative readings down to absolute zero.
   Environment: aspect/new setting; Propagate/legacy Support: choice/details.
-  None implies Water/weight/setup reset. Repot explicitly records changed weighed
-  configuration. Current location uses active history.
-- Leaf VPD Device: nonnegative displayed kPa, optional context.
-  Calculated requires leaf temperature and both/neither air/RH. Leaf-only stores
-  blank VPD / Not calculated. Use same-observation data, never prior sensors;
-  preserve signed results/C/F provenance.
+  None implies Water/weight/setup reset. Current location uses active history.
+- Leaf VPD Device: nonnegative displayed kPa, optional context. Calculated requires
+  leaf temperature and both/neither air/RH. Leaf-only: blank VPD / Not calculated.
+  Use same-observation data, never prior sensors; retain signed results/C/F provenance.
   The −50..100°C calculation domain is not care guidance. No bulk Leaf VPD.
 - Progress: workbook timezone/4 a.m. care days; drying rates: actual intervals.
   Preserve correction order and future/Removed/estimated/invalid/other-setup exclusions.
@@ -76,9 +72,9 @@
 
 - Daily report is the care plan. Exclude retired `installDailyCareDashboard()`
   from production/menus/refreshes/triggers/sources.
-- Preserve tab order/visibility/formatting/protections and hidden Quick log.
-  Whole-sheet warnings must not block logger/AppSheet; keep RO refills A20:I and
-  K20:M editable, calculated J protected.
+- Preserve tab order/visibility/formatting/protections, hidden Quick log.
+  Whole-sheet warnings must not block logger/AppSheet. RO refills: A20:I/K20:M
+  editable, calculated J protected.
 - JetBrains Mono: cells/all chart text overrides, not just theme.
   `workbook-presentation.mjs` preserves full specs; native RO axis-title colors drop:
   edit that font in the UI and verify non-font metadata. Preserve theme/data.
@@ -110,27 +106,32 @@
   model/correction rules. Use the existing queue trigger and explicit analytics
   refresh, never onEdit or the save critical section. Publish all four snapshots
   and successful metadata atomically.
+- Keep five-minute queue intake. Scheduled analytics may reuse Ready snapshots
+  under eight minutes old (normally ten-minute refreshes); invalid/future/stale/
+  non-Ready metadata forces refresh. Explicit analytics/manual recalculation bypass
+  this guard. Consumer freshness stays 15 minutes.
 - `Workbook calculations` H:K: calculated time/state/cycle plant ID/setup.
   Failed refreshes preserve prior successful time/results.
   Cycle data/role labels require Ready, selected plant/setup match, valid timestamp
-  within 15 minutes of shared clock. Show waiting/refreshing/failure;
-  never relabel another plant's cached results.
-- All direct dry-down consumers require the same Ready/15-minute timestamp gate
-  and cached setup matching current Baselines T.
-  Repot/failed/stale refreshes withhold old dry anchors/model guidance.
+  within 15 minutes of shared clock. While computing retain prior status/time;
+  mobile shows request progress. Show applicable waiting/failure; never relabel
+  another plant's cache. Flush failure status before releasing the refresh lease to
+  protect later Ready publications.
+- All direct dry-down consumers require Ready/15-minute freshness and cached setup
+  matching current Baselines T. Repot/failed/stale refreshes withhold old dry anchors/
+  model guidance.
 - `Workbook analytics`: cycles A:D/gaps F:H. `cycle-comparison.mjs` owns
   cycle algorithm/legacy custom-function wrapper; reuse correction/cycle helpers.
   Compare actual elapsed time, label in workbook timezone. Legacy custom-function
   callers must not pass NOW/TODAY.
-- Full projections/summaries read all 50,000 History slots. Chart-only helpers
-  retain latest 4,999 relevant points chronologically; cycle comparisons select by
-  absolute observation time before elapsed-day alignment. Preserve chart-color
-  sentinels and plant chart sources through
-  row 5011; never expand wide helpers/every plant page tenfold.
-- `workbook-environment.mjs`: read-only Light & humidity/Environment data.
-  Separate PPFD/lux/RH and air/soil/leaf temperatures by unit/target/time; retain
-  corrections, blanks/zero, location/preset notes. Never infer historical canopy
-  height or add helpers to AppSheet intake.
+- Full projections/summaries read 50,000 History slots; chart helpers retain latest
+  4,999 relevant points chronologically. Cycle comparisons select by absolute
+  observation time before elapsed-day alignment. Preserve chart-color sentinels,
+  plant chart sources through row 5011; never expand wide helpers/all pages tenfold.
+- `workbook-environment.mjs`: read-only Light & humidity/Environment. Separate
+  PPFD/lux/RH and air/soil/leaf temperatures by unit/target/time. Retain corrections,
+  blanks/zero, location/preset notes. No inferred historical canopy height or helpers
+  in AppSheet intake.
 - Bound lookups to inventory; regenerate on additions. Compare optimization outputs/
   measured timings.
 - Sensor imports stay outside History. Follow `SENSOR-IMPORT.md`: verify archived
@@ -147,25 +148,25 @@
   native rounding; weight labels off, markers/hover intact. Recheck preconditions.
 - `plant-page-presentation.mjs`: A1:J38, guarded labels/merges/formulas/formats/
   dimensions. Preserve formulas/evidence/full notes; no workbook refresh just for styles.
-- Chart pixels/row heights are independent. Check gaps around all four
-  charts, A109 status, A139 backlink, A140 history. Follow the guide's scoped
-  row heights; reject hidden boundary rows and sheet-wide autofit.
+- Chart pixels/row heights are independent. Check all four chart gaps, A109 status,
+  A139 backlink, A140 history. Use the guide's scoped row heights; reject hidden
+  boundary rows/sheet-wide autofit.
 - `workbook-upgrade.mjs` is one-time: recheck captured cells/empty destinations
   before writing. Prepare, apply formulas, verify calculations, create charts.
   Stop on drift/installed destinations; never clear/replay.
 - Preserve unreviewed chart IDs/specs/positions.
   Basic metadata can omit charts; no-op `findReplace` with
   `include_spreadsheet_in_response: true` and no grid data returns full metadata.
-  Rehearse on a native copy; apply helpers before charts; verify calculations/colors.
+  Apply helpers before charts; verify calculations/colors.
 - `watering-intervals.mjs`: Pxx status A109/chart A111, hidden warning-protected
   helper outside AppSheet. Use whole-day gaps between distinct active Water dates,
   combine same-day setups/applications. Under two dates stays blank; no invented
   first interval, unfinished gap, or care schedule. Read full History, plot the
   latest 4,999 completed gaps, summarize all gaps. Preserve palette and explicit
   old bounds in historical one-time installation planners.
-- Empty native charts can lose colors/labels/vertical-axis options but retain
-  bindings. Test empty-to-populated transitions on a copy; reapply planned specs
-  after real intervals if needed. No styling-only triggers.
+- Empty native charts may lose colors/labels/vertical-axis options yet retain
+  bindings. Test empty-to-populated on a copy; reapply specs after real intervals
+  if needed. No styling-only triggers.
 
 - Behavior/schema changes: run `npm run test:logger`, `npm run test:logger:coverage`,
   `npm run check:logger`. Align server constants/row builders, client, tests/checker,
@@ -175,12 +176,12 @@
   Before deployment inspect synced artwork/published dependencies.
 - Before live writes, back up in native Drive; freshly read headers/formulas/
   validations/last rows/request IDs/staging schemas/deployment/triggers.
-- Keep native before/after metadata/cells privately ignored. Rehearse structure on
-  a native workbook/script copy; compare History/staging/RO entries/formulas/chart
-  IDs/specs/positions/protections/relative tab order exactly.
-- Reject snapshots above 40,000,000 UTF-8 bytes. Verify before release: full-scale
-  representative native refresh duration/payload size/daily trigger-runtime quota
-  headroom; local timing does not prove these.
+- Keep native before/after metadata/cells privately ignored. Rehearse structure in
+  native workbook/script copies; exactly compare History/staging/RO entries/formulas/
+  chart IDs/specs/positions/protections/relative tab order.
+- Reject snapshots over 40,000,000 UTF-8 bytes. Before release verify representative
+  full-scale native refresh duration/payload size/daily trigger-runtime quota headroom;
+  local timing cannot prove these.
 - Drive copies include bound scripts; avoid competing functions. Never replay
   `sortSpecs` when extending History's BasicFilter: it re-sorts History.
 - Appended native columns inherit validation. Replace rules only in new ranges;
@@ -188,6 +189,6 @@
 - Run `installGardenLogger()`/`installAppSheetIntake()` only after source/tests agree.
 - `npm run apps-script:status`: only `plant-tracker.gs`, `Index.html`,
   and `appsscript.json`. Source edits/`clasp push` do not update the versioned web app.
-- Installers/queue-trigger reinstall: only for contract changes. Verify
-  `Connected · Logger <version>`, successful
-  web-app/trigger executions, one five-minute `processQueuedAppSheetEntries` trigger.
+- Installers/queue-trigger reinstall: contract changes only. Verify
+  `Connected · Logger <version>`, successful web-app/trigger executions,
+  one five-minute `processQueuedAppSheetEntries` trigger.

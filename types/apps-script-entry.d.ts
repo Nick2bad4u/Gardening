@@ -3,6 +3,7 @@ interface GardenAnalyticsRefreshResult {
     historyRows?: number;
     message?: string;
     payloadBytes?: number;
+    skipped?: true;
     status:
         | "Busy"
         | "Ready"

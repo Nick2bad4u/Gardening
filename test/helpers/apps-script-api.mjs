@@ -1,4 +1,57 @@
 /**
+ * Model only the requested History columns and the API's two date render modes.
+ *
+ * @param {string} spreadsheetId
+ * @param {import("../logger-fixtures.js").AnalyticsReadOptions} options
+ * @param {import("../logger-fixtures.js").CellValue[][]} history
+ * @param {(date: Date) => number} [serialDate]
+ *
+ * @returns {import("../logger-fixtures.js").AnalyticsReadResponse}
+ */
+export function analyticsReadResponse(
+    spreadsheetId,
+    options,
+    history,
+    serialDate = (date) => date.getTime() / 86_400_000 + 25_569
+) {
+    return {
+        spreadsheetId,
+        valueRanges: options.ranges.map((range) => {
+            const groups =
+                /^'History'!(?<first>[A-Z]+)2:(?<last>[A-Z]+)(?<end>\d+)$/v.exec(
+                    range
+                )?.groups;
+            const first = groups?.["first"];
+            const last = groups?.["last"];
+            const end = groups?.["end"];
+            if (first === undefined || last === undefined || end === undefined)
+                throw new Error("Unexpected fixture API range");
+            return {
+                majorDimension: "ROWS",
+                range,
+                values: history
+                    .slice(0, Number(end) - 1)
+                    .map((row) =>
+                        row
+                            .slice(
+                                analyticsColumnIndex(first),
+                                analyticsColumnIndex(last) + 1
+                            )
+                            .map((value) =>
+                                value instanceof Date
+                                    ? options.dateTimeRenderOption ===
+                                      "SERIAL_NUMBER"
+                                        ? serialDate(value)
+                                        : value.toISOString()
+                                    : value
+                            )
+                    ),
+            };
+        }),
+    };
+}
+
+/**
  * Verify the evaluated source exports the testing API before assigning types.
  * Runtime return values remain covered by the original behavioral assertions.
  *
@@ -74,6 +127,8 @@ export function appsScriptApi(context) {
         GARDEN_DRY_DOWN: null,
         GARDEN_ENVIRONMENT_READINGS: null,
         GARDEN_RECORDED_LOCATIONS: null,
+        gardenAnalyticsHistoryRows_: null,
+        gardenAnalyticsOutputs_: null,
         getGardenSpreadsheet_: null,
         getRecentObservations_: null,
         getRecentWebObservations: null,
@@ -196,4 +251,12 @@ export function appsScriptApi(context) {
  */
 export function overrideAppsScript(context, name, implementation) {
     Reflect.set(context, name, implementation);
+}
+
+/** @param {string} name */
+function analyticsColumnIndex(name) {
+    let index = 0;
+    for (const letter of name)
+        index = index * 26 + (letter.codePointAt(0) ?? 0) - 64;
+    return index - 1;
 }

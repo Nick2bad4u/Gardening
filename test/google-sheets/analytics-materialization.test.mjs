@@ -3,7 +3,10 @@ import { fileURLToPath } from "node:url";
 import vm from "node:vm";
 import { describe, expect, it, vi } from "vitest";
 
-import { appsScriptApi } from "../helpers/apps-script-api.mjs";
+import {
+    analyticsReadResponse,
+    appsScriptApi,
+} from "../helpers/apps-script-api.mjs";
 
 const sourceUrl = new URL(
     "../../scripts/google-sheets/plant-tracker.gs",
@@ -37,6 +40,7 @@ function fixture(options = {}) {
         observation(36, "Move"),
     ];
     const writes = vi.fn();
+    const flush = vi.fn();
     const logError = vi.fn();
     const nativeFormatDate = vi.fn(formatDate);
     const historyRead = vi.fn(() => {
@@ -44,6 +48,12 @@ function fixture(options = {}) {
             throw new Error("History read must not hold the writer lock");
         return history;
     });
+    const valuesRead = vi.fn(
+        (
+            /** @type {string} */ spreadsheetId,
+            /** @type {import("../logger-fixtures.js").AnalyticsReadOptions} */ options
+        ) => analyticsReadResponse(spreadsheetId, options, historyRead())
+    );
     const releaseLock = vi.fn();
     const batchUpdate = vi.fn(() => {
         if (isLocked)
@@ -89,8 +99,7 @@ function fixture(options = {}) {
                     name === "History"
                         ? (options.historyLastRow ?? history.length + 1)
                         : 100,
-                getMaxColumns: () =>
-                    name === "Workbook calculations" ? 6 : 67,
+                getMaxColumns: () => 67,
                 getMaxRows: () => 50_001,
                 /** @param {(string | number)[]} range */
                 getRange: (...range) => ({
@@ -108,7 +117,28 @@ function fixture(options = {}) {
                                 ],
                             ];
                         }
-                        if (name === "History") return historyRead();
+                        if (name === "History") {
+                            const [
+                                start,
+                                column,
+                                count,
+                                width,
+                            ] = range;
+                            if (
+                                typeof start !== "number" ||
+                                typeof column !== "number" ||
+                                typeof count !== "number" ||
+                                typeof width !== "number"
+                            )
+                                throw new Error(
+                                    "Unexpected native History fixture range"
+                                );
+                            return historyRead()
+                                .slice(start - 2, start - 2 + count)
+                                .map((row) =>
+                                    row.slice(column - 1, column - 1 + width)
+                                );
+                        }
                         if (options.missingSelectedBaseline === true) return [];
                         return [
                             [
@@ -164,8 +194,10 @@ function fixture(options = {}) {
             }),
         },
         Set,
-        Sheets: { Spreadsheets: { batchUpdate } },
-        SpreadsheetApp: { flush: vi.fn(), openById: () => spreadsheet },
+        Sheets: {
+            Spreadsheets: { batchUpdate, Values: { batchGet: valuesRead } },
+        },
+        SpreadsheetApp: { flush, openById: () => spreadsheet },
         Utilities: {
             formatDate: nativeFormatDate,
             getUuid: () => "fixture-lease",
@@ -183,6 +215,7 @@ function fixture(options = {}) {
         "refreshGardenAnalyticsSafely_",
         "gardenAnalyticsOutputs_",
         "gardenAnalyticsCellsRequest_",
+        "gardenAnalyticsCellsRequests_",
         "gardenAnalyticsPayloadBytes_",
         "finishAppSheetQueueRun_",
     ];
@@ -197,6 +230,7 @@ function fixture(options = {}) {
         api,
         batchUpdate,
         context,
+        flush,
         getScriptLock,
         historyRead,
         logError,
@@ -205,6 +239,7 @@ function fixture(options = {}) {
         releaseLock,
         sheets,
         spreadsheet,
+        valuesRead,
         writes,
     };
 }
@@ -242,14 +277,99 @@ function observation(index, event = "Weigh") {
 }
 
 describe("scheduled analytics materialization", () => {
-    it("reads History once and atomically publishes four correctly sized outputs and one snapshot identity", () => {
+    it("reports an awaiting snapshot when the metadata read returns no rows", () => {
+        expect.hasAssertions();
+
+        const test = fixture();
+        const spreadsheet = {
+            getSheetByName: () => ({
+                getRange: () => ({ getValues: () => [] }),
+            }),
+        };
+
+        expect(
+            structuredClone(test.api.workbookCalculationStatus_(spreadsheet))
+        ).toStrictEqual({ status: "Awaiting native refresh" });
+    });
+
+    it("publishes compressed large outputs with the existing metadata, timestamp format and NOW clock in one batch", () => {
+        expect.hasAssertions();
+
+        const test = fixture({
+            history: Array.from({ length: 128 }, (_, index) =>
+                observation(index, "Light")
+            ),
+        });
+        const compress = vi.fn(test.api.gardenAnalyticsCellsRequests_);
+
+        test.context["gardenAnalyticsCellsRequests_"] = compress;
+
+        const result = test.api.refreshGardenAnalytics_(test.spreadsheet);
+        const [payload] =
+            /**
+             * @type {[
+             *     {
+             *         requests: import("../apps-script-fixtures.js").AnalyticsCellsRequest[];
+             *     },
+             * ]}
+             */ (/** @type {unknown} */ (test.batchUpdate.mock.calls[0]));
+
+        expect(result.status).toBe("Ready");
+        expect(compress).toHaveBeenCalledTimes(4);
+        expect(test.batchUpdate).toHaveBeenCalledTimes(1);
+        expect(
+            payload.requests.some(
+                (request) => request.updateCells?.rows.length === 0
+            )
+        ).toBe(true);
+        expect(
+            payload.requests.at(-3)?.updateCells?.rows[1]?.values[1]
+                ?.userEnteredValue?.stringValue
+        ).toBe("Ready");
+        expect(payload.requests.at(-2)).toMatchObject({
+            repeatCell: {
+                cell: {
+                    userEnteredFormat: {
+                        numberFormat: {
+                            pattern: "mmm d, yyyy h:mm:ss AM/PM",
+                            type: "DATE_TIME",
+                        },
+                    },
+                },
+                fields: "userEnteredFormat.numberFormat",
+                range: {
+                    endColumnIndex: 8,
+                    endRowIndex: 2,
+                    sheetId: 3,
+                    startColumnIndex: 7,
+                    startRowIndex: 1,
+                },
+            },
+        });
+        expect(
+            payload.requests.at(-1)?.updateCells?.rows[0]?.values[0]
+                ?.userEnteredValue?.formulaValue
+        ).toBe("=NOW()");
+        expect(test.writes).not.toHaveBeenCalled();
+    });
+
+    it("reads paired History columns and atomically publishes four correctly sized outputs and one snapshot identity", () => {
         expect.hasAssertions();
 
         const test = fixture({ selectedPlant: "P01", selectedSetup: 3 });
         const result = test.api.refreshGardenAnalytics_(test.spreadsheet);
 
         expect(result.status).toBe("Ready");
-        expect(test.historyRead).toHaveBeenCalledTimes(1);
+        expect(test.valuesRead).toHaveBeenCalledTimes(3);
+        expect(
+            test.valuesRead.mock.calls.map(
+                ([, options]) => options.dateTimeRenderOption
+            )
+        ).toStrictEqual([
+            "SERIAL_NUMBER",
+            "FORMATTED_STRING",
+            "SERIAL_NUMBER",
+        ]);
         expect(test.getScriptLock).toHaveBeenCalledTimes(2);
         expect(test.releaseLock).toHaveBeenCalledTimes(2);
         expect(test.batchUpdate).toHaveBeenCalledTimes(1);
@@ -355,13 +475,44 @@ describe("scheduled analytics materialization", () => {
         expect(metadata?.[0]?.userEnteredValue?.numberValue).toBe(
             Date.parse(result.calculatedAt ?? "") / 86_400_000 + 25_569
         );
-        expect(test.writes.mock.calls).toStrictEqual([
-            [
-                "Workbook calculations",
-                ["I2"],
-                "Refreshing",
-            ],
-        ]);
+        expect(test.writes).not.toHaveBeenCalled();
+    });
+
+    it("keeps the installed workbook and prior Ready snapshot untouched until atomic publication", () => {
+        expect.hasAssertions();
+
+        const test = fixture({
+            calculationStatus: "Ready",
+            calculationTime: asOf,
+        });
+
+        test.batchUpdate.mockImplementationOnce(() => {
+            expect(test.writes).not.toHaveBeenCalled();
+            expect(test.flush).not.toHaveBeenCalled();
+
+            for (const sheet of test.sheets.values()) {
+                expect(sheet.insertColumnsAfter).not.toHaveBeenCalled();
+            }
+
+            expect(
+                structuredClone(
+                    test.api.workbookCalculationStatus_(test.spreadsheet)
+                )
+            ).toStrictEqual({
+                calculatedAt: asOf.toISOString(),
+                status: "Ready",
+            });
+            expect(
+                test.api.refreshGardenAnalytics_(test.spreadsheet).status
+            ).toBe("Busy");
+        });
+
+        const result = test.api.refreshGardenAnalytics_(test.spreadsheet);
+
+        expect(result.status).toBe("Ready");
+        expect(test.batchUpdate).toHaveBeenCalledTimes(1);
+        expect(test.flush).toHaveBeenCalledExactlyOnceWith();
+        expect(test.flush).toHaveBeenCalledAfter(test.batchUpdate);
     });
 
     it("does not publish outputs or advance last-success metadata when the atomic batch fails", () => {
@@ -378,11 +529,6 @@ describe("scheduled analytics materialization", () => {
             status: "Refresh failed",
         });
         expect(test.writes.mock.calls).toStrictEqual([
-            [
-                "Workbook calculations",
-                ["I2"],
-                "Refreshing",
-            ],
             [
                 "Workbook calculations",
                 ["I2"],
@@ -422,11 +568,6 @@ describe("scheduled analytics materialization", () => {
             [
                 "Workbook calculations",
                 ["I2"],
-                "Refreshing",
-            ],
-            [
-                "Workbook calculations",
-                ["I2"],
                 "Refresh failed",
             ],
         ]);
@@ -437,6 +578,60 @@ describe("scheduled analytics materialization", () => {
             false
         );
     });
+});
+
+describe("analytics recovery and publication guards", () => {
+    it.each([false, true])(
+        "flushes failure status before releasing its lease and preserves the original error (flush failure: %s)",
+        (failFlush) => {
+            expect.hasAssertions();
+
+            const test = fixture({
+                calculationStatus: "Ready",
+                calculationTime: asOf,
+                failBatch: true,
+            });
+
+            test.flush.mockImplementationOnce(() => {
+                expect(test.writes).toHaveBeenCalledExactlyOnceWith(
+                    "Workbook calculations",
+                    ["I2"],
+                    "Refresh failed"
+                );
+                expect(
+                    test.properties.has("gardenAnalyticsRefreshLeaseV1")
+                ).toBe(true);
+                expect(test.releaseLock).toHaveBeenCalledTimes(1);
+
+                if (failFlush) throw new Error("Failure-status flush failed");
+            });
+
+            const result = test.api.refreshGardenAnalyticsSafely_(
+                test.spreadsheet
+            );
+
+            expect(result).toMatchObject({
+                message: "Derived batch failed",
+                status: "Refresh failed",
+            });
+            expect(test.flush).toHaveBeenCalledExactlyOnceWith();
+            expect(test.flush).toHaveBeenCalledAfter(test.writes);
+            expect(test.releaseLock).toHaveBeenCalledTimes(2);
+            expect(test.properties.has("gardenAnalyticsRefreshLeaseV1")).toBe(
+                false
+            );
+            expect(
+                test.api.workbookCalculationStatus_(test.spreadsheet)
+                    .calculatedAt
+            ).toBe(asOf.toISOString());
+            expect(
+                test.logError.mock.calls.some(
+                    ([message]) =>
+                        message === "Error: Failure-status flush failed"
+                )
+            ).toBe(failFlush);
+        }
+    );
 
     it("preserves queue save receipts and success when analytics fails after bulk processing", () => {
         expect.hasAssertions();
@@ -460,12 +655,158 @@ describe("scheduled analytics materialization", () => {
     });
 
     it.each([
+        { age: 0, skipped: true, status: "Ready" },
+        { age: 479_999, skipped: true, status: "Ready" },
+        { age: 480_000, skipped: false, status: "Ready" },
+        { age: 600_000, skipped: false, status: "Ready" },
+        { age: -1, skipped: false, status: "Ready" },
+        { age: 0, skipped: false, status: "Refresh failed" },
+        { age: 0, skipped: false, status: "Refreshing" },
+        { age: 0, skipped: false, status: "" },
+    ])(
+        "scheduled analytics age $age / $status skips=$skipped without skipping intake",
+        ({ age, skipped, status }) => {
+            expect.hasAssertions();
+
+            const expectedSkip = skipped ? true : undefined;
+            const expectedBatches = skipped ? 0 : 1;
+            const clock = vi.spyOn(Date, "now").mockReturnValue(asOf.getTime());
+            try {
+                const calculatedAt = new Date(asOf.getTime() - age);
+                const test = fixture({
+                    calculationStatus: status,
+                    calculationTime: calculatedAt,
+                });
+                const bulk = vi.fn(() => ({ ok: true }));
+
+                test.context["processQueuedAppSheetBulkEntries_"] = bulk;
+
+                const summary = test.api.finishAppSheetQueueRun_(
+                    test.spreadsheet,
+                    {
+                        ok: true,
+                        savedCount: 3,
+                    }
+                );
+
+                expect(summary).toMatchObject({
+                    analytics: { status: "Ready" },
+                    ok: true,
+                    savedCount: 3,
+                });
+                expect(bulk).toHaveBeenCalledExactlyOnceWith(test.spreadsheet);
+                expect(summary.analytics.skipped).toBe(expectedSkip);
+                expect(test.batchUpdate).toHaveBeenCalledTimes(expectedBatches);
+                expect(test.valuesRead).toHaveBeenCalledTimes(
+                    expectedBatches * 3
+                );
+            } finally {
+                clock.mockRestore();
+            }
+        }
+    );
+
+    it("returns the previous successful time without locks or writes when scheduled analytics is skipped", () => {
+        expect.hasAssertions();
+
+        const clock = vi.spyOn(Date, "now").mockReturnValue(asOf.getTime());
+        try {
+            const test = fixture({
+                calculationStatus: "Ready",
+                calculationTime: asOf,
+            });
+
+            test.context["processQueuedAppSheetBulkEntries_"] = () => ({
+                ok: true,
+            });
+
+            const summary = test.api.finishAppSheetQueueRun_(test.spreadsheet, {
+                ok: true,
+                savedCount: 0,
+            });
+
+            expect(summary.analytics.calculatedAt).toBe(asOf.toISOString());
+            expect(summary.analytics.skipped).toBe(true);
+            expect(test.getScriptLock).not.toHaveBeenCalled();
+            expect(test.writes).not.toHaveBeenCalled();
+            expect(test.flush).not.toHaveBeenCalled();
+        } finally {
+            clock.mockRestore();
+        }
+    });
+
+    it.each([
+        "",
+        "2026-10-18T04:30:00Z",
+        new Date(NaN),
+    ])(
+        "refreshes scheduled analytics for malformed or missing native timestamp %s",
+        (calculationTime) => {
+            expect.hasAssertions();
+
+            const test = fixture({
+                calculationStatus: "Ready",
+                calculationTime,
+            });
+
+            test.context["processQueuedAppSheetBulkEntries_"] = () => ({
+                ok: true,
+            });
+
+            const summary = test.api.finishAppSheetQueueRun_(test.spreadsheet, {
+                ok: true,
+                savedCount: 0,
+            });
+
+            expect(summary.analytics.skipped).toBeUndefined();
+            expect(test.batchUpdate).toHaveBeenCalledTimes(1);
+        }
+    );
+
+    it("refreshes scheduled analytics when prior metadata cannot be read", () => {
+        expect.hasAssertions();
+
+        const test = fixture({ failCalculationRead: true });
+
+        test.context["processQueuedAppSheetBulkEntries_"] = () => ({
+            ok: true,
+        });
+
+        const summary = test.api.finishAppSheetQueueRun_(test.spreadsheet, {
+            ok: true,
+            savedCount: 0,
+        });
+
+        expect(summary.analytics.status).toBe("Ready");
+        expect(test.batchUpdate).toHaveBeenCalledTimes(1);
+    });
+
+    it.each(["recalculateGardenWorkbook", "refreshGardenAnalytics"])(
+        "%s always refreshes a recent successful snapshot",
+        (action) => {
+            expect.hasAssertions();
+
+            const test = fixture({
+                calculationStatus: "Ready",
+                calculationTime: new Date(),
+            });
+            const result =
+                action === "recalculateGardenWorkbook"
+                    ? test.api.recalculateGardenWorkbook()
+                    : test.api.refreshGardenAnalytics();
+
+            expect(result.status).toBe("Ready");
+            expect(test.batchUpdate).toHaveBeenCalledTimes(1);
+            expect(test.valuesRead).toHaveBeenCalledTimes(3);
+        }
+    );
+
+    it.each([
         { busy: true, status: "Busy" },
         { lease: `${Date.now() + 480_000}:other-refresh`, status: "Busy" },
         { historyLastRow: 50_002, status: "Refresh failed" },
-        { failStatus: true, status: "Refresh failed" },
     ])(
-        "fails safely before outputs for $status / $busy $noLock $historyLastRow $failStatus",
+        "fails safely before outputs for $status / $busy $noLock $historyLastRow",
         ({ status, ...options }) => {
             expect.hasAssertions();
 
@@ -478,6 +819,26 @@ describe("scheduled analytics materialization", () => {
             expect(test.historyRead).not.toHaveBeenCalled();
         }
     );
+
+    it("preserves the original publication failure when failure-status writing also fails", () => {
+        expect.hasAssertions();
+
+        const test = fixture({ failBatch: true, failStatus: true });
+        const result = test.api.refreshGardenAnalyticsSafely_(test.spreadsheet);
+
+        expect(result).toMatchObject({
+            message: "Derived batch failed",
+            status: "Refresh failed",
+        });
+        expect(test.logError).toHaveBeenCalledWith(
+            "Error: Status write failed"
+        );
+        expect(test.writes).not.toHaveBeenCalled();
+        expect(test.flush).not.toHaveBeenCalled();
+        expect(test.properties.has("gardenAnalyticsRefreshLeaseV1")).toBe(
+            false
+        );
+    });
 
     it.each([
         {
@@ -775,6 +1136,21 @@ describe("scheduled analytics materialization", () => {
         expect.hasAssertions();
 
         const test = fixture();
+        const formatter = new Intl.DateTimeFormat("en-US", {
+            timeZone: "UTC",
+            timeZoneName: "longOffset",
+        });
+        const formatToParts = vi.fn((/** @type {Date} */ date) =>
+            formatter.formatToParts(date)
+        );
+
+        // Only this VM receives the spy; no shared Intl globals are replaced.
+        test.context["Intl"] = {
+            DateTimeFormat: vi.fn(function createFormatter() {
+                return { formatToParts };
+            }),
+        };
+
         const first = observation(0, "Light");
         const second = observation(36, "Humidity");
         const sharedDate = new Date("2025-01-01T00:00:00Z");
@@ -815,7 +1191,8 @@ describe("scheduled analytics materialization", () => {
             (formatCall) => formatCall[2] === "Z"
         );
 
-        expect(conversions).toHaveLength(1);
+        expect(conversions).toHaveLength(0);
+        expect(formatToParts).toHaveBeenCalledExactlyOnceWith(sharedDate);
         expect(
             request.updateCells.rows[2]?.values[0]?.userEnteredValue
                 ?.numberValue

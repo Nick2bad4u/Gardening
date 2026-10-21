@@ -535,6 +535,16 @@ function gatedCycleConsumer(formula, cell, inventoryLastRow) {
  *   {import("../../types/workbook-integrity.d.ts").IntegrityCell} cell
  */
 function gatedModelConsumer(formula, cell) {
+    // The legacy Insights note retained the original 30-pot return range even
+    // after its lookup range grew to the current 36-pot roster.
+    const modelFormula =
+        formula ===
+            "=IFNA(INDEX('Dry-down models'!P2:P31,MATCH(B228,'Dry-down models'!A2:A37,0)),\"Collecting evidence\")" &&
+        cell.sheet === "Insights" &&
+        cell.row === 230 &&
+        cell.column === 0
+            ? formula.replace("P2:P31", "P2:P37")
+            : formula;
     const plant =
         cell.sheet === "Dashboard"
             ? `$B${cell.row + 1}`
@@ -554,7 +564,7 @@ function gatedModelConsumer(formula, cell) {
         throw new Error("Unknown materialized model consumer");
     const state = "'Workbook calculations'!";
     const ready = `AND(${state}$I$2="Ready",ISNUMBER(${state}$H$2),${state}$H$2>0,${state}$H$2<=${state}$E$2,${state}$E$2-${state}$H$2<=15/1440,IFNA(XLOOKUP(${plant},'Dry-down models'!$A$2:$A$37,'Dry-down models'!$B$2:$B$37),0)=XLOOKUP(${plant},Baselines!$A$2:$A$37,Baselines!$T$2:$T$37,-1))`;
-    const gated = `=IF(IFERROR(${ready},FALSE),${formula.slice(1)},"")`;
+    const gated = `=IF(IFERROR(${ready},FALSE),${modelFormula.slice(1)},"")`;
     if (cell.sheet === "Baselines" && cell.column === 9)
         return `=LET(manualReview,XLOOKUP(${plant},'Plant tracker'!$A$2:$A$37,'Plant tracker'!$AD$2:$AD$37,""),IF(manualReview<>"",manualReview,${gated.slice(1)}))`;
     return gated;
