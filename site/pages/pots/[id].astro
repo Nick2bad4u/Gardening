@@ -1,5 +1,6 @@
 ---
 import SiteLayout from "../../components/SiteLayout.astro";
+import { manualCareNote } from "../../../docs/layouts/plant-tracker-data.js";
 import profilesById from "../../../docs/layouts/plant-profile-data.json";
 import { getProfiles } from "../../lib/content.mjs";
 import { getContainers } from "../../lib/containers.mjs";
@@ -21,6 +22,7 @@ export function getStaticPaths() {
 const { id } = Astro.params;
 const profiles = (await getProfiles()).filter((profile) => profile.trackerId === id);
 const container = (await getContainers()).find((item) => item.id === id);
+const manualCare = Boolean(container?.pending || container?.aggregate || manualCareNote(id ?? ""));
 ---
 
 <SiteLayout
@@ -38,10 +40,10 @@ const container = (await getContainers()).find((item) => item.id === id);
         <HistorySummary />
         <HistoryTrend />
         <HistoryMilestones />
-        <HistoryBaselines manualCare={Boolean(container?.pending || container?.aggregate)} />
-        <HistoryCharts manualCare={Boolean(container?.pending || container?.aggregate)} />
+        <HistoryBaselines manualCare={manualCare} />
+        <HistoryCharts manualCare={manualCare} />
         <HistoryTable />
-        <HistoryLogging />
+        <HistoryLogging potId={id} />
         <noscript>
             <p>
                 Live observations need JavaScript. Use the Google Sheets link above to read the

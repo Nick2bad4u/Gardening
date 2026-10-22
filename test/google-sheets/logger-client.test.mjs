@@ -554,7 +554,7 @@ describe("garden logger 4 a.m. weighing day", () => {
         const { window } = createLoggerWindow({
             online: false,
             storage: {
-                gardenLoggerBootstrapV4: JSON.stringify({
+                gardenLoggerBootstrapV5: JSON.stringify({
                     bootstrap: old,
                     savedAt: Date.now(),
                 }),
@@ -894,7 +894,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
         const current = createLoggerWindow({
             online: false,
             storage: {
-                gardenLoggerBootstrapV4: JSON.stringify({
+                gardenLoggerBootstrapV5: JSON.stringify({
                     bootstrap: workflowBootstrap(),
                     savedAt: Date.now(),
                 }),
@@ -910,7 +910,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
         const legacy = createLoggerWindow({
             online: false,
             storage: {
-                gardenLoggerBootstrapV4: JSON.stringify({
+                gardenLoggerBootstrapV5: JSON.stringify({
                     bootstrap: old,
                     savedAt: Date.now(),
                 }),
@@ -983,8 +983,8 @@ describe("garden logger daily progress, filtered History and measured charts", (
             const reload = createLoggerWindow({
                 online: false,
                 storage: {
-                    gardenLoggerBootstrapV4: required(
-                        window.localStorage.getItem("gardenLoggerBootstrapV4")
+                    gardenLoggerBootstrapV5: required(
+                        window.localStorage.getItem("gardenLoggerBootstrapV5")
                     ),
                 },
             });
@@ -4728,6 +4728,64 @@ describe("garden logger humidity observations", () => {
         ).toMatch(/relative humidity/iv);
     });
 
+    it.each(["P39", "P40"])(
+        "keeps %s manual care when a stale cache supplies dry forecasts",
+        (id) => {
+            expect.hasAssertions();
+
+            const data = workflowBootstrap();
+            const plant = {
+                ...required(data.plants[0]),
+                dryForecastWindow: "Tomorrow",
+                id,
+                recommendedWaterDate: "Tomorrow",
+            };
+            const { window } = createLoggerWindow({
+                bootstrapData: { ...data, plants: [plant] },
+            });
+            const summary = queryElement(
+                window.document,
+                "#plantSummary",
+                HTMLElement
+            );
+            const chart = queryElement(
+                window.document,
+                ".weight-chart",
+                HTMLElement
+            );
+            const forecast = queryElement(
+                window.document,
+                ".plant-forecast",
+                HTMLElement
+            );
+
+            expect(forecast.textContent).toContain("Manual houseplant care");
+            expect(forecast.textContent).toContain(
+                id === "P39" ? "Keep lightly moist" : "Allow partial drying"
+            );
+            expect(forecast.textContent).not.toContain("Tomorrow");
+            expect(summary.textContent).not.toMatch(
+                /No completed cycle yet|vs last dry/v
+            );
+            expect(chart.querySelectorAll(":scope .chart-dry")).toHaveLength(0);
+            expect(chart.querySelectorAll(":scope .chart-point")).toHaveLength(
+                4
+            );
+            expect(chart.textContent).toContain("480 g");
+
+            enterWorkflowValue(window, "weight", "415");
+
+            expect(
+                queryElement(window.document, "#weightFeedback", HTMLElement)
+                    .textContent
+            ).toContain("-5 g vs latest 420 g");
+            expect(
+                queryElement(window.document, "#weightFeedback", HTMLElement)
+                    .textContent
+            ).not.toContain("vs last dry");
+        }
+    );
+
     it("uses the terrarium portrait when P38 is supplied by the current roster", () => {
         expect.hasAssertions();
 
@@ -4972,33 +5030,36 @@ describe("garden logger humidity observations", () => {
 describe("garden logger bootstrap cache and connection recovery", () => {
     afterEach(restoreLoggerMocks);
 
-    it("does not expose the pre-reassignment cached roster before a fresh bootstrap", () => {
-        expect.hasAssertions();
+    it.each(["gardenLoggerBootstrapV2", "gardenLoggerBootstrapV4"])(
+        "does not expose the stale %s cached roster before a fresh bootstrap",
+        (cacheKey) => {
+            expect.hasAssertions();
 
-        const { window } = createLoggerWindow({
-            bootstrapBehavior: () => undefined,
-            storage: {
-                gardenLoggerBootstrapV2: JSON.stringify({
-                    bootstrap: {
-                        ...bootstrap,
-                        plants: [
-                            { ...required(bootstrap.plants[0]), id: "P33" },
-                        ],
-                        version: "5.27.0",
-                    },
-                    savedAt: Date.now(),
-                }),
-            },
-        });
+            const { window } = createLoggerWindow({
+                bootstrapBehavior: () => undefined,
+                storage: {
+                    [cacheKey]: JSON.stringify({
+                        bootstrap: {
+                            ...bootstrap,
+                            plants: [
+                                { ...required(bootstrap.plants[0]), id: "P33" },
+                            ],
+                            version: "5.27.0",
+                        },
+                        savedAt: Date.now(),
+                    }),
+                },
+            });
 
-        expect(
-            queryElement(window.document, "#modeTabs", HTMLElement).hidden
-        ).toBe(true);
-        expect(
-            queryElement(window.document, "#plantSelect", HTMLSelectElement)
-                .options
-        ).toHaveLength(0);
-    });
+            expect(
+                queryElement(window.document, "#modeTabs", HTMLElement).hidden
+            ).toBe(true);
+            expect(
+                queryElement(window.document, "#plantSelect", HTMLSelectElement)
+                    .options
+            ).toHaveLength(0);
+        }
+    );
 
     it("opens from a recent saved plant list while Google refreshes in the background", () => {
         expect.hasAssertions();
@@ -5013,7 +5074,7 @@ describe("garden logger bootstrap cache and connection recovery", () => {
                 refreshHandlers = handlers;
             },
             storage: {
-                gardenLoggerBootstrapV4: JSON.stringify({
+                gardenLoggerBootstrapV5: JSON.stringify({
                     bootstrap,
                     savedAt: Date.now(),
                 }),
@@ -5045,7 +5106,7 @@ describe("garden logger bootstrap cache and connection recovery", () => {
         ).toBe("Connected · Logger fresh");
 
         const storedBootstrap = parseStoredRecord(
-            window.localStorage.getItem("gardenLoggerBootstrapV4")
+            window.localStorage.getItem("gardenLoggerBootstrapV5")
         );
 
         expect(jsonRecord(storedBootstrap["bootstrap"])["version"]).toBe(
@@ -5061,7 +5122,7 @@ describe("garden logger bootstrap cache and connection recovery", () => {
                 failure({ message: "Storage unavailable" });
             },
             storage: {
-                gardenLoggerBootstrapV4: JSON.stringify({
+                gardenLoggerBootstrapV5: JSON.stringify({
                     bootstrap,
                     savedAt: Date.now(),
                 }),
@@ -5085,7 +5146,7 @@ describe("garden logger bootstrap cache and connection recovery", () => {
 
         const { calls, window } = createLoggerWindow({
             storage: {
-                gardenLoggerBootstrapV4: JSON.stringify({
+                gardenLoggerBootstrapV5: JSON.stringify({
                     bootstrap,
                     savedAt: Date.now() - 6 * 60 * 60 * 1000 - 1,
                 }),
@@ -5101,7 +5162,7 @@ describe("garden logger bootstrap cache and connection recovery", () => {
         ).toBe("Connected · Logger test");
 
         const storedBootstrap = parseStoredRecord(
-            window.localStorage.getItem("gardenLoggerBootstrapV4")
+            window.localStorage.getItem("gardenLoggerBootstrapV5")
         );
 
         expect(jsonRecord(storedBootstrap["bootstrap"])["version"]).toBe(
@@ -6461,7 +6522,7 @@ describe("garden logger plant selection and label ordering", () => {
                 refreshHandlers = handlers;
             },
             storage: {
-                gardenLoggerBootstrapV4: JSON.stringify({
+                gardenLoggerBootstrapV5: JSON.stringify({
                     bootstrap,
                     savedAt: Date.now(),
                 }),
@@ -6541,7 +6602,7 @@ describe("garden logger plant selection and label ordering", () => {
                 refreshHandlers = handlers;
             },
             storage: {
-                gardenLoggerBootstrapV4: JSON.stringify({
+                gardenLoggerBootstrapV5: JSON.stringify({
                     bootstrap,
                     savedAt: Date.now(),
                 }),
@@ -7511,6 +7572,8 @@ describe("garden logger plant photos and portrait rendering", () => {
         ["P35", "lithops-shared-planter"],
         ["P36", "pleiospilos-nelii"],
         ["P37", "echeveria-arctic-ice"],
+        ["P39", "fittonia-albivenis-nightly"],
+        ["P40", "peperomia-obtusifolia-spice-is-nice"],
     ])("uses the maintained explicit portrait for %s", (id, slug) => {
         expect.hasAssertions();
 
@@ -8286,7 +8349,7 @@ describe("garden logger local History loading and portraits", () => {
                 pendingBootstrap.push(handlers);
             },
             storage: {
-                gardenLoggerBootstrapV4: JSON.stringify({
+                gardenLoggerBootstrapV5: JSON.stringify({
                     bootstrap: { ...bootstrap, recent: [recentExample] },
                     savedAt: Date.now(),
                 }),
@@ -9511,7 +9574,7 @@ describe("garden logger activity metrics and guidance", () => {
         const { window } = createLoggerWindow({
             online: false,
             storage: {
-                gardenLoggerBootstrapV4: JSON.stringify({
+                gardenLoggerBootstrapV5: JSON.stringify({
                     bootstrap,
                     savedAt: Date.now(),
                 }),
@@ -12684,7 +12747,7 @@ describe("garden logger cached event roster upgrades", () => {
                 refresh = handlers;
             },
             storage: {
-                gardenLoggerBootstrapV4: JSON.stringify({
+                gardenLoggerBootstrapV5: JSON.stringify({
                     bootstrap: {
                         ...bootstrap,
                         events: legacyEvents,
@@ -12788,7 +12851,7 @@ describe("garden logger cached event roster upgrades", () => {
                 refresh = handlers;
             },
             storage: {
-                gardenLoggerBootstrapV4: JSON.stringify({
+                gardenLoggerBootstrapV5: JSON.stringify({
                     bootstrap: { ...bootstrap, events: legacyEvents },
                     savedAt: Date.now(),
                 }),
@@ -12870,7 +12933,7 @@ describe("garden logger cached event roster upgrades", () => {
                 refresh = handlers;
             },
             storage: {
-                gardenLoggerBootstrapV4: JSON.stringify({
+                gardenLoggerBootstrapV5: JSON.stringify({
                     bootstrap: { ...bootstrap, events: legacyEvents },
                     savedAt: Date.now(),
                 }),
@@ -12959,7 +13022,7 @@ describe("garden logger cached event roster upgrades", () => {
                 refresh = handlers;
             },
             storage: {
-                gardenLoggerBootstrapV4: JSON.stringify({
+                gardenLoggerBootstrapV5: JSON.stringify({
                     bootstrap,
                     savedAt: Date.now(),
                 }),

@@ -4,6 +4,11 @@ Production logger **5.37.1 / immutable version 113** supports **36 container all
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
+Maintained source is now **5.38.0**, with the pending P39/P40 enrollment described
+below. It has **not** replaced that verified production deployment. Production
+AppSheet remains at its verified **1.100132** baseline until the new saved
+definition and live behavior are checked.
+
 The mobile logger and AppSheet are the observation input surfaces. The unused
 `Quick log` compatibility tab is hidden. Every saved event becomes a new
 append-only row on `History`.
@@ -32,6 +37,120 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## October 21 houseplant enrollment and rehearsal — pending publication
+
+The **2026-10-21** maintained **5.38.0** change adds two separate houseplant pots:
+
+| Pot | Label | Collection record | Nursery identity                                         |
+| --- | ----- | ----------------- | -------------------------------------------------------- |
+| P39 | #13   | Houseplant-06     | _Fittonia albivenis_, Network News™ Nightly™             |
+| P40 | #14   | Houseplant-07     | _Peperomia obtusifolia_, Savory Delights™ Spice is Nice™ |
+
+The maintained roster contains **38 containers**, `P01`–`P32` and `P35`–`P40`.
+Neither plant replaces P31's variegated peperomia or P38's terrarium. Nursery
+identifications and unverified cultivar details remain qualified in the
+[P39 profile](../../docs/plants/houseplants/fittonia-albivenis-nightly.md) and
+[P40 profile](../../docs/plants/houseplants/peperomia-obtusifolia-spice-is-nice.md).
+
+History remains **67 columns, A:BO**, with **50,000 observation slots**, and App
+entries remains **59 columns, A:BG**. App bulk appends **BW `P39 weight (g)`** and
+**BX `P40 weight (g)`**, becoming **76 columns, A:BX**. All preceding A:BV fields,
+staging rows, request IDs, and retries retain their meaning. The bridge continues
+to accept the existing **74-column** staging schema during the deliberate upgrade;
+the new columns require the native migration and AppSheet schema update.
+
+P39 and P40 accept measured weights, watering observations, dimensions, and
+history charts. Their manual-care policy withholds dry-weight references,
+dry-down rates, calibration and plateau prompts, forecasts, and model-fit outputs,
+including when older cached payloads are displayed. Fittonia guidance is to keep
+the mix lightly moist with drainage; Peperomia guidance allows partial drying
+with drainage checks. Neither receives a cactus-style dry endpoint or fixed
+watering date. Aggregate calibration and forecast indicators exclude these two
+ineligible pots while the tracked-container count remains 38.
+
+The native [backup](https://docs.google.com/spreadsheets/d/1uRq028ORH056OdSI8L5R6SouA-PWMzsh_r8Rk7-JNaU/edit)
+and separate [disposable rehearsal workbook](https://docs.google.com/spreadsheets/d/1dEixMcxJzLk5F2Q1SzbGMfCECdyoP31SlSW7svVVxU0/edit)
+retain the **1,996 existing observations**. Synthetic save/retry/bulk scenarios
+belong only in that disposable copy. The guarded
+[`houseplant-enrollment.mjs`](./houseplant-enrollment.mjs) planner relocates the
+old **Plant color data rows 5002:6023** comparison area to hidden,
+warning-protected **Plant comparisons**, sized **1,568 rows × 6 columns**. It
+retargets the affected chart sources while preserving existing chart IDs and
+the full History capacity; this is not a ledger truncation.
+
+All 38 revised AppSheet portraits have been uploaded and hash-verified in the
+private [GardenPlantPortraits-e668e7d001d12f24 folder](https://drive.google.com/drive/folders/1ALGTMfieYLTx63RJ6eFLIyOfFSNcepq6).
+The folder remains owner-only. The production AppSheet expression switch is
+pending; uploaded artwork is not evidence of a deployed app update.
+
+**Disposable rehearsal receipt, October 21, 2026 (Eastern):** native integration
+of logger **5.38.0** passed the **38-container** roster, **76-column** bulk queue,
+legacy **74-column** parsing, single/bulk Weigh saves, idempotent retries, and
+conflicting-retry rejection. Those scenarios added four synthetic Weigh rows;
+six further Water/Measure fixtures exercised both dimensions and a completed
+**three-day watering interval**. The copy then held **2,006 unique Observation
+IDs**, comprising **1,996 original observations** and **10 synthetic records**
+with consistent request/save grouping. Final comparison confirmed **39,713
+original entered History/header cells unchanged**, along with the captured
+**rows 2008:2500** tail. Staging matched the prior runtime snapshot; against the
+original baseline, differences were limited to the expected enrollment headers
+and rules plus **12 App bulk row-2 runtime values**. Captured App entries and
+the complete **RO A1:T1000** range remained unchanged. The original History
+notes and data-validation baseline was not captured; no historical metadata
+equality is claimed for those fields.
+
+The full **38-page** presentation refresh reached the **360-second** execution
+limit at **00:27:23 UTC on October 22**, having started at **00:21:23 UTC**.
+A four-page P37–P40 attempt also timed out (**00:27:48–00:33:49 UTC**), as did
+the subsequent two-page attempt. P39's page body completed in **176.802 seconds**
+within that failed pair. These batch sizes are not a usable fallback, and no
+full-refresh headroom is established.
+
+The maintained fallback now exposes separate
+`refreshGardenWorkbookPage37()`, `refreshGardenWorkbookPage38()`,
+`refreshGardenWorkbookPage39()`, and `refreshGardenWorkbookPage40()` commands.
+The single P40 invocation succeeded in **178.891 seconds**, including **176.796
+seconds** in the page body and **181.109 seconds** remaining before the execution
+limit. This measures one page invocation, not an entire collection refresh or
+daily trigger quota. Bootstrap passed in **13.714 seconds**, returning **75,384
+bytes** and **38 pots**. The focused enrollment path uses the guarded native
+planner and analytics; its latest refresh reached **Ready at 00:53:20 UTC**,
+with calculated timestamp **00:53:13.465 UTC**.
+
+The final strict guard passed with all **38 roster entries**, Ready analytics,
+matching new-pot setups, and a shared-clock/snapshot age of **7.292 seconds**.
+Ten old model charts had lost conditional metadata when analytics became more
+than 15 minutes stale; their original models were populated. After fresh
+analytics and repair, independent readback matched **all 18 requested complete
+chart specifications**, preserved **all 190 chart IDs and positions**, and
+confirmed **172 untargeted charts exactly unchanged**. The guard now rejects
+stale analytics before chart finalization. The temporary authorized rehearsal
+runner was removed by restoring the original **24 script files**, followed by
+exact readback. Final receipts are `rehearsal-final-chart-guard-receipt.json`,
+`rehearsal-final-chart-review-receipt.json`,
+`authorized-rehearsal-exact24-restore.json`, and
+`rehearsal-final-preservation-receipt.json` in the ignored rehearsal records.
+
+Final source validation passed **2,246 unit tests across 71 files**. The preceding
+**1,850-test / 47-file logger coverage run** reported **99.58% statements,
+98.56% branches, 100% functions, and 99.8% lines**; that coverage measurement
+preceded the final migration-guard additions. **19 Storybook stories** and
+**16 desktop/mobile/theme route checks** passed. The site build contains **219
+pages, 49 profiles, and 38 pots**. These are scoped results: the photo-publication
+Pester suite still has **one pre-existing failure**, so this is not an all-checks
+pass or a production-release receipt.
+
+**Publication is pending.** This entry records maintained source and rehearsal
+results, not a completed production rollout. GitHub publication awaits owner
+approval. Before replacing the production baseline, obtain fresh production
+preflight evidence, apply and verify the guarded production migration,
+update the existing logger deployment in place, and independently reload the
+saved AppSheet definition. Record the resulting immutable logger version,
+AppSheet version, unchanged original observations and staging data, successful
+executions, and exactly one five-minute queue trigger. Until those receipts exist,
+the verified production references remain **5.37.1 / immutable 113** and
+**AppSheet 1.100132**.
 
 ## Maintained 5.37.0 capacity and mobile display update
 
@@ -2846,7 +2965,9 @@ collection-wide Water, Weigh, Water + weigh, Mist, Check, Inspect, Rotation, Mov
 Environment, Clean, Prune, Propagate, Pest, or Other round. It stores `Round ID`, observation time, one action
 selector, a compact EnumList of selected plant IDs, a hidden legacy weight-state
 field, optional shared care details, and active gram fields for P01–P32 and
-P35–P38. The retired P33/P34 columns remain blank-only compatibility fields. Empty weight fields are
+P35–P40 in maintained 5.38.0. Production remains P35–P38 until the
+[pending enrollment](#october-21-houseplant-enrollment-and-rehearsal--pending-publication)
+is verified. The retired P33/P34 columns remain blank-only compatibility fields. Empty weight fields are
 skipped. `processQueuedAppSheetEntries()` combines the selected IDs and
 nonblank weights into no more than one deterministic
 `appsheet-bulk-{Round ID}-{Plant ID}` request per plant and sends the complete
@@ -2862,7 +2983,7 @@ individual readings; their fields are absent from bulk staging.
 In AppSheet, `Selected plants` is an EnumList of refs whose `Valid_If` is
 `SORT(Plant tracker[Plant ID])`. Keep that expression in place so shared-action
 rounds can select every current active record after the source schema changes.
-The `Round action` validation must cover all 36 active weight fields and require
+The maintained `Round action` validation must cover all 38 active weight fields and require
 the retired P33/P34 fields blank; keep
 it aligned with [`appsheet-bulk-validation.txt`](./appsheet-bulk-validation.txt).
 The prior P01-P22-only check rejected valid weigh-only rounds for newer plants.
@@ -3062,8 +3183,15 @@ or update it in the workbook once:
 that long presentation-only refresh, run
 `refreshGardenWorkbookPages01To10()`,
 `refreshGardenWorkbookPages11To20()`,
-or `refreshGardenWorkbookPages21To30()` from the Apps Script editor for whichever
-page batch remains unfinished. These resumable commands rebuild only the named
+`refreshGardenWorkbookPages21To30()`,
+`refreshGardenWorkbookPages31To32()`,
+`refreshGardenWorkbookPages35To36()`, or the individual commands
+`refreshGardenWorkbookPage37()`, `refreshGardenWorkbookPage38()`,
+`refreshGardenWorkbookPage39()`, and `refreshGardenWorkbookPage40()` from the
+Apps Script editor for whichever pages remain unfinished. The individual
+commands are also available from **Garden logger → Refresh P37 page** through
+**Refresh P40 page**.
+These resumable commands rebuild only the named
 plant pages; they do not write to canonical `History` or the AppSheet staging
 tables.
 

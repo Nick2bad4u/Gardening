@@ -16906,7 +16906,7 @@
             ].join("/");
             const PLANT_ICON_PATH = "/Gardening/assets/plant-icons/";
             // Generated from the exported artwork by sync-plant-icons.mjs.
-            const PLANT_ICON_REVISION = "f8ac927063b98a47";
+            const PLANT_ICON_REVISION = "e668e7d001d12f24";
             const PLANT_ICON_CACHE = "gardenLoggerPlantPortraitsV1";
             const plantPortraitRequests = new Map();
             let plantPortraitCache;
@@ -16917,7 +16917,7 @@
             const OBSERVATION_QUEUE_RECOVERY_KEY =
                 "gardenLoggerObservationQueueRecoveryV1";
             const OBSERVATION_QUEUE_LOCK = "gardenLoggerObservationQueueV1";
-            const BOOTSTRAP_CACHE_KEY = "gardenLoggerBootstrapV4";
+            const BOOTSTRAP_CACHE_KEY = "gardenLoggerBootstrapV5";
             const BOOTSTRAP_CACHE_MAX_AGE_MS = 6 * 60 * 60 * 1000;
             const BOOTSTRAP_TIMEOUT_MS = 20000;
             const BOOTSTRAP_AUTO_RETRIES = 1;
@@ -18814,7 +18814,9 @@
                 const dry = Number(plant?.dryOrLowestWeight);
                 const hasLatest = Number.isFinite(latest) && latest > 0;
                 const hasDry =
-                    plant?.id !== "P38" && Number.isFinite(dry) && dry > 0;
+                    !["P38", "P39", "P40"].includes(plant?.id) &&
+                    Number.isFinite(dry) &&
+                    dry > 0;
                 const observedAt = Date.parse($("observedAt").value);
                 const latestAt = Date.parse(plant?.latestWeightAt);
                 feedback.textContent = "";
@@ -18826,10 +18828,11 @@
                 )
                     return;
                 if (String($("potSetup").value) !== String(plant.potSetup)) {
-                    feedback.textContent =
-                        plant.id === "P38"
-                            ? "Different pot setup · no comparable latest weight."
-                            : "Different pot setup · no comparable latest or dry weight.";
+                    feedback.textContent = ["P38", "P39", "P40"].includes(
+                        plant.id
+                    )
+                        ? "Different pot setup · no comparable latest weight."
+                        : "Different pot setup · no comparable latest or dry weight.";
                 } else {
                     const comparisons = [];
                     const timing =
@@ -19454,6 +19457,9 @@
                 if (plant?.id === "P36") return "pleiospilos-nelii";
                 if (plant?.id === "P37") return "echeveria-arctic-ice";
                 if (plant?.id === "P38") return "terrarium";
+                if (plant?.id === "P39") return "fittonia-albivenis-nightly";
+                if (plant?.id === "P40")
+                    return "peperomia-obtusifolia-spice-is-nice";
                 if (plant?.id === "P31") return "peperomia-obtipan-bicolor";
                 if (plant?.id === "P32")
                     return "tradescantia-spathacea-tricolor";
@@ -20239,6 +20245,17 @@
                             "Recorded weights remain observations; they do not establish a watering forecast for this enclosure.",
                         ];
                     }
+                    if (
+                        ["P39", "P40"].includes(plant.id) &&
+                        ["Last completed dry", "Cycle avg loss"].includes(label)
+                    ) {
+                        value = "N/A";
+                        detail = "Manual houseplant care";
+                        help = [
+                            "Inspect the substrate, drainage and plant condition. A completed-dry reference or dry-down rate is not a watering trigger for this plant.",
+                            "Recorded weights and watering intervals remain observations.",
+                        ];
+                    }
                     const metric = document.createElement("div");
                     metric.className = "metric";
                     if (
@@ -20249,8 +20266,8 @@
                     if (label === "Last completed dry") {
                         metric.setAttribute(
                             "aria-description",
-                            plant.id === "P38"
-                                ? "Not applicable to this enclosure"
+                            ["P38", "P39", "P40"].includes(plant.id)
+                                ? "Manual care; no completed-dry reference"
                                 : plant.dryOrLowestWeightBasis ||
                                       "No completed cycle yet"
                         );
@@ -20451,7 +20468,7 @@
             }
 
             function latestWeightComparison(plant) {
-                if (plant.id === "P38") return "";
+                if (["P38", "P39", "P40"].includes(plant.id)) return "";
                 const { latestWeight, dryOrLowestWeight } = plant;
                 if (
                     ![latestWeight, dryOrLowestWeight].every(
@@ -20534,7 +20551,7 @@
                             Date.parse(right.observedAt)
                     );
                 const previousDry =
-                    plant.id !== "P38" &&
+                    !["P38", "P39", "P40"].includes(plant.id) &&
                     series.previousDry &&
                     Number.isFinite(series.previousDry.weight) &&
                     series.previousDry.weight > 0
@@ -20809,7 +20826,7 @@
                             ? formattedTimestamp(series.startedAt)
                             : "Not recorded",
                     ],
-                    ...(plant.id === "P38"
+                    ...(["P38", "P39", "P40"].includes(plant.id)
                         ? []
                         : [
                               [
@@ -21239,6 +21256,18 @@
                     note.className = "forecast-guidance";
                     note.textContent =
                         "Record observed weights and humidity. Watering guidance is pending confirmation of the terrarium's plants, substrate, drainage and ventilation; no dry-weight baseline or watering forecast is assigned.";
+                    panel.append(title, note);
+                    return panel;
+                }
+                if (["P39", "P40"].includes(plant.id)) {
+                    const title = document.createElement("strong");
+                    title.textContent = "Manual houseplant care";
+                    const note = document.createElement("p");
+                    note.className = "forecast-guidance";
+                    note.textContent =
+                        plant.id === "P39"
+                            ? "Keep lightly moist with good drainage. Check the upper mix and root zone as the surface begins to dry; avoid saturation and whole-pot drought. Recorded weights are observations, with no dry-weight baseline or watering forecast."
+                            : "Allow partial drying and check below the surface. Confirm drainage; avoid persistently wet roots and prolonged whole-pot drought. Recorded weights are observations, with no dry-weight baseline or watering forecast.";
                     panel.append(title, note);
                     return panel;
                 }

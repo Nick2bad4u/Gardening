@@ -803,8 +803,7 @@ function renderCharts(summary) {
         ? {
               emptyMessage:
                   "No recorded watering intervals in this chart range.",
-              summary:
-                  "Review the plants and enclosure before choosing a watering method. Recorded intervals do not set a care schedule.",
+              summary: summary.manualCareNote,
           }
         : {
               emptyMessage:
@@ -947,6 +946,22 @@ function renderPlant(plant, plants, index, trackerIndex) {
     state.currentPlant = plant;
     setHistoryPanelsVisible(true);
     const summary = plant.summary;
+    setText("#manual-care-guidance", summary.manualCareNote);
+    const careGuidance = document.querySelector("#manual-care-guidance");
+    if (careGuidance instanceof HTMLElement)
+        careGuidance.hidden = !summary.manualCare;
+    setText(
+        "#weight-chart-description",
+        summary.manualCare
+            ? "Recorded weights only; no dry or wet care targets are assigned."
+            : "Current pot setup; dry and wet means appear when available."
+    );
+    setText(
+        "#watering-chart-description",
+        summary.manualCare
+            ? "Past intervals are descriptive history, not a watering schedule."
+            : "Elapsed days between recorded soak-to-runoff events."
+    );
     for (const panel of document.querySelectorAll("[data-weight-baseline]")) {
         if (panel instanceof HTMLElement) panel.hidden = summary.manualCare;
     }

@@ -1,3 +1,12 @@
+---
+import { manualCareNote } from "../../../../docs/layouts/plant-tracker-data.js";
+interface Props {
+    potId?: string;
+}
+const { potId = "" } = Astro.props;
+const careNote = manualCareNote(potId);
+---
+
 <section class="logging-guide" aria-labelledby="logging-title">
     <div>
         <p class="eyebrow">Google Sheets workflow</p>
@@ -18,8 +27,10 @@
         </li>
         <li>
             Enter the measured weight without choosing a dry or wet state. The logger saves it as{" "}
-            <code>Routine</code>; applicable cycle comparisons are derived from recorded watering.
-            Pending terrarium identities and setup require manual care review.
+            <code>Routine</code>; applicable cycle comparisons are derived from recorded watering.{" "}
+            <span id="manual-care-guidance" hidden={!careNote}>
+                {careNote}
+            </span>
         </li>
         <li>
             Tick <strong>Save</strong>. The logger appends one or more event-specific History rows
@@ -27,8 +38,8 @@
         </li>
         <li>
             In the mobile logger, <strong>Repot</strong> records the old and new pot size and
-            advances <code>Pot setup</code>
-            automatically. Setup 1 means the first tracked whole-pot configuration—not a 1-inch pot.
+            advances <code>Pot setup</code> automatically. Setup 1 means the first tracked whole-pot
+            configuration—not a 1-inch pot.
         </li>
     </ol>
 </section>

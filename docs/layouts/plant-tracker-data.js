@@ -58,6 +58,8 @@ const plantSheetGids = Object.freeze({
     P36: 202_609_360,
     P37: 202_610_370,
     P38: 202_610_380,
+    P39: 202_610_390,
+    P40: 202_610_400,
 });
 
 export const sheetUrls = {
@@ -546,8 +548,8 @@ export function calculateSummary(sourceEvents, plantId = "") {
     const activeEvents = currentEvents.filter(
         (event) => (numericValue(event["Pot setup"]) ?? 1) === activePotSetup
     );
-    // P38 has no identified plants or enclosure setup; dry-cycle care is unestablished.
-    const isManualCare = plantId === "P38";
+    const careNote = manualCareNote(plantId);
+    const isManualCare = careNote !== "";
     const weightCycles = weightCycleAnalytics(activeEvents, isManualCare);
     const activeWeights = weightCycles.weights;
     const dryWeights = weightCycles.dryAnchors.map((event) =>
@@ -705,7 +707,7 @@ export function calculateSummary(sourceEvents, plantId = "") {
         dryAverage
     );
     const baselineStatus = isManualCare
-        ? "Manual care review · identities and setup pending"
+        ? "Manual care review"
         : weightBaselineStatus(
               activeWeights.length,
               wetWeights.length,
@@ -784,6 +786,7 @@ export function calculateSummary(sourceEvents, plantId = "") {
         leafTemperatureSeries,
         leafVpdSeries,
         manualCare: isManualCare,
+        manualCareNote: careNote,
         observationSpanDays:
             datedEvents.length > 1
                 ? daysBetween(
@@ -847,6 +850,17 @@ export function historyPageUrl(labelId) {
     return base !== undefined && base !== ""
         ? `${base}pots/${encodeURIComponent(labelId)}/`
         : `./plant-history.html?id=${encodeURIComponent(labelId)}`;
+}
+
+/** @param {string} plantId */
+export function manualCareNote(plantId) {
+    /** @type {Record<string, string>} */
+    const notes = {
+        P38: "Review the plants and enclosure before choosing a watering method. Recorded intervals do not set a care schedule.",
+        P39: "Keep lightly moist with good drainage; check the upper mix and root zone as the surface begins to dry. Avoid saturation and whole-pot drought; do not use a cactus dry-weight plateau.",
+        P40: "Allow partial drying; check below the surface and confirm drainage. Avoid persistently wet roots and prolonged whole-pot drought; do not use a cactus dry-weight plateau.",
+    };
+    return notes[plantId] ?? "";
 }
 
 /** @typedef {{ plants: string; history: string }} SourceCsv */

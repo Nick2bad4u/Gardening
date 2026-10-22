@@ -407,6 +407,21 @@ async function main() {
         );
         assert.ok(page !== undefined, `Missing container ${id}`);
         const members = profiles.filter((profile) => profile.trackerId === id);
+        const history = pages.find(
+            (entry) => entry.relative === `pots/${id}/index.html`
+        );
+        assert.ok(history !== undefined, `Missing pot history ${id}`);
+        const sheetAnchor = /<a\b[^>]+\bid="sheet-plant-page"[^>]*>/v.exec(
+            history.html
+        )?.[0];
+        const sheetHref = attributes(`${sheetAnchor ?? ""}</a>`).find(
+            (attribute) => attribute.name === "href"
+        )?.value;
+        assert.equal(
+            sheetHref,
+            containers.find((container) => container.id === id)?.sheetUrl,
+            `Incorrect initial worksheet link in ${id}; it must work before live data loads`
+        );
         for (const member of members) {
             assert.ok(
                 page.html.includes(`/plants/${member.slug}/`),

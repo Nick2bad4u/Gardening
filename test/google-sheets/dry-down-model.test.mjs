@@ -430,7 +430,7 @@ describe("dry-down formulas and workbook installation", () => {
 
             expect(required(baselineFormulas[0])[0]).toContain("XLOOKUP($A2,");
             expect(required(baselineFormulas[1])[1]).toContain(
-                "'Dry-down models'!$P$2:$P$37"
+                "'Dry-down models'!$P$2:$P$39"
             );
             expect(required(dashboardFormulas[1])[0]).toContain("XLOOKUP($B8,");
             expect(calls.some((call) => call.name === "History")).toBe(false);
@@ -875,6 +875,41 @@ describe("same-setup cycle learning", () => {
             expect(empty[15]).toContain(
                 "Do not wait for the whole root ball to become bone dry"
             );
+        }
+    );
+
+    it.each(["P39", "P40"])(
+        "withholds %s dry anchors, forecasts and plateau prompts while preserving measurements",
+        (id) => {
+            expect.hasAssertions();
+
+            const context = runtime();
+            const history = [
+                ...completed(0, 0.2, { id }),
+                ...current(20, [0], 0.2, { id }),
+            ];
+            const before = structuredClone(history);
+            const values = required(context.GARDEN_DRY_DOWN(history, id)[0]);
+            for (const index of [
+                2,
+                3,
+                6,
+                7,
+                8,
+                9,
+                13,
+                14,
+            ])
+                expect(values[index]).toBe("");
+
+            expect(values[10]).toBe("Manual houseplant care");
+            expect(values[12]).toBe(
+                "Manual substrate and plant-condition check"
+            );
+            expect(values.at(-1)).toBe(
+                "Manual houseplant care; no weight-based watering trigger"
+            );
+            expect(structuredClone(history)).toStrictEqual(before);
         }
     );
 

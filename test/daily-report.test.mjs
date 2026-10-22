@@ -534,6 +534,112 @@ describe("daily report evidence", () => {
         expect(groupFor(pot(sample, "P08"))).toBe("reference");
     });
 
+    it.each([
+        ["P39", "P01"],
+        ["P40", "P01"],
+        ["P39", "P08"],
+        ["P40", "P08"],
+    ])(
+        "rejects manual-care %s promoted from otherwise valid %s evidence",
+        (id, sourceId) => {
+            expect.hasAssertions();
+
+            const report = structuredClone(sample);
+            const candidate = pot(report, sourceId);
+            candidate.id = id;
+
+            expect(() => validateReport(report)).toThrow(
+                "Manual-care pots P39/P40 cannot use Water or dry-reference actions"
+            );
+        }
+    );
+
+    it.each(["P39", "P40"])(
+        "keeps %s manual Check valid without invented measurements or calibration",
+        (id) => {
+            expect.hasAssertions();
+
+            const report = structuredClone(sample);
+            const candidate = pot(report, "P28");
+            Object.assign(candidate, {
+                action: "check",
+                cycleStartedAt: null,
+                dryReferenceGrams: null,
+                id,
+                lastWateredAt: null,
+                latest: null,
+                mixId: null,
+                plateau: "unavailable",
+                plateauPoints: [],
+                previous: null,
+                reason: "special",
+                recommendation:
+                    "Check the actual substrate and plant condition; water only if the plant-specific readiness check supports it.",
+            });
+            report.aiRecommendation = [
+                "AI exception to the main list: inspect this manual-care pot's substrate and drainage; water only if the plant-specific readiness check supports it. Plateau evidence is unavailable.",
+            ];
+            const valid = validateReport(report);
+
+            expect(pot(valid, id).action).toBe("check");
+            expect(groupFor(pot(valid, id))).toBe("special");
+            expect(pot(valid, id).mixId).toBeNull();
+            expect(pot(valid, id).latest).toBeNull();
+            expect(valid.aiRecommendation).toStrictEqual(
+                report.aiRecommendation
+            );
+        }
+    );
+
+    it.each([
+        ["P39", "check"],
+        ["P40", "check"],
+        ["P39", "weigh"],
+        ["P40", "weigh"],
+    ])(
+        "rejects calibration fields on %s %s while allowing measured mass changes",
+        (id, action) => {
+            expect.hasAssertions();
+
+            const report = structuredClone(sample);
+            const candidate = pot(report, "P01");
+            Object.assign(candidate, {
+                action,
+                dryReferenceGrams: null,
+                id,
+                mixId: null,
+                plateau: "unavailable",
+                plateauPoints: [],
+                reason: action === "weigh" ? "flexible" : "special",
+            });
+
+            expect(validateReport(report)).toBe(report);
+            expect(weightChange(candidate)).not.toBeNull();
+
+            candidate.dryReferenceGrams = 100;
+
+            expect(() => validateReport(report)).toThrow(
+                "Manual-care pots P39/P40 cannot carry dry-reference or plateau calibration"
+            );
+
+            candidate.dryReferenceGrams = null;
+            candidate.plateau = "not-supported";
+
+            expect(() => validateReport(report)).toThrow(
+                "Manual-care pots P39/P40 cannot carry dry-reference or plateau calibration"
+            );
+
+            candidate.plateau = "unavailable";
+            candidate.plateauPoints = structuredClone(
+                pot(sample, "P01").plateauPoints
+            );
+
+            expect(() => validateReport(report)).toThrow(
+                "Manual-care pots P39/P40 cannot carry dry-reference or plateau calibration"
+            );
+        }
+    );
+
     it.each(["not-supported", "unavailable"])(
         "rejects watering when plateau evidence is %s",
         (plateau) => {

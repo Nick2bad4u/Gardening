@@ -112,3 +112,13 @@ pending record, bringing the manifest to 47 profile records. This pending state
 only describes remote publication; it does not mean the terrarium is unreceived.
 No Gyazo Collection or capture was invented. Existing remote capture and placement
 counts are unchanged, and the local evidence files remain untouched.
+
+The two Leafjoy houseplants supplied October 21, 2026 add pending remote-photo
+records for **P39 / #13** Fittonia Network News™ Nightly™ and **P40 / #14**
+Peperomia Savory Delights™ Spice is Nice™, bringing the manifest to 49 profile
+records. Four sanitized full-frame owner photographs, including a shared label
+view, use the established [local evidence fallback](../nursery-labels/README.md#october-21-leafjoy-houseplants).
+The date records when the photographs were supplied; exact capture and
+acquisition dates remain unconfirmed. No Gyazo Collections or captures have
+been created for these records, so remote placement and capture counts are
+unchanged. Pending remote publication does not mean the plants are unreceived.

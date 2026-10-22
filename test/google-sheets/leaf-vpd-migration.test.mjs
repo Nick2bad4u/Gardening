@@ -167,7 +167,7 @@ function sourceSchema() {
         JSON.parse(
             String(
                 vm.runInContext(
-                    `JSON.stringify({history:[...HISTORY_HEADERS,"Plant / planter","Trend anchor","Days after anchor",GARDEN_LOGGER.requestIdHeader,...HISTORY_DETAIL_HEADERS,...HISTORY_PROVENANCE_HEADERS,...HISTORY_MEASUREMENT_HEADERS,...HISTORY_ROTATION_HEADERS,...HISTORY_WATER_HEADERS,...HISTORY_HUMIDITY_HEADERS,...HISTORY_LIGHT_HEADERS,...HISTORY_CARE_HEADERS],entries:[...APP_SHEET_ENTRY_HEADERS],bulk:[...APP_SHEET_BULK_HEADERS],bulkEvents:[...APP_SHEET_BULK_ACTION_OPTIONS]})`,
+                    `JSON.stringify({history:[...HISTORY_HEADERS,"Plant / planter","Trend anchor","Days after anchor",GARDEN_LOGGER.requestIdHeader,...HISTORY_DETAIL_HEADERS,...HISTORY_PROVENANCE_HEADERS,...HISTORY_MEASUREMENT_HEADERS,...HISTORY_ROTATION_HEADERS,...HISTORY_WATER_HEADERS,...HISTORY_HUMIDITY_HEADERS,...HISTORY_LIGHT_HEADERS,...HISTORY_CARE_HEADERS],entries:[...APP_SHEET_ENTRY_HEADERS],bulk:[...APP_SHEET_BULK_V536_HEADERS],bulkEvents:[...APP_SHEET_BULK_ACTION_OPTIONS]})`,
                     context
                 )
             )

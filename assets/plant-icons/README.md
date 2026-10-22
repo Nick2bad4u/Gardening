@@ -2,10 +2,13 @@
 
 These standalone multicolor SVGs are generated from
 [`assets/artwork/plant-icons.svg`](../artwork/plant-icons.svg).
-The 38 files cover 36 field-guide profiles and two whole-planter portraits and
-can be used without loading the complete sprite. The latter are
+The 57 files cover 49 field-guide profiles (including the historical removed
+profile), five archived plant portraits, and three whole-planter portraits.
+They can be used without loading the complete sprite. The current shared-pot
+portraits are
 `shared-rehab-cactus-planter.svg` (**#1 / P19**) and
-`shared-succulent-planter.svg` (**#2 / P20**). They fix the generic-seedling
+`shared-succulent-planter.svg` (**#2 / P20**); the third is retained for the
+archived Amazon plan. The two current portraits fix the generic-seedling
 fallback for tracker records that link to the field guide's contents instead
 of a single component profile.
 

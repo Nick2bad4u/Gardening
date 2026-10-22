@@ -584,6 +584,11 @@ export interface AppsScriptTestApi {
         loggerVersion: string;
         plantPages: number;
     };
+    refreshGardenWorkbookPage37: AppsScriptTestApi["refreshGardenWorkbookPages31To32"];
+    refreshGardenWorkbookPage38: AppsScriptTestApi["refreshGardenWorkbookPages31To32"];
+    refreshGardenWorkbookPage39: AppsScriptTestApi["refreshGardenWorkbookPages31To32"];
+
+    refreshGardenWorkbookPage40: AppsScriptTestApi["refreshGardenWorkbookPages31To32"];
     refreshGardenWorkbookPages01To10: () => {
         firstPlant: unknown;
         lastPlant: unknown;
@@ -602,7 +607,6 @@ export interface AppsScriptTestApi {
         loggerVersion: string;
         plantPages: number;
     };
-
     refreshGardenWorkbookPages31To32: () => {
         firstPlant: unknown;
         lastPlant: unknown;

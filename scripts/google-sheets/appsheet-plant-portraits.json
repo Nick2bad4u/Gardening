@@ -1,5 +1,5 @@
 {
-    "folder": "GardenPlantPortraits-f8ac927063b98a47",
+    "folder": "GardenPlantPortraits-e668e7d001d12f24",
     "portraits": [
         {
             "id": "P01",
@@ -180,7 +180,17 @@
             "id": "P38",
             "name": "Terrarium",
             "slug": "terrarium"
+        },
+        {
+            "id": "P39",
+            "name": "Nightly nerve plant",
+            "slug": "fittonia-albivenis-nightly"
+        },
+        {
+            "id": "P40",
+            "name": "Spice is Nice peperomia",
+            "slug": "peperomia-obtusifolia-spice-is-nice"
         }
     ],
-    "revision": "f8ac927063b98a47"
+    "revision": "e668e7d001d12f24"
 }

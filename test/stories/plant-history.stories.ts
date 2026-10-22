@@ -550,3 +550,69 @@ export const ExtendedCareEventsDesktopLight: Story = {
     ...ExtendedCareEvents,
     args: { ...ExtendedCareEvents.args, theme: "light", width: 1280 },
 };
+
+export const FittoniaManualCare: Story = {
+    args: {
+        path: "pots/P39/",
+        scenario: "houseplants",
+        theme: "light",
+        width: 1280,
+    },
+    play: async ({ canvasElement }) => {
+        const { document } = await websiteCanvas(canvasElement);
+        await waitFor(() =>
+            expect(document.querySelector("#latest-weight")).toHaveTextContent(
+                "550 g"
+            )
+        );
+        await expect(
+            document.querySelector(".baseline-panel")
+        ).not.toBeVisible();
+        await expect(document.querySelector("#dry-average")).toHaveTextContent(
+            "—"
+        );
+        await expect(
+            document.querySelector("#manual-care-guidance")
+        ).toHaveTextContent("Keep lightly moist");
+        await expect(
+            document.querySelector("#watering-chart-summary")
+        ).toHaveTextContent("do not use a cactus dry-weight plateau");
+        await expect(
+            document.querySelector("#weight-chart svg")
+        ).toBeInTheDocument();
+        await expectNoOverflow(document);
+    },
+};
+
+export const PeperomiaManualCare: Story = {
+    args: {
+        path: "pots/P40/",
+        scenario: "houseplants",
+        theme: "dark",
+        width: 390,
+    },
+    play: async ({ canvasElement }) => {
+        const { document } = await websiteCanvas(canvasElement);
+        await waitFor(() =>
+            expect(document.querySelector("#latest-weight")).toHaveTextContent(
+                "550 g"
+            )
+        );
+        await expect(
+            document.querySelector(".baseline-panel")
+        ).not.toBeVisible();
+        await expect(document.querySelector("#wet-average")).toHaveTextContent(
+            "—"
+        );
+        await expect(
+            document.querySelector("#manual-care-guidance")
+        ).toHaveTextContent("Allow partial drying");
+        await expect(
+            document.querySelector("#watering-chart-summary")
+        ).toHaveTextContent("do not use a cactus dry-weight plateau");
+        await expect(
+            document.querySelector("#weight-chart svg")
+        ).toBeInTheDocument();
+        await expectNoOverflow(document);
+    },
+};

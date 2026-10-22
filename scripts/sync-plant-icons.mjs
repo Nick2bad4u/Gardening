@@ -286,6 +286,10 @@ function portraitDescriptions() {
             "Three opposing pairs of thick triangular green leaves with pale marginal teeth and raised white tubercles.",
         ],
         [
+            "fittonia-albivenis-nightly",
+            "Schematic pink-veined nerve plant with pointed oval leaves, green margins, and branching stems in a neutral illustrative pot; follows the owner photos without establishing cultivar identity or pot specifications.",
+        ],
+        [
             "four-succulent-planter",
             "Lilac Cubic Frost, golden Coppertone, fuzzy blue-green Deminuta, and red-edged Ruby Slippers share one light-colored round planter.",
         ],
@@ -364,6 +368,10 @@ function portraitDescriptions() {
         [
             "peperomia-obtipan-bicolor",
             "Illustrative branching baby rubber plant with thick oval green leaves and cream margins in a neutral pale pot; the nursery tag reads Peperomia obtipan Bicolor basket.",
+        ],
+        [
+            "peperomia-obtusifolia-spice-is-nice",
+            "Schematic baby rubber plant with glossy rounded green leaves and upright branching stems in a neutral illustrative pot; follows the owner photos without establishing cultivar identity or pot specifications.",
         ],
         [
             "pilosocereus-pachycladus-variegated",

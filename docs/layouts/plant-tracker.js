@@ -189,7 +189,7 @@ function renderRow(plant) {
         "dry-time-cell"
     );
     dryTimeCell.title = summary.manualCare
-        ? "Plant identities and enclosure setup are pending; no dry-down or watering forecast is assigned."
+        ? summary.manualCareNote
         : "Workbook estimate from established wet-to-dry weight cycles; use it as an observation, not a watering deadline.";
     row.append(dryTimeCell);
 

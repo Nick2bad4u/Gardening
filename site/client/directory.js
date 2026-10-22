@@ -37,7 +37,9 @@ export function initializeDirectory() {
                 const isOverview = entry.dataset["overview"] === "true";
                 const isAggregate = entry.dataset["aggregate"] === "true";
                 const isMatches = terms.every((term) =>
-                    (entry.dataset["search"] ?? "").includes(term)
+                    /^p\d+$/v.test(term)
+                        ? entry.dataset["trackerId"]?.toLowerCase() === term
+                        : (entry.dataset["search"] ?? "").includes(term)
                 );
                 entry.hidden =
                     !isMatches ||

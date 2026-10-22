@@ -25,6 +25,7 @@ export interface WebsiteFrameProps {
 
 type ObservationScenario =
     | "care-events"
+    | "houseplants"
     | "humidity"
     | "light";
 
@@ -43,6 +44,7 @@ export const websiteArgTypes = {
             "care-events",
             "ready",
             "humidity",
+            "houseplants",
             "light",
             "loading",
             "empty",
@@ -52,7 +54,7 @@ export const websiteArgTypes = {
         table: {
             type: {
                 summary:
-                    "ready | humidity | light | care-events | loading | empty | error | retry",
+                    "ready | humidity | houseplants | light | care-events | loading | empty | error | retry",
             },
         },
     },

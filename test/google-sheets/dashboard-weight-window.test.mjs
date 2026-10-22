@@ -153,7 +153,7 @@ function mutatePrecondition(snapshot, kind) {
         );
     switch (kind) {
         case "bounds": {
-            snapshot.dashboardReadBounds.rowCount = 42;
+            snapshot.dashboardReadBounds.rowCount = 44;
             break;
         }
         case "clock": {
@@ -223,7 +223,7 @@ describe("dashboard rolling measured minimum", () => {
             dashboardWeightWindowHeaders
         );
 
-        for (const row of [7, 42])
+        for (const row of [7, 44])
             expect(nativeFormula(row)).toBe(dashboardMinimumWeightFormula(row));
         const formula = dashboardMinimumWeightFormula(7);
 
@@ -246,7 +246,7 @@ describe("dashboard rolling measured minimum", () => {
 
         expect(snapshot).toStrictEqual(before);
         expect(plan.ranges).toStrictEqual([
-            "Dashboard!AF6:AG42",
+            "Dashboard!AF6:AG44",
             "Integrity!B12",
         ]);
         expect(plan.requests[0]).toStrictEqual({
@@ -299,7 +299,7 @@ describe("dashboard rolling measured minimum", () => {
         dashboard.basicFilter = {
             range: {
                 endColumnIndex: 31,
-                endRowIndex: 42,
+                endRowIndex: 44,
                 sheetId: 1,
                 startColumnIndex: 0,
                 startRowIndex: 5,
@@ -312,7 +312,7 @@ describe("dashboard rolling measured minimum", () => {
         ).toBe(false);
         expect(plan.requests.at(-1)).toMatchObject({
             setBasicFilter: {
-                filter: { range: { endColumnIndex: 33, endRowIndex: 42 } },
+                filter: { range: { endColumnIndex: 33, endRowIndex: 44 } },
             },
         });
     });
@@ -364,7 +364,7 @@ describe("dashboard rolling measured minimum", () => {
                 bandedRangeId: 77,
                 range: {
                     endColumnIndex: 31,
-                    endRowIndex: 42,
+                    endRowIndex: 44,
                     sheetId: 1,
                     startColumnIndex: 0,
                     startRowIndex: 5,

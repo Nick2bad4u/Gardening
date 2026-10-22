@@ -93,7 +93,11 @@ const initialName =
         <a
             class="button"
             id="sheet-plant-page"
-            href="https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit?gid=1875598047#gid=1875598047"
+            href={
+                container?.sheetUrl ??
+                primaryProfile?.sheetUrl ??
+                "https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit?gid=1875598047#gid=1875598047"
+            }
             target="_blank"
             rel="noreferrer"
         >

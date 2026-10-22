@@ -1,0 +1,118 @@
+{
+    "anatomy": {
+        "intro": "Compare four visible structures; this schematic is not a measurement or identification test.",
+        "parts": [
+            {
+                "function": "The oval blade forms the broad surface of each leaf.",
+                "label": "Leaf blade"
+            },
+            {
+                "function": "Pink veins branch across the green blade.",
+                "label": "Netted veins"
+            },
+            {
+                "function": "The creeping stem carries leaves and visible hairs.",
+                "label": "Hairy stem"
+            },
+            {
+                "function": "A short stalk joins each blade to the stem.",
+                "label": "Petiole"
+            }
+        ],
+        "sourceIds": [
+            "ncsu"
+        ]
+    },
+    "comparisonSourceIds": [
+        "pw"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "ncsu"
+        ],
+        "text": "Small pale tubular flowers sit among overlapping bracts. Indoor flowering is uncommon."
+    },
+    "growth": {
+        "note": "These are general features, not an observed growth sequence or calendar for this plant.",
+        "sourceIds": [
+            "ncsu",
+            "pw"
+        ],
+        "stages": [
+            {
+                "text": "New leaves extend the leafy shoot.",
+                "title": "Leafy shoot"
+            },
+            {
+                "text": "Creeping stems expand the plant sideways.",
+                "title": "Spreading growth"
+            },
+            {
+                "text": "Small flowers may appear; none is documented for P39.",
+                "title": "Possible flowers"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "kew",
+            "pw"
+        ],
+        "text": "Kew places Fittonia albivenis in the wet tropics of South America. Nightly is a nursery trade selection; its label does not establish a wild collection locality."
+    },
+    "image": {
+        "alt": "Generated Fittonia anatomy schematic: 1 leaf blade, 2 pink netted veins, 3 hairy stem, 4 petiole; educational illustration rather than collection identification evidence.",
+        "file": "assets/plant-explainers/fittonia-albivenis-nightly.webp",
+        "generatedOn": "2026-10-21",
+        "prompt": "Use case: scientific-educational. Asset type: square botanical anatomy illustration for a personal gardening field guide. Create a detailed naturalistic watercolor and fine colored-pencil schematic of Fittonia albivenis with pink netted veins, green leaf margins, oval pointed thin leaf blades, short petioles and visibly finely hairy branching creeping stems. Show a small leafy shoot enlarged, isolated on a warm ivory background, no pot, no soil, no roots. Generous clear margins. Exactly four dark-green numbered circles with fine leader lines and small endpoint dots: 1 points to the broad leaf blade away from its veins; 2 points precisely to the pink netted vein network on another leaf; 3 points to fine hairs along a clearly visible stem segment; 4 points precisely to a short petiole between stem and leaf blade. Make all four targets exposed and unambiguous. Numbers 1, 2, 3, 4 are the only text, each appears once. Botanical educational schematic, not a photograph, diagnosis or depiction of a confirmed cultivar. No branding, no watermark, no decorative labels, no invented flowers.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Other Network News nerve plants",
+            "profileSlug": null,
+            "text": "Other selections share the species and netted leaf pattern. Color alone cannot independently verify the Nightly trade identity."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "pw"
+        ],
+        "text": "Proven Winners describes Nightly as a spreading plant about 4–8 inches high. This is a product description, not a measurement of P39."
+    },
+    "milestones": [
+        {
+            "date": "2026-10-21",
+            "sourcePath": "docs/plants/houseplants/fittonia-albivenis-nightly.md",
+            "text": "Owner supplied plant photographs and a Network News Nightly label; purchase date, pot dimensions, placement, and earlier care remain unrecorded.",
+            "title": "Labels and photographs supplied"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "Kew dates the accepted Fittonia albivenis combination to 1979 and its earlier Adelaster name to 1861. These are nomenclatural dates; Nightly’s introduction date remains unverified."
+    },
+    "slug": "fittonia-albivenis-nightly",
+    "sources": [
+        {
+            "accessed": "2026-10-21",
+            "id": "kew",
+            "title": "Kew: Fittonia albivenis",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:105033-2"
+        },
+        {
+            "accessed": "2026-10-21",
+            "id": "ncsu",
+            "title": "NC State Extension: Fittonia albivenis",
+            "url": "https://plants.ces.ncsu.edu/plants/fittonia-albivenis/"
+        },
+        {
+            "accessed": "2026-10-21",
+            "id": "pw",
+            "title": "Proven Winners: Network News Nightly",
+            "url": "https://www.provenwinners.com/plants/fittonia/network-news-nightly-nerve-plant-fittonia-albivenis"
+        }
+    ]
+}

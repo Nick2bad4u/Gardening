@@ -94,6 +94,8 @@ describe("plant chart color identity", () => {
             "P36",
             "P37",
             "P38",
+            "P39",
+            "P40",
         ]);
 
         const uniqueColors = new Set(palette.map((color) => color.hex));
@@ -194,7 +196,7 @@ describe("plant chart color identity", () => {
         );
         expect(measured).toHaveProperty(
             `updateChartSpec.spec.basicChart.series.${palette.length - 1}.colorStyle.rgbColor`,
-            plantColor("P38")
+            plantColor("P40")
         );
         expect(measured).toHaveProperty(
             `updateChartSpec.spec.basicChart.series.${palette.length}.series.sourceRange.sources.0.startColumnIndex`,
@@ -304,16 +306,16 @@ describe("plant chart color identity", () => {
         const compact = compactSelectedPlantSeries(primary, shared);
         const identityColors = new Set(
             compact
-                .slice(0, 36)
+                .slice(0, 38)
                 .map((series) => JSON.stringify(series.colorStyle))
         );
 
-        expect(compact).toHaveLength(38);
-        expect(compact.slice(0, 36)).toStrictEqual(primary);
-        expect(identityColors.size).toBe(36);
+        expect(compact).toHaveLength(40);
+        expect(compact.slice(0, 38)).toStrictEqual(primary);
+        expect(identityColors.size).toBe(38);
         expect(
             compact
-                .slice(36)
+                .slice(38)
                 .map(({ lineStyle, pointStyle, series, targetAxis }) => ({
                     lineStyle,
                     pointStyle,
@@ -328,12 +330,12 @@ describe("plant chart color identity", () => {
                 targetAxis,
             }))
         );
-        expect(compact[36]?.colorStyle?.rgbColor).toStrictEqual({
+        expect(compact[38]?.colorStyle?.rgbColor).toStrictEqual({
             blue: 104 / 255,
             green: 99 / 255,
             red: 95 / 255,
         });
-        expect(compact[37]?.colorStyle?.rgbColor).toStrictEqual({
+        expect(compact[39]?.colorStyle?.rgbColor).toStrictEqual({
             blue: 166 / 255,
             green: 160 / 255,
             red: 154 / 255,

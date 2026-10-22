@@ -116,15 +116,15 @@ describe("field guide source rendering", () => {
         expect(plantSheetUrl("P37")).toContain("gid=202610370");
     });
 
-    it("assigns the received houseplants to P31/P32 while keeping abandoned orders in old plans", async () => {
+    it("assigns the received houseplants to P31/P32/P39/P40 while keeping abandoned orders in old plans", async () => {
         expect.hasAssertions();
 
         const profiles = await getProfiles();
         const archived = await getOldPlans();
 
-        expect(profiles).toHaveLength(47);
+        expect(profiles).toHaveLength(49);
         expect(profiles.filter((profile) => !profile.historical)).toHaveLength(
-            46
+            48
         );
         expect(
             profiles.some((profile) =>
@@ -133,6 +133,8 @@ describe("field guide source rendering", () => {
         ).toBe(false);
         expect(plantSheetUrl("P31")).toContain("gid=202609330");
         expect(plantSheetUrl("P32")).toContain("gid=202609340");
+        expect(plantSheetUrl("P39")).toContain("gid=202610390");
+        expect(plantSheetUrl("P40")).toContain("gid=202610400");
         expect(archived).toHaveLength(6);
         expect(
             archived.some((document) =>
@@ -144,7 +146,12 @@ describe("field guide source rendering", () => {
         expect(
             profiles
                 .filter((profile) =>
-                    ["P31", "P32"].includes(profile.trackerId ?? "")
+                    [
+                        "P31",
+                        "P32",
+                        "P39",
+                        "P40",
+                    ].includes(profile.trackerId ?? "")
                 )
                 .map((profile) => ({
                     id: profile.trackerId,
@@ -167,6 +174,18 @@ describe("field guide source rendering", () => {
                 inventory: "Houseplant-04",
                 label: "#8",
                 slug: "tradescantia-spathacea-tricolor",
+            },
+            {
+                id: "P39",
+                inventory: "Houseplant-06",
+                label: "#13",
+                slug: "fittonia-albivenis-nightly",
+            },
+            {
+                id: "P40",
+                inventory: "Houseplant-07",
+                label: "#14",
+                slug: "peperomia-obtusifolia-spice-is-nice",
             },
         ]);
     });
@@ -223,7 +242,7 @@ describe("field guide source rendering", () => {
         ).toStrictEqual(
             slugs.toSorted((left, right) => left.localeCompare(right))
         );
-        expect(potIds.size).toBe(36);
+        expect(potIds.size).toBe(38);
         expect(
             members
                 .map((profile) => profile.inventoryId)
