@@ -1,13 +1,12 @@
 # Google Sheets observation logger
 
-Production logger **5.37.1 / immutable version 113** supports **36 container allocations**, using IDs `P01`–`P32` and `P35`–`P38`, and **50,000 History observation slots**. The October 20–21 rollout below records the capacity migration, working workbook/mobile recalculation controls, and verified maintenance deployment; the October 17 and earlier receipts retain the schema and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.38.0 / immutable version 114** supports **38 container allocations**, using IDs `P01`–`P32` and `P35`–`P40`, and **50,000 History observation slots**. The October 22 rollout below records the verified P39/P40 enrollment and deployment; the October 20–21 and earlier receipts retain the capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained source is now **5.38.0**, with the pending P39/P40 enrollment described
-below. It has **not** replaced that verified production deployment. Production
-AppSheet remains at its verified **1.100132** baseline until the new saved
-definition and live behavior are checked.
+Maintained and deployed source are **5.38.0**, with production **AppSheet
+1.100135** verified by an independent saved-definition readback. The rollout
+receipt below records the production checks separately from rehearsal results.
 
 The mobile logger and AppSheet are the observation input surfaces. The unused
 `Quick log` compatibility tab is hidden. Every saved event becomes a new
@@ -29,7 +28,7 @@ for retained water, measured loss, forecast windows, and model evidence. The
 **Current weight difference** comparison starts at **Insights A586**.
 The [RO refill log](RO-REFILLS.md) records water-supply refill dates, amounts
 for the four storage containers, and a chart of gallons refilled per visit.
-The production **Plant colors** sheet maps its 36 active allocations to
+The production **Plant colors** sheet maps its 38 active allocations to
 consistent chart colors, with full names, swatches, and links to their charts.
 The October 9 chart snapshot keeps P01–P32, P35–P38 order so colors stay attached to the same plant;
 the cycle explorer changes color automatically with its selected plant.
@@ -38,7 +37,62 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
-## October 21 houseplant enrollment and rehearsal — pending publication
+## October 22 houseplant production rollout
+
+The owner authorized publication after the disposable rehearsal. The earlier
+[preflight backup](https://docs.google.com/spreadsheets/d/1P4ofc9W2d172Na0N8Yfh2vnReetUb2vP02A1n23w_-g/edit)
+was retained. After pausing the queue, a separate native
+[immediate pre-migration backup](https://docs.google.com/spreadsheets/d/1_QtILeCWqRG6FARdMe5AETqfgfqOJrNTEUN4SZ1NqCo/edit)
+established the baseline for the guarded P39/P40 enrollment; its receipt is
+`production-20261022-paused-backup.json`. Production now has **38 containers**,
+**76 App bulk columns**, and **190 reviewed charts**, retaining the existing
+50,000-observation capacity. The final comparison preserved **all 1,996 original
+observations and unique IDs**, including their values, notes, and validations;
+the captured History tail remained blank and RO data matched exactly. No
+synthetic observation was submitted to production.
+
+Logger **5.38.0 / immutable version 114** was created at **04:18:55.359 UTC on
+October 22, 2026**, and the existing deployment was updated at **04:19:06.248
+UTC**. Final deployment verification completed at **04:23:21 UTC**. The existing
+web-app URL, OAuth scopes, and access settings were preserved.
+[PR #27](https://github.com/Nick2bad4u/Gardening/pull/27) and its
+Pages checks passed. The final source had **2,246 passing unit tests** and a
+subsequent **50-test Storybook pass**; the earlier rehearsal receipt retains
+its separate coverage measurement and known Pester limitation.
+
+The AppSheet update adds two optional positive Decimal weight fields, with two
+decimal places and visibility for Weigh/Water + weigh. Bulk Log places P39/P40
+after P38 and before Notes; round validation includes both new fields. Portraits
+use the new private revision and roster, natural label order adds #13/#14, and
+the two reference-image entries use the published collection JPGs. Independent
+saved-definition comparison detected regeneration changes to the Round action
+enum order and optional Mist validation; both original settings were restored
+before the final save. A fresh read at **04:27 UTC** confirmed **AppSheet
+1.100135**. The comparison accounted for all **460 original definition entries**;
+changes were limited to the three reviewed Plant tracker formulas, Round
+validation, two new columns, and Bulk Log ordering. The Mist validator differs
+only by a leading `=` normalization. Canonical/analytics tables remain
+`READ_ONLY`, and staging remains `ADDS_AND_UPDATES`.
+
+The live phone reported **Connected · Logger 5.38.0**, displayed all **38
+labels**, including **#13/P39** and **#14/P40**, and showed the correct manual
+care with no invented records. Both new pots appeared in bulk choices. Immutable
+version 114 `doGet` completed at **04:27:07 UTC** in **0.868 seconds**, followed
+by bootstrap at **04:27:10 UTC** in **13.008 seconds**. The Head queue completed
+at **04:15:42**, **04:20:42**, and **04:25:42 UTC**, taking **6.231**, **15.563**,
+and **7.408 seconds** respectively. Exactly **one five-minute
+`processQueuedAppSheetEntries` trigger** was restored and verified.
+
+Fresh AppSheet sync and visual checks at **04:30–04:31 UTC** confirmed version
+**1.100135**, the correct #13/#14 plant cards, blank weight/dimension values,
+and **No log**. Both revisioned portraits loaded at **150 px** natural width.
+Bulk Log showed blank optional P39/P40 inputs immediately after P38 and before
+Notes for **Weigh** and **Water + weigh**, and hid both for **Water**. No values
+were entered or observations submitted; **Cancel → Discard** returned to Plants.
+A fresh trigger UI inspection confirmed exactly one **Minutes timer / Every
+5 minutes** trigger; its dialog was canceled without changes.
+
+## October 21 houseplant enrollment and rehearsal
 
 The **2026-10-21** maintained **5.38.0** change adds two separate houseplant pots:
 
@@ -81,8 +135,8 @@ the full History capacity; this is not a ledger truncation.
 
 All 38 revised AppSheet portraits have been uploaded and hash-verified in the
 private [GardenPlantPortraits-e668e7d001d12f24 folder](https://drive.google.com/drive/folders/1ALGTMfieYLTx63RJ6eFLIyOfFSNcepq6).
-The folder remains owner-only. The production AppSheet expression switch is
-pending; uploaded artwork is not evidence of a deployed app update.
+The folder remains owner-only. The October 22 production receipt above records
+the subsequent AppSheet expression update and its verification status.
 
 **Disposable rehearsal receipt, October 21, 2026 (Eastern):** native integration
 of logger **5.38.0** passed the **38-container** roster, **76-column** bulk queue,
@@ -141,16 +195,9 @@ pages, 49 profiles, and 38 pots**. These are scoped results: the photo-publicati
 Pester suite still has **one pre-existing failure**, so this is not an all-checks
 pass or a production-release receipt.
 
-**Publication is pending.** This entry records maintained source and rehearsal
-results, not a completed production rollout. GitHub publication awaits owner
-approval. Before replacing the production baseline, obtain fresh production
-preflight evidence, apply and verify the guarded production migration,
-update the existing logger deployment in place, and independently reload the
-saved AppSheet definition. Record the resulting immutable logger version,
-AppSheet version, unchanged original observations and staging data, successful
-executions, and exactly one five-minute queue trigger. Until those receipts exist,
-the verified production references remain **5.37.1 / immutable 113** and
-**AppSheet 1.100132**.
+This is the disposable rehearsal receipt. The October 22 production receipt
+above records the separately authorized live migration and deployment; synthetic
+rehearsal rows are not production observations.
 
 ## Maintained 5.37.0 capacity and mobile display update
 
@@ -2965,9 +3012,7 @@ collection-wide Water, Weigh, Water + weigh, Mist, Check, Inspect, Rotation, Mov
 Environment, Clean, Prune, Propagate, Pest, or Other round. It stores `Round ID`, observation time, one action
 selector, a compact EnumList of selected plant IDs, a hidden legacy weight-state
 field, optional shared care details, and active gram fields for P01–P32 and
-P35–P40 in maintained 5.38.0. Production remains P35–P38 until the
-[pending enrollment](#october-21-houseplant-enrollment-and-rehearsal--pending-publication)
-is verified. The retired P33/P34 columns remain blank-only compatibility fields. Empty weight fields are
+P35–P40 in production 5.38.0. The retired P33/P34 columns remain blank-only compatibility fields. Empty weight fields are
 skipped. `processQueuedAppSheetEntries()` combines the selected IDs and
 nonblank weights into no more than one deterministic
 `appsheet-bulk-{Round ID}-{Plant ID}` request per plant and sends the complete
