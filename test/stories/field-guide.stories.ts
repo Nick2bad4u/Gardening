@@ -329,6 +329,14 @@ export const HouseplantTerrarium: Story = {
         await expect(
             document.querySelector('[data-aggregate="true"]')
         ).toHaveTextContent("provisional members");
+        await userEvent.clear(search);
+        await userEvent.type(search, "p39");
+        await expect(
+            document.querySelectorAll("[data-directory-entry]:not([hidden])")
+        ).toHaveLength(1);
+        await expect(
+            canvas.getByRole("heading", { name: "Nightly nerve plant" })
+        ).toBeVisible();
         await userEvent.tab();
         await expect(
             canvas.getByRole("combobox", { name: "Collection" })

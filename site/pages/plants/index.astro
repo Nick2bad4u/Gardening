@@ -97,6 +97,7 @@ const currentCount = profiles.filter(
             <li
                 data-directory-entry
                 data-search={profile.searchText}
+                data-tracker-id={profile.trackerId}
                 data-group={profile.group}
                 data-historical={String(profile.historical)}
                 data-overview={String(overviewSlugs.has(profile.slug))}
