@@ -1,8 +1,8 @@
 # Pot labels
 
-Last updated: 2026-10-10
+Last updated: 2026-10-21
 
-This is the print reference for 46 active profile records across 36 tracked pot allocations. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
+This is the print reference for 48 active profile records across 38 tracked pot allocations. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
 
 The six August cactus labels are `E1`–`E3` and `F1`–`F3`; their exact mapping
 was recorded from the pots on 2026-08-10. The numbered mapping was also
@@ -496,4 +496,27 @@ CONFIRM DRAINAGE AND ROOT-ZONE DRYNESS
 #12 | TERRARIUM
 P38 | Houseplant-05 | Mixed houseplants
 One container · one care history
+```
+
+## October 21 houseplant labels
+
+The photographed Proven Winners leafjoy littles labels support these separate
+nursery identities. Pot measurements and placements remain unrecorded. Use the
+profile sources for care; the printed prompts are inspection reminders.
+
+| Label | Tracker | Inventory     | Profile                                                                                                                                   |
+| ----- | ------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `#13` | `P39`   | Houseplant-06 | [Nightly nerve plant](./houseplants/fittonia-albivenis-nightly.md), _Fittonia albivenis_, Network News™ Nightly™                          |
+| `#14` | `P40`   | Houseplant-07 | [Spice is Nice peperomia](./houseplants/peperomia-obtusifolia-spice-is-nice.md), _Peperomia obtusifolia_, Savory Delights™ Spice is Nice™ |
+
+```text
+#13 | NIGHTLY NERVE PLANT
+P39 | Fittonia albivenis | NURSERY LABEL
+LIGHTLY MOIST, NOT SOGGY; NO WHOLE-POT DROUGHT
+```
+
+```text
+#14 | SPICE IS NICE PEPEROMIA
+P40 | Peperomia obtusifolia | NURSERY LABEL
+PARTIAL DRYING; CHECK BELOW THE SURFACE
 ```

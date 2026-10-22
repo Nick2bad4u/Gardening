@@ -28,6 +28,12 @@
         ...(scenario === "humidity"
             ? ["P38,#12,Terrarium,Plant identities pending,5 days"]
             : []),
+        ...(scenario === "houseplants"
+            ? [
+                  "P39,#13,Nightly nerve plant,Fittonia albivenis,5 days",
+                  "P40,#14,Spice is Nice peperomia,Peperomia obtusifolia,5 days",
+              ]
+            : []),
     ].join("\n");
     const historyHeaders =
         "Date,Plant ID,Event,Weight state,Weight (g),Height (cm),Width (cm),Plant condition,Notes,Pot setup,Record status,Request ID,Relative humidity (%),PPFD (µmol/m²/s),Illuminance (lux),Observation quality,Measurement method,Observation ID,Corrects observation ID,Soil moisture,Mist targets,Mist amount (mL),Mist details,Previous location,New location,Temperature (°C),Temperature target,Temperature entry unit,Environment aspect,Previous setting,New setting,Propagation method,Propagation details,Support action,Support details,Leaf temperature (°C),Leaf temperature entry unit,Paired air temperature (°C),Paired air temperature entry unit,Paired relative humidity (%),Leaf VPD (kPa),Leaf VPD source";
@@ -181,6 +187,14 @@
                   "2026-09-02,P38,Humidity,,,,,,Saturated reading,1,Active,storybook-humidity-full,100",
                   "2026-09-03,P38,Humidity,,,,,,Latest reading,1,Active,storybook-humidity-latest,65.5",
               ]
+            : []),
+        ...(scenario === "houseplants"
+            ? ["P39", "P40"].flatMap((id) => [
+                  `2026-09-01,${id},Weight,Dry,400,,,Healthy,Measured before water,1,Active,storybook-${id}-dry`,
+                  `2026-09-02,${id},Water,,,,,Healthy,Water recorded,1,Active,storybook-${id}-water`,
+                  `2026-09-02,${id},Weight,Wet,600,,,Healthy,Measured after draining,1,Active,storybook-${id}-wet`,
+                  `2026-09-03,${id},Weight,Routine,550,,,Healthy,Routine check,1,Active,storybook-${id}-routine`,
+              ])
             : []),
         ...(["care-events", "light"].includes(scenario)
             ? (scenario === "light" ? lightObservations : careObservations).map(

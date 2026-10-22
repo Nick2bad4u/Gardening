@@ -168,47 +168,56 @@ function runtime(historyRows = []) {
 }
 
 describe("logger History-backed read models", () => {
-    it("withholds a terrarium dry reference while retaining measured weights and watering history", () => {
-        expect.hasAssertions();
+    it.each([
+        "P38",
+        "P39",
+        "P40",
+    ])(
+        "withholds %s dry references while retaining measured weights and watering history",
+        (plantId) => {
+            expect.hasAssertions();
 
-        const observations = [
-            row("2026-09-01T12:00:00Z", "Water"),
-            row("2026-09-01T13:00:00Z", "Weigh", { 4: 500 }),
-            row("2026-09-03T12:00:00Z", "Weigh", { 4: 450 }),
-            row("2026-09-04T12:00:00Z", "Water"),
-            row("2026-09-04T13:00:00Z", "Weigh", { 4: 500 }),
-            row("2026-09-05T13:00:00Z", "Weigh", { 4: 495 }),
-        ];
-        const terrariumRows = observations.map((record) => {
-            const copy = [...record];
-            copy[1] = "P38";
-            return copy;
-        });
-        const before = structuredClone(terrariumRows);
-        const result = runtime().api.webWeightReadModelsFromRows_(
-            [...observations, ...terrariumRows],
-            new Map([
-                ["P01", 1],
-                ["P38", 1],
-            ]),
-            now,
-            zone
-        );
-        const terrarium = structuredClone(required(result.byPlant.get("P38")));
+            const observations = [
+                row("2026-09-01T12:00:00Z", "Water"),
+                row("2026-09-01T13:00:00Z", "Weigh", { 4: 500 }),
+                row("2026-09-03T12:00:00Z", "Weigh", { 4: 450 }),
+                row("2026-09-04T12:00:00Z", "Water"),
+                row("2026-09-04T13:00:00Z", "Weigh", { 4: 500 }),
+                row("2026-09-05T13:00:00Z", "Weigh", { 4: 495 }),
+            ];
+            const terrariumRows = observations.map((record) => {
+                const copy = [...record];
+                copy[1] = plantId;
+                return copy;
+            });
+            const before = structuredClone(terrariumRows);
+            const result = runtime().api.webWeightReadModelsFromRows_(
+                [...observations, ...terrariumRows],
+                new Map([
+                    ["P01", 1],
+                    [plantId, 1],
+                ]),
+                now,
+                zone
+            );
+            const terrarium = structuredClone(
+                required(result.byPlant.get(plantId))
+            );
 
-        expect(terrarium.latestWeight).toBe(495);
-        expect(terrarium.weightSeries.previousDry).toBeNull();
-        expect(
-            terrarium.weightSeries.points.map((point) => point.weight)
-        ).toStrictEqual([500, 495]);
-        expect(terrarium.weightSeries.waterings).toMatchObject([
-            { observedAt: "2026-09-04T12:00:00.000Z" },
-        ]);
-        expect(
-            result.byPlant.get("P01")?.weightSeries.previousDry?.weight
-        ).toBe(450);
-        expect(terrariumRows).toStrictEqual(before);
-    });
+            expect(terrarium.latestWeight).toBe(495);
+            expect(terrarium.weightSeries.previousDry).toBeNull();
+            expect(
+                terrarium.weightSeries.points.map((point) => point.weight)
+            ).toStrictEqual([500, 495]);
+            expect(terrarium.weightSeries.waterings).toMatchObject([
+                { observedAt: "2026-09-04T12:00:00.000Z" },
+            ]);
+            expect(
+                result.byPlant.get("P01")?.weightSeries.previousDry?.weight
+            ).toBe(450);
+            expect(terrariumRows).toStrictEqual(before);
+        }
+    );
 
     it("ignores anonymous History rows and defaults a blank baseline setup to the first pot", () => {
         expect.hasAssertions();

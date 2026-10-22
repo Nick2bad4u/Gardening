@@ -162,3 +162,33 @@ the primary image. These local evidence copies retain the supplied 720 × 1280
 resolution; no higher-resolution camera original was supplied. Copyright Nick;
 all rights reserved. These acquisition files are served with the field guide;
 no Gyazo capture or Collection has been created for this session.
+
+## October 21 Leafjoy houseplants
+
+Four full-frame photographs supplied October 21, 2026 document **#13 / P39**
+and **#14 / P40**. The filenames record the supplied date; capture time and
+exact acquisition date are unconfirmed. The shared label photograph preserves
+both Proven Winners leafjoy littles tags. Retail names are evidence of the
+seller's identification, not independent botanical verification.
+
+| File                                                              | Evidence role                                                                                            |
+| ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| [P39 Fittonia overview](./2026-10-21-p39-fittonia-overview.jpg)   | Pink-veined foliage, stems, and partial nursery pot; the Peperomia is also partly visible                |
+| [P39 Fittonia detail](./2026-10-21-p39-fittonia-detail.jpg)       | Leaf patterns, margins, and stems; the photograph does not establish soil moisture or firmness           |
+| [P40 Peperomia overview](./2026-10-21-p40-peperomia-overview.jpg) | Rounded green leaves, stems, and partial nursery pot; surface droplets are visible                       |
+| [Shared Leafjoy labels](./2026-10-21-p39-p40-leafjoy-labels.jpg)  | Network News™ Nightly™ / _Fittonia albivenis_; Savory Delights™ Spice is Nice™ / _Peperomia obtusifolia_ |
+
+The Fittonia tag also displays Cocoon Collection / For Interior Rooms and
+WorkLife Collection / For Desks & Tabletops. The Peperomia tag displays Atrium
+Collection / For Bright Rooms, SpaScene Collection / For Humid Rooms, and
+WorkLife Collection / For Desks & Tabletops. These are grower marketing and
+placement labels; they do not establish measured light or humidity requirements.
+
+Private originals and source mappings remain excluded from publication. The
+maintained JPEG sanitizer removed private metadata without cropping, resizing,
+or re-encoding the primary image. Each publication copy retains its supplied
+960 × 1280 resolution; decoded-pixel comparisons found zero changed pixels.
+Copyright Nick; all rights reserved. These local evidence copies are available
+to the field guide; dedicated Gyazo Collections and remote publication remain
+pending. The photography setting does not establish final plant placement,
+pot dimensions, medium, or a watering event.

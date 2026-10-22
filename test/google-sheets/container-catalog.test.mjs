@@ -123,7 +123,7 @@ describe("container catalog migration", () => {
         const model = await getContainers();
         const profiles = await getProfiles();
 
-        expect(profiles).toHaveLength(47);
+        expect(profiles).toHaveLength(49);
 
         const catalog = normalizeContainerCatalog(model);
         const lithops = catalog.members.filter(
@@ -167,9 +167,9 @@ describe("container catalog migration", () => {
             memberSlugs: [],
             pending: false,
         });
-        expect(catalog.containers).toHaveLength(36);
-        expect(catalog.members).toHaveLength(43);
-        expect(model.flatMap(({ profiles }) => profiles)).toHaveLength(46);
+        expect(catalog.containers).toHaveLength(38);
+        expect(catalog.members).toHaveLength(45);
+        expect(model.flatMap(({ profiles }) => profiles)).toHaveLength(48);
 
         const { snapshot } = fixture(catalog.containers.length);
         for (const [index, container] of catalog.containers.entries()) {
@@ -190,9 +190,9 @@ describe("container catalog migration", () => {
         );
         expect(terrariumRow[4]?.numberValue).toBe(0);
         expect(terrariumRow[5]?.stringValue).toBe("");
-        expect(rows[0]).toHaveLength(37);
-        expect(rows[1]).toHaveLength(44);
-        expect(plan.memberRange).toBe("'Container members'!A1:J44");
+        expect(rows[0]).toHaveLength(39);
+        expect(rows[1]).toHaveLength(46);
+        expect(plan.memberRange).toBe("'Container members'!A1:J46");
     }, 20_000);
 
     it("creates one container row for several botanical profiles without changing inputs", () => {

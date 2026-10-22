@@ -913,50 +913,64 @@ describe("humidity observations", () => {
     });
 });
 
-describe("pending terrarium care", () => {
-    it("retains observations without creating dry/wet readiness or watering capacity", () => {
-        expect.hasAssertions();
+describe("manual container care", () => {
+    it.each([
+        ["P38", "Review the plants and enclosure"],
+        ["P39", "Keep lightly moist"],
+        ["P40", "Allow partial drying"],
+    ])(
+        "retains %s observations without creating dry/wet readiness or watering capacity",
+        (plantId, guidance) => {
+            expect.hasAssertions();
 
-        const events = [
-            {
-                _index: 0,
-                Date: "2026-09-01",
-                Event: "Water",
-                "Weight (g)": 600,
-            },
-            {
-                _index: 1,
-                Date: "2026-09-02",
-                Event: "Weight",
-                "Weight (g)": 500,
-            },
-            {
-                _index: 2,
-                Date: "2026-09-03",
-                Event: "Water",
-                "Weight (g)": 600,
-            },
-            {
-                _index: 3,
-                Date: "2026-09-04",
-                Event: "Weight",
-                "Weight (g)": 450,
-            },
-        ];
-        const summary = summarizeIndexedHistory(events, "P38");
+            const events = [
+                {
+                    _index: 0,
+                    Date: "2026-09-01",
+                    Event: "Water",
+                    "Weight (g)": 600,
+                },
+                {
+                    _index: 1,
+                    Date: "2026-09-02",
+                    Event: "Weight",
+                    "Weight (g)": 500,
+                },
+                {
+                    _index: 2,
+                    Date: "2026-09-03",
+                    Event: "Water",
+                    "Weight (g)": 600,
+                },
+                {
+                    _index: 3,
+                    Date: "2026-09-04",
+                    Event: "Weight",
+                    "Weight (g)": 450,
+                },
+            ];
+            const summary = summarizeIndexedHistory(events, plantId);
 
-        expect(summary.manualCare).toBe(true);
-        expect(summary.baselineStatus).toContain("Manual care review");
-        expect(summary.weightSeries).toHaveLength(4);
-        expect(
-            summary.weightSeries.every((point) => point.state === "Routine")
-        ).toBe(true);
-        expect(summary.latestWeightValue).toBe(450);
-        expect(summary.lastWater?.["Date"]).toBe("2026-09-03");
-        expect(summary.dryAverage).toBeNull();
-        expect(summary.wetAverage).toBeNull();
-        expect(summary.capacity).toBeNull();
-        expect(summary.remainingFraction).toBeNull();
-        expect(summarizeIndexedHistory(events, "P01").manualCare).toBe(false);
-    });
+            expect(summary.manualCare).toBe(true);
+            expect(summary.baselineStatus).toContain("Manual care review");
+            expect(summary.weightSeries).toHaveLength(4);
+            expect(
+                summary.weightSeries.every((point) => point.state === "Routine")
+            ).toBe(true);
+            expect(summary.latestWeightValue).toBe(450);
+            expect(summary.lastWater?.["Date"]).toBe("2026-09-03");
+            expect(summary.dryAverage).toBeNull();
+            expect(summary.wetAverage).toBeNull();
+            expect(summary.capacity).toBeNull();
+            expect(summary.remainingFraction).toBeNull();
+            expect(summarizeIndexedHistory(events, "P01").manualCare).toBe(
+                false
+            );
+            expect(summarizeIndexedHistory(events, "P01").dryAverage).toBe(500);
+            expect(summary.baselineStatus).not.toContain(
+                "identities and setup pending"
+            );
+            expect(summary.manualCareNote).toContain(guidance);
+        }
+    );
 });

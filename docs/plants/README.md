@@ -1,8 +1,8 @@
 # Plant profiles
 
-Last updated: 2026-10-10
+Last updated: 2026-10-21
 
-These **47 pages cover 46 active profile records and one historical record, across 36 tracker allocations**. Each profile combines identification, botanical background, collection photographs, and practical care for its current pot. Use the guides with plant-condition and moisture checks rather than a fixed watering calendar.
+These **49 pages cover 48 active profile records and one historical record, across 38 tracker allocations**. Each profile combines identification, botanical background, collection photographs, and practical care for its current pot. Use the guides with plant-condition and moisture checks rather than a fixed watering calendar.
 
 **New acquisition:** [Arctic Ice echeveria](./succulents/echeveria-arctic-ice.md)
 is enrolled as **Succulent-17 / #11 / P37**, acquired October 6, 2026 at Home
@@ -25,7 +25,7 @@ the best current match and the evidence that could confirm or change it. The
 [pot-label reference](./labels.md) collects the print layouts, native origins,
 publication years, warnings, and orientation instructions.
 
-The [container guide](../containers.md) separates 43 current botanical profile
+The [container guide](../containers.md) separates 45 current botanical profile
 groups from three whole-planter overviews. Documented botanical members of shared
 planters have their own profiles; the terrarium retains provisional identities
 within its overview. Each container keeps one P-ID and care history. Use the
@@ -123,12 +123,14 @@ The owner bought both Lithops nursery pots and the split rock at Home Depot, How
 
 ## Houseplants
 
-| Inventory ID  | Label ID | Profile                                                                                                         | Identification status                                         |
-| ------------- | -------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Houseplant-01 | `#3`     | [Money tree (_Pachira glabra_)](./houseplants/pachira-glabra.md)                                                | Genus tag; working species ID                                 |
-| Houseplant-03 | `#7`     | [Peperomia Bicolor (_Peperomia obtusifolia_ 'Obtipan Bicolor')](./houseplants/peperomia-obtipan-bicolor.md)     | Nursery-labeled cultivar; P31; purchased 2026-09-20           |
-| Houseplant-04 | `#8`     | [Tricolor oyster plant (_Tradescantia spathacea_ 'Tricolor')](./houseplants/tradescantia-spathacea-tricolor.md) | Nursery-labeled under _Rhoeo_; P32; purchased 2026-09-20      |
-| Houseplant-05 | `#12`    | [Terrarium](./houseplants/terrarium.md)                                                                         | Aggregate; photo-based probable and tentative identities; P38 |
+| Inventory ID  | Label ID | Profile                                                                                                         | Identification status                                                                               |
+| ------------- | -------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| Houseplant-01 | `#3`     | [Money tree (_Pachira glabra_)](./houseplants/pachira-glabra.md)                                                | Genus tag; working species ID                                                                       |
+| Houseplant-03 | `#7`     | [Peperomia Bicolor (_Peperomia obtusifolia_ 'Obtipan Bicolor')](./houseplants/peperomia-obtipan-bicolor.md)     | Nursery-labeled cultivar; P31; purchased 2026-09-20                                                 |
+| Houseplant-04 | `#8`     | [Tricolor oyster plant (_Tradescantia spathacea_ 'Tricolor')](./houseplants/tradescantia-spathacea-tricolor.md) | Nursery-labeled under _Rhoeo_; P32; purchased 2026-09-20                                            |
+| Houseplant-05 | `#12`    | [Terrarium](./houseplants/terrarium.md)                                                                         | Aggregate; photo-based probable and tentative identities; P38                                       |
+| Houseplant-06 | `#13`    | [Nightly nerve plant](./houseplants/fittonia-albivenis-nightly.md)                                              | Nursery-labelled Fittonia albivenis, Network News™ Nightly™; P39; documented 2026-10-21             |
+| Houseplant-07 | `#14`    | [Spice is Nice peperomia](./houseplants/peperomia-obtusifolia-spice-is-nice.md)                                 | Nursery-labelled Peperomia obtusifolia, Savory Delights™ Spice is Nice™; P40; documented 2026-10-21 |
 
 Peperomia Bicolor and Tricolor oyster plant were purchased at Carlson's Greenhouses on September 20 in six-inch nursery pots. Their last recorded placement is the room-side floor near the money tree. Separate eight-inch Amazon Basics pots and the living-room arrangement are planned; the profiles detail the proposed mix and lighting trial. Completed repots, placement, and leaf-height exposure remain unrecorded.
 

@@ -1,10 +1,20 @@
 # Setup and equipment
 
-Last updated: 2026-10-10
+Last updated: 2026-10-21
 
 The [equipment and supplies inventory](./equipment/inventory.md) lists the collection's products and model references. All four wooden tables are the [LEJANEOYE two-tier bamboo side-table model](https://www.amazon.com/dp/B0D25H73ZS), identified September 17; measured tabletop dimensions are recorded separately from seller specifications.
 
-The [container guide](./containers.md) separates the 43 current botanical profile groups from three whole-planter overviews. P19, P20, P30, P35, and P38 are shared plantings with one label, one tracker history, and one current setup per container; P38 keeps its provisional identities within a Houseplants aggregate overview. The P-ID persists when a planting moves to a different pot; repots record a setup boundary rather than a new container ID.
+The [container guide](./containers.md) separates the 45 current botanical profile groups from three whole-planter overviews. P19, P20, P30, P35, and P38 are shared plantings with one label, one tracker history, and one current setup per container; P38 keeps its provisional identities within a Houseplants aggregate overview. The P-ID persists when a planting moves to a different pot; repots record a setup boundary rather than a new container ID.
+
+## October 21 nursery houseplants — setup pending
+
+**P39 / #13 [Nightly nerve plant](./plants/houseplants/fittonia-albivenis-nightly.md)**
+and **P40 / #14 [Spice is Nice peperomia](./plants/houseplants/peperomia-obtusifolia-spice-is-nice.md)**
+are separate nursery pots documented October 21. Pot dimensions, drainage,
+medium, placement, and measured leaf-level light remain unrecorded. Neither is
+assigned to the cactus tables, terrarium, or the older living-room plan. Confirm
+those details before specifying light settings or a repot; enrollment is not a
+completed setup change.
 
 ## Terrarium — seller-listed jar and photographed enclosure
 
@@ -35,7 +45,7 @@ The six-inch pot's suitability remains conditional on root-ball fit and drainage
 
 ## Current routine
 
-The collection has **36 tracked containers and 47 profiles: 46 active and one historical**. Recent additions are P31 / #7 Peperomia Bicolor and P32 / #8 Tricolor oyster plant, purchased at Carlson's Greenhouses September 20, and P35 / #9 shared Lithops and P36 / #10 split rock, purchased at Home Depot in Howell, Michigan September 21.
+The collection has **38 tracked containers and 49 profiles: 48 active and one historical**. Recent additions are P31 / #7 Peperomia Bicolor and P32 / #8 Tricolor oyster plant, purchased at Carlson's Greenhouses September 20, and P35 / #9 shared Lithops and P36 / #10 split rock, purchased at Home Depot in Howell, Michigan September 21.
 
 The September 23 Lithops and split-rock repots are **setup 2**, using **80% Molly's Succulent Mix + 20% perlite**. P35 holds four visible Lithops heads in the D'vine Dev Blush Mauve pot, logged as **4.2 in round**; P36 holds one split-rock leaf pair in the Thirtypot speckled-brown pot, logged as **4 in round**. Seller-selected sizes are 4.3 and 4.5 inches, respectively. Routine weights were **1247 g** and **713.5 g**, with dry medium and firm plants; neither batch includes watering or a verified dry baseline. Final growing positions, actual drainage, and usable internal depth remain unverified.
 

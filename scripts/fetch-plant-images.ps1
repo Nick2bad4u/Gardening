@@ -523,6 +523,28 @@ $plantCatalog = @(
         CommonsSearch = 'Tradescantia spathacea Tricolor'
         INaturalistName = 'Tradescantia spathacea'
         ScopeNote = 'Species-reference photographs may show normal green-purple Tradescantia spathacea; none is assumed to show the nursery-labelled Tricolor cultivar.'
+    },
+    [pscustomobject]@{
+        Id = 'Houseplant-06'
+        LabelId = '#13'
+        Slug = 'fittonia-albivenis-nightly'
+        ScientificName = 'Fittonia albivenis'
+        CommonName = 'Nightly nerve plant'
+        CommonsCategory = 'Fittonia albivenis'
+        CommonsSearch = 'Fittonia albivenis'
+        INaturalistName = 'Fittonia albivenis'
+        ScopeNote = 'Species-reference photographs may show other leaf colors or selections of Fittonia albivenis; none is assumed to show Network News Nightly. These references do not establish the owned plant''s cultivar identity.'
+    },
+    [pscustomobject]@{
+        Id = 'Houseplant-07'
+        LabelId = '#14'
+        Slug = 'peperomia-obtusifolia-spice-is-nice'
+        ScientificName = 'Peperomia obtusifolia'
+        CommonName = 'Spice is Nice peperomia'
+        CommonsCategory = 'Peperomia obtusifolia'
+        CommonsSearch = 'Peperomia obtusifolia'
+        INaturalistName = 'Peperomia obtusifolia'
+        ScopeNote = 'Species-reference photographs may show plain green or variegated Peperomia obtusifolia selections; none is assumed to show Savory Delights Spice is Nice. The owned plant''s exact cultivar is unverified.'
     }
 )
 
@@ -565,6 +587,8 @@ $rejectedSourceUrls = @(
 # File metadata does not always name a visible flower. These visually checked
 # overrides keep the lifecycle labels honest without guessing from plant size.
 $subjectOverrides = @{
+    'https://commons.wikimedia.org/wiki/File:Nerve_plant_@_Leyam,_Vadakkethara,_Thenkurissi,_Palakkad.jpg' = 'flower'
+    'https://commons.wikimedia.org/wiki/File:Peperomia_obtusifolia_(baby_rubber_plant)_4.jpg' = 'habit'
     'https://commons.wikimedia.org/wiki/File:Aeonium_haworthii_PICT3759.jpg' = 'flower'
     'https://commons.wikimedia.org/wiki/File:Aeonium_haworthii_PICT3825.jpg' = 'flower'
     'https://commons.wikimedia.org/wiki/File:Alpy,_imgp1247_(2014-08).jpg' = 'flower'

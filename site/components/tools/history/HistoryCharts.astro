@@ -80,7 +80,7 @@ const { manualCare = false } = Astro.props;
                         </svg>
                         Pot weight
                     </h3>
-                    <p>
+                    <p id="weight-chart-description">
                         {manualCare
                             ? "Recorded weights only; no dry or wet care targets are assigned."
                             : "Current pot setup; dry and wet means appear when available."}
@@ -135,7 +135,7 @@ const { manualCare = false } = Astro.props;
                         </svg>
                         Watering intervals
                     </h3>
-                    <p>
+                    <p id="watering-chart-description">
                         {manualCare
                             ? "Past intervals are descriptive history, not a watering schedule."
                             : "Elapsed days between recorded soak-to-runoff events."}

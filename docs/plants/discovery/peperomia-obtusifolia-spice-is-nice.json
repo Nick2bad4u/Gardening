@@ -1,0 +1,131 @@
+{
+    "anatomy": {
+        "intro": "Identify the fleshy vegetative parts and the illustrative flower structure; P40 has no recorded flowering.",
+        "parts": [
+            {
+                "function": "The glossy blade broadens toward a rounded tip.",
+                "label": "Thick leaf"
+            },
+            {
+                "function": "The short stalk connects a leaf to the stem.",
+                "label": "Petiole"
+            },
+            {
+                "function": "Fleshy branches support successive leaves.",
+                "label": "Branching stem"
+            },
+            {
+                "function": "A slender axis carries tiny petal-less flowers.",
+                "label": "Flower spike"
+            }
+        ],
+        "sourceIds": [
+            "ncsu"
+        ]
+    },
+    "comparisonSourceIds": [
+        "rhs-bicolor",
+        "pw-protected"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "ncsu"
+        ],
+        "text": "Minute cream-colored flowers crowd a narrow spike. The drawing shows a possible structure, not a bloom observed on P40."
+    },
+    "growth": {
+        "note": "These are species and product descriptions, not measured growth stages for P40.",
+        "sourceIds": [
+            "ncsu",
+            "pw"
+        ],
+        "stages": [
+            {
+                "text": "Leaves expand along the shoots.",
+                "title": "New leaves"
+            },
+            {
+                "text": "Branches build a fuller canopy.",
+                "title": "Branching plant"
+            },
+            {
+                "text": "The brand describes upright stems that can eventually trail.",
+                "title": "Older stems"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "Kew gives the species range as Florida through tropical America and describes a perennial or epiphyte of the wet tropics. The nursery trade selection has no demonstrated wild collection locality."
+    },
+    "image": {
+        "alt": "Generated Peperomia obtusifolia anatomy schematic: 1 thick leaf, 2 petiole, 3 branching stem, 4 flower spike; flowering is illustrative and has not been observed on the owned plant.",
+        "file": "assets/plant-explainers/peperomia-obtusifolia-spice-is-nice.webp",
+        "generatedOn": "2026-10-21",
+        "prompt": "Use case: scientific-educational. Asset type: square botanical anatomy illustration for a personal gardening field guide. Create a detailed naturalistic watercolor and fine colored-pencil schematic of green-leaved Peperomia obtusifolia. Show a compact upright branching shoot with thick glossy rounded oval dark-green leaves, shallowly cupped blades, short petioles, smooth fleshy branching stems and one slender upright cream-green flower spike with tiny tightly packed inconspicuous flowers. No variegation. Isolated on warm ivory background, no pot, soil or roots, generous clear margins. Exactly four dark-green numbered circles with fine leader lines and small endpoint dots: 1 points to a thick leaf blade; 2 points precisely to an exposed short petiole connecting blade and main stem; 3 points to a clearly visible branching main stem; 4 points to the slender flower spike. All targets exposed and unambiguous. Numbers 1, 2, 3, 4 are the only text, each appears once. Flower spike is a general species illustration, not an observation of flowering in an owned plant; do not portray a specific verified cultivar or photographic collection evidence. No branding, no watermark, no decorative labels, no showy petals.\n\nFollow-up edit prompt: Correct only callout 2 in this botanical anatomy schematic. Keep the plant drawing, ivory background, numbers 1, 3 and 4 and all their leaders unchanged. Move the endpoint dot of callout 2 from the branch node to the middle of the exposed slender green petiole connecting the bottom-left large leaf to the lower main stem (the narrow curved stalk just above that leaf's attachment to the main stem, near the lower center of the image). Reposition the number-2 circle into clear ivory space to the left of that petiole if necessary. Its leader must unambiguously end halfway along that slender leaf stalk, not on the branching main stem, node, or leaf blade. Preserve exactly four numbers, no added text.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Peperomia Bicolor",
+            "profileSlug": "peperomia-obtipan-bicolor",
+            "text": "RHS lists Obtipan Bicolor as a separate cultivar. Shared species identity does not make P40 the same nursery selection or container as P31."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "pw"
+        ],
+        "text": "The brand lists Spice is Nice at approximately 6–12 inches high. Pot conditions and the actual selection affect form; P40 has not been measured."
+    },
+    "milestones": [
+        {
+            "date": "2026-10-21",
+            "sourcePath": "docs/plants/houseplants/peperomia-obtusifolia-spice-is-nice.md",
+            "text": "Owner supplied plant photographs and a Savory Delights Spice is Nice label; no purchase date, weight, watering, feeding, or repot event was supplied.",
+            "title": "Labels and photographs supplied"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "pw",
+            "pw-protected"
+        ],
+        "text": "The product page names EC-PEPE-1806, but the brand’s protected list also associates EC-PEPE-2103 with Spice is Nice. The supplied trade label does not distinguish them. Exact cultivar remains unverified."
+    },
+    "slug": "peperomia-obtusifolia-spice-is-nice",
+    "sources": [
+        {
+            "accessed": "2026-10-21",
+            "id": "kew",
+            "title": "Kew: Peperomia obtusifolia",
+            "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:679269-1"
+        },
+        {
+            "accessed": "2026-10-21",
+            "id": "ncsu",
+            "title": "NC State Extension: Peperomia obtusifolia",
+            "url": "https://plants.ces.ncsu.edu/plants/peperomia-obtusifolia/"
+        },
+        {
+            "accessed": "2026-10-21",
+            "id": "pw",
+            "title": "Proven Winners: Savory Delights Spice is Nice",
+            "url": "https://www.provenwinners.com/plants/peperomia/savory-delights-spice-nice-baby-rubber-plant-peperomia-obtusifolia"
+        },
+        {
+            "accessed": "2026-10-21",
+            "id": "pw-protected",
+            "title": "Proven Winners 2025–26 protected varieties, page 19",
+            "url": "https://www.provenwinners.com/sites/provenwinners.com/files/pdf/2025-26_proven_winners_protected_plant_varieties.pdf"
+        },
+        {
+            "accessed": "2026-10-21",
+            "id": "rhs-bicolor",
+            "title": "RHS: Peperomia obtusifolia Obtipan Bicolor",
+            "url": "https://www.rhs.org.uk/plants/379773/peperomia-obtusifolia-obtipan-bicolor-v/details"
+        }
+    ]
+}

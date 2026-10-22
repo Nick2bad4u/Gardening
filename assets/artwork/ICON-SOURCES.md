@@ -11,7 +11,7 @@ Two plant illustrations are adapted from SVG Repo sources:
 | `icon-cactus`    | [Cactus, SVG Repo 206109](https://www.svgrepo.com/svg/206109/cactus)         | SVG Repo                 | [CC0](https://www.svgrepo.com/page/licensing/#CC0)          | Redrawn and simplified for clear rendering from 16–52 px; colors were harmonized with the field-guide palette.       |
 | `icon-succulent` | [Succulents, SVG Repo 474474](https://www.svgrepo.com/svg/474474/succulents) | xiyou0608                | [Public domain](https://www.svgrepo.com/page/licensing/#PD) | Redrawn as a compact rosette while retaining the source illustration's concentric soil and layered-leaf composition. |
 
-The 55 `icon-plant-*` portraits and the remaining interface symbols are original
+The 57 `icon-plant-*` portraits and the remaining interface symbols are original
 repository artwork. Each portrait uses a different simplified silhouette,
 color pattern, growth habit, spine or leaf treatment, and pot where appropriate
 to evoke the plant named by that profile. The P29 portrait emphasizes paired,
@@ -67,6 +67,17 @@ The September 23 Containers launcher adds original repository vector artwork: th
 The Arctic Ice portrait for **#11 / P37**, first added October 6 and updated October 9, is original schematic vector artwork. The revision follows owner photographs supplied October 8: a pale, broad rosette above a tall blue-and-white glazed ceramic pot with dark blue elongated diamonds. The photographs guide its appearance; the drawing does not verify cultivar identity. The profile preserves the patent and seller references.
 
 The October 9 revision of the tiny mixed planter portrait for **#6 / P30** follows the five owner photographs supplied that day. Its shallow rounded green-glazed bowl has a dark narrow rim, mottled lower glaze, and multicolored mineral top dressing. Two pale rosettes, red-orange paddles, copper-orange shoots, and low purple foliage suggest the photographed arrangement without resolving the component plants' provisional identities. The separate component portraits still use illustrative pots to frame their foliage; they do not represent additional containers. Both revised portraits remain original simplified vectors, not photographs or botanical diagrams. The source photographs retain the owner's separate rights.
+
+## October 21 houseplant portraits
+
+The October 21 houseplant additions are original schematic vector portraits
+for **P39 / #13** Fittonia Network News™ Nightly™ and **P40 / #14** Peperomia
+Savory Delights™ Spice is Nice™. Pink-veined pointed leaves with green margins
+distinguish the Fittonia; thick rounded green leaves distinguish the Peperomia.
+The silhouettes follow owner-supplied photographs while the pots are neutral
+illustrative framing, not evidence of actual pot size or material. These
+portraits do not independently establish cultivar identity, health, or care
+needs. The source photographs retain the owner's separate rights.
 
 ## Terrarium and humidity symbols
 

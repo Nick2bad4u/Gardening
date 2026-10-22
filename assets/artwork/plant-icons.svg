@@ -18386,4 +18386,66 @@
   <rect x="15" y="42" width="34" height="7" rx="2" fill="#e6ad7e" stroke="#8d5e42" stroke-width="2" />
 </g>
   </symbol>
+  <symbol id="icon-plant-fittonia-albivenis-nightly" viewBox="0 0 64 64">
+<defs>
+  <linearGradient id="fittonia-nightly-leaf" x1="0" y1="0" x2="1" y2="1">
+    <stop stop-color="#e9adb9" />
+    <stop offset="1" stop-color="#bb738e" />
+  </linearGradient>
+  <linearGradient id="fittonia-nightly-pot" x1="0" y1="0" x2="1" y2="1">
+    <stop stop-color="#a5b8bc" />
+    <stop offset="1" stop-color="#647d86" />
+  </linearGradient>
+  <g id="fittonia-nightly-leaf-shape" stroke-linejoin="round">
+    <path d="M0 0C-10-5-11-14-3-23C8-18 12-7 0 0Z" fill="url(#fittonia-nightly-leaf)" stroke="#426c44" stroke-width="1.6" />
+    <path d="M0-1-3-20M-1-7-7-10M-2-12-7-15M0-5 5-9M-1-11 3-15" fill="none" stroke="#f6d5dc" stroke-width="1.2" stroke-linecap="round" />
+    <path d="M-5-9-4-5M2-8 3-5M-4-16-4-12M1-16 1-12" fill="none" stroke="#477846" stroke-width="1" stroke-linecap="round" />
+  </g>
+</defs>
+<g stroke-linecap="round" stroke-linejoin="round">
+  <ellipse cx="32" cy="59" rx="21" ry="2.5" fill="#254638" opacity="0.14" />
+  <path d="M17 44H47L44 57Q32 61 20 57Z" fill="url(#fittonia-nightly-pot)" stroke="#52656e" stroke-width="1.5" />
+  <ellipse cx="32" cy="44" rx="15" ry="4" fill="#66523b" stroke="#52656e" stroke-width="1.5" />
+  <path d="M31 45 29 20M31 41 16 30M32 39 48 23M31 43 44 37" fill="none" stroke="#6f9556" stroke-width="2.4" />
+  <use href="#fittonia-nightly-leaf-shape" transform="translate(30 26) rotate(5) scale(0.85)" />
+  <use href="#fittonia-nightly-leaf-shape" transform="translate(39 30) rotate(53) scale(0.9)" />
+  <use href="#fittonia-nightly-leaf-shape" transform="translate(22 31) rotate(-58) scale(0.82)" />
+  <use href="#fittonia-nightly-leaf-shape" transform="translate(31 39) rotate(-22) scale(0.88)" />
+  <use href="#fittonia-nightly-leaf-shape" transform="translate(42 43) rotate(67) scale(0.76)" />
+  <use href="#fittonia-nightly-leaf-shape" transform="translate(26 45) rotate(-67) scale(0.9)" />
+  <use href="#fittonia-nightly-leaf-shape" transform="translate(32 48) rotate(37) scale(0.76)" />
+  <path d="M23 52Q31 55 39 53" fill="none" stroke="#cfdbda" stroke-width="1.2" opacity="0.65" />
+</g>
+  </symbol>
+  <symbol id="icon-plant-peperomia-obtusifolia-spice-is-nice" viewBox="0 0 64 64">
+<defs>
+  <radialGradient id="peperomia-spice-leaf" cx="0.3" cy="0.2" r="0.85">
+    <stop stop-color="#6eaa60" />
+    <stop offset="0.5" stop-color="#347744" />
+    <stop offset="1" stop-color="#1c4e38" />
+  </radialGradient>
+  <linearGradient id="peperomia-spice-pot" x1="0" y1="0" x2="1" y2="1">
+    <stop stop-color="#d9c5a3" />
+    <stop offset="1" stop-color="#ac9576" />
+  </linearGradient>
+  <g id="peperomia-spice-leaf-shape" stroke-linejoin="round">
+    <path d="M0 0C-9-1-12-8-9-14C-7-20 3-21 7-16C13-10 8-2 0 0Z" fill="url(#peperomia-spice-leaf)" stroke="#284f36" stroke-width="1.3" />
+    <path d="M0-2-1-14" fill="none" stroke="#81ab65" stroke-width="0.9" opacity="0.7" />
+    <path d="M-6-12Q-5-16-1-16" fill="none" stroke="#c6dc9e" stroke-width="1.4" stroke-linecap="round" opacity="0.65" />
+  </g>
+</defs>
+<g stroke-linecap="round" stroke-linejoin="round">
+  <ellipse cx="32" cy="59" rx="21" ry="2.5" fill="#254638" opacity="0.14" />
+  <path d="M17 43H47L44 57Q32 61 20 57Z" fill="url(#peperomia-spice-pot)" stroke="#86755e" stroke-width="1.5" />
+  <ellipse cx="32" cy="43" rx="15" ry="4" fill="#61503b" stroke="#86755e" stroke-width="1.5" />
+  <path d="M31 45 32 17M31 35 18 24M32 39 46 30M33 28 42 15" fill="none" stroke="#69964e" stroke-width="3" />
+  <use href="#peperomia-spice-leaf-shape" transform="translate(34 22) rotate(13) scale(0.82)" />
+  <use href="#peperomia-spice-leaf-shape" transform="translate(24 28) rotate(-62) scale(0.94)" />
+  <use href="#peperomia-spice-leaf-shape" transform="translate(40 29) rotate(57) scale(0.88)" />
+  <use href="#peperomia-spice-leaf-shape" transform="translate(31 38) rotate(-13) scale(1)" />
+  <use href="#peperomia-spice-leaf-shape" transform="translate(42 43) rotate(68) scale(0.9)" />
+  <use href="#peperomia-spice-leaf-shape" transform="translate(25 44) rotate(-64) scale(0.85)" />
+  <path d="M24 52Q32 55 39 53" fill="none" stroke="#f3e6ce" stroke-width="1.2" opacity="0.7" />
+</g>
+  </symbol>
 </svg>

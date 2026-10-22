@@ -6,10 +6,11 @@ workbook. It supports daily browsing, individual observations, collection-wide
 care/weight rounds, save receipts, dashboards, and per-plant charts without
 creating a second gardening database.
 
-The verified production baseline is **AppSheet 1.100132**, saved and checked
-on October 17, 2026, with logger **5.36.0 / immutable version 111**. The
-[logger runbook](../scripts/google-sheets/README.md#october-17-leaf-vpd-and-logger-reliability-rollout)
-records the native schema migration, Integrity checks, and logger deployment.
+The verified AppSheet production baseline is **1.100132**, saved and checked
+on October 17, 2026. The logger subsequently reached **5.37.1 / immutable version
+113**; the [logger runbook](../scripts/google-sheets/README.md) records that
+verified October 20–21 deployment. Maintained **5.38.0** and the P39/P40
+enrollment below are pending production verification and publication.
 Earlier dated records retain their verified historical state.
 
 The owner-only
@@ -17,6 +18,73 @@ The owner-only
 contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
+
+## October 21 houseplant enrollment and rehearsal — pending publication
+
+The **2026-10-21** maintained **5.38.0** contract adds **P39 / #13 — Nightly nerve
+plant** (_Fittonia albivenis_) and **P40 / #14 — Spice is Nice peperomia**
+(_Peperomia obtusifolia_). The source roster becomes **38 containers**, IDs
+`P01`–`P32` and `P35`–`P40`; the nursery names and uncertain cultivar details
+remain qualified in the plant profiles.
+
+App bulk appends **BW `P39 weight (g)`** and **BX `P40 weight (g)`**, extending
+its physical schema from **74 columns, A:BV**, to **76 columns, A:BX**. Preserve
+all old columns, queued rows, keys, and receipts. History/History view remain
+**67 physical columns, A:BO**, and App entries remains **59, A:BG**. The bridge
+retains legacy 74-column parsing and retry compatibility during the upgrade.
+The maintained bulk validation covers all 38 active weights; the saved app
+must be checked after its new columns, form order, picker entries, and natural
+label order through **#14** are updated.
+
+P39/P40 keep weights, watering records, and history charts, with manual-care
+guidance instead of dry-weight references, dry-down rates, calibration or plateau
+prompts, forecasts, and model-fit results. Fittonia should stay lightly moist with
+drainage; Peperomia allows partial drying with drainage checks. No watering,
+measurement, or pot-setup event is invented merely to enroll either plant.
+Canonical and helper tables stay read-only, staging tables stay writable, and the
+Apps Script bridge remains the only observation writer.
+
+The [logger enrollment runbook](../scripts/google-sheets/README.md#october-21-houseplant-enrollment-and-rehearsal--pending-publication)
+records the native backup, disposable copy, preserved **1,996 existing
+observations**, and guarded comparison-helper relocation. The new private
+[portrait folder](https://drive.google.com/drive/folders/1ALGTMfieYLTx63RJ6eFLIyOfFSNcepq6)
+contains all 38 verified SVGs. It is owner-only; its production expression switch
+has not yet been verified.
+
+The **October 21 disposable rehearsal** passed the 5.38.0 **38-container** roster,
+76-column bulk processing, legacy 74-column compatibility, single/bulk saves,
+retries, and conflicting-retry rejection. Four Weigh fixtures plus six
+Water/Measure fixtures produced **10 synthetic observations**, including both
+dimensions and a three-day watering interval. Readback found **2,006 unique
+Observation IDs** with consistent request/save grouping and **39,713 unchanged
+original entered History/header cells**, covering all **1,996 original
+observations**. The captured rows 2008:2500 tail was unchanged. Staging matched
+the prior runtime snapshot; its only differences from the original baseline
+were expected enrollment headers/rules and 12 App bulk row-2 runtime values.
+Captured App entries and the complete **RO A1:T1000** range were unchanged.
+Original History notes/validation baselines were absent, so historical metadata
+equality is not claimed.
+
+This validates the disposable bridge path, not a saved production AppSheet
+configuration. Full 38-page, four-page, and two-page presentation refreshes each
+hit the **360-second** limit. The maintained fallback now has individual
+P37/P38/P39/P40 page commands; a single P40 invocation succeeded in **178.891
+seconds**. Bootstrap passed in **13.714 seconds**, returning **75,384 bytes**
+and all **38 pots**. The latest analytics refresh reached **Ready at 00:53:20
+UTC on October 22**. This does not establish full-collection refresh headroom.
+The final guard passed the fresh 38-pot snapshot and matching setups.
+Independent chart readback matched **all 18 requested full specifications**,
+preserved **190 chart IDs/positions**, and found **172 untargeted charts exactly
+unchanged**. The original **24 disposable-script files** were restored and
+verified exactly. The runbook records these completed rehearsal checks and
+scoped validation, including **2,246 unit tests**. No production mutation is
+recorded for this enrollment.
+
+**AppSheet 1.100132 remains the verified production baseline.** This section is
+a pending contract and rehearsal record, not a saved-app release receipt.
+GitHub publication awaits owner approval. Record a new version only after the
+production editor save, fresh independent definition comparison, empty-form
+checks without synthetic saves, and native preservation checks succeed.
 
 ## Maintained 5.36.0 Leaf VPD contract
 
@@ -730,8 +798,9 @@ The Plants view sorts by the hidden virtual Number column
 the physical sequence A1-A3 through H1-H3, followed by the numbered plant and
 shared-planter labels #1–#12 in the saved October 9 mapping. The `#` group always sorts after every lettered
 label.
-Active IDs and writable picker values are P01–P32 and P35–P38; do not replace them
-with the display-order helper.
+The verified production IDs and writable picker values are P01–P32 and P35–P38;
+the pending 5.38.0 contract extends them through P40 and the numbered labels
+through #14. Do not replace plant IDs with the display-order helper.
 
 Plants uses the Image virtual column `Plant portrait` as its square main
 image. Care history derives its round left-side `Plant image` through the

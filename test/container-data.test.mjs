@@ -9,12 +9,12 @@ import {
 import { getProfiles } from "../site/lib/content.mjs";
 
 describe("container membership", () => {
-    it("keeps 36 care units, five shared plantings, and qualified Lithops members without counting overviews twice", async () => {
+    it("keeps 38 care units, five shared plantings, and qualified Lithops members without counting overviews twice", async () => {
         expect.hasAssertions();
 
         const containers = await getContainers();
 
-        expect(containers).toHaveLength(36);
+        expect(containers).toHaveLength(38);
         expect(
             containers
                 .filter((container) => container.shared)
@@ -31,7 +31,7 @@ describe("container membership", () => {
                 (total, container) => total + container.members.length,
                 0
             )
-        ).toBe(43);
+        ).toBe(45);
         expect(
             containers
                 .filter((container) => container.overview !== undefined)

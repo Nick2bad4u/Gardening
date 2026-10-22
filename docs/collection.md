@@ -1,6 +1,6 @@
 # Plant collection
 
-Last updated: 2026-10-10
+Last updated: 2026-10-21
 
 This is the current working inventory plus historical records for plants
 removed from the collection. Photo-based identifications are marked as probable, with nursery names retained alongside them.
@@ -15,7 +15,7 @@ available. Gallery captions distinguish species and ancestry references from pho
 The short label IDs are permanent plant or shared-planter identifiers, not
 table coordinates. They are shown beside the longer historical inventory IDs.
 
-The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was installed September 13. The profiled collection has **47 profile records: 46 active and one historical, across 36 tracker allocations**. The established [Table Placement Guide](./layouts/table-placement-research.md) remains the working arrangement.
+The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was installed September 13. The profiled collection has **49 profile records: 48 active and one historical, across 38 tracker allocations**. The established [Table Placement Guide](./layouts/table-placement-research.md) remains the working arrangement.
 
 Profile records and containers answer different questions: a profile describes
 a botanical identity or an aggregate planting, while a tracker identifies the
@@ -25,14 +25,31 @@ references. Component profiles add botanical detail without adding pots or
 duplicating care events.
 
 The [container guide](./containers.md) brings together the five shared plantings,
-their members, and the distinction between 43 botanical profile groups and three
+their members, and the distinction between 45 botanical profile groups and three
 aggregate overviews. Open the
 [container directory](https://nick2bad4u.github.io/Gardening/containers/) for
 each container's member list, care context, and existing history.
 
+## October 21 houseplant additions
+
+Two separately potted houseplants are documented from owner-supplied photographs
+and Proven Winners leafjoy littles labels received October 21, 2026:
+
+| Inventory     | Label | Tracker | Profile and nursery identity                                                                                                                     |
+| ------------- | ----- | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Houseplant-06 | `#13` | `P39`   | [Nightly nerve plant](./plants/houseplants/fittonia-albivenis-nightly.md), _Fittonia albivenis_, Network News™ Nightly™                          |
+| Houseplant-07 | `#14` | `P40`   | [Spice is Nice peperomia](./plants/houseplants/peperomia-obtusifolia-spice-is-nice.md), _Peperomia obtusifolia_, Savory Delights™ Spice is Nice™ |
+
+The labels support the nursery identities; photographs are consistent with them.
+Exact purchase dates, retailer, pot dimensions, drainage, medium, placement,
+previous watering, and fertilizer history are unrecorded. Visible water droplets
+do not establish a watering event. P39 is separate from the provisional Fittonia
+in P38; P40 is separate from P31 Peperomia Bicolor. Enrollment creates no weight,
+watering, feeding, or repot observation.
+
 ## Terrarium — October 10 arrival photographs
 
-**P38 / #12 — Terrarium**, enrolled October 9, 2026, now has five owner-supplied arrival-condition photographs received October 10. They show a rounded glass jar with a cork lid, probable red-veined _Fittonia albivenis_ and white-speckled _Hypoestes phyllostachya_ (both cultivar unknown), tentative _Pilea_ cf. _depressa_ trailing growth, and unidentified fern-like foliage and moss. [Houseplant-05](./plants/houseplants/terrarium.md) is the aggregate Houseplants profile; these remain qualified visual identifications. The collection retains 43 botanical profile groups and now has three whole-planter overviews. The jar record is: Glass jar with cork lid; seller-listed 6.3 × 3.9 in (16 × 10 cm); dimension orientation unverified. See the [terrarium arrival record](./terrarium.md) for the photographs, owner-reported shipping damage, and remaining setup questions.
+**P38 / #12 — Terrarium**, enrolled October 9, 2026, now has five owner-supplied arrival-condition photographs received October 10. They show a rounded glass jar with a cork lid, probable red-veined _Fittonia albivenis_ and white-speckled _Hypoestes phyllostachya_ (both cultivar unknown), tentative _Pilea_ cf. _depressa_ trailing growth, and unidentified fern-like foliage and moss. [Houseplant-05](./plants/houseplants/terrarium.md) is the aggregate Houseplants profile; these remain qualified visual identifications. The collection retains 45 botanical profile groups and now has three whole-planter overviews. The jar record is: Glass jar with cork lid; seller-listed 6.3 × 3.9 in (16 × 10 cm); dimension orientation unverified. See the [terrarium arrival record](./terrarium.md) for the photographs, owner-reported shipping damage, and remaining setup questions.
 
 ## October 6 Arctic Ice acquisition
 

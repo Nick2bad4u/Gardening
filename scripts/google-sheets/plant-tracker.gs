@@ -13,11 +13,11 @@
    refreshGardenWorkbook, refreshGardenAnalytics, recalculateGardenWorkbook, refreshGardenWorkbookPages01To10,
    refreshGardenWorkbookPages11To20, refreshGardenWorkbookPages21To30,
    refreshGardenWorkbookPages31To32, refreshGardenWorkbookPages33To34,
-   refreshGardenWorkbookPages35To36,
+   refreshGardenWorkbookPages35To36, refreshGardenWorkbookPage37, refreshGardenWorkbookPage38, refreshGardenWorkbookPage39, refreshGardenWorkbookPage40,
    dryDownModelFormula_, installDailyCareDashboard, GARDEN_CYCLE_COMPARISON, GARDEN_ENVIRONMENT_READINGS, GARDEN_RECORDED_LOCATIONS */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.37.1",
+    version: "5.38.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -241,6 +241,18 @@ const WEB_PLANT_IMAGE_URLS = Object.freeze({
             "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-09-20-p34-tradescantia-spathacea-tricolor-acquisition.jpg",
         nurseryLabelImageUrl:
             "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-09-20-p34-tradescantia-spathacea-tricolor-acquisition.jpg",
+    }),
+    P39: Object.freeze({
+        currentImageUrl:
+            "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-10-21-p39-fittonia-detail.jpg",
+        nurseryLabelImageUrl:
+            "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-10-21-p39-p40-leafjoy-labels.jpg",
+    }),
+    P40: Object.freeze({
+        currentImageUrl:
+            "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-10-21-p40-peperomia-overview.jpg",
+        nurseryLabelImageUrl:
+            "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-10-21-p39-p40-leafjoy-labels.jpg",
     }),
 });
 
@@ -556,6 +568,8 @@ const APP_SHEET_BULK_PLANTS = Object.freeze([
     "P36",
     "P37",
     "P38",
+    "P39",
+    "P40",
 ]);
 // Owner reassigned the two purchased houseplants to P31/P32. Old P33/P34
 // requests stay retired; freshness guards prevent canceled-order draft reuse.
@@ -671,9 +685,15 @@ const APP_SHEET_BULK_V534_HEADERS = Object.freeze([
     "P38 weight (g)",
 ]);
 
-const APP_SHEET_BULK_HEADERS = Object.freeze([
+const APP_SHEET_BULK_V536_HEADERS = Object.freeze([
     ...APP_SHEET_BULK_V534_HEADERS,
     ...APP_SHEET_BULK_CARE_HEADERS,
+]);
+
+const APP_SHEET_BULK_HEADERS = Object.freeze([
+    ...APP_SHEET_BULK_V536_HEADERS,
+    "P39 weight (g)",
+    "P40 weight (g)",
 ]);
 
 const APP_SHEET_BULK_ACTION_INDEX = 3;
@@ -972,6 +992,10 @@ function onOpen() {
         .addItem("Verify logger", "installGardenLogger")
         .addItem("Verify AppSheet intake", "installAppSheetIntake")
         .addItem("Refresh workbook views", "refreshGardenWorkbook")
+        .addItem("Refresh P37 page", "refreshGardenWorkbookPage37")
+        .addItem("Refresh P38 page", "refreshGardenWorkbookPage38")
+        .addItem("Refresh P39 page", "refreshGardenWorkbookPage39")
+        .addItem("Refresh P40 page", "refreshGardenWorkbookPage40")
         .addItem("Recalculate workbook", "recalculateGardenWorkbook")
         .addSeparator()
         .addItem("Open Quick log", "openQuickLog")
@@ -1703,10 +1727,11 @@ function processQueuedAppSheetBulkEntries_(spreadsheet) {
     if (!bulkSheet) {
         return appSheetBulkQueueSummary_(false, 0, [], 0, startedAt);
     }
-    // Live 54/56/58/60-column AppSheet apps remain usable until an explicit upgrade.
+    // Earlier AppSheet schemas, including 74 columns, remain usable until an explicit upgrade.
     migrateLegacyAppSheetBulkSheet_(bulkSheet, false);
     const bulkHeaders = [
         APP_SHEET_BULK_HEADERS,
+        APP_SHEET_BULK_V536_HEADERS,
         APP_SHEET_BULK_V534_HEADERS,
         APP_SHEET_BULK_V531_HEADERS,
         APP_SHEET_BULK_V529_HEADERS,
@@ -2320,6 +2345,7 @@ function migrateLegacyAppSheetBulkSheet_(sheet, shouldUpgradeInventory = true) {
 
     if (hasHeaders(APP_SHEET_BULK_HEADERS)) return false;
     const priorSchema = [
+        { headers: APP_SHEET_BULK_V536_HEADERS, lastColumn: "BV" },
         { headers: APP_SHEET_BULK_V534_HEADERS, lastColumn: "BJ" },
         { headers: APP_SHEET_BULK_V531_HEADERS, lastColumn: "BI" },
         { headers: APP_SHEET_BULK_V529_HEADERS, lastColumn: "BH" },
@@ -3676,6 +3702,26 @@ function refreshGardenWorkbookPages35To36() {
     return refreshGardenWorkbookPageRange_(32, 34);
 }
 
+/** Refreshes P37 without rebuilding the shared workbook views. */
+function refreshGardenWorkbookPage37() {
+    return refreshGardenWorkbookPageRange_(34, 35);
+}
+
+/** Refreshes P38 without rebuilding the shared workbook views. */
+function refreshGardenWorkbookPage38() {
+    return refreshGardenWorkbookPageRange_(35, 36);
+}
+
+/** Refreshes P39 without rebuilding the shared workbook views. */
+function refreshGardenWorkbookPage39() {
+    return refreshGardenWorkbookPageRange_(36, 37);
+}
+
+/** Refreshes P40 without rebuilding the shared workbook views. */
+function refreshGardenWorkbookPage40() {
+    return refreshGardenWorkbookPageRange_(37, 38);
+}
+
 /** Retains the retired entry point for stale callers. */
 function refreshGardenWorkbookPages33To34() {
     throw new Error(
@@ -3852,8 +3898,8 @@ function dryDownOutputRow_(id, records) {
         output.late,
         output.basis,
         output.readiness,
-        model.review,
-        model.fit,
+        output.review,
+        output.fit,
         watering.date,
         watering.guidance,
         ...model.recent,
@@ -3891,6 +3937,23 @@ function dryDownPolicyOutput_(plantId, model) {
                     : model.basis,
             readiness: "Manual leaf-cycle readiness; weigh when useful",
             inspection: "Leaf-cycle check only",
+        };
+    }
+    if (["P39", "P40"].includes(plantId)) {
+        return {
+            ...model,
+            dry: "",
+            wet: "",
+            loss: "",
+            date: "",
+            early: "",
+            late: "",
+            fit: "",
+            basis: "Manual houseplant care",
+            readiness: "Manual houseplant readiness; weigh when useful",
+            review: "Manual substrate and plant-condition check",
+            inspection:
+                "Manual houseplant care; no weight-based watering trigger",
         };
     }
     if (["P31", "P32"].includes(plantId)) {
@@ -3936,6 +3999,8 @@ function wateringRecommendation_(plantId, model) {
         P38: "Closed-jar terrarium; inspect enclosure, substrate and plants. Record humidity and weight as observations; do not use a cactus dry reference, plateau, or full-dry cycle as permission to water.",
         P21: "Inspect upper 2 in of mix; water when dry there. Do not wait for the whole root ball to become bone dry.",
         P31: "Allow the mix to partially dry before watering and draining. Do not wait for the whole root ball to become bone dry or use a cactus dry reference or plateau as permission to water.",
+        P39: "Keep lightly moist with good drainage; check the upper mix and root zone as the surface begins to dry. Avoid saturation and whole-pot drought; do not use a cactus dry-weight plateau.",
+        P40: "Allow partial drying; check below the surface and confirm drainage. Avoid persistently wet roots and prolonged whole-pot drought; do not use a cactus dry-weight plateau.",
         P32: "Allow the upper 1–2 in of mix to dry before watering and draining. Do not wait for the whole root ball to become bone dry or use a cactus dry reference or plateau as permission to water.",
         P28: "Inspect inner-leaf firmness and leaf replacement. A dry pot or wrinkled old leaves alone do not mean water.",
         P35: "Inspect each Lithops pair and its leaf-replacement stage. Do not water during leaf replacement; dry pot weight, a plateau, or wrinkled old leaves alone do not establish readiness for the shared pot.",
@@ -6084,7 +6149,7 @@ function refreshWorkbookCalculations_(spreadsheet, plants) {
 /** @param {number} rowNumber @param {GardenWorkbookViewPlant} plant @returns {string[]} */
 function baselineViewRow_(rowNumber, plant) {
     const row = rowNumber;
-    return [
+    const values = [
         plant.id,
         plant.name,
         latestMeasuredWeightFormula_(row, 1),
@@ -6094,7 +6159,9 @@ function baselineViewRow_(rowNumber, plant) {
         `=XLOOKUP($A${row},'Plant tracker'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Plant tracker'!$O$2:$O$${APP_SHEET_BULK_PLANTS.length + 1},"")`,
         plant.id === "P38"
             ? '="Closed-jar terrarium; inspect enclosure, substrate and plants"'
-            : `=IFS(V${row}<1,"Collecting weights",Y${row}="","Need a wet weight",W${row}="","Need a completed dry cycle",Z${row}="","Recheck weights",TRUE,"Calibrated")`,
+            : ["P39", "P40"].includes(plant.id)
+              ? '="Manual houseplant care; inspect mix and drainage"'
+              : `=IFS(V${row}<1,"Collecting weights",Y${row}="","Need a wet weight",W${row}="","Need a completed dry cycle",Z${row}="","Recheck weights",TRUE,"Calibrated")`,
         `=${dryDownLookupFormula_(row, "L")}`,
         `=LET(review,XLOOKUP($A${row},'Plant tracker'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Plant tracker'!$AD$2:$AD$${APP_SHEET_BULK_PLANTS.length + 1},""),IF(review<>"",review,${dryDownLookupFormula_(row, "M")}))`,
         remeasureStatusFormula_(row),
@@ -6124,6 +6191,13 @@ function baselineViewRow_(rowNumber, plant) {
         `=${dryDownLookupFormula_(row, "O")}`,
         `=${dryDownLookupFormula_(row, "P")}`,
     ];
+    if (["P39", "P40"].includes(plant.id)) {
+        for (const index of [22, 24, 25, 30, 31, 34]) values[index] = '=""';
+        values[9] = '="Manual substrate and plant-condition check"';
+        values[11] = '="Manual houseplant care; inspect mix and drainage"';
+        values[32] = '="Manual houseplant care"';
+    }
+    return values;
 }
 
 /**
@@ -6559,7 +6633,7 @@ function dailyCareWeekFormula_(detailRow, column, bounds) {
         `=IF($B${detailRow}="","",IFERROR(LET(plant,$B${detailRow},day,${column}$6,today,$B$6,weight,$D${detailRow},weighed,$E${detailRow},`,
         `watered,${baseline("O")},dry,${model("C")},wet,${model("D")},early,${model("I")},planned,${model("O")},review,${model("M")},points,${model("E")},`,
         `lastDay,IF(AND(ISNUMBER(weighed),weighed>0),INT(ROUND(weighed-${offset},8)),today-2),waterDay,IF(AND(ISNUMBER(watered),watered>0),INT(ROUND(watered-${offset},8)),0),`,
-        'special,OR(plant="P21",plant="P28",plant="P31",plant="P32",plant="P35",plant="P36"),hasForecast,AND(ISNUMBER(early),early>0),',
+        'special,OR(plant="P21",plant="P28",plant="P31",plant="P32",plant="P35",plant="P36",plant="P39",plant="P40"),hasForecast,AND(ISNUMBER(early),early>0),',
         'reviewNeeded,AND(review<>"",review<>"OK",review<>"No trend",review<>"No current-cycle alert",review<>"Owner-confirmed normal"),',
         "nearMass,AND(ISNUMBER(weight),weight>0,weighed>=watered,ISNUMBER(dry),dry>0,ISNUMBER(wet),wet>dry,weight<=dry+MAX(2,0.05*(wet-dry))),",
         `nearDay,AND(hasForecast,day>=INT(early-${offset})),waterCheck,AND(NOT(special),NOT(reviewNeeded),OR(nearDay,nearMass,AND(ISNUMBER(planned),planned>0,day>=planned))),`,
@@ -7251,15 +7325,15 @@ function refreshDashboardView_(spreadsheet, plants) {
         ],
         [
             "Forecast ready",
-            `=COUNT(Baselines!$AF$2:$AF$${APP_SHEET_BULK_PLANTS.length + 1})&" / "&COUNTA(Baselines!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1})`,
+            `=COUNT(Baselines!$AF$2:$AF$${APP_SHEET_BULK_PLANTS.length + 1})&" / "&COUNTIFS(Baselines!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},"<>",Baselines!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},"<>P39",Baselines!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},"<>P40")`,
         ],
         [
             "Current curve supported",
-            `=COUNTIF(Baselines!$I$2:$I$${APP_SHEET_BULK_PLANTS.length + 1},"Current cycle supported")&" / "&COUNTA(Baselines!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1})`,
+            `=COUNTIF(Baselines!$I$2:$I$${APP_SHEET_BULK_PLANTS.length + 1},"Current cycle supported")&" / "&COUNTIFS(Baselines!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},"<>",Baselines!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},"<>P39",Baselines!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},"<>P40")`,
         ],
         [
             "Calibrated",
-            `=COUNTIF(Baselines!$H$2:$H$${APP_SHEET_BULK_PLANTS.length + 1},"Calibrated")&" / "&COUNTA(Baselines!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1})`,
+            `=COUNTIF(Baselines!$H$2:$H$${APP_SHEET_BULK_PLANTS.length + 1},"Calibrated")&" / "&COUNTIFS(Baselines!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},"<>",Baselines!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},"<>P39",Baselines!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},"<>P40")`,
         ],
     ];
     const integrity = spreadsheet.getSheetByName("Integrity");
@@ -11922,7 +11996,8 @@ function webWeightReadModelsFromRows_(
                 records,
                 potSetup,
                 nowMs,
-                plantId !== "P38" && historySetups.get(plantId) === potSetup
+                !["P38", "P39", "P40"].includes(plantId) &&
+                    historySetups.get(plantId) === potSetup
                     ? dryByPlant.get(plantId) || null
                     : null
             )

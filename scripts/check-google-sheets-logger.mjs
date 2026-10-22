@@ -83,10 +83,18 @@ assert.ok(
     isImageUrls(webPlantImageUrls),
     "Logger image URLs must have the expected record shape."
 );
-assert.equal(Object.keys(webPlantImageUrls).length, 32);
+assert.equal(Object.keys(webPlantImageUrls).length, 34);
 assert.ok(
     Object.entries(webPlantImageUrls)
-        .filter(([id]) => id !== "P31" && id !== "P32")
+        .filter(
+            ([id]) =>
+                ![
+                    "P31",
+                    "P32",
+                    "P39",
+                    "P40",
+                ].includes(id)
+        )
         .every(([, { currentImageUrl }]) =>
             /^https:\/\/thumb\.gyazo\.com\/thumb\/960\/[\da-f]{32}\.(?:jpg|png)$/v.test(
                 currentImageUrl
@@ -124,6 +132,33 @@ for (const [
         )
     );
 }
+for (const [id, filename] of /** @type {const} */ ([
+    ["P39", "2026-10-21-p39-fittonia-detail.jpg"],
+    ["P40", "2026-10-21-p40-peperomia-overview.jpg"],
+])) {
+    /** @type {{ currentImageUrl: string; nurseryLabelImageUrl?: string }} */
+    const photo = required(
+        webPlantImageUrls[required(id, "houseplant ID")],
+        "houseplant evidence photo"
+    );
+    assert.equal(
+        photo.currentImageUrl,
+        `https://nick2bad4u.github.io/Gardening/assets/nursery-labels/${filename}`
+    );
+    assert.equal(
+        photo.nurseryLabelImageUrl,
+        "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-10-21-p39-p40-leafjoy-labels.jpg"
+    );
+    acquisitionImageFiles.push(
+        new URL(`../assets/nursery-labels/${filename}`, import.meta.url)
+    );
+}
+acquisitionImageFiles.push(
+    new URL(
+        "../assets/nursery-labels/2026-10-21-p39-p40-leafjoy-labels.jpg",
+        import.meta.url
+    )
+);
 const acquisitionImageStats = await Promise.all(
     acquisitionImageFiles.map((url) => stat(url))
 );
@@ -624,8 +659,8 @@ const inspectProvenance = strings(
 assert.equal(inspectProvenance[2], "Observed");
 assert.equal(inspectProvenance[8], "Observed");
 const appSheetBulkHeaders = strings(evaluateLogger("APP_SHEET_BULK_HEADERS"));
-assert.equal(appSheetBulkHeaders.length, 74);
-assert.deepEqual(appSheetBulkHeaders.slice(62), [
+assert.equal(appSheetBulkHeaders.length, 76);
+assert.deepEqual(appSheetBulkHeaders.slice(62, 74), [
     ...careHeaders.slice(0, 5),
     ...careHeaders.slice(8, 15),
 ]);
@@ -644,6 +679,10 @@ assert.deepEqual(
         (_, index) => `P${String(index + 1).padStart(2, "0")} weight (g)`
     )
 );
+assert.deepEqual(appSheetBulkHeaders.slice(74), [
+    "P39 weight (g)",
+    "P40 weight (g)",
+]);
 assert.equal(appSheetBulkHeaders[36], "Notes");
 assert.equal(appSheetBulkHeaders[39], "Status");
 assert.equal(appSheetBulkHeaders[44], "Rotation (°)");
@@ -811,7 +850,7 @@ assert.match(html, /state\.saveStartedAt = Date\.now\(\);/v);
 assert.match(html, /function browserIsOnline\(\)/v);
 assert.match(html, /const BOOTSTRAP_TIMEOUT_MS = 20000;/v);
 assert.match(html, /const BOOTSTRAP_AUTO_RETRIES = 1;/v);
-assert.match(html, /const BOOTSTRAP_CACHE_KEY = "gardenLoggerBootstrapV4";/v);
+assert.match(html, /const BOOTSTRAP_CACHE_KEY = "gardenLoggerBootstrapV5";/v);
 assert.match(
     html,
     /const BOOTSTRAP_CACHE_MAX_AGE_MS = 6 \* 60 \* 60 \* 1000;/v
@@ -1205,6 +1244,10 @@ assert.match(source, /function refreshGardenWorkbook\(\)/v);
 assert.match(source, /function refreshGardenWorkbookPages01To10\(\)/v);
 assert.match(source, /function refreshGardenWorkbookPages11To20\(\)/v);
 assert.match(source, /function refreshGardenWorkbookPages21To30\(\)/v);
+assert.match(source, /function refreshGardenWorkbookPage37\(\)/v);
+assert.match(source, /function refreshGardenWorkbookPage38\(\)/v);
+assert.match(source, /function refreshGardenWorkbookPage39\(\)/v);
+assert.match(source, /function refreshGardenWorkbookPage40\(\)/v);
 assert.match(source, /function inferredWeightStatesByRow_\(historyRows\)/v);
 assert.match(
     source,
@@ -1223,11 +1266,11 @@ const forecastFormulaRow = strings(
 );
 assert.match(
     required(forecastFormulaRow[20], "forecast formula"),
-    /'Dry-down models'!\$E\$2:\$E\$37/v
+    /'Dry-down models'!\$E\$2:\$E\$39/v
 );
 assert.match(
     required(forecastFormulaRow[30], "forecast formula"),
-    /'Dry-down models'!\$G\$2:\$G\$37/v
+    /'Dry-down models'!\$G\$2:\$G\$39/v
 );
 assert.doesNotMatch(
     required(forecastFormulaRow[30], "forecast formula"),

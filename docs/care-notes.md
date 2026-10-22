@@ -1,6 +1,6 @@
 # Practical care notes
 
-Last updated: 2026-10-10
+Last updated: 2026-10-21
 
 Start with the [watering quick guide](./watering-quick-guide.md) for each group's
 drying target. This page brings together the collection's routine checks,
@@ -25,6 +25,23 @@ requires the growing space below **86°F (30°C)**. The older outdoor weather
 triggers below do not replace that equipment limit.
 
 The owner reports current conditions around **45–50% RH** and temperatures **in the 70s °F**, with three sensing points described in the [setup record](./setup.md). Two under-table Honeywell fans are set to low; A22 control is limited to fan cycles. Use those readings alongside each pot's drying pattern.
+
+## October 21 nursery houseplants
+
+**P39 / #13 [Nightly nerve plant](./plants/houseplants/fittonia-albivenis-nightly.md)**
+needs lightly moist, aerated medium without whole-pot drought. **P40 / #14
+[Spice is Nice peperomia](./plants/houseplants/peperomia-obtusifolia-spice-is-nice.md)**
+needs partial drying and a check below the surface before watering. Both need
+working drainage and direct moisture checks; neither inherits the cactus
+plateau or a weight-only watering decision. Their profiles cite Proven Winners
+and extension guidance.
+
+The photographs supplied October 21 show droplets and some drooping Fittonia
+foliage, but do not establish a completed watering or the cause of wilting.
+Check the actual root zone before adding water. Pot dimensions, medium,
+placement, nursery feeding history, and earlier care remain unrecorded. Inspect
+for pests before placing them among established plants; no automatic feeding
+alternation or immediate repot is assigned.
 
 ## Terrarium — arrival condition and observation needs
 

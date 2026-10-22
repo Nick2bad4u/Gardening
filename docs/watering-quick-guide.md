@@ -2,21 +2,22 @@
 
 When to water, when to wait, and why: a short reference for this collection, grouped by similar needs.
 
-Reviewed September 23, 2026; terrarium guidance and collection index updated October 10. These are starting strategies for established plants, not a calendar. Fresh repots and unhealthy roots need an individual check. The [detailed strategy](./watering-strategy.md) explains scale and report rules; the [plant index below](#find-every-plant-in-its-group) shows every pot's group.
+Reviewed September 23, 2026; new houseplants and collection index updated October 21. These are starting strategies for established plants, not a calendar. Fresh repots and unhealthy roots need an individual check. The [detailed strategy](./watering-strategy.md) explains scale and report rules; the [plant index below](#find-every-plant-in-its-group) shows every pot's group.
 
 ## Choose the right drying target
 
-| Group                                                      | Water when                                                                | Wait when                                                                         |
-| ---------------------------------------------------------- | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| [Peperomia Bicolor](#houseplants-partial-drying)           | The mix has partially dried; check below the surface.                     | The root ball is still wet.                                                       |
-| [Oyster plant](#houseplants-partial-drying)                | The upper 1–2 inches are dry, with no soggy root zone below.              | Only the surface has dried.                                                       |
-| [Money tree](#houseplants-partial-drying)                  | The upper roughly 2 inches are dry; check the retained nursery root ball. | The interior remains wet, even if the outside mix is dry.                         |
-| [Cacti and Dragon's Egg](#cacti-dry-through)               | The mix has dried through and the plant is ready during active growth.    | The roots remain damp, or growth has slowed markedly.                             |
-| [Ordinary succulents](#ordinary-succulents-dry-then-water) | The root zone has dried and the plant's condition supports watering.      | Damp mix accompanies soft or declining leaves.                                    |
-| [Kiwi aeonium](#kiwi-aeonium-follow-growth-and-rest)       | The mix has dried substantially during active growth.                     | Growth is resting or the root zone is still moist.                                |
-| [Lithops](#lithops-check-each-head)                        | Dry roots, leaf stage, and actual hydration need agree.                   | Old leaves are being absorbed, with no separate evidence of a hydration problem.  |
-| [Both split rocks](#split-rocks-inspect-the-leaf-stage)    | Dry roots and the condition of the current leaves support a drink.        | Shrinking outer leaves are the only apparent thirst sign.                         |
-| [Terrarium](#terrarium-inspect-the-enclosed-medium)        | The enclosed medium needs moisture after direct inspection.               | The medium is moist, water is standing, or only shipping wilt/RH suggests thirst. |
+| Group                                                       | Water when                                                                    | Wait when                                                                         |
+| ----------------------------------------------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| [Both peperomias](#houseplants-partial-drying)              | The mix has partially dried; check below the surface.                         | The root ball is still wet.                                                       |
+| [Oyster plant](#houseplants-partial-drying)                 | The upper 1–2 inches are dry, with no soggy root zone below.                  | Only the surface has dried.                                                       |
+| [Money tree](#houseplants-partial-drying)                   | The upper roughly 2 inches are dry; check the retained nursery root ball.     | The interior remains wet, even if the outside mix is dry.                         |
+| [Cacti and Dragon's Egg](#cacti-dry-through)                | The mix has dried through and the plant is ready during active growth.        | The roots remain damp, or growth has slowed markedly.                             |
+| [Ordinary succulents](#ordinary-succulents-dry-then-water)  | The root zone has dried and the plant's condition supports watering.          | Damp mix accompanies soft or declining leaves.                                    |
+| [Kiwi aeonium](#kiwi-aeonium-follow-growth-and-rest)        | The mix has dried substantially during active growth.                         | Growth is resting or the root zone is still moist.                                |
+| [Lithops](#lithops-check-each-head)                         | Dry roots, leaf stage, and actual hydration need agree.                       | Old leaves are being absorbed, with no separate evidence of a hydration problem.  |
+| [Both split rocks](#split-rocks-inspect-the-leaf-stage)     | Dry roots and the condition of the current leaves support a drink.            | Shrinking outer leaves are the only apparent thirst sign.                         |
+| [Nightly nerve plant](#nerve-plant-maintain-light-moisture) | The upper mix is beginning to dry and root-zone inspection supports watering. | The root zone is wet; wilting alone is not a watering signal.                     |
+| [Terrarium](#terrarium-inspect-the-enclosed-medium)         | The enclosed medium needs moisture after direct inspection.                   | The medium is moist, water is standing, or only shipping wilt/RH suggests thirst. |
 
 **Dry surface is not dry roots.** Check below top dressing without damaging roots. A light pot or plateau supports inspection, but does not measure moisture. Drooping or softness can mean thirst or root trouble.
 
@@ -29,6 +30,20 @@ Reviewed September 23, 2026; terrarium guidance and collection index updated Oct
 **Money tree — P21 / #3:** the nursery tag suggests the upper **2 inches** drying. Check the retained nursery core too; do not wait for prolonged whole-root-ball drought. Working identity: _Pachira_ cf. _glabra_, genus confirmed by tag. [Profile and tag evidence](./plants/houseplants/pachira-glabra.md)
 
 **Why:** these foliage plants need root aeration without prolonged drought. In the planned north-door setup, new lights may change drying speed; check instead of assigning an interval. After an up-pot, compare the nursery core with the new outer mix. Do not wait for a cactus plateau.
+
+**Spice is Nice peperomia — P40 / #14:** partial drying and a check below the
+surface, with working drainage. Nursery-pot depth is unrecorded; do not apply a
+fixed inspection depth or prolonged whole-pot drought. Its [profile](./plants/houseplants/peperomia-obtusifolia-spice-is-nice.md)
+keeps label evidence separate from P31.
+
+## Nerve plant: maintain light moisture
+
+**Nightly nerve plant — P39 / #13:** keep the medium lightly moist and aerated.
+Check as the upper mix begins to dry; do not wait for whole-pot drought or a
+cactus plateau. Confirm drainage and actual root-zone moisture before watering,
+especially when the leaves droop. The [profile](./plants/houseplants/fittonia-albivenis-nightly.md)
+cites Proven Winners and extension guidance. This separate nursery pot does not
+inherit the enclosed terrarium's watering routine.
 
 ## Terrarium: inspect the enclosed medium
 
@@ -86,7 +101,7 @@ Keep both split rocks and the Lithops outside automatic cactus feeding alternati
 
 ## Find every plant in its group
 
-This index covers **43 botanical profile groups across 36 tracked containers**, plus three whole-planter overview pages, as of October 10. P38 is represented by its Houseplants overview with provisional identities rather than separate botanical member records. A shared container is listed once with all its members. The removed silken pincushion and canceled orders are in their historical records.
+This index covers **45 botanical profile groups across 38 tracked containers**, plus three whole-planter overview pages, as of October 10. P38 is represented by its Houseplants overview with provisional identities rather than separate botanical member records. A shared container is listed once with all its members. The removed silken pincushion and canceled orders are in their historical records.
 
 ### Cacti and Dragon's Egg
 
@@ -138,3 +153,5 @@ This index covers **43 botanical profile groups across 36 tracked containers**, 
 | P35 / #9    | [Lithops shared planter](./plants/succulents/lithops-shared-planter.md): [probable _L. lesliei_](./plants/succulents/lithops-lesliei.md) and [probable _L. salicola_](./plants/succulents/lithops-salicola.md) — one shared watering decision |
 | P36 / #10   | [Split rock, not Royal Flush](./plants/succulents/pleiospilos-nelii.md) — split rock                                                                                                                                                          |
 | P38 / #12   | [Terrarium](./plants/houseplants/terrarium.md) — enclosed houseplant planting; inspect moisture, avoid fixed watering schedules                                                                                                               |
+| P39 / #13   | [Nightly nerve plant](./plants/houseplants/fittonia-albivenis-nightly.md) — lightly moist, aerated medium; no whole-pot drought                                                                                                               |
+| P40 / #14   | [Spice is Nice peperomia](./plants/houseplants/peperomia-obtusifolia-spice-is-nice.md) — partial drying; check below the surface                                                                                                              |
