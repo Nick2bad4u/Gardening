@@ -10,6 +10,8 @@ import {
     websiteCanvas,
 } from "./website-frame.js";
 
+const imageSelector = "#watering-map-image";
+const listName = "Watering details by pot";
 const svgLabel = "Download SVG";
 const pngLabel = "Download PNG";
 const sourceSelector = "#watering-map-source";
@@ -41,6 +43,77 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+export const DatedSnapshotWhileLoading: Story = {
+    args: { scenario: "dated-loading" },
+    play: async ({ canvasElement }) => {
+        const { canvas, document, userEvent } =
+            await websiteCanvas(canvasElement);
+        await expect(document.querySelector(sourceSelector)).toHaveTextContent(
+            "Published snapshot · refreshing live observations."
+        );
+        await expect(document.querySelector(sourceSelector)).toHaveAttribute(
+            "data-source",
+            "published"
+        );
+        await expect(document.querySelector(imageSelector)).toBeVisible();
+        await expect(
+            canvas.getByRole("button", { name: "Refreshing…" })
+        ).toBeDisabled();
+        await expect(
+            canvas.getByRole("button", { name: pngLabel })
+        ).toBeEnabled();
+        await expect(
+            canvas.getByRole("button", { name: svgLabel })
+        ).toBeEnabled();
+        await userEvent.click(canvas.getByText(detailsLabel));
+        await expect(
+            canvas.getByRole("list", { name: listName })
+        ).toHaveTextContent("Days since watering: 3");
+    },
+};
+
+export const DatedSnapshotOffline: Story = {
+    args: { scenario: "dated-error" },
+    play: async ({ canvasElement }) => {
+        const { canvas, document, userEvent } =
+            await websiteCanvas(canvasElement);
+        await waitFor(() =>
+            expect(document.querySelector(sourceSelector)).toHaveTextContent(
+                "Live refresh failed · showing published snapshot."
+            )
+        );
+        await expect(document.querySelector(sourceSelector)).toHaveTextContent(
+            "Counts fixed at its source-read date."
+        );
+        await expect(document.querySelector(sourceSelector)).toHaveAttribute(
+            "data-source",
+            "published"
+        );
+        await expect(document.querySelector(imageSelector)).toHaveAttribute(
+            "alt",
+            expect.stringContaining("2026-09-05")
+        );
+        await userEvent.click(canvas.getByText(detailsLabel));
+        await expect(
+            canvas.getByRole("list", { name: listName })
+        ).toHaveTextContent("Days since watering: 3");
+        await userEvent.click(canvas.getByRole("button", { name: svgLabel }));
+        await waitFor(() =>
+            expect(
+                document.querySelector("#watering-map-export-status")
+            ).toHaveTextContent("SVG download prepared.")
+        );
+        await userEvent.click(canvas.getByRole("button", { name: pngLabel }));
+        await waitFor(
+            () =>
+                expect(
+                    document.querySelector("#watering-map-export-status")
+                ).toHaveTextContent("PNG download prepared."),
+            { timeout: 10_000 }
+        );
+    },
+};
+
 export const TrackerUnavailable: Story = {
     args: { scenario: "tracker-unavailable" },
     play: async ({ canvasElement }) => {
@@ -53,9 +126,7 @@ export const TrackerUnavailable: Story = {
         await expect(document.documentElement).not.toHaveAttribute(
             "data-tracker-requested"
         );
-        await expect(
-            document.querySelector("#watering-map-image")
-        ).toBeVisible();
+        await expect(document.querySelector(imageSelector)).toBeVisible();
         await expect(
             canvas.getByRole("button", { name: pngLabel })
         ).toBeEnabled();
@@ -77,12 +148,10 @@ export const LoadedAndExportable: Story = {
         await expect(document.querySelector(sourceSelector)).toHaveTextContent(
             "Source read"
         );
-        await expect(
-            document.querySelector("#watering-map-image")
-        ).toBeVisible();
+        await expect(document.querySelector(imageSelector)).toBeVisible();
         await userEvent.click(canvas.getByText(detailsLabel));
         const list = canvas.getByRole("list", {
-            name: "Watering details by pot",
+            name: listName,
         });
         await expect(list).toHaveTextContent("Last Water: 2026-09-02");
         await expect(list).toHaveTextContent("Days since watering: Unknown");
@@ -158,7 +227,7 @@ export const MobileDark: Story = {
         await expectNoOverflow(document);
         await userEvent.click(canvas.getByText(detailsLabel));
         await expect(
-            canvas.getByRole("list", { name: "Watering details by pot" })
+            canvas.getByRole("list", { name: listName })
         ).toBeVisible();
         await expectNoOverflow(document);
         await userEvent.click(viewport);
@@ -187,7 +256,7 @@ export const Loading: Story = {
 };
 
 export const Unavailable: Story = {
-    args: { scenario: "error" },
+    args: { scenario: "invalid-snapshot" },
     play: async ({ canvasElement }) => {
         const { canvas, document } = await websiteCanvas(canvasElement);
         await waitFor(() =>
@@ -204,9 +273,7 @@ export const Unavailable: Story = {
         await expect(
             canvas.getByRole("button", { name: svgLabel })
         ).toBeDisabled();
-        await expect(
-            document.querySelector("#watering-map-image")
-        ).not.toBeVisible();
+        await expect(document.querySelector(imageSelector)).not.toBeVisible();
     },
 };
 
@@ -228,9 +295,7 @@ export const RetryAfterFailure: Story = {
                 loadedMessage
             )
         );
-        await expect(
-            document.querySelector("#watering-map-image")
-        ).toBeVisible();
+        await expect(document.querySelector(imageSelector)).toBeVisible();
         await expect(
             canvas.getByRole("button", { name: svgLabel })
         ).toBeEnabled();
@@ -248,8 +313,12 @@ export const NoWateringHistory: Story = {
             )
         );
         await userEvent.click(canvas.getByText(detailsLabel));
+        await expect(document.querySelector(sourceSelector)).toHaveAttribute(
+            "data-source",
+            "live"
+        );
         const list = canvas.getByRole("list", {
-            name: "Watering details by pot",
+            name: listName,
         });
         await expect(list).toHaveTextContent("Days since watering: Unknown");
         await expect(list).not.toHaveTextContent("Last Water: 2026-");

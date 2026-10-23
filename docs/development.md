@@ -160,6 +160,24 @@ pot names and labels, so a slow Plant tracker export cannot block the image. It 
 also display History from a newer validated tracker/history snapshot, preserving
 that snapshot's original read time. Its separate storage key does not replace the
 tracker's paired cache.
+
+The page also embeds `docs/layouts/watering-history-snapshot.json` so a first
+visit can display and download the map when Google's export service is unavailable.
+This small publication fallback contains only the latest active Water and Move
+observations from a reviewed canonical History read, its actual `sourceReadAt`,
+and the inventory IDs covered. It contains no observation IDs, request IDs, or
+notes. Its counts stay fixed to the source-read date, and both the page and
+download identify it as a published snapshot. A newer browser snapshot or a
+successful live response replaces it; an empty successful response also replaces
+it. The published fallback is never relabeled or stored as a fresh network read.
+
+To refresh the fallback, read the complete current canonical History and inventory,
+exclude removed and future observations, retain the latest Water and Move per pot,
+and compare its `buildWateringMap()` result with the full read before replacing the
+JSON. Preserve the actual read-completion instant. Rebuild and publish the site
+after review; a website build alone does not refresh this source. Storybook replaces
+the embedded fallback with synthetic records before serving its fixture pages.
+
 The preview fits the screen by default. **Enlarge image** switches to a closer
 view with contained horizontal scrolling; **Fit image** restores the overview.
 Printing always fits the full diagram, including when the preview is enlarged.

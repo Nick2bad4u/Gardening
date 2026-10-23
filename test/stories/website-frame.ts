@@ -13,22 +13,31 @@ import {
 export interface WebsiteFrameProps {
     path: string;
     scenario:
-        | "empty"
-        | "error"
-        | "loading"
-        | "ready"
-        | "retry"
-        | "tracker-unavailable"
-        | ObservationScenario;
+        | NetworkScenario
+        | ObservationScenario
+        | SnapshotScenario;
     theme: "dark" | "light";
     width: number;
 }
+
+type NetworkScenario =
+    | "empty"
+    | "error"
+    | "loading"
+    | "ready"
+    | "retry"
+    | "tracker-unavailable";
 
 type ObservationScenario =
     | "care-events"
     | "houseplants"
     | "humidity"
     | "light";
+
+type SnapshotScenario =
+    | "dated-error"
+    | "dated-loading"
+    | "invalid-snapshot";
 
 export const websiteArgTypes = {
     path: {
@@ -42,6 +51,9 @@ export const websiteArgTypes = {
         description:
             "Synthetic spreadsheet response. Applies to the plant tracker and history pages.",
         options: [
+            "dated-error",
+            "dated-loading",
+            "invalid-snapshot",
             "care-events",
             "ready",
             "humidity",
@@ -56,7 +68,7 @@ export const websiteArgTypes = {
         table: {
             type: {
                 summary:
-                    "ready | humidity | houseplants | light | care-events | loading | empty | error | retry | tracker-unavailable",
+                    "ready | humidity | houseplants | light | care-events | loading | empty | error | retry | tracker-unavailable | dated-error | dated-loading | invalid-snapshot",
             },
         },
     },

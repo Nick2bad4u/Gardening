@@ -5,6 +5,7 @@ import {
     loadHistorySnapshot,
 } from "../../../docs/layouts/plant-tracker-data.js";
 import { buildWateringMap } from "./watering-map-data.js";
+import { decodeWateringSnapshot } from "./watering-map-snapshot.js";
 import { renderWateringMapSvg } from "./watering-map-svg.js";
 
 /** @typedef {import("./watering-map-data.js").PotPlacement} PotPlacement */
@@ -35,6 +36,12 @@ const placementData = JSON.parse(panel.dataset["placements"] ?? "[]");
 const placements = Array.isArray(placementData)
     ? placementData.filter((value) => isPlacement(value))
     : [];
+const publishedSnapshot = readEmbeddedSnapshot();
+const savedSnapshot = getSavedHistoryData();
+const useSavedSnapshot =
+    savedSnapshot !== null &&
+    (publishedSnapshot === null ||
+        savedSnapshot.readAt > publishedSnapshot.readAt);
 /**
  * @type {{
  *     snapshot: HistorySnapshot | null;
@@ -43,13 +50,15 @@ const placements = Array.isArray(placementData)
  *     previewUrl: string;
  *     sourceState: string;
  *     sourceMessage: string;
+ *     sourceKind: "published" | "saved" | "live";
  * }}
  */
 const state = {
     isExportBusy: false,
     lastAttempt: 0,
     previewUrl: "",
-    snapshot: getSavedHistoryData(),
+    snapshot: useSavedSnapshot ? savedSnapshot : publishedSnapshot,
+    sourceKind: useSavedSnapshot ? "saved" : "published",
     sourceMessage: "Saved preview · refreshing published observations.",
     sourceState: "saved",
 };
@@ -57,8 +66,18 @@ const state = {
 /** @param {HistorySnapshot} next */
 function applySnapshot(next) {
     state.snapshot = next;
+    state.sourceKind = "live";
     state.sourceState = "live";
     state.sourceMessage = "Published observations loaded.";
+}
+
+/** @param {HistorySnapshot} snapshot */
+function createMapModel(snapshot) {
+    const asOf =
+        state.sourceKind === "published"
+            ? new Date(snapshot.readAt)
+            : new Date();
+    return buildWateringMap(placements, snapshot.history, asOf);
 }
 
 /** @param {string} text @param {"strong" | "span"} [tag] */
@@ -85,6 +104,7 @@ function download(blob, filename) {
 /** Recheck the lifetime even when this tab has stayed open overnight. */
 function expireSnapshot() {
     if (
+        state.sourceKind === "published" ||
         !state.snapshot ||
         (Date.now() - state.snapshot.readAt <= maximumAge &&
             state.snapshot.readAt <= Date.now())
@@ -92,10 +112,12 @@ function expireSnapshot() {
         return;
     }
 
-    state.snapshot = null;
-    state.sourceState = "error";
-    state.sourceMessage =
-        "Saved data expired after 24 hours. Refresh data to generate a current image.";
+    state.snapshot = publishedSnapshot;
+    state.sourceKind = "published";
+    state.sourceState = publishedSnapshot ? "saved" : "error";
+    state.sourceMessage = publishedSnapshot
+        ? "Saved data expired · showing published snapshot. Counts fixed at its source-read date."
+        : "Saved data expired after 24 hours. Refresh data to generate a current image.";
 }
 
 /** @param {"png" | "svg"} format */
@@ -108,7 +130,7 @@ async function exportImage(format) {
     setExportBusy(true);
     exportStatus.textContent = `Preparing ${format.toUpperCase()}…`;
     render();
-    const model = buildWateringMap(placements, state.snapshot.history);
+    const model = createMapModel(state.snapshot);
     const svg = new Blob(
         [
             renderWateringMapSvg(model, {
@@ -165,6 +187,11 @@ function isPlacement(value) {
 
 function markRefreshFailed() {
     state.sourceState = "error";
+    if (state.snapshot && state.sourceKind === "published") {
+        state.sourceMessage =
+            "Live refresh failed · showing published snapshot. Counts fixed at its source-read date.";
+        return;
+    }
     state.sourceMessage = state.snapshot
         ? "Refresh failed · showing saved observations. Use Refresh data to retry."
         : "Watering log unavailable; no saved preview is available. Use Refresh data to retry.";
@@ -197,14 +224,26 @@ async function pngFromSvg(svg) {
     }
 }
 
+/**
+ * Decode only the reviewed snapshot embedded in this page; never cache it as a
+ * live read.
+ */
+function readEmbeddedSnapshot() {
+    try {
+        /** @type {unknown} */
+        const value = JSON.parse(panel.dataset["historySnapshot"] ?? "null");
+        return decodeWateringSnapshot(value);
+    } catch {
+        return null;
+    }
+}
+
 async function refresh() {
     if (refreshButton.disabled) return;
     state.lastAttempt = Date.now();
     setRefreshBusy(true);
     state.sourceState = "saved";
-    state.sourceMessage = state.snapshot
-        ? "Saved preview · refreshing published observations."
-        : "Loading published watering observations…";
+    state.sourceMessage = refreshingMessage();
     render();
     try {
         const freshSnapshot = await loadHistorySnapshot();
@@ -223,18 +262,31 @@ function refreshIfDue() {
     if (Date.now() - state.lastAttempt >= refreshInterval) void refresh();
 }
 
+function refreshingMessage() {
+    if (!state.snapshot) return "Loading published watering observations…";
+    if (state.sourceKind === "published") {
+        return "Published snapshot · refreshing live observations. Counts fixed at its source-read date.";
+    }
+    return "Saved preview · refreshing published observations.";
+}
+
 function render() {
     expireSnapshot();
     sourceStatus.dataset["state"] = state.sourceState;
+    sourceStatus.dataset["source"] = state.sourceKind;
+    const sourceNote =
+        state.sourceKind === "published"
+            ? "Newer care may be missing from this dated snapshot."
+            : "Published Sheets data may lag recent saves.";
     sourceStatus.textContent = state.snapshot
-        ? `${state.sourceMessage} Source read ${sourceReadLabel(state.snapshot.readAt)}. Published Sheets data may lag recent saves.`
+        ? `${state.sourceMessage} Source read ${sourceReadLabel(state.snapshot.readAt)}. ${sourceNote}`
         : state.sourceMessage;
     pngButton.disabled = state.snapshot === null || state.isExportBusy;
     svgButton.disabled = state.snapshot === null || state.isExportBusy;
     const previousUrl = state.previewUrl;
     state.previewUrl = "";
     if (state.snapshot) {
-        const model = buildWateringMap(placements, state.snapshot.history);
+        const model = createMapModel(state.snapshot);
         const svg = renderWateringMapSvg(model, {
             readAt: state.snapshot.readAt,
             status: state.sourceMessage,

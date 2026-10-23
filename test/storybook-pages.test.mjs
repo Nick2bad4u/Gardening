@@ -122,6 +122,26 @@ describe("storybook preview preparation", () => {
         expect(html).not.toContain("googletagmanager");
     });
 
+    it("replaces canonical embedded history with synthetic observations before fixture publication", () => {
+        expect.hasAssertions();
+
+        const html = injectFixture(
+            '<html><head></head><body><section id="watering-map" data-history-snapshot="{&quot;observations&quot;:[{&quot;Notes&quot;:&quot;canonical-history-sentinel&quot;}]}"></section><script type="module" src="map.js"></script></body></html>'
+        );
+
+        expect(html).not.toContain("canonical-history-sentinel");
+        expect(html).toContain(
+            "&quot;sourceReadAt&quot;:&quot;2026-09-05T16:00:00Z&quot;"
+        );
+        expect(html).toContain("&quot;Date&quot;:&quot;2026-09-02&quot;");
+        expect(html).toContain(
+            'panel.removeAttribute("data-history-snapshot")'
+        );
+        expect(
+            html.indexOf('panel.removeAttribute("data-history-snapshot")')
+        ).toBeLessThan(html.indexOf("</body>"));
+    });
+
     it("preserves unchanged files so starting another runner does not reload an active story", async () => {
         expect.hasAssertions();
 

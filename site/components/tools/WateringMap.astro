@@ -1,5 +1,6 @@
 ---
 import { getWateringPlacements } from "../../lib/watering-placement.mjs";
+import historySnapshot from "../../../docs/layouts/watering-history-snapshot.json";
 import "../../styles/tools/watering-map.css";
 
 const placements = await getWateringPlacements();
@@ -10,14 +11,17 @@ const placements = await getWateringPlacements();
     id="watering-map"
     aria-labelledby="watering-map-title"
     data-placements={JSON.stringify(placements)}
+    data-history-snapshot={JSON.stringify(historySnapshot)}
 >
     <header>
         <p class="eyebrow">Your watering log, at a glance</p>
         <h2 id="watering-map-title">Days since watering</h2>
         <p>
             Each pot’s place shows the number of calendar days since its last recorded Water event.
-            Counts update from the published log when you open this page and every five minutes
-            while it is visible. These are observations, not a watering schedule.
+            A dated snapshot is available immediately while the live log refreshes. When the live
+            log is unavailable, snapshot counts stay fixed at its source-read date. Live data
+            refreshes every five minutes while this page is visible. These are observations, not a
+            watering schedule.
         </p>
     </header>
     <div class="watering-map-actions" aria-label="Watering map controls">

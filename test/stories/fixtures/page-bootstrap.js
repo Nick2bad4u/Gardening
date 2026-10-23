@@ -247,7 +247,7 @@
                     // The canonical history stays available while the unrelated tracker stalls.
                 });
             }
-            if (scenario === "loading")
+            if (["dated-loading", "loading"].includes(scenario))
                 return new Promise(() => {
                     // Keep the request pending for the loading-state story.
                 });
@@ -255,7 +255,11 @@
             const hasPreviouslyFailed = failedSources.has(sourceId);
             failedSources.add(sourceId);
             if (
-                scenario === "error" ||
+                [
+                    "dated-error",
+                    "error",
+                    "invalid-snapshot",
+                ].includes(scenario) ||
                 (scenario === "retry" && !hasPreviouslyFailed)
             ) {
                 return new Response("Fixture service unavailable", {

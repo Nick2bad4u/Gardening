@@ -8,7 +8,32 @@ const fixtureBase = "/Gardening/storybook/preview";
 
 /** @param {string} html */
 export function injectFixture(html) {
-    return html.replace(
+    const snapshot = JSON.stringify({
+        observations: [
+            {
+                Date: "2026-09-02",
+                Event: "Water",
+                "Plant ID": "P01",
+                "Record status": "Active",
+            },
+        ],
+        plantIds: ["P01", "P02"],
+        source: "canonical-history",
+        sourceReadAt: "2026-09-05T16:00:00Z",
+        version: 1,
+    }).replaceAll('"', "&quot;");
+    // Strip canonical observations from the actual HTML before publishing any fixture.
+    const synthetic = html.replaceAll(
+        /\bdata-history-snapshot="[^"]*"/gv,
+        () => `data-history-snapshot="${snapshot}"`
+    );
+    // Parser-time scripts run before Astro's deferred module clients. Keep missing
+    // and invalid snapshot scenarios independent from the valid default fixture.
+    const configured = synthetic.replace(
+        "</body>",
+        `<script>{const panel=document.querySelector("#watering-map");const scenario=new URLSearchParams(location.search).get("scenario");if(panel&&["loading","error","retry"].includes(scenario))panel.removeAttribute("data-history-snapshot");if(panel&&scenario==="invalid-snapshot")panel.setAttribute("data-history-snapshot","{}");}</script></body>`
+    );
+    return configured.replace(
         /<head\b[^>]*>/iv,
         (head) =>
             `${head}<script src="${fixtureBase}/storybook-fixture.js"></script>`
