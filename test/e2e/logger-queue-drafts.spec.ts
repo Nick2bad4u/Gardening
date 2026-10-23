@@ -103,11 +103,11 @@ const expectRestoredDraft = async (page: Readonly<Page>) => {
 const expectHistoryCapacity = async (page: Readonly<Page>) => {
     const description =
         "History space at last refresh: 500 of 50,000 rows used · 49,500 remaining.";
-    const capacity = page.getByRole("status", {
+    const capacity = page.getByRole("button", {
         exact: true,
         name: description,
     });
-    await expect.soft(capacity).toHaveText("History · 1% used");
+    await expect.soft(capacity).toHaveText("1%");
     await expect.soft(capacity).toHaveAttribute("title", description);
 };
 

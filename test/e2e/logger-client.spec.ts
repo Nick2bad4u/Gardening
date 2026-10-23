@@ -429,11 +429,11 @@ for (const theme of ["dark", "light"] as const) {
                     errors.push(error.message);
                 });
                 await openLogger(page, width, theme);
-                const capacity = page.getByRole("status", {
+                const capacity = page.getByRole("button", {
                     exact: true,
                     name: "History space at last refresh: 500 of 50,000 rows used · 49,500 remaining.",
                 });
-                await expect.soft(capacity).toHaveText("History · 1% used");
+                await expect.soft(capacity).toHaveText("1%");
                 await capacity.screenshot({
                     path: testInfo.outputPath("history-capacity.png"),
                 });
