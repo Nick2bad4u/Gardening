@@ -1,13 +1,12 @@
 # Google Sheets observation logger
 
-Production logger **5.39.1 / immutable version 116** supports **38 container allocations**, using IDs `P01`–`P32` and `P35`–`P40`, and **50,000 History observation slots**. The October 23 rollouts below record the table picker and compact toolbar; October 22 records the verified P39/P40 enrollment, and earlier receipts retain the capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.39.2 / immutable version 117** supports **38 container allocations**, using IDs `P01`–`P32` and `P35`–`P40`, and **50,000 History observation slots**. The October 23 rollouts below record the table picker, compact toolbar, and empty-draft fix; October 22 records the verified P39/P40 enrollment, and earlier receipts retain the capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained source is **5.39.2**; production remains **5.39.1** pending the
-empty-draft fix rollout. Production **AppSheet
+Maintained source and production are **5.39.2**. Production **AppSheet
 1.100135** was verified by an independent saved-definition readback on October 22.
-The table-picker and compact-toolbar releases do not change AppSheet. The rollout
+The table-picker, compact-toolbar, and empty-draft releases do not change AppSheet. The rollout
 receipt below records the production checks separately from rehearsal results.
 
 The mobile logger and AppSheet are the observation input surfaces. The unused
@@ -46,8 +45,47 @@ plant selections and form preferences. Selecting a plant or bulk pots alone no
 longer creates a recoverable draft. Reloading ignores older empty selection-only
 snapshots while preserving real measurements, notes, and deliberate event choices.
 Cleared fields and event choices retained after a successful save do not create a
-new draft by themselves. Pending-save recovery and queued observations keep their
-existing protections. Production verification is pending.
+new draft by themselves. Resuming an action-only draft treats those actions as
+intentional unfinished care, preserving them through subsequent form clicks and
+reloads. Pending-save recovery and queued observations keep their existing
+protections. Ambiguous older action-only records remain recoverable; clearly
+empty older records are ignored without deleting their stored snapshots.
+
+The reviewed source commit
+[`5d7421e`](https://github.com/Nick2bad4u/Gardening/commit/5d7421e597bb818852ff10a0c5a2c4afd73fe523)
+passed logger coverage, SonarCloud/SonarQube, Socket, both secret scans, and
+[Pages/browser checks](https://github.com/Nick2bad4u/Gardening/actions/runs/40017129081)
+before promotion. **1,872 logger tests** passed with **99.58% statement coverage**.
+The local **152-case** logger suite passed in Chromium/MS Edge and the mobile
+project, including selection-only navigation, save/clear/reload, real resumed
+actions, and cross-tab preservation. CI passed **244 Chromium route/tool cases**
+and **59 Storybook browser tests**. Type, source, site, lint, formatting, and secret
+checks passed. Browser save/recovery tests used synthetic local fixtures.
+
+A native Drive backup was created at **20:21:15.742 UTC on October 23, 2026**.
+Native snapshots at **20:23:08 UTC** and **20:26:34 UTC** preserved all **2,022
+observations and unique IDs**, **1,652 request groups**, **38 App entries** rows,
+and the empty App bulk table. Captured values, formulas, notes, validations, and
+sheet properties matched; no observations or derived-cell changes appeared during
+the deployment interval. Integrity reported zero missing/duplicate observation
+IDs, missing retry IDs, calculation-anchor errors, and formula errors.
+
+Immutable **version 117** was created at **20:25:08.257 UTC** and the existing
+deployment updated at **20:25:09.729 UTC**. The immediate post-promotion read
+briefly returned previous source, so the verification guard stopped. Fresh
+read-only audits at **20:25:50 UTC** and **20:26:12 UTC** confirmed the reviewed
+source matched Head and immutable version 117. No write was repeated. The workbook
+binding, deployment URL, access settings, and scopes remained unchanged.
+
+The live client showed **Connected · Logger 5.39.2**. Reloading automatically hid
+the existing empty-draft indicator while keeping P40 and the Table picker selected.
+Switching to P39 and back to P40, then reloading, left the banner hidden. Both
+390 px themes had no horizontal overflow; the original dark theme and browser
+size were restored. No Discard action, synthetic observation, or manual
+recalculation was used in production. Version 117 `doGet` at **16:27:22 EDT**
+completed in **0.893 s**, followed by bootstrap at **16:27:25 EDT** in **13.844 s**.
+The existing singleton five-minute queue trigger was verified; its post-deployment
+**16:25:42 EDT** execution completed in **6.503 s**.
 
 ## October 23 compact status toolbar
 
