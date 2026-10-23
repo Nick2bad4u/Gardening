@@ -1,13 +1,12 @@
 # Google Sheets observation logger
 
-Production logger **5.39.0 / immutable version 115** supports **38 container allocations**, using IDs `P01`–`P32` and `P35`–`P40`, and **50,000 History observation slots**. The October 23 rollout below records the table picker; October 22 records the verified P39/P40 enrollment, and earlier receipts retain the capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.39.1 / immutable version 116** supports **38 container allocations**, using IDs `P01`–`P32` and `P35`–`P40`, and **50,000 History observation slots**. The October 23 rollouts below record the table picker and compact toolbar; October 22 records the verified P39/P40 enrollment, and earlier receipts retain the capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained source is **5.39.1**; production remains **5.39.0** until the compact
-toolbar rollout below is verified. Production **AppSheet
+Maintained source and production are **5.39.1**. Production **AppSheet
 1.100135** was verified by an independent saved-definition readback on October 22.
-The table-picker release does not change AppSheet. The rollout
+The table-picker and compact-toolbar releases do not change AppSheet. The rollout
 receipt below records the production checks separately from rehearsal results.
 
 The mobile logger and AppSheet are the observation input surfaces. The unused
@@ -47,7 +46,45 @@ on tap to show the full status, exact last confirmed calculation time, and Histo
 row counts. Pending requests and failure or unconfirmed outcomes reveal their
 messages automatically. Capacity warnings remain visible. The server change is
 the logger version only; workbook schema, calculation behavior, and AppSheet are
-unchanged. Production verification is pending.
+unchanged. At 320 px, long capacity warnings wrap without overlapping Recalculate.
+
+The reviewed source commit
+[`3db7ebd`](https://github.com/Nick2bad4u/Gardening/commit/3db7ebd3fc6591941b31bdba3f7299b8e91b7546)
+passed logger coverage, SonarCloud, secret scans, and
+[Pages/browser checks](https://github.com/Nick2bad4u/Gardening/actions/runs/40008788204)
+before production promotion. Local validation passed **1,862 logger tests** with
+**99.58% statement coverage**, full type checks, logger/site checks, and applicable
+lint/format checks. The complete **134-case** Chromium/MS Edge and mobile logger
+suite passed before the final warning-wrap adjustment; **48 focused cases** passed
+after it, including the new 320/390 px warning regressions. The final CI browser
+suite passed **241 cases**. Browser scenarios used synthetic fixtures.
+
+A fresh native Drive backup was created at **19:08:09.792 UTC on October 23, 2026**.
+Native connector snapshots at **19:20:44 UTC** and **19:22:11 UTC** preserved all
+**2,022 observations and unique IDs**, **1,652 request groups**, **38 App entries**
+rows, and the empty App bulk table. Captured values, formulas, notes, validations,
+and sheet properties matched, with no appended observation or derived-cell change
+during the deployment interval. Integrity reported zero missing/duplicate IDs,
+zero missing retry IDs, zero calculation-anchor errors, and zero formula errors.
+The existing uncalibrated-plant and missing-anchor counts remain observation tasks.
+
+Immutable **version 116** was created at **19:21:41.572 UTC**; the existing
+deployment was updated at **19:21:43.067 UTC**. Source readback matched the reviewed
+commit, Head, and immutable version, preserving the workbook binding, web-app URL,
+scopes, and access settings. The live client showed **Connected · Logger 5.39.1**,
+retained its existing unsent P40 draft and Table selection, and displayed all three
+controls in one **44 px** row in both phone themes without horizontal overflow.
+The region from the mode tabs to Choose plant decreased from **291 px to 131 px**.
+Tapping the History SVG opened the exact **2,022 / 50,000** count and calculation
+timestamp; collapsing it restored the compact view. No synthetic observation or
+manual recalculation was sent to production.
+
+Version 116 `doGet` at **15:22:13 EDT** completed in **1.505 s**, followed by
+bootstrap at **15:22:17 EDT** in **13.629 s**. Exactly one five-minute
+`processQueuedAppSheetEntries` trigger was verified; its post-deployment
+**15:25:42 EDT** execution completed in **7.558 s**. Private before/after snapshots,
+native backup metadata, and mutation receipts remain under the ignored
+`.cache/logger-status-toolbar/` directory.
 
 ## October 23 table picker
 
