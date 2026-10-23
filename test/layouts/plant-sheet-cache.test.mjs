@@ -4,6 +4,7 @@ import { createSheetSnapshotCache } from "../../docs/layouts/plant-sheet-cache.j
 import {
     getSavedCollectionData,
     loadCollectionSnapshot,
+    sheetUrls,
 } from "../../docs/layouts/plant-tracker-data.js";
 
 const key = "gardening-public-sheet-snapshot-v1";
@@ -48,6 +49,37 @@ function isText(value) {
 }
 
 describe("public Sheet snapshot cache", () => {
+    it("keeps independently keyed snapshots separate when one stored payload is invalid", async () => {
+        expect.hasAssertions();
+
+        const { cache, options, values } = fixture();
+        const historyCache = createSheetSnapshotCache({
+            ...options,
+            load: () => Promise.resolve("history only"),
+            storageKey: "history-test-snapshot",
+        });
+        await cache.refresh();
+        const original = values.get(key);
+        await historyCache.refresh();
+
+        expect(values.get(key)).toBe(original);
+        expect(values.size).toBe(2);
+        expect(historyCache.saved()?.data).toBe("history only");
+        expect(cache.saved()?.data).toBe("validated source");
+
+        values.set("history-test-snapshot", "{broken");
+
+        expect(
+            createSheetSnapshotCache({
+                ...options,
+                storageKey: "history-test-snapshot",
+            }).saved()
+        ).toBeNull();
+        expect(createSheetSnapshotCache(options).saved()?.data).toBe(
+            "validated source"
+        );
+    });
+
     it("shows a saved source on the next page without requiring a new request", async () => {
         expect.hasAssertions();
 
@@ -317,3 +349,117 @@ function deferredSource() {
     // eslint-disable-next-line canonical/no-use-extend-native -- Promise.withResolvers is a standard ES2024 API available in the required Node 26 runtime.
     return Promise.withResolvers();
 }
+
+describe("history-only Sheet loading", () => {
+    it("loads canonical history without requesting the tracker and preserves the saved read time on failure", async () => {
+        expect.hasAssertions();
+
+        const { storage, values } = fixture();
+        const savedAt = Date.now() - 60_000;
+        const collectionSourceKey = JSON.stringify({
+            history: sheetUrls.historyCsv,
+            schema: "collection-csv-v1",
+            tracker: sheetUrls.trackerCsv,
+        });
+        const savedCollection = JSON.stringify({
+            data: {
+                history: "Date,Plant ID,Event\n2026-09-01,P01,Water",
+                plants: "Plant ID,Plant / planter\nP01,Cactus",
+            },
+            readAt: savedAt,
+            sourceKey: collectionSourceKey,
+            startedAt: savedAt,
+            version: 1,
+        });
+        values.set(key, savedCollection);
+        values.set(
+            "gardening-public-history-snapshot-v1",
+            JSON.stringify({
+                data: "Plant ID,Plant / planter\nP01,Cactus",
+                readAt: savedAt + 1000,
+                sourceKey: JSON.stringify({
+                    history: sheetUrls.historyCsv,
+                    schema: "history-csv-v1",
+                }),
+                startedAt: savedAt + 1000,
+                version: 1,
+            })
+        );
+        vi.stubGlobal(
+            "location",
+            new URL("https://example.test/Gardening/setup/placement/")
+        );
+        vi.stubGlobal("localStorage", storage);
+        const source = {
+            csv: "Date,Plant ID,Event\n2026-09-02,P01,Water",
+            fail: false,
+        };
+        const fetch = vi.fn((url) => {
+            const requested = new URL(String(url));
+            requested.searchParams.delete("refresh");
+            if (requested.href !== sheetUrls.historyCsv)
+                throw new Error("Unexpected tracker dependency");
+            if (source.fail) return Promise.reject(new Error("offline"));
+            return Promise.resolve(new Response(source.csv));
+        });
+        vi.stubGlobal("fetch", fetch);
+        onTestFinished(() => {
+            vi.unstubAllGlobals();
+        });
+        // Separate module instances model a fresh page without sharing memory from other tests.
+        const moduleUrl = new URL(
+            "../../docs/layouts/plant-tracker-data.js?history-only-cache-test",
+            import.meta.url
+        );
+        /** @type {typeof import("../../docs/layouts/plant-tracker-data.js")} */
+        // eslint-disable-next-line no-unsanitized/method -- Fixed repository URL; the literal query isolates this page's cache from other test module instances.
+        const historyModule = await import(moduleUrl.href);
+        const saved = historyModule.getSavedHistoryData();
+
+        expect(saved?.readAt).toBe(savedAt);
+        expect(saved?.history[0]).toMatchObject({
+            _index: 0,
+            Date: "2026-09-01",
+            Event: "Water",
+            "Plant ID": "P01",
+        });
+        expect(fetch).not.toHaveBeenCalled();
+
+        const fresh = await historyModule.loadHistorySnapshot();
+
+        expect(fetch).toHaveBeenCalledExactlyOnceWith(
+            expect.stringContaining(`${sheetUrls.historyCsv}&refresh=`),
+            expect.anything()
+        );
+        expect(fresh.history[0]).toMatchObject({
+            _index: 0,
+            Date: "2026-09-02",
+            Event: "Water",
+            "Plant ID": "P01",
+        });
+        expect(fresh.readAt).toBeGreaterThan(savedAt);
+        expect(values.get(key)).toBe(savedCollection);
+        expect(values.has("gardening-public-history-snapshot-v1")).toBe(true);
+
+        source.fail = true;
+
+        await expect(historyModule.loadHistorySnapshot()).rejects.toThrow(
+            "offline"
+        );
+        expect(historyModule.getSavedHistoryData()).toStrictEqual(fresh);
+
+        source.fail = false;
+        source.csv = "Plant ID,Plant / planter\nP01,Cactus";
+
+        await expect(historyModule.loadHistorySnapshot()).rejects.toThrow(
+            "expected columns"
+        );
+        expect(historyModule.getSavedHistoryData()?.readAt).toBe(fresh.readAt);
+
+        source.csv = "Date,Plant ID,Event";
+
+        expect(
+            (await historyModule.loadHistorySnapshot()).history
+        ).toStrictEqual([]);
+    });
+});

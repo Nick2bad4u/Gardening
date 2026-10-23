@@ -1,14 +1,14 @@
 import { sourceReadLabel } from "../../../docs/layouts/plant-sheet-cache.js";
 import {
     getRequiredElement,
-    getSavedCollectionData,
-    loadCollectionSnapshot,
+    getSavedHistoryData,
+    loadHistorySnapshot,
 } from "../../../docs/layouts/plant-tracker-data.js";
 import { buildWateringMap } from "./watering-map-data.js";
 import { renderWateringMapSvg } from "./watering-map-svg.js";
 
 /** @typedef {import("./watering-map-data.js").PotPlacement} PotPlacement */
-/** @typedef {Awaited<ReturnType<typeof loadCollectionSnapshot>>} CollectionSnapshot */
+/** @typedef {Awaited<ReturnType<typeof loadHistorySnapshot>>} HistorySnapshot */
 
 const panel = getRequiredElement("#watering-map", HTMLElement);
 const sourceStatus = getRequiredElement("#watering-map-source", HTMLElement);
@@ -37,7 +37,7 @@ const placements = Array.isArray(placementData)
     : [];
 /**
  * @type {{
- *     snapshot: CollectionSnapshot | null;
+ *     snapshot: HistorySnapshot | null;
  *     lastAttempt: number;
  *     isExportBusy: boolean;
  *     previewUrl: string;
@@ -49,12 +49,12 @@ const state = {
     isExportBusy: false,
     lastAttempt: 0,
     previewUrl: "",
-    snapshot: getSavedCollectionData(),
+    snapshot: getSavedHistoryData(),
     sourceMessage: "Saved preview · refreshing published observations.",
     sourceState: "saved",
 };
 
-/** @param {CollectionSnapshot} next */
+/** @param {HistorySnapshot} next */
 function applySnapshot(next) {
     state.snapshot = next;
     state.sourceState = "live";
@@ -108,10 +108,7 @@ async function exportImage(format) {
     setExportBusy(true);
     exportStatus.textContent = `Preparing ${format.toUpperCase()}…`;
     render();
-    const model = buildWateringMap(
-        placements,
-        state.snapshot.collection.history
-    );
+    const model = buildWateringMap(placements, state.snapshot.history);
     const svg = new Blob(
         [
             renderWateringMapSvg(model, {
@@ -210,7 +207,7 @@ async function refresh() {
         : "Loading published watering observations…";
     render();
     try {
-        const freshSnapshot = await loadCollectionSnapshot();
+        const freshSnapshot = await loadHistorySnapshot();
         applySnapshot(freshSnapshot);
     } catch {
         markRefreshFailed();
@@ -237,10 +234,7 @@ function render() {
     const previousUrl = state.previewUrl;
     state.previewUrl = "";
     if (state.snapshot) {
-        const model = buildWateringMap(
-            placements,
-            state.snapshot.collection.history
-        );
+        const model = buildWateringMap(placements, state.snapshot.history);
         const svg = renderWateringMapSvg(model, {
             readAt: state.snapshot.readAt,
             status: state.sourceMessage,

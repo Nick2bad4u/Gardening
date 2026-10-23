@@ -150,11 +150,16 @@ the owner's browser profile; this does not reproduce Android package installatio
 
 The placement page's **Days since watering** panel generates an SVG from the
 maintained pot placements and the published observation log. It refreshes on
-opening and every five minutes while visible, shares the tracker's bounded
-24-hour snapshot cache, and recalculates elapsed calendar days in the collection's
+opening and every five minutes while visible, keeps a separate bounded
+24-hour History snapshot, and recalculates elapsed calendar days in the collection's
 time zone. Saved previews and failed refreshes remain labeled in the page and
 downloads. PNG downloads render the same SVG at twice its native dimensions;
 both formats use a light background independent of the site theme.
+The map reads History independently: its maintained placement data already supplies
+pot names and labels, so a slow Plant tracker export cannot block the image. It can
+also display History from a newer validated tracker/history snapshot, preserving
+that snapshot's original read time. Its separate storage key does not replace the
+tracker's paired cache.
 The preview fits the screen by default. **Enlarge image** switches to a closer
 view with contained horizontal scrolling; **Fit image** restores the overview.
 Printing always fits the full diagram, including when the preview is enlarged.

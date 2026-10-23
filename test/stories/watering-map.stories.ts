@@ -10,6 +10,7 @@ import {
     websiteCanvas,
 } from "./website-frame.js";
 
+const svgLabel = "Download SVG";
 const pngLabel = "Download PNG";
 const sourceSelector = "#watering-map-source";
 const loadedMessage = "Published observations loaded.";
@@ -40,6 +41,30 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+export const TrackerUnavailable: Story = {
+    args: { scenario: "tracker-unavailable" },
+    play: async ({ canvasElement }) => {
+        const { canvas, document } = await websiteCanvas(canvasElement);
+        await waitFor(() =>
+            expect(document.querySelector(sourceSelector)).toHaveTextContent(
+                loadedMessage
+            )
+        );
+        await expect(document.documentElement).not.toHaveAttribute(
+            "data-tracker-requested"
+        );
+        await expect(
+            document.querySelector("#watering-map-image")
+        ).toBeVisible();
+        await expect(
+            canvas.getByRole("button", { name: pngLabel })
+        ).toBeEnabled();
+        await expect(
+            canvas.getByRole("button", { name: svgLabel })
+        ).toBeEnabled();
+    },
+};
+
 export const LoadedAndExportable: Story = {
     play: async ({ canvasElement }) => {
         const { canvas, document, userEvent } =
@@ -62,9 +87,7 @@ export const LoadedAndExportable: Story = {
         await expect(list).toHaveTextContent("Last Water: 2026-09-02");
         await expect(list).toHaveTextContent("Days since watering: Unknown");
         await expect(list).toHaveTextContent("P20");
-        await userEvent.click(
-            canvas.getByRole("button", { name: "Download SVG" })
-        );
+        await userEvent.click(canvas.getByRole("button", { name: svgLabel }));
         await waitFor(() =>
             expect(
                 document.querySelector("#watering-map-export-status")
@@ -158,7 +181,7 @@ export const Loading: Story = {
             canvas.getByRole("button", { name: pngLabel })
         ).toBeDisabled();
         await expect(
-            canvas.getByRole("button", { name: "Download SVG" })
+            canvas.getByRole("button", { name: svgLabel })
         ).toBeDisabled();
     },
 };
@@ -179,7 +202,7 @@ export const Unavailable: Story = {
             canvas.getByRole("button", { name: pngLabel })
         ).toBeDisabled();
         await expect(
-            canvas.getByRole("button", { name: "Download SVG" })
+            canvas.getByRole("button", { name: svgLabel })
         ).toBeDisabled();
         await expect(
             document.querySelector("#watering-map-image")
@@ -209,7 +232,7 @@ export const RetryAfterFailure: Story = {
             document.querySelector("#watering-map-image")
         ).toBeVisible();
         await expect(
-            canvas.getByRole("button", { name: "Download SVG" })
+            canvas.getByRole("button", { name: svgLabel })
         ).toBeEnabled();
     },
 };

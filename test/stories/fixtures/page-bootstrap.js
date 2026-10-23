@@ -230,7 +230,7 @@
     }
     const headers = history.split("\n", 1)[0];
     const nativeFetch = fetch.bind(globalThis);
-    let failedRequests = 0;
+    const failedSources = new Set();
     /** @type {typeof fetch} */
     const fixtureFetch = async (input, init) => {
         const url = new URL(
@@ -238,14 +238,25 @@
             location.href
         );
         if (url.hostname === "docs.google.com") {
+            if (
+                scenario === "tracker-unavailable" &&
+                url.searchParams.get("gid") === "0"
+            ) {
+                document.documentElement.dataset["trackerRequested"] = "true";
+                return new Promise(() => {
+                    // The canonical history stays available while the unrelated tracker stalls.
+                });
+            }
             if (scenario === "loading")
                 return new Promise(() => {
                     // Keep the request pending for the loading-state story.
                 });
-            failedRequests += 1;
+            const sourceId = url.searchParams.get("gid");
+            const hasPreviouslyFailed = failedSources.has(sourceId);
+            failedSources.add(sourceId);
             if (
                 scenario === "error" ||
-                (scenario === "retry" && failedRequests <= 2)
+                (scenario === "retry" && !hasPreviouslyFailed)
             ) {
                 return new Response("Fixture service unavailable", {
                     status: 503,

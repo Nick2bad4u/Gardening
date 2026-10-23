@@ -919,6 +919,16 @@ const collectionCache = createSheetSnapshotCache({
     validate: isSourceCsv,
 });
 
+const historyCache = createSheetSnapshotCache({
+    load: () => fetchCsv(sheetUrls.historyCsv),
+    sourceKey: JSON.stringify({
+        history: sheetUrls.historyCsv,
+        schema: "history-csv-v1",
+    }),
+    storageKey: "gardening-public-history-snapshot-v1",
+    validate: isHistoryCsv,
+});
+
 /** Return a saved preview, never a claim that Google Sheets was just read. */
 export function getSavedCollectionData() {
     const snapshot = collectionCache.saved();
@@ -927,6 +937,21 @@ export function getSavedCollectionData() {
               collection: buildCollectionData(snapshot.data),
               readAt: snapshot.readAt,
           }
+        : null;
+}
+
+/** Return the newest validated History preview without changing its read time. */
+export function getSavedHistoryData() {
+    const history = historyCache.saved();
+    const collection = collectionCache.saved();
+    if (collection && (!history || collection.readAt > history.readAt)) {
+        return {
+            history: buildHistoryData(collection.data.history),
+            readAt: collection.readAt,
+        };
+    }
+    return history
+        ? { history: buildHistoryData(history.data), readAt: history.readAt }
         : null;
 }
 
@@ -948,6 +973,15 @@ export async function loadCollectionSnapshot() {
     };
 }
 
+/** Refresh the canonical observation feed without waiting for tracker formulas. */
+export async function loadHistorySnapshot() {
+    const snapshot = await historyCache.refresh();
+    return {
+        history: buildHistoryData(snapshot.data),
+        readAt: snapshot.readAt,
+    };
+}
+
 /** @param {PlantLabelRecord} plant */
 export function plantLabel(plant) {
     return (plant["Current pot label"] ?? "") || (plant["Plant ID"] ?? "");
@@ -956,12 +990,7 @@ export function plantLabel(plant) {
 /** @param {SourceCsv} source @returns {CollectionData} */
 function buildCollectionData(source) {
     const plants = rowsToObjects(parseCsv(source.plants));
-    const history = rowsToObjects(parseCsv(source.history));
-    /** @type {HistoryEvent[]} */
-    const observations = history.map((event, index) => ({
-        ...event,
-        _index: index,
-    }));
+    const observations = buildHistoryData(source.history);
     /** @type {Map<string, HistoryEvent[]>} */
     const eventsById = new Map();
     for (const event of observations) {
@@ -992,6 +1021,14 @@ function buildCollectionData(source) {
             };
         }),
     };
+}
+
+/** @param {string} csv @returns {HistoryEvent[]} */
+function buildHistoryData(csv) {
+    return rowsToObjects(parseCsv(csv)).map((event, index) => ({
+        ...event,
+        _index: index,
+    }));
 }
 
 /**
@@ -1039,6 +1076,18 @@ function historyCorrectionOrder(events) {
             original = previous;
         }
     });
+}
+
+/** @param {unknown} value @returns {value is string} */
+function isHistoryCsv(value) {
+    return (
+        typeof value === "string" &&
+        hasSourceHeaders(value, [
+            "Date",
+            "Plant ID",
+            "Event",
+        ])
+    );
 }
 
 /**

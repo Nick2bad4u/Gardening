@@ -1,4 +1,4 @@
-const storageKey = "gardening-public-sheet-snapshot-v1";
+const defaultStorageKey = "gardening-public-sheet-snapshot-v1";
 const maximumAge = 24 * 60 * 60 * 1000;
 const maximumLength = 1024 ** 2;
 
@@ -19,6 +19,7 @@ const maximumLength = 1024 ** 2;
  *     load: () => Promise<T>;
  *     validate: (value: unknown) => value is T;
  *     storage?: () => SnapshotStorage | null;
+ *     storageKey?: string;
  *     now?: () => number;
  * }} options
  */
@@ -27,6 +28,7 @@ export function createSheetSnapshotCache({
     now = Date.now,
     sourceKey,
     storage = browserStorage,
+    storageKey = defaultStorageKey,
     validate,
 }) {
     /** @type {SheetSnapshot<T> | null} */

@@ -18,6 +18,7 @@ export interface WebsiteFrameProps {
         | "loading"
         | "ready"
         | "retry"
+        | "tracker-unavailable"
         | ObservationScenario;
     theme: "dark" | "light";
     width: number;
@@ -50,11 +51,12 @@ export const websiteArgTypes = {
             "empty",
             "error",
             "retry",
+            "tracker-unavailable",
         ],
         table: {
             type: {
                 summary:
-                    "ready | humidity | houseplants | light | care-events | loading | empty | error | retry",
+                    "ready | humidity | houseplants | light | care-events | loading | empty | error | retry | tracker-unavailable",
             },
         },
     },
