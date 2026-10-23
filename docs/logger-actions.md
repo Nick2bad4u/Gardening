@@ -40,6 +40,22 @@ The same applies to #6 / P30 and #9 / P35: their botanical pages share one pot
 entry. “Tan/brown Lithops firm; grey/green heads beginning replacement” belongs
 in P35's note. Find each planter's members in the [container guide](./containers.md).
 
+## Choosing Pots by Table Position
+
+Both the single-plant picker and **Bulk care** offer **List**, **Labels**, and
+**Table** views. Each picker remembers its own view on the current device.
+Switching views keeps the selected plant or bulk selection.
+
+**Table** places the 24 lettered pots in the same six-column, four-row arrangement
+as the [placement guide](./layouts/table-placement-research.md). The back row
+nearest the window is at the top; the front row nearest you is at the bottom.
+Numbered pots (`#1`, `#2`, and so on) remain below the table in their usual label
+order. Search and **Not weighed today** leave gaps where pots are hidden, so
+visible labels retain their actual table positions.
+
+The grid describes the maintained arrangement. Recording a Move does not assign
+a new grid slot; update the placement guide when the table arrangement changes.
+
 ## The 21 Selectable Actions
 
 The maintained 5.36.0 single-plant form exposes these 21 event choices. Fields listed as required here describe the detailed web/AppSheet writer; Quick log offers a smaller set of structured fields.

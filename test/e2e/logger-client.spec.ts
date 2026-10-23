@@ -1,8 +1,11 @@
-import { expect, type Page, test } from "@playwright/test";
+import { expect, type Locator, type Page, test } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 
 // eslint-disable-next-line import-x/extensions -- Shared ESM fixture is also served by the local preview.
 import { loggerBrowserFixture } from "../helpers/logger-browser-fixture.mjs";
+
+const pressedAttribute = "aria-pressed";
+const bulkCareTab = "Bulk care";
 
 const cactusArtwork = await readFile(
     ".pages-site/assets/plant-icons/parodia-leninghausii.svg"
@@ -22,7 +25,7 @@ const expectBalancedLabels = async (
                 .getByRole("group", { name: "Choose plant by pot label" })
                 .getByRole("button")
         )
-        .toHaveCount(36);
+        .toHaveCount(38);
     expect
         .soft(
             await page.evaluate(() => document.documentElement.dataset["theme"])
@@ -83,7 +86,7 @@ const expectCompactHistory = async (page: Readonly<Page>) => {
     await page.reload();
     await expect
         .soft(page.getByRole("button", { name: "Compact history" }))
-        .toHaveAttribute("aria-pressed", "true");
+        .toHaveAttribute(pressedAttribute, "true");
 };
 
 const expectPortraitAccess = async (page: Readonly<Page>, width: number) => {
@@ -213,7 +216,7 @@ const expectSeparateFormControls = async (page: Readonly<Page>) => {
         .soft(
             page.getByRole("button", { exact: true, name: "Use current time" })
         )
-        .toHaveAttribute("aria-pressed", "false");
+        .toHaveAttribute(pressedAttribute, "false");
 };
 
 const expectTerrariumContext = async (page: Readonly<Page>) => {
@@ -517,6 +520,317 @@ for (const theme of ["dark", "light"] as const) {
                 expect.soft(errors).toStrictEqual([]);
             });
         });
+    }
+}
+
+const tableRows = [
+    [
+        "P04",
+        "P15",
+        "P23",
+        "P26",
+        "P18",
+        "P03",
+    ],
+    [
+        "P01",
+        "P13",
+        "P24",
+        "P16",
+        "P08",
+        "P11",
+    ],
+    [
+        "P02",
+        "P05",
+        "P25",
+        "P28",
+        "P09",
+        "P07",
+    ],
+    [
+        "P12",
+        "P14",
+        "P27",
+        "P06",
+        "P10",
+        "P17",
+    ],
+];
+
+const tablePicker = (page: Readonly<Page>, isBulk = false) =>
+    page.getByRole("group", {
+        name: isBulk
+            ? "Choose plants for bulk care"
+            : "Choose plant by pot label",
+    });
+
+const tablePlantNames = {
+    P05: /, P05(?:,|$)/v,
+    P06: /, P06(?:,|$)/v,
+    P10: /, P10(?:,|$)/v,
+    P27: /, P27(?:,|$)/v,
+    P38: /, P38(?:,|$)/v,
+};
+const tablePlant = (
+    picker: Readonly<Locator>,
+    id: keyof typeof tablePlantNames
+) =>
+    picker.getByRole("button", {
+        includeHidden: true,
+        name: tablePlantNames[id],
+    });
+
+const pickerMode = (page: Readonly<Page>, name: string) =>
+    page.getByRole("button", { exact: true, name });
+
+const expectTableLayout = async (page: Readonly<Page>, isBulk = false) => {
+    const picker = tablePicker(page, isBulk);
+    await expect.soft(picker).toHaveClass(/\btable-picker\b/v);
+    await expect.soft(picker.getByRole("button")).toHaveCount(38);
+    const positions = await picker.evaluate(
+        (element, usesBulkId) =>
+            [...element.querySelectorAll<HTMLElement>("[data-table-row]")].map(
+                (button) => ({
+                    column: button.dataset["tableColumn"],
+                    gridColumn: getComputedStyle(button).gridColumnStart,
+                    gridRow: getComputedStyle(button).gridRowStart,
+                    id: button.dataset[usesBulkId ? "bulkPlantId" : "plantId"],
+                    row: button.dataset["tableRow"],
+                })
+            ),
+        isBulk
+    );
+    expect.soft(positions).toStrictEqual(
+        tableRows.flatMap((row, visualRow) =>
+            row.map((id, column) => ({
+                column: String(column + 1),
+                gridColumn: String(column + 1),
+                gridRow: String(visualRow + 1),
+                id,
+                row: String(4 - visualRow),
+            }))
+        )
+    );
+    const layout = await picker.evaluate((element) => {
+        const numbered = [
+            ...element.querySelectorAll<HTMLElement>("[data-plant-label^='#']"),
+        ];
+        const front = [
+            ...element.querySelectorAll<HTMLElement>("[data-table-row]"),
+        ];
+        const frontBottom = Math.max(
+            ...front.map((button) => button.getBoundingClientRect().bottom)
+        );
+        return {
+            labels: numbered.map((button) => button.dataset["plantLabel"]),
+            numberedBelow: numbered.every(
+                (button) => button.getBoundingClientRect().top > frontBottom
+            ),
+            validBounds: [...front, ...numbered].every((button) => {
+                const rect = button.getBoundingClientRect();
+                return (
+                    rect.width >= 44 &&
+                    rect.height >= 44 &&
+                    rect.left >= 0 &&
+                    rect.right <= innerWidth
+                );
+            }),
+        };
+    });
+    expect.soft(layout).toStrictEqual({
+        labels: Array.from({ length: 14 }, (_, index) => `#${index + 1}`),
+        numberedBelow: true,
+        validBounds: true,
+    });
+    await expect
+        .poll(() =>
+            page.evaluate(
+                () => document.documentElement.scrollWidth <= innerWidth
+            )
+        )
+        .toBe(true);
+};
+
+const expectSingleTableFilter = async (page: Readonly<Page>) => {
+    const picker = tablePicker(page);
+    const neighbor = tablePlant(picker, "P10");
+    const originalX = await neighbor.evaluate(
+        (button) => button.getBoundingClientRect().x
+    );
+    await pickerMode(page, "Not weighed today").click();
+    await expect.soft(tablePlant(picker, "P05")).toBeHidden();
+    await expect.soft(tablePlant(picker, "P06")).toBeHidden();
+    await expect.soft(neighbor).toBeVisible();
+    expect
+        .soft(
+            await neighbor.evaluate(
+                (button) => button.getBoundingClientRect().x
+            )
+        )
+        .toBe(originalX);
+    await expect.soft(neighbor).toHaveAttribute("data-table-column", "5");
+    await pickerMode(page, "Not weighed today").click();
+};
+
+const expectTableProgressFits = async (page: Readonly<Page>) => {
+    const terrarium = tablePlant(tablePicker(page), "P38");
+    await expect.soft(terrarium).toHaveAccessibleName(/Queued · Saved today/v);
+    const bounds = await terrarium.evaluate((button) => {
+        const rect = button.getBoundingClientRect();
+        const before = getComputedStyle(button, "::before");
+        const after = getComputedStyle(button, "::after");
+        return {
+            badges: [before.content, after.content],
+            badgesFit: [before, after].every(
+                (style) =>
+                    Number(style.width.replace(/px$/v, "")) <=
+                        button.clientWidth &&
+                    Number(style.height.replace(/px$/v, "")) > 0 &&
+                    style.visibility === "visible"
+            ),
+            childrenFit: [...button.children].every((child) => {
+                const childRect = child.getBoundingClientRect();
+                return (
+                    childRect.left >= rect.left &&
+                    childRect.right <= rect.right &&
+                    childRect.top >= rect.top &&
+                    childRect.bottom <= rect.bottom
+                );
+            }),
+            contentsFit: button.scrollWidth <= button.clientWidth,
+        };
+    });
+    expect.soft(bounds).toStrictEqual({
+        badges: ['"Saved today"', '"Queued"'],
+        badgesFit: true,
+        childrenFit: true,
+        contentsFit: true,
+    });
+};
+
+const expectSingleModeSelection = async (
+    page: Readonly<Page>,
+    mode: string
+) => {
+    await pickerMode(page, mode).click();
+    expect
+        .soft(
+            await page.evaluate(
+                () =>
+                    document.querySelector<HTMLSelectElement>("#plantSelect")
+                        ?.value
+            )
+        )
+        .toBe("P27");
+};
+
+const expectBulkTableFilter = async (page: Readonly<Page>) => {
+    const picker = tablePicker(page, true);
+    const selected = tablePlant(picker, "P10");
+    const originalX = await selected.evaluate(
+        (button) => button.getBoundingClientRect().x
+    );
+    const search = page.getByRole("searchbox", {
+        name: "Find by name, ID, or label",
+    });
+    await search.fill("P10");
+    await expect.soft(tablePlant(picker, "P06")).toBeHidden();
+    await expect.soft(selected).toBeVisible();
+    expect
+        .soft(
+            await selected.evaluate(
+                (button) => button.getBoundingClientRect().x
+            )
+        )
+        .toBe(originalX);
+    await expect.soft(selected).toHaveAttribute("data-table-column", "5");
+    await search.fill("");
+};
+
+const expectBulkModeSelection = async (page: Readonly<Page>) => {
+    const picker = tablePicker(page, true);
+    await pickerMode(page, "Labels").click();
+    await expect
+        .soft(tablePlant(picker, "P10"))
+        .toHaveAttribute(pressedAttribute, "true");
+    await pickerMode(page, "List").click();
+    await expect
+        .soft(picker.getByRole("checkbox", { name: /P10/v }))
+        .toBeChecked();
+    await pickerMode(page, "Table").click();
+    await expect
+        .soft(tablePlant(picker, "P10"))
+        .toHaveAttribute(pressedAttribute, "true");
+};
+
+for (const theme of ["dark", "light"] as const) {
+    for (const width of [390, 1280]) {
+        test.describe(
+            `table picker ${theme} ${width}px`,
+            { tag: "@logger" },
+            () => {
+                test("single selection preserves physical slots, filtered holes and saved mode", async ({
+                    page,
+                }, testInfo) => {
+                    await openLogger(page, width, theme);
+                    await pickerMode(page, "Table").click();
+                    await expectTableLayout(page);
+                    await expectTableProgressFits(page);
+                    const selected = tablePlant(tablePicker(page), "P27");
+                    await selected.focus();
+                    await page.keyboard.press("Enter");
+                    await expect
+                        .soft(selected)
+                        .toHaveAttribute(pressedAttribute, "true");
+                    await expectSingleTableFilter(page);
+                    await expectSingleModeSelection(page, "Labels");
+                    await expectSingleModeSelection(page, "List");
+                    await expectSingleModeSelection(page, "Table");
+                    await page.reload();
+                    await expect
+                        .soft(pickerMode(page, "Table"))
+                        .toHaveAttribute(pressedAttribute, "true");
+                    await expectTableLayout(page);
+                    await tablePicker(page).screenshot({
+                        path: testInfo.outputPath("single-table.png"),
+                    });
+                });
+
+                test("bulk selection survives modes and search without moving matching pots", async ({
+                    page,
+                }, testInfo) => {
+                    await openLogger(page, width, theme);
+                    await page
+                        .getByRole("tab", { exact: true, name: bulkCareTab })
+                        .click();
+                    await pickerMode(page, "Table").click();
+                    await expectTableLayout(page, true);
+                    const selected = tablePlant(tablePicker(page, true), "P10");
+                    await selected.focus();
+                    await page.keyboard.press("Space");
+                    await expect
+                        .soft(selected)
+                        .toHaveAttribute(pressedAttribute, "true");
+                    await expect
+                        .soft(page.getByText("1 selected", { exact: true }))
+                        .toBeVisible();
+                    await expectBulkTableFilter(page);
+                    await expectBulkModeSelection(page);
+                    await page.reload();
+                    await page
+                        .getByRole("tab", { exact: true, name: bulkCareTab })
+                        .click();
+                    await expect
+                        .soft(pickerMode(page, "Table"))
+                        .toHaveAttribute(pressedAttribute, "true");
+                    await expectTableLayout(page, true);
+                    await tablePicker(page, true).screenshot({
+                        path: testInfo.outputPath("bulk-table.png"),
+                    });
+                });
+            }
+        );
     }
 }
 

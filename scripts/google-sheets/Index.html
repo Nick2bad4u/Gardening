@@ -385,7 +385,11 @@
             .picker-modes--plant {
                 grid-template-columns:
                     [list-start] auto [list-end labels-start] auto
-                    [labels-end filter-start] minmax(0, 1fr) [filter-end];
+                    [labels-end table-start] auto [table-end filter-start] minmax(
+                        0,
+                        1fr
+                    )
+                    [filter-end];
                 gap: 2px;
                 inline-size: fit-content;
                 max-inline-size: 100%;
@@ -407,11 +411,24 @@
                 touch-action: manipulation;
             }
 
+            /* Closed details must not leave fixed popovers in scrollable overflow. */
+            .help-disclosure:not([open]) > .help-text,
             .label-picker[hidden],
             .list-picker[hidden] {
                 display: none;
             }
 
+            .picker-modes--bulk {
+                grid-template-columns: repeat(
+                    3,
+                    [mode-start] minmax(0, 1fr) [mode-end]
+                );
+            }
+            .table-picker-note {
+                margin-block: 8px;
+                font-size: 0.875rem;
+                color: var(--muted);
+            }
             .plant-choice-icon {
                 inline-size: 2.15rem;
                 block-size: 2.15rem;
@@ -433,6 +450,44 @@
                 & .plant-choice-icon {
                     inline-size: 1.55rem;
                     block-size: 1.55rem;
+                }
+            }
+
+            .label-picker.table-picker {
+                grid-template-rows: repeat(
+                    4,
+                    [row-start] minmax(52px, auto) [row-end]
+                );
+                grid-template-columns: repeat(
+                    6,
+                    [pot-start] minmax(0, 1fr) [pot-end]
+                );
+                gap: 5px;
+                max-block-size: none;
+                overflow: visible;
+                & .label-choice {
+                    flex-flow: column nowrap;
+                    gap: 2px;
+                    min-inline-size: 0;
+                    padding: 3px 1px;
+                    font-size: 0.875rem;
+                }
+                & .label-choice::before,
+                & .label-choice::after {
+                    flex-basis: auto;
+                    max-inline-size: 100%;
+                    overflow-wrap: anywhere;
+                }
+                & .label-choice::after {
+                    font-size: 0.625rem;
+                    white-space: nowrap;
+                }
+                & .table-picker-heading {
+                    grid-column: 1 / -1;
+                    margin: 8px 0 2px;
+                    font-size: 0.875rem;
+                    font-weight: 800;
+                    color: var(--muted);
                 }
             }
 
@@ -2666,8 +2721,14 @@
                 }
 
                 .picker-modes--plant {
+                    grid-template-columns: repeat(
+                        3,
+                        [mode-start] minmax(0, 1fr) [mode-end]
+                    );
                     inline-size: 100%;
-
+                    & .picker-mode--unweighed {
+                        grid-column: 1 / -1;
+                    }
                     & .picker-mode {
                         gap: 4px;
                         padding-inline: 5px;
@@ -14325,6 +14386,13 @@
                                         >Labels</button
                                     >
                                     <button
+                                        id="tablePickerMode"
+                                        class="picker-mode"
+                                        type="button"
+                                        aria-pressed="false"
+                                        >Table</button
+                                    >
+                                    <button
                                         id="notWeighedToday"
                                         class="picker-mode picker-mode--unweighed"
                                         type="button"
@@ -14393,6 +14461,13 @@
                                     ></div>
                                 </details>
                             </div>
+                            <p
+                                id="tablePickerNote"
+                                class="table-picker-note"
+                                hidden
+                                >Facing the window · rear row at top, room edge
+                                at bottom · Mylar left, wall right.</p
+                            >
                             <div
                                 id="labelPicker"
                                 class="label-picker"
@@ -15752,11 +15827,10 @@
                             ></div>
                             <div class="picker-toolbar picker-toolbar--bulk">
                                 <span class="hint"
-                                    >Select multiple plants in either
-                                    view.</span
+                                    >Select multiple plants in any view.</span
                                 >
                                 <div
-                                    class="picker-modes"
+                                    class="picker-modes picker-modes--bulk"
                                     role="group"
                                     aria-label="Bulk plant selector style"
                                 >
@@ -15789,6 +15863,13 @@
                                                 href="#app-icon-label"
                                             ></use></svg
                                         >Labels</button
+                                    >
+                                    <button
+                                        id="bulkTablePickerMode"
+                                        class="picker-mode"
+                                        type="button"
+                                        aria-pressed="false"
+                                        >Table</button
                                     >
                                 </div>
                             </div>
@@ -15835,6 +15916,13 @@
                                 role="status"
                                 aria-live="polite"
                                 >Tap a plant to see its name and selection.</p
+                            >
+                            <p
+                                id="bulkTablePickerNote"
+                                class="table-picker-note"
+                                hidden
+                                >Facing the window · rear row at top, room edge
+                                at bottom · Mylar left, wall right.</p
                             >
                             <div
                                 id="bulkPlantList"
@@ -17721,9 +17809,11 @@
 
             function refreshMobileHitTargets() {
                 document.documentElement.classList.add("mobile-hit-recovery");
-                if (state.bootstrap && state.plantPickerMode === "labels") {
+                if (state.bootstrap && state.plantPickerMode !== "list") {
                     // Replace stale hit boxes while retaining decoded portraits.
-                    [...$("labelPicker").children].forEach((button) => {
+                    [
+                        ...$("labelPicker").querySelectorAll("[data-plant-id]"),
+                    ].forEach((button) => {
                         const replacement = button.cloneNode(false);
                         replacement.append(...button.childNodes);
                         button.replaceWith(replacement);
@@ -19809,18 +19899,110 @@
                 );
             }
 
+            // Visual order: rear/window at top, room edge at bottom. Stable P IDs.
+            // Maintained source: docs/layouts/table-placement-research.md.
+            // Tests compare these slots with site/lib/watering-placement.mjs.
+            const TABLE_PICKER_ROWS = Object.freeze([
+                Object.freeze(["P04", "P15", "P23", "P26", "P18", "P03"]),
+                Object.freeze(["P01", "P13", "P24", "P16", "P08", "P11"]),
+                Object.freeze(["P02", "P05", "P25", "P28", "P09", "P07"]),
+                Object.freeze(["P12", "P14", "P27", "P06", "P10", "P17"]),
+            ]);
+            function tablePickerSlot(plantId) {
+                for (const [visualRow, row] of TABLE_PICKER_ROWS.entries()) {
+                    const column = row.indexOf(plantId);
+                    if (column !== -1)
+                        return { row: 4 - visualRow, column: column + 1 };
+                }
+                return null;
+            }
+            function comparePlantsByTable(left, right) {
+                const order = TABLE_PICKER_ROWS.flat();
+                const leftIndex = order.indexOf(left.id);
+                const rightIndex = order.indexOf(right.id);
+                const group = (plant, index) =>
+                    index !== -1
+                        ? 0
+                        : /^#\d+$/u.test(plant.label || "")
+                          ? 1
+                          : 2;
+                return (
+                    group(left, leftIndex) - group(right, rightIndex) ||
+                    (leftIndex !== -1 && rightIndex !== -1
+                        ? leftIndex - rightIndex
+                        : comparePlantsByNaturalLabel(left, right))
+                );
+            }
+            function applyTablePickerLayout(picker, tableMode, idKey) {
+                picker.classList.toggle("table-picker", tableMode);
+                picker
+                    .querySelectorAll(".table-picker-heading")
+                    .forEach((heading) => heading.remove());
+                let numberedIndex = 0;
+                let otherIndex = 0;
+                const selector =
+                    idKey === "plantId"
+                        ? "[data-plant-id]"
+                        : "[data-bulk-plant-id]";
+                const buttons = [...picker.querySelectorAll(selector)];
+                const numberCount = buttons.filter(
+                    (button) =>
+                        !tablePickerSlot(button.dataset[idKey]) &&
+                        /^#\d+$/u.test(button.dataset.plantLabel || "")
+                ).length;
+                const otherHeadingRow = 6 + Math.ceil(numberCount / 6);
+                const headings = new Set();
+                buttons.forEach((button) => {
+                    delete button.dataset.tableRow;
+                    delete button.dataset.tableColumn;
+                    button.style.gridRow = "";
+                    button.style.gridColumn = "";
+                    if (!tableMode) return;
+                    const slot = tablePickerSlot(button.dataset[idKey]);
+                    if (slot) {
+                        button.dataset.tableRow = String(slot.row);
+                        button.dataset.tableColumn = String(slot.column);
+                        button.style.gridRow = String(5 - slot.row);
+                        button.style.gridColumn = String(slot.column);
+                        return;
+                    }
+                    const numbered = /^#\d+$/u.test(
+                        button.dataset.plantLabel || ""
+                    );
+                    const headingRow = numbered ? 5 : otherHeadingRow;
+                    const index = numbered ? numberedIndex++ : otherIndex++;
+                    button.style.gridRow = String(
+                        headingRow + 1 + Math.floor(index / 6)
+                    );
+                    button.style.gridColumn = String((index % 6) + 1);
+                    if (!headings.has(headingRow) && !button.hidden) {
+                        headings.add(headingRow);
+                        const heading = document.createElement("p");
+                        heading.className = "table-picker-heading";
+                        heading.textContent = numbered
+                            ? "Numbered pots"
+                            : "Other pots · position unrecorded";
+                        heading.style.gridRow = String(headingRow);
+                        picker.insertBefore(heading, button);
+                    }
+                });
+            }
+
             function renderLabelPicker() {
                 const picker = $("labelPicker");
                 const currentId = $("plantSelect").value;
                 const weighedPlantIds = queuedWeighedPlantIds();
                 const existingButtons = new Map(
-                    [...picker.children].map((button) => [
-                        button.dataset.plantId,
-                        button,
-                    ])
+                    [...picker.querySelectorAll("[data-plant-id]")].map(
+                        (button) => [button.dataset.plantId, button]
+                    )
                 );
                 [...state.bootstrap.plants]
-                    .sort(comparePlantsByNaturalLabel)
+                    .sort(
+                        state.plantPickerMode === "table"
+                            ? comparePlantsByTable
+                            : comparePlantsByNaturalLabel
+                    )
                     .forEach((plant, index) => {
                         let button = existingButtons.get(plant.id);
                         existingButtons.delete(plant.id);
@@ -19848,6 +20030,7 @@
                             );
                         }
                         const label = button.querySelector("span");
+                        button.dataset.plantLabel = plant.label || "";
                         const labelText = plant.label || plant.id;
                         if (label.textContent !== labelText)
                             label.textContent = labelText;
@@ -19862,7 +20045,8 @@
                             Boolean(savedTodayPlantIds()?.has(plant.id))
                         );
                         button.hidden =
-                            isNotWeighedFilterActive() &&
+                            (isNotWeighedFilterActive() ||
+                                state.plantPickerMode === "table") &&
                             !state.filteredPlants.some(
                                 (candidate) => candidate.id === plant.id
                             );
@@ -19885,22 +20069,37 @@
                         );
                         // Keep unchanged images connected and decoded. Rebuilding
                         // the grid makes every cached SVG blink on mobile taps.
-                        if (picker.children[index] !== button)
+                        const orderedButtons =
+                            picker.querySelectorAll("[data-plant-id]");
+                        if (orderedButtons[index] !== button)
                             picker.insertBefore(
                                 button,
-                                picker.children[index] || null
+                                orderedButtons[index] || null
                             );
                     });
                 existingButtons.forEach((button) => {
                     clearPlantPortraits(button);
                     button.remove();
                 });
+                applyTablePickerLayout(
+                    picker,
+                    state.plantPickerMode === "table",
+                    "plantId"
+                );
             }
 
             function setPlantPickerMode(mode, persist = true) {
-                state.plantPickerMode = mode === "labels" ? "labels" : "list";
-                const labelsMode = state.plantPickerMode === "labels";
-                $("listPicker").hidden = labelsMode;
+                state.plantPickerMode = ["labels", "table"].includes(mode)
+                    ? mode
+                    : "list";
+                const labelsMode = state.plantPickerMode !== "list";
+                $("tablePickerNote").hidden = state.plantPickerMode !== "table";
+                $("tablePickerMode").setAttribute(
+                    "aria-pressed",
+                    String(state.plantPickerMode === "table")
+                );
+                $("listPicker").hidden = state.plantPickerMode === "labels";
+                $("plantChoiceMenu").hidden = labelsMode;
                 $("labelPicker").hidden = !labelsMode;
                 $("listPickerMode").setAttribute(
                     "aria-pressed",
@@ -19908,7 +20107,7 @@
                 );
                 $("labelPickerMode").setAttribute(
                     "aria-pressed",
-                    String(labelsMode)
+                    String(state.plantPickerMode === "labels")
                 );
                 if (labelsMode) renderLabelPicker();
                 if (persist)
@@ -20033,6 +20232,7 @@
                 details.hidden = !plant;
                 displayTools.hidden = !plant;
                 showPickerName(plant);
+                if (state.plantPickerMode !== "list") renderLabelPicker();
                 if (!plant) {
                     renderWeightFeedback();
                     const empty = document.createElement("div");
@@ -20041,7 +20241,6 @@
                     return;
                 }
                 safeStorageSet(localStorage, "gardenPlantId", plant.id);
-                if (state.plantPickerMode === "labels") renderLabelPicker();
                 if (plantChanged) $("potSetup").value = plant.potSetup || 1;
                 renderWeightFeedback();
                 $("currentPotSize").textContent =
@@ -23412,15 +23611,23 @@
             }
 
             function setBulkPickerMode(mode, persist = true) {
-                state.bulkPickerMode = mode === "labels" ? "labels" : "list";
-                const labelsMode = state.bulkPickerMode === "labels";
+                state.bulkPickerMode = ["labels", "table"].includes(mode)
+                    ? mode
+                    : "list";
+                const labelsMode = state.bulkPickerMode !== "list";
+                $("bulkTablePickerNote").hidden =
+                    state.bulkPickerMode !== "table";
+                $("bulkTablePickerMode").setAttribute(
+                    "aria-pressed",
+                    String(state.bulkPickerMode === "table")
+                );
                 $("bulkListPickerMode").setAttribute(
                     "aria-pressed",
                     String(!labelsMode)
                 );
                 $("bulkLabelPickerMode").setAttribute(
                     "aria-pressed",
-                    String(labelsMode)
+                    String(state.bulkPickerMode === "labels")
                 );
                 if (state.bootstrap) renderBulkPlants($("bulkSearch").value);
                 if (persist)
@@ -23470,85 +23677,152 @@
                 );
                 state.bulkFilteredPlants = plants;
                 const list = $("bulkPlantList");
-                const labelsMode = state.bulkPickerMode === "labels";
+                const labelsMode = state.bulkPickerMode !== "list";
+                const tableMode = state.bulkPickerMode === "table";
                 list.className = labelsMode
                     ? "label-picker bulk-label-picker"
                     : "bulk-list";
-                clearPlantPortraits(list);
-                const visiblePlants = labelsMode
-                    ? [...plants].sort(comparePlantsByNaturalLabel)
-                    : plants;
-                visiblePlants.forEach((plant) => {
+                list.classList.toggle("bulk-table-picker", tableMode);
+                list.querySelectorAll(".bulk-empty").forEach((empty) =>
+                    empty.remove()
+                );
+                const existing = new Map(
+                    [...list.querySelectorAll("[data-bulk-plant-id]")].map(
+                        (element) => [element.dataset.bulkPlantId, element]
+                    )
+                );
+                const visiblePlants = tableMode
+                    ? [...state.bootstrap.plants].sort(comparePlantsByTable)
+                    : labelsMode
+                      ? [...plants].sort(comparePlantsByNaturalLabel)
+                      : plants;
+                visiblePlants.forEach((plant, index) => {
+                    const portraitName = plantIconName(plant);
+                    const renderMode = labelsMode ? "labels" : "list";
+                    let element = existing.get(plant.id);
+                    existing.delete(plant.id);
+                    if (
+                        element &&
+                        (element.dataset.renderMode !== renderMode ||
+                            element.dataset.portraitName !== portraitName)
+                    ) {
+                        clearPlantPortraits(element);
+                        element.remove();
+                        element = null;
+                    }
+                    if (!element) {
+                        element = document.createElement(
+                            labelsMode ? "button" : "label"
+                        );
+                        element.dataset.bulkPlantId = plant.id;
+                        element.dataset.renderMode = renderMode;
+                        element.dataset.portraitName = portraitName;
+                        element.className = labelsMode
+                            ? "label-choice"
+                            : "bulk-plant";
+                        if (labelsMode) {
+                            element.type = "button";
+                            element.append(
+                                createPlantPortrait(
+                                    plant,
+                                    "app-icon plant-choice-icon"
+                                ),
+                                document.createElement("span")
+                            );
+                            element.addEventListener("click", (event) => {
+                                const selected = !state.bulkSelected.has(
+                                    plant.id
+                                );
+                                setBulkPlantSelected(plant.id, selected);
+                                event.currentTarget.setAttribute(
+                                    "aria-pressed",
+                                    String(selected)
+                                );
+                            });
+                        } else {
+                            const checkbox = document.createElement("input");
+                            checkbox.type = "checkbox";
+                            checkbox.value = plant.id;
+                            checkbox.addEventListener("change", () => {
+                                setBulkPlantSelected(
+                                    plant.id,
+                                    checkbox.checked
+                                );
+                                checkbox
+                                    .closest(".bulk-plant")
+                                    .classList.toggle(
+                                        "is-selected",
+                                        checkbox.checked
+                                    );
+                            });
+                            const text = document.createElement("span");
+                            const name = document.createElement("span");
+                            name.className = "bulk-name";
+                            const meta = document.createElement("span");
+                            meta.className = "bulk-meta";
+                            text.append(name, meta);
+                            element.append(
+                                checkbox,
+                                createPlantPortrait(
+                                    plant,
+                                    "app-icon plant-choice-icon"
+                                ),
+                                text
+                            );
+                        }
+                    }
+                    element.dataset.plantLabel = plant.label || "";
+                    element.hidden = !plants.some(
+                        (candidate) => candidate.id === plant.id
+                    );
                     if (labelsMode) {
-                        const button = document.createElement("button");
-                        button.type = "button";
-                        button.className = "label-choice";
-                        button.dataset.bulkPlantId = plant.id;
-                        button.title = `${plant.name} · ${plant.id}`;
-                        button.setAttribute(
+                        element.disabled = state.saving;
+                        element.title = `${plant.name} · ${plant.id}`;
+                        element.setAttribute(
                             "aria-label",
                             `${plant.label ? `Label ${plant.label}, ` : ""}${plant.name}, ${plant.id}`
                         );
-                        button.setAttribute(
+                        element.setAttribute(
                             "aria-pressed",
                             String(state.bulkSelected.has(plant.id))
                         );
-                        const labelText = document.createElement("span");
-                        labelText.textContent = plant.label || plant.id;
-                        button.append(
-                            createPlantPortrait(
-                                plant,
-                                "app-icon plant-choice-icon"
-                            ),
-                            labelText
+                        element.querySelector("span").textContent =
+                            plant.label || plant.id;
+                    } else {
+                        const checkbox = element.querySelector("input");
+                        checkbox.checked = state.bulkSelected.has(plant.id);
+                        checkbox.disabled = state.saving;
+                        element.classList.toggle(
+                            "is-selected",
+                            checkbox.checked
                         );
-                        button.addEventListener("click", () => {
-                            const selected = !state.bulkSelected.has(plant.id);
-                            setBulkPlantSelected(plant.id, selected);
-                            button.setAttribute(
-                                "aria-pressed",
-                                String(selected)
-                            );
-                        });
-                        list.append(button);
-                        return;
+                        element.querySelector(".bulk-name").textContent =
+                            plant.name;
+                        element.querySelector(".bulk-meta").textContent =
+                            `${plant.id}${plant.label ? ` · ${plant.label}` : ""} · ${plant.daysSinceWater === "" ? "no water age" : `${plant.daysSinceWater} days`}`;
                     }
-                    const label = document.createElement("label");
-                    label.className = "bulk-plant";
-                    label.dataset.bulkPlantId = plant.id;
-                    const checkbox = document.createElement("input");
-                    checkbox.type = "checkbox";
-                    checkbox.value = plant.id;
-                    checkbox.checked = state.bulkSelected.has(plant.id);
-                    checkbox.disabled = state.saving;
-                    label.classList.toggle("is-selected", checkbox.checked);
-                    checkbox.addEventListener("change", () => {
-                        setBulkPlantSelected(plant.id, checkbox.checked);
-                        label.classList.toggle("is-selected", checkbox.checked);
-                    });
-                    const text = document.createElement("span");
-                    const name = document.createElement("span");
-                    name.className = "bulk-name";
-                    name.textContent = plant.name;
-                    const meta = document.createElement("span");
-                    meta.className = "bulk-meta";
-                    meta.textContent = `${plant.id}${plant.label ? ` · ${plant.label}` : ""} · ${plant.daysSinceWater === "" ? "no water age" : `${plant.daysSinceWater} days`}`;
-                    text.append(name, meta);
-                    label.append(
-                        checkbox,
-                        createPlantPortrait(
-                            plant,
-                            "app-icon plant-choice-icon"
-                        ),
-                        text
+                    const ordered = list.querySelectorAll(
+                        "[data-bulk-plant-id]"
                     );
-                    list.append(label);
+                    if (ordered[index] !== element)
+                        list.insertBefore(element, ordered[index] || null);
                 });
+                existing.forEach((element) => {
+                    clearPlantPortraits(element);
+                    element.remove();
+                });
+                applyTablePickerLayout(list, tableMode, "bulkPlantId");
                 if (!plants.length) {
                     const empty = document.createElement("p");
-                    empty.className = "hint";
+                    empty.className = "hint bulk-empty";
                     empty.textContent =
                         "No matching plants. Your other selections are kept.";
+                    if (tableMode) {
+                        empty.style.gridColumn = "1 / -1";
+                        empty.style.gridRow = String(
+                            7 + Math.ceil(state.bootstrap.plants.length / 6)
+                        );
+                    }
                     list.append(empty);
                 }
                 renderBulkCount();
@@ -25569,6 +25843,9 @@
             $("labelPickerMode").addEventListener("click", () =>
                 setPlantPickerMode("labels")
             );
+            $("tablePickerMode").addEventListener("click", () =>
+                setPlantPickerMode("table")
+            );
             $("labelPicker").addEventListener("click", (event) => {
                 const button = event.target.closest("[data-plant-id]");
                 if (button) selectPlantById(button.dataset.plantId);
@@ -25681,6 +25958,9 @@
             );
             $("bulkLabelPickerMode").addEventListener("click", () =>
                 setBulkPickerMode("labels")
+            );
+            $("bulkTablePickerMode").addEventListener("click", () =>
+                setBulkPickerMode("table")
             );
             $("bulkSelectVisible").addEventListener("click", () => {
                 state.bulkFilteredPlants.forEach((plant) =>

@@ -22,6 +22,7 @@ import * as fs from "node:fs";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { comparePlantsByNaturalLabel } from "../../docs/layouts/plant-tracker-data.js";
+import { getWateringPlacements } from "../../site/lib/watering-placement.mjs";
 import { queryElement, queryElements, required } from "../helpers/required.mjs";
 import {
     jsonRecord,
@@ -6836,6 +6837,411 @@ describe("garden logger plant selection and label ordering", () => {
             "#5",
             "#6",
         ]);
+    });
+});
+
+describe("garden logger table picker", () => {
+    afterEach(restoreLoggerMocks);
+
+    /**
+     * Build synthetic logger records from the maintained current placement
+     * roster.
+     */
+    async function tableFixture() {
+        const placements = await getWateringPlacements();
+        const bootstrapData = {
+            ...bootstrap,
+            dayKey: "2026-09-06",
+            dayStartHour: 4,
+            plants: placements.map(({ id, label, name }) => ({
+                ...required(bootstrap.plants[0]),
+                id,
+                label,
+                name,
+            })),
+            serverTime: "2026-09-06T16:05:00Z",
+            timeZone: "America/New_York",
+            weighedTodayPlantIds: ["P01", "P02"],
+        };
+        return { bootstrapData, placements };
+    }
+
+    /** @param {Window} window @param {string} selector */
+    function click(window, selector) {
+        queryElement(window.document, selector, HTMLButtonElement).click();
+    }
+
+    /** @param {HTMLElement} element */
+    function coordinates(element) {
+        return {
+            column: element.dataset["tableColumn"],
+            gridColumn: element.style.gridColumn,
+            gridRow: element.style.gridRow,
+            row: element.dataset["tableRow"],
+        };
+    }
+
+    it.each([
+        {
+            attribute: "plantId",
+            item: "[data-plant-id]",
+            mode: "#tablePickerMode",
+            picker: "#labelPicker",
+            tab: "#singleModeTab",
+        },
+        {
+            attribute: "bulkPlantId",
+            item: "[data-bulk-plant-id]",
+            mode: "#bulkTablePickerMode",
+            picker: "#bulkPlantList",
+            tab: "#bulkModeTab",
+        },
+    ])(
+        "aligns every maintained front pot in $picker and retains numbered and unknown pots",
+        async ({ attribute, item, mode, picker, tab }) => {
+            expect.hasAssertions();
+
+            const { bootstrapData, placements } = await tableFixture();
+            bootstrapData.plants.push({
+                ...required(bootstrapData.plants[0]),
+                id: "P99",
+                label: "New pot",
+                name: "Unrecorded fixture plant",
+            });
+            const { window } = createLoggerWindow({ bootstrapData });
+            click(window, tab);
+            click(window, mode);
+            const container = queryElement(
+                window.document,
+                picker,
+                HTMLElement
+            );
+            const buttons = queryElements(container, item, HTMLButtonElement);
+            const front = placements.filter(({ zone }) => zone === "front");
+            const uniqueIds = new Set(
+                buttons.map((button) => button.dataset[attribute])
+            );
+
+            expect(front).toHaveLength(24);
+            expect(container.classList.contains("table-picker")).toBe(true);
+            expect(buttons).toHaveLength(bootstrapData.plants.length);
+            expect(uniqueIds.size).toBe(bootstrapData.plants.length);
+
+            for (const placement of front) {
+                const position = required(
+                    /^R(?<row>\d)C(?<column>\d)$/v.exec(placement.position)
+                        ?.groups
+                );
+                const button = required(
+                    buttons.find(
+                        (candidate) =>
+                            candidate.dataset[attribute] === placement.id
+                    )
+                );
+
+                expect(coordinates(button)).toStrictEqual({
+                    column: position["column"],
+                    gridColumn: position["column"],
+                    gridRow: String(5 - Number(position["row"])),
+                    row: position["row"],
+                });
+            }
+
+            const numbered = placements
+                .filter(({ label }) => label.startsWith("#"))
+                .toSorted(
+                    (left, right) =>
+                        Number(left.label.slice(1)) -
+                        Number(right.label.slice(1))
+                );
+            const numberedIds = new Set(numbered.map(({ id }) => id));
+
+            expect(
+                buttons
+                    .filter((button) =>
+                        numberedIds.has(button.dataset[attribute] ?? "")
+                    )
+                    .map((button) => button.dataset[attribute])
+            ).toStrictEqual(numbered.map(({ id }) => id));
+            expect(container.textContent).toContain("Numbered pots");
+            expect(container.textContent).toContain(
+                "Other pots · position unrecorded"
+            );
+            expect(
+                required(
+                    buttons.find(
+                        (button) => button.dataset[attribute] === "P99"
+                    )
+                ).textContent
+            ).toContain("New pot");
+            expect(
+                required(
+                    buttons.find(
+                        (button) => button.dataset[attribute] === "P99"
+                    )
+                ).dataset
+            ).not.toHaveProperty("tableRow");
+        }
+    );
+
+    it("keeps physical slots when search and not-weighed filters hide neighbors", async () => {
+        expect.hasAssertions();
+
+        const { bootstrapData } = await tableFixture();
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date("2026-09-06T16:05:00Z"));
+        const { window } = createLoggerWindow({
+            bootstrapData,
+            storage: {
+                gardenLoggerBulkPickerModeV1: "table",
+                gardenLoggerPlantPickerModeV1: "table",
+                gardenPlantId: "P01",
+            },
+        });
+        const first = queryElement(
+            window.document,
+            '#labelPicker [data-plant-id="P01"]',
+            HTMLButtonElement
+        );
+        const second = queryElement(
+            window.document,
+            '#labelPicker [data-plant-id="P02"]',
+            HTMLButtonElement
+        );
+        const initial = coordinates(first);
+        click(window, "#notWeighedToday");
+
+        expect(second.hidden).toBe(true);
+        expect(first.hidden).toBe(false);
+        expect(coordinates(first)).toStrictEqual(initial);
+
+        click(window, "#notWeighedToday");
+        enterWorkflowValue(window, "plantSearch", "P01");
+
+        expect(
+            queryElement(
+                window.document,
+                "#plantSearch",
+                HTMLInputElement
+            ).closest("[hidden]")
+        ).toBeNull();
+        expect(second.hidden).toBe(true);
+        expect(
+            coordinates(
+                queryElement(
+                    window.document,
+                    '#labelPicker [data-plant-id="P01"]',
+                    HTMLButtonElement
+                )
+            )
+        ).toStrictEqual(initial);
+
+        expect(
+            queryElements(
+                window.document,
+                "#labelPicker .table-picker-heading",
+                HTMLElement
+            )
+                .filter((heading) => !heading.hidden)
+                .map((heading) => heading.textContent)
+        ).not.toContain("Numbered pots");
+
+        enterWorkflowValue(window, "plantSearch", "no such fixture plant");
+
+        expect(
+            queryElements(
+                window.document,
+                "#labelPicker button",
+                HTMLButtonElement
+            ).filter((button) => !button.hidden)
+        ).toHaveLength(0);
+        expect(
+            queryElements(
+                window.document,
+                "#labelPicker .table-picker-heading",
+                HTMLElement
+            ).filter((heading) => !heading.hidden)
+        ).toHaveLength(0);
+
+        enterWorkflowValue(window, "plantSearch", "");
+
+        expect(
+            queryElements(
+                window.document,
+                "#labelPicker [data-table-row]",
+                HTMLButtonElement
+            ).filter((button) => !button.hidden)
+        ).toHaveLength(24);
+
+        click(window, "#bulkModeTab");
+        const bulk = queryElement(
+            window.document,
+            '#bulkPlantList [data-bulk-plant-id="P01"]',
+            HTMLButtonElement
+        );
+        const bulkInitial = coordinates(bulk);
+        bulk.click();
+        enterWorkflowValue(window, "bulkSearch", "P02");
+
+        expect(
+            queryElement(window.document, "#bulkCount", HTMLElement).textContent
+        ).toBe("1 selected");
+        expect(
+            queryElement(
+                window.document,
+                '#bulkPlantList [data-bulk-plant-id="P02"]',
+                HTMLButtonElement
+            ).style.gridColumn
+        ).toBe(second.style.gridColumn);
+
+        expect(
+            queryElements(
+                window.document,
+                "#bulkPlantList .table-picker-heading",
+                HTMLElement
+            )
+                .filter((heading) => !heading.hidden)
+                .map((heading) => heading.textContent)
+        ).not.toContain("Numbered pots");
+
+        enterWorkflowValue(window, "bulkSearch", "no such fixture plant");
+
+        expect(
+            queryElements(
+                window.document,
+                "#bulkPlantList [data-bulk-plant-id]",
+                HTMLButtonElement
+            ).filter((button) => !button.hidden)
+        ).toHaveLength(0);
+        expect(
+            queryElements(
+                window.document,
+                "#bulkPlantList .table-picker-heading",
+                HTMLElement
+            ).filter((heading) => !heading.hidden)
+        ).toHaveLength(0);
+        expect(
+            queryElement(
+                window.document,
+                "#bulkPlantList .bulk-empty",
+                HTMLElement
+            ).style.gridColumn
+        ).toBe("1 / -1");
+
+        enterWorkflowValue(window, "bulkSearch", "");
+
+        expect(
+            coordinates(
+                queryElement(
+                    window.document,
+                    '#bulkPlantList [data-bulk-plant-id="P01"]',
+                    HTMLButtonElement
+                )
+            )
+        ).toStrictEqual(bulkInitial);
+        expect(
+            queryElement(
+                window.document,
+                '#bulkPlantList [data-bulk-plant-id="P01"]',
+                HTMLButtonElement
+            ).getAttribute("aria-pressed")
+        ).toBe("true");
+    });
+
+    it("preserves single and bulk drafts and selections through modes and refresh, then restores both table preferences", async () => {
+        expect.hasAssertions();
+
+        const { bootstrapData } = await tableFixture();
+        const { behaviors, window } = createLoggerWindow({
+            bootstrapData,
+            storage: { gardenPlantId: "P01" },
+        });
+        enterWorkflowValue(window, "weight", "432.5");
+        for (const mode of [
+            "#tablePickerMode",
+            "#labelPickerMode",
+            "#listPickerMode",
+            "#tablePickerMode",
+        ])
+            click(window, mode);
+        click(window, "#bulkModeTab");
+        click(window, "#bulkTablePickerMode");
+        click(window, '#bulkPlantList [data-bulk-plant-id="P02"]');
+        const notes = queryElement(
+            window.document,
+            "#bulkNotes",
+            HTMLTextAreaElement
+        );
+        notes.value = "Unfinished synthetic care note";
+        notes.dispatchEvent(new window.Event("input", { bubbles: true }));
+        for (const mode of [
+            "#bulkLabelPickerMode",
+            "#bulkListPickerMode",
+            "#bulkTablePickerMode",
+        ])
+            click(window, mode);
+        behaviors.getWebAppBootstrap = ({ success }) => {
+            success({
+                ...bootstrapData,
+                plants: bootstrapData.plants.map((plant) => ({
+                    ...plant,
+                    name: `${plant.name} refreshed`,
+                })),
+            });
+        };
+        refreshWorkflow(window);
+
+        expect(
+            queryElement(window.document, "#weight", HTMLInputElement).value
+        ).toBe("432.5");
+        expect(
+            queryElement(window.document, "#plantSelect", HTMLSelectElement)
+                .value
+        ).toBe("P01");
+        expect(
+            queryElement(window.document, "#bulkNotes", HTMLTextAreaElement)
+                .value
+        ).toBe("Unfinished synthetic care note");
+        expect(
+            queryElement(
+                window.document,
+                '#bulkPlantList [data-bulk-plant-id="P02"]',
+                HTMLButtonElement
+            ).getAttribute("aria-pressed")
+        ).toBe("true");
+        expect(
+            queryElement(
+                window.document,
+                '#bulkPlantList [data-bulk-plant-id="P02"]',
+                HTMLButtonElement
+            ).getAttribute("aria-label")
+        ).toContain("refreshed");
+        expect(
+            window.localStorage.getItem("gardenLoggerPlantPickerModeV1")
+        ).toBe("table");
+        expect(
+            window.localStorage.getItem("gardenLoggerBulkPickerModeV1")
+        ).toBe("table");
+
+        const reloaded = createLoggerWindow({
+            bootstrapData,
+            storage: copyLoggerStorage(window),
+        }).window;
+
+        expect(
+            queryElement(
+                reloaded.document,
+                "#tablePickerMode",
+                HTMLButtonElement
+            ).getAttribute("aria-pressed")
+        ).toBe("true");
+        expect(
+            queryElement(
+                reloaded.document,
+                "#bulkTablePickerMode",
+                HTMLButtonElement
+            ).getAttribute("aria-pressed")
+        ).toBe("true");
     });
 });
 

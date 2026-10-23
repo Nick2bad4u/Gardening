@@ -4,8 +4,9 @@ Production logger **5.38.0 / immutable version 114** supports **38 container all
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained and deployed source are **5.38.0**, with production **AppSheet
-1.100135** verified by an independent saved-definition readback. The rollout
+Maintained source is **5.39.0**; production remains **5.38.0 / immutable 114**
+until the table-picker rollout below is verified. Production **AppSheet
+1.100135** was verified by an independent saved-definition readback. The rollout
 receipt below records the production checks separately from rehearsal results.
 
 The mobile logger and AppSheet are the observation input surfaces. The unused
@@ -36,6 +37,20 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## October 23 table picker
+
+The maintained **5.39.0** client adds **Table** beside List and Labels in both
+single-plant and Bulk care pickers. Each remembers its own view. The 24 lettered
+pots use the maintained front-table positions, with the window/back row at the
+top. Numbered pots keep natural label order below the grid. Filters preserve
+empty table positions, and switching views retains selections and form entries.
+
+The bulk audit verified all 12 shared actions, including Mist, Move, Environment,
+Propagate, and Inspect, in the existing client, server, and staging contract.
+Leaf VPD, Temperature, Light, and Humidity remain individual measurements; no
+new event or workbook/AppSheet column is needed. The server change is the logger
+version only. Production deployment and preservation receipts are pending.
 
 ## October 22 houseplant production rollout
 
@@ -3250,19 +3265,29 @@ For the analytics migration, use the guarded request builder instead of a full
 refresh; the [operator guide](WORKBOOK-ANALYTICS.md) defines its write boundaries.
 
 The mobile app remembers the selected plant, theme, plant-picker style, and
-recent-History length on that device. The searchable selector can be switched
-to a compact grid containing every current pot label. Selected round events can
+recent-History length on that device. Both the single-plant and bulk pickers offer
+**List / Labels / Table**. Labels uses natural pot-label order. Table places the
+24 lettered pots in six columns and four rows, with R4 nearest the window at the
+top and R1 nearest the room at the bottom; numbered pots retain natural label
+order below the grid. Search and Not weighed today preserve empty table slots
+instead of moving the remaining pots. Each picker remembers its own mode.
+Selected round events can
 be retained between plants; weight state is inferred and has no manual control.
 The nutrient yes/no choice, product, and amount are remembered and mirrored
-between single and bulk care for that browser session. The 12 single-entry
-event buttons form a three-by-four grid; bulk care offers Water, Check,
-Rotation, Clean, Prune, Pest, and Other.
+between single and bulk care for that browser session. The single-entry form
+offers 21 actions. Bulk care offers Water, Mist, Check, Inspect, Rotation, Move,
+Environment, Clean, Prune, Propagate, Pest, and Other; its newer shared-action
+fields retain the same validation and retry handling as individual entry.
 It deliberately clears measurements after each confirmed save. Bulk care has
-its own remembered **List / Labels** switch, with cached SVG portraits in both
-views and multiple selections shared across them. Filtering or switching modes
+its own remembered view, with cached SVG portraits and multiple selections shared
+across views. Filtering or switching modes
 does not discard selected plants; **Select visible** adds only the current
 matches, and **Clear selection** removes all selections. Label buttons use
-natural pot-label order while save requests retain canonical P-ID order.
+natural pot-label order outside Table's positioned group, while save requests
+retain canonical P-ID order. The inline `TABLE_PICKER_ROWS` P-ID grid is checked
+against `site/lib/watering-placement.mjs` and its maintained Markdown placement
+source by the logger client tests. Keep both synchronized for arrangement changes;
+a Move history event does not itself assign a grid position.
 The desktop sidebar keeps the garden links. On both desktop and phones, the
 active form's save/queue controls come first, followed by the phone queue when
 it contains entries (or a storage warning), then Recent History last. A queued

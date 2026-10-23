@@ -1,5 +1,7 @@
 import { readFile } from "node:fs/promises";
 
+import { getContainers } from "../../site/lib/containers.mjs";
+
 const source = await readFile("scripts/google-sheets/Index.html", "utf8");
 
 const events = [
@@ -63,37 +65,35 @@ const namedPlants = {
     P05: "Old Man of the Andes",
     P06: "Eastern prickly pear cactus",
 };
-const plants = Array.from({ length: 36 }, (_, index) => ({
+// Only permanent identities come from maintained local content. Observations,
+// names and service responses remain synthetic; this never reads Google Sheets.
+const containers = await getContainers();
+const plants = containers.map(({ id, label }, index) => ({
     currentLocation: "Upper shelf",
     currentPotSize:
-        index === 35
+        id === "P38"
             ? "Glass jar with cork lid; seller-listed 6.3 × 3.9 in (16 × 10 cm); dimension orientation unverified"
             : "4 in",
     daysSinceWater: 4,
-    dryOrLowestWeight: index === 35 ? "" : 390,
+    dryOrLowestWeight: id === "P38" ? "" : 390,
     dryOrLowestWeightDate: "Sep 1, 2026",
     fieldGuideUrl: "https://example.test/guide#parodia-leninghausii",
     historyUrl: "https://example.test/history",
-    id: `P${String(index + (index < 32 ? 1 : 3)).padStart(2, "0")}`,
-    label:
-        index < 24
-            ? String.fromCodePoint(65 + Math.floor(index / 4)) +
-              String((index % 4) + 1)
-            : `#${String(index - 23)}`,
+    id,
+    label,
     lastWatered: "Sep 5, 2026",
     latestWeight: 430,
     latestWeightAt: "2026-09-09T14:00:00Z",
     name:
-        index === 35
+        id === "P38"
             ? "Mixed tropical terrarium"
-            : (namedPlants[`P${String(index + 1).padStart(2, "0")}`] ??
-              `Collection plant ${index + 1}`),
+            : (namedPlants[id] ?? `Collection plant ${index + 1}`),
     potSetup: 1,
     scientificName:
-        index === 35
+        id === "P38"
             ? "Probable Fittonia albivenis + Hypoestes phyllostachya; tentative Pilea cf. depressa; fern-like foliage and moss unidentified"
             : "Parodia leninghausii",
-    ...(index === 35 && {
+    ...(id === "P38" && {
         latestAirTemperature: 0,
         latestAirTemperatureAt: "2026-09-09T13:00:00Z",
         latestLux: 450,
