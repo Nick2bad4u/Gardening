@@ -1,6 +1,6 @@
 # Equipment and Supplies
 
-Equipment and supplies documented through October 10, 2026, grouped by use. Entries distinguish the installed setup from planned additions and stored equipment.
+Equipment and supplies documented through October 22, 2026, grouped by use. Entries distinguish the installed setup from planned additions and stored equipment.
 
 ## Display and Support
 
@@ -9,7 +9,8 @@ Equipment and supplies documented through October 10, 2026, grouped by use. Entr
 - **[Freestanding blackout room divider](https://www.amazon.com/dp/B0GS9FSNXT).** The recorded order is the 5 × 6-foot panel with wider feet. It forms the backdrop/support for the existing Mylar arrangement; this is not a fixture suspension point.
 - **[VIVOSUN diamond Mylar roll](https://www.amazon.com/dp/B01MZ72PAH) · 6 mil, 4 × 25 feet.** Used on the divider and as a loose floor-protection sheet. The two-foot room-end return panel was removed.
 - **Four heavy-duty screw eyelets and the fixtures' included adjustable ropes.** The eyelets were bought at a local hardware store; two support each independently hung fixture. Exact eyelet brand/load ratings are unrecorded. Each fixture hangs independently.
-- **North-facing windowsill.** Current position of #3 / P21 Money Tree, confirmed September 16. Its vacated wooden-table position remains open. Sill dimensions and light at the leaves are unmeasured.
+- **Money-tree support.** Photographs supplied October 22 show #3 / P21 Money Tree on a stool on the room side of the display; capture date, stool model, dimensions, and leaf exposure remain unrecorded. Do not infer that this is one of the planned Bamworld stools. The September 16 north-windowsill placement is historical.
+- **Terrarium desk.** P38 / #12 sits on the desk to the right of the table display in photographs supplied October 22. Desk dimensions and current leaf-level light are unmeasured.
 
 - **[Bamworld three-pack plant stools, Nature](https://www.amazon.com/dp/B0GTHQRZSL).** Ordered September 20; receipt and assembly are unrecorded. The seller describes pine and diagram heights of **7.8, 8.6, and 11.5 inches**. Assembled heights and support-top diameters are unmeasured. The September 22 plan assigns the **smallest stool to P31 / #7 Peperomia**, beside P32 at the living-room north-facing double glass sliding door; P32 will be closest to the glass. Completed placement is unrecorded. Measure light at the leaves after positioning the stool.
 
@@ -75,13 +76,16 @@ The September 28 purchase list adds the supplies below. Quantities describe that
 
 ## Pots, Medium, and Top Dressing
 
+- **Glass destination pots for P39 / #13 and P40 / #14.** Owned, with a drainage hole according to the October 22 owner clarification. The pots are irregularly shaped; the owner plans to measure them tonight, but sizes, brand/model, and usable internal dimensions remain unrecorded. Acrylic paint is planned **only on the exterior below the soil line**, clarified October 22. Paint product and cure details remain unrecorded. No completed painting or repot is reported.
+- **Incoming VERYPLANTS Molly's mixes, exact products pending.** Expected in a few days as of October 22. The owner tentatively identifies the other two products besides Succulent Mix as Aroid and Orchid mixes; exact bag names, quantities, formulations, blend recipes, and assignments to P39/P40 remain unverified. They are not recorded as the plants' current medium.
+
 - **Blue-and-white ceramic pot · owner-described 6-inch size.** Acquired at Home Depot on October 6, 2026, for the new [_Echeveria_ 'Arctic Ice'](../setup.md#october-6-arctic-ice-acquisition). Brand/model, store location, measured internal dimensions, drainage hole or plug, and saucer details are unrecorded. Receipt of this pot is confirmed by the owner; completed repotting and the plant's current container are not yet documented. Owner photos and further details are pending.
 
 - **Two Amazon Basics eight-inch destination pots.** The owner confirms two pots with many drainage holes for P31 / #7 and P32 / #8, one previously decorated. The September 22 plan puts them side by side at the living-room north-facing sliding glass door, P31 on the smallest Bamworld stool and P32 closest to the glass; no completed placement or repotting is reported.
 - **Loose Carlson's greenhouse potting mix.** Supplied for the proposed P31/P32 repots and described by the owner as airy and containing perlite. The owner plans to blend it with Molly's Succulent Mix; additional perlite is available, but no ratio or completed blend is recorded. The existing nursery-pot medium is separately unrecorded.
 
 - **[SQKH four-inch pots and trays](https://www.amazon.com/dp/B0DNSJG1FL).** Colorful six-pack polypropylene planters with drainage, purchased across several orders. The starter group and later arrivals use these or their individually documented containers; pot setup numbers remain per pot.
-- **[Amazon Basics six-inch white pot](https://www.amazon.com/dp/B0F4QBMJMN).** Current Money Tree container, with drainage holes and ridges.
+- **[Amazon Basics six-inch white pot](https://www.amazon.com/dp/B0F4QBMJMN).** Earlier recorded Money Tree container, with drainage holes and ridges. Photographs supplied October 22 show a dark pot; its identity, dimensions, and any repot/setup change remain unconfirmed.
 - **[Amazon Basics eight-inch white polypropylene pots](https://www.amazon.com/dp/B0F4QB8C8M).** Two owner-confirmed destination pots for the P31/P32 repot plan, with many drainage holes according to the owner. One is the previously decorated pot; its specific plant assignment remains unconfirmed. Eight inches is the retail size; no planting or internal measurement is documented.
 - **[D'vine Dev beaded ceramic pot, Blush Mauve, model 27-C-Z-K](https://www.amazon.com/dp/B0H6J4RCF8).** Used for the **September 23 P35 / #9 repot**: four visible Lithops heads share this pot at setup 2, logged as **4.2 in round**. The title says four inches, while the selected variant is **4.3 Inch**; these seller descriptions are distinct from the logged size. Seller claims: glazed ceramic, a drainage hole, matching saucer, drainage net, and pad. The owner's existing intention not to use the saucer remains recorded; actual drainage and usable internal depth remain unverified.
 - **[Thirtypot speckled-brown ceramic pot](https://www.amazon.com/dp/B0GGSNQG27).** Used for the **September 23 P36 / #10 split-rock repot**, at setup 2 with pot size logged as **4 in round**. The title says four inches, while the selected variant is **4.5 Inch, Speckled-brown**. Seller external dimensions are waist **4.5 in / 11.4 cm**, opening **3.7 in / 9.5 cm**, height **3.6 in / 9.2 cm**, and bottom **2 in / 5 cm**. The listing describes ceramic, a drainage hole, a plug, and a net. Actual drainage, plug use, and usable internal depth remain unverified.

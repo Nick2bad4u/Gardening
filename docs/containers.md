@@ -1,6 +1,6 @@
 # Containers and shared planters
 
-Last updated: 2026-10-21
+Last updated: 2026-10-22
 
 The collection has **38 tracked containers**, including **five shared
 plantings**. Its **48 current profile pages** comprise **45 botanical profile
@@ -15,7 +15,7 @@ context, and links to the existing observation history together.
 
 ## Terrarium — Houseplants aggregate with provisional identities
 
-**P38 / #12 — Terrarium**, enrolled October 9, 2026, retains one container history and an aggregate [Houseplants profile, Houseplant-05](./plants/houseplants/terrarium.md). No separate botanical member profiles are allocated. Five owner-supplied photographs received October 10 show a rounded glass jar with a cork lid and several plant forms. The [terrarium arrival record](./terrarium.md) preserves the qualified visual identifications, shipping-condition evidence, and owner-reported shelf placement near the cactus grow area; the seller gives no species list. Glass jar with cork lid; seller-listed 6.3 × 3.9 in (16 × 10 cm); dimension orientation unverified. Seller care says keep the lid closed and mist only when needed. The owner's normal lid routine, drainage, and substrate recipe remain unverified.
+**P38 / #12 — Terrarium**, enrolled October 9, 2026, retains one container history and an aggregate [Houseplants profile, Houseplant-05](./plants/houseplants/terrarium.md). No separate botanical member profiles are allocated. Five owner-supplied photographs received October 10 show a rounded glass jar with a cork lid and several plant forms. The [terrarium arrival record](./terrarium.md) preserves the qualified visual identifications, shipping-condition evidence, and historical October 10 shelf report and the desk position to the right of the table display shown in photographs supplied October 22; the seller gives no species list. Glass jar with cork lid; seller-listed 6.3 × 3.9 in (16 × 10 cm); dimension orientation unverified. Seller care says keep the lid closed and mist only when needed. The owner's normal lid routine, drainage, and substrate recipe remain unverified.
 
 ## Which identifier means what?
 

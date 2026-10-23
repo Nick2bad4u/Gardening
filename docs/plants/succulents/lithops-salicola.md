@@ -11,6 +11,8 @@
 - Acquired on: 2026-09-21
 - Current pot: Shared D'vine Dev Blush Mauve planter, repotted 2026-09-23; see the aggregate P35 record for pot dimensions, medium, and setup history
 
+Placement evidence: photographs supplied October 22, 2026 show the shared P35 mauve pot at the back left behind Kiwi. The capture date and leaf-height exposure are unrecorded; both component profiles retain the same container location and history.
+
 ## Names and identification
 
 | Kind                                 | Record                                                                   |

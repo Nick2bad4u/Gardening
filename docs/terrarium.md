@@ -1,6 +1,6 @@
 # Terrarium arrival record
 
-Last updated: 2026-10-10
+Last updated: 2026-10-22
 
 **Container: P38 · Physical label: #12.** Enrolled October 9, 2026. Five owner
 photographs supplied October 10 document its condition after shipping; the
@@ -32,10 +32,10 @@ owner-reported instrument reading at the cap, not a verified whole-jar humidity
 measurement or a root-zone moisture test. The seller suggested **90% RH**; that
 is recorded as seller guidance, not an adopted collection target.
 
-The owner keeps it **on a shelf near the cactus grow area, but not close to it**.
-An approximate **9,000 lux** reading was taken **outside the glass on the side
-closest to the grow light**. The owner is considering reducing that reading to
-about **7,000 lux**; no move or new reading has been reported. That is a proposed
+The owner reported **a shelf near the cactus grow area, but not close to it**, on October 10. Photographs supplied **October 22** show the jar **on the desk to the right of the table display**; their capture date is unrecorded.
+The earlier approximate **9,000 lux** reading was taken **outside the glass on the side
+closest to the grow light**. The owner proposed reducing that reading to
+about **7,000 lux**; no new reading or completed light adjustment has been reported for the desk location. That is a proposed
 adjustment, not a verified plant requirement. The meter/app, lamp identity,
 distance, daily light duration, and leaf-level illumination inside are unknown.
 No PPFD or daily light integral is calculated from this external-glass reading.
@@ -54,7 +54,7 @@ but its contents have not been supplied. This describes the seller's intended
 routine, not the owner's observed lid or watering history.
 
 Substrate recipe, the owner's normal lid routine, and watering history
-remain unrecorded. The photography location is not the reported shelf location.
+remain unrecorded. The October 10 arrival views do not establish their photography location; the October 22 display photographs supply the later desk-location evidence.
 Fogging alone does not establish water pooling at the bottom.
 
 ## Working plant identifications

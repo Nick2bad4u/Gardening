@@ -1,6 +1,7 @@
 ---
 import SiteLayout from "../../components/SiteLayout.astro";
 import DocumentArticle from "../../components/DocumentArticle.astro";
+import WateringMap from "../../components/tools/WateringMap.astro";
 import { getDocument } from "../../lib/content.mjs";
 import { siteUrl } from "../../lib/routes.mjs";
 const document = await getDocument("docs/layouts/table-placement-research.md");
@@ -13,7 +14,7 @@ const diagramSections = document.toc.filter((section) =>
         "illustrated-relative-light",
         "whole-display",
         "front-tables-six-columns-four-rows",
-        "rear-tables-and-north-windowsill",
+        "rear-tables-and-nearby-pots",
     ].includes(section.id)
 );
 ---
@@ -28,16 +29,14 @@ const diagramSections = document.toc.filter((section) =>
     ]}
 >
     <DocumentArticle document={document}>
+        <WateringMap />
         <nav class="diagram-navigation card" aria-label="Placement and light diagrams">
             <h2>Placement and Light Diagrams</h2>
             <p>
                 Open a diagram to see it at full size. These illustrations show the September 16
-                arrangement, with Money Tree on the separate north windowsill. Serpent and
-                Hook-spined cactus have since exchanged positions; see the{" "}
-                <a href="#owner-light-readings-and-confirmed-swap">
-                    current positions and light readings
-                </a>
-                below. Light shading in the diagrams is estimated.
+                arrangement. Later swaps, newer rear pots, and the Money Tree and terrarium moves
+                appear in the <a href="#watering-map">current watering map</a>
+                and written placement records. Light shading in the old diagrams is estimated.
             </p>
             <ul>
                 {diagramSections.map((section) => (

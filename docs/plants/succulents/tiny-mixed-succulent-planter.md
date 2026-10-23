@@ -8,7 +8,7 @@
 - Identification: **Smart Planet Home five-plant retail succulent garden; component-level foliage matches are provisional and no cultivar is treated as proven**
 - Acquired from: Home Depot; grown by Altman Plants under Smart Planet Home branding; exact store not recorded
 - Acquired on: 2026-09-02
-- Current pot: setup 2; repotted together in the purchased terra-cotta planter, logged as “5 inch shallow” with “Nursery cacti soil and my top dressing”
+- Current pot: green glazed round bowl visible in photographs supplied October 22, 2026; dimensions, medium, and any repot/setup change unconfirmed. The September 2 care-day setup-2 record describes the earlier terra-cotta planter as “5 inch shallow” with “Nursery cacti soil and my top dressing”
 
 ## Names and identification
 
@@ -53,6 +53,8 @@ top view, and the shared post-repot context. These views provide a visual record
 The components were kept together during the September 2 repot in the purchased
 five-inch-class terra-cotta planter. The repot was logged at **September 3, 2026, 12:18 a.m. EDT**, with **“5 inch shallow”** and **“Nursery cacti soil and my top dressing”** as its setup-2 descriptions. Exact depth and ingredient proportions remain unmeasured. All plants share the same root volume, watering, and whole-pot weight.
 
+The photographs supplied October 22 show a green glazed round bowl in the same rear-zone position. Their capture date and any intervening repot date are unrecorded; retain the historical setup-2 description without treating the photo as a care event.
+
 ## Why the component names stay broad
 
 Echeveria includes many species and cultivated hybrids, while the two
@@ -62,14 +64,14 @@ explain those comparisons alongside each group's growth habit.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                                                                                                                                                                                                        |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Arrival             | Use the September 2 views as the visual baseline. Watch each component for collapse, translucence, pests, or poor rooting even though observations are saved against one planter.                                                                                                                                  |
-| Grow-light position | **Photo-matched front of rear zone, between #1 and #5 · Bright.** September 15 rear wooden tables, facing the window. Compare the low rosettes and paddle leaves for shadows from the large pots. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
-| Water               | Judge the shared root volume by full dry-down and whole-pot weight. Water thoroughly and drain, but do not repeatedly wet the pot for one component while the others remain firm.                                                                                                                                  |
-| Pot and mix         | Setup 2 records “5 inch shallow” with “Nursery cacti soil and my top dressing.” Exact depth and ingredient proportions remain unrecorded; the pot description alone does not verify drainage performance.                                                                                                          |
-| Mixed growth        | Prune or separate only if one component begins shading, crowding, or demanding a materially different watering rhythm.                                                                                                                                                                                             |
-| Feeding             | Use the collection's dilute succulent product only during an ordinary active-growth watering. Avoid feeding stressed or poorly rooted components.                                                                                                                                                                  |
+| Topic               | Practical starting approach                                                                                                                                                                                                                                                                                                                                                           |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Arrival             | Use the September 2 views as the visual baseline. Watch each component for collapse, translucence, pests, or poor rooting even though observations are saved against one planter.                                                                                                                                                                                                     |
+| Grow-light position | **Photo-matched front of rear zone, between #1 and #5 · Bright.** Rear wooden tables, facing the window; position retained in photographs supplied October 22 (capture date unrecorded). Compare the low rosettes and paddle leaves for shadows from the large pots. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
+| Water               | Judge the shared root volume by full dry-down and whole-pot weight. Water thoroughly and drain, but do not repeatedly wet the pot for one component while the others remain firm.                                                                                                                                                                                                     |
+| Pot and mix         | The historical setup-2 record describes “5 inch shallow” with “Nursery cacti soil and my top dressing.” The October 22 view shows a green glazed bowl; it does not establish a new setup, medium, dimensions, or drainage.                                                                                                                                                            |
+| Mixed growth        | Prune or separate only if one component begins shading, crowding, or demanding a materially different watering rhythm.                                                                                                                                                                                                                                                                |
+| Feeding             | Use the collection's dilute succulent product only during an ordinary active-growth watering. Avoid feeding stressed or poorly rooted components.                                                                                                                                                                                                                                     |
 
 ## Rotation and watch points
 

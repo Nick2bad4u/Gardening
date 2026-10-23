@@ -1,6 +1,6 @@
 # Pot labels
 
-Last updated: 2026-10-21
+Last updated: 2026-10-22
 
 This is the print reference for 48 active profile records across 38 tracked pot allocations. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
 
@@ -14,14 +14,14 @@ planter (`P30`). Their Smart Planet Home / Altman Plants tags are archived; `#5`
 the probable _F. tuberculosa_ identification alongside its retail
 _F. tigrina_ name.
 
-Current numbered labels are **#1–#12**. Peperomia Bicolor uses **#7 / P31**, and Tricolor oyster plant uses **#8 / P32**.
+Current numbered labels are **#1–#14**. Peperomia Bicolor uses **#7 / P31**, and Tricolor oyster plant uses **#8 / P32**.
 
 The six Mountain Crest mappings were recorded after receipt on
 2026-08-28: `G1` Black Widow (`P27`), `G2` paper spine (`P23`), `G3` Royal
 Flush split rock (`P28`), `H1` Coconut Crystal (`P24`), `H2` Raindrops (`P25`),
 and `H3` Eve's needle (`P26`).
 
-The current ID-to-plant mapping and proposed positions are in the
+The current ID-to-plant mapping and recorded positions, updated from photographs supplied October 22, are in the
 [Table Placement Guide](../layouts/table-placement-research.md). Label IDs stay
 with the plant when a pot moves.
 
@@ -501,7 +501,7 @@ One container · one care history
 ## October 21 houseplant labels
 
 The photographed Proven Winners leafjoy littles labels support these separate
-nursery identities. Pot measurements and placements remain unrecorded. Use the
+nursery identities. The owner confirmed October 22 that both were purchased October 21 at Home Depot in Howell, Michigan, and are quarantined in another room pending repotting. Pot measurements and precise positions remain unrecorded. Use the
 profile sources for care; the printed prompts are inspection reminders.
 
 | Label | Tracker | Inventory     | Profile                                                                                                                                   |

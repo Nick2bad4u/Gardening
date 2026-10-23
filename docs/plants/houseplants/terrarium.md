@@ -60,9 +60,9 @@ unverified; these are seller figures, not measured height, diameter, substrate
 depth, or root volume. Dark medium, moss, round brown pieces, and a mesh edge are
 visible; a drainage outlet or water reservoir is not established.
 
-The owner reports a shelf near, but not close to, the cactus grow area and about
-**9,000 lux outside the glass on the light-facing side**. Reducing that reading
-to about **7,000 lux** is proposed, not a completed move or a plant threshold.
+The owner reported a shelf near, but not close to, the cactus grow area on October 10, with about
+**9,000 lux outside the glass on the light-facing side**. Photographs supplied October 22 show the jar on the desk to the right of the table display; capture date is unrecorded and this position has no new light measurement. Reducing that reading
+to about **7,000 lux** remains a proposed light adjustment, not a confirmed setting or a plant threshold.
 Leaf-level light, lamp identity, distance, and duration are unrecorded.
 
 A mini sensor hanging below the cap reportedly read **99% RH with fogged glass**

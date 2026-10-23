@@ -146,6 +146,27 @@ metadata, and the homepage's Chromium installability diagnostics. A temporary
 persistent Edge profile can verify the deployed HTTPS pages without changing
 the owner's browser profile; this does not reproduce Android package installation.
 
+## Watering placement image
+
+The placement page's **Days since watering** panel generates an SVG from the
+maintained pot placements and the published observation log. It refreshes on
+opening and every five minutes while visible, shares the tracker's bounded
+24-hour snapshot cache, and recalculates elapsed calendar days in the collection's
+time zone. Saved previews and failed refreshes remain labeled in the page and
+downloads. PNG downloads render the same SVG at twice its native dimensions;
+both formats use a light background independent of the site theme.
+The preview fits the screen by default. **Enlarge image** switches to a closer
+view with contained horizontal scrolling; **Fit image** restores the overview.
+Printing always fits the full diagram, including when the preview is enlarged.
+
+The diagram shows recorded coordinates, with separate groups for the front
+tables, rear tables, and other pots. Money Tree's room-side stool and the
+terrarium's right-hand desk remain separate from table coordinates. Logged free-text
+locations appear in the accessible pot details without moving markers. Only
+active Water observations reset the count; unknown histories stay unknown.
+Elapsed days describe the log and do not recommend watering. The feature reads
+the published sources and never writes to the workbook.
+
 ## Artwork and photo publication
 
 The canonical portrait and interface artwork lives under `assets/artwork/`. Standalone exports retain their public `/assets/plant-icons/`, `/assets/ui-icons/`, and `/plant-icons.svg` addresses.

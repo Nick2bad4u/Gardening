@@ -6,9 +6,9 @@
 - Visual description: Thick, glossy dark-green leaves with rounded ends and slightly cupped blades grow on fleshy upright stems; water droplets are visible in the supplied photographs.
 - Interesting fact: Its cream-colored flower spikes carry tiny flowers rather than a showy petalled bloom; the baby rubber plant common name does not make it a rubber tree.
 - Identification: **Labeled _Peperomia obtusifolia_, Savory Delights™ Spice is Nice™; photographs are consistent with that species. Proven Winners associates the trade name with more than one cultivar; the exact cultivar of this plant is unverified.**
-- Acquired from: Retailer unrecorded; Proven Winners leafjoy littles nursery branding
-- Acquired on: Exact purchase date unrecorded; owned and photographs supplied 2026-10-21
-- Current pot: Nursery container visible in photographs; diameter, depth, drainage, and medium unrecorded
+- Acquired from: Home Depot, Howell, Michigan; owner clarification October 22, 2026; Proven Winners leafjoy littles nursery branding
+- Acquired on: 2026-10-21
+- Current pot: Nursery container pending repot; diameter, depth, drainage, and medium unrecorded. A glass pot with a drainage hole is a planned replacement, not the current setup
 
 ## Names and identity
 
@@ -41,17 +41,37 @@ the species name, not the introduction of the nursery selection.
 
 ![P40 peperomia with thick rounded glossy green leaves and visible water droplets](../../../assets/nursery-labels/2026-10-21-p40-peperomia-overview.jpg)
 
-The owner supplied the photographs on **October 21, 2026**; purchase date and
-capture time are unrecorded. The tag's Atrium, SpaScene, and WorkLife categories
+The owner supplied the photographs on **October 21, 2026** and later confirmed
+purchasing the plant that day at Home Depot in Howell. Capture time remains
+unrecorded. The tag's Atrium, SpaScene, and WorkLife categories
 describe marketing placements. They do not establish this plant's actual
 position or a need to keep it in a humid enclosure. Visible droplets do not
 establish when or whether the root ball was watered.
 
 ## Care in this collection
 
-Placement, leaf-level light, room conditions, pot dimensions, drainage, medium,
-nursery fertilizer charge, and earlier care remain unrecorded. No watering,
-weight, feeding, or repot event is inferred from enrollment or photographs.
+**Owner clarification, October 22:** P40 and P39 are quarantined in another
+room for roughly a week or until the planned repots. Exact placement,
+leaf-level light, and room conditions are unmeasured. Both received **RO water
+on October 21**, their purchase day, because the owner described the medium as
+extremely dry. Exact time, water volume, fertilizer use, and weights were not
+supplied. This is owner-reported care; it does not verify a saved live tracker
+entry or establish their present moisture.
+
+Irregularly shaped glass replacement pots with drainage holes are available,
+with acrylic painting below the soil line planned **on the outside only**.
+The owner plans measurements tonight; dimensions, paint product, and completed
+curing remain unconfirmed. Additional VERYPLANTS aroid/orchid mixes
+are expected in a few days; exact received bags and each plant's final recipe
+are pending. See the [planned setup](../../setup.md).
+The repot has not been reported complete; the nursery medium and fertilizer
+charge remain unknown.
+
+**Mix-selection assessment:** Molly's Aroid Mix is a plausible trial medium
+given the manufacturer's fast-draining structure and NC State's warning about
+persistent wetness in _P. obtusifolia_. This is a suitability inference, not a
+tested recipe for P40. Check the actual bag texture and root-ball fit before
+choosing the pot or adding the coarser orchid mix; no fixed blend is assigned.
 
 | Topic                | Practical approach                                                                                                                                                                                                                                                                                                       |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -72,7 +92,10 @@ appear after a move. Establish the purchased plant before taking cuttings.
 
 ## Sources
 
-- Owner-supplied label and plant photographs, October 21, 2026, linked above: exact label wording, separate container, and visible form. Growing conditions and purchase/capture dates unrecorded. Owner photographs remain copyright Nick, all rights reserved.
+- Owner clarification, October 22, 2026: Home Depot in Howell purchase and RO watering on October 21 after very dry medium; separate-room quarantine; irregular glass drainage pots with exterior-only acrylic painting planned; measurements expected that evening; incoming VERYPLANTS mixes. Exact watering time/volume, paint product, pot dimensions, and completed repot remain unrecorded.
+- [VERYPLANTS: Molly's Aroid Mix](https://veryplants.com/products/mollys-aroid-mix-premium-tropical-plant-soil-mix) and [Molly's Orchid Mix](https://veryplants.com/products/mollys-orchid-mix), inspected October 22, 2026: manufacturer descriptions of the two candidate media. Product descriptions are not evidence of the owner's exact received bags or plant-specific performance.
+
+- Owner-supplied label and plant photographs, October 21, 2026, linked above: exact label wording, separate container, and visible form; capture time unrecorded. Owner photographs remain copyright Nick, all rights reserved.
 - [Proven Winners: Savory Delights® Spice is Nice™](https://www.provenwinners.com/plants/peperomia/savory-delights-spice-nice-baby-rubber-plant-peperomia-obtusifolia): trade-name/cultivar association, glossy foliage, indirect light, drainage, and humidity guidance. Its depth-based watering advice must be scaled to the actual pot.
 - [NC State Extension: _Peperomia obtusifolia_](https://plants.ces.ncsu.edu/plants/peperomia-obtusifolia/): family, foliage and flower form, bright indirect light, wet/very-dry soil sensitivity, humidity guidance, and pests.
 - [RHS: How to grow peperomia](https://www.rhs.org.uk/plants/peperomia/how-to-grow-peperomia): partial drying, root inspection before repotting, and avoiding overwatering.
