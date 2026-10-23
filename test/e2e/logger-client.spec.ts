@@ -6,6 +6,7 @@ import { loggerBrowserFixture } from "../helpers/logger-browser-fixture.mjs";
 
 const pressedAttribute = "aria-pressed";
 const bulkCareTab = "Bulk care";
+const recalculateWorkbookName = "Recalculate workbook";
 
 const cactusArtwork = await readFile(
     ".pages-site/assets/plant-icons/parodia-leninghausii.svg"
@@ -835,15 +836,38 @@ for (const theme of ["dark", "light"] as const) {
     }
 }
 
+const expectRecalculationIcon = async (page: Readonly<Page>) => {
+    const icon = await page
+        .getByRole("button", { exact: true, name: recalculateWorkbookName })
+        .evaluate((button) => {
+            const svg = button.querySelector("svg");
+            const rect = svg?.getBoundingClientRect();
+            return {
+                hasDrawing: Boolean(svg?.querySelector("path[d]")),
+                labelVisible: Boolean(
+                    button
+                        .querySelector("#recalculateWorkbookLabel")
+                        ?.textContent.trim()
+                ),
+                visible:
+                    rect !== undefined && rect.width > 0 && rect.height > 0,
+            };
+        });
+    expect
+        .soft(icon)
+        .toStrictEqual({ hasDrawing: true, labelVisible: true, visible: true });
+};
+
 const beginWorkbookRecalculation = async (page: Readonly<Page>) => {
     const button = page.getByRole("button", {
         exact: true,
-        name: "Recalculate workbook",
+        name: recalculateWorkbookName,
     });
     await button.focus();
     await page.keyboard.press("Enter");
     await expect.soft(button).toBeDisabled();
     await expect.soft(button).toHaveAttribute("aria-busy", "true");
+    await expectRecalculationIcon(page);
     await expect
         .soft(
             page
@@ -866,11 +890,12 @@ const confirmWorkbookRecalculation = async (page: Readonly<Page>) => {
             })
         )
     );
+    await expectRecalculationIcon(page);
     await expect
         .soft(
             page.getByRole("button", {
                 exact: true,
-                name: "Recalculate workbook",
+                name: recalculateWorkbookName,
             })
         )
         .toBeEnabled();
@@ -945,6 +970,77 @@ const expectCalculationDisclosure = async (page: Readonly<Page>) => {
     await expect.soft(status).toBeVisible();
 };
 
+test.describe("button press feedback", { tag: "@logger" }, () => {
+    test.use({ hasTouch: true });
+
+    test("normal motion moves enabled controls while disabled controls ignore taps", async ({
+        page,
+    }) => {
+        await page.clock.install({ time: "2026-09-09T14:00:00Z" });
+        await openLogger(page, 390, "dark");
+        await page.emulateMedia({ reducedMotion: "no-preference" });
+        await page.clock.pauseAt("2026-09-09T14:00:01Z");
+        const capacity = page.getByRole("button", {
+            name: /History space at last refresh:/v,
+        });
+        await capacity.tap();
+        await expect.soft(capacity).not.toHaveCSS("transform", "none");
+        await page.clock.runFor(300);
+        await expect.soft(capacity).toHaveCSS("transform", "none");
+        await beginWorkbookRecalculation(page);
+        await page.clock.runFor(300);
+        const recalculate = page.getByRole("button", {
+            exact: true,
+            name: recalculateWorkbookName,
+        });
+        const restingFilter = await recalculate.evaluate(
+            (element) => getComputedStyle(element).filter
+        );
+        const rect = await recalculate.evaluate((element) => {
+            const bounds = element.getBoundingClientRect();
+            return {
+                height: bounds.height,
+                width: bounds.width,
+                x: bounds.x,
+                y: bounds.y,
+            };
+        });
+        await page.touchscreen.tap(
+            rect.x + rect.width / 2,
+            rect.y + rect.height / 2
+        );
+        await expect.soft(recalculate).toHaveCSS("filter", restingFilter);
+    });
+
+    for (const theme of ["dark", "light"] as const) {
+        test(`touch and keyboard feedback remains visible with reduced motion in ${theme}`, async ({
+            page,
+        }) => {
+            await page.clock.install({
+                time: "2026-09-09T14:00:00Z",
+            });
+            await openLogger(page, 390, theme);
+            await page.clock.pauseAt("2026-09-09T14:00:01Z");
+            const button = page.getByRole("button", {
+                name: /History space at last refresh:/v,
+            });
+            const restingFilter = await button.evaluate(
+                (element) => getComputedStyle(element).filter
+            );
+            await button.tap();
+            await expect.soft(button).not.toHaveCSS("filter", restingFilter);
+            await expect.soft(button).toHaveCSS("transform", "none");
+            await page.clock.runFor(300);
+            await expect.soft(button).toHaveCSS("filter", restingFilter);
+            await button.focus();
+            await page.keyboard.press("Enter");
+            await expect.soft(button).not.toHaveCSS("filter", restingFilter);
+            await page.clock.runFor(300);
+            await expect.soft(button).toHaveCSS("filter", restingFilter);
+        });
+    }
+});
+
 test.describe("capacity warning toolbar", () => {
     for (const width of [320, 390]) {
         for (const remainingRows of [
@@ -965,7 +1061,7 @@ test.describe("capacity warning toolbar", () => {
             test(
                 `capacity warning toolbar at ${width}px with ${String(remainingRows)} remaining`,
                 { tag: "@logger" },
-                async ({ page }) => {
+                async ({ page }, testInfo) => {
                     const fixtureHtml = loggerBrowserFixture().replace(
                         "window.google =",
                         () => `fixtureBootstrap.historyCapacity = ${JSON.stringify(capacityData)};
@@ -978,9 +1074,14 @@ test.describe("capacity warning toolbar", () => {
                         width === 320 ? "dark" : "light",
                         fixtureHtml
                     );
+                    await page
+                        .getByRole("group", { name: "Workbook controls" })
+                        .screenshot({
+                            path: testInfo.outputPath("warning-toolbar.png"),
+                        });
                     const recalculate = page.getByRole("button", {
                         exact: true,
-                        name: "Recalculate workbook",
+                        name: recalculateWorkbookName,
                     });
                     const geometry = await recalculate.evaluate((button) => {
                         const capacity = document.querySelector(
@@ -990,10 +1091,17 @@ test.describe("capacity warning toolbar", () => {
                             throw new Error("Missing history capacity control");
                         const buttonRect = button.getBoundingClientRect();
                         const capacityRect = capacity.getBoundingClientRect();
+                        const capacityRange = document.createRange();
+                        capacityRange.selectNodeContents(capacity);
+                        const capacityContent =
+                            capacityRange.getBoundingClientRect();
                         const range = document.createRange();
                         range.selectNodeContents(button);
                         const textRect = range.getBoundingClientRect();
                         return {
+                            capacityContentFits:
+                                capacityContent.left >= capacityRect.left &&
+                                capacityContent.right <= capacityRect.right,
                             controlsSeparated:
                                 buttonRect.right <= capacityRect.left ||
                                 capacityRect.right <= buttonRect.left ||
@@ -1012,6 +1120,7 @@ test.describe("capacity warning toolbar", () => {
                         };
                     });
                     expect.soft(geometry).toStrictEqual({
+                        capacityContentFits: true,
                         controlsSeparated: true,
                         labelFits: true,
                         withinViewport: true,
@@ -1052,6 +1161,11 @@ for (const theme of ["dark", "light"] as const) {
                 await beginWorkbookRecalculation(page);
                 await confirmWorkbookRecalculation(page);
                 await expectToolbarGeometry(page);
+                await page
+                    .getByRole("group", { name: "Workbook controls" })
+                    .screenshot({
+                        path: testInfo.outputPath("compact-toolbar.png"),
+                    });
                 await expectCalculationDisclosure(page);
                 await expect
                     .soft(
@@ -1151,6 +1265,7 @@ for (const theme of ["dark", "light"] as const) {
                                 ),
                             outcome
                         );
+                        await expectRecalculationIcon(page);
                         const status = page
                             .getByRole("status")
                             .filter({ hasText: confirmedCalculationText });
@@ -1170,7 +1285,7 @@ for (const theme of ["dark", "light"] as const) {
                             .soft(
                                 page.getByRole("button", {
                                     exact: true,
-                                    name: "Recalculate workbook",
+                                    name: recalculateWorkbookName,
                                 })
                             )
                             .toBeEnabled();

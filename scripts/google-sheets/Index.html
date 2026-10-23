@@ -32,6 +32,7 @@
                 --help-border: #9bbfc4;
                 --help-note: #fff3d5;
                 --help-note-ink: #684812;
+                --button-press-brightness: 0.85;
 
                 &[data-theme="dark"] {
                     color-scheme: dark;
@@ -55,6 +56,7 @@
                     --help-border: #537d80;
                     --help-note: #382f1d;
                     --help-note-ink: #f3dca4;
+                    --button-press-brightness: 1.25;
                     --shadow: 0 10px 30px rgb(0 0 0 / 0.3);
                 }
             }
@@ -653,18 +655,27 @@
             .workflow-toolbar {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 6px;
+                gap: 8px;
                 align-items: center;
                 padding-block: 8px 0;
 
                 & button {
-                    flex: 0 0 auto;
+                    flex: 1 1 auto;
                     justify-content: center;
                     min-inline-size: 0;
+                    white-space: nowrap;
                 }
 
-                & .workflow-recalculate {
-                    flex-grow: 1;
+                & button[aria-busy="true"] {
+                    cursor: progress;
+                    border-color: var(--forest-2);
+                    opacity: 0.75;
+                }
+            }
+
+            @keyframes button-working {
+                to {
+                    opacity: 0.35;
                 }
             }
 
@@ -693,10 +704,6 @@
                     margin-block: 0 8px;
                     overflow-wrap: anywhere;
                 }
-            }
-
-            .history-capacity {
-                max-inline-size: 130px;
             }
 
             .history-filters {
@@ -3165,6 +3172,24 @@
                 .portrait-button:hover,
                 .portrait-button:focus-visible {
                     box-shadow: 0 0 0 3px var(--line);
+                }
+            }
+
+            button:not(:disabled):active,
+            button.is-activated {
+                box-shadow: inset 0 0 0 2px currentcolor;
+                filter: brightness(var(--button-press-brightness));
+
+                @media (prefers-reduced-motion: no-preference) {
+                    transform: translateY(1px);
+                }
+            }
+
+            .workflow-toolbar button[aria-busy="true"] .app-icon {
+                animation: button-working 1s ease-in-out infinite alternate;
+
+                @media (prefers-reduced-motion: reduce) {
+                    animation: none;
                 }
             }
         </style>
@@ -14325,10 +14350,32 @@
                         <button
                             id="recalculateWorkbookButton"
                             type="button"
-                            class="photo-visibility-toggle workflow-recalculate"
+                            class="photo-visibility-toggle"
                             aria-label="Recalculate workbook"
                             aria-describedby="workbookCalculationStatus"
-                            >Recalculate</button
+                            ><svg
+                                viewBox="0 0 24 24"
+                                class="app-icon app-icon--small"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <rect
+                                    x="5"
+                                    y="2"
+                                    width="14"
+                                    height="20"
+                                    rx="2"
+                                ></rect>
+                                <path
+                                    d="M8 6h8M8 10h1m6 0h1M8 14h1m6 0h1M8 18h1m6 0h1"
+                                ></path></svg
+                            ><span id="recalculateWorkbookLabel"
+                                >Recalculate</span
+                            ></button
                         >
                         <button
                             id="historyCapacityStatus"
@@ -25655,7 +25702,7 @@
                 state.workbookCalculationPending = true;
                 button.disabled = true;
                 button.setAttribute("aria-busy", "true");
-                button.textContent = "Recalculating…";
+                $("recalculateWorkbookLabel").textContent = "Recalculating…";
                 showWorkbookCalculationStatus(
                     "Recalculating workbook…",
                     "pending"
@@ -25664,7 +25711,7 @@
                     state.workbookCalculationPending = false;
                     button.disabled = false;
                     button.setAttribute("aria-busy", "false");
-                    button.textContent = "Recalculate";
+                    $("recalculateWorkbookLabel").textContent = "Recalculate";
                     showWorkbookCalculationStatus(message, status);
                 };
                 const timeout = window.setTimeout(() => {
@@ -25985,6 +26032,20 @@
                     $("plantSelect").value
                 );
             });
+            document.addEventListener(
+                "click",
+                (event) => {
+                    if (!(event.target instanceof Element)) return;
+                    const button = event.target.closest("button");
+                    if (!button || button.disabled) return;
+                    button.classList.add("is-activated");
+                    window.setTimeout(
+                        () => button.classList.remove("is-activated"),
+                        250
+                    );
+                },
+                { capture: true }
+            );
             $("historyCapacityStatus").addEventListener("click", () => {
                 const details = $("workbookCalculationDetails");
                 details.open = !details.open;

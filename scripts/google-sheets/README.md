@@ -4,7 +4,7 @@ Production logger **5.39.2 / immutable version 117** supports **38 container all
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained source and production are **5.39.2**. Production **AppSheet
+Maintained source is **5.39.3**; production remains **5.39.2** until the button-feedback rollout below is verified. Production **AppSheet
 1.100135** was verified by an independent saved-definition readback on October 22.
 The table-picker, compact-toolbar, and empty-draft releases do not change AppSheet. The rollout
 receipt below records the production checks separately from rehearsal results.
@@ -37,6 +37,21 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## October 23 toolbar spacing and button feedback
+
+The maintained **5.39.3** client gives Refresh, Recalculate, and History capacity
+consistent spacing and distributes spare room across the controls. Longer labels
+wrap the toolbar onto another row on narrow screens. Recalculate has a calculator
+icon that stays visible during requests and after success or failure.
+
+Enabled buttons show an immediate pressed treatment and a brief activation flash
+after touch or keyboard activation. Refresh and Recalculate also show a busy
+treatment while waiting for Google. Reduced-motion preferences retain the color
+feedback without movement or icon animation. This is a client presentation change;
+the server change is limited to the version marker.
+
+Production deployment and preservation verification are pending.
 
 ## October 23 empty-draft recovery fix
 
