@@ -12824,7 +12824,329 @@ function ordinaryDraftKeys(window) {
     );
 }
 
+/** @param {Window} window @param {string} mode */
+function selectEmptyDraftPlants(window, mode) {
+    if (mode === "bulk") {
+        queryElement(
+            window.document,
+            "#bulkModeTab",
+            HTMLButtonElement
+        ).click();
+        queryElement(
+            window.document,
+            "#bulkSelectVisible",
+            HTMLButtonElement
+        ).click();
+    } else changeWorkflowSelect(window, "plantSelect", "P02");
+}
+
 describe("ordinary unsent entry recovery", () => {
+    it.each(["single", "bulk"])(
+        "does not retain a %s selection-only entry after reload",
+        (mode) => {
+            expect.hasAssertions();
+
+            const { window } = createLoggerWindow();
+            selectEmptyDraftPlants(window, mode);
+            window.dispatchEvent(new window.Event("pagehide"));
+            const reloaded = createLoggerWindow({
+                storage: copyLoggerStorage(window),
+            });
+
+            expect(
+                queryElement(
+                    reloaded.window.document,
+                    "#entryDraftBanner",
+                    HTMLElement
+                ).hidden
+            ).toBe(true);
+            expect(ordinaryDraftKeys(reloaded.window)).toHaveLength(0);
+        }
+    );
+
+    it("does not retain an empty entry after a successful save and automatic advance", () => {
+        expect.hasAssertions();
+
+        const { behaviors, window } = createLoggerWindow();
+        behaviors.saveWebObservation = ({ success }) => {
+            success({ message: "Saved" });
+        };
+        const advance = queryElement(
+            window.document,
+            "#advanceAfterQueue",
+            HTMLInputElement
+        );
+        advance.checked = true;
+        advance.dispatchEvent(new window.Event("change", { bubbles: true }));
+        queryElement(window.document, "#keepEvents", HTMLInputElement).checked =
+            true;
+        queryElement(
+            window.document,
+            '#eventChips [data-event="Water"]',
+            HTMLButtonElement
+        ).click();
+        enterWorkflowValue(window, "weight", "431");
+        queryElement(
+            window.document,
+            "#entryForm",
+            HTMLFormElement
+        ).dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
+        const notes = queryElement(
+            window.document,
+            "#notes",
+            HTMLTextAreaElement
+        );
+        notes.value = "A next observation to discard";
+        notes.dispatchEvent(new window.Event("input", { bubbles: true }));
+
+        expect(ordinaryDraftKeys(window)).toHaveLength(1);
+
+        notes.value = "";
+        notes.dispatchEvent(new window.Event("input", { bubbles: true }));
+        changeWorkflowSelect(window, "plantSelect", "P01");
+        window.dispatchEvent(new window.Event("pagehide"));
+
+        expect(
+            queryElement(window.document, "#weight", HTMLInputElement).value
+        ).toBe("");
+
+        const reloaded = createLoggerWindow({
+            storage: copyLoggerStorage(window),
+        });
+
+        expect(
+            queryElement(
+                reloaded.window.document,
+                "#entryDraftBanner",
+                HTMLElement
+            ).hidden
+        ).toBe(true);
+        expect(ordinaryDraftKeys(reloaded.window)).toHaveLength(0);
+    });
+
+    it("removes its unfinished draft after erasing the last note and changing plants", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        const notes = queryElement(
+            window.document,
+            "#notes",
+            HTMLTextAreaElement
+        );
+        notes.value = "An observation I decided not to keep";
+        notes.dispatchEvent(new window.Event("input", { bubbles: true }));
+
+        expect(ordinaryDraftKeys(window)).toHaveLength(1);
+
+        notes.value = "";
+        notes.dispatchEvent(new window.Event("input", { bubbles: true }));
+        changeWorkflowSelect(window, "plantSelect", "P02");
+        window.dispatchEvent(new window.Event("pagehide"));
+        const reloaded = createLoggerWindow({
+            storage: copyLoggerStorage(window),
+        });
+
+        expect(
+            queryElement(
+                reloaded.window.document,
+                "#entryDraftBanner",
+                HTMLElement
+            ).hidden
+        ).toBe(true);
+        expect(ordinaryDraftKeys(reloaded.window)).toHaveLength(0);
+    });
+
+    it("does not retain an untouched current-time entry when leaving the page", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        queryElement(
+            window.document,
+            "#observedAtNow",
+            HTMLButtonElement
+        ).click();
+        window.dispatchEvent(new window.Event("pagehide"));
+        const reloaded = createLoggerWindow({
+            storage: copyLoggerStorage(window),
+        });
+
+        expect(
+            queryElement(
+                reloaded.window.document,
+                "#entryDraftBanner",
+                HTMLElement
+            ).hidden
+        ).toBe(true);
+    });
+
+    it.each(["single", "bulk"])(
+        "does not offer a legacy %s selection-only record as an unfinished observation",
+        (mode) => {
+            expect.hasAssertions();
+
+            const { window } = createLoggerWindow();
+            selectEmptyDraftPlants(window, mode);
+            const notes = queryElement(
+                window.document,
+                mode === "bulk" ? "#bulkNotes" : "#notes",
+                HTMLTextAreaElement
+            );
+            notes.value = "Temporary fixture content";
+            notes.dispatchEvent(new window.Event("input", { bubbles: true }));
+            const key = required(ordinaryDraftKeys(window)[0]);
+            const legacy = parseStoredRecord(window.localStorage.getItem(key));
+            const snapshot = jsonRecord(legacy["snapshot"]);
+            snapshot["events"] = [];
+            jsonRecord(snapshot["values"])[
+                mode === "bulk" ? "bulkNotes" : "notes"
+            ] = "";
+            legacy["content"] = JSON.stringify(snapshot);
+            const reloaded = createLoggerWindow({
+                storage: { [key]: JSON.stringify(legacy) },
+            });
+
+            expect(
+                queryElement(
+                    reloaded.window.document,
+                    "#entryDraftBanner",
+                    HTMLElement
+                ).hidden
+            ).toBe(true);
+
+            const values = jsonRecord(snapshot["values"]);
+            values["futureReading"] = "Keep this value from a newer logger";
+            legacy["content"] = JSON.stringify(snapshot);
+            const future = createLoggerWindow({
+                storage: { [key]: JSON.stringify(legacy) },
+            });
+
+            expect(
+                queryElement(
+                    future.window.document,
+                    "#entryDraftBanner",
+                    HTMLElement
+                ).hidden
+            ).toBe(false);
+
+            delete values["futureReading"];
+            snapshot["time"] = {
+                instant: "",
+                mode: "fixed",
+                value: "2026-10-22T19:15",
+            };
+            legacy["content"] = JSON.stringify(snapshot);
+            const fixed = createLoggerWindow({
+                storage: { [key]: JSON.stringify(legacy) },
+            });
+
+            expect(
+                queryElement(
+                    fixed.window.document,
+                    "#entryDraftBanner",
+                    HTMLElement
+                ).hidden
+            ).toBe(false);
+        }
+    );
+
+    it.each(["Water", "Rotation"])(
+        "retains an intentional %s action without a typed measurement",
+        (event) => {
+            expect.hasAssertions();
+
+            const { window } = createLoggerWindow();
+            queryElement(
+                window.document,
+                `#eventChips [data-event="${event}"]`,
+                HTMLButtonElement
+            ).click();
+            const reloaded = createLoggerWindow({
+                storage: copyLoggerStorage(window),
+            });
+
+            expect(
+                queryElement(
+                    reloaded.window.document,
+                    "#entryDraftBanner",
+                    HTMLElement
+                ).hidden
+            ).toBe(false);
+
+            queryElement(
+                reloaded.window.document,
+                "#entryDraftResume",
+                HTMLButtonElement
+            ).click();
+
+            expect(
+                queryElement(
+                    reloaded.window.document,
+                    `#eventChips [data-event="${event}"]`,
+                    HTMLButtonElement
+                ).getAttribute("aria-pressed")
+            ).toBe("true");
+
+            queryElement(
+                reloaded.window.document,
+                "#notes",
+                HTMLTextAreaElement
+            ).click();
+            reloaded.window.dispatchEvent(
+                new reloaded.window.Event("pagehide")
+            );
+            const reopened = createLoggerWindow({
+                storage: copyLoggerStorage(reloaded.window),
+            });
+
+            expect(
+                queryElement(
+                    reopened.window.document,
+                    "#entryDraftBanner",
+                    HTMLElement
+                ).hidden
+            ).toBe(false);
+        }
+    );
+
+    it("does not remove another tab's unfinished notes when a selection-only tab leaves", async () => {
+        expect.hasAssertions();
+
+        const { first, second, values } = createCrossTabLoggerPair();
+        await settleQueueLocks();
+        const notes = queryElement(
+            first.window.document,
+            "#notes",
+            HTMLTextAreaElement
+        );
+        notes.value = "Keep the other tab's note";
+        notes.dispatchEvent(new first.window.Event("input", { bubbles: true }));
+        await settleQueueLocks();
+        changeWorkflowSelect(second.window, "plantSelect", "P02");
+        second.window.dispatchEvent(new second.window.Event("pagehide"));
+        await settleQueueLocks();
+        const reloaded = createLoggerWindow({
+            storage: Object.fromEntries(values),
+        });
+
+        expect(ordinaryDraftKeys(reloaded.window)).toHaveLength(1);
+
+        queryElement(
+            reloaded.window.document,
+            "#entryDraftResume",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(
+                reloaded.window.document,
+                "#notes",
+                HTMLTextAreaElement
+            ).value
+        ).toBe(notes.value);
+    });
+
     it("retains raw partial values and a fixed time, then resumes only on request", () => {
         expect.hasAssertions();
 

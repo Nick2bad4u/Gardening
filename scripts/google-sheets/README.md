@@ -4,7 +4,8 @@ Production logger **5.39.1 / immutable version 116** supports **38 container all
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained source and production are **5.39.1**. Production **AppSheet
+Maintained source is **5.39.2**; production remains **5.39.1** pending the
+empty-draft fix rollout. Production **AppSheet
 1.100135** was verified by an independent saved-definition readback on October 22.
 The table-picker and compact-toolbar releases do not change AppSheet. The rollout
 receipt below records the production checks separately from rehearsal results.
@@ -37,6 +38,16 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## October 23 empty-draft recovery fix
+
+The maintained **5.39.2** client distinguishes unfinished entry content from
+plant selections and form preferences. Selecting a plant or bulk pots alone no
+longer creates a recoverable draft. Reloading ignores older empty selection-only
+snapshots while preserving real measurements, notes, and deliberate event choices.
+Cleared fields and event choices retained after a successful save do not create a
+new draft by themselves. Pending-save recovery and queued observations keep their
+existing protections. Production verification is pending.
 
 ## October 23 compact status toolbar
 

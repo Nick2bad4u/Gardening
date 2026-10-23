@@ -331,7 +331,10 @@ Shared bulk details must really be shared. In particular, a common water-volume 
 The maintained logger can retain an unfinished ordinary single-plant or bulk
 form. **Resume draft** restores it; **Discard draft** removes it deliberately. A draft
 is not a queued request or a saved History record. Restoring it does not rewrite
-a submitted request or change its retry identity.
+a submitted request or change its retry identity. Selecting a plant or bulk pots,
+changing form preferences, and keeping event choices after saving do not by
+themselves create an unfinished draft. Measurements, notes, and deliberate new
+event choices remain recoverable.
 
 Queue changes coordinate across logger tabs in the same browser where the Web
 Locks API is available. If another tab owns a queue mutation or send, the logger

@@ -3,15 +3,15 @@ import { type BrowserContext, expect, type Page, test } from "@playwright/test";
 // eslint-disable-next-line import-x/extensions -- Shared ESM fixture also serves the isolated browser preview.
 import { loggerBrowserFixture } from "../helpers/logger-browser-fixture.mjs";
 
-const routeLogger = async (context: Readonly<BrowserContext>) => {
+const routeLogger = async (
+    context: Readonly<BrowserContext>,
+    fixtureHtml = loggerBrowserFixture({ holdBatch: true, preserveQueue: true })
+) => {
     await context.route("**/*", async (route) => {
         const url = new URL(route.request().url());
         if (url.pathname === "/Gardening/logger-fixture") {
             await route.fulfill({
-                body: loggerBrowserFixture({
-                    holdBatch: true,
-                    preserveQueue: true,
-                }),
+                body: fixtureHtml,
                 contentType: "text/html",
             });
         } else await route.abort();
@@ -115,6 +115,115 @@ test.describe(
     "logger queue ownership and unsent drafts",
     { tag: "@logger" },
     () => {
+        test("plant navigation alone does not restore an unsent draft after reload", async ({
+            context,
+            page,
+        }) => {
+            await routeLogger(context);
+            await openLogger(page);
+            await page
+                .getByRole("button", { exact: true, name: "Labels" })
+                .click();
+            await page
+                .getByRole("group", { name: "Choose plant by pot label" })
+                .getByRole("button", { name: /P02/v })
+                .click();
+            await page.reload();
+            await expect
+                .soft(page.getByRole("region", { name: "Unsent entry drafts" }))
+                .toBeHidden();
+            await page
+                .getByRole("tab", { exact: true, name: "Bulk care" })
+                .click();
+            await page
+                .getByRole("button", { exact: true, name: "Select visible" })
+                .click();
+            await page.reload();
+            await expect
+                .soft(page.getByRole("region", { name: "Unsent entry drafts" }))
+                .toBeHidden();
+        });
+
+        test("successful save followed by plant navigation leaves no phantom draft", async ({
+            context,
+            page,
+        }) => {
+            const fixtureHtml = loggerBrowserFixture({
+                holdBatch: true,
+                preserveQueue: true,
+            }).replace(
+                'saveWebObservation() { failure({ message: "Fixture writes are disabled." }); }',
+                'saveWebObservation() { document.documentElement.dataset.fixtureSingleSaved = "true"; success({ message: "Saved" }); }'
+            );
+            await routeLogger(context, fixtureHtml);
+            await openLogger(page);
+            await page
+                .getByRole("button", { exact: true, name: "Water" })
+                .click();
+            await page
+                .getByLabel("Keep selected events after saving", {
+                    exact: true,
+                })
+                .check();
+            await page
+                .getByRole("button", { exact: true, name: "Save now" })
+                .click();
+            await expect
+                .poll(() =>
+                    page.evaluate(
+                        () =>
+                            document.documentElement.dataset[
+                                "fixtureSingleSaved"
+                            ]
+                    )
+                )
+                .toBe("true");
+            await expect
+                .soft(
+                    page.getByRole("button", { exact: true, name: "Save now" })
+                )
+                .toBeEnabled();
+            await page
+                .getByRole("button", { exact: true, name: "Labels" })
+                .click();
+            await page
+                .getByRole("group", { name: "Choose plant by pot label" })
+                .getByRole("button", { name: /P02/v })
+                .click();
+            await page.reload();
+            await expect
+                .soft(page.getByRole("region", { name: "Unsent entry drafts" }))
+                .toBeHidden();
+        });
+
+        test("an intentional action survives resuming and focusing an empty field", async ({
+            context,
+            page,
+        }) => {
+            await routeLogger(context);
+            await openLogger(page);
+            await page
+                .getByRole("button", { exact: true, name: "Water" })
+                .click();
+            await page.reload();
+            await page
+                .getByRole("button", { exact: true, name: "Resume draft" })
+                .click();
+            await page
+                .getByRole("textbox", { exact: true, name: "Notes" })
+                .click();
+            await page.reload();
+            await expect
+                .soft(page.getByRole("region", { name: "Unsent entry drafts" }))
+                .toBeVisible();
+            await page
+                .getByRole("button", { exact: true, name: "Resume draft" })
+                .click();
+            await expect
+                .soft(page.getByRole("button", { exact: true, name: "Water" }))
+                .toHaveAttribute("aria-pressed", "true");
+        });
+
         test("native Web Locks release ownership when the sending tab closes", async ({
             context,
             page,

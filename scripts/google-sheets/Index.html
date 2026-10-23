@@ -17309,6 +17309,84 @@
                 };
             }
 
+            // Compare entry content without treating navigation, unit preferences,
+            // or the automatic clock/current-pot suggestions as an observation.
+            // The original snapshot still stores every value for exact recovery.
+            function comparableOrdinaryDraft(snapshot) {
+                const { plantIds, values, time, ...entry } = snapshot;
+                const plant = state.bootstrap?.plants.find(
+                    (candidate) => candidate.id === plantIds[0]
+                );
+                const preferences = new Set([
+                    "plantSelect",
+                    "measurementUnit",
+                    "measurementQuality",
+                    "measurementMethod",
+                    "temperatureUnit",
+                    "leafTemperatureUnit",
+                    "leafAirTemperatureUnit",
+                ]);
+                return {
+                    ...entry,
+                    values: Object.fromEntries(
+                        Object.entries(values)
+                            .filter(([id]) => !preferences.has(id))
+                            .map(([id, value]) => [
+                                id,
+                                (id === "potSetup" &&
+                                    value === String(plant?.potSetup || 1)) ||
+                                (id === "moveFrom" &&
+                                    value === (plant?.currentLocation || ""))
+                                    ? ""
+                                    : value,
+                            ])
+                    ),
+                    time:
+                        time.mode === "now"
+                            ? { ...time, value: "", instant: "" }
+                            : time,
+                };
+            }
+
+            function isEmptyOrdinaryDraft(snapshot) {
+                // Older records cannot distinguish inherited event choices from
+                // deliberate event-only care. Keep those and any future fields.
+                if (
+                    snapshot.events.length ||
+                    snapshot.time.mode !== "now" ||
+                    Object.keys(snapshot).some(
+                        (key) =>
+                            ![
+                                "mode",
+                                "events",
+                                "plantIds",
+                                "values",
+                                "time",
+                            ].includes(key)
+                    ) ||
+                    Object.keys(snapshot.time).some(
+                        (key) => !["mode", "value", "instant"].includes(key)
+                    )
+                )
+                    return false;
+                const defaults = {
+                    rotationDegrees: "90",
+                    bulkRotationDegrees: "90",
+                    wateringApplication: WATERING_APPLICATION_OPTIONS[0],
+                    bulkWateringApplication: WATERING_APPLICATION_OPTIONS[0],
+                    leafVpdSource: "Calculated",
+                };
+                return Object.entries(
+                    comparableOrdinaryDraft(snapshot).values
+                ).every(
+                    ([id, value]) =>
+                        (typeof value === "string" && !value.trim()) ||
+                        (Array.isArray(value) && !value.length) ||
+                        (value === false && $(id)?.type === "checkbox") ||
+                        (Object.hasOwn(defaults, id) && value === defaults[id])
+                );
+            }
+
             function withEntryDraftLock(action) {
                 const failed = () => {
                     entryDrafts.warning =
@@ -17345,10 +17423,12 @@
                 const snapshot = ordinaryDraftSnapshot(mode);
                 const content = JSON.stringify(snapshot);
                 if (
-                    content === entryDrafts.baselines[mode] &&
-                    !entryDrafts.current[mode]
-                )
+                    JSON.stringify(comparableOrdinaryDraft(snapshot)) ===
+                    entryDrafts.baselines[mode]
+                ) {
+                    forgetOrdinaryDraft(entryDrafts.current[mode]);
                     return null;
+                }
                 if (
                     entryDrafts.current[mode]?.content === content &&
                     !entryDrafts.warning
@@ -17410,7 +17490,8 @@
                         )
                             continue;
                         const draft = readOrdinaryDraft(key);
-                        if (draft) retained.push(draft);
+                        if (draft && !isEmptyOrdinaryDraft(draft.snapshot))
+                            retained.push(draft);
                     }
                     entryDrafts.retained = retained.sort((left, right) =>
                         right.updatedAt.localeCompare(left.updatedAt)
@@ -17586,6 +17667,12 @@
                     writeOrdinaryDraft(resumed);
                     localStorage.removeItem(source.key);
                     entryDrafts.current[mode] = resumed;
+                    // Resumed actions are explicit unfinished care, even when
+                    // Keep actions also restored them as round preferences.
+                    entryDrafts.baselines[mode] = JSON.stringify({
+                        ...JSON.parse(entryDrafts.baselines[mode]),
+                        events: [],
+                    });
                     restoreOrdinaryDraftSnapshot(source.snapshot);
                     entryDrafts.warning = "";
                     scanEntryDrafts();
@@ -24050,7 +24137,7 @@
                     renderBulkEventChips();
                     updateNutrientFields("bulk", $("bulkNutrientsUsed").value);
                     entryDrafts.baselines.bulk = JSON.stringify(
-                        ordinaryDraftSnapshot("bulk")
+                        comparableOrdinaryDraft(ordinaryDraftSnapshot("bulk"))
                     );
                 } finally {
                     entryDrafts.restoring = false;
@@ -24366,7 +24453,7 @@
                     renderMeasurementControls();
                     setObservationTime("observedAt");
                     entryDrafts.baselines.single = JSON.stringify(
-                        ordinaryDraftSnapshot("single")
+                        comparableOrdinaryDraft(ordinaryDraftSnapshot("single"))
                     );
                     persistRoundState();
                     renderEventChips();
@@ -25857,10 +25944,10 @@
                     else withObservationQueueLock(() => {}, { quiet: true });
                     state.bootstrapReady = true;
                     entryDrafts.baselines.single = JSON.stringify(
-                        ordinaryDraftSnapshot("single")
+                        comparableOrdinaryDraft(ordinaryDraftSnapshot("single"))
                     );
                     entryDrafts.baselines.bulk = JSON.stringify(
-                        ordinaryDraftSnapshot("bulk")
+                        comparableOrdinaryDraft(ordinaryDraftSnapshot("bulk"))
                     );
                     entryDrafts.ready = true;
                     scanEntryDrafts();
