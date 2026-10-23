@@ -256,7 +256,8 @@ const expectTerrariumContext = async (page: Readonly<Page>) => {
 const openLogger = async (
     page: Readonly<Page>,
     width: number,
-    theme: "dark" | "light"
+    theme: "dark" | "light",
+    fixtureHtml = loggerBrowserFixture()
 ) => {
     await page.clock.setFixedTime("2026-09-09T14:00:00Z");
     await page.setViewportSize({ height: 900, width });
@@ -265,7 +266,7 @@ const openLogger = async (
         const url = new URL(route.request().url());
         if (url.pathname === "/Gardening/logger-fixture") {
             await route.fulfill({
-                body: loggerBrowserFixture(),
+                body: fixtureHtml,
                 contentType: "text/html",
             });
         } else if (url.pathname.startsWith("/Gardening/assets/plant-icons/")) {
@@ -943,6 +944,101 @@ const expectCalculationDisclosure = async (page: Readonly<Page>) => {
     await summary.press("Space");
     await expect.soft(status).toBeVisible();
 };
+
+test.describe("capacity warning toolbar", () => {
+    for (const width of [320, 390]) {
+        for (const remainingRows of [
+            499,
+            0,
+            null,
+        ]) {
+            const capacityData =
+                remainingRows === null
+                    ? null
+                    : {
+                          remainingRows,
+                          supportedLastRow: 50_001,
+                          supportedObservationRows: 50_000,
+                          usedRows: 50_000 - remainingRows,
+                      };
+
+            test(
+                `capacity warning toolbar at ${width}px with ${String(remainingRows)} remaining`,
+                { tag: "@logger" },
+                async ({ page }) => {
+                    const fixtureHtml = loggerBrowserFixture().replace(
+                        "window.google =",
+                        () => `fixtureBootstrap.historyCapacity = ${JSON.stringify(capacityData)};
+                 fixtureBootstrap.workbookCalculation = { status: "Ready", calculatedAt: "2026-09-09T14:00:00Z" };
+                 window.google =`
+                    );
+                    await openLogger(
+                        page,
+                        width,
+                        width === 320 ? "dark" : "light",
+                        fixtureHtml
+                    );
+                    const recalculate = page.getByRole("button", {
+                        exact: true,
+                        name: "Recalculate workbook",
+                    });
+                    const geometry = await recalculate.evaluate((button) => {
+                        const capacity = document.querySelector(
+                            "#historyCapacityStatus"
+                        );
+                        if (!capacity)
+                            throw new Error("Missing history capacity control");
+                        const buttonRect = button.getBoundingClientRect();
+                        const capacityRect = capacity.getBoundingClientRect();
+                        const range = document.createRange();
+                        range.selectNodeContents(button);
+                        const textRect = range.getBoundingClientRect();
+                        return {
+                            controlsSeparated:
+                                buttonRect.right <= capacityRect.left ||
+                                capacityRect.right <= buttonRect.left ||
+                                buttonRect.bottom <= capacityRect.top ||
+                                capacityRect.bottom <= buttonRect.top,
+                            labelFits:
+                                textRect.left >= buttonRect.left &&
+                                textRect.right <= buttonRect.right &&
+                                textRect.top >= buttonRect.top &&
+                                textRect.bottom <= buttonRect.bottom,
+                            withinViewport:
+                                capacityRect.left >= 0 &&
+                                capacityRect.right <= innerWidth &&
+                                document.documentElement.scrollWidth <=
+                                    innerWidth,
+                        };
+                    });
+                    expect.soft(geometry).toStrictEqual({
+                        controlsSeparated: true,
+                        labelFits: true,
+                        withinViewport: true,
+                    });
+                    await expect
+                        .soft(
+                            page.getByLabel("History capacity details", {
+                                exact: true,
+                            })
+                        )
+                        .toBeVisible();
+                    await expect
+                        .soft(
+                            page.getByLabel("History capacity details", {
+                                exact: true,
+                            })
+                        )
+                        .toContainText(
+                            remainingRows === null
+                                ? "Refresh to try again"
+                                : "capacity increase"
+                        );
+                }
+            );
+        }
+    }
+});
 
 for (const theme of ["dark", "light"] as const) {
     test.describe(

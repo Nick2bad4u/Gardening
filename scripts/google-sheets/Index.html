@@ -651,20 +651,20 @@
             }
 
             .workflow-toolbar {
-                display: grid;
-                grid-template-columns:
-                    [refresh-start] auto [refresh-end recalculate-start] minmax(
-                        0,
-                        1fr
-                    )
-                    [recalculate-end capacity-start] auto [capacity-end];
+                display: flex;
+                flex-wrap: wrap;
                 gap: 6px;
                 align-items: center;
                 padding-block: 8px 0;
 
                 & button {
+                    flex: 0 0 auto;
                     justify-content: center;
                     min-inline-size: 0;
+                }
+
+                & .workflow-recalculate {
+                    flex-grow: 1;
                 }
             }
 
@@ -14325,7 +14325,7 @@
                         <button
                             id="recalculateWorkbookButton"
                             type="button"
-                            class="photo-visibility-toggle"
+                            class="photo-visibility-toggle workflow-recalculate"
                             aria-label="Recalculate workbook"
                             aria-describedby="workbookCalculationStatus"
                             >Recalculate</button
