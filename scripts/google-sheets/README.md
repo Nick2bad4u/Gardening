@@ -1,12 +1,12 @@
 # Google Sheets observation logger
 
-Production logger **5.38.0 / immutable version 114** supports **38 container allocations**, using IDs `P01`–`P32` and `P35`–`P40`, and **50,000 History observation slots**. The October 22 rollout below records the verified P39/P40 enrollment and deployment; the October 20–21 and earlier receipts retain the capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.39.0 / immutable version 115** supports **38 container allocations**, using IDs `P01`–`P32` and `P35`–`P40`, and **50,000 History observation slots**. The October 23 rollout below records the table picker; October 22 records the verified P39/P40 enrollment, and earlier receipts retain the capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained source is **5.39.0**; production remains **5.38.0 / immutable 114**
-until the table-picker rollout below is verified. Production **AppSheet
-1.100135** was verified by an independent saved-definition readback. The rollout
+Maintained and deployed source are **5.39.0**. Production **AppSheet
+1.100135** was verified by an independent saved-definition readback on October 22.
+The table-picker release does not change AppSheet. The rollout
 receipt below records the production checks separately from rehearsal results.
 
 The mobile logger and AppSheet are the observation input surfaces. The unused
@@ -50,7 +50,42 @@ The bulk audit verified all 12 shared actions, including Mist, Move, Environment
 Propagate, and Inspect, in the existing client, server, and staging contract.
 Leaf VPD, Temperature, Light, and Humidity remain individual measurements; no
 new event or workbook/AppSheet column is needed. The server change is the logger
-version only. Production deployment and preservation receipts are pending.
+version only.
+
+The reviewed source commit
+[`dc8726d`](https://github.com/Nick2bad4u/Gardening/commit/dc8726d91e3a6c25c76a1a1ab595e868e37bc050)
+passed logger coverage, SonarCloud, secret scans, and
+[Pages/browser checks](https://github.com/Nick2bad4u/Gardening/actions/runs/39998049456)
+before production promotion. Local validation passed **1,861 logger tests** with
+**99.58% statement coverage**, the logger checker, full type checks, applicable
+lint/format checks, and **130 Chromium/MS Edge and mobile browser cases**. Four
+focused phone cases passed again after the final badge adjustment. Tests used
+synthetic browser fixtures; no synthetic observation was sent to production.
+
+A native Drive backup was created at **17:49:16.844 UTC on October 23, 2026**.
+Fresh connector snapshots before and after deployment preserved **2,022
+observations and unique IDs**, **1,652 request groups**, all **38 App entries**
+rows, and the empty App bulk table. Pre-existing values, formulas, notes,
+validations, and captured sheet properties matched; no canonical row was
+appended during the release. Integrity reported zero missing/duplicate IDs,
+zero missing retry IDs, zero calculation-anchor errors, and zero formula errors.
+Uncalibrated plants and a setup without an anchor remain observation tasks.
+
+Immutable **version 115** was created at **18:04:19.717 UTC** and promoted on the
+existing deployment at **18:04:21.333 UTC**. Readback
+matched maintained source, Head, and immutable source; the workbook binding,
+web-app URL, scopes, and access settings were unchanged. The live client showed
+**Connected · Logger 5.39.0**, retained its existing unsent draft, and remembered
+both Table preferences after reload. Both pickers showed 24 positioned lettered
+pots followed by 14 numbered pots. Phone checks in both themes had no horizontal
+overflow. The existing single **five-minute `processQueuedAppSheetEntries`**
+trigger remained in place; its **14:05:42 EDT** execution completed in **10.21 s**.
+The post-deployment web app and bootstrap executions also completed successfully.
+
+Private native snapshots and mutation receipts remain under the ignored
+`.cache/logger-table-layout/` directory. The deployment used the existing Apps
+Script access; workbook readback used the connected Drive tools because the
+local Apps Script credential did not have Sheets API access.
 
 ## October 22 houseplant production rollout
 
