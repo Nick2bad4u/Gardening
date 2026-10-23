@@ -53,7 +53,7 @@ establish when or whether the root ball was watered.
 **Owner clarification, October 22:** P40 and P39 are quarantined in another
 room for roughly a week or until the planned repots. Exact placement,
 leaf-level light, and room conditions are unmeasured. Both received **RO water
-on October 21**, their purchase day, because the owner described the medium as
+on the evening of October 21**, their purchase day, because the owner described the medium as
 extremely dry. Exact time, water volume, fertilizer use, and weights were not
 supplied. This is owner-reported care; it does not verify a saved live tracker
 entry or establish their present moisture.
@@ -92,7 +92,7 @@ appear after a move. Establish the purchased plant before taking cuttings.
 
 ## Sources
 
-- Owner clarification, October 22, 2026: Home Depot in Howell purchase and RO watering on October 21 after very dry medium; separate-room quarantine; irregular glass drainage pots with exterior-only acrylic painting planned; measurements expected that evening; incoming VERYPLANTS mixes. Exact watering time/volume, paint product, pot dimensions, and completed repot remain unrecorded.
+- Owner clarification, October 22, 2026: Home Depot in Howell purchase and RO watering on the evening of October 21 after very dry medium; separate-room quarantine; irregular glass drainage pots with exterior-only acrylic painting planned; measurements expected that evening; incoming VERYPLANTS mixes. Exact watering time/volume, paint product, pot dimensions, and completed repot remain unrecorded.
 - [VERYPLANTS: Molly's Aroid Mix](https://veryplants.com/products/mollys-aroid-mix-premium-tropical-plant-soil-mix) and [Molly's Orchid Mix](https://veryplants.com/products/mollys-orchid-mix), inspected October 22, 2026: manufacturer descriptions of the two candidate media. Product descriptions are not evidence of the owner's exact received bags or plant-specific performance.
 
 - Owner-supplied label and plant photographs, October 21, 2026, linked above: exact label wording, separate container, and visible form; capture time unrecorded. Owner photographs remain copyright Nick, all rights reserved.

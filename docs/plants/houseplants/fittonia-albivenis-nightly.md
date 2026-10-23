@@ -50,7 +50,7 @@ root-zone moisture, a completed watering, or the cause of wilting.
 **Owner clarification, October 22:** P39 and P40 are quarantined in another
 room for roughly a week or until the planned repots. The exact position,
 leaf-level light, and room conditions are unmeasured. The owner watered both
-with **RO water on October 21**, their purchase day, because the medium was
+with **RO water on the evening of October 21**, their purchase day, because the medium was
 described as extremely dry. Exact time, water volume, fertilizer use, and
 weights were not supplied. This is owner-reported care, not an inference from
 the photographs or proof that a live tracker entry has been saved.
@@ -93,7 +93,7 @@ scorched edges warrant reassessing roots, drainage, or exposure.
 ## Sources
 
 - Owner-supplied label and plant photographs, October 21, 2026, linked above: nursery wording, visible appearance, and separate pot; capture time unrecorded. Owner photographs remain copyright Nick, all rights reserved.
-- Owner clarification, October 22, 2026: Home Depot in Howell purchase and RO watering on October 21 after very dry medium; separate-room quarantine; irregular glass drainage pots with exterior-only acrylic painting planned; measurements expected that evening; incoming VERYPLANTS mixes. Exact watering time/volume, paint product, pot dimensions, and completed repot remain unrecorded.
+- Owner clarification, October 22, 2026: Home Depot in Howell purchase and RO watering on the evening of October 21 after very dry medium; separate-room quarantine; irregular glass drainage pots with exterior-only acrylic painting planned; measurements expected that evening; incoming VERYPLANTS mixes. Exact watering time/volume, paint product, pot dimensions, and completed repot remain unrecorded.
 - [VERYPLANTS: Molly's Aroid Mix](https://veryplants.com/products/mollys-aroid-mix-premium-tropical-plant-soil-mix) and [Molly's Orchid Mix](https://veryplants.com/products/mollys-orchid-mix), inspected October 22, 2026: manufacturer descriptions of chunky aroid medium and an open orchid mix. Product descriptions do not establish the contents of the owner's incoming bags or a tested Fittonia recipe.
 - [Proven Winners: Network News™ Nightly™](https://www.provenwinners.com/plants/fittonia/network-news-nightly-nerve-plant-fittonia-albivenis): product identity, indirect light, moist but draining medium, and brand humidity guidance. These are horticultural starting points, not measurements of P39.
 - [Kew Plants of the World Online: _Fittonia albivenis_](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:105033-2): accepted name, family, native distribution, 1979 combination, and 1861 basionym.
