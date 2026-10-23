@@ -16,7 +16,7 @@ const root = process.cwd();
  */
 
 // Rear coordinates translate the October 22 owner photos into schematic spacing.
-// The gray/blue rosette pot is not assigned until its identity is confirmed.
+// The owner confirmed the gray/blue rosette as P37 Arctic Ice on October 23.
 /** @type {Omit<PotPlacement, "label" | "name">[]} */
 const rearPlacements = [
     { id: "P22", position: "Rear left", x: 215, y: 490, zone: "rear" },
@@ -50,12 +50,18 @@ const rearPlacements = [
         y: 300,
         zone: "rear",
     },
+    {
+        id: "P37",
+        position: "Back center-left, between Lithops and shared cacti",
+        x: 390,
+        y: 300,
+        zone: "rear",
+    },
 ];
 const otherPositions = new Map([
     ["P21", "Stool on room side"],
     ["P31", "Floor (last reported Sep 20)"],
     ["P32", "Floor (last reported Sep 20)"],
-    ["P37", "Back rosette identity pending"],
     ["P38", "Desk to right of tables"],
     ["P39", "Quarantine in another room"],
     ["P40", "Quarantine in another room"],

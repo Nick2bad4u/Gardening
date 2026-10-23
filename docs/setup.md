@@ -1,6 +1,6 @@
 # Setup and equipment
 
-Last updated: 2026-10-22
+Last updated: 2026-10-23
 
 The [equipment and supplies inventory](./equipment/inventory.md) lists the collection's products and model references. All four wooden tables are the [LEJANEOYE two-tier bamboo side-table model](https://www.amazon.com/dp/B0D25H73ZS), identified September 17; measured tabletop dimensions are recorded separately from seller specifications.
 
@@ -24,15 +24,12 @@ The owner reported buying an **_Echeveria_ 'Arctic Ice'** and a **6-inch
 blue-and-white ceramic pot for it** at Home Depot on October 6, 2026. The store
 location and price paid are unrecorded. Identification follows
 the supplied [Altman Plants listing](https://shopaltmanplants.com/products/echeveria-arctic-ice-ppaf)
-screenshot, which names **USPP29,584 / SKU 0850821**. Photos of the owned plant
-and pot, its current container, and additional setup details are still pending.
+screenshot, which names **USPP29,584 / SKU 0850821**. Display photos supplied October 22 show the pale rosette in a grey/blue pot between P35 and P19 at the back center-left, identified by the owner as Arctic Ice on October 23; capture date is unknown.
 See the [collection record](./collection.md) for the acquisition evidence and
 the [equipment inventory](./equipment/inventory.md#pots-medium-and-top-dressing)
 for the pot.
 
-The ceramic pot is recorded as acquired for this plant; a completed repot,
-medium recipe, drainage arrangement, usable depth, watering history, and
-growing position have not been reported. The listing's 3.5-inch title and the
+The ceramic pot is recorded as purchased for this plant; the display photos and identity confirmation do not establish whether it is installed, or supply pot dimensions, a medium recipe, drainage, usable depth, watering, or a repot event. The listing's 3.5-inch title and the
 screenshot's 2.5 selection do not establish the received nursery-pot size.
 The assigned identity is **Succulent-17 / #11 / P37**. No weight reference
 or position in the existing light layout is inferred from enrollment.
@@ -72,7 +69,7 @@ The last recorded location is the room-side floor near the money tree on Septemb
 
 **September 15 table update:** the owner replaced the former **two 16 × 13-inch wooden tables plus a round glass table** with **four 16 × 13-inch wooden tables**, adding two wooden tables and retiring the glass table. All 30 then-tracked pots were rearranged onto the wooden display shown in the new photos. The working interpretation is four tables in a **2 × 2 block, nominally 26 inches across × 32 inches toward the window**, with **24 small pots in six columns × four rows at the room end** and the six larger/shared containers behind them. Table orientation and gaps have not been tape-checked; the new tables' height is unmeasured. The owner confirmed September 20 that the former round glass display table is gone and no longer used; it was approximately 30 years old, with model unknown.
 
-Photographs supplied **October 22, 2026** (capture date unrecorded) update the [current placement guide](./layouts/table-placement-research.md). The 24-pot front grid retains six columns and four rows, with **B3 / P06 at R1C4, D1 / P10 at R1C5, C1 / P07 at R2C6, and D2 / P11 at R3C6**; the other front cells retain their recorded positions, including A3/F1. **P35 Lithops sits behind Kiwi at the back left**, and **P36 split rock sits between the shared cactus and square box at the back center-right**. **P21 Money Tree is on a room-side stool**, superseding its historical September 16 north-windowsill location; **P38 Terrarium is on the desk to the right**. P30 is visible in a green glazed round bowl. The grey/blue back-center-left pot remains a possible P37 Arctic Ice pending owner confirmation. P31/P32 are absent from these views, and their last September 20 floor locations remain unverified as current; P39/P40 are not pictured here; the later October 22 owner clarification places both in quarantine in another room. The photographs establish no new watering, medium, repot/setup boundary, dimensions, light reading, or controller setting.
+Photographs supplied **October 22, 2026** (capture date unrecorded) update the [current placement guide](./layouts/table-placement-research.md). The 24-pot front grid retains six columns and four rows, with **B3 / P06 at R1C4, D1 / P10 at R1C5, C1 / P07 at R2C6, and D2 / P11 at R3C6**; the other front cells retain their recorded positions, including A3/F1. **P35 Lithops sits behind Kiwi at the back left**, and **P36 split rock sits between the shared cactus and square box at the back center-right**. **P21 Money Tree is on a room-side stool**, superseding its historical September 16 north-windowsill location; **P38 Terrarium is on the desk to the right**. P30 is visible in a green glazed round bowl. The owner confirmed October 23 that the pale rosette in the grey/blue pot at the back center-left is P37 / #11 Arctic Ice, between P35 Lithops and P19 shared cactus. P31/P32 are absent from these views, and their last September 20 floor locations remain unverified as current; P39/P40 are not pictured here; the later October 22 owner clarification places both in quarantine in another room. The photographs establish no new watering, medium, repot/setup boundary, dimensions, light reading, or controller setting.
 
 The current diagram faces the window: **north window top, open room bottom, Mylar left, white wall right**. This rotates the old schematic view without changing the room. The two-foot end reflector remains absent. See the [current placement guide](./layouts/table-placement-research.md) for the current positions, earlier illustrative light map and [owner light readings](./layouts/table-placement-research.md#owner-light-readings-and-confirmed-swap). The 48 approximate lux-derived PPFD readings were taken at individual plant heights, not one level plane. The whole mapped rectangle, including the intentionally unlit far edge, ranged from 145 to 677 estimated PPFD; the app's 13-hour DLI output ranged from 6.8 to 31.7. This is not calibrated PAR evidence, and the measurement date was not supplied. That earlier review confirmed the A3/F1 exchange; the October 22 photographs supply the later position updates above without new light measurements. Old proposed swaps and the glass-spill gradient are historical.
 

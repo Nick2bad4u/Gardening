@@ -81,7 +81,7 @@ describe("watering placement source", () => {
         }
     });
 
-    it("maps the October 22 rear additions and preserves uncertainty outside the grid", () => {
+    it("maps the photographed rear pots including the owner's Arctic Ice confirmation", () => {
         expect.hasAssertions();
 
         const placements = buildWateringPlacements(source, containers);
@@ -99,6 +99,7 @@ describe("watering placement source", () => {
             "P30",
             "P35",
             "P36",
+            "P37",
         ]);
         expect(placements.filter(({ zone }) => zone === "sill")).toStrictEqual(
             []
@@ -117,6 +118,12 @@ describe("watering placement source", () => {
             x: 600,
             y: 300,
         });
+        expect(placements.find(({ id }) => id === "P37")).toMatchObject({
+            position: "Back center-left, between Lithops and shared cacti",
+            x: 390,
+            y: 300,
+            zone: "rear",
+        });
 
         const others = placements.filter(({ zone }) => zone === "other");
 
@@ -126,13 +133,12 @@ describe("watering placement source", () => {
             { id: "P21", position: "Stool on room side" },
             { id: "P31", position: "Floor (last reported Sep 20)" },
             { id: "P32", position: "Floor (last reported Sep 20)" },
-            { id: "P37", position: "Back rosette identity pending" },
             { id: "P38", position: "Desk to right of tables" },
             { id: "P39", position: "Quarantine in another room" },
             { id: "P40", position: "Quarantine in another room" },
         ]);
         expect(others[0]).toMatchObject({ x: 170, y: 1305 });
-        expect(others[6]).toMatchObject({ x: 610, y: 1435 });
+        expect(others[5]).toMatchObject({ x: 390, y: 1435 });
     });
 
     it.each([

@@ -86,8 +86,6 @@ export function renderWateringMapSvg(model, { readAt, status }) {
         ${text(500, 194, "REAR TABLES · NORTH WINDOW", "zone", "middle")}
         <rect x="92" y="220" width="816" height="425" rx="18" class="surface"/>
         <path d="M500 220V645" class="divider"/>
-        ${text(390, 300, "Rosette identity", "note", "middle")}
-        ${text(390, 321, "awaiting confirmation", "note", "middle")}
         <rect x="92" y="663" width="816" height="530" rx="18" class="surface"/>
         <path d="M500 663V1193" class="divider"/>
         ${[

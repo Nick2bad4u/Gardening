@@ -4,13 +4,13 @@
 - Label ID: `#11`
 - Tracker ID: `P37`
 - Status: **active; acquired October 6, 2026**
-- Visual description: The cultivar reference describes pale, opalescent rosettes with thick spoon-shaped leaves and small pointed tips. Owner photographs are pending; this is reference context, not a verified description of the owned specimen.
+- Visual description: A pale rosette in a grey/blue pot at the back center-left of the display, identified by the owner October 23 in photographs supplied October 22. The cultivar reference describes thick spoon-shaped leaves with small pointed tips; measurements and detailed specimen features remain unverified.
 - Interesting fact: The cultivar originated from a February 2012 cross between 'E1 IV' and 'Lila's Surprise'; its patent was issued in 2018.
-- Identification: **owner-associated Altman Plants listing; physical label and plant photographs pending**
+- Identification: **owner-confirmed specimen October 23, 2026; cultivar name follows the owner and associated Altman Plants listing; physical nursery label pending**
 - Acquired from: Home Depot, owner report; store location unrecorded
 - Acquired on: 2026-10-06
 - Pot purchased for it: **6-inch blue-and-white ceramic pot**, owner-described size
-- Current pot: Current container, drainage, medium, roots, placement, and repot status are not yet documented.
+- Current pot: Grey/blue pot at the back center-left between P35 Lithops and P19 shared cactus, owner-confirmed October 23 from October 22-supplied photos. These views do not establish the installed model/size, drainage, medium, roots, or repot status.
 - Reference archive: [reference photographs and attribution](../../../assets/plants/echeveria-arctic-ice/)
 
 The next physical label, **#11**, was allocated on October 7, 2026, at the owner's request.
@@ -18,6 +18,10 @@ This profile uses **Succulent-17 / P37**. Enrollment creates an identity and
 history destination; no weight, watering, repot, or dry/wet reference is implied.
 The owner's screenshot is a retailer listing, not a photograph of the purchased
 specimen. Its pictured nursery size and online price are not purchase facts.
+
+## Owner-confirmed specimen and placement
+
+On **October 23, 2026**, the owner confirmed that the pale rosette at the back is Arctic Ice. It is the grey/blue pot **between P35 / #9 Lithops and P19 / #1 shared cactus at the back center-left** in the display photographs supplied October 22; their capture date is unknown. This links the specimen to **P37 / #11 / Succulent-17** and the owner-associated cultivar name. The physical nursery label remains pending; neither these views nor the purchased six-inch pot establish installed pot dimensions, drainage, medium, or a repot event. See the [placement guide](../../layouts/table-placement-research.md). The supplied display photos are not published in this reference gallery.
 
 ## Identity and breeder history
 
@@ -91,8 +95,7 @@ File hashes, source links, and attribution remain in the reference archive.
 For color comparison, see [Altman's cultivar photographs](https://shopaltmanplants.com/products/echeveria-arctic-ice-ppaf).
 Those seller images are linked only; no reuse license was established. Searches
 of Commons, iNaturalist, and licensed-image web results on October 6 did not
-locate an independently licensed cultivar-specific color photograph. Owner
-photos remain pending. The following comparison photographs are identified by
+locate an independently licensed cultivar-specific color photograph. Owner display photos supplied October 22 were linked to this specimen by the owner October 23; they remain separate from this published reference gallery. The following comparison photographs are identified by
 their own source names and are not presented as 'Arctic Ice'.
 
 ## Comparison photographs
@@ -166,8 +169,7 @@ Photo-source names and licenses were checked October 6, 2026.
 NC State's genus guidance supports bright light, good drainage, and frost
 protection. It describes fleshy rosettes, offsets, and flower stalks raised above
 the leaves; these are useful general context, not confirmation of this specimen.
-Placement under the collection's lights remains open until its condition and
-actual position are documented. Start with bright exposure and adjust gradually;
+The owner-confirmed position is the back center-left between P35 and P19. Actual leaf-height light and root-zone condition remain unmeasured. Start with bright exposure and adjust gradually;
 do not copy a neighbor's measured light value without measuring this position.
 
 The **6-inch pot may or may not fit the roots**. RHS warns that surplus potting
@@ -196,16 +198,17 @@ attached to each archived image. The most useful owner evidence will be:
 - An overhead rosette view and a side view, with a ruler nearby.
 - Both sides of the physical nursery label, if retained.
 - The ceramic pot's interior, underside, and drainage opening.
-- Its current nursery container and medium; roots only when otherwise inspecting
+- The installed container and medium; roots only when otherwise inspecting
   or repotting, without disturbing it solely to complete this page.
-- Actual placement, any repot date and recipe, and an initial container weight
+- Leaf-height light, any repot date and recipe, and a container weight
   once the weighed setup is settled.
 
 ## Sources
 
 - Owner reports and supplied Altman listing screenshot, October 6, 2026:
   acquired at Home Depot that day; 6-inch blue-and-white ceramic pot purchased
-  for it; further plant photographs and details pending.
+  for it; purchase alone did not establish an installed setup.
+- Owner display photographs supplied October 22 and specimen/position confirmation October 23, 2026: pale rosette in the grey/blue rear pot between P35 and P19. Capture date unknown; no new dimensions or care event established.
 - [USPP29584P2: primary cultivar description and breeding history](https://patents.google.com/patent/USPP29584P2/en)
 - [Altman Plants: exact retail listing, SKU 0850821](https://shopaltmanplants.com/products/echeveria-arctic-ice-ppaf)
 - [Altman Specialty Plants: wholesale cultivar care description](https://shopaltmanonline.com/products/echeveria-arctic-ice-ppaf-3-5)

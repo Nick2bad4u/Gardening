@@ -1,6 +1,6 @@
 # Pot labels
 
-Last updated: 2026-10-22
+Last updated: 2026-10-23
 
 This is the print reference for 48 active profile records across 38 tracked pot allocations. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
 
@@ -151,7 +151,7 @@ sources and the full collection records. Mountain Crest dates are receipt dates.
 | `#7`  | Peperomia Bicolor               | Thick rounded green leaves with broad cream variegation on branching stems.                     | Each slender cream-colored flower spike holds many minute, petal-less flowers with two stamens apiece.              | Carlson's Greenhouses — 2026-09-20             |
 | `#8`  | Tricolor oyster plant           | Pointed strap-shaped leaves striped green and cream, with pink tones and purple undersides.     | The purple boat around the tiny white flowers consists of bracts, or modified leaves.                               | Carlson's Greenhouses — 2026-09-20             |
 | `#9`  | Shared Lithops planter          | Four visible heads: two tan/brown patterned heads and two grey-green heads with darker windows. | Each head is a pair of succulent leaves; replacement growth draws water from the older pair.                        | Home Depot, Howell — 2026-09-21                |
-| `#11` | Arctic Ice echeveria            | Pale opalescent rosette in cultivar references; owned appearance pending.                       | Cultivar selected from a 2012 cross; patent issued in 2018.                                                         | Home Depot — 2026-10-06                        |
+| `#11` | Arctic Ice echeveria            | Owner-confirmed pale rosette in the grey/blue rear pot.                                         | Cultivar selected from a 2012 cross; patent issued in 2018.                                                         | Home Depot — 2026-10-06                        |
 | `#10` | Split rock                      | Rounded grey-green speckled leaves divided by a deep central cleft.                             | Seed capsules open when wet and close as they dry, releasing some seeds with each shower.                           | Home Depot, Howell — 2026-09-21                |
 | `G1`  | Black Widow chin cactus         | Dark ribbed globe variegated in near-black purple, red, and green.                              | It belongs to the same species commonly sold as colorful grafted moon cacti.                                        | Mountain Crest Gardens — received 2026-08-28   |
 | `G2`  | Paper spine cactus              | Rounded gray-green segments carrying broad curling paperlike spines.                            | Loose segments detach readily and can root as new plants; the “paper” structures are true spines.                   | Mountain Crest Gardens — received 2026-08-28   |
@@ -478,9 +478,7 @@ Important date conventions:
 
 ## October 7 Arctic Ice label
 
-**Succulent-17 / #11 / P37** is [Arctic Ice echeveria](./succulents/echeveria-arctic-ice.md),
-identified from the owner's associated Altman listing. Physical-label and plant
-photographs remain pending. Current pot, medium, drainage, and placement are unrecorded.
+**Succulent-17 / #11 / P37** is [Arctic Ice echeveria](./succulents/echeveria-arctic-ice.md). The owner confirmed October 23 that the pale rosette in the grey/blue pot between P35 and P19 at the back center-left is this specimen, in photos supplied October 22 (capture date unknown). The cultivar name retains the owner-associated Altman listing basis; physical nursery-label evidence remains pending. Permanent #11 stays with P37 when it moves.
 
 ```text
 #11 | ARCTIC ICE ECHEVERIA

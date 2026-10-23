@@ -87,8 +87,14 @@
         {
             "date": "2026-10-06",
             "sourcePath": "docs/plants/succulents/echeveria-arctic-ice.md",
-            "text": "Owner reported acquisition at Home Depot and purchase of a six-inch blue-and-white ceramic pot; completed repot and current setup remain unrecorded.",
+            "text": "Owner reported acquisition at Home Depot and purchase of a six-inch blue-and-white ceramic pot; that acquisition report did not establish a completed repot or installed setup.",
             "title": "Acquired at Home Depot"
+        },
+        {
+            "date": "2026-10-23",
+            "sourcePath": "docs/plants/succulents/echeveria-arctic-ice.md",
+            "text": "Owner confirmed the pale rosette in the grey/blue back-center-left pot between P35 Lithops and P19 shared cactus as Arctic Ice in display photographs supplied October 22. Capture date unknown; the confirmation does not establish installed pot dimensions, medium, drainage, or a repot event.",
+            "title": "Rear specimen and position confirmed"
         }
     ],
     "nameStory": {

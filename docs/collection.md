@@ -1,6 +1,6 @@
 # Plant collection
 
-Last updated: 2026-10-22
+Last updated: 2026-10-23
 
 This is the current working inventory plus historical records for plants
 removed from the collection. Photo-based identifications are marked as probable, with nursery names retained alongside them.
@@ -55,18 +55,18 @@ Visible water droplets alone did not establish the watering; the later owner rep
 The owner reported buying an **_Echeveria_ 'Arctic Ice'** at **Home Depot on
 October 6, 2026**, together with a **6-inch blue-and-white ceramic pot acquired
 for it**. The store location and price paid have not been supplied.
-More information and photographs of the owned plant and pot are pending.
+Display photographs were supplied October 22 (capture date unknown). On October 23 the owner identified the pale rosette in the grey/blue back-center-left pot as Arctic Ice, between P35 Lithops and P19 shared cactus.
 Physical label **#11** was allocated on October 7 at the owner's request; the collection allocation is
 **Succulent-17 / P37**. Enrollment does not create a care observation.
 
-| Field                  | Recorded evidence                                                                                                                                                             |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Working identification | _Echeveria_ 'Arctic Ice', from the owner-supplied Altman Plants product-listing screenshot; owned-plant identification not yet checked against photographs or a nursery label |
-| Seller reference       | Altman Plants; SKU `0850821`; listing names USPP29,584                                                                                                                        |
-| Acquired on            | 2026-10-06 at Home Depot, owner report; store location and price paid unrecorded                                                                                              |
-| Pot acquired for it    | Owner-described 6-inch blue-and-white ceramic pot; brand, model, usable internal dimensions, drainage, and saucer details unrecorded                                          |
-| Current setup          | Current container, completed repot, medium, root condition, plant size, and placement unrecorded                                                                              |
-| Care history           | No weight, watering, feeding, or repot event supplied with this acquisition report                                                                                            |
+| Field                  | Recorded evidence                                                                                                                                                                                             |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Working identification | _Echeveria_ 'Arctic Ice', from the owner-supplied Altman Plants product-listing screenshot; owner identified the rear specimen October 23 in October 22-supplied photos; physical nursery label still pending |
+| Seller reference       | Altman Plants; SKU `0850821`; listing names USPP29,584                                                                                                                                                        |
+| Acquired on            | 2026-10-06 at Home Depot, owner report; store location and price paid unrecorded                                                                                                                              |
+| Pot acquired for it    | Owner-described 6-inch blue-and-white ceramic pot; brand, model, usable internal dimensions, drainage, and saucer details unrecorded                                                                          |
+| Current setup          | Grey/blue rear pot between P35/P19, owner-confirmed October 23; the photos do not establish pot model/size, repot, medium, drainage, roots, or plant dimensions                                               |
+| Care history           | No weight, watering, feeding, or repot event supplied with this acquisition report                                                                                                                            |
 
 The screenshot's title says **3.5-inch**, while the selected item at the bottom
 shows **2.5**. Neither establishes the received nursery-pot size. The separate
@@ -82,7 +82,7 @@ published August 7, 2018. These identify the named cultivar, not the appearance
 or condition of this particular plant.
 
 Sources: owner acquisition report and supplied listing screenshot, October 6,
-2026; Altman listing and USPP29,584 checked October 6. See the
+2026; display photos supplied October 22 and owner specimen/position confirmation October 23; Altman listing and USPP29,584 checked October 6. See the
 [setup note](./setup.md#october-6-arctic-ice-acquisition) and
 [pot inventory](./equipment/inventory.md#pots-medium-and-top-dressing).
 
@@ -91,7 +91,7 @@ now includes breeding history, identification features, provisional care,
 and a [10-image reference gallery](../assets/plants/echeveria-arctic-ice/): two
 monochrome Arctic Ice patent figures and eight labeled comparison photographs.
 The comparisons show other echeverias; all references remain separate from
-pending owner photos.
+the owner-supplied October 22 display photos; these reference images do not prove specimen identity.
 
 ## September 21 Lithops and split-rock additions
 
@@ -133,7 +133,7 @@ Both repots record **80% Molly's Succulent Mix + 20% perlite**. Neither batch co
 
 On **2026-09-15**, the owner added two 16 × 13-inch tables and rearranged the collection onto four wooden tables. The working 26 × 32-inch footprint is inferred before gaps; exact table height and fixture centers remain unmeasured. The September illustrations are historical and predate the later position changes.
 
-Photographs supplied **October 22, 2026** (capture date unrecorded) update the [current placement guide](./layouts/table-placement-research.md). The 24-pot front grid retains six columns and four rows, with **B3 / P06 at R1C4, D1 / P10 at R1C5, C1 / P07 at R2C6, and D2 / P11 at R3C6**; the other front cells retain their recorded positions, including A3/F1. **P35 Lithops sits behind Kiwi at the back left**, and **P36 split rock sits between the shared cactus and square box at the back center-right**. **P21 Money Tree is on a room-side stool**, superseding its historical September 16 north-windowsill location; **P38 Terrarium is on the desk to the right**. P30 is visible in a green glazed round bowl. The grey/blue back-center-left pot remains a possible P37 Arctic Ice pending owner confirmation. P31/P32 are absent from these views, and their last September 20 floor locations remain unverified as current; P39/P40 are not pictured here; the later October 22 owner clarification places both in quarantine in another room. The photographs establish no new watering, medium, repot/setup boundary, dimensions, light reading, or controller setting.
+Photographs supplied **October 22, 2026** (capture date unrecorded) update the [current placement guide](./layouts/table-placement-research.md). The 24-pot front grid retains six columns and four rows, with **B3 / P06 at R1C4, D1 / P10 at R1C5, C1 / P07 at R2C6, and D2 / P11 at R3C6**; the other front cells retain their recorded positions, including A3/F1. **P35 Lithops sits behind Kiwi at the back left**, and **P36 split rock sits between the shared cactus and square box at the back center-right**. **P21 Money Tree is on a room-side stool**, superseding its historical September 16 north-windowsill location; **P38 Terrarium is on the desk to the right**. P30 is visible in a green glazed round bowl. The owner confirmed October 23 that the pale rosette in the grey/blue pot at the back center-left is P37 / #11 Arctic Ice, between P35 Lithops and P19 shared cactus. P31/P32 are absent from these views, and their last September 20 floor locations remain unverified as current; P39/P40 are not pictured here; the later October 22 owner clarification places both in quarantine in another room. The photographs establish no new watering, medium, repot/setup boundary, dimensions, light reading, or controller setting.
 
 The plant inventory and the care configuration are separate records. On
 2026-08-14 the owner reported three changes to the cactus setup:

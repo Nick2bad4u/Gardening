@@ -1,13 +1,13 @@
 # Plant profiles
 
-Last updated: 2026-10-22
+Last updated: 2026-10-23
 
 These **49 pages cover 48 active profile records and one historical record, across 38 tracker allocations**. Each profile combines identification, botanical background, collection photographs, and practical care for its current pot. Use the guides with plant-condition and moisture checks rather than a fixed watering calendar.
 
 **New acquisition:** [Arctic Ice echeveria](./succulents/echeveria-arctic-ice.md)
 is enrolled as **Succulent-17 / #11 / P37**, acquired October 6, 2026 at Home
 Depot. A six-inch blue-and-white ceramic pot was purchased for it; current
-container, medium, drainage, repot, placement, and owner photographs remain pending.
+pot model/size, medium, drainage, and repot details are not established by the display photos supplied October 22. The owner confirmed October 23 that the pale rosette in the grey/blue pot between P35 and P19 at the back center-left is Arctic Ice.
 
 The collection-level [setup record](../setup.md#august-14-substrate-airflow-and-light-reset)
 documents the August 14 move of all 18 individually potted cactus-display
@@ -79,26 +79,26 @@ weights and Ruler dimensions are recorded in the individual profiles.
 
 ## Succulents
 
-| Inventory ID  | Label ID               | Profile                                                                                                                     | Identification status                                                               |
-| ------------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| Succulent-01  | `#2`; formerly `C4-D4` | [Pulido's echeveria (_Echeveria pulidonis_)](./succulents/echeveria-pulidonis.md)                                           | Probable                                                                            |
-| Succulent-02  | `#2`; formerly `C4-D4` | [Elephant bush (_Portulacaria afra_)](./succulents/portulacaria-afra.md)                                                    | High                                                                                |
-| Succulent-03  | `#2`; formerly `C4-D4` | [Silver teaspoons (_Kalanchoe bracteata_)](./succulents/kalanchoe-bracteata.md)                                             | Probable                                                                            |
-| Succulent-04  | `#2`; formerly `C4-D4` | [Copper spoons (_Kalanchoe orgyalis_)](./succulents/kalanchoe-orgyalis.md)                                                  | High                                                                                |
-| Succulent-05  | `#4`                   | [Kiwi aeonium (_Aeonium haworthii_ 'Dream Color')](./succulents/aeonium-haworthii-dream-color.md)                           | Very high                                                                           |
-| Succulent-06  | `G3`                   | [Royal Flush split rock (_Pleiospilos nelii_ 'Royal Flush')](./succulents/pleiospilos-nelii-royal-flush.md)                 | Seller-labeled; owner-inspected; P28                                                |
-| Succulent-07  | `H2`                   | [Raindrops echeveria (_Echeveria_ 'Raindrops')](./succulents/echeveria-raindrops.md)                                        | Seller-labeled; owner-inspected; P25                                                |
-| Succulent-08  | `H1`                   | [Coconut Crystal hens and chicks (_Sempervivum_ Colorockz® 'Coconut Crystal')](./succulents/sempervivum-coconut-crystal.md) | Seller-labeled; owner-inspected; P24                                                |
-| Succulent-09  | `#5`                   | [Tuberculate tiger jaws (probable _Faucaria tuberculosa_)](./succulents/faucaria-tuberculosa.md)                            | Seller-labeled _F. tigrina_; probable _F. tuberculosa_; P29                         |
-| Succulent-10  | `#6`                   | [Tiny mixed succulent planter](./succulents/tiny-mixed-succulent-planter.md)                                                | Seller-described five-plant garden; component IDs provisional; P30                  |
-| Succulent-10A | `#6`                   | [Pale rosette echeveria](./succulents/tiny-planter-echeveria.md)                                                            | _Echeveria_ sp.; species and cultivar unresolved; shared P30 component group        |
-| Succulent-10B | `#6`                   | [Coppertone-type sedum](./succulents/tiny-planter-coppertone-sedum.md)                                                      | Probable _Sedum adolphi_ / _S. nussbaumerianum_ complex; shared P30 component group |
-| Succulent-10C | `#6`                   | [Paddle kalanchoe](./succulents/tiny-planter-paddle-kalanchoe.md)                                                           | _Kalanchoe luciae_ / _K. thyrsiflora_ complex; shared P30 component group           |
-| Succulent-15  | `#9`                   | [Lithops shared planter](./succulents/lithops-shared-planter.md)                                                            | Probable _L. lesliei_ (tan/brown) + _L. salicola_ (grey/green), from photos; P35    |
-| Succulent-15A | `#9`                   | [_Lithops lesliei_](./succulents/lithops-lesliei.md)                                                                        | Probable species from photos; two tan/brown heads; shared P35 component group       |
-| Succulent-15B | `#9`                   | [_Lithops salicola_](./succulents/lithops-salicola.md)                                                                      | Probable species from photos; two grey/green heads; shared P35 component group      |
-| Succulent-16  | `#10`                  | [Split rock](./succulents/pleiospilos-nelii.md)                                                                             | Nursery-labelled _Pleiospilos nelii_; no cultivar supplied; not Royal Flush; P36    |
-| Succulent-17  | `#11`                  | [Arctic Ice echeveria](./succulents/echeveria-arctic-ice.md)                                                                | Owner-associated Altman listing; specimen and label photographs pending; P37        |
+| Inventory ID  | Label ID               | Profile                                                                                                                     | Identification status                                                                    |
+| ------------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| Succulent-01  | `#2`; formerly `C4-D4` | [Pulido's echeveria (_Echeveria pulidonis_)](./succulents/echeveria-pulidonis.md)                                           | Probable                                                                                 |
+| Succulent-02  | `#2`; formerly `C4-D4` | [Elephant bush (_Portulacaria afra_)](./succulents/portulacaria-afra.md)                                                    | High                                                                                     |
+| Succulent-03  | `#2`; formerly `C4-D4` | [Silver teaspoons (_Kalanchoe bracteata_)](./succulents/kalanchoe-bracteata.md)                                             | Probable                                                                                 |
+| Succulent-04  | `#2`; formerly `C4-D4` | [Copper spoons (_Kalanchoe orgyalis_)](./succulents/kalanchoe-orgyalis.md)                                                  | High                                                                                     |
+| Succulent-05  | `#4`                   | [Kiwi aeonium (_Aeonium haworthii_ 'Dream Color')](./succulents/aeonium-haworthii-dream-color.md)                           | Very high                                                                                |
+| Succulent-06  | `G3`                   | [Royal Flush split rock (_Pleiospilos nelii_ 'Royal Flush')](./succulents/pleiospilos-nelii-royal-flush.md)                 | Seller-labeled; owner-inspected; P28                                                     |
+| Succulent-07  | `H2`                   | [Raindrops echeveria (_Echeveria_ 'Raindrops')](./succulents/echeveria-raindrops.md)                                        | Seller-labeled; owner-inspected; P25                                                     |
+| Succulent-08  | `H1`                   | [Coconut Crystal hens and chicks (_Sempervivum_ Colorockz® 'Coconut Crystal')](./succulents/sempervivum-coconut-crystal.md) | Seller-labeled; owner-inspected; P24                                                     |
+| Succulent-09  | `#5`                   | [Tuberculate tiger jaws (probable _Faucaria tuberculosa_)](./succulents/faucaria-tuberculosa.md)                            | Seller-labeled _F. tigrina_; probable _F. tuberculosa_; P29                              |
+| Succulent-10  | `#6`                   | [Tiny mixed succulent planter](./succulents/tiny-mixed-succulent-planter.md)                                                | Seller-described five-plant garden; component IDs provisional; P30                       |
+| Succulent-10A | `#6`                   | [Pale rosette echeveria](./succulents/tiny-planter-echeveria.md)                                                            | _Echeveria_ sp.; species and cultivar unresolved; shared P30 component group             |
+| Succulent-10B | `#6`                   | [Coppertone-type sedum](./succulents/tiny-planter-coppertone-sedum.md)                                                      | Probable _Sedum adolphi_ / _S. nussbaumerianum_ complex; shared P30 component group      |
+| Succulent-10C | `#6`                   | [Paddle kalanchoe](./succulents/tiny-planter-paddle-kalanchoe.md)                                                           | _Kalanchoe luciae_ / _K. thyrsiflora_ complex; shared P30 component group                |
+| Succulent-15  | `#9`                   | [Lithops shared planter](./succulents/lithops-shared-planter.md)                                                            | Probable _L. lesliei_ (tan/brown) + _L. salicola_ (grey/green), from photos; P35         |
+| Succulent-15A | `#9`                   | [_Lithops lesliei_](./succulents/lithops-lesliei.md)                                                                        | Probable species from photos; two tan/brown heads; shared P35 component group            |
+| Succulent-15B | `#9`                   | [_Lithops salicola_](./succulents/lithops-salicola.md)                                                                      | Probable species from photos; two grey/green heads; shared P35 component group           |
+| Succulent-16  | `#10`                  | [Split rock](./succulents/pleiospilos-nelii.md)                                                                             | Nursery-labelled _Pleiospilos nelii_; no cultivar supplied; not Royal Flush; P36         |
+| Succulent-17  | `#11`                  | [Arctic Ice echeveria](./succulents/echeveria-arctic-ice.md)                                                                | Owner-confirmed specimen October 23; Altman cultivar listing; nursery label pending; P37 |
 
 The three Mountain Crest succulents arrived rooted in 2-inch nursery pots of unrecorded shape and moved to matching round 4 × 4 × 3.7-inch pots on 2026-08-28. Their 2026-08-29 Scale weights and Ruler dimensions are recorded in the individual profiles.
 

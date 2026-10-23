@@ -1,8 +1,8 @@
 # Grow-spot diagrams
 
-Last updated: 2026-10-22
+Last updated: 2026-10-23
 
-The [Table Placement Guide](./table-placement-research.md) records the **four wooden tables** and the placement evidence supplied **October 22, 2026**; photo capture date is unrecorded. The front retains **six columns × four rows**, with four updated cells. The rear group includes P35 Lithops behind Kiwi and P36 split rock between the shared cactus and square box. P21 Money Tree is on a room-side stool, and P38 Terrarium is on the desk to the right; the possible P37 grey/blue rear pot remains unconfirmed. The working 26 × 32-inch block is photo-inferred before gaps. The view puts **north window top, room bottom, Mylar left and white wall right**. The former round-glass and September windowsill arrangements are historical.
+The [Table Placement Guide](./table-placement-research.md) records the **four wooden tables** and the placement evidence supplied **October 22, 2026**; photo capture date is unrecorded. The front retains **six columns × four rows**, with four updated cells. The rear group includes P35 Lithops behind Kiwi and P36 split rock between the shared cactus and square box. P21 Money Tree is on a room-side stool, and P38 Terrarium is on the desk to the right; the owner confirmed October 23 that P37 Arctic Ice is the pale rosette in the grey/blue pot between P35 and P19 at the back center-left. The working 26 × 32-inch block is photo-inferred before gaps. The view puts **north window top, room bottom, Mylar left and white wall right**. The former round-glass and September windowsill arrangements are historical.
 
 The September 20 additions, #7 / P31 Peperomia Bicolor and #8 / P32 Tricolor oyster plant, have [proposed acclimation guidance](./table-placement-research.md#september-20-houseplant-purchases) for planned separate Amazon Basics eight-inch pots with owner-confirmed plentiful drainage holes on floor pot stools, explicitly off the tables. Both nursery pots were reported as six inches in diameter on September 20, when the plants were on the room-side floor; neither is visible in the photographs supplied October 22, so their current positions and pot setups remain unverified. No completed repot or move is reported; stool models/heights, actual positions, and leaf-height light remain unmeasured.
 
@@ -92,7 +92,7 @@ tap, or keyboard-focus any plant marker to reveal its common and botanical
 names, inventory record, label status, origin, placement, identification
 status, and field-guide link.
 
-The current guide uses a six-column/four-row front grid and the recorded rear group, with Money Tree's room-side stool and the terrarium's right-hand desk shown separately. P31/P32 retain only their September 20 floor report; their current locations are unverified. P37 remains unassigned pending confirmation. The October 22 owner clarification places P39/P40 in quarantine in another room for a planned “week or so” until repotting; exact positions and light exposure remain unmeasured. The 26 × 32-inch table footprint remains photo-inferred. The old 4-column/6-row, round-glass, and September windowsill coordinates are superseded.
+The current guide uses a six-column/four-row front grid and the recorded rear group, with Money Tree's room-side stool and the terrarium's right-hand desk shown separately. P31/P32 retain only their September 20 floor report; their current locations are unverified. P37 Arctic Ice is at the back center-left between P35 and P19, confirmed by the owner October 23. The October 22 owner clarification places P39/P40 in quarantine in another room for a planned “week or so” until repotting; exact positions and light exposure remain unmeasured. The 26 × 32-inch table footprint remains photo-inferred. The old 4-column/6-row, round-glass, and September windowsill coordinates are superseded.
 
 In the setup archive, the older measured diagrams retain this
 earlier working arrangement for reference:
