@@ -156,7 +156,8 @@
             .plant-choice-summary-text,
             .plant-choice-text,
             .plant-summary-content,
-            .queue-main {
+            .queue-main,
+            .workbook-calculation-details {
                 min-inline-size: 0;
             }
 
@@ -649,20 +650,61 @@
                 content: "Saved today";
             }
 
-            .workflow-refresh,
+            .workflow-toolbar {
+                display: grid;
+                grid-template-columns:
+                    [refresh-start] auto [refresh-end recalculate-start] minmax(
+                        0,
+                        1fr
+                    )
+                    [recalculate-end capacity-start] auto [capacity-end];
+                gap: 6px;
+                align-items: center;
+                padding-block: 8px 0;
+
+                & button {
+                    justify-content: center;
+                    min-inline-size: 0;
+                }
+            }
+
+            .workflow-status {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0 12px;
+                align-items: center;
+                justify-content: space-between;
+                margin-block-end: 8px;
+            }
+
+            .workbook-calculation-details {
+                & > summary {
+                    align-content: center;
+                    min-block-size: 44px;
+                    color: var(--muted);
+                    cursor: pointer;
+                }
+
+                &[open] {
+                    flex-basis: 100%;
+                }
+
+                & p {
+                    margin-block: 0 8px;
+                    overflow-wrap: anywhere;
+                }
+            }
+
+            .history-capacity {
+                max-inline-size: 130px;
+            }
+
             .history-filters {
                 display: flex;
                 flex-wrap: wrap;
                 gap: 12px;
                 align-items: center;
                 justify-content: space-between;
-            }
-
-            .workflow-refresh {
-                padding: 8px 4px;
-            }
-
-            .history-filters {
                 margin-block: 12px;
 
                 & label {
@@ -14260,12 +14302,11 @@
                         >
                     </div>
 
-                    <div class="workflow-refresh">
-                        <span
-                            id="dataFreshness"
-                            class="hint"
-                            role="status"
-                        ></span>
+                    <div
+                        class="workflow-toolbar"
+                        role="group"
+                        aria-label="Workbook controls"
+                    >
                         <button
                             id="refreshDataButton"
                             type="button"
@@ -14281,30 +14322,56 @@
                             </svg>
                             Refresh
                         </button>
-                    </div>
-                    <div class="workflow-refresh">
                         <button
                             id="recalculateWorkbookButton"
                             type="button"
                             class="photo-visibility-toggle"
+                            aria-label="Recalculate workbook"
                             aria-describedby="workbookCalculationStatus"
-                            >Recalculate workbook</button
+                            >Recalculate</button
                         >
+                        <button
+                            id="historyCapacityStatus"
+                            type="button"
+                            class="photo-visibility-toggle history-capacity"
+                            aria-label="History capacity"
+                            aria-controls="workbookCalculationDetails"
+                            aria-expanded="false"
+                            hidden
+                            ><svg
+                                viewBox="0 0 64 64"
+                                class="app-icon app-icon--small"
+                                aria-hidden="true"
+                            >
+                                <use href="#app-icon-history"></use></svg
+                            ><span id="historyCapacityLabel"></span
+                        ></button>
+                    </div>
+                    <div class="workflow-status">
                         <span
-                            id="workbookCalculationStatus"
+                            id="dataFreshness"
                             class="hint"
                             role="status"
-                            aria-live="polite"
-                            >Refresh calculations across the workbook.</span
+                        ></span>
+                        <details
+                            id="workbookCalculationDetails"
+                            class="workbook-calculation-details hint"
                         >
+                            <summary id="workbookCalculationSummary"
+                                >Calculation status</summary
+                            >
+                            <p
+                                id="workbookCalculationStatus"
+                                role="status"
+                                aria-live="polite"
+                                >Refresh calculations across the workbook.</p
+                            >
+                            <p
+                                id="historyCapacityDetail"
+                                aria-label="History capacity details"
+                            ></p>
+                        </details>
                     </div>
-                    <p
-                        id="historyCapacityStatus"
-                        aria-label="History capacity"
-                        class="hint"
-                        role="status"
-                        hidden
-                    ></p>
                     <form
                         id="entryForm"
                         aria-label="Single plant entry"
@@ -18859,8 +18926,10 @@
                 const elapsed = Date.now() - Date.parse(timestamp);
                 $("dataFreshness").textContent =
                     Number.isFinite(elapsed) && elapsed >= 0
-                        ? `Updated from Google ${elapsedTime(elapsed)} ago`
-                        : "Updated from Google: time unavailable";
+                        ? elapsed < 60000
+                            ? "Updated just now"
+                            : `Updated ${elapsedTime(elapsed)} ago`
+                        : "Update time unavailable";
                 $("dataFreshness").title = formattedTimestamp(timestamp);
             }
 
@@ -21804,6 +21873,8 @@
 
             function renderHistoryCapacity() {
                 const element = $("historyCapacityStatus");
+                const label = $("historyCapacityLabel");
+                const detail = $("historyCapacityDetail");
                 const capacity = state.bootstrap?.historyCapacity;
                 if (
                     !capacity ||
@@ -21816,10 +21887,12 @@
                 ) {
                     element.hidden = false;
                     element.classList.remove("queue-storage-warning");
-                    element.textContent = "History · Capacity unavailable";
+                    label.textContent = "Unavailable";
                     element.title =
                         "History capacity is unavailable. Refresh to try again.";
                     element.setAttribute("aria-label", element.title);
+                    detail.textContent = element.title;
+                    $("workbookCalculationDetails").open = true;
                     return;
                 }
                 element.hidden = false;
@@ -21837,11 +21910,14 @@
                         : percent > 99
                           ? ">99"
                           : String(Math.round(percent));
-                element.textContent = full
-                    ? "History · 100% used · Full"
-                    : `History · ${percentage}% used`;
+                label.textContent = full
+                    ? "100% · Full"
+                    : `${percentage}%${capacity.remainingRows <= 500 ? " · Nearly full" : ""}`;
                 element.title = `History space at last refresh: ${capacity.usedRows.toLocaleString()} of ${capacity.supportedObservationRows.toLocaleString()} rows used · ${capacity.remainingRows.toLocaleString()} remaining.${full ? " New observations need a capacity increase; completed requests can still be retried safely." : capacity.remainingRows <= 500 ? " Plan a capacity increase before the remaining rows fill." : ""}`;
                 element.setAttribute("aria-label", element.title);
+                detail.textContent = element.title;
+                if (capacity.remainingRows <= 500)
+                    $("workbookCalculationDetails").open = true;
             }
 
             function createEventChip(eventName, pressed) {
@@ -25412,7 +25488,14 @@
             }
 
             function applyWorkbookCalculationMetadata(calculation) {
-                if (!calculation || state.workbookCalculationPending) return;
+                if (state.workbookCalculationPending) return;
+                if (!calculation) {
+                    if (!state.workbookCalculatedAt)
+                        showWorkbookCalculationStatus(
+                            "Workbook calculation status is awaiting confirmation."
+                        );
+                    return;
+                }
                 const calculatedAt = calculation.calculatedAt;
                 if (
                     typeof calculatedAt === "string" &&
@@ -25430,10 +25513,33 @@
                           : calculation.status === "Refresh failed"
                             ? "The latest workbook calculation failed; previous results are retained."
                             : "Workbook calculation status is awaiting confirmation.";
-                showWorkbookCalculationStatus(message);
+                const status =
+                    calculation.status === "Ready"
+                        ? "ready"
+                        : calculation.status === "Refreshing"
+                          ? "pending"
+                          : calculation.status === "Refresh failed"
+                            ? "failed"
+                            : "unconfirmed";
+                showWorkbookCalculationStatus(message, status);
             }
 
-            function showWorkbookCalculationStatus(message) {
+            function showWorkbookCalculationStatus(
+                message,
+                status = "unconfirmed"
+            ) {
+                const summaries = {
+                    ready: "Calculations ready",
+                    pending: "Recalculating…",
+                    failed: "Calculation failed",
+                    busy: "Calculations busy",
+                    offline: "Calculations offline",
+                    unconfirmed: "Calculation unconfirmed",
+                };
+                $("workbookCalculationSummary").textContent =
+                    summaries[status] || summaries.unconfirmed;
+                if (status !== "ready")
+                    $("workbookCalculationDetails").open = true;
                 const lastSuccess = state.workbookCalculatedAt
                     ? ` Last confirmed calculation: ${new Date(state.workbookCalculatedAt).toLocaleString()}.`
                     : "";
@@ -25445,13 +25551,15 @@
                 if (state.workbookCalculationPending) return;
                 if (!browserIsOnline()) {
                     showWorkbookCalculationStatus(
-                        "Offline. Reconnect to recalculate the workbook."
+                        "Offline. Reconnect to recalculate the workbook.",
+                        "offline"
                     );
                     return;
                 }
                 if (state.saving) {
                     showWorkbookCalculationStatus(
-                        "An entry is being saved. Recalculate after it finishes."
+                        "An entry is being saved. Recalculate after it finishes.",
+                        "busy"
                     );
                     return;
                 }
@@ -25461,13 +25569,16 @@
                 button.disabled = true;
                 button.setAttribute("aria-busy", "true");
                 button.textContent = "Recalculating…";
-                showWorkbookCalculationStatus("Recalculating workbook…");
-                const finish = (message) => {
+                showWorkbookCalculationStatus(
+                    "Recalculating workbook…",
+                    "pending"
+                );
+                const finish = (message, status = "unconfirmed") => {
                     state.workbookCalculationPending = false;
                     button.disabled = false;
                     button.setAttribute("aria-busy", "false");
-                    button.textContent = "Recalculate workbook";
-                    showWorkbookCalculationStatus(message);
+                    button.textContent = "Recalculate";
+                    showWorkbookCalculationStatus(message, status);
                 };
                 const timeout = window.setTimeout(() => {
                     if (attempt !== state.workbookCalculationAttempt) return;
@@ -25488,16 +25599,19 @@
                     ) {
                         state.workbookCalculatedAt = calculatedAt;
                         finish(
-                            "Workbook calculations refreshed. Dependent formulas and charts may take a moment to update."
+                            "Workbook calculations refreshed. Dependent formulas and charts may take a moment to update.",
+                            "ready"
                         );
                         refreshCachedBootstrap();
                     } else if (result?.status === "Busy") {
                         finish(
-                            "The workbook is busy with another operation. Wait a moment, then try again."
+                            "The workbook is busy with another operation. Wait a moment, then try again.",
+                            "busy"
                         );
                     } else if (result?.status === "Refresh failed") {
                         finish(
-                            "Recalculation failed. The previous successful calculations are retained. Try again when the workbook is available."
+                            "Recalculation failed. The previous successful calculations are retained. Try again when the workbook is available.",
+                            "failed"
                         );
                     } else {
                         finish(
@@ -25782,6 +25896,16 @@
                 renderPlantOptions(
                     $("plantSearch").value,
                     $("plantSelect").value
+                );
+            });
+            $("historyCapacityStatus").addEventListener("click", () => {
+                const details = $("workbookCalculationDetails");
+                details.open = !details.open;
+            });
+            $("workbookCalculationDetails").addEventListener("toggle", () => {
+                $("historyCapacityStatus").setAttribute(
+                    "aria-expanded",
+                    String($("workbookCalculationDetails").open)
                 );
             });
             $("recalculateWorkbookButton").addEventListener(

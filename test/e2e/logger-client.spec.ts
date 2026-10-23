@@ -841,12 +841,8 @@ const beginWorkbookRecalculation = async (page: Readonly<Page>) => {
     });
     await button.focus();
     await page.keyboard.press("Enter");
-    const pendingButton = page.getByRole("button", {
-        exact: true,
-        name: "Recalculating…",
-    });
-    await expect.soft(pendingButton).toBeDisabled();
-    await expect.soft(pendingButton).toHaveAttribute("aria-busy", "true");
+    await expect.soft(button).toBeDisabled();
+    await expect.soft(button).toHaveAttribute("aria-busy", "true");
     await expect
         .soft(
             page
@@ -855,6 +851,8 @@ const beginWorkbookRecalculation = async (page: Readonly<Page>) => {
         )
         .toBeVisible();
 };
+
+const confirmedCalculationText = "Last confirmed calculation:";
 
 const confirmWorkbookRecalculation = async (page: Readonly<Page>) => {
     await page.evaluate(() =>
@@ -879,10 +877,103 @@ const confirmWorkbookRecalculation = async (page: Readonly<Page>) => {
         .soft(
             page
                 .getByRole("status")
-                .filter({ hasText: "Last confirmed calculation:" })
+                .filter({ hasText: confirmedCalculationText })
         )
         .toBeVisible();
 };
+
+const expectToolbarGeometry = async (page: Readonly<Page>) => {
+    const geometry = await page.evaluate(() => {
+        const selectors = [
+            "#refreshDataButton",
+            "#recalculateWorkbookButton",
+            "#historyCapacityStatus",
+        ];
+        return selectors.map((selector) => {
+            const element = document.querySelector(selector);
+            if (!element)
+                throw new Error(`Missing toolbar control ${selector}`);
+            const rect = element.getBoundingClientRect();
+            return {
+                bottom: rect.bottom,
+                left: rect.left,
+                right: rect.right,
+                top: rect.top,
+            };
+        });
+    });
+    expect
+        .soft(Math.max(...geometry.map(({ top }) => top)))
+        .toBeLessThan(Math.min(...geometry.map(({ bottom }) => bottom)));
+    expect
+        .soft(geometry.every(({ left, right }) => left >= 0 && right <= 390))
+        .toBe(true);
+    expect
+        .soft(
+            await page.evaluate(
+                () => document.documentElement.scrollWidth <= innerWidth
+            )
+        )
+        .toBe(true);
+};
+
+const expectCalculationDisclosure = async (page: Readonly<Page>) => {
+    const summary = page.getByText("Calculations ready", { exact: true });
+    const status = page
+        .getByRole("status")
+        .filter({ hasText: confirmedCalculationText });
+    await summary.click();
+    await expect.soft(status).toBeHidden();
+    const capacity = page.getByRole("button", {
+        name: /History space at last refresh:/v,
+    });
+    await capacity.click();
+    await expect.soft(capacity).toHaveAttribute("aria-expanded", "true");
+    await expect
+        .soft(
+            page.getByText(
+                /History space at last refresh: 500 of 50,000 rows used · 49,500 remaining/v
+            )
+        )
+        .toBeVisible();
+
+    await summary.focus();
+    await page.keyboard.press("Enter");
+    await expect.soft(capacity).toHaveAttribute("aria-expanded", "false");
+    await summary.press("Space");
+    await expect.soft(status).toBeVisible();
+};
+
+for (const theme of ["dark", "light"] as const) {
+    test.describe(
+        `compact status toolbar ${theme} 390px`,
+        { tag: "@logger" },
+        () => {
+            test("keeps the controls on one row and exposes exact details by click and keyboard", async ({
+                page,
+            }, testInfo) => {
+                await openLogger(page, 390, theme);
+                await beginWorkbookRecalculation(page);
+                await confirmWorkbookRecalculation(page);
+                await expectToolbarGeometry(page);
+                await expectCalculationDisclosure(page);
+                await expect
+                    .soft(
+                        page
+                            .getByRole("status")
+                            .filter({ hasText: confirmedCalculationText })
+                    )
+                    .toContainText("9/9/2026");
+                await page
+                    .getByRole("status")
+                    .filter({ hasText: confirmedCalculationText })
+                    .screenshot({
+                        path: testInfo.outputPath("calculation-details.png"),
+                    });
+            });
+        }
+    );
+}
 
 for (const theme of ["dark", "light"] as const) {
     for (const width of [390, 1280]) {
@@ -922,7 +1013,7 @@ for (const theme of ["dark", "light"] as const) {
                         .toBe(true);
                     await page
                         .getByRole("status")
-                        .filter({ hasText: "Last confirmed calculation:" })
+                        .filter({ hasText: confirmedCalculationText })
                         .screenshot({
                             path: testInfo.outputPath(
                                 "workbook-recalculation.png"
@@ -966,7 +1057,7 @@ for (const theme of ["dark", "light"] as const) {
                         );
                         const status = page
                             .getByRole("status")
-                            .filter({ hasText: "Last confirmed calculation:" });
+                            .filter({ hasText: confirmedCalculationText });
                         await expect
                             .soft(status)
                             .toContainText(

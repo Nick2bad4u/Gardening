@@ -320,7 +320,9 @@ Shared bulk details must really be shared. In particular, a common water-volume 
 | Queued                                | A pending local observation exists; this is not yet proof of a canonical saved weight.                                                 |
 | Saved today                           | History confirms an eligible weight in the current local care day.                                                                     |
 | Not weighed today                     | A progress filter using the 4 a.m. care-day boundary. It neither logs a skipped action nor requires every remaining pot to be weighed. |
-| Refresh / Updated from Google         | Refreshes data and reports fetch time. It is not a new observation timestamp.                                                          |
+| Refresh / Updated                     | Refreshes data from Google and reports fetch time. It is not a new observation timestamp.                                              |
+| Recalculate                           | Refreshes workbook calculations. Open the calculation status below the toolbar for the last confirmed calculation time and details.    |
+| History icon and percentage           | Shows used History capacity. Calculation details include exact used and remaining row counts; capacity warnings remain visible.        |
 | Correct entry                         | Opens a supported correction of one saved event, with a reason, preview, and confirmation.                                             |
 | Move to another plant                 | Reassigns that event to the selected plant and its valid pot setup, preserving the original entry in the audit trail.                  |
 | Delete entry                          | Removes the event from active history and calculations; a deletion record preserves its provenance and retry receipt.                  |
@@ -339,7 +341,7 @@ but queue changes are disabled with an explanation. Storage events and returning
 to the tab refresh its queue view. This does not synchronize separate phones or
 browser profiles.
 
-History currently supports **4,999 observation rows** below its header. A save
+History currently supports **50,000 observation rows** below its header. A save
 can create several event rows. The server checks the whole batch against remaining
 capacity before appending, so a capacity rejection does not leave half of the
 batch saved. Keep the retained request recoverable and have the supported workbook

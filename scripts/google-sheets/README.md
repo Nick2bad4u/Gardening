@@ -4,7 +4,8 @@ Production logger **5.39.0 / immutable version 115** supports **38 container all
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained and deployed source are **5.39.0**. Production **AppSheet
+Maintained source is **5.39.1**; production remains **5.39.0** until the compact
+toolbar rollout below is verified. Production **AppSheet
 1.100135** was verified by an independent saved-definition readback on October 22.
 The table-picker release does not change AppSheet. The rollout
 receipt below records the production checks separately from rehearsal results.
@@ -37,6 +38,16 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## October 23 compact status toolbar
+
+The maintained **5.39.1** client places Refresh, Recalculate, and the History SVG
+with its capacity percentage in one compact toolbar. Calculation details expand
+on tap to show the full status, exact last confirmed calculation time, and History
+row counts. Pending requests and failure or unconfirmed outcomes reveal their
+messages automatically. Capacity warnings remain visible. The server change is
+the logger version only; workbook schema, calculation behavior, and AppSheet are
+unchanged. Production verification is pending.
 
 ## October 23 table picker
 

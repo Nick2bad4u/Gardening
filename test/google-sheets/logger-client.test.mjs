@@ -925,7 +925,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
         expect(
             queryElement(legacy.window.document, "#dataFreshness", HTMLElement)
                 .textContent
-        ).toBe("Updated from Google: time unavailable");
+        ).toBe("Update time unavailable");
         expect(
             queryElement(legacy.window.document, ".weight-chart", HTMLElement)
                 .textContent
@@ -1432,7 +1432,7 @@ describe("garden logger History details and current-cycle charts", () => {
         expect(
             queryElement(window.document, "#dataFreshness", HTMLElement)
                 .textContent
-        ).toContain("less than a minute ago");
+        ).toContain("Updated just now");
         expect(
             queryElement(window.document, ".metrics", HTMLElement).textContent
         ).toContain("Sep 5, 2026");
@@ -1580,7 +1580,7 @@ describe("garden logger History details and current-cycle charts", () => {
         expect(
             queryElement(window.document, "#dataFreshness", HTMLElement)
                 .textContent
-        ).toContain("less than a minute ago");
+        ).toContain("Updated just now");
         expect(
             queryElement(window.document, "#connectionStatus", HTMLElement)
                 .textContent
@@ -13599,16 +13599,16 @@ describe("leaf VPD entry and history capacity", () => {
     });
 
     it.each([
-        { expected: "0% used", remainingRows: 50_000 },
-        { expected: "<1% used", remainingRows: 49_999 },
-        { expected: "<1% used", remainingRows: 49_501 },
-        { expected: "1% used", remainingRows: 49_500 },
-        { expected: "4% used", remainingRows: 48_120 },
-        { expected: "99% used", remainingRows: 501 },
-        { expected: "99% used", remainingRows: 500 },
-        { expected: ">99% used", remainingRows: 499 },
-        { expected: ">99% used", remainingRows: 1 },
-        { expected: "100% used · Full", remainingRows: 0 },
+        { expected: "0%", remainingRows: 50_000 },
+        { expected: "<1%", remainingRows: 49_999 },
+        { expected: "<1%", remainingRows: 49_501 },
+        { expected: "1%", remainingRows: 49_500 },
+        { expected: "4%", remainingRows: 48_120 },
+        { expected: "99%", remainingRows: 501 },
+        { expected: "99% · Nearly full", remainingRows: 500 },
+        { expected: ">99% · Nearly full", remainingRows: 499 },
+        { expected: ">99% · Nearly full", remainingRows: 1 },
+        { expected: "100% · Full", remainingRows: 0 },
     ])(
         "shows compact refreshed capacity with $remainingRows rows remaining while keeping entry controls available",
         ({ expected, remainingRows }) => {
@@ -13632,7 +13632,10 @@ describe("leaf VPD entry and history capacity", () => {
             );
 
             expect(status.hidden).toBe(false);
-            expect(status.textContent).toBe(`History · ${expected}`);
+            expect(
+                queryElement(status, "#historyCapacityLabel", HTMLElement)
+                    .textContent
+            ).toBe(expected);
             expect(status.title).toContain(
                 `History space at last refresh: ${(50_000 - remainingRows).toLocaleString()} of 50,000 rows used · ${remainingRows.toLocaleString()} remaining.`
             );
@@ -13692,7 +13695,10 @@ describe("leaf VPD entry and history capacity", () => {
             );
 
             expect(status.hidden).toBe(false);
-            expect(status.textContent).toBe("History · Capacity unavailable");
+            expect(
+                queryElement(status, "#historyCapacityLabel", HTMLElement)
+                    .textContent
+            ).toBe("Unavailable");
             expect(status.getAttribute("aria-label")).toBe(status.title);
             expect(status.title).toContain("Refresh to try again");
             expect(status.classList.contains("queue-storage-warning")).toBe(
@@ -13892,6 +13898,99 @@ describe("leaf VPD entry and history capacity", () => {
 });
 
 describe("manual workbook recalculation", () => {
+    it("keeps ready details collapsed, preserves a user-open disclosure, and retains the history icon across invalid and full refreshes", () => {
+        expect.hasAssertions();
+
+        const calculatedAt = "2026-10-20T05:00:00Z";
+        const ready = {
+            ...bootstrap,
+            historyCapacity: {
+                remainingRows: 49_500,
+                supportedLastRow: 50_001,
+                supportedObservationRows: 50_000,
+                usedRows: 500,
+            },
+            workbookCalculation: { calculatedAt, status: "Ready" },
+        };
+        const { behaviors, window } = createLoggerWindow({
+            bootstrapData: ready,
+        });
+        const disclosure = queryElement(
+            window.document,
+            "#workbookCalculationDetails",
+            HTMLDetailsElement
+        );
+        const capacity = queryElement(
+            window.document,
+            "#historyCapacityStatus",
+            HTMLButtonElement
+        );
+        const icon = required(capacity.querySelector("svg"));
+        const calculationDate = new Date(calculatedAt);
+
+        expect(disclosure.open).toBe(false);
+        expect(icon.querySelector("use")?.getAttribute("href")).toBe(
+            "#app-icon-history"
+        );
+
+        capacity.click();
+
+        expect(capacity.getAttribute("aria-expanded")).toBe("true");
+        expect(
+            queryElement(window.document, "#historyCapacityDetail", HTMLElement)
+                .textContent
+        ).toContain("500 of 50,000 rows used · 49,500 remaining");
+        expect(
+            queryElement(
+                window.document,
+                "#workbookCalculationStatus",
+                HTMLElement
+            ).textContent
+        ).toContain(calculationDate.toLocaleString());
+
+        refreshWorkflow(window);
+
+        expect(disclosure.open).toBe(true);
+
+        behaviors.getWebAppBootstrap = ({ success }) => {
+            success({ ...ready, historyCapacity: null });
+        };
+        refreshWorkflow(window);
+
+        expect(capacity.querySelector("svg")).toBe(icon);
+        expect(
+            queryElement(capacity, "#historyCapacityLabel", HTMLElement)
+                .textContent
+        ).toBe("Unavailable");
+
+        behaviors.getWebAppBootstrap = ({ success }) => {
+            success({
+                ...ready,
+                historyCapacity: {
+                    remainingRows: 0,
+                    supportedLastRow: 50_001,
+                    supportedObservationRows: 50_000,
+                    usedRows: 50_000,
+                },
+            });
+        };
+        refreshWorkflow(window);
+
+        expect(icon.isConnected).toBe(true);
+        expect(
+            queryElement(capacity, "#historyCapacityLabel", HTMLElement)
+                .textContent
+        ).toBe("100% · Full");
+        expect(
+            queryElement(window.document, "#historyCapacityDetail", HTMLElement)
+                .textContent
+        ).toContain("50,000 of 50,000 rows used · 0 remaining");
+        expect(
+            queryElement(window.document, "#saveButton", HTMLButtonElement)
+                .disabled
+        ).toBe(false);
+    });
+
     it("shows the saved successful timestamp while retaining a failed snapshot status", () => {
         expect.hasAssertions();
 
@@ -13914,6 +14013,13 @@ describe("manual workbook recalculation", () => {
             "latest workbook calculation failed"
         );
         expect(status.textContent).toContain("Last confirmed calculation:");
+        expect(
+            queryElement(
+                window.document,
+                "#workbookCalculationDetails",
+                HTMLDetailsElement
+            ).open
+        ).toBe(true);
     });
 
     it("preserves the draft and focus while preventing duplicate requests, then displays confirmed freshness", () => {
@@ -13948,6 +14054,13 @@ describe("manual workbook recalculation", () => {
         expect(button.disabled).toBe(true);
         expect(button.getAttribute("aria-busy")).toBe("true");
         expect(status.textContent).toContain("Recalculating workbook");
+        expect(
+            queryElement(
+                window.document,
+                "#workbookCalculationDetails",
+                HTMLDetailsElement
+            ).open
+        ).toBe(true);
         expect(
             calls.filter(({ method }) => method === "recalculateGardenWorkbook")
         ).toHaveLength(1);
@@ -14025,6 +14138,13 @@ describe("manual workbook recalculation", () => {
                   : "did not confirm"
         );
         expect(notes.value).toBe("Still here");
+        expect(
+            queryElement(
+                window.document,
+                "#workbookCalculationDetails",
+                HTMLDetailsElement
+            ).open
+        ).toBe(true);
     });
 
     it("keeps offline and active-save requests local without unlocking a save", () => {
