@@ -1,12 +1,12 @@
 # Google Sheets observation logger
 
-Production logger **5.39.2 / immutable version 117** supports **38 container allocations**, using IDs `P01`–`P32` and `P35`–`P40`, and **50,000 History observation slots**. The October 23 rollouts below record the table picker, compact toolbar, and empty-draft fix; October 22 records the verified P39/P40 enrollment, and earlier receipts retain the capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.39.3 / immutable version 118** supports **38 container allocations**, using IDs `P01`–`P32` and `P35`–`P40`, and **50,000 History observation slots**. The October 23 rollouts below record the table picker, toolbar spacing and button feedback, and empty-draft fix; October 22 records the verified P39/P40 enrollment, and earlier receipts retain the capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained source is **5.39.3**; production remains **5.39.2** until the button-feedback rollout below is verified. Production **AppSheet
+Maintained source and production are **5.39.3**. Production **AppSheet
 1.100135** was verified by an independent saved-definition readback on October 22.
-The table-picker, compact-toolbar, and empty-draft releases do not change AppSheet. The rollout
+The table-picker, toolbar, button-feedback, and empty-draft releases do not change AppSheet. The rollout
 receipt below records the production checks separately from rehearsal results.
 
 The mobile logger and AppSheet are the observation input surfaces. The unused
@@ -51,7 +51,43 @@ treatment while waiting for Google. Reduced-motion preferences retain the color
 feedback without movement or icon animation. This is a client presentation change;
 the server change is limited to the version marker.
 
-Production deployment and preservation verification are pending.
+The reviewed source commit
+[`834155c`](https://github.com/Nick2bad4u/Gardening/commit/834155c16c255146448c790fe651d69c4bc350b4)
+passed logger coverage, SonarCloud/SonarQube, Socket, both secret scans, and
+[Pages/browser checks](https://github.com/Nick2bad4u/Gardening/actions/runs/40024660635)
+before promotion. Local validation passed **1,872 logger tests** with **99.58%
+statement coverage**, **158 logger browser cases** across Chromium/MS Edge and
+the mobile project, type checks, source/site checks, builds, and applicable lint,
+formatting, and secret checks. The browser cases verify touch and keyboard
+feedback, reduced motion, disabled controls, icon preservation through request
+outcomes, and warning-label containment at 320 px. Both themes were inspected at
+390 px. Browser actions used synthetic local fixtures.
+
+A native Drive backup was created at **21:10:19.615 UTC on October 23, 2026**.
+Fresh native snapshots immediately before deployment matched that backup across
+all **2,022 observations and unique IDs**, **1,652 request groups**, **38 App entries
+rows**, and **0 App bulk rows**. Canonical and staging values, formulas, notes,
+validations, sheet properties, and the bounded auxiliary ranges were preserved.
+The backup comparison allowed only the expected derived calculation timestamp
+change. The after-deployment comparison found no changed cells or appended rows
+in those checked ranges. Integrity reported no identity, retry, projection, or
+formula errors; the existing 18 uncalibrated plants and one setup without an
+anchor remained observation needs.
+
+The existing deployment was updated to immutable **118** at **21:25:33.862 UTC**.
+The immediate readback briefly returned version 117; no mutation was repeated.
+A fresh read at **21:26:31 UTC** verified maintained, Head, and immutable source
+parity, with the same deployment URL and access entry points. A fresh page load
+displayed **Connected · Logger 5.39.3**, the calculator icon, and the balanced
+toolbar in both phone themes without horizontal overflow. Refresh visibly used
+its busy treatment while waiting for Google.
+
+The existing single **five-minute** `processQueuedAppSheetEntries` trigger was
+verified without editing it. Its **17:25:42 EDT** post-deployment run completed in
+**11.779 seconds**. Version 118 `doGet` at **17:27:43 EDT** and bootstrap at
+**17:27:46 EDT** completed in **0.922** and **12.906 seconds**, respectively. A
+manual Refresh also completed through version 118. No installers, trigger
+reinstallation, schema migration, or synthetic production observations were used.
 
 ## October 23 empty-draft recovery fix
 
