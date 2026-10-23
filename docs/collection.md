@@ -1,6 +1,6 @@
 # Plant collection
 
-Last updated: 2026-10-21
+Last updated: 2026-10-22
 
 This is the current working inventory plus historical records for plants
 removed from the collection. Photo-based identifications are marked as probable, with nursery names retained alongside them.
@@ -40,12 +40,11 @@ and Proven Winners leafjoy littles labels received October 21, 2026:
 | Houseplant-06 | `#13` | `P39`   | [Nightly nerve plant](./plants/houseplants/fittonia-albivenis-nightly.md), _Fittonia albivenis_, Network News™ Nightly™                          |
 | Houseplant-07 | `#14` | `P40`   | [Spice is Nice peperomia](./plants/houseplants/peperomia-obtusifolia-spice-is-nice.md), _Peperomia obtusifolia_, Savory Delights™ Spice is Nice™ |
 
-The labels support the nursery identities; photographs are consistent with them.
-Exact purchase dates, retailer, pot dimensions, drainage, medium, placement,
-previous watering, and fertilizer history are unrecorded. Visible water droplets
-do not establish a watering event. P39 is separate from the provisional Fittonia
-in P38; P40 is separate from P31 Peperomia Bicolor. Enrollment creates no weight,
-watering, feeding, or repot observation.
+The labels support the nursery identities; photographs are consistent with them. In an **October 22 owner clarification**, both purchases were confirmed as **October 21, 2026, at Home Depot in Howell, Michigan**. The owner reports watering both with **RO water on October 21** because they were “super bone dry.” That is an owner-described condition, not a measured dry weight or baseline. Exact watering times, volumes, fertilizer use, and earlier nursery care are unreported. This documentation records the report; it does not confirm that corresponding Water events have been entered in the live History ledger.
+
+Both plants are **in quarantine in another room**, planned for “a week or so” until repotting. Their precise positions and light exposure remain unmeasured. New glass pots with a drainage hole are owned for the planned repots. The owner clarified October 22 that the acrylic paint is planned **only on the exterior below the soil line**. The pots are irregularly shaped; the owner plans to measure them tonight, but dimensions remain pending. Paint product and cure details are unrecorded; no completed painting is reported. Medium is expected in a few days: the owner tentatively identifies the other two VERYPLANTS Molly's products as Aroid and Orchid mixes, but exact bags, quantities, recipes, and assignment to either plant remain unverified. No completed repot is reported; current nursery-pot dimensions, drainage, and medium remain unrecorded.
+
+Visible water droplets alone did not establish the watering; the later owner report supplies that evidence. P39 remains separate from the provisional Fittonia in P38, and P40 from P31 Peperomia Bicolor. Enrollment itself creates no care event.
 
 ## Terrarium — October 10 arrival photographs
 
@@ -132,7 +131,9 @@ Both repots record **80% Molly's Succulent Mix + 20% perlite**. Neither batch co
 
 ## Collection setup history
 
-On **2026-09-15**, the owner added two 16 × 13-inch tables and rearranged the collection onto four wooden tables. The [current guide](./layouts/table-placement-research.md) records a photo-matched six-column/four-row small-pot grid at the front, five containers behind it, and #3 / P21 Money Tree separately on the north windowsill after the supplied photos. The owner confirmed the move complete on September 16; the exact move time was not recorded. The vacated rear-left slot stays open; Kiwi remains in place. The working 26 × 32-inch footprint is inferred before gaps; exact table height and fixture centers remain unmeasured. This furniture and placement change does not alter inventory IDs, shared-container membership, pot setups, or watering references.
+On **2026-09-15**, the owner added two 16 × 13-inch tables and rearranged the collection onto four wooden tables. The working 26 × 32-inch footprint is inferred before gaps; exact table height and fixture centers remain unmeasured. The September illustrations are historical and predate the later position changes.
+
+Photographs supplied **October 22, 2026** (capture date unrecorded) update the [current placement guide](./layouts/table-placement-research.md). The 24-pot front grid retains six columns and four rows, with **B3 / P06 at R1C4, D1 / P10 at R1C5, C1 / P07 at R2C6, and D2 / P11 at R3C6**; the other front cells retain their recorded positions, including A3/F1. **P35 Lithops sits behind Kiwi at the back left**, and **P36 split rock sits between the shared cactus and square box at the back center-right**. **P21 Money Tree is on a room-side stool**, superseding its historical September 16 north-windowsill location; **P38 Terrarium is on the desk to the right**. P30 is visible in a green glazed round bowl. The grey/blue back-center-left pot remains a possible P37 Arctic Ice pending owner confirmation. P31/P32 are absent from these views, and their last September 20 floor locations remain unverified as current; P39/P40 are not pictured here; the later October 22 owner clarification places both in quarantine in another room. The photographs establish no new watering, medium, repot/setup boundary, dimensions, light reading, or controller setting.
 
 The plant inventory and the care configuration are separate records. On
 2026-08-14 the owner reported three changes to the cactus setup:
@@ -288,7 +289,7 @@ money tree is `#3`, and the Kiwi aeonium is `#4`. The former `A4-B4` and
 
 ## September 20 Carlson's Greenhouses houseplants
 
-Two houseplants were purchased at **Carlson's Greenhouses on September 20, 2026**, in nursery baskets reported as six inches wide. Both tags identify Carlson's as grower and specify bright, indirect light. Their last recorded location is the room-side floor near the money tree. The nursery supplied no watering or fertilizer history; wet foliage at purchase does not establish root-ball moisture.
+Two houseplants were purchased at **Carlson's Greenhouses on September 20, 2026**, in nursery baskets reported as six inches wide. Both tags identify Carlson's as grower and specify bright, indirect light. Their last reported location was the room-side floor near the money tree on September 20; neither is visible in the photographs supplied October 22, so current placement remains unverified. The nursery supplied no watering or fertilizer history; wet foliage at purchase does not establish root-ball moisture.
 
 Separate eight-inch Amazon Basics pots with drainage holes are planned, using airy greenhouse potting mix blended with Molly's Succulent Mix at a ratio still to be chosen. The [Bamworld Nature stools](./equipment/inventory.md#display-and-support) have seller-listed heights of 7.8, 8.6, and 11.5 inches. Delivery, repotting, and stool installation are unconfirmed; actual nursery-pot depth, root condition, and leaf-height light remain unmeasured.
 
@@ -307,7 +308,7 @@ identify Altman Plants as grower and Smart Planet Home as the retail brand.
 Exact store, current measured pot dimensions, replacement-medium composition,
 weights, plant dimensions, and maintained placement were not recorded in the acquisition note; use the current placement guide and care history for subsequent observations.
 
-The setup-2 repot descriptions are: **P30 / #6** is logged as **“5 inch shallow”** with **“Nursery cacti soil and my top dressing”** at **September 3, 2026, 12:18 a.m. EDT**; **P29 / #5** is logged as **“4.25 round, 4.25 deep”** with **80% Molly's Succulent Mix / 20% perlite with top dressing** at **12:23 a.m. EDT**. Both timestamps fall in the September 2 care day. These are owner-entered pot descriptions, not fresh ruler measurements. Current placement follows the confirmed placement guide; weights remain in the care history.
+The setup-2 repot descriptions are: **P30 / #6** is logged as **“5 inch shallow”** with **“Nursery cacti soil and my top dressing”** at **September 3, 2026, 12:18 a.m. EDT**; **P29 / #5** is logged as **“4.25 round, 4.25 deep”** with **80% Molly's Succulent Mix / 20% perlite with top dressing** at **12:23 a.m. EDT**. Both timestamps fall in the September 2 care day. These are owner-entered pot descriptions, not fresh ruler measurements. Current placement follows the placement guide; weights remain in the care history. Photographs supplied October 22 show P30 in a green glazed round bowl, but do not establish the date, medium, dimensions, or setup number of any intervening repot. The terra-cotta setup-2 description above remains historical evidence.
 
 | Inventory ID  | Label ID | Tracker ID | Working identification                                                                                          | Common name                  | Confidence                                  | Current record                                     |
 | ------------- | -------- | ---------- | --------------------------------------------------------------------------------------------------------------- | ---------------------------- | ------------------------------------------- | -------------------------------------------------- |

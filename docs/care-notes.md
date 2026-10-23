@@ -1,6 +1,6 @@
 # Practical care notes
 
-Last updated: 2026-10-21
+Last updated: 2026-10-22
 
 Start with the [watering quick guide](./watering-quick-guide.md) for each group's
 drying target. This page brings together the collection's routine checks,
@@ -18,7 +18,7 @@ and dry-down. Use the
 [final placement guide](./layouts/table-placement-research.md) for each pot's
 ongoing light need; adding a light does not by itself make a pot ready to water.
 
-The September 15 photographs replace the old placement plan with four wooden tables: 24 small pots in a six-column/four-row front grid and, in the updated arrangement, five larger/shared containers behind them plus #3 / P21 Money Tree separately on the north windowsill. The owner confirmed the money-tree move complete on September 16 after planning it on September 15; the exact move time was not recorded. Downward-pointing leaves prompted the move, but excess light remains a suspected cause. The vacated table slot stays open and Kiwi stays in place. The [current guide](./layouts/table-placement-research.md#owner-light-readings-and-confirmed-swap) now also records the owner's approximate light comparison and the confirmed A3 Serpent / F1 Hook-spined exchange; other positions remain unchanged. A new location does not reset a pot setup, wet/dry reference or learned watering cycle. Keep existing observations and use useful measurements to detect changed drying; moving a pot is not automatically a reason to water or weigh daily.
+Photographs supplied **October 22, 2026** (capture date unrecorded) update the [current placement guide](./layouts/table-placement-research.md). The 24-pot front grid retains six columns and four rows, with **B3 / P06 at R1C4, D1 / P10 at R1C5, C1 / P07 at R2C6, and D2 / P11 at R3C6**; the other front cells retain their recorded positions, including A3/F1. **P35 Lithops sits behind Kiwi at the back left**, and **P36 split rock sits between the shared cactus and square box at the back center-right**. **P21 Money Tree is on a room-side stool**, superseding its historical September 16 north-windowsill location; **P38 Terrarium is on the desk to the right**. P30 is visible in a green glazed round bowl. The grey/blue back-center-left pot remains a possible P37 Arctic Ice pending owner confirmation. P31/P32 are absent from these views, and their last September 20 floor locations remain unverified as current; P39/P40 are not pictured here; the later October 22 owner clarification places both in quarantine in another room. The photographs establish no new watering, medium, repot/setup boundary, dimensions, light reading, or controller setting. A location change does not reset pot setups, wet/dry references, or learned watering cycles. Use plant condition and useful measurements to assess changed drying; a move alone is not a reason to water or weigh daily.
 
 For the installed 240 W fixture, the [manufacturer's operating limit](https://vivosun.com/support/guide/aerolight-gen2)
 requires the growing space below **86°F (30°C)**. The older outdoor weather
@@ -36,18 +36,17 @@ working drainage and direct moisture checks; neither inherits the cactus
 plateau or a weight-only watering decision. Their profiles cite Proven Winners
 and extension guidance.
 
-The photographs supplied October 21 show droplets and some drooping Fittonia
-foliage, but do not establish a completed watering or the cause of wilting.
-Check the actual root zone before adding water. Pot dimensions, medium,
-placement, nursery feeding history, and earlier care remain unrecorded. Inspect
-for pests before placing them among established plants; no automatic feeding
-alternation or immediate repot is assigned.
+The owner clarified October 22 that **both were purchased October 21 at Home Depot in Howell, Michigan**, and **both were watered with RO water on October 21** because they were “super bone dry.” This is an owner-described moisture condition, not a measured dry weight or baseline. Exact watering times, volumes, fertilizer use, and earlier nursery care are unreported. The photographs' droplets did not prove watering; the owner report now supplies that evidence. This note does not confirm a Water entry in the live History ledger.
+
+Both are **in quarantine in another room** for the owner's planned “week or so” until repotting. The new glass pots have a drainage hole. The owner clarified October 22 that acrylic paint is planned **only on the exterior below the soil line**. The irregularly shaped pots are to be measured tonight; dimensions, paint product, and cure details remain unrecorded. No completed painting is reported. Medium is still expected, with Molly's Aroid and Orchid products tentatively identified rather than confirmed bags or recipes. No completed repot is reported. Check the actual root zone before adding more water; no feeding alternation or exact repot date is assigned.
+
+For quarantine, [Illinois Extension recommends separating new plants for 2–3 weeks](https://extension.illinois.edu/houseplants/get-started). A cautious plan is to continue checking leaves, stems, and pots during that interval; completing a repot is not evidence that pests are absent. This recommendation is separate from the owner's reported week-or-so plan.
 
 ## Terrarium — arrival condition and observation needs
 
 The October 10 [arrival record for P38 / #12 — Terrarium](./terrarium.md) contains five owner-supplied photographs and the owner's report of shipping damage. The seller expects a quick rebound, but recovery has not yet been observed. Plant identifications remain qualified, and the photographs do not establish root-zone moisture or a watering need.
 
-The owner reports **99% RH with fogged glass** from a sensor hanging inside under the cap; sensor model and measurement time are unknown. The seller's suggested **90% RH** remains an unverified target. The jar is on a shelf near the cactus grow area, with approximately **9,000 lux measured outside the nearest glass**; reducing this to about **7,000 lux** is the owner's proposed adjustment, not a confirmed change or plant requirement. Record actual relative-humidity readings as standalone **Humidity** events in **% RH** (0–100); these are observations, not automatic watering or lid-adjustment instructions. Normal lid routine and the remaining setup details still need confirmation.
+The owner reports **99% RH with fogged glass** from a sensor hanging inside under the cap; sensor model and measurement time are unknown. The seller's suggested **90% RH** remains an unverified target. The October 10 report placed the jar on a shelf near the cactus grow area, with approximately **9,000 lux measured outside the nearest glass**. Photographs supplied October 22 show it on the desk to the right of the table display, without a new light measurement; reducing this to about **7,000 lux** is the owner's proposed adjustment, not a confirmed change or plant requirement. Record actual relative-humidity readings as standalone **Humidity** events in **% RH** (0–100); these are observations, not automatic watering or lid-adjustment instructions. Normal lid routine and the remaining setup details still need confirmation.
 
 ## September 20 houseplant purchases
 
@@ -61,7 +60,7 @@ Check these as houseplants, without waiting for a cactus-style whole-pot dry pla
 
 **September 27 clarification and feeding plan:** the owner confirms both had just been watered at their September 20 pickup; exact times and nursery fertilizer use are unknown. Their next otherwise-ready watering should use plain RO. Once settled, drying normally and showing healthy new growth, the [Foliage-Pro plan](./equipment/msu-fertilizer-schedule.md#september-27-foliage-pro-starting-plan) starts **SUPERthrive Foliage-Pro 9-3-6 at 1/4 tsp/US gal**, at most every second actual ready watering, with plain RO between and whenever feeding remains unsuitable. Check known nursery or replacement-mix fertilizer before starting. This is a recommendation, not a completed feed, and adds no dedicated weighing or daily inspection requirement.
 
-Both houseplants were last recorded September 20 on the room-side floor near the money tree, in six-inch nursery pots. Separate eight-inch Amazon Basics pots with drainage holes are planned; one is decorated, with its plant assignment unrecorded. Compare the roots with the destination pots before repotting. The [Bamworld Nature stools](https://www.amazon.com/dp/B0GTHQRZSL) are seller-listed at 7.8, 8.6, and 11.5 inches high; receipt and installation are unconfirmed.
+Both houseplants were last recorded September 20 on the room-side floor near the money tree, in six-inch nursery pots. Neither is visible in the photographs supplied October 22; their current locations remain unverified. Separate eight-inch Amazon Basics pots with drainage holes are planned; one is decorated, with its plant assignment unrecorded. Compare the roots with the destination pots before repotting. The [Bamworld Nature stools](https://www.amazon.com/dp/B0GTHQRZSL) are seller-listed at 7.8, 8.6, and 11.5 inches high; receipt and installation are unconfirmed.
 
 The proposed medium blends airy, perlite-containing greenhouse potting mix with Molly's Succulent Mix. Additional perlite is available, but no completed blend is recorded. Nursery-pot depth, drainage, root condition, and feeding history are unknown. The owner-confirmed nursery watering is dated history, not a current moisture observation.
 
@@ -78,7 +77,7 @@ profiles describe the tan/brown and grey/green groups, respectively. Both share
 the same P35 / #9 assembly, care events, and setup references; the probable IDs
 do not establish root connections between the four visible heads.
 
-**P35 / #9 [Lithops shared planter](./plants/succulents/lithops-shared-planter.md)** now contains four visible heads from two nursery pots. **P36 / #10 [Split rock](./plants/succulents/pleiospilos-nelii.md)** is a separate, label-supported _Pleiospilos nelii_, cultivar not recorded and explicitly not Royal Flush. Both were repotted September 23 into **setup 2**, using 80% Molly's Succulent Mix + 20% perlite. P35 uses the D'vine Dev Blush Mauve pot, logged as 4.2 in round; P36 uses the Thirtypot speckled-brown pot, logged as 4 in round. Their seller-selected sizes are 4.3 and 4.5 inches respectively, not measured internal dimensions. Final growing positions, actual drainage, and usable internal depth remain unverified.
+**P35 / #9 [Lithops shared planter](./plants/succulents/lithops-shared-planter.md)** now contains four visible heads from two nursery pots. **P36 / #10 [Split rock](./plants/succulents/pleiospilos-nelii.md)** is a separate, label-supported _Pleiospilos nelii_, cultivar not recorded and explicitly not Royal Flush. Both were repotted September 23 into **setup 2**, using 80% Molly's Succulent Mix + 20% perlite. P35 uses the D'vine Dev Blush Mauve pot, logged as 4.2 in round; P36 uses the Thirtypot speckled-brown pot, logged as 4 in round. Their seller-selected sizes are 4.3 and 4.5 inches respectively, not measured internal dimensions. Photographs supplied October 22 place P35 behind Kiwi at the back left and P36 between the shared cactus and square box at the back center-right. Actual drainage, usable internal depth, and leaf-height exposure remain unverified.
 
 The September 23 checks record Dry medium and firm plants: all four visible Lithops heads, and a single firm split-rock leaf pair. The owner describes nearly rootbound nursery plants and removed only freely detached, extremely dry Lithops leaves; the bumpier, lighter Lithops have small scars/fissures but remain firm. Routine weights were 1247 g for P35 and 713.5 g for P36. These are setup-2 observations, not verified dry baselines, and neither repot batch records watering.
 

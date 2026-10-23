@@ -8,7 +8,7 @@
 - Identification: **retail tag confirms genus _Pachira_; _P. glabra_ is a supplied working candidate, not a proven species identification**
 - Acquired from: Home Depot, Howell, Michigan
 - Acquired on: 2026-07-29
-- Current pot: transplanted from 4 inches into a 6-inch Amazon Basics pot; retained nursery root-ball soil with Back to the Roots cactus/succulent soil filling the remaining space
+- Current pot: dark round pot visible in photographs supplied October 22, 2026; size, medium, and any repot/setup change unconfirmed. Earlier recorded setup: 6-inch Amazon Basics pot with retained nursery soil and Back to the Roots cactus/succulent soil
 - Photo archive: [licensed species-reference images](../../../assets/plants/pachira-glabra/)
 
 ## Names and identity
@@ -45,22 +45,22 @@ needs moisture checks separate from the cactus dry-down routine.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                 |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Light               | Provide bright indirect light and acclimate gradually when increasing exposure. Keep foliage clear of cold glass and drafts.                                                                                       |
-| Grow-light position | **North-facing windowsill, off the tables · Gentler**, recorded September 16. Daylight and lamp spill at leaf height are unmeasured. See the [current placement guide](../../layouts/table-placement-research.md). |
-| Shade cloth         | Leave it off while foliage remains normally colored; add it if the window-facing leaves bleach or develop crisp tan patches.                                                                                       |
-| Water               | Water when the upper portion of the mix has dried, then drain. Do not wait for the entire 6-inch root ball to become cactus-dry.                                                                                   |
-| Pot                 | Keep the current 6-inch pot until roots justify the purchased 8-inch pot; moving up again immediately would retain unnecessary water.                                                                              |
-| Temperature         | Keep warm and away from cold window glass or drafts; this tropical tree is less cold-tolerant than the cacti.                                                                                                      |
+| Topic               | Practical approach                                                                                                                                                                                                                          |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Light               | Provide bright indirect light and acclimate gradually when increasing exposure. Keep foliage clear of cold glass and drafts.                                                                                                                |
+| Grow-light position | **Room-side stool, off the tables · Gentler**, visible in photographs supplied October 22, 2026; capture date unrecorded. Actual leaf exposure is unmeasured. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Shade cloth         | Leave it off while foliage remains normally colored; add it if the window-facing leaves bleach or develop crisp tan patches.                                                                                                                |
+| Water               | Water when the upper portion of the mix has dried, then drain. Do not wait for the entire root ball to become cactus-dry.                                                                                                                   |
+| Pot                 | Confirm the present pot dimensions and root fit before planning a larger pot; the October 22 view does not establish a completed repot.                                                                                                     |
+| Temperature         | Keep warm and away from cold window glass or drafts; this tropical tree is less cold-tolerant than the cacti.                                                                                                                               |
 
-The current 6-inch [Amazon Basics pot](https://www.amazon.com/dp/B0F4QBMJMN?th=1)
+The previously recorded 6-inch [Amazon Basics pot](https://www.amazon.com/dp/B0F4QBMJMN?th=1)
 is lightweight polypropylene with drainage. The stored
 [8-inch version](https://www.amazon.com/dp/B0F4QB8C8M?th=1) is 7.9 inches in
 diameter and 6.7 inches high with its saucer; reserve it for a later root-led
 repot rather than using calendar age alone.
 
-Downward-pointing leaves were reported September 15; the north-windowsill placement was confirmed September 16, with the exact move time unrecorded. Excess light is a possible cause, but leaf angle alone is inconclusive. [NC State's _P. aquatica_ guidance](https://plants.ces.ncsu.edu/plants/pachira-aquatica/) supports indirect light as a comparison for this genus-tagged plant. [University of Maryland Extension](https://extension.umd.edu/resource/watering-indoor-plants) notes that both under- and overwatering can cause wilting. Check moisture before watering and support the entire pot and saucer clear of cold glass and drafts; sill dimensions remain unmeasured.
+Downward-pointing leaves were reported September 15; the north-windowsill placement was confirmed September 16, with the exact move time unrecorded. Excess light is a possible cause, but leaf angle alone is inconclusive. [NC State's _P. aquatica_ guidance](https://plants.ces.ncsu.edu/plants/pachira-aquatica/) supports indirect light as a comparison for this genus-tagged plant. [University of Maryland Extension](https://extension.umd.edu/resource/watering-indoor-plants) notes that both under- and overwatering can cause wilting. Check moisture before watering and support the entire pot and saucer clear of cold glass and drafts. The October 22 photographs show the later room-side stool position; its dimensions remain unmeasured.
 
 ## Recorded pot changes
 

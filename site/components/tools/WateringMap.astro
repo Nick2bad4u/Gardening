@@ -1,0 +1,78 @@
+---
+import { getWateringPlacements } from "../../lib/watering-placement.mjs";
+import "../../styles/tools/watering-map.css";
+
+const placements = await getWateringPlacements();
+---
+
+<section
+    class="watering-map card"
+    id="watering-map"
+    aria-labelledby="watering-map-title"
+    data-placements={JSON.stringify(placements)}
+>
+    <header>
+        <p class="eyebrow">Your watering log, at a glance</p>
+        <h2 id="watering-map-title">Days since watering</h2>
+        <p>
+            Each pot’s place shows the number of calendar days since its last recorded Water event.
+            Counts update from the published log when you open this page and every five minutes
+            while it is visible. These are observations, not a watering schedule.
+        </p>
+    </header>
+    <div class="watering-map-actions" aria-label="Watering map controls">
+        <button type="button" id="watering-map-refresh">
+            Refresh data
+        </button>
+        <button type="button" id="watering-map-png" disabled>
+            Download PNG
+        </button>
+        <button type="button" id="watering-map-svg" disabled>
+            Download SVG
+        </button>
+        <button type="button" id="watering-map-enlarge" aria-pressed="false">
+            Enlarge image
+        </button>
+    </div>
+    <p id="watering-map-source" class="watering-map-source" role="status" aria-live="polite">
+        Loading published watering observations…
+    </p>
+    <p
+        id="watering-map-export-status"
+        class="watering-map-export-status"
+        role="status"
+        aria-live="polite"
+    ></p>
+    <figure class="watering-map-figure">
+        <div
+            class="watering-map-viewport"
+            tabindex="0"
+            role="region"
+            aria-label="Watering placement image; enlarge to scroll horizontally"
+        >
+            <img
+                id="watering-map-image"
+                alt="Recorded table placement with days since watering for each pot; equivalent details follow below."
+                hidden
+            />
+        </div>
+        <figcaption>
+            The layout follows the photos supplied October 22, with front and rear tables shown
+            separately. Other locations and unconfirmed placements appear in their own group. The
+            gray/blue rosette at the back still needs an identity confirmation. A logged move is
+            listed in the details; free-text locations cannot update diagram coordinates. “Unknown”
+            means no active Water event was recorded. The full map fits your screen; use Enlarge
+            image for a closer view with sideways scrolling, or open the readable pot details below.
+        </figcaption>
+    </figure>
+    <details class="watering-map-details">
+        <summary>Watering and placement details for every pot</summary>
+        <ul id="watering-map-pot-list" aria-label="Watering details by pot"></ul>
+    </details>
+    <noscript>
+        Enable JavaScript to load the watering log and generate a downloadable image.
+    </noscript>
+</section>
+<script>
+    import "../../client/tools/watering-map.js";
+</script>

@@ -6,9 +6,9 @@
 - Visual description: Small oval leaves have pink netted veins and broad pink areas edged with green; the supplied photographs show hairy trailing stems and some drooping foliage.
 - Interesting fact: The species name albivenis means white-veined, although cultivated nerve plants can have pink or red veins too.
 - Identification: **Labeled _Fittonia albivenis_, Network News™ Nightly™; leaf and stem appearance is consistent with the label. A separate cultivar denomination is unverified.**
-- Acquired from: Retailer unrecorded; Proven Winners leafjoy littles nursery branding
-- Acquired on: Exact purchase date unrecorded; owned and photographs supplied 2026-10-21
-- Current pot: Nursery container visible in photographs; diameter, depth, drainage, and medium unrecorded
+- Acquired from: Home Depot, Howell, Michigan; owner clarification October 22, 2026; Proven Winners leafjoy littles nursery branding
+- Acquired on: 2026-10-21
+- Current pot: Nursery container pending repot; diameter, depth, drainage, and medium unrecorded. A glass pot with a drainage hole is a planned replacement, not the current setup
 
 ## Names and identity
 
@@ -38,18 +38,40 @@ These are publication dates, not the discovery date of this nursery selection.
 
 ![Detail of P39 pink-and-green foliage and hairy stems](../../../assets/nursery-labels/2026-10-21-p39-fittonia-detail.jpg)
 
-The owner supplied these photographs on **October 21, 2026**; capture time and
-purchase date are unrecorded. The label carries the Cocoon and WorkLife
+The owner supplied these photographs on **October 21, 2026** and later confirmed
+purchasing the plant that day at Home Depot in Howell. Capture time remains
+unrecorded. The label carries the Cocoon and WorkLife
 collections. These are product categories, not measured light or humidity
 requirements. Drooping leaves and visible water droplets do not establish
 root-zone moisture, a completed watering, or the cause of wilting.
 
 ## Care in this collection
 
-Placement, leaf-level light, current room conditions, pot dimensions, drainage,
-medium, nursery fertilizer charge, and previous watering remain unrecorded.
-Enrollment supplies no weight or care event. Use direct checks while these
-basics are being established.
+**Owner clarification, October 22:** P39 and P40 are quarantined in another
+room for roughly a week or until the planned repots. The exact position,
+leaf-level light, and room conditions are unmeasured. The owner watered both
+with **RO water on October 21**, their purchase day, because the medium was
+described as extremely dry. Exact time, water volume, fertilizer use, and
+weights were not supplied. This is owner-reported care, not an inference from
+the photographs or proof that a live tracker entry has been saved.
+
+The replacement glass pots have owner-confirmed drainage holes and irregular
+shapes; the owner plans to measure them tonight. Acrylic paint below the soil
+line is planned **on the outside only**. Paint product, dimensions, and completed
+curing are unconfirmed. Additional VERYPLANTS mixes, described
+as the aroid and orchid mixes, are expected in a few days. The exact received
+bags, mix proportions, and assignment to each plant remain pending. See the
+[planned setup](../../setup.md).
+No completed repot or new pot setup is recorded.
+
+**Mix-selection assessment:** VERYPLANTS describes Molly's Aroid Mix as chunky
+and fast-draining, and Molly's Orchid Mix as an open mix for epiphytic orchids.
+NC State describes Fittonia as shallow-rooted and vulnerable to drought
+wilting. For this small plant, do not choose the orchid mix alone as the default:
+assess particle size and moisture retention around its roots when the bags
+arrive. A finer, moisture-retentive but draining houseplant medium may be needed.
+This is an inference from the product structure and plant guidance, not a
+tested recipe for P39; no fixed blending ratio is assigned.
 
 | Topic                | Practical approach                                                                                                                                                                                                                                                                                            |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -70,7 +92,9 @@ scorched edges warrant reassessing roots, drainage, or exposure.
 
 ## Sources
 
-- Owner-supplied label and plant photographs, October 21, 2026, linked above: nursery wording, visible appearance, and separate pot; purchase/capture dates and growing conditions unrecorded. Owner photographs remain copyright Nick, all rights reserved.
+- Owner-supplied label and plant photographs, October 21, 2026, linked above: nursery wording, visible appearance, and separate pot; capture time unrecorded. Owner photographs remain copyright Nick, all rights reserved.
+- Owner clarification, October 22, 2026: Home Depot in Howell purchase and RO watering on October 21 after very dry medium; separate-room quarantine; irregular glass drainage pots with exterior-only acrylic painting planned; measurements expected that evening; incoming VERYPLANTS mixes. Exact watering time/volume, paint product, pot dimensions, and completed repot remain unrecorded.
+- [VERYPLANTS: Molly's Aroid Mix](https://veryplants.com/products/mollys-aroid-mix-premium-tropical-plant-soil-mix) and [Molly's Orchid Mix](https://veryplants.com/products/mollys-orchid-mix), inspected October 22, 2026: manufacturer descriptions of chunky aroid medium and an open orchid mix. Product descriptions do not establish the contents of the owner's incoming bags or a tested Fittonia recipe.
 - [Proven Winners: Network News™ Nightly™](https://www.provenwinners.com/plants/fittonia/network-news-nightly-nerve-plant-fittonia-albivenis): product identity, indirect light, moist but draining medium, and brand humidity guidance. These are horticultural starting points, not measurements of P39.
 - [Kew Plants of the World Online: _Fittonia albivenis_](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:105033-2): accepted name, family, native distribution, 1979 combination, and 1861 basionym.
 - [NC State Extension: _Fittonia albivenis_](https://plants.ces.ncsu.edu/plants/fittonia-albivenis/): name meaning, pink/red/white veins, shallow roots, drought wilting, and sensitivity to dry air and direct sun. Its calendar watering suggestion is not adopted for this unmeasured nursery pot.

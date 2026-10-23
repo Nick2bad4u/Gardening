@@ -42,13 +42,13 @@ to its smooth, hairless flower tube.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                        |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **R3C6 · Bright.** September 15, 2026 photo layout, facing the window (six columns, four rows). Keep a clear light path to the growing tip. See the [current placement guide](../../layouts/table-placement-research.md). |
-| Outdoor light       | Bright light with gradual direct-sun exposure to acclimate the nursery-grown skin.                                                                                                                                        |
-| Water               | Full soak, complete drainage, then dry through. Reduce water sharply during cool slow growth.                                                                                                                             |
-| Pot                 | Do not jump straight to a mature-size container. Move up one practical size when roots or body crowd the current pot.                                                                                                     |
-| Mix                 | Open, fast draining, and not excessively rich. Keep the body-to-soil line visible.                                                                                                                                        |
+| Topic               | Practical approach                                                                                                                                                                                                                                              |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **R2C6 · Bright.** Owner photographs supplied October 22, 2026 (capture date unrecorded), facing the window (six columns, four rows). Keep a clear light path to the growing tip. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Outdoor light       | Bright light with gradual direct-sun exposure to acclimate the nursery-grown skin.                                                                                                                                                                              |
+| Water               | Full soak, complete drainage, then dry through. Reduce water sharply during cool slow growth.                                                                                                                                                                   |
+| Pot                 | Do not jump straight to a mature-size container. Move up one practical size when roots or body crowd the current pot.                                                                                                                                           |
+| Mix                 | Open, fast draining, and not excessively rich. Keep the body-to-soil line visible.                                                                                                                                                                              |
 
 The plant may flatten or contract modestly in a dry rest. That is safer than
 trying to maintain maximum summer plumpness in cool indoor conditions. Active

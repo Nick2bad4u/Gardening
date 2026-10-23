@@ -40,13 +40,13 @@ successive flowers.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                        |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **R2C6 · Bright.** September 15, 2026 photo layout, facing the window (six columns, four rows). Keep a clear light path to the growing tip. See the [current placement guide](../../layouts/table-placement-research.md). |
-| Water               | Deep soak and full drainage after the pot dries. A plant in active growth or carrying buds may use water sooner than a dormant one.                                                                                       |
-| Winter              | Cooler, bright, and dry conditions encourage a clean rest; do not force growth with warmth, water, and weak light.                                                                                                        |
-| Pot and mix         | The current drained pot works. Repot when pups crowd the rim or roots have replaced much of the mix.                                                                                                                      |
-| Feeding             | Modest dilute fertilizer during warm growth can support flowering; avoid high-nitrogen feeding.                                                                                                                           |
+| Topic               | Practical approach                                                                                                                                                                                                                                              |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **R3C6 · Bright.** Owner photographs supplied October 22, 2026 (capture date unrecorded), facing the window (six columns, four rows). Keep a clear light path to the growing tip. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | Deep soak and full drainage after the pot dries. A plant in active growth or carrying buds may use water sooner than a dormant one.                                                                                                                             |
+| Winter              | Cooler, bright, and dry conditions encourage a clean rest; do not force growth with warmth, water, and weak light.                                                                                                                                              |
+| Pot and mix         | The current drained pot works. Repot when pups crowd the rim or roots have replaced much of the mix.                                                                                                                                                            |
+| Feeding             | Modest dilute fertilizer during warm growth can support flowering; avoid high-nitrogen feeding.                                                                                                                                                                 |
 
 ## Propagation and watch points
 

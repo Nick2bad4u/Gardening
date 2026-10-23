@@ -300,6 +300,13 @@ const config = [
         },
     },
     {
+        files: ["test/layouts/watering-map.test.mjs"],
+        name: "Gardening: ES2024 watering map date fixtures",
+        // Exercise the browser Date contract, including DST boundaries, without
+        // requiring Temporal in the ES2024 browser runtime under test.
+        rules: { "unicorn/prefer-temporal": "off" },
+    },
+    {
         files: ["test/google-sheets/**/*.test.mjs"],
         name: "Gardening: native Apps Script date and cell fixtures",
         rules: {

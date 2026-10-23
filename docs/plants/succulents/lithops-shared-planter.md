@@ -114,13 +114,13 @@ hands-on report above. This photograph does not show either split rock.
 
 ## Care in this collection
 
-| Topic           | Practical starting approach                                                                                                                                                                                                                             |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Light           | Final position and leaf-height exposure remain unrecorded. Acclimate gradually to a bright position; do not assume the cactus display's exposure suits newly acquired plants.                                                                           |
-| Water           | Let the fresh repot settle and assess root disturbance before considering water. Use leaf-cycle inspection and actual root-zone dryness together. Firm heads and the absence of a recorded watering are not a reason for an automatic post-repot drink. |
-| Shared planting | Inspect all four heads separately. Sharing a pot does not guarantee matching replacement cycles. If their needs diverge, reassess the shared arrangement rather than watering one firm or replacing head to satisfy another.                            |
-| Pot and medium  | The recorded recipe is 80% Molly's Succulent Mix plus 20% added perlite, not a measured 80% mineral fraction. Drainage and usable internal depth still need confirmation. Wisconsin Extension suggests roughly 3–5 inches of depth for Lithops roots.   |
-| Tracking        | Weigh the complete P35 assembly consistently. Keep setup-2 readings separate from nursery weights and establish its own references from subsequent observations.                                                                                        |
+| Topic           | Practical starting approach                                                                                                                                                                                                                                  |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Light           | Photographs supplied October 22 show the mauve pot at the back left behind Kiwi; capture date and leaf-height exposure remain unrecorded. Acclimate gradually to a bright position; do not assume the cactus display's exposure suits newly acquired plants. |
+| Water           | Let the fresh repot settle and assess root disturbance before considering water. Use leaf-cycle inspection and actual root-zone dryness together. Firm heads and the absence of a recorded watering are not a reason for an automatic post-repot drink.      |
+| Shared planting | Inspect all four heads separately. Sharing a pot does not guarantee matching replacement cycles. If their needs diverge, reassess the shared arrangement rather than watering one firm or replacing head to satisfy another.                                 |
+| Pot and medium  | The recorded recipe is 80% Molly's Succulent Mix plus 20% added perlite, not a measured 80% mineral fraction. Drainage and usable internal depth still need confirmation. Wisconsin Extension suggests roughly 3–5 inches of depth for Lithops roots.        |
+| Tracking        | Weigh the complete P35 assembly consistently. Keep setup-2 readings separate from nursery weights and establish its own references from subsequent observations.                                                                                             |
 
 ## Watch points
 
