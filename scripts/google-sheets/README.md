@@ -1,13 +1,12 @@
 # Google Sheets observation logger
 
-Production logger **5.39.3 / immutable version 118** supports **38 container allocations**, using IDs `P01`–`P32` and `P35`–`P40`, and **50,000 History observation slots**. The October 23 rollouts below record the table picker, toolbar spacing and button feedback, and empty-draft fix; October 22 records the verified P39/P40 enrollment, and earlier receipts retain the capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.39.4 / immutable version 119** supports **38 container allocations**, using IDs `P01`–`P32` and `P35`–`P40`, and **50,000 History observation slots**. The October 24 rollout adds scheduled-run diagnostics; October 23 records the table picker, toolbar spacing and button feedback, and empty-draft fix; October 22 records the verified P39/P40 enrollment, and earlier receipts retain the capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained source is **5.39.4**; production remains **5.39.3** until the diagnostic
-rollout below is verified. Production **AppSheet
+Maintained and production source are **5.39.4**. Production **AppSheet
 1.100135** was verified by an independent saved-definition readback on October 22.
-The table-picker, toolbar, button-feedback, and empty-draft releases do not change AppSheet. The rollout
+The table-picker, toolbar, button-feedback, empty-draft, and diagnostic releases do not change AppSheet. The rollout
 receipt below records the production checks separately from rehearsal results.
 
 The mobile logger and AppSheet are the observation input surfaces. The unused
@@ -49,7 +48,7 @@ scheduled runs all completed in **5.176–33.350 seconds**. The live workbook ha
 App entries marked Saved, no bulk intake, and Ready analytics. These are dated
 diagnostic observations, not a guarantee against future service delays.
 
-The **5.39.4** diagnostic update is being validated before production promotion.
+The **5.39.4** diagnostic update was deployed on October 24.
 It adds correlated progress records before potentially slow stages, stage
 completion timings, and total queue runtime including analytics. A hard timeout
 may prevent completion and error handlers from running; the last started stage
@@ -86,8 +85,42 @@ It emitted one correlated run with **17,136 ms total runtime**, including
 The final analytics status was Ready. Native before/after reads exactly preserved
 History and both staging tables, including formulas, notes, and validations;
 only the expected calculation metadata changed in the checked auxiliary ranges.
-No synthetic observations, installers, or trigger changes were used. Production
-promotion and live scheduled-run verification remain pending.
+No synthetic observations, installers, or trigger changes were used.
+
+Source commit **a147408** passed logger coverage, website/browser checks and
+Pages deployment, SonarCloud, Socket, and both secret scans. A
+[native backup](https://docs.google.com/spreadsheets/d/1Yu-p5v2YJj_x7wuVJQ4fMNkuOEibm1VJfT7ZNaCT38w/edit)
+was created at **10:55:42 EDT**. Fresh production/backup reads matched all 2,022
+observation rows, 1,652 request groups, 38 saved staging rows, empty bulk intake,
+and the checked formulas, notes, validations, and auxiliary ranges.
+
+The existing deployment was updated in place at **11:01:28 EDT**, using immutable
+version **119**. The first immediate read returned the prior deployment source;
+a fresh read at **11:01:42 EDT** verified HEAD and immutable source exactly against
+the reviewed commit. No deployment write was repeated. The unchanged phone URL
+connected as **Logger 5.39.4**. Native after-deployment reads preserved every
+checked observation and staging cell, with no new observations; only the expected
+Workbook calculations refresh timestamp changed. Integrity showed zero identity,
+retry, projection, and formula errors. The existing 18 uncalibrated plants and
+one setup without an anchor remain observation needs, not deployment errors.
+
+The existing singleton five-minute trigger completed its **11:05:42 EDT** run
+in **5.239 seconds** according to Apps Script. Its new records shared run ID
+`6005e07e-24e0-47d8-9f84-5b3fd682855f` and measured **3,846 ms total application
+runtime**: workbook opening **386 ms**, single intake **1,165 ms**, bulk intake
+**1,949 ms**, and analytics freshness **336 ms**. The summary correctly reported
+zero intake and Ready analytics with `analyticsSkipped: true`; the previous
+snapshot was still fresh. The disposable rehearsal above verified the full
+analytics path. Version 119 `doGet` and bootstrap also completed in
+**1.188 / 9.675 seconds**, respectively. These are observed runs, not latency
+guarantees.
+
+The dependency audit retained development-only findings in the existing npm
+tree. No npm runtime packages ship in the three-file Apps Script artifact.
+The relevant development paths use maintained fixtures and explicit endpoints;
+this diagnostic rollout did not change dependencies or expose a development
+server. The audit findings remain dependency-maintenance work, rather than a
+claim that the development tree is vulnerability-free.
 
 ## October 23 toolbar spacing and button feedback
 
