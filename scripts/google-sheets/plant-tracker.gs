@@ -17,7 +17,7 @@
    dryDownModelFormula_, installDailyCareDashboard, GARDEN_CYCLE_COMPARISON, GARDEN_ENVIRONMENT_READINGS, GARDEN_RECORDED_LOCATIONS */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.39.3",
+    version: "5.39.4",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -1518,8 +1518,27 @@ function processAppSheetEntry(entryId) {
  * shared script lock instead of introducing a second, uncoordinated writer.
  */
 function processQueuedAppSheetEntries() {
+    const diagnostics = gardenDiagnosticContext_(
+        "processQueuedAppSheetEntries"
+    );
+    return gardenDiagnosticPhase_(diagnostics, "run", () => {
+        const spreadsheet = gardenDiagnosticPhase_(
+            diagnostics,
+            "open-workbook",
+            getGardenSpreadsheet_
+        );
+        const entries = gardenDiagnosticPhase_(
+            diagnostics,
+            "single-intake",
+            () => processQueuedAppSheetEntryRows_(spreadsheet)
+        );
+        return finishAppSheetQueueRun_(spreadsheet, entries, diagnostics);
+    });
+}
+
+/** @param {GardenSpreadsheet} spreadsheet */
+function processQueuedAppSheetEntryRows_(spreadsheet) {
     const startedAt = Date.now();
-    const spreadsheet = getGardenSpreadsheet_();
     const entries = requireSheet_(
         spreadsheet,
         GARDEN_LOGGER.appSheetEntriesSheet
@@ -1529,10 +1548,7 @@ function processQueuedAppSheetEntries() {
 
     const rowCount = Math.max(0, entries.getLastRow() - 1);
     if (!rowCount) {
-        return finishAppSheetQueueRun_(
-            spreadsheet,
-            appSheetQueueSummary_(0, [], 0, startedAt)
-        );
+        return appSheetQueueSummary_(0, [], 0, startedAt);
     }
 
     /** @type {GardenHistoryRow[]} */
@@ -1640,7 +1656,7 @@ function processQueuedAppSheetEntries() {
         deferredCount,
         startedAt
     );
-    return finishAppSheetQueueRun_(spreadsheet, summary);
+    return summary;
 }
 
 /**
@@ -1676,22 +1692,81 @@ function appSheetQueueSummary_(
     };
 }
 
-/** @param {GardenSpreadsheet} spreadsheet @param {GardenEntryQueueSummary} entrySummary */
-function finishAppSheetQueueRun_(spreadsheet, entrySummary) {
-    const bulkSummary = processQueuedAppSheetBulkEntries_(spreadsheet);
+/** @param {string} operation @returns {GardenDiagnosticContext} */
+function gardenDiagnosticContext_(operation) {
+    return { operation, runId: Utilities.getUuid(), startedAt: Date.now() };
+}
+
+/**
+ * Emit before native calls so a hard timeout leaves the active stage in logs.
+ * Only fixed diagnostic labels and timing are logged; errors may contain private data.
+ * @template T
+ * @param {GardenDiagnosticContext} diagnostics
+ * @param {string} stage
+ * @param {() => T} action
+ * @returns {T}
+ */
+function gardenDiagnosticPhase_(diagnostics, stage, action) {
+    const startedAt = Date.now();
+    /** @param {"started" | "completed" | "failed"} status */
+    const log = (status) => {
+        try {
+            const now = Date.now();
+            const message = JSON.stringify({
+                loggerVersion: GARDEN_LOGGER.version,
+                operation: diagnostics.operation,
+                runId: diagnostics.runId,
+                stage,
+                status,
+                elapsedMs: now - diagnostics.startedAt,
+                stageElapsedMs: now - startedAt,
+            });
+            if (status === "failed") console.error(message);
+            else console.info(message);
+        } catch {
+            // Diagnostic output must not change writes, receipts, or original errors.
+        }
+    };
+    log("started");
+    try {
+        const result = action();
+        log("completed");
+        return result;
+    } catch (error) {
+        log("failed");
+        throw error;
+    }
+}
+
+/** @param {GardenSpreadsheet} spreadsheet @param {GardenEntryQueueSummary} entrySummary @param {GardenDiagnosticContext} [diagnostics] */
+function finishAppSheetQueueRun_(
+    spreadsheet,
+    entrySummary,
+    diagnostics = gardenDiagnosticContext_("processQueuedAppSheetEntries")
+) {
+    const bulkSummary = gardenDiagnosticPhase_(diagnostics, "bulk-intake", () =>
+        processQueuedAppSheetBulkEntries_(spreadsheet)
+    );
     // All intake writers have released their canonical script lock. Analytics
     // failures never turn a saved observation or receipt into a failed save.
-    const analytics = refreshScheduledGardenAnalytics_(spreadsheet);
+    const analytics = refreshScheduledGardenAnalytics_(
+        spreadsheet,
+        diagnostics
+    );
     const summary = {
         ...entrySummary,
         ok: entrySummary.ok && bulkSummary.ok,
         bulk: bulkSummary,
         analytics,
+        elapsedMs: Date.now() - diagnostics.startedAt,
     };
     console.info(
         JSON.stringify({
             loggerVersion: GARDEN_LOGGER.version,
             operation: "processQueuedAppSheetEntries",
+            runId: diagnostics.runId,
+            stage: "summary",
+            status: "completed",
             queuedCount: summary.queuedCount,
             processedCount: summary.processedCount,
             savedCount: summary.savedCount,
@@ -1706,7 +1781,11 @@ function finishAppSheetQueueRun_(spreadsheet, entrySummary) {
             bulkNeedsCorrectionCount: bulkSummary.needsCorrectionCount,
             bulkRetryCount: bulkSummary.retryCount,
             bulkDeferredCount: bulkSummary.deferredCount,
-            elapsedMs: summary.elapsedMs + bulkSummary.elapsedMs,
+            analyticsStatus: analytics.status,
+            analyticsSkipped: analytics.skipped === true,
+            historyRows: analytics.historyRows,
+            payloadBytes: analytics.payloadBytes,
+            elapsedMs: summary.elapsedMs,
         })
     );
     return summary;
@@ -4967,8 +5046,13 @@ function workbookCalculationStatus_(spreadsheet) {
                 ? { calculatedAt: calculatedAt.toISOString() }
                 : {}),
         };
-    } catch (error) {
-        console.error(String(error));
+    } catch {
+        console.error(
+            JSON.stringify({
+                operation: "workbookCalculationStatus",
+                status: "failed",
+            })
+        );
         return { status: "Unavailable" };
     }
 }
@@ -5036,9 +5120,16 @@ function releaseGardenAnalyticsLease_(lease) {
     }
 }
 
-/** @param {GardenSpreadsheet} spreadsheet @returns {GardenAnalyticsRefreshResult} */
-function refreshScheduledGardenAnalytics_(spreadsheet) {
-    const snapshot = workbookCalculationStatus_(spreadsheet);
+/** @param {GardenSpreadsheet} spreadsheet @param {GardenDiagnosticContext} [diagnostics] @returns {GardenAnalyticsRefreshResult} */
+function refreshScheduledGardenAnalytics_(
+    spreadsheet,
+    diagnostics = gardenDiagnosticContext_("refreshGardenAnalytics")
+) {
+    const snapshot = gardenDiagnosticPhase_(
+        diagnostics,
+        "analytics.freshness",
+        () => workbookCalculationStatus_(spreadsheet)
+    );
     const calculatedAt = snapshot.calculatedAt;
     const age = Date.now() - Date.parse(calculatedAt || "");
     // Intake still runs every five minutes. Reuse only a recent successful
@@ -5051,18 +5142,20 @@ function refreshScheduledGardenAnalytics_(spreadsheet) {
         age < GARDEN_LOGGER.analyticsMinimumScheduledAgeMs
     )
         return { status: "Ready", calculatedAt, skipped: true };
-    return refreshGardenAnalyticsSafely_(spreadsheet);
+    return refreshGardenAnalyticsSafely_(spreadsheet, diagnostics);
 }
 
-/** @param {GardenSpreadsheet} spreadsheet @returns {GardenAnalyticsRefreshResult} */
-function refreshGardenAnalyticsSafely_(spreadsheet) {
+/** @param {GardenSpreadsheet} spreadsheet @param {GardenDiagnosticContext} [diagnostics] @returns {GardenAnalyticsRefreshResult} */
+function refreshGardenAnalyticsSafely_(
+    spreadsheet,
+    diagnostics = gardenDiagnosticContext_("refreshGardenAnalytics")
+) {
     try {
-        return refreshGardenAnalytics_(spreadsheet);
+        return gardenDiagnosticPhase_(diagnostics, "analytics", () =>
+            refreshGardenAnalytics_(spreadsheet, diagnostics)
+        );
     } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
-        console.error(
-            JSON.stringify({ operation: "refreshGardenAnalytics", message })
-        );
         return { status: "Refresh failed", message };
     }
 }
@@ -5401,179 +5494,239 @@ function gardenAnalyticsHistoryRows_(spreadsheet, history, rowCount, timeZone) {
  * A cross-context lease serializes derived refreshes. The full-ledger read and
  * publication never hold the canonical writer lock.
  * @param {GardenSpreadsheet} spreadsheet
+ * @param {GardenDiagnosticContext} [diagnostics]
  * @returns {GardenAnalyticsRefreshResult}
  */
-function refreshGardenAnalytics_(spreadsheet) {
-    const lease = acquireGardenAnalyticsLease_();
+function refreshGardenAnalytics_(
+    spreadsheet,
+    diagnostics = gardenDiagnosticContext_("refreshGardenAnalytics")
+) {
+    const lease = gardenDiagnosticPhase_(
+        diagnostics,
+        "analytics.lease",
+        acquireGardenAnalyticsLease_
+    );
     if (!lease) return { status: "Busy" };
+    /** @type {GardenSheet | undefined} */
     let calculations;
     try {
-        calculations = requireSheet_(
-            spreadsheet,
-            GARDEN_LOGGER.workbookCalculationsSheet
+        calculations = gardenDiagnosticPhase_(
+            diagnostics,
+            "analytics.prepare",
+            () => {
+                calculations = requireSheet_(
+                    spreadsheet,
+                    GARDEN_LOGGER.workbookCalculationsSheet
+                );
+                ensureSheetColumnCapacity_(calculations, 11);
+                return calculations;
+            }
         );
-        ensureSheetColumnCapacity_(calculations, 11);
         // Keep the preceding snapshot and its state until atomic publication.
         // An early status write forces dependent workbook formulas to recalculate
         // before the full History read and again when the new snapshot arrives.
-        const asOf = new Date();
-        const timeZone = spreadsheet.getSpreadsheetTimeZone();
-        const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
-        const rowCount = Math.max(0, history.getLastRow() - 1);
-        if (rowCount > GARDEN_LOGGER.historyCapacityRows - 1)
-            throw new Error(
-                "History exceeds the supported analytics capacity."
-            );
-        const rows = gardenAnalyticsHistoryRows_(
-            spreadsheet,
-            history,
-            rowCount,
-            timeZone
-        );
-        const selectedPlant = cleanText_(
-            requireSheet_(spreadsheet, "Insights").getRange("B228").getValue()
-        );
-        const baselineRows = requireSheet_(
-            spreadsheet,
-            GARDEN_LOGGER.baselinesSheet
-        )
-            .getRange(2, 1, APP_SHEET_BULK_PLANTS.length, 20)
-            .getValues();
-        const selectedSetup =
-            baselineRows.find(
-                (row) => cleanText_(row[0]) === selectedPlant
-            )?.[19] ?? "";
+        const { asOf, timeZone, rowCount, rows, selectedPlant, selectedSetup } =
+            gardenDiagnosticPhase_(diagnostics, "analytics.read", () => {
+                const asOf = new Date();
+                const timeZone = spreadsheet.getSpreadsheetTimeZone();
+                const history = requireSheet_(
+                    spreadsheet,
+                    GARDEN_LOGGER.historySheet
+                );
+                const rowCount = Math.max(0, history.getLastRow() - 1);
+                if (rowCount > GARDEN_LOGGER.historyCapacityRows - 1)
+                    throw new Error(
+                        "History exceeds the supported analytics capacity."
+                    );
+                const rows = gardenAnalyticsHistoryRows_(
+                    spreadsheet,
+                    history,
+                    rowCount,
+                    timeZone
+                );
+                const selectedPlant = cleanText_(
+                    requireSheet_(spreadsheet, "Insights")
+                        .getRange("B228")
+                        .getValue()
+                );
+                const baselineRows = requireSheet_(
+                    spreadsheet,
+                    GARDEN_LOGGER.baselinesSheet
+                )
+                    .getRange(2, 1, APP_SHEET_BULK_PLANTS.length, 20)
+                    .getValues();
+                const selectedSetup =
+                    baselineRows.find(
+                        (row) => cleanText_(row[0]) === selectedPlant
+                    )?.[19] ?? "";
+                return {
+                    asOf,
+                    timeZone,
+                    rowCount,
+                    rows,
+                    selectedPlant,
+                    selectedSetup,
+                };
+            });
         const dateSerials = new Map();
-        const outputs = gardenAnalyticsOutputs_(
-            rows,
-            selectedPlant,
-            selectedSetup,
-            asOf,
-            timeZone,
-            dateSerials
+        const outputs = gardenDiagnosticPhase_(
+            diagnostics,
+            "analytics.calculate",
+            () =>
+                gardenAnalyticsOutputs_(
+                    rows,
+                    selectedPlant,
+                    selectedSetup,
+                    asOf,
+                    timeZone,
+                    dateSerials
+                )
         );
-        const specifications = [
-            {
-                name: GARDEN_LOGGER.dryDownModelsSheet,
-                column: 1,
-                width: DRY_DOWN_MODEL_HEADERS.length,
-                rows: outputs.models,
-            },
-            {
-                name: "Workbook analytics",
-                column: 1,
-                width: 4,
-                rows: outputs.cycles,
-            },
-            {
-                name: "Environment data",
-                column: 1,
-                width: 12,
-                rows: outputs.environment,
-            },
-            {
-                name: "Environment data",
-                column: 23,
-                width: 5,
-                rows: outputs.locations,
-            },
-        ];
-        const requests = specifications.flatMap((output) => {
-            const sheet = requireSheet_(spreadsheet, output.name);
-            ensureSheetColumnCapacity_(sheet, output.column + output.width - 1);
-            ensureSheetRowCapacity_(sheet, output.rows.length);
-            return gardenAnalyticsCellsRequests_(
-                sheet,
-                output.column,
-                output.width,
-                output.rows,
-                timeZone,
-                dateSerials
-            );
-        });
-        requests.push({
-            updateCells: {
-                range: {
-                    sheetId: calculations.getSheetId(),
-                    startRowIndex: 0,
-                    endRowIndex: 2,
-                    startColumnIndex: 7,
-                    endColumnIndex: 11,
-                },
-                rows: [
+        const publicationSheet = calculations;
+        const { requests, payloadBytes } = gardenDiagnosticPhase_(
+            diagnostics,
+            "analytics.prepare-publication",
+            () => {
+                const specifications = [
                     {
-                        values: [
-                            "Analytics calculated at",
-                            "Analytics status",
-                            "Cycle plant ID",
-                            "Cycle pot setup",
-                        ].map((value) => correctionCell_(value, timeZone)),
+                        name: GARDEN_LOGGER.dryDownModelsSheet,
+                        column: 1,
+                        width: DRY_DOWN_MODEL_HEADERS.length,
+                        rows: outputs.models,
                     },
                     {
-                        values: [
-                            asOf,
-                            "Ready",
-                            selectedPlant,
-                            selectedSetup,
-                        ].map((value) => correctionCell_(value, timeZone)),
+                        name: "Workbook analytics",
+                        column: 1,
+                        width: 4,
+                        rows: outputs.cycles,
                     },
-                ],
-                fields: "userEnteredValue",
-            },
-        });
-        requests.push({
-            repeatCell: {
-                range: {
-                    sheetId: calculations.getSheetId(),
-                    startRowIndex: 1,
-                    endRowIndex: 2,
-                    startColumnIndex: 7,
-                    endColumnIndex: 8,
-                },
-                cell: {
-                    userEnteredFormat: {
-                        numberFormat: {
-                            type: "DATE_TIME",
-                            pattern: "mmm d, yyyy h:mm:ss AM/PM",
+                    {
+                        name: "Environment data",
+                        column: 1,
+                        width: 12,
+                        rows: outputs.environment,
+                    },
+                    {
+                        name: "Environment data",
+                        column: 23,
+                        width: 5,
+                        rows: outputs.locations,
+                    },
+                ];
+                const requests = specifications.flatMap((output) => {
+                    const sheet = requireSheet_(spreadsheet, output.name);
+                    ensureSheetColumnCapacity_(
+                        sheet,
+                        output.column + output.width - 1
+                    );
+                    ensureSheetRowCapacity_(sheet, output.rows.length);
+                    return gardenAnalyticsCellsRequests_(
+                        sheet,
+                        output.column,
+                        output.width,
+                        output.rows,
+                        timeZone,
+                        dateSerials
+                    );
+                });
+                requests.push({
+                    updateCells: {
+                        range: {
+                            sheetId: publicationSheet.getSheetId(),
+                            startRowIndex: 0,
+                            endRowIndex: 2,
+                            startColumnIndex: 7,
+                            endColumnIndex: 11,
                         },
-                    },
-                },
-                fields: "userEnteredFormat.numberFormat",
-            },
-        });
-        requests.push({
-            updateCells: {
-                range: {
-                    sheetId: calculations.getSheetId(),
-                    startRowIndex: 1,
-                    endRowIndex: 2,
-                    startColumnIndex: 4,
-                    endColumnIndex: 5,
-                },
-                rows: [
-                    {
-                        values: [
-                            { userEnteredValue: { formulaValue: "=NOW()" } },
+                        rows: [
+                            {
+                                values: [
+                                    "Analytics calculated at",
+                                    "Analytics status",
+                                    "Cycle plant ID",
+                                    "Cycle pot setup",
+                                ].map((value) =>
+                                    correctionCell_(value, timeZone)
+                                ),
+                            },
+                            {
+                                values: [
+                                    asOf,
+                                    "Ready",
+                                    selectedPlant,
+                                    selectedSetup,
+                                ].map((value) =>
+                                    correctionCell_(value, timeZone)
+                                ),
+                            },
                         ],
+                        fields: "userEnteredValue",
                     },
-                ],
-                fields: "userEnteredValue",
-            },
-        });
-        // One atomic commit publishes all four outputs, clears their old tails,
-        // and advances the successful timestamp. A lost reply cannot expose a
-        // mixed-generation result; the next scheduled run safely recomputes.
-        const payloadBytes = gardenAnalyticsPayloadBytes_(
-            JSON.stringify({ requests })
+                });
+                requests.push({
+                    repeatCell: {
+                        range: {
+                            sheetId: publicationSheet.getSheetId(),
+                            startRowIndex: 1,
+                            endRowIndex: 2,
+                            startColumnIndex: 7,
+                            endColumnIndex: 8,
+                        },
+                        cell: {
+                            userEnteredFormat: {
+                                numberFormat: {
+                                    type: "DATE_TIME",
+                                    pattern: "mmm d, yyyy h:mm:ss AM/PM",
+                                },
+                            },
+                        },
+                        fields: "userEnteredFormat.numberFormat",
+                    },
+                });
+                requests.push({
+                    updateCells: {
+                        range: {
+                            sheetId: publicationSheet.getSheetId(),
+                            startRowIndex: 1,
+                            endRowIndex: 2,
+                            startColumnIndex: 4,
+                            endColumnIndex: 5,
+                        },
+                        rows: [
+                            {
+                                values: [
+                                    {
+                                        userEnteredValue: {
+                                            formulaValue: "=NOW()",
+                                        },
+                                    },
+                                ],
+                            },
+                        ],
+                        fields: "userEnteredValue",
+                    },
+                });
+                // One atomic commit publishes all four outputs, clears their old tails,
+                // and advances the successful timestamp. A lost reply cannot expose a
+                // mixed-generation result; the next scheduled run safely recomputes.
+                const payloadBytes = gardenAnalyticsPayloadBytes_(
+                    JSON.stringify({ requests })
+                );
+                // Stay below Apps Script's 50 MB request limit with headroom for the
+                // native API envelope. Never truncate canonical evidence to fit a cache.
+                if (payloadBytes > 40000000)
+                    throw new Error(
+                        "Analytics output exceeds the 40 MB atomic refresh limit. Keep the previous snapshot and review the output size."
+                    );
+                return { requests, payloadBytes };
+            }
         );
-        // Stay below Apps Script's 50 MB request limit with headroom for the
-        // native API envelope. Never truncate canonical evidence to fit a cache.
-        if (payloadBytes > 40000000)
-            throw new Error(
-                "Analytics output exceeds the 40 MB atomic refresh limit. Keep the previous snapshot and review the output size."
-            );
-        correctionBatchUpdate_(spreadsheet, requests);
-        SpreadsheetApp.flush();
+        gardenDiagnosticPhase_(diagnostics, "analytics.publish", () =>
+            correctionBatchUpdate_(spreadsheet, requests)
+        );
+        gardenDiagnosticPhase_(diagnostics, "analytics.flush", () =>
+            SpreadsheetApp.flush()
+        );
         return {
             status: "Ready",
             calculatedAt: asOf.toISOString(),
@@ -5583,20 +5736,31 @@ function refreshGardenAnalytics_(spreadsheet) {
     } catch (error) {
         try {
             if (calculations) {
-                calculations.getRange("I2").setValue("Refresh failed");
+                const failureSheet = calculations;
+                gardenDiagnosticPhase_(
+                    diagnostics,
+                    "analytics.failure-status",
+                    () => failureSheet.getRange("I2").setValue("Refresh failed")
+                );
                 // Commit failure before releasing the lease so this buffered
                 // write cannot overwrite a later refresh's Ready publication.
-                SpreadsheetApp.flush();
+                gardenDiagnosticPhase_(
+                    diagnostics,
+                    "analytics.failure-flush",
+                    () => SpreadsheetApp.flush()
+                );
             }
-        } catch (statusError) {
-            console.error(String(statusError));
+        } catch {
+            // The stage log records this failure without replacing the original error.
         }
         throw error;
     } finally {
         try {
-            releaseGardenAnalyticsLease_(lease);
-        } catch (error) {
-            console.error(`Analytics lease cleanup delayed: ${String(error)}`);
+            gardenDiagnosticPhase_(diagnostics, "analytics.release-lease", () =>
+                releaseGardenAnalyticsLease_(lease)
+            );
+        } catch {
+            // The bounded lease remains the fallback when cleanup fails.
         }
     }
 }

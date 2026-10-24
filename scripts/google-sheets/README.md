@@ -4,7 +4,8 @@ Production logger **5.39.3 / immutable version 118** supports **38 container all
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained source and production are **5.39.3**. Production **AppSheet
+Maintained source is **5.39.4**; production remains **5.39.3** until the diagnostic
+rollout below is verified. Production **AppSheet
 1.100135** was verified by an independent saved-definition readback on October 22.
 The table-picker, toolbar, button-feedback, and empty-draft releases do not change AppSheet. The rollout
 receipt below records the production checks separately from rehearsal results.
@@ -37,6 +38,56 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## October 24 scheduled-run diagnostics
+
+The October 23 **05:50:42 EDT** `processQueuedAppSheetEntries` execution timed out
+after **361.049 seconds**. Its Cloud log recorded only the execution-limit error,
+so the slow operation could not be identified. On October 24, the latest 50
+scheduled runs all completed in **5.176–33.350 seconds**. The live workbook had
+2,022 observation rows, no identity/retry/projection/formula errors, all 38
+App entries marked Saved, no bulk intake, and Ready analytics. These are dated
+diagnostic observations, not a guarantee against future service delays.
+
+The **5.39.4** diagnostic update is being validated before production promotion.
+It adds correlated progress records before potentially slow stages, stage
+completion timings, and total queue runtime including analytics. A hard timeout
+may prevent completion and error handlers from running; the last started stage
+without a completion record is the investigation starting point, not proof that
+Google's service caused the delay. Structured timing records contain stage names,
+timings, statuses, and summary counts rather than observation contents.
+
+Inspect **Apps Script → Executions → processQueuedAppSheetEntries → Cloud logs**.
+Use the run ID to group records when executions overlap. Compare the final total
+duration with Google's execution duration, allowing for platform startup and log
+delivery overhead. Keep the existing five-minute trigger and eight-minute
+analytics freshness guard; this update adds diagnostics without changing intake,
+retry handling, snapshot publication, or care decisions.
+
+Each timing record has `runId`, `stage`, `status`, `elapsedMs` (since the run
+started), and `stageElapsedMs`. The final `summary` retains intake counts and adds
+analytics status, reuse status, input-row extent, and payload bytes. `historyRows`
+is the analytics input range's row extent, which can include formula-bearing or
+empty rows; it is not the number of saved observations. A normal cached run may
+skip the detailed analytics stages. Stage failures omit raw error text from the
+new diagnostic records, and failures to emit stage logs do not change the
+underlying operation's result or exception.
+
+Local validation passed **1,876 logger tests** with **99.58% statement coverage**,
+including deterministic total-duration, stage-order/correlation, privacy,
+logging-failure, and preparation-failure checks. Apps Script, build, and test
+type checks, source checks, applicable lint, formatting, and secret scans passed.
+An independent review found no remaining issue after the preparation-failure
+regression was corrected.
+
+The native disposable-copy rehearsal completed at **10:49:01 EDT on October 24**.
+It emitted one correlated run with **17,136 ms total runtime**, including
+**4,576 ms reading analytics inputs**, **896 ms publishing**, and **65 ms flushing**.
+The final analytics status was Ready. Native before/after reads exactly preserved
+History and both staging tables, including formulas, notes, and validations;
+only the expected calculation metadata changed in the checked auxiliary ranges.
+No synthetic observations, installers, or trigger changes were used. Production
+promotion and live scheduled-run verification remain pending.
 
 ## October 23 toolbar spacing and button feedback
 

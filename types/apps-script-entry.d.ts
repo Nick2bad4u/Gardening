@@ -27,6 +27,12 @@ interface GardenBulkReceipt {
         | "Saved";
 }
 
+interface GardenDiagnosticContext {
+    operation: string;
+    runId: string;
+    startedAt: number;
+}
+
 type GardenEntryObservation = globalThis.GardenStoredObservationInput;
 
 /** Raw RPC object keys remain unknown until their field validators run. */

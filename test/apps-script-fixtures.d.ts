@@ -65,7 +65,6 @@ export interface AnalyticsApi {
         rowCount: number,
         timeZone: string
     ) => CellValue[][];
-
     gardenAnalyticsOutputs_: (
         history: CellValue[][],
         plant: CellValue,
@@ -79,7 +78,14 @@ export interface AnalyticsApi {
         locations: CellValue[][];
         models: CellValue[][];
     };
+
     gardenAnalyticsPayloadBytes_: (value: string) => number;
+    processQueuedAppSheetEntries: () => {
+        analytics: { status: string };
+        elapsedMs: number;
+        ok: boolean;
+        queuedCount: number;
+    };
     recalculateGardenWorkbook: () => { calculatedAt?: string; status: string };
     refreshGardenAnalytics: () => { status: string };
     refreshGardenAnalytics_: (spreadsheet: object) => {

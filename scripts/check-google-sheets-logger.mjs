@@ -824,7 +824,7 @@ assert.match(source, /LockService\.getScriptLock\(\)/v);
 assert.doesNotMatch(source, /LockService\.getDocumentLock\(\)/v);
 assert.match(
     source,
-    /function refreshGardenAnalytics_\(spreadsheet\) \{\s+const lease = acquireGardenAnalyticsLease_\(\)/v
+    /function refreshGardenAnalytics_\(\s*spreadsheet,\s*diagnostics = gardenDiagnosticContext_\("refreshGardenAnalytics"\)\s*\) \{\s+const lease = gardenDiagnosticPhase_\(\s*diagnostics,\s*"analytics\.lease",\s*acquireGardenAnalyticsLease_\s*\);\s+if \(!lease\) return \{ status: "Busy" \};/v
 );
 assert.match(source, /function getWebSaveStatus\(payload\)/v);
 assert.match(source, /function savedRequestStatus_\(history, requestId\)/v);

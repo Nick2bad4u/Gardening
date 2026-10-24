@@ -1,3 +1,4 @@
+import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
@@ -14,6 +15,16 @@ const sourceUrl = new URL(
 );
 const source = readFileSync(sourceUrl, "utf8");
 const asOf = new Date("2026-10-18T04:30:00Z");
+
+/** @param {unknown[][]} calls @returns {Record<string, unknown>[]} */
+function diagnosticLogs(calls) {
+    return calls.map(([message]) => {
+        const value = /** @type {unknown} */ (JSON.parse(String(message)));
+        if (typeof value !== "object" || value === null)
+            throw new Error("Expected structured diagnostic");
+        return /** @type {Record<string, unknown>} */ (value);
+    });
+}
 
 /**
  * @param {{
@@ -42,6 +53,7 @@ function fixture(options = {}) {
     const writes = vi.fn();
     const flush = vi.fn();
     const logError = vi.fn();
+    const logInfo = vi.fn();
     const nativeFormatDate = vi.fn(formatDate);
     const historyRead = vi.fn(() => {
         if (isLocked)
@@ -168,7 +180,7 @@ function fixture(options = {}) {
         toast: vi.fn(),
     };
     const context = vm.createContext({
-        console: { error: logError, info: vi.fn() },
+        console: { error: logError, info: logInfo },
         Date,
         Error,
         LockService: {
@@ -218,6 +230,7 @@ function fixture(options = {}) {
         "gardenAnalyticsCellsRequests_",
         "gardenAnalyticsPayloadBytes_",
         "finishAppSheetQueueRun_",
+        "processQueuedAppSheetEntries",
     ];
     for (const name of names)
         if (typeof context[name] !== "function")
@@ -234,6 +247,7 @@ function fixture(options = {}) {
         getScriptLock,
         historyRead,
         logError,
+        logInfo,
         nativeFormatDate,
         properties,
         releaseLock,
@@ -275,6 +289,221 @@ function observation(index, event = "Weigh") {
     row[49] = event === "Move" ? "Window shelf" : "";
     return row;
 }
+
+describe("queue and analytics phase diagnostics", () => {
+    it("retains failure-status cleanup when preparation fails after finding the calculations sheet", () => {
+        expect.hasAssertions();
+
+        const test = fixture();
+        const calculations = test.sheets.get("Workbook calculations");
+        assert.ok(calculations);
+        vi.spyOn(calculations, "getMaxColumns").mockImplementation(() => {
+            throw new Error("Preparation failed");
+        });
+
+        expect(
+            test.api.refreshGardenAnalyticsSafely_(test.spreadsheet)
+        ).toMatchObject({
+            message: "Preparation failed",
+            status: "Refresh failed",
+        });
+        expect(test.writes).toHaveBeenCalledWith(
+            "Workbook calculations",
+            ["I2"],
+            "Refresh failed"
+        );
+        expect(test.flush).toHaveBeenCalledTimes(1);
+        expect(test.batchUpdate).not.toHaveBeenCalled();
+        expect(test.properties.has("gardenAnalyticsRefreshLeaseV1")).toBe(
+            false
+        );
+        expect(diagnosticLogs(test.logError.mock.calls)).toStrictEqual(
+            expect.arrayContaining([
+                expect.objectContaining({
+                    stage: "analytics.prepare",
+                    status: "failed",
+                }),
+            ])
+        );
+    });
+
+    it("logs before each stage, correlates the run, and includes analytics in total elapsed time", () => {
+        expect.hasAssertions();
+
+        let now = 0;
+        const clock = vi.spyOn(Date, "now").mockImplementation(() => now);
+        try {
+            const test = fixture();
+
+            test.context["processQueuedAppSheetEntryRows_"] = () => {
+                now += 20;
+                return {
+                    deferredCount: 0,
+                    elapsedMs: 20,
+                    needsCorrectionCount: 0,
+                    ok: true,
+                    processedCount: 2,
+                    queuedCount: 2,
+                    retryCount: 0,
+                    savedCount: 2,
+                };
+            };
+
+            test.context["processQueuedAppSheetBulkEntries_"] = () => {
+                now += 30;
+                return {
+                    deferredCount: 0,
+                    elapsedMs: 30,
+                    needsCorrectionCount: 0,
+                    ok: true,
+                    processedCount: 1,
+                    queuedCount: 1,
+                    requestedCount: 3,
+                    retryCount: 0,
+                    savedRequestCount: 3,
+                    savedRoundCount: 1,
+                };
+            };
+
+            test.valuesRead.mockImplementation((id, options) => {
+                expect(
+                    diagnosticLogs(test.logInfo.mock.calls).at(-1)
+                ).toMatchObject({ stage: "analytics.read", status: "started" });
+
+                now += 7;
+                return analyticsReadResponse(id, options, test.historyRead());
+            });
+
+            test.batchUpdate.mockImplementation(() => {
+                expect(
+                    diagnosticLogs(test.logInfo.mock.calls).at(-1)
+                ).toMatchObject({
+                    stage: "analytics.publish",
+                    status: "started",
+                });
+
+                now += 40;
+            });
+
+            test.flush.mockImplementation(() => {
+                now += 50;
+            });
+
+            const result = test.api.processQueuedAppSheetEntries();
+            const logs = diagnosticLogs(test.logInfo.mock.calls);
+
+            expect(
+                logs
+                    .filter((entry) => entry["status"] === "started")
+                    .map((entry) => entry["stage"])
+            ).toStrictEqual([
+                "run",
+                "open-workbook",
+                "single-intake",
+                "bulk-intake",
+                "analytics.freshness",
+                "analytics",
+                "analytics.lease",
+                "analytics.prepare",
+                "analytics.read",
+                "analytics.calculate",
+                "analytics.prepare-publication",
+                "analytics.publish",
+                "analytics.flush",
+                "analytics.release-lease",
+            ]);
+            expect(new Set(logs.map((entry) => entry["runId"]))).toStrictEqual(
+                new Set(["fixture-lease"])
+            );
+            expect(result).toMatchObject({
+                elapsedMs: 161,
+                ok: true,
+                queuedCount: 2,
+            });
+            expect(
+                logs.find((entry) => entry["stage"] === "summary")
+            ).toMatchObject({
+                analyticsSkipped: false,
+                analyticsStatus: "Ready",
+                bulkSavedRequestCount: 3,
+                elapsedMs: 161,
+                historyRows: 2,
+                savedCount: 2,
+            });
+            expect(logs.at(-1)).toMatchObject({
+                elapsedMs: 161,
+                stage: "run",
+                status: "completed",
+            });
+        } finally {
+            clock.mockRestore();
+        }
+    });
+
+    it("identifies a failed publication without logging private error text or observations", () => {
+        expect.hasAssertions();
+
+        const test = fixture();
+
+        test.batchUpdate.mockImplementation(() => {
+            throw new Error("Private note and workbook identifier");
+        });
+
+        expect(
+            test.api.refreshGardenAnalyticsSafely_(test.spreadsheet)
+        ).toMatchObject({
+            message: "Private note and workbook identifier",
+            status: "Refresh failed",
+        });
+        expect(diagnosticLogs(test.logError.mock.calls)).toStrictEqual(
+            expect.arrayContaining([
+                expect.objectContaining({
+                    stage: "analytics.publish",
+                    status: "failed",
+                }),
+            ])
+        );
+
+        const logged = JSON.stringify([
+            ...test.logInfo.mock.calls,
+            ...test.logError.mock.calls,
+        ]);
+
+        expect(logged).not.toContain("Private note");
+        expect(logged).not.toContain("Window shelf");
+        expect(logged).not.toContain("disposable-fixture");
+        expect(test.flush).toHaveBeenCalledTimes(1);
+    });
+
+    it("preserves successful work and original errors when diagnostic output fails", () => {
+        expect.hasAssertions();
+
+        const test = fixture();
+
+        test.logInfo.mockImplementation(() => {
+            throw new Error("Log unavailable");
+        });
+
+        test.logError.mockImplementation(() => {
+            throw new Error("Log unavailable");
+        });
+
+        expect(
+            test.api.refreshGardenAnalyticsSafely_(test.spreadsheet).status
+        ).toBe("Ready");
+
+        test.batchUpdate.mockImplementation(() => {
+            throw new Error("Original publication failure");
+        });
+
+        expect(
+            test.api.refreshGardenAnalyticsSafely_(test.spreadsheet)
+        ).toMatchObject({
+            message: "Original publication failure",
+            status: "Refresh failed",
+        });
+    });
+});
 
 describe("scheduled analytics materialization", () => {
     it("reports an awaiting snapshot when the metadata read returns no rows", () => {
@@ -625,9 +854,10 @@ describe("analytics recovery and publication guards", () => {
                     .calculatedAt
             ).toBe(asOf.toISOString());
             expect(
-                test.logError.mock.calls.some(
-                    ([message]) =>
-                        message === "Error: Failure-status flush failed"
+                test.logError.mock.calls.some(([message]) =>
+                    String(message).includes(
+                        '"stage":"analytics.failure-flush"'
+                    )
                 )
             ).toBe(failFlush);
         }
@@ -831,7 +1061,7 @@ describe("analytics recovery and publication guards", () => {
             status: "Refresh failed",
         });
         expect(test.logError).toHaveBeenCalledWith(
-            "Error: Status write failed"
+            expect.stringContaining('"stage":"analytics.failure-status"')
         );
         expect(test.writes).not.toHaveBeenCalled();
         expect(test.flush).not.toHaveBeenCalled();
@@ -888,7 +1118,10 @@ describe("analytics recovery and publication guards", () => {
 
         expect(result).toStrictEqual({ status: "Unavailable" });
         expect(test.logError).toHaveBeenCalledWith(
-            "Error: Calculation status read unavailable"
+            JSON.stringify({
+                operation: "workbookCalculationStatus",
+                status: "failed",
+            })
         );
         expect(test.writes).not.toHaveBeenCalled();
         expect(test.batchUpdate).not.toHaveBeenCalled();
@@ -963,7 +1196,7 @@ describe("analytics recovery and publication guards", () => {
             /^\d+:fixture-lease$/v
         );
         expect(test.logError).toHaveBeenCalledWith(
-            "Analytics lease cleanup delayed: Error: Lease storage unavailable"
+            expect.stringContaining('"stage":"analytics.release-lease"')
         );
         expect(test.releaseLock).toHaveBeenCalledTimes(2);
     });
