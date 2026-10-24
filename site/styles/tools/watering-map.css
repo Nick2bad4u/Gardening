@@ -2,9 +2,112 @@
     min-inline-size: 0;
     margin-block: 2rem;
     color: var(--ink);
+    color-scheme: dark;
+    background:
+        radial-gradient(ellipse at top right, #274c3d 0, transparent 55%),
+        var(--surface);
+    border-color: var(--line);
+    box-shadow: 0 16px 40px rgb(8 20 15 / 15%);
+
+    --surface: #14241f;
+    --surface-soft: #1d3129;
+    --ink: #eff5ef;
+    --muted: #b8c9be;
+    --accent: #a5dfc0;
+    --clay: #f0c69a;
+    --line: #3a5447;
 
     & header p {
         max-inline-size: 78ch;
+    }
+
+    & .watering-map-heading-top {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem 1rem;
+        align-items: center;
+        justify-content: space-between;
+        margin-block-end: 1.1rem;
+    }
+
+    & .eyebrow {
+        margin: 0;
+        color: var(--accent);
+    }
+
+    & .watering-map-mode {
+        padding: 0.25rem 0.7rem;
+        font-size: 0.75rem;
+        font-weight: 650;
+        color: var(--muted);
+        border: 1px solid var(--line);
+        border-radius: 100px;
+    }
+
+    & .watering-map-title-row {
+        display: flex;
+        gap: 0.85rem;
+        align-items: center;
+        margin-block-end: 1rem;
+    }
+
+    & .watering-map-emblem {
+        display: grid;
+        flex: none;
+        place-items: center;
+        inline-size: 3.5rem;
+        block-size: 3.5rem;
+        background: var(--surface-soft);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+    }
+
+    & h2 {
+        margin: 0;
+    }
+
+    & .watering-map-stats {
+        display: grid;
+        grid-template-columns: repeat(3, [stat] minmax(0, 1fr));
+        gap: 1px;
+        margin-block: 1.5rem;
+        overflow: hidden;
+        background: var(--line);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+    }
+
+    & .watering-map-stats > div {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 0.25rem;
+        padding: 0.9rem 1.15rem;
+        background: var(--surface);
+    }
+
+    & .watering-map-stats dt {
+        font-size: 0.75rem;
+        font-weight: 600;
+        line-height: 1.5;
+        color: var(--muted);
+    }
+
+    & .watering-map-icon {
+        display: inline-block;
+        flex: none;
+        inline-size: 1.25rem;
+        block-size: 1.25rem;
+        margin-inline-end: 0.4rem;
+        vertical-align: middle;
+    }
+
+    & .watering-map-stats dd {
+        margin: 0;
+        font-size: 1.75rem;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+        line-height: 1.25;
+        color: var(--accent);
     }
 
     & .watering-map-actions {
@@ -27,6 +130,30 @@
         border-radius: 8px;
     }
 
+    & button:not(:disabled):hover,
+    & button:not(:disabled):focus,
+    & summary:hover,
+    & summary:focus {
+        background: #294536;
+        border-color: var(--accent);
+    }
+
+    & .watering-map-refresh {
+        color: #122c20;
+        background: var(--accent);
+        border-color: var(--accent);
+    }
+
+    & .watering-map-refresh:not(:disabled):hover,
+    & .watering-map-refresh:not(:disabled):focus {
+        background: #c3edd6;
+    }
+
+    & .watering-map-enlarge[aria-pressed="true"] {
+        background: #294536;
+        border-color: var(--accent);
+    }
+
     & button:disabled {
         cursor: not-allowed;
         opacity: 0.55;
@@ -41,9 +168,12 @@
 
     & .watering-map-source {
         padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+        font-weight: 600;
         overflow-wrap: anywhere;
         background: var(--surface-soft);
         border-inline-start: 4px solid var(--accent);
+        border-radius: 0 8px 8px 0;
     }
 
     & .watering-map-source[data-state="error"],
@@ -59,20 +189,21 @@
     & .watering-map-viewport {
         max-inline-size: 100%;
         overflow: auto;
-        background: var(--white);
+        background: #101d19;
         border: 1px solid var(--line);
         border-radius: 8px;
     }
 
-    & .watering-map-viewport img:not([hidden]) {
+    & .watering-map-image > svg {
         display: block;
         inline-size: 100%;
         min-inline-size: 0;
         max-inline-size: none;
         block-size: auto;
+        user-select: text;
     }
 
-    &:where([data-enlarged="true"]) .watering-map-viewport img:not([hidden]) {
+    &:where([data-enlarged="true"]) .watering-map-image > svg {
         min-inline-size: 780px;
     }
 
@@ -97,6 +228,7 @@
     & .watering-map-details li {
         padding: 1rem;
         overflow-wrap: anywhere;
+        background: var(--surface-soft);
         border: 1px solid var(--line);
         border-radius: 8px;
     }
@@ -108,30 +240,89 @@
 
     & .watering-map-details span {
         margin-block-start: 0.3rem;
+        font-size: 0.875rem;
+        color: var(--muted);
+    }
+
+    & .watering-map-details a {
+        color: var(--accent);
+    }
+
+    & .watering-map-details summary {
+        line-height: 1.5;
     }
 
     & .watering-map-export-status:empty {
         display: none;
     }
 
+    @media (width <= 600px) {
+        & .watering-map-heading-top {
+            gap: 0.5rem;
+        }
+
+        & .watering-map-title-row {
+            align-items: start;
+        }
+
+        & .watering-map-emblem {
+            inline-size: 2.75rem;
+            block-size: 2.75rem;
+        }
+
+        & .watering-map-stats > div {
+            gap: 0.35rem;
+            padding: 0.75rem 0.65rem;
+        }
+
+        & .watering-map-stats dd {
+            font-size: 1.5rem;
+        }
+
+        & .watering-map-actions {
+            display: grid;
+            grid-template-columns: repeat(2, [control] minmax(0, 1fr));
+            gap: 0.6rem;
+        }
+
+        & button {
+            padding-inline: 0.5rem;
+            font-size: 0.875rem;
+        }
+    }
+
     @media print {
         padding: 0;
         margin-block: 1rem;
+        color-scheme: light;
+        background: var(--surface);
         border: 0;
+        box-shadow: none;
         break-inside: avoid;
+
+        --surface: #ffffff;
+        --surface-soft: #f3f3f3;
+        --ink: #111111;
+        --muted: #333333;
+        --accent: #244633;
+        --clay: #704624;
+        --line: #bbbbbb;
 
         & .watering-map-actions,
         & .watering-map-details,
-        & .watering-map-export-status {
+        & .watering-map-export-status,
+        & .watering-map-emblem,
+        & .watering-map-mode {
             display: none;
         }
 
         & .watering-map-viewport {
             overflow: visible;
+            background: var(--surface);
             border: 0;
         }
 
-        & .watering-map-viewport img:not([hidden]) {
+        & .watering-map-image > svg {
             min-inline-size: 0;
             max-inline-size: 100%;
         }

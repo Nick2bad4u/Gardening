@@ -1,6 +1,6 @@
 # Terrarium arrival record
 
-Last updated: 2026-10-22
+Last updated: 2026-10-24
 
 **Container: P38 · Physical label: #12.** Enrolled October 9, 2026. Five owner
 photographs supplied October 10 document its condition after shipping; the
@@ -22,7 +22,7 @@ determined from these views. No definite pest, rot, or mold diagnosis is assigne
 
 The photographs show a rounded glass jar with a removable cork lid, dark
 planting medium, moss, some round brown pieces, and a visible mesh edge. The
-composition and arrangement of the layers remain unverified. The photographs
+photographs alone do not identify the layers; the October 24 owner clarification below supplies their broad composition. The photographs
 do not establish a drainage outlet, a water reservoir, or the medium's moisture.
 
 On October 10 the owner reported **99% RH** from a mini humidity sensor hanging
@@ -35,15 +35,14 @@ is recorded as seller guidance, not an adopted collection target.
 The owner reported **a shelf near the cactus grow area, but not close to it**, on October 10. Photographs supplied **October 22** show the jar **on the desk to the right of the table display**; their capture date is unrecorded.
 The earlier approximate **9,000 lux** reading was taken **outside the glass on the side
 closest to the grow light**. The owner proposed reducing that reading to
-about **7,000 lux**; no new reading or completed light adjustment has been reported for the desk location. That is a proposed
-adjustment, not a verified plant requirement. The meter/app, lamp identity,
+about **7,000 lux**. The later October 24 report gives about **6,000–7,000 lux** currently, without a measurement position or applied light settings. Neither number is a verified plant requirement. The meter/app, lamp identity,
 distance, daily light duration, and leaf-level illumination inside are unknown.
 No PPFD or daily light integral is calculated from this external-glass reading.
 
 The seller's listing, supplied by the owner October 10, gives **6.3 × 3.9 in
 (16 × 10 cm)** for the cork-lidded glass jar. These are seller-listed dimensions,
 not owner measurements; which dimension describes height or width is unverified.
-They do not establish internal planting volume or usable substrate depth.
+On October 24 the owner said these may be internal dimensions; that remains unverified. The figures do not establish internal planting volume or usable substrate depth.
 
 The seller describes a made-to-order planting of live moss, small terrarium
 plants, natural hardscape, and substrate, with varieties, moss, wood, stones,
@@ -53,9 +52,9 @@ sun, and mist only when needed; a care guide is included according to the listin
 but its contents have not been supplied. This describes the seller's intended
 routine, not the owner's observed lid or watering history.
 
-Substrate recipe, the owner's normal lid routine, and watering history
-remain unrecorded. The October 10 arrival views do not establish their photography location; the October 22 display photographs supply the later desk-location evidence.
-Fogging alone does not establish water pooling at the bottom.
+**October 24 owner update:** the original lower layers are **LECA balls and larger volcanic rock**, beneath a **fluffy, light, coco-coir-containing upper substrate**. The seller's exact upper-layer recipe is unknown. Current light is reported as **about 6,000–7,000 lux**; meter position, leaf-height exposure inside the jar, light duration, and lamp settings are unrecorded. The owner leaves the lid off for a couple of hours when heavy fog persists all day. No direct watering has been reported; the jar was **misted once on October 23**, after a moisture meter indicated dry. Exact time and volume are unknown; this report does not verify a saved Mist event.
+
+The lower rock/LECA layer does not establish an outlet or prove that water can leave the jar. Treat the meter reading as one observation: inspect accessible substrate, glass-visible moisture and any retained water, then compare plant condition before adding more. The exact substrate recipe and drainage outlet remain unknown. The October 10 arrival views do not establish their photography location; the October 22 photographs supply the later desk-location evidence.
 
 ## Working plant identifications
 
@@ -101,8 +100,7 @@ required correction established by the 9,000-lux reading. Compare readings at
 the leaves inside, including the brightest and shaded sides, and check for
 warming during the light cycle. The glass, cork, foliage, and measurement angle
 make the outside reading an incomplete description of the plants' exposure.
-Record any actual move and follow-up reading rather than treating 7,000 lux as
-a safety cutoff.
+The October 24 owner reading of about 6,000–7,000 lux does not establish leaf-level light or a safety cutoff; record its measurement position when practical.
 
 Some condensation is expected in a closed terrarium. If it stays heavily fogged
 or dripping, briefly remove the lid or wipe the glass and reassess; RHS advises
@@ -163,6 +161,8 @@ Retained green leaves support cautious optimism, but do not prove healthy roots
 or a particular recovery time.
 
 ## Sources
+
+- Owner clarification, October 24, 2026: original LECA/larger volcanic-rock lower layers, fluffy light coir-containing upper medium, about 6,000–7,000 lux, conditional few-hour lid opening, no direct watering, and one misting on October 23 after a dry meter indication. Seller dimensions may be internal in the owner's view, but no measurement verifies that.
 
 - Seller listing text supplied by the owner October 10, 2026: 6.3 × 3.9 in
   (16 × 10 cm), cork-lidded glass jar, variable live planting and hardscape,

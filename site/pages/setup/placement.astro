@@ -29,8 +29,20 @@ const diagramSections = document.toc.filter((section) =>
     ]}
 >
     <DocumentArticle document={document}>
+        <nav class="placement-shortcuts" aria-label="Placement page shortcuts">
+            <a class="placement-map-link" href="#watering-map">
+                <img src={siteUrl("assets/ui-icons/water.svg")} alt="" width="22" height="22" />
+                <span>Jump to watering map</span>
+                <span aria-hidden="true">↓</span>
+            </a>
+            <a href="#placement-diagrams">Placement diagrams ↓</a>
+        </nav>
         <WateringMap />
-        <nav class="diagram-navigation card" aria-label="Placement and light diagrams">
+        <nav
+            class="diagram-navigation card"
+            id="placement-diagrams"
+            aria-label="Placement and light diagrams"
+        >
             <h2>Placement and Light Diagrams</h2>
             <p>
                 Open a diagram to see it at full size. These illustrations show the September 16
@@ -60,6 +72,40 @@ const diagramSections = document.toc.filter((section) =>
     </section>
 </SiteLayout>
 <style>
+    .placement-shortcuts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-block: -0.5rem 1.5rem;
+    }
+    .placement-shortcuts a {
+        display: inline-flex;
+        gap: 0.65rem;
+        align-items: center;
+        min-block-size: 44px;
+        padding: 0.7rem 1rem;
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: var(--ink);
+        text-decoration: none;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+    }
+    .placement-shortcuts .placement-map-link {
+        color: #ecf4ef;
+        background: #18352c;
+        border-color: #48705c;
+    }
+    .placement-shortcuts a:hover,
+    .placement-shortcuts a:focus {
+        text-decoration: underline;
+        border-color: var(--accent);
+    }
+    .placement-map-link span:last-child {
+        margin-inline-start: 0.5rem;
+        color: #9ed4b7;
+    }
     .diagram-navigation {
         margin-block: 2rem;
     }
@@ -77,5 +123,10 @@ const diagramSections = document.toc.filter((section) =>
         cursor: pointer;
         padding: 1rem;
         font-weight: 700;
+    }
+    @media print {
+        .placement-shortcuts {
+            display: none;
+        }
     }
 </style>

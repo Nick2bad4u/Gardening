@@ -42,6 +42,27 @@ const startMarker = "<!-- GENERATED PLANT ICONS START -->";
 const endMarker = "<!-- GENERATED PLANT ICONS END -->";
 const leadingZeroOmissionPattern = /(?:^|\D)\.(?=\d)|(?<!\d)\d+\.\d+\.(?=\d)/mv;
 
+/**
+ * @param {string} sprite
+ */
+export function parsePlantSymbols(sprite) {
+    return sprite
+        .matchAll(
+            /<symbol\s+id="icon-plant-(?<slug>[^"]+)"\s+viewBox="(?<viewBox>[^"]+)"\s*>(?<body>[\s\S]*?)<\/symbol>/gv
+        )
+        .map((match) => ({
+            body: normalizeSymbolBody(
+                required(match.groups?.["body"], "plant symbol body")
+            ),
+            slug: required(match.groups?.["slug"], "plant symbol slug"),
+            viewBox: required(
+                match.groups?.["viewBox"],
+                "plant symbol viewBox"
+            ),
+        }))
+        .toArray();
+}
+
 export async function syncPlantIcons({
     checkOnly = false,
     syncLogger = false,
@@ -188,27 +209,6 @@ function normalizeSymbolBody(value) {
             .map((line) => /^\s*/v.exec(line)?.[0].length ?? 0)
     );
     return lines.map((line) => line.slice(indentation)).join("\n");
-}
-
-/**
- * @param {string} sprite
- */
-function parsePlantSymbols(sprite) {
-    return sprite
-        .matchAll(
-            /<symbol\s+id="icon-plant-(?<slug>[^"]+)"\s+viewBox="(?<viewBox>[^"]+)"\s*>(?<body>[\s\S]*?)<\/symbol>/gv
-        )
-        .map((match) => ({
-            body: normalizeSymbolBody(
-                required(match.groups?.["body"], "plant symbol body")
-            ),
-            slug: required(match.groups?.["slug"], "plant symbol slug"),
-            viewBox: required(
-                match.groups?.["viewBox"],
-                "plant symbol viewBox"
-            ),
-        }))
-        .toArray();
 }
 
 function portraitDescriptions() {

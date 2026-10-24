@@ -17,8 +17,25 @@ const exportStatus = getRequiredElement(
     "#watering-map-export-status",
     HTMLElement
 );
-const preview = getRequiredElement("#watering-map-image", HTMLImageElement);
+const preview = getRequiredElement("#watering-map-image", HTMLDivElement);
+const refreshLabel = getRequiredElement(
+    "#watering-map-refresh-label",
+    HTMLElement
+);
+const enlargeLabel = getRequiredElement(
+    "#watering-map-enlarge-label",
+    HTMLElement
+);
 const potList = getRequiredElement("#watering-map-pot-list", HTMLUListElement);
+const totalCount = getRequiredElement("#watering-map-total-count", HTMLElement);
+const recordedCount = getRequiredElement(
+    "#watering-map-recorded-count",
+    HTMLElement
+);
+const unknownCount = getRequiredElement(
+    "#watering-map-unknown-count",
+    HTMLElement
+);
 const refreshButton = getRequiredElement(
     "#watering-map-refresh",
     HTMLButtonElement
@@ -36,6 +53,38 @@ const placementData = JSON.parse(panel.dataset["placements"] ?? "[]");
 const placements = Array.isArray(placementData)
     ? placementData.filter((value) => isPlacement(value))
     : [];
+// This is validated canonical vector artwork emitted by the static build, never
+// content read from a Sheet. Dynamic text is escaped by the SVG renderer.
+/** @type {unknown} */
+const artworkData = JSON.parse(
+    panel.dataset["artwork"] ?? '{"definitions":"","portraits":{}}'
+);
+const artwork = isWateringArtwork(artworkData)
+    ? artworkData
+    : { definitions: "", portraits: {} };
+
+/**
+ * @param {unknown} value @returns {value is
+ *   import("./watering-map-svg.js").WateringArtwork}
+ */
+function isWateringArtwork(value) {
+    if (
+        typeof value !== "object" ||
+        value === null ||
+        !("definitions" in value) ||
+        !("portraits" in value)
+    )
+        return false;
+    if (
+        typeof value.definitions !== "string" ||
+        typeof value.portraits !== "object" ||
+        value.portraits === null
+    )
+        return false;
+    return Object.values(value.portraits).every(
+        (slug) => typeof slug === "string" && /^[a-z][\w\-]*$/v.test(slug)
+    );
+}
 const publishedSnapshot = readEmbeddedSnapshot();
 const savedSnapshot = getSavedHistoryData();
 const useSavedSnapshot =
@@ -47,7 +96,6 @@ const useSavedSnapshot =
  *     snapshot: HistorySnapshot | null;
  *     lastAttempt: number;
  *     isExportBusy: boolean;
- *     previewUrl: string;
  *     sourceState: string;
  *     sourceMessage: string;
  *     sourceKind: "published" | "saved" | "live";
@@ -56,7 +104,6 @@ const useSavedSnapshot =
 const state = {
     isExportBusy: false,
     lastAttempt: 0,
-    previewUrl: "",
     snapshot: useSavedSnapshot ? savedSnapshot : publishedSnapshot,
     sourceKind: useSavedSnapshot ? "saved" : "published",
     sourceMessage: "Saved preview · refreshing published observations.",
@@ -133,10 +180,14 @@ async function exportImage(format) {
     const model = createMapModel(state.snapshot);
     const svg = new Blob(
         [
-            renderWateringMapSvg(model, {
-                readAt: state.snapshot.readAt,
-                status: state.sourceMessage,
-            }),
+            renderWateringMapSvg(
+                model,
+                {
+                    readAt: state.snapshot.readAt,
+                    status: state.sourceMessage,
+                },
+                artwork
+            ),
         ],
         { type: "image/svg+xml;charset=utf-8" }
     );
@@ -210,7 +261,7 @@ async function pngFromSvg(svg) {
         const context = canvas.getContext("2d");
         if (!context)
             throw new Error("Image export is unavailable in this browser.");
-        context.fillStyle = "#ffffff";
+        context.fillStyle = "#0c1815";
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.drawImage(image, 0, 0, canvas.width, canvas.height);
         return await new Promise((resolve, reject) => {
@@ -283,20 +334,28 @@ function render() {
         : state.sourceMessage;
     pngButton.disabled = state.snapshot === null || state.isExportBusy;
     svgButton.disabled = state.snapshot === null || state.isExportBusy;
-    const previousUrl = state.previewUrl;
-    state.previewUrl = "";
     if (state.snapshot) {
         const model = createMapModel(state.snapshot);
-        const svg = renderWateringMapSvg(model, {
-            readAt: state.snapshot.readAt,
-            status: state.sourceMessage,
-        });
-        state.previewUrl = URL.createObjectURL(
-            new Blob([svg], { type: "image/svg+xml;charset=utf-8" })
+        const recorded = model.markers.filter(
+            (marker) => marker.days !== null
+        ).length;
+        totalCount.textContent = String(model.markers.length);
+        recordedCount.textContent = String(recorded);
+        unknownCount.textContent = String(model.markers.length - recorded);
+        const svg = renderWateringMapSvg(
+            model,
+            {
+                readAt: state.snapshot.readAt,
+                status: state.sourceMessage,
+            },
+            artwork
         );
-        preview.src = state.previewUrl;
+        const parser = new DOMParser();
+        const parsed = parser.parseFromString(svg, "image/svg+xml");
+        preview.replaceChildren(
+            document.importNode(parsed.documentElement, true)
+        );
         preview.hidden = false;
-        preview.alt = `Recorded table placements with days since watering as of ${model.date}. Equivalent details follow below.`;
         potList.replaceChildren(
             ...model.markers.map((marker) => {
                 const item = document.createElement("li");
@@ -322,11 +381,13 @@ function render() {
             })
         );
     } else {
+        totalCount.textContent = String(placements.length);
+        recordedCount.textContent = "—";
+        unknownCount.textContent = "—";
         preview.hidden = true;
-        preview.removeAttribute("src");
+        preview.replaceChildren();
         potList.replaceChildren();
     }
-    if (previousUrl) URL.revokeObjectURL(previousUrl);
 }
 
 /** @param {boolean} busy */
@@ -337,7 +398,7 @@ function setExportBusy(busy) {
 /** @param {boolean} busy */
 function setRefreshBusy(busy) {
     refreshButton.disabled = busy;
-    refreshButton.textContent = busy ? "Refreshing…" : "Refresh data";
+    refreshLabel.textContent = busy ? "Refreshing…" : "Refresh data";
 }
 
 refreshButton.addEventListener("click", () => {
@@ -353,7 +414,7 @@ enlargeButton.addEventListener("click", () => {
     const isEnlarged = panel.dataset["enlarged"] !== "true";
     panel.dataset["enlarged"] = String(isEnlarged);
     enlargeButton.setAttribute("aria-pressed", String(isEnlarged));
-    enlargeButton.textContent = isEnlarged ? "Fit image" : "Enlarge image";
+    enlargeLabel.textContent = isEnlarged ? "Fit image" : "Enlarge image";
 });
 window.addEventListener("focus", refreshIfDue);
 document.addEventListener("visibilitychange", refreshIfDue);

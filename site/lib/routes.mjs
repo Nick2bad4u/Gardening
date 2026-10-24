@@ -160,6 +160,12 @@ export const primaryNavigation = [
         section: "tracker",
     },
     {
+        href: siteUrl("setup/placement/#watering-map"),
+        icon: "water",
+        label: "Watering map",
+        section: "watering-map",
+    },
+    {
         href: siteUrl("photos/"),
         icon: "photos",
         label: "Photos",

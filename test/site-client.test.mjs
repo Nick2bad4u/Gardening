@@ -117,6 +117,36 @@ describe("the modular website shell", () => {
         }
     });
 
+    it("dismisses navigation after activating a nested same-page link label", () => {
+        expect.hasAssertions();
+
+        const window = createSite();
+        const button = window.document.querySelector("[data-menu-toggle]");
+        const nav = window.document.querySelector("#site-nav");
+        const link = window.document.createElement("a");
+        link.href = "#watering-map";
+        const label = window.document.createElement("span");
+        label.textContent = "Watering map";
+        link.append(label);
+        nav?.append(link);
+        button?.dispatchEvent(
+            new window.MouseEvent("click", { bubbles: true })
+        );
+        nav?.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+
+        expect(button?.getAttribute("aria-expanded")).toBe("true");
+
+        const activation = new window.MouseEvent("click", {
+            bubbles: true,
+            cancelable: true,
+        });
+        label.dispatchEvent(activation);
+
+        expect(button?.getAttribute("aria-expanded")).toBe("false");
+        expect(nav?.classList.contains("is-open")).toBe(false);
+        expect(activation.defaultPrevented).toBe(false);
+    });
+
     it("distinguishes old and future reviewed reports rather than calling either today's advice", () => {
         expect.hasAssertions();
 

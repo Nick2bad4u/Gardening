@@ -154,7 +154,11 @@ opening and every five minutes while visible, keeps a separate bounded
 24-hour History snapshot, and recalculates elapsed calendar days in the collection's
 time zone. Saved previews and failed refreshes remain labeled in the page and
 downloads. PNG downloads render the same SVG at twice its native dimensions;
-both formats use a light background independent of the site theme.
+both formats use the map's dark background independent of the site theme.
+The site navigation links directly to `setup/placement/#watering-map`, and the
+placement page includes a jump link above the panel. Summary counts distinguish
+pots with a recorded Water event from pots without one; they follow the same
+live, saved, or dated source as the diagram and are not watering recommendations.
 The map reads History independently: its maintained placement data already supplies
 pot names and labels, so a slow Plant tracker export cannot block the image. It can
 also display History from a newer validated tracker/history snapshot, preserving

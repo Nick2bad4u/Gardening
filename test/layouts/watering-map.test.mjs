@@ -3,6 +3,12 @@ import { describe, expect, it, onTestFinished } from "vitest";
 
 import { buildWateringMap } from "../../site/client/tools/watering-map-data.js";
 import { renderWateringMapSvg } from "../../site/client/tools/watering-map-svg.js";
+import { getContainers } from "../../site/lib/containers.mjs";
+import {
+    getWateringArtwork,
+    namespaceArtwork,
+} from "../../site/lib/watering-artwork.mjs";
+import { getWateringPlacements } from "../../site/lib/watering-placement.mjs";
 import { required } from "../helpers/required.mjs";
 
 /** @typedef {import("../../site/lib/watering-placement.mjs").PotPlacement} PotPlacement */
@@ -292,6 +298,12 @@ describe("standalone watering image", () => {
 
         expect(document.querySelector("parsererror")).toBeNull();
         expect(document.documentElement.tagName.toLowerCase()).toBe("svg");
+        expect(document.documentElement.getAttribute("data-color-scheme")).toBe(
+            "dark"
+        );
+        expect(document.querySelector("svg > rect")?.getAttribute("fill")).toBe(
+            "#0c1815"
+        );
         expect(document.querySelectorAll("[data-pot-id]")).toHaveLength(3);
 
         expect(
@@ -306,6 +318,18 @@ describe("standalone watering image", () => {
         expect(
             document.querySelector('[data-pot-id="P20"] .count')?.textContent
         ).toBe("?");
+
+        for (const placement of placements) {
+            expect(
+                Array.from(document.querySelectorAll("[data-pot-id]"))
+                    .find(
+                        (marker) =>
+                            marker.getAttribute("data-pot-id") === placement.id
+                    )
+                    ?.querySelector("text.name")?.textContent
+            ).toBe(placement.name);
+        }
+
         expect(document.querySelector("desc")?.textContent).toContain(
             "Published observations loaded"
         );
@@ -367,4 +391,180 @@ describe("standalone watering image", () => {
             "Waiting for published watering history"
         );
     });
+
+    it("keeps long plant names as visible SVG text so browser Find can match them", () => {
+        expect.hasAssertions();
+
+        const name = "Probable Haworthiopsis attenuata cultivar unknown";
+        const model = buildWateringMap(
+            [{ ...required(placements[0]), name }],
+            [],
+            new Date("2026-10-22T16:00:00Z")
+        );
+        const window = new Window();
+        onTestFinished(async () => window.happyDOM.close());
+        const parser = new window.DOMParser();
+        const document = parser.parseFromString(
+            renderWateringMapSvg(model, { readAt: null, status: "Loading" }),
+            "image/svg+xml"
+        );
+        const visibleName = document.querySelector(
+            '[data-pot-id="P01"] text.name'
+        );
+
+        expect(visibleName?.textContent).toBe(name);
+        expect(visibleName?.getAttribute("aria-hidden")).not.toBe("true");
+        expect(visibleName?.getAttribute("display")).not.toBe("none");
+        expect(document.querySelector(".count")?.textContent).toBe("?");
+        expect(document.querySelector("desc")?.textContent).toContain(
+            "Question mark means no recorded watering"
+        );
+    });
+});
+
+describe("inline watering artwork", () => {
+    it("uses the maintained container portraits and resolves every embedded reference without network images", async () => {
+        expect.hasAssertions();
+
+        const [
+            artwork,
+            currentPlacements,
+            containers,
+        ] = await Promise.all([
+            getWateringArtwork(),
+            getWateringPlacements(),
+            getContainers(),
+        ]);
+        const model = buildWateringMap(
+            currentPlacements,
+            [],
+            new Date("2026-10-24T16:00:00Z")
+        );
+        const window = new Window();
+        onTestFinished(async () => window.happyDOM.close());
+        const parser = new window.DOMParser();
+        const svg = renderWateringMapSvg(
+            model,
+            { readAt: null, status: "Loading" },
+            artwork
+        );
+        const document = parser.parseFromString(svg, "image/svg+xml");
+        const ids = Array.from(
+            document.querySelectorAll("[id]"),
+            (element) => element.id
+        );
+
+        expect(document.querySelector("parsererror")).toBeNull();
+
+        const uniqueIds = new Set(ids);
+
+        expect(uniqueIds.size).toBe(ids.length);
+        expect(document.querySelectorAll("[data-plant-slug]")).toHaveLength(38);
+        expect(
+            document.querySelectorAll(
+                "image, script, foreignObject, link, [src]"
+            )
+        ).toHaveLength(0);
+
+        for (const container of containers) {
+            const marker = Array.from(
+                document.querySelectorAll("[data-pot-id]")
+            ).find(
+                (element) =>
+                    element.getAttribute("data-pot-id") === container.id
+            );
+
+            expect(
+                marker
+                    ?.querySelector("[data-plant-slug]")
+                    ?.getAttribute("data-plant-slug")
+            ).toBe(container.portraitSlug);
+            expect(artwork.portraits[container.id]).toBe(
+                container.portraitSlug
+            );
+        }
+
+        for (const element of document.querySelectorAll("[href]")) {
+            const reference = element.getAttribute("href") ?? "";
+
+            expect(reference).toMatch(/^#[\w\-]+$/v);
+            expect(ids).toContain(reference.slice(1));
+        }
+
+        for (const reference of svg.matchAll(/url\(#(?<id>[\w\-]+)\)/gv)) {
+            expect(ids).toContain(reference.groups?.["id"]);
+        }
+
+        expect(svg).not.toMatch(/@import|url\((?!#)/v);
+    });
+
+    it("namespaces local gradient, mask, and use references together", () => {
+        expect.hasAssertions();
+
+        const source =
+            '<defs><linearGradient id="color"><stop offset="0" stop-color="#fff"/></linearGradient><mask id="cut"><rect width="64" height="64" fill="#fff"/></mask><path id="leaf" d="M0 0L10 10"/></defs><use href="#leaf" fill="url(#color)" mask="url(#cut)"/>';
+        const result = namespaceArtwork(source, "test-portrait-");
+
+        expect(result).toContain('id="test-portrait-color"');
+        expect(result).toContain('id="test-portrait-cut"');
+        expect(result).toContain('id="test-portrait-leaf"');
+        expect(result).toContain('href="#test-portrait-leaf"');
+        expect(result).toContain('fill="url(#test-portrait-color)"');
+        expect(result).toContain('mask="url(#test-portrait-cut)"');
+    });
+
+    it.each([
+        '<script>alert("test")</script>',
+        "<style>text { display: none; }</style>",
+        '<image href="https://example.invalid/plant.svg"/>',
+        '<path onclick="alert(1)" d="M0 0"/>',
+        '<path style="fill:red" d="M0 0"/>',
+        '<use href="https://example.invalid/plant.svg#leaf"/>',
+        '<path fill="url(https://example.invalid/paint.svg#color)" d="M0 0"/>',
+        '<path id="leaf"/><path id="leaf"/>',
+        '<use href="#missing"/>',
+    ])(
+        "rejects unsafe or unresolved artwork before it enters the page: %s",
+        (source) => {
+            expect.hasAssertions();
+
+            expect(() => namespaceArtwork(source, "test-portrait-")).toThrow(
+                /artwork/iv
+            );
+        }
+    );
+
+    it.each([
+        [
+            "decimal entity in paint token",
+            '<path fill="u&#114;l(https://example.invalid/paint.svg#color)" d="M0 0"/>',
+        ],
+        [
+            "hexadecimal entity in paint token",
+            '<path fill="u&#x72;l(https://example.invalid/paint.svg#color)" d="M0 0"/>',
+        ],
+        [
+            "named entities around a paint URL",
+            '<path fill="url(&quot;https://example.invalid/paint.svg#color&quot;)" d="M0 0"/>',
+        ],
+        ["encoded local fragment", '<path id="leaf"/><use href="&#35;leaf"/>'],
+        ["encoded definition ID", '<path id="lea&#102;"/><use href="#leaf"/>'],
+        [
+            "CSS escape in paint token",
+            String.raw`<path fill="u\72l(https://example.invalid/paint.svg#color)" d="M0 0"/>`,
+        ],
+        [
+            "CSS escape with whitespace terminator",
+            String.raw`<path fill="\75 rl(https://example.invalid/paint.svg#color)" d="M0 0"/>`,
+        ],
+    ])(
+        "rejects %s before browser decoding can expose a reference",
+        (_description, source) => {
+            expect.hasAssertions();
+
+            expect(() => namespaceArtwork(source, "test-portrait-")).toThrow(
+                "Encoded values are not allowed in artwork attributes."
+            );
+        }
+    );
 });

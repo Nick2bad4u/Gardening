@@ -16,7 +16,7 @@ Follow growth and normal drying when reviewing the feeding rate.
 
 ## September 20 foliage-basket exceptions
 
-**P31 / #7 [Peperomia Bicolor](../plants/houseplants/peperomia-obtipan-bicolor.md)** and **P32 / #8 [Tricolor oyster plant](../plants/houseplants/tradescantia-spathacea-tricolor.md)** have their own nutrient plan. On September 27, the owner confirmed that both had just been watered when collected on September 20. The exact watering times and whether that nursery water contained fertilizer are unknown; do not classify it as a plain-water or feed event. Nursery medium, any existing fertilizer charge, root condition, and completed repot status remain unrecorded.
+**P31 / #7 [Peperomia Bicolor](../plants/houseplants/peperomia-obtipan-bicolor.md)** and **P32 / #8 [Tricolor oyster plant](../plants/houseplants/tradescantia-spathacea-tricolor.md)** have their own nutrient plan. On September 27, the owner confirmed that both had just been watered when collected on September 20. The exact watering times and whether that nursery water contained fertilizer are unknown; do not classify it as a plain-water or feed event. The October 24 owner update confirms completed repots about two weeks earlier into approximately 30% perlite + 70% greenhouse houseplant mix. The replacement mix's fertilizer charge and current root condition remain unrecorded; no completed feed is implied.
 
 Use partial drying for #7 and the upper **1–2 inches** drying for #8, with the usual plant-readiness check. A cactus plateau, purchase anniversary, or proposed feeding never establishes watering readiness.
 

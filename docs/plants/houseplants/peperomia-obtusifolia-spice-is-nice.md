@@ -58,27 +58,22 @@ extremely dry. Exact time, water volume, fertilizer use, and weights were not
 supplied. This is owner-reported care; it does not verify a saved live tracker
 entry or establish their present moisture.
 
-Irregularly shaped glass replacement pots with drainage holes are available,
-with acrylic painting below the soil line planned **on the outside only**.
-The owner plans measurements tonight; dimensions, paint product, and completed
-curing remain unconfirmed. Additional VERYPLANTS aroid/orchid mixes
-are expected in a few days; exact received bags and each plant's final recipe
-are pending. See the [planned setup](../../setup.md).
-The repot has not been reported complete; the nursery medium and fertilizer
-charge remain unknown.
+**October 24 repot plan:** P39 / #13 and P40 / #14 remain in quarantine in another room. The owner plans to repot both into the irregular glass drainage containers on **October 25**, using **75% Molly's Aroid Mix + 25% Molly's Orchid Mix**, then place them **on the shelf beside P38 Terrarium**. Pot photographs, usable internal dimensions, paint product, and completed curing remain pending. The October 22 clarification specifies acrylic paint **only on the exterior below the soil line**. P39 is to sit below the glass rim so the walls rise above its foliage for humidity; preserve its existing planting depth rather than burying stems. This is a planned arrangement, with moisture, airflow, shading, and actual drainage still to check after planting. No completed repot or new setup is recorded.
+
+The owner has ordered **8 oz of seller-described “tropical pink” springtails** for planned addition to these pots after arrival. Species, arrival, and actual introduction are unconfirmed; the order does not establish a care benefit or replace drainage and moisture checks.
 
 **Mix-selection assessment:** Molly's Aroid Mix is a plausible trial medium
 given the manufacturer's fast-draining structure and NC State's warning about
 persistent wetness in _P. obtusifolia_. This is a suitability inference, not a
 tested recipe for P40. Check the actual bag texture and root-ball fit before
-choosing the pot or adding the coarser orchid mix; no fixed blend is assigned.
+implementing the planned 75:25 aroid/orchid trial; the recipe is not a verified optimum.
 
 | Topic                | Practical approach                                                                                                                                                                                                                                                                                                       |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Light                | Bright indirect light, introduced gradually. Confirm the intended position before choosing a grow-light setting; this is not automatically assigned to the cactus tables or P31's planned living-room setup.                                                                                                             |
 | Water                | Let the medium partially dry, then check below the surface before watering. The brand suggests checking the top 1–2 inches, but scale that depth to the actual nursery pot. Avoid both a persistently wet root ball and prolonged whole-pot drought. Water through only with working drainage and empty retained runoff. |
 | Humidity and airflow | Ordinary room conditions may be suitable; record them rather than importing the terrarium's readings. The tag's humid-room category does not require high humidity: the official product page lists low humidity preference, and extension guidance gives medium to low humidity. Avoid cold drafts.                     |
-| Pot and medium       | Check drainage, existing mix, and roots before choosing a repot or new pot. No replacement size or mix ratio has been assigned.                                                                                                                                                                                          |
+| Pot and medium       | Current nursery setup remains unmeasured. Planned October 25: irregular glass pot with owner-confirmed drainage, using 75% Molly's Aroid Mix + 25% Molly's Orchid Mix. Photograph and measure before recording a completed setup; check actual moisture retention and drainage.                                          |
 | Tracker              | Manual moisture checks; weight trends are supporting evidence and no cactus plateau establishes readiness. Keep P40 separate from P31's history.                                                                                                                                                                         |
 | Feeding              | Check nursery feeding history and new growth before adding fertilizer. No completed feed or automatic feed/plain-water alternation is recorded.                                                                                                                                                                          |
 
@@ -91,6 +86,8 @@ does not identify thirst. Reassess exposure if new pale or scorched patches
 appear after a move. Establish the purchased plant before taking cuttings.
 
 ## Sources
+
+- Owner plan, October 24, 2026: October 25 glass-pot repots in 75% Molly's Aroid Mix + 25% Molly's Orchid Mix; future shelf position beside P38, P39 recessed below the rim, measurements/photos pending, and an 8 oz tropical pink springtail order. These are plans, not completed care events.
 
 - Owner clarification, October 22, 2026: Home Depot in Howell purchase and RO watering on the evening of October 21 after very dry medium; separate-room quarantine; irregular glass drainage pots with exterior-only acrylic painting planned; measurements expected that evening; incoming VERYPLANTS mixes. Exact watering time/volume, paint product, pot dimensions, and completed repot remain unrecorded.
 - [VERYPLANTS: Molly's Aroid Mix](https://veryplants.com/products/mollys-aroid-mix-premium-tropical-plant-soil-mix) and [Molly's Orchid Mix](https://veryplants.com/products/mollys-orchid-mix), inspected October 22, 2026: manufacturer descriptions of the two candidate media. Product descriptions are not evidence of the owner's exact received bags or plant-specific performance.

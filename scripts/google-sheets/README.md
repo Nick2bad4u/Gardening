@@ -4,7 +4,8 @@ Production logger **5.39.5 / immutable version 120** supports **38 container all
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained source and production are **5.39.5**, verified on October 24.
+Maintained source is **5.39.6**; production remains **5.39.5 / immutable version
+120** until the owner-clarification rollout below is verified.
 Production **AppSheet
 1.100135** was verified by an independent saved-definition readback on October 22.
 The table-picker, toolbar, button-feedback, empty-draft, and diagnostic releases do not change AppSheet. The rollout
@@ -38,6 +39,58 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## October 24 owner setup clarifications and searchable placement map
+
+The maintained 5.39.6 source incorporates the owner's October 24 clarification
+of the current P31/P32, P37, and P38 media without changing canonical History.
+P31/P32's completed repots and kitchen move were reported as about two weeks
+earlier; no exact event timestamp or new setup number is invented. Their current
+eight-inch pot descriptions and approximate 70% greenhouse houseplant mix /
+30% perlite are retained as owner reports. P39/P40 and P32's next repots remain
+October 25 plans.
+
+Baselines R uses the P31/P32 and P38 owner reports only as setup-1 fallbacks
+when no medium is recorded in that setup. P37's pure Molly's Succulent Mix
+clarification applies only in setup 2 when the selected medium is missing or
+the original numeric/text `6`. A different recorded medium takes precedence,
+and later setups cannot inherit these clarifications. The original ledger
+value is preserved. No watering, misting, weight, or exact repot time is
+fabricated from the narrative reports.
+
+The guarded 25-cell workbook plan updates twelve Plant tracker metadata cells,
+nine Containers setup notes, and four Baselines R formulas. It preserves the
+existing P35/P36 product-source hyperlinks. Only `userEnteredValue` is written;
+History, staging, setup numbers, formats, notes, validations, protections, chart
+specifications, and tab properties remain outside the write set. The maintained
+container notes supply the same wording for the website and live catalog.
+
+The website's placement map now renders inline SVG text, with all 38 canonical
+container portraits and complete plant names. Browser Find and text selection
+can use the visible map text. Downloaded SVG/PNG files embed the same artwork
+and local definitions; no external images are required. Artwork is validated
+at build time, and imported observation text is escaped. This website work
+does not synchronize or rewrite logger artwork.
+
+The local logger suite passed **1,924 tests** across 48 files, retaining **99.58%
+statement**, **98.39% branch**, **100% function**, and **99.8% line** coverage.
+The first run encountered an existing installation-test timeout while several
+heavy checks ran concurrently; the full rerun passed with unchanged timeouts
+and gates. The placement and shared-navigation browser suites passed 22
+scenarios. Native Google Sheets evaluation passed 16 additional medium cases,
+including numeric/text `6`, removed records, substantive recorded media, and
+later setups. The disposable copy applied exactly 25 reviewed cells; all other
+captured stored cells, notes, and validations matched. Sheets automatically
+pruned series and their axes from eleven copied empty/error charts, including
+after exact-spec restoration. This copy-only effect is recorded separately;
+the production comparison permits no chart-specification changes.
+
+The already-authorized disposable script parsed the reviewed 5.39.6 source and
+completed its read-only probe at **19:51:20 EDT on October 24**. The current-pot
+reader took **27,078 ms**; bootstrap took **9,450 ms**, returned **5.39.6**, and
+included **38 plants**. These are observed timings. The script used the explicit
+copied workbook ID; no production observations, installers, or trigger changes
+were involved. Production rollout and final preservation checks are pending.
 
 ## October 24 collection-record reconciliation
 

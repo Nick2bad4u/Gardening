@@ -60,8 +60,8 @@ const rearPlacements = [
 ];
 const otherPositions = new Map([
     ["P21", "Stool on room side"],
-    ["P31", "Floor (last reported Sep 20)"],
-    ["P32", "Floor (last reported Sep 20)"],
+    ["P31", "Kitchen window shelf"],
+    ["P32", "Kitchen window shelf"],
     ["P38", "Desk to right of tables"],
     ["P39", "Quarantine in another room"],
     ["P40", "Quarantine in another room"],

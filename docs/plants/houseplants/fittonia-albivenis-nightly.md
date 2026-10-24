@@ -55,14 +55,9 @@ described as extremely dry. Exact time, water volume, fertilizer use, and
 weights were not supplied. This is owner-reported care, not an inference from
 the photographs or proof that a live tracker entry has been saved.
 
-The replacement glass pots have owner-confirmed drainage holes and irregular
-shapes; the owner plans to measure them tonight. Acrylic paint below the soil
-line is planned **on the outside only**. Paint product, dimensions, and completed
-curing are unconfirmed. Additional VERYPLANTS mixes, described
-as the aroid and orchid mixes, are expected in a few days. The exact received
-bags, mix proportions, and assignment to each plant remain pending. See the
-[planned setup](../../setup.md).
-No completed repot or new pot setup is recorded.
+**October 24 repot plan:** P39 / #13 and P40 / #14 remain in quarantine in another room. The owner plans to repot both into the irregular glass drainage containers on **October 25**, using **75% Molly's Aroid Mix + 25% Molly's Orchid Mix**, then place them **on the shelf beside P38 Terrarium**. Pot photographs, usable internal dimensions, paint product, and completed curing remain pending. The October 22 clarification specifies acrylic paint **only on the exterior below the soil line**. P39 is to sit below the glass rim so the walls rise above its foliage for humidity; preserve its existing planting depth rather than burying stems. This is a planned arrangement, with moisture, airflow, shading, and actual drainage still to check after planting. No completed repot or new setup is recorded.
+
+The owner has ordered **8 oz of seller-described “tropical pink” springtails** for planned addition to these pots after arrival. Species, arrival, and actual introduction are unconfirmed; the order does not establish a care benefit or replace drainage and moisture checks.
 
 **Mix-selection assessment:** VERYPLANTS describes Molly's Aroid Mix as chunky
 and fast-draining, and Molly's Orchid Mix as an open mix for epiphytic orchids.
@@ -71,16 +66,16 @@ wilting. For this small plant, do not choose the orchid mix alone as the default
 assess particle size and moisture retention around its roots when the bags
 arrive. A finer, moisture-retentive but draining houseplant medium may be needed.
 This is an inference from the product structure and plant guidance, not a
-tested recipe for P39; no fixed blending ratio is assigned.
+tested recipe for P39; the planned 75:25 aroid/orchid blend remains an untested trial for this specimen.
 
-| Topic                | Practical approach                                                                                                                                                                                                                                                                                            |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Light                | Start with bright indirect light and gradual acclimation. Keep it out of an abrupt move into the strongest cactus exposure; record its actual position before assigning lamp settings.                                                                                                                        |
-| Water                | Maintain lightly moist, aerated medium. Check the upper mix and accessible root zone as the surface begins to dry; do not wait for whole-pot drought or a cactus dry-weight plateau. The brand's top-inch check must be scaled to the still-unmeasured pot depth. Drain excess water when watering is needed. |
-| Humidity and airflow | Avoid drying drafts and a direct fan blast. The brand prefers high humidity, while extension guidance describes medium humidity; actual room conditions and leaf response should guide any adjustment. No humidity target or closed enclosure has been assigned to this pot.                                  |
-| Pot and medium       | Confirm drainage before watering through. Inspect the nursery medium and roots before deciding whether a repot is needed; no pot size, mix recipe, or completed repot is assumed.                                                                                                                             |
-| Tracker              | Manual moisture and plant-condition checks. Weights support a trend once the weighed assembly is consistent; they cannot alone determine readiness.                                                                                                                                                           |
-| Feeding              | Nursery feeding history is unknown. Check the existing fertilizer charge and active growth before choosing a feeding plan; no automatic feed/plain-water alternation is assigned.                                                                                                                             |
+| Topic                | Practical approach                                                                                                                                                                                                                                                                                                                                         |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Light                | Start with bright indirect light and gradual acclimation. Keep it out of an abrupt move into the strongest cactus exposure; record its actual position before assigning lamp settings.                                                                                                                                                                     |
+| Water                | Maintain lightly moist, aerated medium. Check the upper mix and accessible root zone as the surface begins to dry; do not wait for whole-pot drought or a cactus dry-weight plateau. The brand's top-inch check must be scaled to the still-unmeasured pot depth. Drain excess water when watering is needed.                                              |
+| Humidity and airflow | Avoid drying drafts and a direct fan blast. The brand prefers high humidity, while extension guidance describes medium humidity; actual room conditions and leaf response should guide any adjustment. The planned glass walls will rise above the foliage; inspect airflow and moisture rather than assuming a fixed humidity target or sealed enclosure. |
+| Pot and medium       | Current nursery setup remains unmeasured. Planned October 25: irregular glass pot with owner-confirmed drainage, using 75% Molly's Aroid Mix + 25% Molly's Orchid Mix. Photograph and measure before recording a completed setup; check actual moisture retention and drainage.                                                                            |
+| Tracker              | Manual moisture and plant-condition checks. Weights support a trend once the weighed assembly is consistent; they cannot alone determine readiness.                                                                                                                                                                                                        |
+| Feeding              | Nursery feeding history is unknown. Check the existing fertilizer charge and active growth before choosing a feeding plan; no automatic feed/plain-water alternation is assigned.                                                                                                                                                                          |
 
 ## Watch points
 
@@ -91,6 +86,8 @@ leaves hang down. Soft dark stems, persistent decline in wet medium, or new
 scorched edges warrant reassessing roots, drainage, or exposure.
 
 ## Sources
+
+- Owner plan, October 24, 2026: October 25 glass-pot repots in 75% Molly's Aroid Mix + 25% Molly's Orchid Mix; future shelf position beside P38, P39 recessed below the rim, measurements/photos pending, and an 8 oz tropical pink springtail order. These are plans, not completed care events.
 
 - Owner-supplied label and plant photographs, October 21, 2026, linked above: nursery wording, visible appearance, and separate pot; capture time unrecorded. Owner photographs remain copyright Nick, all rights reserved.
 - Owner clarification, October 22, 2026: Home Depot in Howell purchase and RO watering on the evening of October 21 after very dry medium; separate-room quarantine; irregular glass drainage pots with exterior-only acrylic painting planned; measurements expected that evening; incoming VERYPLANTS mixes. Exact watering time/volume, paint product, pot dimensions, and completed repot remain unrecorded.

@@ -440,7 +440,7 @@ h3 {
     }
 }
 
-@media (width <= 1280px) {
+@media (width <= 1400px) {
     .menu-toggle {
         display: inline-flex;
         margin-inline-start: auto;

@@ -192,6 +192,8 @@ function allowed(correction) {
             ([
                 "P29",
                 "P30",
+                "P31",
+                "P32",
                 "P37",
             ].includes(id) &&
                 [
@@ -210,13 +212,25 @@ function allowed(correction) {
     if (sheet === "Baselines")
         return (
             /^P(?:0[1-9]|[12]\d|3[0125-9]|40)$/v.test(id) &&
-            (column === 5 || (column === 17 && /^P2[3-8]$/v.test(id)))
+            (column === 5 ||
+                (column === 17 &&
+                    (/^P2[3-8]$/v.test(id) ||
+                        [
+                            "P31",
+                            "P32",
+                            "P37",
+                            "P38",
+                        ].includes(id))))
         );
     if (sheet === "Containers")
         return (
             (column === 14 &&
                 [
                     "P30",
+                    "P31",
+                    "P32",
+                    "P35",
+                    "P36",
                     "P37",
                     "P38",
                     "P39",

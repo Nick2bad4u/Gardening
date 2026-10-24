@@ -17,7 +17,7 @@
    dryDownModelFormula_, installDailyCareDashboard, GARDEN_CYCLE_COMPARISON, GARDEN_ENVIRONMENT_READINGS, GARDEN_RECORDED_LOCATIONS */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.39.5",
+    version: "5.39.6",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -6326,14 +6326,27 @@ function refreshWorkbookCalculations_(spreadsheet, plants) {
     sheet.hideSheet();
 }
 
-/** @param {number} rowNumber @param {GardenWorkbookViewPlant} plant @returns {string[]} */
-function baselineViewRow_(rowNumber, plant) {
-    const row = rowNumber;
-    const mediumFallback = ["P23", "P24", "P25", "P26", "P27", "P28"].includes(
+/** Current-setup evidence wins; owner clarifications apply only to their setup. */
+/** @param {number} row @param {GardenWorkbookViewPlant} plant @returns {string} */
+function baselineMediumFormula_(row, plant) {
+    let mediumFallback = ["P23", "P24", "P25", "P26", "P27", "P28"].includes(
         plant.id
     )
         ? `IF($T${row}=1,"Approximately 80% Molly's Succulent Mix / 20% perlite (owner estimate, September 20, 2026)","Not recorded")`
         : '"Not recorded"';
+    if (["P31", "P32"].includes(plant.id))
+        mediumFallback = `IF($T${row}=1,"Approximately 70% greenhouse houseplant mix / 30% perlite (owner estimate, October 24, 2026)","Not recorded")`;
+    if (plant.id === "P38")
+        mediumFallback = `IF($T${row}=1,"LECA balls and larger volcanic rock below a light, fluffy coco-coir-containing substrate; exact recipe unknown (owner report, October 24, 2026)","Not recorded")`;
+    const recorded = `INDEX(SORT(FILTER({History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},History!$AH$2:$AH$${GARDEN_LOGGER.historyCapacityRows}},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},History!$K$2:$K$${GARDEN_LOGGER.historyCapacityRows}=$T${row},History!$AH$2:$AH$${GARDEN_LOGGER.historyCapacityRows}<>"",History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed"),1,FALSE),1,2)`;
+    if (plant.id === "P37")
+        return `=LET(recorded,IFNA(${recorded},""),IF(AND($T${row}=2,OR(recorded="",recorded&""="6")),"100% Molly's Succulent Mix; no added perlite (owner clarification, October 24, 2026)",IF(recorded="","Not recorded",recorded)))`;
+    return `=IFNA(${recorded},${mediumFallback})`;
+}
+
+/** @param {number} rowNumber @param {GardenWorkbookViewPlant} plant @returns {string[]} */
+function baselineViewRow_(rowNumber, plant) {
+    const row = rowNumber;
     const values = [
         plant.id,
         plant.name,
@@ -6356,7 +6369,7 @@ function baselineViewRow_(rowNumber, plant) {
         `=IFNA(MAX(FILTER(History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},History!$C$2:$C$${GARDEN_LOGGER.historyCapacityRows}="Water",History!$K$2:$K$${GARDEN_LOGGER.historyCapacityRows}=$T${row},History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed")),"")`,
         `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},History!$H$2:$H$${GARDEN_LOGGER.historyCapacityRows}},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},REGEXMATCH(History!$C$2:$C$${GARDEN_LOGGER.historyCapacityRows},"^(Check|Inspect)$"),History!$H$2:$H$${GARDEN_LOGGER.historyCapacityRows}<>"",History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed"),1,FALSE),1,2),"Not recorded")`,
         `=IFNA(MAX(FILTER(History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},REGEXMATCH(History!$C$2:$C$${GARDEN_LOGGER.historyCapacityRows},"^(Check|Inspect)$"),History!$H$2:$H$${GARDEN_LOGGER.historyCapacityRows}<>"",History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed")),"")`,
-        `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},History!$AH$2:$AH$${GARDEN_LOGGER.historyCapacityRows}},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},History!$K$2:$K$${GARDEN_LOGGER.historyCapacityRows}=$T${row},History!$AH$2:$AH$${GARDEN_LOGGER.historyCapacityRows}<>"",History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed"),1,FALSE),1,2),${mediumFallback})`,
+        baselineMediumFormula_(row, plant),
         `=LET(flags,TEXTJOIN(" · ",TRUE,IF(H${row}<>"Calibrated",H${row},""),IF(AND(J${row}<>"OK",J${row}<>"No trend",J${row}<>"No current-cycle alert",J${row}<>"Owner-confirmed normal"),J${row},""),IF(K${row}="Due now","Remeasure due",""),IF(REGEXMATCH(AG${row},"Overdue"),"Dry forecast overdue","")),IF(flags="","No current flags",flags))`,
         `=IFNA(MAX(FILTER(History!$K$2:$K$${GARDEN_LOGGER.historyCapacityRows},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed")),1)`,
         currentCyclePointCountFormula_(row),

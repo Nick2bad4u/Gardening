@@ -1,9 +1,12 @@
 ---
 import { getWateringPlacements } from "../../lib/watering-placement.mjs";
+import { getWateringArtwork } from "../../lib/watering-artwork.mjs";
 import historySnapshot from "../../../docs/layouts/watering-history-snapshot.json";
+import { siteUrl } from "../../lib/routes.mjs";
 import "../../styles/tools/watering-map.css";
 
 const placements = await getWateringPlacements();
+const artwork = await getWateringArtwork();
 ---
 
 <section
@@ -12,10 +15,19 @@ const placements = await getWateringPlacements();
     aria-labelledby="watering-map-title"
     data-placements={JSON.stringify(placements)}
     data-history-snapshot={JSON.stringify(historySnapshot)}
+    data-artwork={JSON.stringify(artwork)}
 >
-    <header>
-        <p class="eyebrow">Your watering log, at a glance</p>
-        <h2 id="watering-map-title">Days since watering</h2>
+    <header class="watering-map-heading">
+        <div class="watering-map-heading-top">
+            <p class="eyebrow">Your watering log, at a glance</p>
+            <span class="watering-map-mode">Observation map</span>
+        </div>
+        <div class="watering-map-title-row">
+            <span class="watering-map-emblem" aria-hidden="true">
+                <img src={siteUrl("assets/ui-icons/water.svg")} alt="" width="36" height="36" />
+            </span>
+            <h2 id="watering-map-title">Days since watering</h2>
+        </div>
         <p>
             Each pot’s place shows the number of calendar days since its last recorded Water event.
             A dated snapshot is available immediately while the live log refreshes. When the live
@@ -24,18 +36,98 @@ const placements = await getWateringPlacements();
             watering schedule.
         </p>
     </header>
+    <dl class="watering-map-stats" aria-label="Watering record coverage">
+        <div>
+            <dt>
+                <img
+                    class="watering-map-icon"
+                    src={siteUrl("assets/ui-icons/pot.svg")}
+                    alt=""
+                    width="20"
+                    height="20"
+                />
+                Total pots
+            </dt>
+            <dd>
+                <span id="watering-map-total-count">—</span>
+            </dd>
+        </div>
+        <div>
+            <dt>
+                <img
+                    class="watering-map-icon"
+                    src={siteUrl("assets/ui-icons/water.svg")}
+                    alt=""
+                    width="20"
+                    height="20"
+                />
+                With Water records
+            </dt>
+            <dd>
+                <span id="watering-map-recorded-count">—</span>
+            </dd>
+        </div>
+        <div>
+            <dt>
+                <img
+                    class="watering-map-icon"
+                    src={siteUrl("assets/ui-icons/history.svg")}
+                    alt=""
+                    width="20"
+                    height="20"
+                />
+                No Water record
+            </dt>
+            <dd>
+                <span id="watering-map-unknown-count">—</span>
+            </dd>
+        </div>
+    </dl>
     <div class="watering-map-actions" aria-label="Watering map controls">
-        <button type="button" id="watering-map-refresh">
-            Refresh data
+        <button type="button" id="watering-map-refresh" class="watering-map-refresh">
+            <img
+                class="watering-map-icon"
+                src={siteUrl("assets/ui-icons/refresh.svg")}
+                alt=""
+                width="20"
+                height="20"
+            />
+            <span id="watering-map-refresh-label">Refresh data</span>
         </button>
         <button type="button" id="watering-map-png" disabled>
+            <img
+                class="watering-map-icon"
+                src={siteUrl("assets/ui-icons/download.svg")}
+                alt=""
+                width="20"
+                height="20"
+            />
             Download PNG
         </button>
         <button type="button" id="watering-map-svg" disabled>
+            <img
+                class="watering-map-icon"
+                src={siteUrl("assets/ui-icons/download.svg")}
+                alt=""
+                width="20"
+                height="20"
+            />
             Download SVG
         </button>
-        <button type="button" id="watering-map-enlarge" aria-pressed="false">
-            Enlarge image
+        <button
+            type="button"
+            id="watering-map-enlarge"
+            class="watering-map-enlarge"
+            aria-pressed="false"
+        >
+            <img
+                class="watering-map-icon"
+                src={siteUrl("assets/ui-icons/expand.svg")}
+                alt=""
+                width="20"
+                height="20"
+            />
+            <span id="watering-map-enlarge-label">Enlarge image</span>
         </button>
     </div>
     <p id="watering-map-source" class="watering-map-source" role="status" aria-live="polite">
@@ -54,11 +146,7 @@ const placements = await getWateringPlacements();
             role="region"
             aria-label="Watering placement image; enlarge to scroll horizontally"
         >
-            <img
-                id="watering-map-image"
-                alt="Recorded table placement with days since watering for each pot; equivalent details follow below."
-                hidden
-            />
+            <div id="watering-map-image" class="watering-map-image" hidden></div>
         </div>
         <figcaption>
             The layout follows the photos supplied October 22, with front and rear tables shown
@@ -67,11 +155,25 @@ const placements = await getWateringPlacements();
             logged move is listed in the details; free-text locations cannot update diagram
             coordinates. “Unknown” means no active Water event was recorded. The full map fits your
             screen; use Enlarge image for a closer view with sideways scrolling, or open the
-            readable pot details below.
+            readable pot details below. The default map is a searchable SVG: use your browser’s Find
+            command (Ctrl+F) to locate plant names and IDs. Portraits are collection artwork, not
+            evidence of the current pot or identification. P31 / #7 and P32 / #8 are on the kitchen
+            window shelf under the reported 54 W six-head LED bars and 10 W three-head LED. P39 /
+            #13 and P40 / #14 are planned for the shelf next to the terrarium after repotting; the
+            map retains their current quarantine location until that move happens.
         </figcaption>
     </figure>
-    <details class="watering-map-details">
-        <summary>Watering and placement details for every pot</summary>
+    <details class="watering-map-details" id="watering-map-details">
+        <summary>
+            <img
+                class="watering-map-icon"
+                src={siteUrl("assets/ui-icons/list.svg")}
+                alt=""
+                width="20"
+                height="20"
+            />
+            Watering and placement details for every pot
+        </summary>
         <ul id="watering-map-pot-list" aria-label="Watering details by pot"></ul>
     </details>
     <noscript>

@@ -9,7 +9,7 @@
 - Identification: **Probable Fittonia albivenis and Hypoestes phyllostachya; tentative Pilea cf. depressa; fern-like foliage and moss unidentified. Cultivars unknown. These are photo-based comparisons, not seller-confirmed species.**
 - Acquired from: Seller identity unrecorded; made-to-order terrarium listing supplied by owner
 - Acquired on: Exact delivery date unconfirmed; enrolled 2026-10-09; arrival-condition photographs supplied 2026-10-10
-- Current pot: Cork-lidded glass jar; seller-listed 6.3 × 3.9 in (16 × 10 cm), dimension orientation unverified; substrate recipe, internal depth, and drainage unconfirmed
+- Current pot: Cork-lidded glass jar; seller-listed 6.3 × 3.9 in (16 × 10 cm), dimension orientation unverified; owner-reported LECA/larger volcanic-rock lower layers and fluffy coir-containing upper medium; exact recipe, internal depth, and drainage outlet unconfirmed
 
 ## Names and identity
 
@@ -58,26 +58,27 @@ or health of the underlying root zone.
 The seller lists **6.3 × 3.9 in (16 × 10 cm)**. The dimension orientation is
 unverified; these are seller figures, not measured height, diameter, substrate
 depth, or root volume. Dark medium, moss, round brown pieces, and a mesh edge are
-visible; a drainage outlet or water reservoir is not established.
+visible; a drainage outlet or water reservoir is not established. The owner believes the seller dimensions may be internal, clarified October 24; that is unverified.
 
 The owner reported a shelf near, but not close to, the cactus grow area on October 10, with about
-**9,000 lux outside the glass on the light-facing side**. Photographs supplied October 22 show the jar on the desk to the right of the table display; capture date is unrecorded and this position has no new light measurement. Reducing that reading
-to about **7,000 lux** remains a proposed light adjustment, not a confirmed setting or a plant threshold.
+**9,000 lux outside the glass on the light-facing side**. Photographs supplied October 22 show the jar on the desk to the right of the table display; capture date is unrecorded. The October 24 report gives about **6,000–7,000 lux** currently, with meter position and settings unknown. The earlier proposed 7,000-lux adjustment was not a plant threshold.
 Leaf-level light, lamp identity, distance, and duration are unrecorded.
 
 A mini sensor hanging below the cap reportedly read **99% RH with fogged glass**
 on October 10. Model, reading time, and temperature are unknown. The seller's
 **90% RH** suggestion is retained as seller advice, not a verified care target.
 
+**October 24 owner update:** the original lower layers are **LECA balls and larger volcanic rock**, beneath a **fluffy, light, coco-coir-containing upper substrate**. The seller's exact upper-layer recipe is unknown. Current light is reported as **about 6,000–7,000 lux**; meter position, leaf-height exposure inside the jar, light duration, and lamp settings are unrecorded. The owner leaves the lid off for a couple of hours when heavy fog persists all day. No direct watering has been reported; the jar was **misted once on October 23**, after a moisture meter indicated dry. Exact time and volume are unknown; this report does not verify a saved Mist event.
+
 ## Practical care for this jar
 
-| Area                 | Starting practice                                                                                                                                                                                     |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Light                | Bright indirect light; keep the glass out of direct sun and away from heat. Check leaf-level exposure and warming before changing the nearby light arrangement.                                       |
-| Water                | Inspect the medium and any standing water first. Do not add water solely for shipping wilt, brown moss, or an RH reading; avoid a fixed watering schedule or cactus dry-down rule.                    |
-| Lid and condensation | Seller care says keep the lid closed. If condensation stays heavy or dripping, briefly vent or wipe the glass and reassess, following RHS guidance. The owner's usual lid routine remains unrecorded. |
-| Recovery             | Remove clearly dead loose debris carefully, preserve living stems, and compare new photographs for posture and new growth. Recovery time is unknown.                                                  |
-| Records              | Record humidity in % RH for P38, with time and sensor position. Weigh the same complete assembly consistently; components do not get separate weigh-ins.                                              |
+| Area                 | Starting practice                                                                                                                                                                                                                                                                                             |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Light                | Bright indirect light; keep the glass out of direct sun and away from heat. Check leaf-level exposure and warming before changing the nearby light arrangement.                                                                                                                                               |
+| Water                | Inspect the medium and any standing water first. Do not add water solely for shipping wilt, brown moss, or an RH reading; avoid a fixed watering schedule or cactus dry-down rule.                                                                                                                            |
+| Lid and condensation | Seller care says keep the lid closed. If condensation stays heavy or dripping, briefly vent or wipe the glass and reassess, following RHS guidance. Owner routine, reported October 24: lid off for a couple of hours when heavy fog persists all day; adjust to observations rather than a fixed daily task. |
+| Recovery             | Remove clearly dead loose debris carefully, preserve living stems, and compare new photographs for posture and new growth. Recovery time is unknown.                                                                                                                                                          |
+| Records              | Record humidity in % RH for P38, with time and sensor position. Weigh the same complete assembly consistently; components do not get separate weigh-ins.                                                                                                                                                      |
 
 The seller also says to mist only when needed. No water volume, fertilizer dose,
 daily venting task, or fixed humidity target has been established for this jar.
@@ -96,6 +97,8 @@ water pooling below the substrate.
   does not mean the planting was repotted.
 
 ## Sources
+
+- Owner clarification, October 24, 2026: original LECA/larger volcanic-rock lower layers, fluffy light coir-containing upper medium, about 6,000–7,000 lux, conditional few-hour lid opening, no direct watering, and one misting on October 23 after a dry meter indication. Seller dimensions may be internal in the owner's view, but no measurement verifies that.
 
 - [Owner arrival record and photographs](../../terrarium.md), supplied October 10,
   2026: shipping condition, provisional identifications, reported placement,

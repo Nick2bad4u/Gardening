@@ -362,7 +362,7 @@ Peperomia obtusifolia 'Obtipan Bicolor'
 Tradescantia spathacea 'Tricolor'
 ```
 
-Both plants were purchased in six-inch nursery pots. Separate eight-inch Amazon Basics pots and a living-room display are planned; labels **#7** and **#8** stay with the plants through repotting. See their profiles for the last recorded placement and planned light trial.
+Both plants were purchased in six-inch nursery pots. The owner confirmed October 24 that the eight-inch Amazon Basics repots and kitchen window-shelf move happened about two weeks earlier. Current mix is estimated at 30% perlite + 70% greenhouse houseplant mix; labels **#7** and **#8** stay with their plants. See the profiles for the installed lights and remaining measurements.
 
 ## September 21 Lithops and split-rock labels
 
@@ -499,7 +499,7 @@ One container · one care history
 ## October 21 houseplant labels
 
 The photographed Proven Winners leafjoy littles labels support these separate
-nursery identities. The owner confirmed October 22 that both were purchased October 21 at Home Depot in Howell, Michigan, and are quarantined in another room pending repotting. Pot measurements and precise positions remain unrecorded. Use the
+nursery identities. The owner confirmed October 22 that both were purchased October 21 at Home Depot in Howell, Michigan, and are quarantined in another room pending repotting. The October 24 plan is to repot them October 25 and place them on the shelf beside P38; current pot measurements and exact quarantine positions remain unrecorded. Use the
 profile sources for care; the printed prompts are inspection reminders.
 
 | Label | Tracker | Inventory     | Profile                                                                                                                                   |

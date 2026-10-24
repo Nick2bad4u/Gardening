@@ -38,6 +38,14 @@ export function initializeSite() {
     menuButton?.addEventListener("click", () => {
         setMenu(menuButton.getAttribute("aria-expanded") !== "true");
     });
+    navigation?.addEventListener("click", (event) => {
+        if (
+            event.target instanceof Element &&
+            event.target.closest("a[href]")
+        ) {
+            setMenu(false);
+        }
+    });
     document.addEventListener("keydown", (event) => {
         if (
             event.key !== "Escape" ||

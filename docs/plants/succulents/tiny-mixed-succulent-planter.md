@@ -53,7 +53,7 @@ top view, and the shared post-repot context. These views provide a visual record
 The components were kept together during the September 2 repot in the purchased
 five-inch-class terra-cotta planter. The repot was logged at **September 3, 2026, 12:18 a.m. EDT**, with **“5 inch shallow”** and **“Nursery cacti soil and my top dressing”** as its setup-2 descriptions. Exact depth and ingredient proportions remain unmeasured. All plants share the same root volume, watering, and whole-pot weight.
 
-**October 8, 2026, 8:12 p.m. EDT:** [canonical workbook History](https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit) records P30's repot to **setup 3**, with **“7 inch shallow”** as the pot description and **“Molly's Mix only”** as the medium. The same batch contains **1,336 g** and a Water event with **Nutrients: No**; the weight is a dated observation, not an assumed immediate post-drain reference. Photographs supplied October 22 show the green glazed round bowl, but do not measure internal depth or verify drainage. All component profiles retain this one shared setup and history.
+**October 8, 2026, 8:12 p.m. EDT:** [canonical workbook History](https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit) records P30's repot to **setup 3**, with **“7 inch shallow”** as the pot description and **“Molly's Mix only”** as the medium. The same batch contains **1,336 g** and a Water event with **Nutrients: No**; the weight is a dated observation, not an assumed immediate post-drain reference. Photographs supplied October 22 show the green glazed round bowl, but do not measure internal depth or verify drainage. On October 24 the owner identified the installed bowl as [Amazon ASIN B0GTF6K64F](https://www.amazon.com/dp/B0GTF6K64F); seller specifications remain unverified. All component profiles retain this one shared setup and history.
 
 ## Why the component names stay broad
 
@@ -85,6 +85,8 @@ explain those comparisons alongside each group's growth habit.
   do not assume the whole planter needs more water.
 
 ## Sources
+
+- [Owner-linked installed pot, Amazon ASIN B0GTF6K64F](https://www.amazon.com/dp/B0GTF6K64F), supplied October 24, 2026: identifies the current P30 destination. Seller specifications were unavailable to independently verify; no internal dimensions or actual drainage are inferred from the link.
 
 - [canonical workbook History](https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit) — October 8, 2026 P30 setup-3 Repot, Water, and Weight records; checked October 24.
 

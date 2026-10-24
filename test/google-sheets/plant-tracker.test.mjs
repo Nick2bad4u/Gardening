@@ -2365,6 +2365,82 @@ describe("garden logger weight-state inference and dry-down formulas", () => {
         }
     });
 
+    it.each([
+        ["P31", "Approximately 70% greenhouse houseplant mix / 30% perlite"],
+        ["P32", "Approximately 70% greenhouse houseplant mix / 30% perlite"],
+        ["P38", "LECA balls and larger volcanic rock"],
+    ])(
+        "limits %s owner medium fallbacks to setup 1 after selecting active history",
+        (id, description) => {
+            expect.hasAssertions();
+
+            const context = loadAppsScript(createHistorySheet([]));
+            const formula = context.baselineViewRow_(32, { id, name: id })[17];
+
+            expect(formula).toContain("History!$B$2:$B$50001=$A32");
+            expect(formula).toContain("History!$K$2:$K$50001=$T32");
+            expect(formula).toContain('History!$AH$2:$AH$50001<>""');
+            expect(formula).toContain('History!$AJ$2:$AJ$50001<>"Removed"');
+            expect(formula).toContain(
+                `),1,FALSE),1,2),IF($T32=1,"${description}`
+            );
+            expect(formula).toMatch(/October 24, 2026\)","Not recorded"\)\)$/v);
+        }
+    );
+
+    it("replaces only Arctic Ice's selected setup-2 placeholder without rewriting canonical evidence", () => {
+        expect.hasAssertions();
+
+        const context = loadAppsScript(createHistorySheet([]));
+        const formula = context.baselineViewRow_(36, {
+            id: "P37",
+            name: "Arctic Ice",
+        })[17];
+
+        expect(formula).toContain("=LET(recorded,IFNA(INDEX(SORT(FILTER(");
+        expect(formula).toContain("History!$B$2:$B$50001=$A36");
+        expect(formula).toContain("History!$K$2:$K$50001=$T36");
+        expect(formula).toContain('History!$AH$2:$AH$50001<>""');
+        expect(formula).toContain('History!$AJ$2:$AJ$50001<>"Removed"');
+        expect(formula).toContain('),1,FALSE),1,2),"")');
+        expect(formula).toContain(
+            'AND($T36=2,OR(recorded="",recorded&""="6"))'
+        );
+        expect(formula).toContain(
+            "100% Molly's Succulent Mix; no added perlite"
+        );
+        expect(formula).toMatch(
+            /IF\(recorded="","Not recorded",recorded\)\)\)$/v
+        );
+    });
+
+    it.each([
+        "P01",
+        "P23",
+        "P28",
+        "P30",
+        "P39",
+        "P40",
+    ])(
+        "preserves %s medium formula construction and excludes future repot mixes",
+        (id) => {
+            expect.hasAssertions();
+
+            const context = loadAppsScript(createHistorySheet([]));
+            const fallback = ["P23", "P28"].includes(id)
+                ? `IF($T2=1,"Approximately 80% Molly's Succulent Mix / 20% perlite (owner estimate, September 20, 2026)","Not recorded")`
+                : '"Not recorded"';
+
+            expect(context.baselineViewRow_(2, { id, name: id })[17]).toBe(
+                [
+                    '=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$50001,History!$AH$2:$AH$50001},History!$B$2:$B$50001=$A2,History!$K$2:$K$50001=$T2,History!$AH$2:$AH$50001<>"",History!$AJ$2:$AJ$50001<>"Removed"),1,FALSE),1,2),',
+                    fallback,
+                    ")",
+                ].join("")
+            );
+        }
+    );
+
     it("returns an empty history before evaluating array columns when a new pot has no observations", () => {
         expect.hasAssertions();
 

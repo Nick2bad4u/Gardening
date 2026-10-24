@@ -117,6 +117,116 @@ function fixture() {
 }
 
 describe("collection record reconciliation", () => {
+    it.each([
+        ...["P31", "P32"].flatMap((id) =>
+            [
+                27,
+                28,
+                30,
+            ].map((column) => ({
+                column,
+                id,
+                sheet: "Plant tracker",
+            }))
+        ),
+        ...[
+            "P31",
+            "P32",
+            "P37",
+            "P38",
+        ].map((id) => ({
+            column: 17,
+            id,
+            sheet: "Baselines",
+        })),
+        ...[
+            "P31",
+            "P32",
+            "P35",
+            "P36",
+        ].map((id) => ({
+            column: 14,
+            id,
+            sheet: "Containers",
+        })),
+    ])(
+        "permits the reviewed owner clarification at $sheet/$id/$column only as a guarded value write",
+        ({ column, id, sheet }) => {
+            expect.hasAssertions();
+
+            const { corrections, snapshot } = fixture();
+            const template = required(
+                corrections.find((correction) => correction.sheet === sheet)
+            );
+            const sheetIndex = snapshot.sheets.findIndex(
+                (entry) => entry.properties.title === sheet
+            );
+            cell(snapshot, sheetIndex, 1, 0).userEnteredValue = {
+                stringValue: id,
+            };
+            cell(snapshot, sheetIndex, 1, column).userEnteredValue = required(
+                template.expected.userEnteredValue
+            );
+            cell(snapshot, sheetIndex, 1, column).note = template.expected.note;
+            const correction = { ...template, column, id };
+            const plan = buildCollectionRecordReconciliationPlan(snapshot, [
+                correction,
+            ]);
+
+            expect(plan.requests).toHaveLength(1);
+            expect(plan.requests[0]?.updateCells.range.startColumnIndex).toBe(
+                column
+            );
+            expect(plan.requests[0]?.updateCells.fields).toBe(
+                "userEnteredValue"
+            );
+            expect(() => {
+                assertCollectionRecordReconciliationPreconditions(
+                    plan,
+                    snapshot
+                );
+            }).not.toThrow();
+
+            cell(snapshot, sheetIndex, 1, column).note =
+                "Concurrent owner correction";
+
+            expect(() => {
+                assertCollectionRecordReconciliationPreconditions(
+                    plan,
+                    snapshot
+                );
+            }).toThrow("Expected cell drift");
+        }
+    );
+
+    it.each([
+        { column: 17, id: "P30", sheet: "Baselines" },
+        { column: 17, id: "P39", sheet: "Baselines" },
+        { column: 17, id: "P40", sheet: "Baselines" },
+        { column: 19, id: "P31", sheet: "Baselines" },
+        { column: 19, id: "P37", sheet: "Baselines" },
+        { column: 27, id: "P35", sheet: "Plant tracker" },
+        { column: 28, id: "P36", sheet: "Plant tracker" },
+        { column: 30, id: "P35", sheet: "Plant tracker" },
+        { column: 30, id: "P36", sheet: "Plant tracker" },
+        { column: 29, id: "P31", sheet: "Plant tracker" },
+        { column: 13, id: "P38", sheet: "Containers" },
+        { column: 14, id: "P29", sheet: "Containers" },
+    ])(
+        "rejects adjacent or unreviewed owner fields at $sheet/$id/$column",
+        (target) => {
+            expect.hasAssertions();
+
+            const { corrections, snapshot } = fixture();
+
+            expect(() =>
+                buildCollectionRecordReconciliationPlan(snapshot, [
+                    { ...required(corrections[0]), ...target },
+                ])
+            ).toThrow("Outside reconciliation scope");
+        }
+    );
+
     it("emits only single-cell value writes and preserves source snapshots", () => {
         expect.hasAssertions();
 
