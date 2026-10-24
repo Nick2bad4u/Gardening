@@ -1,11 +1,11 @@
 # Google Sheets observation logger
 
-Production logger **5.39.4 / immutable version 119** supports **38 container allocations**, using IDs `P01`–`P32` and `P35`–`P40`, and **50,000 History observation slots**. The October 24 rollout adds scheduled-run diagnostics; October 23 records the table picker, toolbar spacing and button feedback, and empty-draft fix; October 22 records the verified P39/P40 enrollment, and earlier receipts retain the capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.39.5 / immutable version 120** supports **38 container allocations**, using IDs `P01`–`P32` and `P35`–`P40`, and **50,000 History observation slots**. The October 24 rollouts reconcile known collection records and add scheduled-run diagnostics; October 23 records the table picker, toolbar spacing and button feedback, and empty-draft fix; October 22 records the verified P39/P40 enrollment, and earlier receipts retain the capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained source is **5.39.5**; production remains **5.39.4** until the
-collection-reconciliation rollout below is verified. Production **AppSheet
+Maintained source and production are **5.39.5**, verified on October 24.
+Production **AppSheet
 1.100135** was verified by an independent saved-definition readback on October 22.
 The table-picker, toolbar, button-feedback, empty-draft, and diagnostic releases do not change AppSheet. The rollout
 receipt below records the production checks separately from rehearsal results.
@@ -85,7 +85,37 @@ the current-pot reader took 13,605 ms and bootstrap took 10,785 ms for 38 plants
 These are observed timings, not latency guarantees. No synthetic observations,
 installers, or trigger changes were used.
 
-Production deployment and preservation verification are pending.
+Production **5.39.5 / immutable version 120** was deployed at **20:25 UTC on
+October 24, 2026**, updating the existing deployment in place and retaining the
+phone URL. Production source and immutable-version files matched reviewed
+commit `e4a3268fc01154c67315b821c6ffdd8106f3fc38`. That commit passed Pages,
+logger coverage, SonarCloud, Socket, Gitleaks, and TruffleHog checks before
+deployment; the updated P30 profile was also verified on the published site.
+
+A [native Drive backup](https://docs.google.com/spreadsheets/d/1_Ng-7fGgLYWrkpjg0k6EAeIdxyHUmRhx8J3TsvUalT8/edit)
+was created at **20:09:42 UTC**. Fresh production reads immediately preceded
+the 96-cell batch. The **20:27:09 UTC** readback matched all 96 intended values
+and formulas with no other captured differences: **2,022 observations**, **2,022
+unique observation IDs**, **1,652 request groups**, **38 saved staging rows**,
+an empty bulk intake, **68 sheets**, and **190 charts** were preserved. Checked
+canonical/staging cells, RO records, formulas, notes, validations, protections,
+chart specifications, tab properties, and conditional formatting matched.
+
+Native Baselines results showed P29's recorded `4.25 round, 4.25 deep`, P30's
+`7 inch shallow` / setup 3 / `Molly's Mix only`, P37's `4.5 inch round 4.25 inch
+high` / setup 2, and the six qualified medium estimates. P37's medium `6` and
+other unknowns remain unchanged. Integrity reported zero formula, identity,
+retry, projection, and required-anchor errors. Its 18 uncalibrated plants and
+one setup without a watering/repot anchor remain evidence gaps, not migration
+failures or instructions to water.
+
+A fresh phone-logger load displayed **Connected · Logger 5.39.5**, and selecting
+P37 showed its recorded current pot and setup 2. Version 120 `doGet` started
+at **16:28:19 EDT** and completed in **0.904 s**; `getWebAppBootstrap` started at **16:28:23 EDT**
+and completed in **14.927 s**. Exactly one five-minute
+`processQueuedAppSheetEntries` trigger remained installed; its **16:25:42 EDT**
+run completed in **51.944 s**. No production observations, installers, AppSheet
+configuration edits, or trigger changes were used for this reconciliation.
 
 ## October 24 scheduled-run diagnostics
 
