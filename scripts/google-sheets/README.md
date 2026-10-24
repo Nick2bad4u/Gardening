@@ -4,7 +4,8 @@ Production logger **5.39.4 / immutable version 119** supports **38 container all
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained and production source are **5.39.4**. Production **AppSheet
+Maintained source is **5.39.5**; production remains **5.39.4** until the
+collection-reconciliation rollout below is verified. Production **AppSheet
 1.100135** was verified by an independent saved-definition readback on October 22.
 The table-picker, toolbar, button-feedback, empty-draft, and diagnostic releases do not change AppSheet. The rollout
 receipt below records the production checks separately from rehearsal results.
@@ -37,6 +38,54 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## October 24 collection-record reconciliation
+
+The 5.39.5 update resolves the current pot description from active Repot records
+in the current setup before using static inventory metadata. Initial pot-size
+seeds apply only to setup 1. Repot save preparation uses that same lookup for the
+previous-pot description; ordinary and bulk care saves retain their existing
+single full-history read under the writer lock.
+
+Baselines F follows the same current-setup Repot lookup. Baselines R preserves
+the documented approximate 80% Molly's Succulent Mix / 20% perlite owner estimate
+for P23–P28 in setup 1 when no current-setup medium is recorded. Later setups
+cannot inherit that estimate. P37's recorded medium value `6` remains unresolved.
+
+The guarded `collection-record-reconciliation.mjs` planner applies reviewed
+single-cell values and formulas after checking the workbook, headers, IDs,
+member-container bindings, original values, and notes. Its 96-cell October 24
+plan covers Plant tracker metadata, Containers, Container members, and the
+38 Baselines F formulas plus six R fallbacks. Only `userEnteredValue` is written;
+canonical History, staging, setup numbers, formatting, validations, and notes
+are outside the write set. Fresh native reads and a Drive backup are required
+before the production batch. Do not run an installer or whole-workbook refresh
+for this reconciliation.
+
+The profile and catalog updates incorporate existing P29/P30/P37 Repot records,
+P23–P28 acquisition details, P38's dated desk placement, and P39/P40's confirmed
+purchase and owner-reported RO watering. Planned repots remain plans. The latter
+watering remains descriptive metadata because no exact event time was supplied;
+the reconciliation does not fabricate a canonical observation.
+
+Local validation passed 1,888 logger tests with 99.58% statement coverage,
+including metadata-drift/replay guards and ordinary/bulk History-read counts.
+Apps Script, build, and test type checks, relevant lint, website build/check,
+formatting, and both secret scans passed. Independent review found no remaining
+correctness issue.
+
+The native rehearsal completed on October 24 at 16:06 EDT. Exactly 96 reviewed
+cells changed; the checked History, staging, RO refill data, formulas, notes,
+validations, sheet properties, and conditional formatting otherwise matched.
+All 2,022 observation rows and 38 saved staging rows remained intact. Native
+formula results matched the known pot sizes and medium estimates, and Integrity
+reported zero formula or identity errors. An already-authorized disposable
+script project read the new workbook copy using its explicit copied workbook ID;
+the current-pot reader took 13,605 ms and bootstrap took 10,785 ms for 38 plants.
+These are observed timings, not latency guarantees. No synthetic observations,
+installers, or trigger changes were used.
+
+Production deployment and preservation verification are pending.
 
 ## October 24 scheduled-run diagnostics
 

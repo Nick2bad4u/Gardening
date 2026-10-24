@@ -166,8 +166,7 @@ no Gyazo capture or Collection has been created for this session.
 ## October 21 Leafjoy houseplants
 
 Four full-frame photographs supplied October 21, 2026 document **#13 / P39**
-and **#14 / P40**. The filenames record the supplied date; capture time and
-exact acquisition date are unconfirmed. The shared label photograph preserves
+and **#14 / P40**. The filenames record the supplied date; exact capture time remains unconfirmed. The owner confirmed October 22 that both plants were purchased October 21, 2026, at Home Depot in Howell, Michigan. The shared label photograph preserves
 both Proven Winners leafjoy littles tags. Retail names are evidence of the
 seller's identification, not independent botanical verification.
 

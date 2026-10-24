@@ -17,7 +17,7 @@ from the licensed species-reference archive under
 [`assets/plants`](../plants/).
 
 Manifest schema 3 records the collection-wide overview Collection, a
-`gyazo_collection` link for each of the 38 photographed current profile records, and the
+`gyazo_collection` link for each of the 39 remotely photographed current profile records, and the
 explicit photo-pending historical record for removed Rehab-04. Each remote
 placement records its stable publication name, provider, Gyazo capture ID,
 direct image URL, capture page URL, evidence date, view, alt text, caption, and
@@ -118,7 +118,6 @@ records for **P39 / #13** Fittonia Network News™ Nightly™ and **P40 / #14**
 Peperomia Savory Delights™ Spice is Nice™, bringing the manifest to 49 profile
 records. Four sanitized full-frame owner photographs, including a shared label
 view, use the established [local evidence fallback](../nursery-labels/README.md#october-21-leafjoy-houseplants).
-The date records when the photographs were supplied; exact capture and
-acquisition dates remain unconfirmed. No Gyazo Collections or captures have
+The date records when the photographs were supplied; the exact capture date remains unconfirmed. The owner confirmed October 22 that both plants were purchased October 21, 2026, at Home Depot in Howell, Michigan. No Gyazo Collections or captures have
 been created for these records, so remote placement and capture counts are
 unchanged. Pending remote publication does not mean the plants are unreceived.

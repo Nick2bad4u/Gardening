@@ -1,13 +1,12 @@
 # Plant profiles
 
-Last updated: 2026-10-23
+Last updated: 2026-10-24
 
 These **49 pages cover 48 active profile records and one historical record, across 38 tracker allocations**. Each profile combines identification, botanical background, collection photographs, and practical care for its current pot. Use the guides with plant-condition and moisture checks rather than a fixed watering calendar.
 
 **New acquisition:** [Arctic Ice echeveria](./succulents/echeveria-arctic-ice.md)
 is enrolled as **Succulent-17 / #11 / P37**, acquired October 6, 2026 at Home
-Depot. A six-inch blue-and-white ceramic pot was purchased for it; current
-pot model/size, medium, drainage, and repot details are not established by the display photos supplied October 22. The owner confirmed October 23 that the pale rosette in the grey/blue pot between P35 and P19 at the back center-left is Arctic Ice.
+Depot. A six-inch blue-and-white ceramic pot was purchased for it. The October 8 History Repot records setup 2 as “4.5 inch round 4.25 inch high,” with 1,242 g and a 1.3-inch height × 4-inch width measurement in the same batch. The medium field contains unresolved `6`; actual recipe, drainage, and usable internal depth remain unknown. The owner confirmed October 23 that the pale rosette in the grey/blue pot between P35 and P19 at the back center-left is Arctic Ice.
 
 The collection-level [setup record](../setup.md#august-14-substrate-airflow-and-light-reset)
 documents the August 14 move of all 18 individually potted cactus-display

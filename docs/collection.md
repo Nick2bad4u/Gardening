@@ -1,6 +1,6 @@
 # Plant collection
 
-Last updated: 2026-10-23
+Last updated: 2026-10-24
 
 This is the current working inventory plus historical records for plants
 removed from the collection. Photo-based identifications are marked as probable, with nursery names retained alongside them.
@@ -65,13 +65,13 @@ Physical label **#11** was allocated on October 7 at the owner's request; the co
 | Seller reference       | Altman Plants; SKU `0850821`; listing names USPP29,584                                                                                                                                                        |
 | Acquired on            | 2026-10-06 at Home Depot, owner report; store location and price paid unrecorded                                                                                                                              |
 | Pot acquired for it    | Owner-described 6-inch blue-and-white ceramic pot; brand, model, usable internal dimensions, drainage, and saucer details unrecorded                                                                          |
-| Current setup          | Grey/blue rear pot between P35/P19, owner-confirmed October 23; the photos do not establish pot model/size, repot, medium, drainage, roots, or plant dimensions                                               |
-| Care history           | No weight, watering, feeding, or repot event supplied with this acquisition report                                                                                                                            |
+| Current setup          | Setup 2, October 8 Repot; logged “4.5 inch round 4.25 inch high”; grey/blue rear pot between P35/P19. Medium field `6` is unresolved; model, drainage, usable internal depth, and roots remain unverified     |
+| Care history           | October 8: 1,242 g; 1.3 inches tall × 4 inches wide; partial Water, Nutrients: No; Check Moist / firm with one broken leaf missing; five owner photos. Subsequent observations remain in History              |
 
 The screenshot's title says **3.5-inch**, while the selected item at the bottom
 shows **2.5**. Neither establishes the received nursery-pot size. The separate
 6-inch ceramic-pot description is owner-reported, not a measured root-ball or
-plant dimension. Buying the pot does not establish that repotting is complete.
+plant dimension. The October 8 History entry independently records the completed setup-2 repot; its logged dimensions are not assumed to be the purchased pot's usable internal measurements.
 
 Altman's [cultivar listing](https://shopaltmanplants.com/products/echeveria-arctic-ice-ppaf)
 describes rounded rosettes with pale, opalescent leaves. The
@@ -82,7 +82,7 @@ published August 7, 2018. These identify the named cultivar, not the appearance
 or condition of this particular plant.
 
 Sources: owner acquisition report and supplied listing screenshot, October 6,
-2026; display photos supplied October 22 and owner specimen/position confirmation October 23; Altman listing and USPP29,584 checked October 6. See the
+2026; [canonical workbook History](https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit) October 8 setup-2 records, checked October 24; display photos supplied October 22 and owner specimen/position confirmation October 23; Altman listing and USPP29,584 checked October 6. See the
 [setup note](./setup.md#october-6-arctic-ice-acquisition) and
 [pot inventory](./equipment/inventory.md#pots-medium-and-top-dressing).
 
@@ -308,7 +308,9 @@ identify Altman Plants as grower and Smart Planet Home as the retail brand.
 Exact store, current measured pot dimensions, replacement-medium composition,
 weights, plant dimensions, and maintained placement were not recorded in the acquisition note; use the current placement guide and care history for subsequent observations.
 
-The setup-2 repot descriptions are: **P30 / #6** is logged as **“5 inch shallow”** with **“Nursery cacti soil and my top dressing”** at **September 3, 2026, 12:18 a.m. EDT**; **P29 / #5** is logged as **“4.25 round, 4.25 deep”** with **80% Molly's Succulent Mix / 20% perlite with top dressing** at **12:23 a.m. EDT**. Both timestamps fall in the September 2 care day. These are owner-entered pot descriptions, not fresh ruler measurements. Current placement follows the placement guide; weights remain in the care history. Photographs supplied October 22 show P30 in a green glazed round bowl, but do not establish the date, medium, dimensions, or setup number of any intervening repot. The terra-cotta setup-2 description above remains historical evidence.
+The setup-2 repot descriptions are: **P30 / #6** is logged as **“5 inch shallow”** with **“Nursery cacti soil and my top dressing”** at **September 3, 2026, 12:18 a.m. EDT**; **P29 / #5** is logged as **“4.25 round, 4.25 deep”** with **80% Molly's Succulent Mix / 20% perlite with top dressing** at **12:23 a.m. EDT**. Both timestamps fall in the September 2 care day. These are owner-entered pot descriptions, not fresh ruler measurements. Current placement follows the placement guide; weights remain in the care history. The terra-cotta setup-2 description above remains historical evidence.
+
+**October 8, 2026, 8:12 p.m. EDT:** [canonical workbook History](https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit) records P30's repot to **setup 3**, with **“7 inch shallow”** as the pot description and **“Molly's Mix only”** as the medium. The same batch contains **1,336 g** and a Water event with **Nutrients: No**; the weight is a dated observation, not an assumed immediate post-drain reference. Photographs supplied October 22 show the green glazed round bowl, but do not measure internal depth or verify drainage. All component profiles retain this one shared setup and history.
 
 | Inventory ID  | Label ID | Tracker ID | Working identification                                                                                          | Common name                  | Confidence                                  | Current record                                     |
 | ------------- | -------- | ---------- | --------------------------------------------------------------------------------------------------------------- | ---------------------------- | ------------------------------------------- | -------------------------------------------------- |

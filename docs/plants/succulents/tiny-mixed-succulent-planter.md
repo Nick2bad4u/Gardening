@@ -8,7 +8,7 @@
 - Identification: **Smart Planet Home five-plant retail succulent garden; component-level foliage matches are provisional and no cultivar is treated as proven**
 - Acquired from: Home Depot; grown by Altman Plants under Smart Planet Home branding; exact store not recorded
 - Acquired on: 2026-09-02
-- Current pot: green glazed round bowl visible in photographs supplied October 22, 2026; dimensions, medium, and any repot/setup change unconfirmed. The September 2 care-day setup-2 record describes the earlier terra-cotta planter as “5 inch shallow” with “Nursery cacti soil and my top dressing”
+- Current pot: Setup 3, repotted October 8, 2026, at 8:12 p.m. EDT; logged as “7 inch shallow” with “Molly's Mix only.” Photographs supplied October 22 show a green glazed round bowl; usable internal depth and drainage remain unverified. The earlier five-inch terra-cotta planter is historical setup 2
 
 ## Names and identification
 
@@ -53,7 +53,7 @@ top view, and the shared post-repot context. These views provide a visual record
 The components were kept together during the September 2 repot in the purchased
 five-inch-class terra-cotta planter. The repot was logged at **September 3, 2026, 12:18 a.m. EDT**, with **“5 inch shallow”** and **“Nursery cacti soil and my top dressing”** as its setup-2 descriptions. Exact depth and ingredient proportions remain unmeasured. All plants share the same root volume, watering, and whole-pot weight.
 
-The photographs supplied October 22 show a green glazed round bowl in the same rear-zone position. Their capture date and any intervening repot date are unrecorded; retain the historical setup-2 description without treating the photo as a care event.
+**October 8, 2026, 8:12 p.m. EDT:** [canonical workbook History](https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit) records P30's repot to **setup 3**, with **“7 inch shallow”** as the pot description and **“Molly's Mix only”** as the medium. The same batch contains **1,336 g** and a Water event with **Nutrients: No**; the weight is a dated observation, not an assumed immediate post-drain reference. Photographs supplied October 22 show the green glazed round bowl, but do not measure internal depth or verify drainage. All component profiles retain this one shared setup and history.
 
 ## Why the component names stay broad
 
@@ -69,7 +69,7 @@ explain those comparisons alongside each group's growth habit.
 | Arrival             | Use the September 2 views as the visual baseline. Watch each component for collapse, translucence, pests, or poor rooting even though observations are saved against one planter.                                                                                                                                                                                                     |
 | Grow-light position | **Photo-matched front of rear zone, between #1 and #5 · Bright.** Rear wooden tables, facing the window; position retained in photographs supplied October 22 (capture date unrecorded). Compare the low rosettes and paddle leaves for shadows from the large pots. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
 | Water               | Judge the shared root volume by full dry-down and whole-pot weight. Water thoroughly and drain, but do not repeatedly wet the pot for one component while the others remain firm.                                                                                                                                                                                                     |
-| Pot and mix         | The historical setup-2 record describes “5 inch shallow” with “Nursery cacti soil and my top dressing.” The October 22 view shows a green glazed bowl; it does not establish a new setup, medium, dimensions, or drainage.                                                                                                                                                            |
+| Pot and mix         | Current setup 3 is logged October 8 as “7 inch shallow” with “Molly's Mix only.” The October 22 view shows the green glazed bowl; usable internal depth and drainage remain unverified. The five-inch nursery-soil setup 2 is historical.                                                                                                                                             |
 | Mixed growth        | Prune or separate only if one component begins shading, crowding, or demanding a materially different watering rhythm.                                                                                                                                                                                                                                                                |
 | Feeding             | Use the collection's dilute succulent product only during an ordinary active-growth watering. Avoid feeding stressed or poorly rooted components.                                                                                                                                                                                                                                     |
 
@@ -85,6 +85,8 @@ explain those comparisons alongside each group's growth habit.
   do not assume the whole planter needs more water.
 
 ## Sources
+
+- [canonical workbook History](https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit) — October 8, 2026 P30 setup-3 Repot, Water, and Weight records; checked October 24.
 
 - [GBIF Backbone Taxonomy: _Echeveria_](https://www.gbif.org/species/5362052)
 - [NC State Extension Plant Toolbox: _Echeveria_](https://plants.ces.ncsu.edu/plants/echeveria/)

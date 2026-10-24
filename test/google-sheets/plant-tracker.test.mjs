@@ -2322,6 +2322,49 @@ describe("garden logger weight-state inference and dry-down formulas", () => {
         }
     });
 
+    it("keeps pot and medium formulas scoped to active current-setup history and the documented seed setup", () => {
+        expect.hasAssertions();
+
+        const context = loadAppsScript(createHistorySheet([]));
+        const rows = [
+            "P22",
+            "P23",
+            "P24",
+            "P25",
+            "P26",
+            "P27",
+            "P28",
+            "P29",
+        ].map((id, index) =>
+            context.baselineViewRow_(index + 2, { id, name: id })
+        );
+        for (const [index, row] of rows.entries()) {
+            for (const column of [5, 17]) {
+                expect(row[column]).toContain(
+                    `History!$K$2:$K$50001=$T${index + 2}`
+                );
+                expect(row[column]).toContain(
+                    'History!$AJ$2:$AJ$50001<>"Removed"'
+                );
+            }
+
+            expect(row[5]).toContain('History!$C$2:$C$50001="Repot"');
+            expect(row[5]).toContain('History!$U$2:$U$50001<>""');
+            expect(row[5]).toContain("'Plant tracker'!$AB$2:$AB$39");
+        }
+
+        expect(rows[0]?.[17]).not.toContain("owner estimate");
+        expect(rows.at(-1)?.[17]).not.toContain("owner estimate");
+
+        const seededRows = rows.slice(1, -1);
+        for (const [index, row] of seededRows.entries()) {
+            expect(row[17]).toContain(
+                `IF($T${index + 3}=1,"Approximately 80% Molly's Succulent Mix / 20% perlite (owner estimate, September 20, 2026)","Not recorded")`
+            );
+            expect(row[17]).toContain('History!$AH$2:$AH$50001<>""');
+        }
+    });
+
     it("returns an empty history before evaluating array columns when a new pot has no observations", () => {
         expect.hasAssertions();
 
@@ -2374,7 +2417,138 @@ describe("garden logger weight-state inference and dry-down formulas", () => {
 });
 
 describe("garden logger workbook refresh and navigation", () => {
-    it("uses current tracker pot sizes without consulting History and defaults legacy blank setups", () => {
+    it("avoids extra full-history pot reads for ordinary queued and bulk care saves", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook();
+        const existing = emptyCells(67);
+        existing[0] = new Date("2026-08-15T12:00:00Z");
+        existing[1] = "P01";
+        existing[2] = "Weigh";
+        existing[4] = 400;
+        existing[10] = 1;
+        workbook.history.__rows.push(existing);
+        const context = loadAppsScript(workbook.history, {
+            globals: workbook.globals,
+            spreadsheet: workbook.spreadsheet,
+        });
+        const queued = context.saveWebObservationBatch([
+            {
+                events: ["Weigh"],
+                observedAt: "2026-08-16T12:00:00Z",
+                plantId: "P01",
+                requestId: "garden-pot-read-batch-12345",
+                weight: 390,
+            },
+        ]);
+
+        expect(queued.ok).toBe(true);
+        expect(
+            workbook.history.__rangeReads.filter(
+                (read) =>
+                    read.column === 1 &&
+                    read.columnCount === 67 &&
+                    read.row === 2
+            )
+        ).toHaveLength(1);
+
+        workbook.history.__rangeReads.length = 0;
+        const bulk = context.saveBulkCareObservation({
+            events: ["Clean"],
+            observedAt: "2026-08-16T13:00:00Z",
+            plantIds: ["P01"],
+            requestId: "garden-pot-read-bulk-12345",
+        });
+
+        expect(bulk.ok).toBe(true);
+        expect(
+            workbook.history.__rangeReads.filter(
+                (read) =>
+                    read.column === 1 &&
+                    read.columnCount === 67 &&
+                    read.row === 2
+            )
+        ).toHaveLength(1);
+    });
+
+    it("uses a saved Repot instead of stale tracker metadata in bootstrap and subsequent saves", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook();
+        const tracker = required(workbook.sheets.get("Plant tracker"));
+        required(tracker.__rows[0])[3] = "Current pot size";
+        required(tracker.__rows[1])[3] = "Not recorded";
+        const context = loadAppsScript(workbook.history, {
+            globals: workbook.globals,
+            spreadsheet: workbook.spreadsheet,
+        });
+        const saved = context.saveWebObservation({
+            events: ["Repot"],
+            observedAt: "2026-08-16T10:02:00-04:00",
+            plantId: "P01",
+            potSize: "5 in",
+            requestId: "garden-pot-first-12345",
+        });
+
+        expect(saved.ok).toBe(true);
+        expect(context.getWebAppBootstrap().plants[0]).toMatchObject({
+            currentPotSize: "5 in",
+            potSetup: 2,
+        });
+        expect(
+            context.plantRecordForId_(workbook.spreadsheet, "P01")
+        ).toMatchObject({ currentPotSize: "5 in", potSetup: 2 });
+
+        const next = context.saveWebObservation({
+            events: ["Repot"],
+            observedAt: "2026-08-17T10:02:00-04:00",
+            plantId: "P01",
+            potSize: "6 in",
+            requestId: "garden-pot-second-12345",
+        });
+
+        expect(next.ok).toBe(true);
+        expect(required(workbook.history.__rows[2])[19]).toBe("5 in");
+        expect(required(tracker.__rows[1])[3]).toBe("Not recorded");
+
+        // A later timestamp on an older setup must not replace the current pot.
+        required(workbook.history.__rows[1])[0] = new Date(
+            "2026-08-18T10:02:00Z"
+        );
+        const removed = [...required(workbook.history.__rows[2])];
+        removed[0] = new Date("2026-08-19T10:02:00Z");
+        removed[20] = "Removed size";
+        removed[35] = "Removed";
+        workbook.history.__rows.push(removed);
+
+        expect(context.getWebAppBootstrap().plants[0]).toMatchObject({
+            currentPotSize: "6 in",
+            potSetup: 3,
+        });
+        expect(
+            context.plantRecordForId_(workbook.spreadsheet, "P01")
+        ).toMatchObject({ currentPotSize: "6 in", potSetup: 3 });
+    });
+
+    it("does not reuse initial pot seeds after a setup change with no recorded current size", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook();
+        required(required(workbook.sheets.get("Baselines")).__rows[1])[19] = 2;
+        const context = loadAppsScript(workbook.history, {
+            spreadsheet: workbook.spreadsheet,
+        });
+
+        expect(
+            context.plantRecordForId_(workbook.spreadsheet, "P01")
+        ).toMatchObject({ currentPotSize: "Not logged", potSetup: 2 });
+        expect(context.getWebAppBootstrap().plants[0]).toMatchObject({
+            currentPotSize: "Not logged",
+            potSetup: 2,
+        });
+    });
+
+    it("preserves tracker pot metadata when History has no Repot and defaults legacy blank setups", () => {
         expect.hasAssertions();
 
         const workbook = createLoggerWorkbook();
@@ -2385,7 +2559,6 @@ describe("garden logger workbook refresh and navigation", () => {
         const anonymous = emptyCells(15);
         anonymous[3] = "Owner annotation";
         tracker.__rows.push(anonymous);
-        workbook.sheets.delete("History");
         const context = loadAppsScript(workbook.history, {
             spreadsheet: workbook.spreadsheet,
         });

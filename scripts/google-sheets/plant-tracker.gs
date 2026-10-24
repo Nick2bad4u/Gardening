@@ -17,7 +17,7 @@
    dryDownModelFormula_, installDailyCareDashboard, GARDEN_CYCLE_COMPARISON, GARDEN_ENVIRONMENT_READINGS, GARDEN_RECORDED_LOCATIONS */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.39.4",
+    version: "5.39.5",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -1055,7 +1055,10 @@ function getWebAppBootstrap() {
             potSetup || 1,
         ])
     );
-    const potSizeByPlant = latestPotSizesFromRows_(historyRows);
+    const potSizeByPlant = latestPotSizesFromRows_(
+        historyRows,
+        potSetupByPlant
+    );
     const locations = new Map(
         recordedLocationRows_(historyRows, refreshedAt, {
             corrections: historyCorrectionContext_,
@@ -1108,8 +1111,11 @@ function getWebAppBootstrap() {
                 nurseryLabelImageUrl: imageUrls?.nurseryLabelImageUrl || "",
                 potSetup: weightRead.weightSeries.potSetup,
                 currentPotSize:
-                    cleanText_(row[currentPotSizeColumn - 1]) ||
                     potSizeByPlant.get(cleanText_(plantId)) ||
+                    cleanText_(row[currentPotSizeColumn - 1]) ||
+                    (weightRead.weightSeries.potSetup === 1
+                        ? INITIAL_POT_SIZE_BY_PLANT[cleanText_(plantId)]
+                        : "") ||
                     "Not logged",
                 lastWatered: formatClientDate_(
                     lastWatered,
@@ -1317,7 +1323,11 @@ function prepareWebObservation_(spreadsheet, payload, plantRecords) {
     /** @type {GardenEntryPlant | null | undefined} */
     const plant = plantRecords
         ? plantRecords.get(plantId)
-        : plantRecordForId_(spreadsheet, plantId);
+        : plantRecordForId_(
+              spreadsheet,
+              plantId,
+              Array.isArray(payload.events) && payload.events.includes("Repot")
+          );
     if (!plant) throw new Error("Choose a valid plant.");
 
     const payloadEvents = payload.events;
@@ -2938,7 +2948,13 @@ function saveWebObservationBatch(payloads) {
     }
 
     const spreadsheet = getGardenSpreadsheet_();
-    const plantRecords = plantRecordsById_(spreadsheet);
+    const needsPreviousPotSize = queuedPayloads.some(
+        (payload) =>
+            isGardenEntryPayload_(payload) &&
+            Array.isArray(payload.events) &&
+            payload.events.includes("Repot")
+    );
+    const plantRecords = plantRecordsById_(spreadsheet, needsPreviousPotSize);
     /** @type {GardenIndexedWebObservation[]} */
     const prepared = [];
     queuedPayloads.forEach((payload, index) => {
@@ -3270,7 +3286,7 @@ function saveBulkCareObservation(payload) {
         payload.entrySource || "Mobile bulk care"
     );
 
-    const plantRecords = plantRecordsById_(spreadsheet);
+    const plantRecords = plantRecordsById_(spreadsheet, false);
     const plants = plantIds.map((plantId) => {
         const plant = plantRecords.get(plantId);
         if (!plant) throw new Error(`Plant ID ${plantId} is not valid.`);
@@ -6313,13 +6329,18 @@ function refreshWorkbookCalculations_(spreadsheet, plants) {
 /** @param {number} rowNumber @param {GardenWorkbookViewPlant} plant @returns {string[]} */
 function baselineViewRow_(rowNumber, plant) {
     const row = rowNumber;
+    const mediumFallback = ["P23", "P24", "P25", "P26", "P27", "P28"].includes(
+        plant.id
+    )
+        ? `IF($T${row}=1,"Approximately 80% Molly's Succulent Mix / 20% perlite (owner estimate, September 20, 2026)","Not recorded")`
+        : '"Not recorded"';
     const values = [
         plant.id,
         plant.name,
         latestMeasuredWeightFormula_(row, 1),
         `=IF(C${row}="","",C${row}/453.59237)`,
         latestMeasuredWeightFormula_(row, 2),
-        `=XLOOKUP($A${row},'Plant tracker'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Plant tracker'!$AB$2:$AB$${APP_SHEET_BULK_PLANTS.length + 1},"Not recorded")`,
+        `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},History!$U$2:$U$${GARDEN_LOGGER.historyCapacityRows}},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},History!$C$2:$C$${GARDEN_LOGGER.historyCapacityRows}="Repot",History!$K$2:$K$${GARDEN_LOGGER.historyCapacityRows}=$T${row},History!$U$2:$U$${GARDEN_LOGGER.historyCapacityRows}<>"",History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed"),1,FALSE),1,2),XLOOKUP($A${row},'Plant tracker'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Plant tracker'!$AB$2:$AB$${APP_SHEET_BULK_PLANTS.length + 1},"Not recorded"))`,
         `=XLOOKUP($A${row},'Plant tracker'!$A$2:$A$${APP_SHEET_BULK_PLANTS.length + 1},'Plant tracker'!$O$2:$O$${APP_SHEET_BULK_PLANTS.length + 1},"")`,
         plant.id === "P38"
             ? '="Closed-jar terrarium; inspect enclosure, substrate and plants"'
@@ -6335,7 +6356,7 @@ function baselineViewRow_(rowNumber, plant) {
         `=IFNA(MAX(FILTER(History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},History!$C$2:$C$${GARDEN_LOGGER.historyCapacityRows}="Water",History!$K$2:$K$${GARDEN_LOGGER.historyCapacityRows}=$T${row},History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed")),"")`,
         `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},History!$H$2:$H$${GARDEN_LOGGER.historyCapacityRows}},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},REGEXMATCH(History!$C$2:$C$${GARDEN_LOGGER.historyCapacityRows},"^(Check|Inspect)$"),History!$H$2:$H$${GARDEN_LOGGER.historyCapacityRows}<>"",History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed"),1,FALSE),1,2),"Not recorded")`,
         `=IFNA(MAX(FILTER(History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},REGEXMATCH(History!$C$2:$C$${GARDEN_LOGGER.historyCapacityRows},"^(Check|Inspect)$"),History!$H$2:$H$${GARDEN_LOGGER.historyCapacityRows}<>"",History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed")),"")`,
-        `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},History!$AH$2:$AH$${GARDEN_LOGGER.historyCapacityRows}},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},History!$K$2:$K$${GARDEN_LOGGER.historyCapacityRows}=$T${row},History!$AH$2:$AH$${GARDEN_LOGGER.historyCapacityRows}<>"",History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed"),1,FALSE),1,2),"Not recorded")`,
+        `=IFNA(INDEX(SORT(FILTER({History!$A$2:$A$${GARDEN_LOGGER.historyCapacityRows},History!$AH$2:$AH$${GARDEN_LOGGER.historyCapacityRows}},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},History!$K$2:$K$${GARDEN_LOGGER.historyCapacityRows}=$T${row},History!$AH$2:$AH$${GARDEN_LOGGER.historyCapacityRows}<>"",History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed"),1,FALSE),1,2),${mediumFallback})`,
         `=LET(flags,TEXTJOIN(" · ",TRUE,IF(H${row}<>"Calibrated",H${row},""),IF(AND(J${row}<>"OK",J${row}<>"No trend",J${row}<>"No current-cycle alert",J${row}<>"Owner-confirmed normal"),J${row},""),IF(K${row}="Due now","Remeasure due",""),IF(REGEXMATCH(AG${row},"Overdue"),"Dry forecast overdue","")),IF(flags="","No current flags",flags))`,
         `=IFNA(MAX(FILTER(History!$K$2:$K$${GARDEN_LOGGER.historyCapacityRows},History!$B$2:$B$${GARDEN_LOGGER.historyCapacityRows}=$A${row},History!$AJ$2:$AJ$${GARDEN_LOGGER.historyCapacityRows}<>"Removed")),1)`,
         currentCyclePointCountFormula_(row),
@@ -11257,17 +11278,21 @@ function isPhotoShareUrl_(value) {
 /**
  * @param {GardenSpreadsheet} spreadsheet
  * @param {string} plantId
+ * @param {boolean} [includePotHistory]
  */
-function plantRecordForId_(spreadsheet, plantId) {
+function plantRecordForId_(spreadsheet, plantId, includePotHistory = true) {
     if (!plantId) return null;
-    return plantRecordsById_(spreadsheet).get(plantId) || null;
+    return (
+        plantRecordsById_(spreadsheet, includePotHistory).get(plantId) || null
+    );
 }
 
 /**
  * @param {GardenSpreadsheet} spreadsheet
+ * @param {boolean} [includePotHistory]
  * @returns {Map<string, GardenPlantData>}
  */
-function plantRecordsById_(spreadsheet) {
+function plantRecordsById_(spreadsheet, includePotHistory = true) {
     const tracker = requireSheet_(spreadsheet, GARDEN_LOGGER.plantTrackerSheet);
     const rowCount = Math.max(0, tracker.getLastRow() - 1);
     if (rowCount === 0) return new Map();
@@ -11290,11 +11315,10 @@ function plantRecordsById_(spreadsheet) {
             potSetup || 1,
         ])
     );
-    const needsPotSizeFallback = rows.some(
-        (row) => !cleanText_(row[currentPotSizeColumn - 1])
-    );
-    const potSizes = needsPotSizeFallback
-        ? latestPotSizesByPlant_(spreadsheet)
+    // Save preparation needs the prior pot only for Repot. Other events and
+    // bulk care retain their existing reads outside the canonical writer lock.
+    const potSizes = includePotHistory
+        ? latestPotSizesByPlant_(spreadsheet, potSetupByPlant)
         : new Map();
     /** @type {Map<string, GardenPlantData>} */
     const records = new Map();
@@ -11312,8 +11336,11 @@ function plantRecordsById_(spreadsheet) {
             scientificName: cleanText_(row[2]),
             label: cleanText_(row[GARDEN_LOGGER.currentLabelColumn - 1]),
             currentPotSize:
-                cleanText_(row[currentPotSizeColumn - 1]) ||
                 potSizes.get(plantId) ||
+                cleanText_(row[currentPotSizeColumn - 1]) ||
+                (Number(potSetupByPlant.get(plantId) || 1) === 1
+                    ? INITIAL_POT_SIZE_BY_PLANT[plantId]
+                    : "") ||
                 "Not logged",
             fieldGuideUrl: fieldGuideUrlForRow_(formulas[index]),
             potSetup: positiveInteger_(
@@ -11327,9 +11354,13 @@ function plantRecordsById_(spreadsheet) {
 
 /**
  * @param {GardenSpreadsheet} spreadsheet
+ * @param {Map<string, GardenCell>} [potSetupByPlant]
  */
-function latestPotSizesByPlant_(spreadsheet) {
-    return latestPotSizesFromRows_(readHistorySnapshot_(spreadsheet));
+function latestPotSizesByPlant_(spreadsheet, potSetupByPlant = new Map()) {
+    return latestPotSizesFromRows_(
+        readHistorySnapshot_(spreadsheet),
+        potSetupByPlant
+    );
 }
 
 /**
@@ -11360,28 +11391,35 @@ function readHistorySnapshot_(spreadsheet) {
 
 /**
  * @param {GardenHistoryRow[]} historyRows
+ * @param {Map<string, GardenCell>} [potSetupByPlant]
  */
-function latestPotSizesFromRows_(historyRows) {
+function latestPotSizesFromRows_(historyRows, potSetupByPlant = new Map()) {
+    const corrections = historyCorrectionContext_(historyRows);
+    const setups = new Map([
+        ...currentPotSetupsFromRows_(historyRows),
+        ...potSetupByPlant,
+    ]);
     /** @type {Map<string, string>} */
-    const result = new Map(Object.entries(INITIAL_POT_SIZE_BY_PLANT));
+    const result = new Map();
     historyRows
+        .map((row, index) => ({ row, index }))
         .filter(
-            (row) =>
+            ({ row }) =>
                 cleanText_(row[2]) === "Repot" &&
-                cleanText_(
-                    row[
-                        GARDEN_LOGGER.historyProvenanceStartColumn +
-                            GARDEN_LOGGER.historyProvenanceColumns -
-                            2
-                    ]
-                ) !== "Removed"
+                activeHistoryRow_(row) &&
+                positiveIntegerOrDefault_(row[10], 1) ===
+                    Number(setups.get(cleanText_(row[1])) || 1)
         )
         .sort((left, right) => {
-            const leftDate = dateSortValue_(left[0]);
-            const rightDate = dateSortValue_(right[0]);
-            return leftDate - rightDate;
+            const leftDate = dateSortValue_(left.row[0]);
+            const rightDate = dateSortValue_(right.row[0]);
+            return (
+                leftDate - rightDate ||
+                (corrections.order[left.index] ?? left.index) -
+                    (corrections.order[right.index] ?? right.index)
+            );
         })
-        .forEach((row) => {
+        .forEach(({ row }) => {
             const plantId = cleanText_(row[1]);
             const potSize = cleanText_(
                 row[GARDEN_LOGGER.historyDetailStartColumn + 3]

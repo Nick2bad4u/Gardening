@@ -1,6 +1,6 @@
 # Setup and equipment
 
-Last updated: 2026-10-23
+Last updated: 2026-10-24
 
 The [equipment and supplies inventory](./equipment/inventory.md) lists the collection's products and model references. All four wooden tables are the [LEJANEOYE two-tier bamboo side-table model](https://www.amazon.com/dp/B0D25H73ZS), identified September 17; measured tabletop dimensions are recorded separately from seller specifications.
 
@@ -29,7 +29,7 @@ See the [collection record](./collection.md) for the acquisition evidence and
 the [equipment inventory](./equipment/inventory.md#pots-medium-and-top-dressing)
 for the pot.
 
-The ceramic pot is recorded as purchased for this plant; the display photos and identity confirmation do not establish whether it is installed, or supply pot dimensions, a medium recipe, drainage, usable depth, watering, or a repot event. The listing's 3.5-inch title and the
+The [canonical workbook History](https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit) independently records **P37 setup 2 on October 8, 2026, at 12:09 a.m. EDT**, with **“4.5 inch round 4.25 inch high”** as its pot description. Its medium field contains the unresolved value **`6`**. The same batch records **1,242 g**, **1.3 inches tall × 4 inches wide**, a **partial Water event with Nutrients: No**, and five owner photographs. Drainage, usable internal depth, actual medium recipe, and the connection between these dimensions and the separately purchased six-inch ceramic pot remain unverified. The listing's 3.5-inch title and the
 screenshot's 2.5 selection do not establish the received nursery-pot size.
 The assigned identity is **Succulent-17 / #11 / P37**. No weight reference
 or position in the existing light layout is inferred from enrollment.
@@ -312,6 +312,8 @@ reused across both records rather than uploaded twice.
 
 The setup-2 repot descriptions are: **P30 / #6** is logged as **“5 inch shallow”** with **“Nursery cacti soil and my top dressing”** at **September 3, 2026, 12:18 a.m. EDT**; **P29 / #5** is logged as **“4.25 round, 4.25 deep”** with **80% Molly's Succulent Mix / 20% perlite with top dressing** at **12:23 a.m. EDT**. Both timestamps fall in the September 2 care day. These are owner-entered pot descriptions, not fresh ruler measurements. Current placement follows the confirmed placement guide; weights remain in the care history.
 
+**October 8, 2026, 8:12 p.m. EDT:** [canonical workbook History](https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit) records P30's repot to **setup 3**, with **“7 inch shallow”** as the pot description and **“Molly's Mix only”** as the medium. The same batch contains **1,336 g** and a Water event with **Nutrients: No**; the weight is a dated observation, not an assumed immediate post-drain reference. Photographs supplied October 22 show the green glazed round bowl, but do not measure internal depth or verify drainage. All component profiles retain this one shared setup and history.
+
 Use current moisture checks and pot measurements when assessing these containers. P30 has one shared history for its aggregate overview and three component groups (Succulent-10A/B/C). Weigh and water it once as a complete pot; separate component profiles describe the plants within it.
 
 ## Shared planters
@@ -353,7 +355,7 @@ more precise are:
 - each individual pot's tabletop-to-tip height after final riser placement;
 - tabletop-to-tip heights for the six August cacti, Kiwi aeonium, and money tree;
 - exact individual plant-to-light clearance for the six Mountain Crest plants; their arrangement is confirmed and their Ruler dimensions and Scale weights are recorded;
-- precise measured pot geometry beyond the logged P29/P30 size descriptions and any still-needed plant dimensions; their setup-2 repot media are recorded in the Repot observations, placement is confirmed, and current weights must be read from the care history;
+- precise measured pot geometry beyond the logged P29/P30 size descriptions and any still-needed plant dimensions; P29 setup-2 and P30 setup-3 media are recorded in their respective Repot observations, placement is confirmed, and current weights must be read from the care history;
 - final original-AeroWave hub height and distance to the nearest plant;
 - exact hub height, plant clearance, vertical angle, and app program for each
   E6 Gen2 fan;

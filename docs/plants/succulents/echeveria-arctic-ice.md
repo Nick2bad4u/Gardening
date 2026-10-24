@@ -4,13 +4,13 @@
 - Label ID: `#11`
 - Tracker ID: `P37`
 - Status: **active; acquired October 6, 2026**
-- Visual description: A pale rosette in a grey/blue pot at the back center-left of the display, identified by the owner October 23 in photographs supplied October 22. The cultivar reference describes thick spoon-shaped leaves with small pointed tips; measurements and detailed specimen features remain unverified.
+- Visual description: A pale rosette in a grey/blue pot at the back center-left of the display, identified by the owner October 23 in photographs supplied October 22. The cultivar reference describes thick spoon-shaped leaves with small pointed tips; the October 8 ruler record gives 1.3 inches tall × 4 inches wide; detailed specimen features remain qualified.
 - Interesting fact: The cultivar originated from a February 2012 cross between 'E1 IV' and 'Lila's Surprise'; its patent was issued in 2018.
 - Identification: **owner-confirmed specimen October 23, 2026; cultivar name follows the owner and associated Altman Plants listing; physical nursery label pending**
 - Acquired from: Home Depot, owner report; store location unrecorded
 - Acquired on: 2026-10-06
 - Pot purchased for it: **6-inch blue-and-white ceramic pot**, owner-described size
-- Current pot: Grey/blue pot at the back center-left between P35 Lithops and P19 shared cactus, owner-confirmed October 23 from October 22-supplied photos. These views do not establish the installed model/size, drainage, medium, roots, or repot status.
+- Current pot: Setup 2, repotted October 8, 2026, at 12:09 a.m. EDT; logged as “4.5 inch round 4.25 inch high.” Grey/blue pot at the back center-left between P35 Lithops and P19 shared cactus, owner-confirmed October 23 from October 22-supplied photos. Model, usable internal depth, drainage, and actual medium recipe remain unverified; the medium field contains the unresolved value `6`.
 - Reference archive: [reference photographs and attribution](../../../assets/plants/echeveria-arctic-ice/)
 
 The next physical label, **#11**, was allocated on October 7, 2026, at the owner's request.
@@ -22,6 +22,12 @@ specimen. Its pictured nursery size and online price are not purchase facts.
 ## Owner-confirmed specimen and placement
 
 On **October 23, 2026**, the owner confirmed that the pale rosette at the back is Arctic Ice. It is the grey/blue pot **between P35 / #9 Lithops and P19 / #1 shared cactus at the back center-left** in the display photographs supplied October 22; their capture date is unknown. This links the specimen to **P37 / #11 / Succulent-17** and the owner-associated cultivar name. The physical nursery label remains pending; neither these views nor the purchased six-inch pot establish installed pot dimensions, drainage, medium, or a repot event. See the [placement guide](../../layouts/table-placement-research.md). The supplied display photos are not published in this reference gallery.
+
+## Recorded setup and observations
+
+The [canonical workbook History](https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit) records a **setup-2 Repot on October 8, 2026, at 12:09 a.m. EDT**, with the pot described as **“4.5 inch round 4.25 inch high.”** The same batch contains **1,242 g**, a ruler measurement of **1.3 inches tall × 4 inches wide**, a **partial Water event with Nutrients: No**, and an owner Check of **Moist / firm, with one broken leaf missing**. These are dated observations, not a present moisture assessment or a confirmed full-soak wet reference. The Repot medium field contains **`6`**; its meaning is unresolved and no mix recipe is inferred. The purchased six-inch ceramic pot remains a separate acquisition description; its relationship to the logged dimensions is unconfirmed.
+
+Five owner photographs supplied October 8 are already published in the [collection-photo manifest](../../../assets/collection-photos/photo-manifest.json) and displayed with the profile. Their exact camera capture time is unknown. They document the owned plant, separately from the cultivar-reference gallery below. Subsequent weights and watering remain in the live History ledger rather than becoming fixed care thresholds here.
 
 ## Identity and breeder history
 
@@ -172,7 +178,7 @@ the leaves; these are useful general context, not confirmation of this specimen.
 The owner-confirmed position is the back center-left between P35 and P19. Actual leaf-height light and root-zone condition remain unmeasured. Start with bright exposure and adjust gradually;
 do not copy a neighbor's measured light value without measuring this position.
 
-The **6-inch pot may or may not fit the roots**. RHS warns that surplus potting
+The **logged setup-2 dimensions do not establish root-ball fit or usable internal depth**. RHS warns that surplus potting
 mix in an oversized container can remain wet and encourage rot. Check the
 inside dimensions, depth, drainage opening, and root-ball size before choosing
 direct planting. If it lacks drainage, a suitably sized draining inner pot is
@@ -180,8 +186,7 @@ a practical display option; remove it for watering and empty collected water.
 
 Use a freely draining succulent medium. Once watering is warranted, wet the root
 zone and let excess water escape. Avoid leaving the pot in standing water.
-No first-water date, gram threshold, mix ratio, or watering interval is assigned
-before the current medium and root condition are known.
+The October 8 partial watering is recorded history. No new gram threshold, mix ratio, or watering interval is assigned before the current medium and root condition are known.
 
 Watch for persistent wetness, soft or collapsing tissue, weak new growth, and
 mealybugs or scale. RHS links overwatering with root damage and rot, while low
@@ -195,15 +200,16 @@ Reference photographs explain cultivar form; they cannot prove the collection
 plant's identity. Keep creator, source, license, and any lookalike qualification
 attached to each archived image. The most useful owner evidence will be:
 
-- An overhead rosette view and a side view, with a ruler nearby.
 - Both sides of the physical nursery label, if retained.
 - The ceramic pot's interior, underside, and drainage opening.
 - The installed container and medium; roots only when otherwise inspecting
   or repotting, without disturbing it solely to complete this page.
-- Leaf-height light, any repot date and recipe, and a container weight
-  once the weighed setup is settled.
+- Leaf-height light and clarification of the actual setup-2 medium recipe.
+- New measurements or comparison photographs when useful during ordinary care; the October 8 ruler, weight, repot, and five photographs are already recorded.
 
 ## Sources
+
+- [canonical workbook History](https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit) — October 8, 2026 P37 setup-2 Repot, Weight, Ruler, partial Water, Check, and Photo records; checked October 24.
 
 - Owner reports and supplied Altman listing screenshot, October 6, 2026:
   acquired at Home Depot that day; 6-inch blue-and-white ceramic pot purchased

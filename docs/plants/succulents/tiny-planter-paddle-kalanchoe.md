@@ -9,7 +9,7 @@
 - Identification: **Provisional paddle-kalanchoe foliage match; the frequently confused species pair and cultivar remain unresolved**
 - Acquired from: Home Depot as part of the Smart Planet Home / Altman Plants mixed succulent garden
 - Acquired on: 2026-09-02
-- Current pot: green glazed round bowl visible in photographs supplied October 22, 2026; dimensions, medium, and any repot/setup change unconfirmed. The September 2 care-day setup-2 record describes the earlier terra-cotta planter as “5 inch shallow” with “Nursery cacti soil and my top dressing”
+- Current pot: Setup 3, repotted October 8, 2026, at 8:12 p.m. EDT; logged as “7 inch shallow” with “Molly's Mix only.” Photographs supplied October 22 show a green glazed round bowl; usable internal depth and drainage remain unverified. The earlier five-inch terra-cotta planter is historical setup 2
 
 ## Names and identification
 
