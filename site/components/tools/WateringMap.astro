@@ -29,10 +29,7 @@ const artwork = await getWateringArtwork();
             <h2 id="watering-map-title">Days since watering</h2>
         </div>
         <p>
-            Each pot’s place shows the number of calendar days since its last recorded Water event.
-            A dated snapshot is available immediately while the live log refreshes. When the live
-            log is unavailable, snapshot counts stay fixed at its source-read date. Live data
-            refreshes every five minutes while this page is visible. These are observations, not a
+            Calendar days since each pot’s last recorded Water event. These are observations, not a
             watering schedule.
         </p>
     </header>
@@ -149,20 +146,38 @@ const artwork = await getWateringArtwork();
             <div id="watering-map-image" class="watering-map-image" hidden></div>
         </div>
         <figcaption>
-            The layout follows the photos supplied October 22, with front and rear tables shown
-            separately. The owner confirmed the pale rear rosette as Arctic Ice (#11 / P37) on
-            October 23. Other locations and unconfirmed placements appear in their own group. A
-            logged move is listed in the details; free-text locations cannot update diagram
-            coordinates. “Unknown” means no active Water event was recorded. The full map fits your
-            screen; use Enlarge image for a closer view with sideways scrolling, or open the
-            readable pot details below. The default map is a searchable SVG: use your browser’s Find
-            command (Ctrl+F) to locate plant names and IDs. Portraits are collection artwork, not
-            evidence of the current pot or identification. P31 / #7 and P32 / #8 are on the kitchen
-            window shelf under the reported 54 W six-head LED bars and 10 W three-head LED. P39 /
-            #13 and P40 / #14 are planned for the shelf next to the terrarium after repotting; the
-            map retains their current quarantine location until that move happens.
+            The full map fits your screen. Use Enlarge image to scroll sideways for a closer view,
+            or open the pot details below for readable names and watering dates.
         </figcaption>
     </figure>
+    <details class="watering-map-notes">
+        <summary>Map context and data freshness</summary>
+        <div>
+            <p>
+                A dated snapshot appears while the live log refreshes. If the live log is
+                unavailable, snapshot counts stay fixed at its source-read date. Live data refreshes
+                every five minutes while this page is visible.
+            </p>
+            <p>
+                The layout follows the photos supplied October 22, with front and rear tables shown
+                separately. The owner confirmed the pale rear rosette as Arctic Ice (#11 / P37) on
+                October 23. Other locations and unconfirmed placements appear in their own group. A
+                logged move is listed in the details; free-text locations cannot update diagram
+                coordinates.
+            </p>
+            <p>
+                “Unknown” means no active Water event was recorded. Use your browser’s Find command
+                to locate IDs in the SVG map, or open the pot details to search full names.
+                Portraits are collection artwork, not evidence of the current pot or identification.
+            </p>
+            <p>
+                P31 / #7 and P32 / #8 are on the kitchen window shelf under the reported 54 W
+                six-head LED bars and 10 W three-head LED. P39 / #13 and P40 / #14 are planned for
+                the shelf next to the terrarium after repotting; the map retains their current
+                quarantine location until that move happens.
+            </p>
+        </div>
+    </details>
     <details class="watering-map-details" id="watering-map-details">
         <summary>
             <img

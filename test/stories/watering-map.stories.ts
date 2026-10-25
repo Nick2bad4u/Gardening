@@ -321,6 +321,13 @@ export const MobileDark: Story = {
         );
         await expectMapCoverage(document);
         await expectDarkMap(document);
+        const valueTops = Array.from(
+            document.querySelectorAll(".watering-map-stats dd"),
+            (value) => value.getBoundingClientRect().top
+        );
+        await expect(
+            Math.max(...valueTops) - Math.min(...valueTops)
+        ).toBeLessThan(1);
         const menuButton = canvas.getByRole("button", { name: "Menu" });
         const navigation = document.querySelector("#site-nav");
         const mapShortcut = document.querySelector<HTMLAnchorElement>(
@@ -367,6 +374,18 @@ export const MobileDark: Story = {
         await expect(viewport.scrollWidth).toBeGreaterThan(
             viewport.clientWidth
         );
+        const caption = document.querySelector(
+            ".watering-map-figure figcaption"
+        );
+        if (!caption) throw new Error("Watering map caption is missing.");
+        const captionBeforeScroll = caption.getBoundingClientRect();
+        viewport.scrollLeft = viewport.scrollWidth;
+        await expect(caption.getBoundingClientRect().left).toBe(
+            captionBeforeScroll.left
+        );
+        await expect(caption.scrollWidth).toBeLessThanOrEqual(
+            Math.ceil(captionBeforeScroll.width)
+        );
         await expectNoOverflow(document);
         await userEvent.keyboard("{Enter}");
         await expect(
@@ -382,6 +401,16 @@ export const MobileDark: Story = {
         ).toBeVisible();
         await expectNoOverflow(document);
         await userEvent.click(viewport);
+        await userEvent.keyboard("{Tab}");
+        const mapNotes = canvas.getByText("Map context and data freshness");
+        await expect(mapNotes).toHaveFocus();
+        await userEvent.click(mapNotes);
+        await waitFor(() =>
+            expect(
+                canvas.getByText(/Live data refreshes every five minutes/v)
+            ).toBeVisible()
+        );
+        await expectNoOverflow(document);
         await userEvent.keyboard("{Tab}");
         await expect(canvas.getByText(detailsLabel)).toHaveFocus();
     },
