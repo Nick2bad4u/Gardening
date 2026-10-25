@@ -67,7 +67,9 @@ async function expectDarkMap(document: Readonly<Document>): Promise<void> {
                     marker.querySelector("[data-plant-slug]")
                 ).toBeVisible();
                 await expect(marker.querySelector("text.count")).toBeVisible();
-                await expect(marker.querySelector("text.name")).toBeVisible();
+                await expect(
+                    marker.querySelector("text.identity")
+                ).toBeVisible();
             }
         )
     );

@@ -320,14 +320,22 @@ describe("standalone watering image", () => {
         ).toBe("?");
 
         for (const placement of placements) {
-            expect(
-                Array.from(document.querySelectorAll("[data-pot-id]"))
-                    .find(
-                        (marker) =>
-                            marker.getAttribute("data-pot-id") === placement.id
-                    )
-                    ?.querySelector("text.name")?.textContent
-            ).toBe(placement.name);
+            const marker = Array.from(
+                document.querySelectorAll("[data-pot-id]")
+            ).find(
+                (candidate) =>
+                    candidate.getAttribute("data-pot-id") === placement.id
+            );
+
+            expect(marker?.querySelector("text.name")?.textContent).toBe(
+                placement.zone === "front" ? undefined : placement.name
+            );
+            expect(marker?.querySelector("title")?.textContent).toContain(
+                placement.name
+            );
+            expect(marker?.querySelector(".identity")?.textContent).toBe(
+                `${placement.label} · ${placement.id}`
+            );
         }
 
         expect(document.querySelector("desc")?.textContent).toContain(
@@ -392,12 +400,12 @@ describe("standalone watering image", () => {
         );
     });
 
-    it("keeps long plant names as visible SVG text so browser Find can match them", () => {
+    it("keeps rear plant names as visible SVG text so browser Find can match them", () => {
         expect.hasAssertions();
 
         const name = "Probable Haworthiopsis attenuata cultivar unknown";
         const model = buildWateringMap(
-            [{ ...required(placements[0]), name }],
+            [{ ...required(placements[1]), name }],
             [],
             new Date("2026-10-22T16:00:00Z")
         );
@@ -409,7 +417,7 @@ describe("standalone watering image", () => {
             "image/svg+xml"
         );
         const visibleName = document.querySelector(
-            '[data-pot-id="P01"] text.name'
+            '[data-pot-id="P20"] text.name'
         );
 
         expect(visibleName?.textContent).toBe(name);

@@ -72,14 +72,20 @@ export function renderWateringMapSvg(
                 /^[a-z][\w\-]*$/v.test(slug)
                     ? `<svg x="${x - 47}" y="${y - 36}" width="44" height="44" viewBox="0 0 64 64" data-plant-slug="${slug}" aria-hidden="true"><use href="#wm-art-plant-${slug}"/></svg>`
                     : "";
-            const nameLines = wrapText(
-                marker.name,
-                isOutside ? 26 : marker.zone === "front" ? 18 : 28
-            );
+            const nameLines = wrapText(marker.name, isOutside ? 26 : 28)
+                .map(
+                    (line, index, lines) =>
+                        `<tspan x="${x}" dy="${index === 0 ? 0 : 12}">${escapeXml(line)}${index < lines.length - 1 ? " " : ""}</tspan>`
+                )
+                .join("");
+            const name =
+                marker.zone === "front"
+                    ? ""
+                    : `<text x="${x}" y="${y + (isOutside ? 42 : 78)}" class="name" text-anchor="middle">${nameLines}</text>`;
             return `<g data-pot-id="${escapeXml(marker.id)}" class="${marker.days === null ? "unrecorded" : "recorded"}"><title>${escapeXml(description)}</title>${shape}${portrait}
             ${text(portrait ? x + 20 : x, y, count, marker.days === null ? "count unknown" : "count", "middle")}
             ${text(x, y + 21, `${marker.label} · ${marker.id}`, "identity", "middle")}
-            <text x="${x}" y="${y + (isOutside ? 42 : marker.zone === "front" ? 39 : 78)}" class="name" text-anchor="middle">${nameLines.map((line, index) => `<tspan x="${x}" dy="${index === 0 ? 0 : 12}">${escapeXml(line)}${index < nameLines.length - 1 ? " " : ""}</tspan>`).join("")}</text>
+            ${name}
             ${isOutside ? text(x, y + 74, marker.position, "location", "middle") : ""}
         </g>`;
         })
