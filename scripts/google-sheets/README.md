@@ -1,11 +1,10 @@
 # Google Sheets observation logger
 
-Production logger **5.39.5 / immutable version 120** supports **38 container allocations**, using IDs `P01`–`P32` and `P35`–`P40`, and **50,000 History observation slots**. The October 24 rollouts reconcile known collection records and add scheduled-run diagnostics; October 23 records the table picker, toolbar spacing and button feedback, and empty-draft fix; October 22 records the verified P39/P40 enrollment, and earlier receipts retain the capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.39.6 / immutable version 121** supports **38 container allocations**, using IDs `P01`–`P32` and `P35`–`P40`, and **50,000 History observation slots**. The October 24 rollouts reconcile known collection records, incorporate owner setup clarifications, and add scheduled-run diagnostics; October 23 records the table picker, toolbar spacing and button feedback, and empty-draft fix; October 22 records the verified P39/P40 enrollment, and earlier receipts retain the capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained source is **5.39.6**; production remains **5.39.5 / immutable version
-120** until the owner-clarification rollout below is verified.
+Maintained source and production are **5.39.6 / immutable version 121**.
 Production **AppSheet
 1.100135** was verified by an independent saved-definition readback on October 22.
 The table-picker, toolbar, button-feedback, empty-draft, and diagnostic releases do not change AppSheet. The rollout
@@ -90,7 +89,48 @@ completed its read-only probe at **19:51:20 EDT on October 24**. The current-pot
 reader took **27,078 ms**; bootstrap took **9,450 ms**, returned **5.39.6**, and
 included **38 plants**. These are observed timings. The script used the explicit
 copied workbook ID; no production observations, installers, or trigger changes
-were involved. Production rollout and final preservation checks are pending.
+were involved.
+
+Production **5.39.6 / immutable version 121** was promoted at **20:09:58 EDT on
+October 24, 2026** (**00:09:58 UTC on October 25**) using reviewed commit
+`de029c341b60a74bfe5a7421438761445971af40`. Its logger coverage, Pages build and
+Chromium tests, SonarCloud, Socket, Gitleaks, and TruffleHog checks passed before
+the logger deployment. [Pages run 40144966830](https://github.com/Nick2bad4u/Gardening/actions/runs/40144966830)
+deployed the new map; its live inline SVG, browser Find result, kitchen labels,
+and retained quarantine labels were verified publicly.
+
+The existing deployment and phone URL were retained. The update returned
+version 121, while the immediate unqualified deployment GET returned stale
+version 120. A fresh partial-response read confirmed 121, and both live HEAD
+and immutable-version source matched the reviewed files. No deployment write
+was repeated.
+
+A [native Drive backup](https://docs.google.com/spreadsheets/d/1BLK539mBKYPWu3TZ_6ehlT63MpAj1xyF5jsyspb1j9s/edit)
+was created at **20:00:25 EDT**. Fresh production preconditions passed immediately
+before the **20:12:10 EDT** 25-cell batch. The **20:13:34 EDT** readback matched
+exactly those 25 values/formulas, with no other captured differences beyond the
+existing analytics-cache timestamp. It preserved **2,022 observations**, **2,022
+unique observation IDs**, **1,652 request groups**, **38 saved staging rows**,
+an empty bulk intake, **68 sheets**, and all **190 chart specifications**.
+Captured canonical/staging and RO cells, notes, validations, protections, sheet
+properties, and conditional formatting matched.
+
+Native Baselines results showed the two qualified greenhouse-mix estimates,
+P37's pure Molly's Succulent Mix clarification, and P38's qualified layer
+description. P39/P40 current medium remained `Not recorded`. Integrity reported
+zero formula, identity, and retry errors; the existing 18
+uncalibrated plants and one setup without an anchor remain evidence gaps.
+
+The live phone logger displayed **Connected · Logger 5.39.6** with calculations
+ready and a fresh **20:13 EDT** data timestamp. Version 121 `doGet` completed in
+**1.476 s** at **20:12:25 EDT**. The initial bootstrap took **34.879 s** and briefly
+left the client on its clearly labeled saved list; a read-only refresh at
+**20:13:45 EDT** completed bootstrap in **13.576 s** and recent History in
+**9.652 s**. These timings are observations, not latency guarantees. The
+**20:10:42 EDT** scheduled queue run completed in **12.783 s** after deployment.
+The existing single five-minute `processQueuedAppSheetEntries` trigger was
+retained. No production observations, installers, AppSheet configuration edits,
+or trigger changes were used.
 
 ## October 24 collection-record reconciliation
 
