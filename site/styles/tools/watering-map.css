@@ -200,7 +200,6 @@
         min-inline-size: 0;
         max-inline-size: none;
         block-size: auto;
-        user-select: text;
     }
 
     &:where([data-enlarged="true"]) .watering-map-image > svg {
