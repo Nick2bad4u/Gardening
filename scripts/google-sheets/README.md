@@ -62,6 +62,15 @@ The profile also records the matching [leafjoy store listing](https://leafjoysto
 found by the owner October 29, with source qualifications. Original one-time
 enrollment statements below describe the evidence available at that rollout.
 
+**Live follow-up verified October 29, 21:17 UTC:** after creating a
+[native workbook backup](https://docs.google.com/spreadsheets/d/14FpYK-7KKpnQoMYwmratHecgEGMxyWVirCxn_y_ItO8/edit),
+one literal-text update corrected only **Container members J47**. Exact readback
+matched the approved barcode and store-source note. All **175 other captured
+header/P41-row cells** and **703 preserved field comparisons** matched the backup;
+J47's format, validation, and note were retained. The three existing **$19.99**
+source strings and pending setup/repot facts are unchanged. No History or staging
+data, schema, logger source, or deployment changed.
+
 Pot dimensions, drainage, medium, placement, prior care, and starting measurements
 remain unrecorded. Repotting and specimen photographs are pending. P41 has manual
 partial-drying guidance: inspect the mix below the surface and confirm drainage;
