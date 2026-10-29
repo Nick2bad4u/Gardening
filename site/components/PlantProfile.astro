@@ -4,8 +4,10 @@ import { getProfiles, photoPreview } from "../lib/content.mjs";
 import { stripMarkdown } from "../lib/content/profile-source.mjs";
 import { getContainers } from "../lib/containers.mjs";
 import { getPlantDiscovery } from "../lib/plant-discovery.mjs";
+import { getPlantCareReference } from "../lib/plant-care.mjs";
 import ContainerMembers from "./ContainerMembers.astro";
 import PlantDiscovery from "./PlantDiscovery.astro";
+import PlantCareReference from "./PlantCareReference.astro";
 import ReferenceGallery from "./ReferenceGallery.astro";
 import SiteIcon from "./SiteIcon.astro";
 import ProfileNavigation from "./ProfileNavigation.astro";
@@ -16,6 +18,7 @@ interface Props {
 }
 const { profile } = Astro.props;
 const profiles = await getProfiles();
+const care = await getPlantCareReference(profile.slug);
 const container = (await getContainers()).find((item) => item.id === profile.trackerId);
 const discovery = container?.aggregate
     ? undefined
@@ -283,6 +286,7 @@ const metadata = [
             </dd>
         </div>
     </dl>
+    <PlantCareReference care={care} historical={profile.historical} />
     {profile.trackerId && (
         <div class="card record-actions">
             <div>
@@ -331,6 +335,12 @@ const metadata = [
             </summary>
             <nav aria-label="On this page">
                 <ul>
+                    <li>
+                        <a href={`#${profile.slug}-care-reference`}>
+                            <SiteIcon name="care" size={22} />
+                            Light &amp; moisture
+                        </a>
+                    </li>
                     {discovery &&
                         [
                             ["anatomy", "How this plant works", "botanical"],

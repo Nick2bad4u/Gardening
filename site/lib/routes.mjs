@@ -57,6 +57,7 @@ const documentRoutes = new Map([
     ["docs/layouts/plant-history.html", "pots/"],
     ["docs/layouts/plant-tracker.html", "tracker/"],
     ["docs/layouts/table-placement-research.md", "setup/placement/"],
+    ["docs/light-moisture.md", "guides/light-moisture/"],
     ["docs/logger-actions.md", "guides/logger-actions/"],
     ["docs/plant-booklet/index.html", ""],
     ["docs/plants/labels.md", "guides/labels/"],

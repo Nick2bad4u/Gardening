@@ -1,0 +1,279 @@
+.plant-care {
+    margin-block: 1.5rem;
+    color: var(--ink);
+    overflow-wrap: anywhere;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+
+    & h2,
+    & h3,
+    & p,
+    & dl,
+    & dd {
+        margin: 0;
+    }
+
+    & h2,
+    & h3 {
+        display: flex;
+        gap: 0.65rem;
+        align-items: center;
+    }
+
+    & h2 {
+        font-size: clamp(1.25rem, 3vi, 1.75rem);
+        scroll-margin-block-start: 7rem;
+    }
+
+    & h3 {
+        font-size: 1.125rem;
+    }
+
+    & .plant-care-heading {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.1rem 1.25rem;
+        border-block-end: 1px solid var(--line);
+    }
+
+    & .plant-care-basis {
+        padding: 0.35rem 0.65rem;
+        font-size: 0.75rem;
+        font-weight: 650;
+        background: var(--surface-soft);
+        border: 1px solid var(--line);
+        border-radius: 0.5rem;
+    }
+
+    & .plant-care-grid {
+        display: grid;
+        grid-template-columns:
+            [light] minmax(0, 1fr) [moisture] minmax(0, 1fr)
+            [end];
+    }
+
+    & .plant-care-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 0.85rem;
+        min-inline-size: 0;
+        padding: 1.25rem;
+    }
+
+    & .plant-care-light {
+        background: linear-gradient(
+            145deg,
+            color-mix(in srgb, #bd9641 8%, var(--surface)),
+            var(--surface) 70%
+        );
+        border-inline-end: 1px solid var(--line);
+    }
+
+    & .plant-care-description,
+    & .plant-care-moisture-cues {
+        font-size: 0.875rem;
+        line-height: 1.625;
+    }
+
+    & .plant-care-light-range {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.1rem 0.6rem;
+        align-items: baseline;
+
+        & .plant-care-label {
+            flex-basis: 100%;
+            font-size: 0.75rem;
+            font-weight: 650;
+            color: var(--muted);
+        }
+
+        & strong {
+            font-size: clamp(1.75rem, 4vi, 2.5rem);
+            font-weight: 750;
+            font-variant-numeric: tabular-nums;
+            line-height: 1.125;
+        }
+
+        & .plant-care-unit {
+            font-size: 0.75rem;
+        }
+    }
+
+    & .plant-care-assumption,
+    & .plant-care-limit,
+    & .plant-care-reviewed {
+        font-size: 0.75rem;
+        line-height: 1.625;
+        color: var(--muted);
+    }
+
+    & .plant-care-measures {
+        display: grid;
+        gap: 0.55rem;
+        font-size: 0.75rem;
+
+        & > div {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.15rem 1rem;
+            justify-content: space-between;
+        }
+
+        & dt {
+            color: var(--muted);
+        }
+
+        & dd {
+            font-weight: 650;
+        }
+    }
+
+    & .plant-care-edges {
+        display: grid;
+        grid-template-columns:
+            [lower] minmax(0, 1fr) [upper] minmax(0, 1fr)
+            [end];
+        gap: 0.5rem;
+
+        & > div {
+            display: grid;
+            gap: 0.25rem;
+            padding: 0.65rem;
+            background: var(--surface-soft);
+            border: 1px solid var(--line);
+            border-radius: 0.6rem;
+        }
+
+        & span {
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        & strong {
+            font-size: 0.875rem;
+        }
+    }
+
+    & .plant-care-regime,
+    & .plant-care-unknown {
+        font-size: 1rem;
+        font-weight: 650;
+        line-height: 1.5;
+    }
+
+    & .plant-care-moisture-cues {
+        display: grid;
+        gap: 0.9rem;
+
+        & > div {
+            padding-inline-start: 0.8rem;
+            border-inline-start: 3px solid
+                color-mix(in srgb, #4489a3 60%, var(--line));
+        }
+
+        & dt {
+            margin-block-end: 0.15rem;
+            font-size: 0.75rem;
+            font-weight: 750;
+        }
+    }
+
+    & .plant-care-evidence {
+        padding-inline: 1.25rem;
+        font-size: 0.75rem;
+        border-block-start: 1px solid var(--line);
+
+        & summary {
+            align-content: center;
+            min-block-size: 2.75rem;
+            padding-block: 0.7rem;
+            font-weight: 650;
+            cursor: pointer;
+        }
+    }
+
+    & .plant-care-evidence-content {
+        display: grid;
+        gap: 0.8rem;
+        padding-block: 0.15rem 1rem;
+        line-height: 1.625;
+
+        & ul {
+            display: grid;
+            gap: 0.6rem;
+            padding-inline-start: 1.2rem;
+            margin: 0;
+        }
+
+        & li span {
+            display: block;
+            color: var(--muted);
+        }
+    }
+
+    & .plant-care-footer {
+        padding: 0.25rem 1.25rem;
+        border-block-start: 1px solid var(--line);
+
+        & a {
+            display: inline-flex;
+            gap: 0.5rem;
+            align-items: center;
+            min-block-size: 2.75rem;
+            font-size: 0.75rem;
+            font-weight: 650;
+        }
+    }
+
+    & .plant-care-historical {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.75rem;
+        background: var(--surface-soft);
+        border-block-end: 1px solid var(--line);
+    }
+
+    @media (width <= 650px) {
+        & .plant-care-grid {
+            grid-template-columns: [start] minmax(0, 1fr) [end];
+        }
+
+        & .plant-care-heading,
+        & .plant-care-panel {
+            padding: 1rem;
+        }
+
+        & .plant-care-light {
+            border-block-end: 1px solid var(--line);
+            border-inline-end: 0;
+        }
+
+        & .plant-care-evidence,
+        & .plant-care-footer {
+            padding-inline: 1rem;
+        }
+    }
+
+    @media print {
+        box-shadow: none;
+        break-inside: auto;
+
+        & .plant-care-panel,
+        & .plant-care-heading {
+            break-inside: avoid;
+        }
+
+        & .plant-care-evidence::details-content {
+            content-visibility: visible;
+        }
+
+        & .plant-care-evidence summary {
+            display: none;
+        }
+    }
+}

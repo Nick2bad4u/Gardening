@@ -1,0 +1,79 @@
+---
+import { getProfiles } from "../lib/content.mjs";
+import { assertCareCoverage, getPlantCareReferences, lightComparison } from "../lib/plant-care.mjs";
+import { profileUrl } from "../lib/routes.mjs";
+import "../styles/care-comparison.css";
+
+const [profiles, records] = await Promise.all([getProfiles(), getPlantCareReferences()]);
+assertCareCoverage(records, profiles);
+const bySlug = new Map(records.map((record) => [record.slug, record]));
+const active = profiles.filter((profile) => !profile.historical);
+const number = new Intl.NumberFormat("en-US");
+const range = (values: readonly [number, number] | null) =>
+    values ? `${number.format(values[0])}–${number.format(values[1])}` : "Not assigned";
+---
+
+<section class="care-comparison" aria-labelledby="collection-care-comparison" data-care-comparison>
+    <h2 id="collection-care-comparison">Compare the collection</h2>
+    <p>
+        {active.length} active profiles · 12 constant-light hours for comparison · trial ranges, not
+        established minimums, optima, or maximums. Each link opens the plant's full care card.
+    </p>
+    <p>
+        Lux is an approximate white-LED envelope, not a fixture calibration. Shared P-IDs have one
+        watering decision. Read the measurement assumptions and exceptions below before changing
+        care.
+    </p>
+    <details class="care-comparison-browser">
+        <summary>Browse all {active.length} active plant references</summary>
+        <ul class="care-comparison-list">
+            {active.map((profile) => {
+                const care = bySlug.get(profile.slug);
+                if (!care) throw new Error(`Missing care comparison: ${profile.slug}`);
+                const light = lightComparison(care.light);
+                return (
+                    <li class="care-comparison-row" data-care-row={profile.slug}>
+                        <div class="care-comparison-identity">
+                            <span>
+                                {profile.trackerId} · {profile.inventoryId}
+                            </span>
+                            <h3>
+                                <a
+                                    href={`${profileUrl(profile.slug)}#${profile.slug}-care-reference`}
+                                >
+                                    {profile.title}
+                                </a>
+                            </h3>
+                        </div>
+                        <dl class="care-comparison-values">
+                            <div>
+                                <dt>PPFD</dt>
+                                <dd>
+                                    {range(light.ppfd)}
+                                    <small>µmol·m⁻²·s⁻¹</small>
+                                </dd>
+                            </div>
+                            <div>
+                                <dt>Approx. lux</dt>
+                                <dd>
+                                    {range(light.lux)}
+                                    <small>white-LED estimate</small>
+                                </dd>
+                            </div>
+                            <div>
+                                <dt>DLI</dt>
+                                <dd>
+                                    {range(care.light.dli)}
+                                    <small>mol·m⁻²·day⁻¹</small>
+                                </dd>
+                            </div>
+                        </dl>
+                        <p class="care-comparison-moisture">
+                            <strong>Drying stage:</strong> {care.moisture.regime}
+                        </p>
+                    </li>
+                );
+            })}
+        </ul>
+    </details>
+</section>

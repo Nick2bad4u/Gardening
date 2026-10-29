@@ -265,6 +265,7 @@ export async function getEquipmentDocs() {
 export async function getGuides() {
     /** @type {[string, string][]} */
     const sources = [
+        ["docs/light-moisture.md", "light-moisture"],
         ["docs/watering-quick-guide.md", "watering-quick-guide"],
         ["docs/watering-strategy.md", "watering-strategy"],
         ["docs/weighing-strategy.md", "weighing-strategy"],

@@ -89,6 +89,12 @@ function assertProfileCoverage(profiles, profilePages) {
         const html = profilePages.get(profile.slug);
         assert.ok(html !== undefined, `Missing profile page: ${profile.slug}`);
         assert.ok(
+            html.includes(`data-plant-care="${profile.slug}"`) &&
+                html.includes(`id="${profile.slug}-care-reference"`) &&
+                html.includes(`${publicBase}guides/light-moisture/`),
+            `Missing light and moisture reference: ${profile.slug}`
+        );
+        assert.ok(
             html.includes(`id="${profile.slug}"`),
             `Profile identity missing: ${profile.slug}`
         );

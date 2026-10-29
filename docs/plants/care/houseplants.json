@@ -1,0 +1,207 @@
+[
+    {
+        "light": {
+            "acclimation": "Begin with gentle indirect light; assess new leaves before increasing exposure. Placement and leaf-level readings are still unrecorded.",
+            "basis": "collection-trial",
+            "caution": "The nursery label names Aglaonema commutatum; the exact Alpine Spires cultivar is unverified. This trial is not a cultivar minimum, optimum, or scorch limit.",
+            "description": "A cautious low-light foliage trial for the newly acquired plant. Bright indirect light is a useful starting placement; avoid an abrupt move into strong sun.",
+            "dli": [3, 6],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Inspect the upper mix and accessible root zone. The retail 12 cm label does not establish the actual pot depth, medium, or drainage.",
+            "regime": "Partial upper-mix drying with an aerated root zone.",
+            "waitWhen": "The mix remains wet below the surface or runoff is standing around the pot. Confirm drainage before adding more water.",
+            "waterWhen": "The upper mix has begun drying and a check below it supports watering. Drain excess water; do not require whole-pot cactus-style drought."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "aglaonema-commutatum-alpine-spires",
+        "sources": [
+            {
+                "scope": "Genus-level indirect-light guidance and overwatering risk; does not establish Alpine Spires thresholds.",
+                "title": "NC State Extension: Aglaonema",
+                "url": "https://plants.ces.ncsu.edu/plants/aglaonema/"
+            },
+            {
+                "scope": "General low-light foliage DLI category informs the proposed 3–6 collection trial, not a cultivar requirement.",
+                "title": "Iowa State Extension: supplemental light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Start with soft indirect exposure and change it gradually after checking leaf response and moisture. Current leaf-level light is unmeasured.",
+            "basis": "collection-trial",
+            "caution": "Direct sun can scorch foliage. The proposed range is a general foliage trial, not a Nightly-specific threshold.",
+            "description": "A low-light foliage trial for nursery-labelled Fittonia albivenis Nightly; use an indirect-light position rather than the strongest cactus exposure.",
+            "dli": [3, 6],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check the surface and accessible root zone as the upper mix begins drying; pot depth and the current medium remain unconfirmed.",
+            "regime": "Lightly moist, aerated medium; avoid whole-pot drought.",
+            "waitWhen": "The root zone is still wet, water is trapped around the roots, or wilting occurs despite wet mix. Inspect the cause before watering again.",
+            "waterWhen": "The upper mix is starting to dry and the root-zone check supports a drink. Keep drainage clear; do not wait for a cactus-style dry plateau."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "fittonia-albivenis-nightly",
+        "sources": [
+            {
+                "scope": "Species-level moist-soil guidance, direct-sun scorch, and overwatering risk; not cultivar-specific numeric targets.",
+                "title": "NC State Extension: Fittonia albivenis",
+                "url": "https://plants.ces.ncsu.edu/plants/fittonia-albivenis/"
+            },
+            {
+                "scope": "The low-light foliage category supplies a cautious 3–6 DLI collection trial, not a tested Nightly threshold.",
+                "title": "Iowa State Extension: supplemental light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Keep the current room-side position as context, then measure at the leaves before changing it. Increase exposure gradually.",
+            "basis": "collection-trial",
+            "caution": "Working identity remains Pachira cf. glabra. Pachira aquatica care is comparison guidance; neither source establishes a glabra-specific numeric threshold.",
+            "description": "Retains the collection's broad 5–12 DLI trial for the money tree. Favor bright indirect light and evaluate growth before approaching the upper end.",
+            "dli": [5, 12],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check the upper mix and the retained nursery core if still present. The current pot size, repot history, and mix are unconfirmed.",
+            "regime": "Upper-mix drying while avoiding prolonged whole-pot drought.",
+            "waitWhen": "The nursery core or lower mix is still wet, or runoff is standing beneath the pot. Drooping alone does not establish thirst.",
+            "waterWhen": "The upper mix has dried and the deeper root-zone check agrees. The nursery tag's upper-2-inch cue needs scaling to the actual pot; drain excess."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "pachira-glabra",
+        "sources": [
+            {
+                "scope": "Pachira aquatica comparison only: indirect light, drainage, and risks from standing water or excessive drying.",
+                "title": "NC State Extension: Pachira aquatica",
+                "url": "https://plants.ces.ncsu.edu/plants/pachira-aquatica/"
+            },
+            {
+                "scope": "General foliage DLI context; the retained 5–12 collection range is an inference, not this source's Pachira recommendation.",
+                "title": "Iowa State Extension: supplemental light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin with the existing 4–6 DLI trial; consider 6–10 only after stable growth and moisture response. Kitchen-shelf light and runtime still need measurement.",
+            "basis": "collection-trial",
+            "caution": "These are collection trials, not measured Obtipan Bicolor limits. Reassess pale patches, scorch, or weak stretching before another increase.",
+            "description": "Retains the profile's initial and settled comparison bands for bright indirect light under the kitchen fixtures plus window light.",
+            "dli": [6, 10],
+            "startingDli": [4, 6]
+        },
+        "moisture": {
+            "check": "Check the upper mix and accessible root zone in the confirmed 8-inch draining pot; the reported mix is about 70% houseplant soil and 30% perlite.",
+            "regime": "Partial drying between thorough, freely draining waterings.",
+            "waitWhen": "The mix below the surface remains wet or runoff is retained. A dry-looking surface alone does not establish that this larger pot needs water.",
+            "waterWhen": "The mix has partly dried and the root-zone check agrees. Empty runoff; avoid both persistent wetness and prolonged whole-pot drought."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "peperomia-obtipan-bicolor",
+        "sources": [
+            {
+                "scope": "Peperomia care: indirect light, partial drying, drainage, and scorch or stretching cues; not cultivar DLI thresholds.",
+                "title": "RHS: How to grow peperomia",
+                "url": "https://www.rhs.org.uk/plants/peperomia/how-to-grow-peperomia"
+            },
+            {
+                "scope": "Foliage DLI categories inform the existing 4–6 initial and 6–10 settled collection trials.",
+                "title": "Iowa State Extension: supplemental light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Try the lower 4–6 band first, then consider 6–10 only with healthy new growth. Actual placement and leaf-level light are not recorded.",
+            "basis": "collection-trial",
+            "caution": "Spice Is Nice is nursery trade branding, not proof of a registered cultivar. The proposed comparison with P31 is unvalidated for this individual plant.",
+            "description": "A proposed bright-indirect-light trial using the collection's other Peperomia obtusifolia as a cautious starting comparison.",
+            "dli": [6, 10],
+            "startingDli": [4, 6]
+        },
+        "moisture": {
+            "check": "Inspect below the surface as well as the upper mix. Actual nursery-pot depth, medium, and drainage must be confirmed; the glass-pot plan is not a completed repot.",
+            "regime": "Partial drying with air around the roots.",
+            "waitWhen": "The root zone remains wet or water is retained beneath it. Avoid fixed-depth triggers until the actual container is documented.",
+            "waterWhen": "The medium has partly dried and the root-zone check supports watering. Allow excess water to escape; do not impose a prolonged cactus-style dry period."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "peperomia-obtusifolia-spice-is-nice",
+        "sources": [
+            {
+                "scope": "General Peperomia indirect-light and partial-drying guidance, including standing-water risk; no Spice Is Nice numeric targets.",
+                "title": "RHS: How to grow peperomia",
+                "url": "https://www.rhs.org.uk/plants/peperomia/how-to-grow-peperomia"
+            },
+            {
+                "scope": "General foliage categories inform proposed 4–6 and 6–10 trials; applying P31's bands to P40 is collection inference.",
+                "title": "Iowa State Extension: supplemental light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Measure inside the glass at representative leaves before changing the light. Watch the different members separately and avoid heating the enclosure.",
+            "basis": "qualitative-only",
+            "caution": "The reported 6,000–7,000 lux is an observation with an unrecorded sensor position, not a requirement. Several member identifications remain provisional.",
+            "description": "Bright indirect light for this mixed terrarium. No shared numeric band is assigned until member needs and light reaching the foliage are better established.",
+            "dli": null,
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Inspect the coir layer, accessible root zone, trapped water, and plant condition. Condensation and air humidity do not measure root-zone moisture.",
+            "regime": "Lightly moist mixed planting in a moisture-retaining enclosure.",
+            "waitWhen": "The upper planting medium is moist, water is pooling, or heavy condensation accompanies persistently wet conditions. Investigate ventilation and moisture before adding water.",
+            "waterWhen": "The planting medium is actually beginning to dry and the plants need moisture. Add a small amount and reassess; the LECA/rock base does not establish an outlet for drainage."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "terrarium",
+        "sources": [
+            {
+                "scope": "Bright indirect placement, heat avoidance, sparing watering, and condensation checks; withholding a mixed-plant numeric target is a collection decision.",
+                "title": "RHS: Terrariums and bottle gardens",
+                "url": "https://www.rhs.org.uk/plants/types/houseplants/bottle-gardens-and-terrariums"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Retain the initial 6–8 DLI trial and consider 8–12 only after stable growth. Measure the kitchen shelf's combined window and fixture exposure first.",
+            "basis": "collection-trial",
+            "caution": "These are collection comparison bands, not proven Tricolor minimum, optimum, or damage limits. Recheck pale or scorched leaves before increasing exposure.",
+            "description": "Retains the profile's brighter indirect-light trial; weak stretching or fading color warrants a light and root-zone review.",
+            "dli": [8, 12],
+            "startingDli": [6, 8]
+        },
+        "moisture": {
+            "check": "Check the upper 1–2 inches, scaled to the actual root ball, and verify that the mix beneath is not still soggy in the 8-inch draining pot.",
+            "regime": "Upper-mix drying between freely draining waterings.",
+            "waitWhen": "The deeper mix remains wet or runoff has collected around the pot. Do not water from a surface reading alone.",
+            "waterWhen": "The upper mix has dried and the root-zone check supports watering. Drain fully; avoid prolonged whole-pot drought."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "tradescantia-spathacea-tricolor",
+        "sources": [
+            {
+                "scope": "Bright indirect light, stretching/color cues, drainage, and upper-1–2-inch drying guidance; no Tricolor DLI thresholds.",
+                "title": "NC State Extension: Tradescantia spathacea",
+                "url": "https://plants.ces.ncsu.edu/plants/tradescantia-spathacea/"
+            },
+            {
+                "scope": "General DLI context for retained 6–8 and 8–12 collection trials; those bands are not species recommendations from this source.",
+                "title": "Iowa State Extension: supplemental light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
+            }
+        ]
+    }
+]

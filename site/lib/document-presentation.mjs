@@ -15,6 +15,10 @@ const guideAppearances = new Map([
     ],
     ["labels", { icon: "label", label: "Plant Identity", tone: "record" }],
     [
+        "light-moisture",
+        { icon: "light", label: "Light & Moisture", tone: "light" },
+    ],
+    [
         "logger-actions",
         { icon: "edit", label: "Recording Care", tone: "record" },
     ],

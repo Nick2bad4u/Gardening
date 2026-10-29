@@ -1,0 +1,168 @@
+---
+import { lightComparison } from "../lib/plant-care.mjs";
+import { siteUrl } from "../lib/routes.mjs";
+import SiteIcon from "./SiteIcon.astro";
+import "../styles/plant-care.css";
+
+interface Props {
+    care: import("../lib/plant-care.mjs").PlantCareReference;
+    historical?: boolean;
+}
+
+const { care, historical = care.light.basis === "historical" } = Astro.props;
+const comparison = lightComparison(care.light);
+const number = new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 });
+const range = (values: readonly [number, number]) =>
+    `${number.format(values[0])}–${number.format(values[1])}`;
+const headingId = `${care.slug}-care-reference`;
+const lightId = `${headingId}-light`;
+const moistureId = `${headingId}-moisture`;
+const basis = historical
+    ? "Historical reference"
+    : care.light.basis === "collection-trial"
+      ? "Collection trial ranges"
+      : "Qualitative guidance";
+---
+
+<section class="plant-care" aria-labelledby={headingId} data-plant-care={care.slug}>
+    <header class="plant-care-heading">
+        <div>
+            <p class="eyebrow">At a glance</p>
+            <h2 id={headingId}>
+                <SiteIcon name="care" size={30} />
+                Light &amp; moisture
+            </h2>
+        </div>
+        <span class="plant-care-basis">{basis}</span>
+    </header>
+    {historical && (
+        <p class="plant-care-historical">This plant is a historical record with no active pot.</p>
+    )}
+    <div class="plant-care-grid">
+        <section class="plant-care-panel plant-care-light" aria-labelledby={lightId}>
+            <h3 id={lightId}>
+                <SiteIcon name="light" size={26} />
+                Light
+            </h3>
+            <p class="plant-care-description">{care.light.description}</p>
+            {!historical && comparison.ppfd && care.light.dli ? (
+                <>
+                    <div class="plant-care-light-range">
+                        <span class="plant-care-label">Working range</span>
+                        <strong>{range(comparison.ppfd)}</strong>
+                        <span class="plant-care-unit">µmol·m⁻²·s⁻¹ PPFD</span>
+                    </div>
+                    <p class="plant-care-assumption">
+                        At {comparison.hours} constant-light hours per day · comparison only
+                    </p>
+                    <dl class="plant-care-measures">
+                        <div>
+                            <dt>Daily light total</dt>
+                            <dd>{range(care.light.dli)} mol·m⁻²·day⁻¹ DLI</dd>
+                        </div>
+                        <div>
+                            <dt>Approx. white-LED lux</dt>
+                            <dd>
+                                {comparison.lux ? `${range(comparison.lux)} lx` : "Not established"}
+                            </dd>
+                        </div>
+                        {comparison.startingPpfd && care.light.startingDli && (
+                            <div>
+                                <dt>Starting comparison</dt>
+                                <dd>
+                                    {range(comparison.startingPpfd)} PPFD ·{" "}
+                                    {range(care.light.startingDli)} DLI
+                                </dd>
+                            </div>
+                        )}
+                    </dl>
+                    <div class="plant-care-edges" aria-label="Working-range comparison edges">
+                        <div>
+                            <span>Below working range</span>
+                            <strong>&lt; {number.format(comparison.ppfd[0])} PPFD</strong>
+                        </div>
+                        <div>
+                            <span>Above working range</span>
+                            <strong>&gt; {number.format(comparison.ppfd[1])} PPFD</strong>
+                        </div>
+                    </div>
+                    <p class="plant-care-limit">
+                        Review exposure at either edge. A proven optimum and hard minimum or maximum
+                        are not established.
+                    </p>
+                </>
+            ) : (
+                <p class="plant-care-unknown">
+                    {historical
+                        ? "No active numeric light target."
+                        : "Numeric light range, optimum, and hard limits are not established."}
+                </p>
+            )}
+        </section>
+        <section class="plant-care-panel plant-care-moisture" aria-labelledby={moistureId}>
+            <h3 id={moistureId}>
+                <SiteIcon name="water" size={26} />
+                Moisture
+            </h3>
+            <p class="plant-care-regime">{care.moisture.regime}</p>
+            <dl class="plant-care-moisture-cues">
+                <div>
+                    <dt>Water when</dt>
+                    <dd>{care.moisture.waterWhen}</dd>
+                </div>
+                <div>
+                    <dt>Wait when</dt>
+                    <dd>{care.moisture.waitWhen}</dd>
+                </div>
+                <div>
+                    <dt>What to check</dt>
+                    <dd>{care.moisture.check}</dd>
+                </div>
+            </dl>
+            <p class="plant-care-limit">
+                Use the actual root-zone condition. A moisture percentage or meter-number target has
+                not been calibrated for this pot.
+            </p>
+        </section>
+    </div>
+    <details class="plant-care-evidence">
+        <summary>Acclimation, range assumptions &amp; sources</summary>
+        <div class="plant-care-evidence-content">
+            <p>
+                <strong>Acclimation:</strong> {care.light.acclimation}
+            </p>
+            <p>
+                <strong>Watch for:</strong> {care.light.caution}
+            </p>
+            {!historical && comparison.ppfd && (
+                <p>
+                    PPFD is a constant-light equivalent of the daily range, not a recorded lamp
+                    setting.
+                </p>
+            )}
+            {!historical && comparison.lux && (
+                <p>
+                    Lux is a spectrum-dependent white-LED comparison, not a calibration for your
+                    fixture. It does not apply to colored, red-enhanced, or mixed light.
+                </p>
+            )}
+            <ul>
+                {care.sources.map((source) => (
+                    <li>
+                        <a href={source.url}>{source.title}</a>
+                        <span>{source.scope}</span>
+                    </li>
+                ))}
+            </ul>
+            <p class="plant-care-reviewed">
+                Reviewed <time datetime={care.reviewedOn}>{care.reviewedOn}</time>
+            </p>
+        </div>
+    </details>
+    <footer class="plant-care-footer">
+        <a href={siteUrl("guides/light-moisture/")}>
+            Compare every plant’s light &amp; moisture
+            <SiteIcon name="arrow-right" size={20} />
+        </a>
+    </footer>
+</section>

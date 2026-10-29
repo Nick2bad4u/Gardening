@@ -2,6 +2,9 @@
 
 Last updated: 2026-10-28
 
+Use the [light and moisture reference](./light-moisture.md) for the plant cards'
+working light ranges, conversion assumptions, and physical moisture checks.
+
 Start with the [watering quick guide](./watering-quick-guide.md) for each group's
 drying target. This page brings together the collection's routine checks,
 equipment changes, repot history, and care exceptions.

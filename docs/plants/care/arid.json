@@ -1,0 +1,1584 @@
+[
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Inspect exposed ribs and the growing tip for bleaching or excessive heat.",
+            "description": "Bright to high light after acclimation.",
+            "dli": [
+                12,
+                22
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "astrophytum-ornatum",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/astrophytum-ornatum/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Raised growth can receive more light than shaded folds; check both surfaces.",
+            "description": "Bright middle zone for the uneven sculptured body.",
+            "dli": [
+                10,
+                18
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "cereus-forbesii-ming-thing",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/cereus-forbesii-ming-thing/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Measure at the crown; dense spines do not establish protection against sudden heat or light.",
+            "description": "High light after a gradual transition.",
+            "dli": [
+                14,
+                24
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "echinocereus-rigidissimus-rubispinus",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/echinocereus-rigidissimus-rubispinus/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Flower buds do not justify an abrupt jump in light or watering.",
+            "description": "Bright middle zone; judge compact new growth.",
+            "dli": [
+                10,
+                18
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "echinopsis-subdenudata",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/echinopsis-subdenudata/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Hybrid identity and individual tolerance remain uncertain; avoid abrupt exposure changes.",
+            "description": "Bright middle or edge zone for this probable obesa-type hybrid.",
+            "dli": [
+                8,
+                15
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "euphorbia-obesa-hybrid",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/euphorbia-obesa-hybrid/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Inspect the palest tissue first; the trial range does not establish its scorch threshold.",
+            "description": "Gentler bright edge for the variegated body.",
+            "dli": [
+                6,
+                12
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "gymnocalycium-mihanovichii-variegated",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/gymnocalycium-mihanovichii-variegated/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Compare the exposed crown with shaded ribs before increasing light.",
+            "description": "Bright middle zone with even exposure.",
+            "dli": [
+                10,
+                18
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "gymnocalycium-saglionis",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/gymnocalycium-saglionis/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Inspect beneath the feathery spines where possible; keep the crown from staying wet.",
+            "description": "Bright light with a gradual transition.",
+            "dli": [
+                10,
+                17
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "mammillaria-plumosa",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/mammillaria-plumosa/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Raised ridges may meet a hotspot before recessed tissue; preserve the waxy surface.",
+            "description": "Bright middle to high zone.",
+            "dli": [
+                12,
+                22
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "myrtillocactus-geometrizans-indigo-wave",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/myrtillocactus-geometrizans-indigo-wave/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Measure at the tallest active tip as well as lower stems.",
+            "description": "Bright middle zone, with support for extending stems.",
+            "dli": [
+                10,
+                18
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "nyctocereus-serpentinus",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/nyctocereus-serpentinus/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Dense hair does not make a sudden move into the hottest spot safe.",
+            "description": "High light after acclimation.",
+            "dli": [
+                12,
+                20
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "oreocereus-trollii",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/oreocereus-trollii/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Check the crown and exposed rib edges for persistent stress.",
+            "description": "Bright middle to high zone.",
+            "dli": [
+                10,
+                18
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "stenocactus-phyllacanthus",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/stenocactus-phyllacanthus/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "A taller tip receives more light and heat without any lamp-setting change.",
+            "description": "Bright middle to high zone; allow for increasing height.",
+            "dli": [
+                12,
+                22
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "austrocylindropuntia-subulata",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/austrocylindropuntia-subulata/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Check both exposed tips and shaded interior stems; hybrid-specific tolerance is unmeasured.",
+            "description": "Bright middle zone for this hybrid clump.",
+            "dli": [
+                10,
+                18
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "chamaelobivia-hybrid",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/chamaelobivia-hybrid/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Probable identification; hair and height can conceal uneven exposure.",
+            "description": "Bright middle to high light after edge acclimation.",
+            "dli": [
+                12,
+                20
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "espostoa-melanostele-nana",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/espostoa-melanostele-nana/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Compare pale and dark faces before rotating; dark color alone is not evidence of high-light tolerance.",
+            "description": "Gentler bright edge for this variegated plant.",
+            "dli": [
+                6,
+                12
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "gymnocalycium-mihanovichii-black-widow",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/gymnocalycium-mihanovichii-black-widow/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Persistent new red stress color with texture changes warrants a gentler position.",
+            "description": "Bright middle zone for the probable identification.",
+            "dli": [
+                10,
+                18
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "mammillaria-mammillaris",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/mammillaria-mammillaris/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "The cf. identification remains provisional; no exact-species optimum is established.",
+            "description": "Bright middle zone; use compact new growth as feedback.",
+            "dli": [
+                10,
+                18
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "mammillaria-rekoi",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/mammillaria-rekoi/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Keep raised waxy folds away from a concentrated hotspot.",
+            "description": "Bright middle light for the sculptured stems.",
+            "dli": [
+                10,
+                18
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "myrtillocactus-geometrizans-fukurokuryuzinboku",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/myrtillocactus-geometrizans-fukurokuryuzinboku/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Recheck the crown as the column grows toward the lamp.",
+            "description": "High light after acclimation.",
+            "dli": [
+                12,
+                22
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "parodia-leninghausii",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/parodia-leninghausii/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Keep detachable segments stable while checking their exposed surfaces.",
+            "description": "Bright middle zone after arrival or move acclimation.",
+            "dli": [
+                10,
+                18
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "tephrocactus-articulatus-papyracanthus",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/tephrocactus-articulatus-papyracanthus/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Observed growth and rest matter; stronger light and heat are not interchangeable.",
+            "description": "Bright outer zone, protecting variegated rosettes.",
+            "dli": [
+                8,
+                15
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Inspect rosette growth, root-zone moisture and weight trend; identify actual rest rather than assuming a season.",
+            "regime": "Growth/rest check, then dry-down",
+            "waitWhen": "The rosette is resting, roots remain damp or growth has slowed with heat. Reduce watering during observed rest.",
+            "waterWhen": "During active growth, the mix has dried substantially and roots are healthy; water thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "aeonium-haworthii-dream-color",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/aeonium-haworthii-dream-color/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "Bright-light acclimation and environment-dependent growth/rest watering; no cultivar-specific DLI thresholds.",
+                "title": "Wisconsin Extension: Aeonium",
+                "url": "https://hort.extension.wisc.edu/articles/aeonium/"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Cultivar-specific DLI is unverified; preserve farina and avoid bleaching the pale rosette.",
+            "description": "New collection trial borrowed from the existing Echeveria working range.",
+            "dli": [
+                10,
+                18
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "echeveria-arctic-ice",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/echeveria-arctic-ice/"
+            },
+            {
+                "scope": "Comparison range from an existing related collection entry, adopted here as a new collection trial; not a published threshold for this plant.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Genus-level sunlight and low-water guidance; no cultivar-specific DLI trial.",
+                "title": "NC State Extension: Echeveria",
+                "url": "https://plants.ces.ncsu.edu/plants/echeveria/"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Check low-rosette shadows; its light preference does not create a separate watering schedule.",
+            "description": "Brightest practical side of shared P20 for the probable rosette.",
+            "dli": [
+                10,
+                18
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check all four plants, dryness below the surface and the complete pot-weight trend.",
+            "regime": "P20: one shared dry-down decision",
+            "waitWhen": "Mix remains wet or one component is compromised. Do not repeatedly water the pot for one plant while others remain hydrated.",
+            "waterWhen": "The shared root volume is dry and the whole planting is ready; water thoroughly with working drainage."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "echeveria-pulidonis",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/echeveria-pulidonis/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Genus-level sunlight and low-water guidance; no cultivar-specific DLI trial.",
+                "title": "NC State Extension: Echeveria",
+                "url": "https://plants.ces.ncsu.edu/plants/echeveria/"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Preserve farina and reduce exposure if the center bleaches or overheats.",
+            "description": "Bright succulent zone; watch the compact center.",
+            "dli": [
+                10,
+                18
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "echeveria-raindrops",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/echeveria-raindrops/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Genus-level sunlight and low-water guidance; no cultivar-specific DLI trial.",
+                "title": "NC State Extension: Echeveria",
+                "url": "https://plants.ces.ncsu.edu/plants/echeveria/"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Increase exposure gradually from the currently tolerated position; inspect for stretching, bleaching and heat.",
+            "basis": "qualitative-only",
+            "caution": "Faucaria tigrina guidance is a genus comparison, not proof of F. tuberculosa requirements.",
+            "description": "Bright exposure, increased gradually; no numeric trial assigned for the probable identification.",
+            "dli": null,
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check mix dryness through the pot, weight trend, paired-leaf firmness and crown condition.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "The base is translucent or spreading softness appears, roots remain wet, or only old leaves are drying. Investigate instead of adding water.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "faucaria-tuberculosa",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/faucaria-tuberculosa/"
+            },
+            {
+                "scope": "Related-species cultivation context only; not confirmation of F. tuberculosa identity or numeric light requirements.",
+                "title": "SANBI: Faucaria tigrina",
+                "url": "https://pza.sanbi.org/faucaria-tigrina"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Compare its leaf height with neighboring rosettes; avoid shading the low Echeveria.",
+            "description": "Bright middle zone for the probable plant in shared P20.",
+            "dli": [
+                8,
+                16
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check all four plants, dryness below the surface and the complete pot-weight trend.",
+            "regime": "P20: one shared dry-down decision",
+            "waitWhen": "Mix remains wet or one component is compromised. Do not repeatedly water the pot for one plant while others remain hydrated.",
+            "waterWhen": "The shared root volume is dry and the whole planting is ready; water thoroughly with working drainage."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "kalanchoe-bracteata",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/kalanchoe-bracteata/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Measure at the upper leaves; taller growth can shade the other members.",
+            "description": "Bright middle zone in shared P20.",
+            "dli": [
+                8,
+                17
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check all four plants, dryness below the surface and the complete pot-weight trend.",
+            "regime": "P20: one shared dry-down decision",
+            "waitWhen": "Mix remains wet or one component is compromised. Do not repeatedly water the pot for one plant while others remain hydrated.",
+            "waterWhen": "The shared root volume is dry and the whole planting is ready; water thoroughly with working drainage."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "kalanchoe-orgyalis",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/kalanchoe-orgyalis/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Increase exposure gradually from the currently tolerated position; inspect for stretching, bleaching and heat.",
+            "basis": "qualitative-only",
+            "caution": "No numeric range is established for these heads; verify leaf-level exposure and preserve species uncertainty.",
+            "description": "Bright light with gradual acclimation for the probable tan/brown group in P35.",
+            "dli": null,
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Inspect all four heads separately, including replacement stage, current-leaf firmness and root-zone dryness; confirm drainage.",
+            "regime": "P35: leaf-cycle checks before water",
+            "waitWhen": "Old leaves are being absorbed, heads remain firm or stages conflict. Do not water to plump old leaves or satisfy a weight forecast.",
+            "waterWhen": "Dry roots, genuine current-leaf need and compatible stages across all heads support one shared watering decision."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "lithops-lesliei",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/lithops-lesliei/"
+            },
+            {
+                "scope": "Bright light, gradual acclimation and leaf-replacement watering restrictions; no species-specific DLI range.",
+                "title": "Wisconsin Extension: Living stones, Lithops",
+                "url": "https://hort.extension.wisc.edu/articles/living-stones-lithops/"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Increase exposure gradually from the currently tolerated position; inspect for stretching, bleaching and heat.",
+            "basis": "qualitative-only",
+            "caution": "No numeric range is established for these heads; sharing P35 does not synchronize leaf cycles.",
+            "description": "Bright light with gradual acclimation for the probable grey/green group in P35.",
+            "dli": null,
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Inspect all four heads separately, including replacement stage, current-leaf firmness and root-zone dryness; confirm drainage.",
+            "regime": "P35: leaf-cycle checks before water",
+            "waitWhen": "Old leaves are being absorbed, heads remain firm or stages conflict. Do not water to plump old leaves or satisfy a weight forecast.",
+            "waterWhen": "Dry roots, genuine current-leaf need and compatible stages across all heads support one shared watering decision."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "lithops-salicola",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/lithops-salicola/"
+            },
+            {
+                "scope": "Bright light, gradual acclimation and leaf-replacement watering restrictions; no species-specific DLI range.",
+                "title": "Wisconsin Extension: Living stones, Lithops",
+                "url": "https://hort.extension.wisc.edu/articles/living-stones-lithops/"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Increase exposure gradually from the currently tolerated position; inspect for stretching, bleaching and heat.",
+            "basis": "qualitative-only",
+            "caution": "Inspect each head for stretch or bleaching; no defensible numeric target is established for this mixed pot.",
+            "description": "Bright light, gradually introduced across all four heads.",
+            "dli": null,
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Inspect all four heads separately, including replacement stage, current-leaf firmness and root-zone dryness; confirm drainage.",
+            "regime": "P35: leaf-cycle checks before water",
+            "waitWhen": "Old leaves are being absorbed, heads remain firm or stages conflict. Do not water to plump old leaves or satisfy a weight forecast.",
+            "waterWhen": "Dry roots, genuine current-leaf need and compatible stages across all heads support one shared watering decision."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "lithops-shared-planter",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/lithops-shared-planter/"
+            },
+            {
+                "scope": "Bright light, gradual acclimation and leaf-replacement watering restrictions; no species-specific DLI range.",
+                "title": "Wisconsin Extension: Living stones, Lithops",
+                "url": "https://hort.extension.wisc.edu/articles/living-stones-lithops/"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "This is a collection trial, not a measured cultivar optimum; color alone is not a watering signal.",
+            "description": "Bright succulent zone with gradual acclimation.",
+            "dli": [
+                10,
+                18
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check the inner/current pair, outer-leaf absorption, base condition and actual root-zone dryness.",
+            "regime": "Leaf-cycle checks before water",
+            "waitWhen": "Only the old outer pair is shrinking, new leaves remain firm, or the base is soft/translucent. A light pot is not enough.",
+            "waterWhen": "Established roots are dry and the current pair shows need compatible with its leaf stage; water the mix and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "pleiospilos-nelii-royal-flush",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/pleiospilos-nelii-royal-flush/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "Sunny exposure, drainage and old-leaf moisture transfer; local season and calendar are not imported as indoor watering dates.",
+                "title": "SANBI: Pleiospilos nelii",
+                "url": "https://pza.sanbi.org/pleiospilos-nelii"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "This plain nursery-labelled plant has no supplied cultivar; the borrowed range is not measured species evidence.",
+            "description": "New collection trial using the existing P. nelii Royal Flush range as a comparison.",
+            "dli": [
+                10,
+                18
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check the inner/current pair, outer-leaf absorption, base condition and actual root-zone dryness.",
+            "regime": "Leaf-cycle checks before water",
+            "waitWhen": "Only the old outer pair is shrinking, new leaves remain firm, or the base is soft/translucent. A light pot is not enough.",
+            "waterWhen": "Established roots are dry and the current pair shows need compatible with its leaf stage; water the mix and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "pleiospilos-nelii",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/pleiospilos-nelii/"
+            },
+            {
+                "scope": "Comparison range from an existing related collection entry, adopted here as a new collection trial; not a published threshold for this plant.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "Sunny exposure, drainage and old-leaf moisture transfer; local season and calendar are not imported as indoor watering dates.",
+                "title": "SANBI: Pleiospilos nelii",
+                "url": "https://pza.sanbi.org/pleiospilos-nelii"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Use a gentler position if foliage is golden or bleaches; check upper and lower leaves.",
+            "description": "Bright middle light in shared P20.",
+            "dli": [
+                8,
+                17
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check all four plants, dryness below the surface and the complete pot-weight trend.",
+            "regime": "P20: one shared dry-down decision",
+            "waitWhen": "Mix remains wet or one component is compromised. Do not repeatedly water the pot for one plant while others remain hydrated.",
+            "waterWhen": "The shared root volume is dry and the whole planting is ready; water thoroughly with working drainage."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "portulacaria-afra",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/portulacaria-afra/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Sempervivum benefits from cool nights and seasonal cold rest; more lamp heat does not replace these conditions.",
+            "description": "Use the brightest, coolest practical indoor succulent position.",
+            "dli": [
+                10,
+                20
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Check root-zone dryness, rosette firmness and whole-pot weight; inspect the crown and saucer.",
+            "regime": "Dry through, then reassess",
+            "waitWhen": "Roots remain damp, the crown holds water or the plant is resting. Keep indoors with cooler nights and avoid hot, wet conditions.",
+            "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "sempervivum-coconut-crystal",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/sempervivum-coconut-crystal/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "Sunlight, drainage, cool nights and cold-season rest at genus level; the indoor DLI range remains a collection trial.",
+                "title": "NC State Extension: Sempervivum",
+                "url": "https://plants.ces.ncsu.edu/plants/sempervivum/"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Increase exposure gradually from the currently tolerated position; inspect for stretching, bleaching and heat.",
+            "basis": "qualitative-only",
+            "caution": "Identities and exposure remain uncertain; no one numeric optimum is assigned to this mixed bowl.",
+            "description": "Bright light at both low rosettes and taller paddle leaves in P30.",
+            "dli": null,
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Inspect all three foliage groups and the full root volume; verify drainage in the current shallow glazed bowl.",
+            "regime": "P30: one shared dry-down decision",
+            "waitWhen": "Drainage is unresolved, deeper mix remains damp or only one component appears thirsty. Reassess conflicting needs before watering.",
+            "waterWhen": "Drainage is confirmed, the shared mix is dry through and the planting is ready; water and drain as one pot."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "tiny-mixed-succulent-planter",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/tiny-mixed-succulent-planter/"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Increase exposure gradually from the currently tolerated position; inspect for stretching, bleaching and heat.",
+            "basis": "qualitative-only",
+            "caution": "Check compact growth and shading; orange color alone does not prove adequate or excessive light.",
+            "description": "Bright light for the probable Sedum adolphi/nussbaumerianum group in P30.",
+            "dli": null,
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Inspect all three foliage groups and the full root volume; verify drainage in the current shallow glazed bowl.",
+            "regime": "P30: one shared dry-down decision",
+            "waitWhen": "Drainage is unresolved, deeper mix remains damp or only one component appears thirsty. Reassess conflicting needs before watering.",
+            "waterWhen": "Drainage is confirmed, the shared mix is dry through and the planting is ready; water and drain as one pot."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "tiny-planter-coppertone-sedum",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/tiny-planter-coppertone-sedum/"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Increase exposure gradually from the currently tolerated position; inspect for stretching, bleaching and heat.",
+            "basis": "qualitative-only",
+            "caution": "Species and cultivar are unknown; preserve farina and check for shading by taller companions.",
+            "description": "Bright light reaching the low Echeveria rosettes in P30.",
+            "dli": null,
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Inspect all three foliage groups and the full root volume; verify drainage in the current shallow glazed bowl.",
+            "regime": "P30: one shared dry-down decision",
+            "waitWhen": "Drainage is unresolved, deeper mix remains damp or only one component appears thirsty. Reassess conflicting needs before watering.",
+            "waterWhen": "Drainage is confirmed, the shared mix is dry through and the planting is ready; water and drain as one pot."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "tiny-planter-echeveria",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/tiny-planter-echeveria/"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Genus-level sunlight and low-water guidance; no cultivar-specific DLI trial.",
+                "title": "NC State Extension: Echeveria",
+                "url": "https://plants.ces.ncsu.edu/plants/echeveria/"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Increase exposure gradually from the currently tolerated position; inspect for stretching, bleaching and heat.",
+            "basis": "qualitative-only",
+            "caution": "Check upper leaves separately from low rosettes; red margins alone do not establish a light threshold.",
+            "description": "Bright light for the probable Kalanchoe luciae/thyrsiflora group in P30.",
+            "dli": null,
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Inspect all three foliage groups and the full root volume; verify drainage in the current shallow glazed bowl.",
+            "regime": "P30: one shared dry-down decision",
+            "waitWhen": "Drainage is unresolved, deeper mix remains damp or only one component appears thirsty. Reassess conflicting needs before watering.",
+            "waterWhen": "Drainage is confirmed, the shared mix is dry through and the planting is ready; water and drain as one pot."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "tiny-planter-paddle-kalanchoe",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/tiny-planter-paddle-kalanchoe/"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Paddle-plant light and identity comparison; no confirmed species identification or numeric light threshold.",
+                "title": "Wisconsin Extension: Flapjacks, Kalanchoe spp.",
+                "url": "https://hort.extension.wisc.edu/articles/flapjacks-kalanchoe-spp/"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Inspect trailing tips and shared-pot shading; quicker water use does not override the other cacti.",
+            "description": "Bright middle exposure for this component of shared P19.",
+            "dli": [
+                10,
+                18
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Inspect all three cacti, shared root-zone dryness and whole-pot weight; confirm healthy established roots.",
+            "regime": "P19: one shared dry-down decision",
+            "waitWhen": "Any roots remain wet or compromised. One shrinking stem does not justify wetting the shared pot; reassess incompatible needs.",
+            "waterWhen": "The whole root volume is dry and all three plants can tolerate watering; water the container and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "cleistocactus-colademononis",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/cleistocactus-colademononis/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Measure at the growing tip; its exposure and water needs are constrained by the shared planting.",
+            "description": "High light after acclimation for the probable column in P19.",
+            "dli": [
+                12,
+                22
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Inspect all three cacti, shared root-zone dryness and whole-pot weight; confirm healthy established roots.",
+            "regime": "P19: one shared dry-down decision",
+            "waitWhen": "Any roots remain wet or compromised. One shrinking stem does not justify wetting the shared pot; reassess incompatible needs.",
+            "waterWhen": "The whole root volume is dry and all three plants can tolerate watering; water the container and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "echinopsis-spachiana",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/echinopsis-spachiana/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Historical use only.",
+            "basis": "historical",
+            "caution": "No current light target or pot allocation applies.",
+            "description": "Historical record only: removed July 24, 2026, with no viable salvage retained.",
+            "dli": null,
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Removed plant; this entry retains the former identification and care history.",
+            "regime": "Historical only",
+            "waitWhen": "Do not use this removed record to guide an active pot.",
+            "waterWhen": "No current watering instruction applies."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "mammillaria-bombycina",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/mammillaria-bombycina/"
+            }
+        ]
+    },
+    {
+        "light": {
+            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "basis": "collection-trial",
+            "caution": "Keep pale variegated areas away from hotspots; the retained trial range is not a safe maximum for every sector.",
+            "description": "Bright to high light for established green tissue in shared P19.",
+            "dli": [
+                12,
+                22
+            ],
+            "startingDli": null
+        },
+        "moisture": {
+            "check": "Inspect all three cacti, shared root-zone dryness and whole-pot weight; confirm healthy established roots.",
+            "regime": "P19: one shared dry-down decision",
+            "waitWhen": "Any roots remain wet or compromised. One shrinking stem does not justify wetting the shared pot; reassess incompatible needs.",
+            "waterWhen": "The whole root volume is dry and all three plants can tolerate watering; water the container and drain."
+        },
+        "reviewedOn": "2026-10-29",
+        "slug": "pilosocereus-pachycladus-variegated",
+        "sources": [
+            {
+                "scope": "Collection observations, identity qualifications and practical moisture checks; numeric trials are not measured observations.",
+                "title": "Maintained collection profile and setup",
+                "url": "https://nick2bad4u.github.io/Gardening/plants/pilosocereus-pachycladus-variegated/"
+            },
+            {
+                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
+                "title": "Collection working light targets",
+                "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
+            },
+            {
+                "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
+                "title": "University of Minnesota Extension: Cacti and succulents",
+                "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            }
+        ]
+    }
+]

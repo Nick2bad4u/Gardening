@@ -1,6 +1,7 @@
 ---
 import SiteLayout from "../../components/SiteLayout.astro";
 import DocumentArticle from "../../components/DocumentArticle.astro";
+import CareComparison from "../../components/CareComparison.astro";
 import { getGuides } from "../../lib/content.mjs";
 import { siteUrl } from "../../lib/routes.mjs";
 export async function getStaticPaths() {
@@ -24,5 +25,7 @@ const { document } = Astro.props;
         { label: document.title, href: "" },
     ]}
 >
-    <DocumentArticle document={document} />
+    <DocumentArticle document={document}>
+        {document.slug === "light-moisture" && <CareComparison />}
+    </DocumentArticle>
 </SiteLayout>
