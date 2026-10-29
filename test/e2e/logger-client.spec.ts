@@ -26,7 +26,7 @@ const expectBalancedLabels = async (
                 .getByRole("group", { name: "Choose plant by pot label" })
                 .getByRole("button")
         )
-        .toHaveCount(38);
+        .toHaveCount(39);
     expect
         .soft(
             await page.evaluate(() => document.documentElement.dataset["theme"])
@@ -589,7 +589,7 @@ const pickerMode = (page: Readonly<Page>, name: string) =>
 const expectTableLayout = async (page: Readonly<Page>, isBulk = false) => {
     const picker = tablePicker(page, isBulk);
     await expect.soft(picker).toHaveClass(/\btable-picker\b/v);
-    await expect.soft(picker.getByRole("button")).toHaveCount(38);
+    await expect.soft(picker.getByRole("button")).toHaveCount(39);
     const positions = await picker.evaluate(
         (element, usesBulkId) =>
             [...element.querySelectorAll<HTMLElement>("[data-table-row]")].map(
@@ -641,7 +641,7 @@ const expectTableLayout = async (page: Readonly<Page>, isBulk = false) => {
         };
     });
     expect.soft(layout).toStrictEqual({
-        labels: Array.from({ length: 14 }, (_, index) => `#${index + 1}`),
+        labels: Array.from({ length: 15 }, (_, index) => `#${index + 1}`),
         numberedBelow: true,
         validBounds: true,
     });
