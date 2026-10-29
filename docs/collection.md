@@ -1,6 +1,6 @@
 # Plant collection
 
-Last updated: 2026-10-24
+Last updated: 2026-10-28
 
 This is the current working inventory plus historical records for plants
 removed from the collection. Photo-based identifications are marked as probable, with nursery names retained alongside them.
@@ -15,7 +15,7 @@ available. Gallery captions distinguish species and ancestry references from pho
 The short label IDs are permanent plant or shared-planter identifiers, not
 table coordinates. They are shown beside the longer historical inventory IDs.
 
-The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was installed September 13. The profiled collection has **49 profile records: 48 active and one historical, across 38 tracker allocations**. The established [Table Placement Guide](./layouts/table-placement-research.md) remains the working arrangement.
+The [AW200 + AeroLight 240 W setup](./equipment/aw200-and-aerolight-240w.md) was installed September 13. The profiled collection has **50 profile records: 49 active and one historical, across 39 tracker allocations**. The established [Table Placement Guide](./layouts/table-placement-research.md) remains the working arrangement.
 
 Profile records and containers answer different questions: a profile describes
 a botanical identity or an aggregate planting, while a tracker identifies the
@@ -25,10 +25,16 @@ references. Component profiles add botanical detail without adding pots or
 duplicating care events.
 
 The [container guide](./containers.md) brings together the five shared plantings,
-their members, and the distinction between 45 botanical profile groups and three
+their members, and the distinction between 46 botanical profile groups and three
 aggregate overviews. Open the
 [container directory](https://nick2bad4u.github.io/Gardening/containers/) for
 each container's member list, care context, and existing history.
+
+## October 28 Alpine Spires acquisition
+
+**Houseplant-08 / #15 / P41** is [Alpine Spires Chinese evergreen](./plants/houseplants/aglaonema-commutatum-alpine-spires.md), nursery-labelled _Aglaonema commutatum_, Igneous™ Alpine Spires™. The owner bought it **October 28, 2026, at Home Depot for $19.99**; store location and receipt are unrecorded. The supplied photograph documents the leafjoy tag and its “I'm New” badge. The owner reports barcode wording “trial” and seeing only one in the store; the barcode side is not pictured, and these observations do not establish rarity or a release date.
+
+Repotting and photographs of the actual plant are planned. Current pot, medium, drainage, placement, light, and initial measurements remain unrecorded. Use manual moisture checks and indirect-light acclimation; no care event or dry-weight baseline is created by enrollment. The [profile](./plants/houseplants/aglaonema-commutatum-alpine-spires.md) separates label evidence from general Aglaonema care and includes the ingestion/sap warning.
 
 ## October 21 houseplant additions
 
@@ -50,7 +56,7 @@ Visible water droplets alone did not establish the watering; the later owner rep
 
 ## Terrarium — October 10 arrival photographs
 
-**P38 / #12 — Terrarium**, enrolled October 9, 2026, now has five owner-supplied arrival-condition photographs received October 10. They show a rounded glass jar with a cork lid, probable red-veined _Fittonia albivenis_ and white-speckled _Hypoestes phyllostachya_ (both cultivar unknown), tentative _Pilea_ cf. _depressa_ trailing growth, and unidentified fern-like foliage and moss. [Houseplant-05](./plants/houseplants/terrarium.md) is the aggregate Houseplants profile; these remain qualified visual identifications. The collection retains 45 botanical profile groups and now has three whole-planter overviews. The jar record is: Glass jar with cork lid; seller-listed 6.3 × 3.9 in (16 × 10 cm); dimension orientation unverified. See the [terrarium arrival record](./terrarium.md) for the photographs, owner-reported shipping damage, and remaining setup questions.
+**P38 / #12 — Terrarium**, enrolled October 9, 2026, now has five owner-supplied arrival-condition photographs received October 10. They show a rounded glass jar with a cork lid, probable red-veined _Fittonia albivenis_ and white-speckled _Hypoestes phyllostachya_ (both cultivar unknown), tentative _Pilea_ cf. _depressa_ trailing growth, and unidentified fern-like foliage and moss. [Houseplant-05](./plants/houseplants/terrarium.md) is the aggregate Houseplants profile; these remain qualified visual identifications. P38 adds an aggregate overview without separately allocated botanical members; current collection totals are recorded above. The jar record is: Glass jar with cork lid; seller-listed 6.3 × 3.9 in (16 × 10 cm); dimension orientation unverified. See the [terrarium arrival record](./terrarium.md) for the photographs, owner-reported shipping damage, and remaining setup questions.
 
 **October 24 owner update:** P38 has its original lower layers of **LECA balls and larger volcanic rock**, with a **fluffy, light, coco-coir-containing upper substrate**; the seller's exact recipe is unknown. Current light is reported as **about 6,000–7,000 lux**, with meter position and leaf-level exposure unrecorded. The owner leaves the lid off for a couple of hours if heavy fog persists all day. No direct watering has been reported; it was **misted once on October 23**, after a moisture meter indicated dry. Time and volume are unknown, and this report is not a verified saved Mist event. The seller's **6.3 × 3.9 in (16 × 10 cm)** dimensions may be internal in the owner's view, but orientation, internal size, and usable depth remain unverified.
 

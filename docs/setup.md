@@ -1,10 +1,14 @@
 # Setup and equipment
 
-Last updated: 2026-10-24
+Last updated: 2026-10-28
 
 The [equipment and supplies inventory](./equipment/inventory.md) lists the collection's products and model references. All four wooden tables are the [LEJANEOYE two-tier bamboo side-table model](https://www.amazon.com/dp/B0D25H73ZS), identified September 17; measured tabletop dimensions are recorded separately from seller specifications.
 
-The [container guide](./containers.md) separates the 45 current botanical profile groups from three whole-planter overviews. P19, P20, P30, P35, and P38 are shared plantings with one label, one tracker history, and one current setup per container; P38 keeps its provisional identities within a Houseplants aggregate overview. The P-ID persists when a planting moves to a different pot; repots record a setup boundary rather than a new container ID.
+The [container guide](./containers.md) separates the 46 current botanical profile groups from three whole-planter overviews. P19, P20, P30, P35, and P38 are shared plantings with one label, one tracker history, and one current setup per container; P38 keeps its provisional identities within a Houseplants aggregate overview. The P-ID persists when a planting moves to a different pot; repots record a setup boundary rather than a new container ID.
+
+## October 28 Alpine Spires — setup pending
+
+**P41 / #15 [Alpine Spires Chinese evergreen](./plants/houseplants/aglaonema-commutatum-alpine-spires.md)** was purchased October 28, 2026, at Home Depot for $19.99. The label names _Aglaonema commutatum_, Igneous™ Alpine Spires™; only the tag has been photographed. The owner plans to repot and then supply plant photographs. Current and replacement pot dimensions, drainage, medium, position, room conditions, and leaf-level light are unrecorded. No lamp schedule or table/shelf position is assigned, and no completed repot or watering is inferred. Record the actual setup after repotting; the planting keeps P41.
 
 ## October 21 nursery houseplants — setup pending
 
@@ -44,7 +48,7 @@ The six-inch pot's suitability remains conditional on root-ball fit and drainage
 
 ## Current routine
 
-The collection has **38 tracked containers and 49 profiles: 48 active and one historical**. Recent additions are P31 / #7 Peperomia Bicolor and P32 / #8 Tricolor oyster plant, purchased at Carlson's Greenhouses September 20, and P35 / #9 shared Lithops and P36 / #10 split rock, purchased at Home Depot in Howell, Michigan September 21.
+The collection has **39 tracked containers and 50 profiles: 49 active and one historical**. Recent additions are P31 / #7 Peperomia Bicolor and P32 / #8 Tricolor oyster plant, purchased at Carlson's Greenhouses September 20, and P35 / #9 shared Lithops and P36 / #10 split rock, purchased at Home Depot in Howell, Michigan September 21.
 
 The September 23 Lithops and split-rock repots are **setup 2**, using **80% Molly's Succulent Mix + 20% perlite**. P35 holds four visible Lithops heads in the D'vine Dev Blush Mauve pot, logged as **4.2 in round**; P36 holds one split-rock leaf pair in the Thirtypot speckled-brown pot, logged as **4 in round**. Seller-selected sizes are 4.3 and 4.5 inches, respectively. Routine weights were **1247 g** and **713.5 g**, with dry medium and firm plants; neither batch includes watering or a verified dry baseline. Photographs supplied October 22 place P35 behind Kiwi at the back left and P36 between the shared cactus and square box at the back center-right. Actual drainage, usable internal depth, and leaf-height exposure remain unverified.
 

@@ -1,8 +1,8 @@
 # Pot labels
 
-Last updated: 2026-10-23
+Last updated: 2026-10-28
 
-This is the print reference for 48 active profile records across 38 tracked pot allocations. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
+This is the print reference for 49 active profile records across 39 tracked pot allocations. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
 
 The six August cactus labels are `E1`–`E3` and `F1`–`F3`; their exact mapping
 was recorded from the pots on 2026-08-10. The numbered mapping was also
@@ -518,3 +518,15 @@ LIGHTLY MOIST, NOT SOGGY; NO WHOLE-POT DROUGHT
 P40 | Peperomia obtusifolia | NURSERY LABEL
 PARTIAL DRYING; CHECK BELOW THE SURFACE
 ```
+
+## October 28 Alpine Spires label
+
+**#15 / P41 / Houseplant-08** is [Alpine Spires Chinese evergreen](./houseplants/aglaonema-commutatum-alpine-spires.md), nursery-labelled _Aglaonema commutatum_, Igneous™ Alpine Spires™. The owner reported the October 28 Home Depot purchase for $19.99. The supplied front-tag photograph shows “I'm New”; barcode “trial” wording is owner-reported and unpictured. Repot and specimen photos remain pending.
+
+```text
+#15 | ALPINE SPIRES CHINESE EVERGREEN
+P41 | Aglaonema commutatum | NURSERY LABEL
+CHECK UPPER MIX AND DRAINAGE; IRRITATING IF CHEWED
+```
+
+Use the profile's sourced care guidance; keep this permanent ID when repotting. No fixed watering interval is assigned.

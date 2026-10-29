@@ -157,6 +157,7 @@ const appSheetBulkPlants = [
     "P38",
     "P39",
     "P40",
+    "P41",
 ];
 
 const appSheetBulkHeaders = [
@@ -198,6 +199,7 @@ const appSheetBulkHeaders = [
     ...historyCareHeaders.slice(8, 15),
     "P39 weight (g)",
     "P40 weight (g)",
+    "P41 weight (g)",
 ];
 const appSheetBulkLegacyHeaders = [
     "Round ID",
@@ -2235,8 +2237,8 @@ describe("garden logger weight-state inference and dry-down formulas", () => {
             weight: baselineRow[2],
         }).toStrictEqual({
             length: 36,
-            time: "=XLOOKUP($A2,'Workbook calculations'!$A$2:$A$39,'Workbook calculations'!$C$2:$C$39,\"\")",
-            weight: "=XLOOKUP($A2,'Workbook calculations'!$A$2:$A$39,'Workbook calculations'!$B$2:$B$39,\"\")",
+            time: "=XLOOKUP($A2,'Workbook calculations'!$A$2:$A$40,'Workbook calculations'!$C$2:$C$40,\"\")",
+            weight: "=XLOOKUP($A2,'Workbook calculations'!$A$2:$A$40,'Workbook calculations'!$B$2:$B$40,\"\")",
         });
         expect(baselineRow.join(" ")).not.toMatch(
             /NOW\(|TODAY\(|\$[A-Z]+:\$[A-Z]+/v
@@ -2251,19 +2253,19 @@ describe("garden logger weight-state inference and dry-down formulas", () => {
         ]);
         for (const [index, column] of modelColumns) {
             expect(baselineRow[index]).toContain(
-                `XLOOKUP($A2,'Dry-down models'!$A$2:$A$39,'Dry-down models'!$${column}$2:$${column}$39,"")`
+                `XLOOKUP($A2,'Dry-down models'!$A$2:$A$40,'Dry-down models'!$${column}$2:$${column}$40,"")`
             );
             expect(baselineRow[index]).toContain(
                 "'Workbook calculations'!$I$2=\"Ready\""
             );
             expect(baselineRow[index]).toContain("*1440<=15");
-            expect(baselineRow[index]).toContain("Baselines!$T$2:$T$39,-1)");
+            expect(baselineRow[index]).toContain("Baselines!$T$2:$T$40,-1)");
         }
 
         expect(baselineRow[25]).toContain('Y2<=W2),"",Y2-W2');
         expect(baselineRow[12]).toBe('=IF(OR(AE2="",C2<=0),"",AE2/C2)');
-        expect(baselineRow[8]).toContain("'Dry-down models'!$L$2:$L$39");
-        expect(baselineRow[9]).toContain("'Plant tracker'!$AD$2:$AD$39");
+        expect(baselineRow[8]).toContain("'Dry-down models'!$L$2:$L$40");
+        expect(baselineRow[9]).toContain("'Plant tracker'!$AD$2:$AD$40");
         expect(baselineRow[11]).toContain('TEXT(early,"mmm d")');
         expect(baselineRow[11]).toContain('TEXT(late,"mmm d")');
         expect(baselineRow[32]).toContain("learned cycle");
@@ -2350,7 +2352,7 @@ describe("garden logger weight-state inference and dry-down formulas", () => {
 
             expect(row[5]).toContain('History!$C$2:$C$50001="Repot"');
             expect(row[5]).toContain('History!$U$2:$U$50001<>""');
-            expect(row[5]).toContain("'Plant tracker'!$AB$2:$AB$39");
+            expect(row[5]).toContain("'Plant tracker'!$AB$2:$AB$40");
         }
 
         expect(rows[0]?.[17]).not.toContain("owner estimate");
@@ -2827,9 +2829,18 @@ describe("garden logger workbook refresh and navigation", () => {
             plantPages: 1,
         });
 
+        expect(
+            structuredClone(context.refreshGardenWorkbookPage41())
+        ).toStrictEqual({
+            firstPlant: "P41",
+            lastPlant: "P41",
+            loggerVersion: LOGGER_VERSION,
+            plantPages: 1,
+        });
+
         const pageCalls = calls.filter(([name]) => name === "plant");
 
-        expect(pageCalls).toHaveLength(38);
+        expect(pageCalls).toHaveLength(39);
         expect(structuredClone(pageCalls.map((call) => call[4]))).toStrictEqual(
             plants
         );
@@ -2845,11 +2856,13 @@ describe("garden logger workbook refresh and navigation", () => {
             [20, plants[20]]
         );
 
-        expect(calls.filter(([name]) => name === "organize")).toHaveLength(9);
-        expect(calls.filter(([name]) => name === "toast")).toHaveLength(9);
-        expect(calls.some(([name]) => name === "baselines")).toBe(false);
-        expect(calls.some(([name]) => name === "dashboard")).toBe(false);
+        expect(calls.filter(([name]) => name === "organize")).toHaveLength(10);
+        expect(calls.filter(([name]) => name === "toast")).toHaveLength(10);
+        expect(
+            calls.some(([name]) => name === "baselines" || name === "dashboard")
+        ).toBe(false);
         expect(structuredClone(flushes)).toStrictEqual([
+            "flush",
             "flush",
             "flush",
             "flush",
@@ -2896,7 +2909,7 @@ describe("garden logger workbook refresh and navigation", () => {
 
         expect(() =>
             context.workbookPlantRecords_(incomplete.spreadsheet)
-        ).toThrow(/P40/v);
+        ).toThrow(/P41/v);
     });
 
     it("builds dashboard links and grows sheet capacity only when needed", () => {
@@ -3169,7 +3182,7 @@ describe("garden logger workbook formatting", () => {
             "Calculated as of ← · cached workbook time"
         );
         expect(cells.get("36:2")).toBe("P30");
-        expect(cells.get("3:1")).toBe("=COUNTA('Plant tracker'!$A$2:$A$39)");
+        expect(cells.get("3:1")).toBe("=COUNTA('Plant tracker'!$A$2:$A$40)");
 
         for (const column of [
             15,
@@ -3177,7 +3190,7 @@ describe("garden logger workbook formatting", () => {
             19,
         ]) {
             expect(cells.get(`3:${column}`)).toContain(
-                '&" / "&COUNTIFS(Baselines!$A$2:$A$39,"<>",Baselines!$A$2:$A$39,"<>P39",Baselines!$A$2:$A$39,"<>P40")'
+                '&" / "&COUNTIFS(Baselines!$A$2:$A$40,"<>",Baselines!$A$2:$A$40,"<>P39",Baselines!$A$2:$A$40,"<>P40",Baselines!$A$2:$A$40,"<>P41")'
             );
             expect(cells.get(`3:${column}`)).not.toContain('"<>P38"');
         }
@@ -3717,7 +3730,7 @@ describe("scoped Dashboard weight count installer", () => {
     }
 
     it.each([24, 26])(
-        "installs and reruns idempotently with %i existing columns while preserving everything outside Y6:Y44",
+        "installs and reruns idempotently with %i existing columns while preserving everything outside Y6:Y45",
         (columns) => {
             expect.hasAssertions();
 
@@ -3735,15 +3748,15 @@ describe("scoped Dashboard weight count installer", () => {
             expect(
                 structuredClone(context.installDashboardWeightCounts())
             ).toStrictEqual({
-                plants: 38,
-                range: "Dashboard!Y6:Y44",
+                plants: 39,
+                range: "Dashboard!Y6:Y45",
                 version: LOGGER_VERSION,
             });
 
             const after = structuredClone(rows);
 
             expect(context.installDashboardWeightCounts().range).toBe(
-                "Dashboard!Y6:Y44"
+                "Dashboard!Y6:Y45"
             );
             expect(rows).toStrictEqual(after);
             expect(
@@ -3780,7 +3793,7 @@ describe("scoped Dashboard weight count installer", () => {
                     ]) =>
                         required(column) === 25 &&
                         required(row) >= 6 &&
-                        required(row) + required(height) - 1 <= 44 &&
+                        required(row) + required(height) - 1 <= 45 &&
                         width === 1
                 )
             ).toBe(true);
@@ -3850,7 +3863,7 @@ describe("scoped Dashboard weight count installer", () => {
         sheet.getMaxRows = () => 35;
 
         expect(() => context.installDashboardWeightCounts()).toThrow(
-            "existing plant rows through row 44"
+            "existing plant rows through row 45"
         );
         expect(ranges).toHaveLength(0);
         expect(insertions).toHaveLength(0);
@@ -4534,6 +4547,7 @@ describe("garden logger mobile bootstrap and collection lookups", () => {
             "#12",
             "#13",
             "#14",
+            "#15",
         ];
         required(workbook.sheets.get("Plant tracker"))
             .getRange(2, 15, trackerLabels.length, 1)
@@ -4586,6 +4600,11 @@ describe("garden logger mobile bootstrap and collection lookups", () => {
                 nurseryLabelImageUrl:
                     "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-10-21-p39-p40-leafjoy-labels.jpg",
             },
+            P41: {
+                currentImageUrl: "",
+                nurseryLabelImageUrl:
+                    "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-10-28-p41-alpine-spires-label.jpg",
+            },
             ...expectedPlantImageUrls,
             P31: {
                 currentImageUrl:
@@ -4605,7 +4624,7 @@ describe("garden logger mobile bootstrap and collection lookups", () => {
         });
         expect(plants.at(-1)).toMatchObject({
             currentPotSize: "Not logged",
-            id: "P40",
+            id: "P41",
         });
     });
 
@@ -7215,7 +7234,7 @@ describe("garden logger AppSheet bulk submission and validation", () => {
         expect(round).toStrictEqual(before);
     });
 
-    it("submits a 38-plant AppSheet weight round in one canonical batch", () => {
+    it("submits a 39-plant AppSheet weight round in one canonical batch", () => {
         expect.hasAssertions();
 
         const workbook = createLoggerWorkbook(appSheetBulkPlants);
@@ -7256,7 +7275,7 @@ describe("garden logger AppSheet bulk submission and validation", () => {
         const result = context.processQueuedAppSheetEntries();
 
         expect(batches).toHaveLength(1);
-        expect(batches[0]).toHaveLength(38);
+        expect(batches[0]).toHaveLength(39);
         expect(
             structuredClone(required(batches[0]).map(({ plantId }) => plantId))
         ).toStrictEqual(appSheetBulkPlants);
@@ -7278,10 +7297,10 @@ describe("garden logger AppSheet bulk submission and validation", () => {
         });
         expect(round[appSheetBulkStatusIndex]).toBe("Saved");
         expect(round[appSheetBulkStatusIndex + 1]).toBe(
-            "38 plant updates saved."
+            "39 plant updates saved."
         );
-        expect(round[appSheetBulkStatusIndex + 2]).toBe(38);
-        expect(round[appSheetBulkStatusIndex + 3]).toBe(38);
+        expect(round[appSheetBulkStatusIndex + 2]).toBe(39);
+        expect(round[appSheetBulkStatusIndex + 3]).toBe(39);
         expect(round[appSheetBulkStatusIndex + 4]).toBeInstanceOf(Date);
         expect(result).toMatchObject({
             bulk: {
@@ -7290,9 +7309,9 @@ describe("garden logger AppSheet bulk submission and validation", () => {
                 needsCorrectionCount: 0,
                 processedCount: 1,
                 queuedCount: 1,
-                requestedCount: 38,
+                requestedCount: 39,
                 retryCount: 0,
-                savedRequestCount: 38,
+                savedRequestCount: 39,
                 savedRoundCount: 1,
             },
             ok: true,
@@ -9932,10 +9951,10 @@ describe("garden logger AppSheet staging migration and trigger installation", ()
         });
 
         expect(existingContext.installAppSheetIntake().bulk).toMatchObject({
-            columnCount: 76,
+            columnCount: 77,
             created: false,
             migrated: false,
-            plantCount: 38,
+            plantCount: 39,
         });
 
         const observedDataSheet = dataSheet(
@@ -9973,7 +9992,7 @@ describe("garden logger AppSheet staging migration and trigger installation", ()
         });
 
         expect(v514Context.installAppSheetBulkSheet()).toMatchObject({
-            columnCount: 76,
+            columnCount: 77,
             created: false,
             migrated: true,
         });
@@ -10037,7 +10056,7 @@ describe("garden logger AppSheet staging migration and trigger installation", ()
         });
 
         expect(legacyContext.installAppSheetBulkSheet()).toMatchObject({
-            columnCount: 76,
+            columnCount: 77,
             created: false,
             migrated: true,
         });
@@ -13590,7 +13609,11 @@ describe("leaf VPD canonical retry identity", () => {
 });
 
 describe("october houseplant enrollment", () => {
-    it.each(["P39", "P40"])(
+    it.each([
+        "P39",
+        "P40",
+        "P41",
+    ])(
         "saves and retries a real %s weight without inventing a watering or setup event",
         (plantId) => {
             expect.hasAssertions();
@@ -13677,39 +13700,48 @@ describe("october houseplant enrollment", () => {
         expect(legacy.__rows).toStrictEqual(before);
     });
 
-    it("processes a 74-column pre-enrollment round and appends new columns only on explicit migration", () => {
-        expect.hasAssertions();
+    it.each([
+        { column: 61, plantId: "P38", width: 74 },
+        { column: 74, plantId: "P39", width: 76 },
+        { column: 75, plantId: "P40", width: 76 },
+    ])(
+        "processes a $width-column $plantId pre-enrollment round and appends new columns only on explicit migration",
+        ({ column, plantId, width }) => {
+            expect.hasAssertions();
 
-        const workbook = createLoggerWorkbook(["P38"]);
-        const round = emptyCells(74);
-        round[0] = "PRE-ENROLLMENT-ROUND";
-        round[appSheetBulkActionIndex] = "Weigh";
-        round[61] = 450;
-        round[73] = "Historical support details";
-        round[appSheetBulkStatusIndex] = "Queued";
-        const legacy = createDataSheet("App bulk", [
-            appSheetBulkHeaders.slice(0, 74),
-            round,
-        ]);
-        legacy.setParent(workbook.spreadsheet);
-        workbook.sheets.set("App bulk", legacy);
-        const context = loadAppsScript(workbook.history, {
-            globals: workbook.globals,
-            spreadsheet: workbook.spreadsheet,
-        });
-        context.processQueuedAppSheetEntries();
+            const workbook = createLoggerWorkbook([plantId]);
+            const round = emptyCells(width);
+            round[0] = "PRE-ENROLLMENT-ROUND";
+            round[appSheetBulkActionIndex] = "Weigh";
+            round[column] = 450;
+            round[73] = "Historical support details";
+            round[appSheetBulkStatusIndex] = "Queued";
+            const legacy = createDataSheet("App bulk", [
+                appSheetBulkHeaders.slice(0, width),
+                round,
+            ]);
+            legacy.setParent(workbook.spreadsheet);
+            workbook.sheets.set("App bulk", legacy);
+            const context = loadAppsScript(workbook.history, {
+                globals: workbook.globals,
+                spreadsheet: workbook.spreadsheet,
+            });
+            context.processQueuedAppSheetEntries();
 
-        expect(legacy.getLastColumn()).toBe(74);
-        expect(round[appSheetBulkStatusIndex]).toBe("Saved");
-        expect(required(workbook.history.__rows[1])[1]).toBe("P38");
-        expect(required(workbook.history.__rows[1])[4]).toBe(450);
+            expect(legacy.getLastColumn()).toBe(width);
+            expect(round[appSheetBulkStatusIndex]).toBe("Saved");
+            expect(required(workbook.history.__rows[1])[1]).toBe(plantId);
+            expect(required(workbook.history.__rows[1])[4]).toBe(450);
 
-        const before = structuredClone(round);
+            const before = structuredClone(round);
 
-        expect(context.migrateLegacyAppSheetBulkSheet_(legacy)).toBe(true);
-        expect(legacy.__rows[0]).toStrictEqual(appSheetBulkHeaders);
-        expect(round.slice(0, 74)).toStrictEqual(before);
-        expect(round.slice(74)).toStrictEqual(["", ""]);
-        expect(context.migrateLegacyAppSheetBulkSheet_(legacy)).toBe(false);
-    });
+            expect(context.migrateLegacyAppSheetBulkSheet_(legacy)).toBe(true);
+            expect(legacy.__rows[0]).toStrictEqual(appSheetBulkHeaders);
+            expect(round.slice(0, width)).toStrictEqual(before);
+            expect(round.slice(width)).toStrictEqual(
+                emptyCells(appSheetBulkHeaders.length - width)
+            );
+            expect(context.migrateLegacyAppSheetBulkSheet_(legacy)).toBe(false);
+        }
+    );
 });

@@ -2,11 +2,13 @@
 
 ## Current scope
 
-The collection has **38 tracked containers**. Owner photographs supplied **October 22, 2026** update the recorded arrangement; the capture date was not supplied. The front display still has 24 small pots in six columns and four rows. P35 / #9 Lithops is at the rear left behind Kiwi, and P36 / #10 split rock is at the rear center-right between the shared cactus and square succulent box. P21 / #3 Money Tree is on a stool on the room side of the display; P38 / #12 Terrarium is on the desk to the right. The owner confirmed October 23 that the pale rosette in the grey/blue pot at the back center-left is P37 / #11 Arctic Ice, between P35 Lithops and P19 shared cactus.
+The collection has **39 tracked containers**. Owner photographs supplied **October 22, 2026** update the recorded arrangement; the capture date was not supplied. The front display still has 24 small pots in six columns and four rows. P35 / #9 Lithops is at the rear left behind Kiwi, and P36 / #10 split rock is at the rear center-right between the shared cactus and square succulent box. P21 / #3 Money Tree is on a stool on the room side of the display; P38 / #12 Terrarium is on the desk to the right. The owner confirmed October 23 that the pale rosette in the grey/blue pot at the back center-left is P37 / #11 Arctic Ice, between P35 Lithops and P19 shared cactus.
 
 **October 24 owner update:** P31 / #7 Peperomia Bicolor and P32 / #8 Tricolor oyster plant are on a **kitchen window shelf** with the **FECiDA 54 W six-tube light plus one Juhefa 10 W three-head fixture**. Their completed repots and kitchen move were about two weeks before October 24, with exact dates and times unrecorded. The current medium is approximately **30% perlite + 70% greenhouse houseplant mix**, an owner estimate, in the previously selected Amazon Basics eight-inch drainage pots. Kitchen window orientation, leaf-height light, fixture settings, and internal pot dimensions are unmeasured.
 
 P39 / #13 Nightly nerve plant and P40 / #14 Spice is Nice peperomia remain quarantined in another room. Their **future position is the shelf beside P38 Terrarium**, following the owner's planned October 25 glass-pot repots in 75% Molly's Aroid Mix + 25% Molly's Orchid Mix. The exact shelf geometry, usable pot dimensions, and exposure remain unmeasured; this is a plan rather than a completed move.
+
+**October 28 addition:** P41 / #15 [Alpine Spires Chinese evergreen](../plants/houseplants/aglaonema-commutatum-alpine-spires.md) has no recorded placement or light reading. Repotting and specimen photographs are pending; no cactus-table, kitchen, or terrarium-shelf assignment is inferred.
 
 ## September 21 additions: placement updated October 22
 

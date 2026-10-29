@@ -1553,7 +1553,7 @@ describe("analytics recovery and publication guards", () => {
 
         expect(output.environment).toHaveLength(2);
         expect(output.locations).toHaveLength(1);
-        expect(output.models).toHaveLength(39);
+        expect(output.models).toHaveLength(40);
         expect(output.models.every((row) => row.length === 22)).toBe(true);
     });
 

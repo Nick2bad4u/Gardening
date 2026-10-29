@@ -60,6 +60,7 @@ const plantSheetGids = Object.freeze({
     P38: 202_610_380,
     P39: 202_610_390,
     P40: 202_610_400,
+    P41: 202_610_410,
 });
 
 export const sheetUrls = {
@@ -859,6 +860,7 @@ export function manualCareNote(plantId) {
         P38: "Review the plants and enclosure before choosing a watering method. Recorded intervals do not set a care schedule.",
         P39: "Keep lightly moist with good drainage; check the upper mix and root zone as the surface begins to dry. Avoid saturation and whole-pot drought; do not use a cactus dry-weight plateau.",
         P40: "Allow partial drying; check below the surface and confirm drainage. Avoid persistently wet roots and prolonged whole-pot drought; do not use a cactus dry-weight plateau.",
+        P41: "Allow partial drying; check below the surface and confirm drainage before watering. Avoid persistently wet roots and whole-pot drought; do not use a cactus dry-weight plateau.",
     };
     return notes[plantId] ?? "";
 }

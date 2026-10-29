@@ -1,6 +1,6 @@
 # Practical care notes
 
-Last updated: 2026-10-24
+Last updated: 2026-10-28
 
 Start with the [watering quick guide](./watering-quick-guide.md) for each group's
 drying target. This page brings together the collection's routine checks,
@@ -31,6 +31,10 @@ The owner reports current conditions around **45–50% RH** and temperatures **i
 The [canonical workbook History](https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit), checked October 24, records **P30 / #6 setup 3** on October 8 at **8:12 p.m. EDT**, with **“7 inch shallow”**, **“Molly's Mix only”**, **1,336 g**, and a Water event with **Nutrients: No**. Its older five-inch nursery-soil setup is historical. All four P30 profiles share this one container history.
 
 **P37 / #11 Arctic Ice setup 2** was logged October 8 at **12:09 a.m. EDT**, with **“4.5 inch round 4.25 inch high”**, **1,242 g**, and **1.3 inches tall × 4 inches wide**. The batch also records partial watering with **Nutrients: No**, an owner Check of **Moist / firm with one broken leaf missing**, and five owner photos. Its historical medium field contains **`6`**; the owner clarified October 24 that its current mix is **100% Molly's Succulent Mix, no added perlite**. Do not interpret the partial Water or same-batch weight as a full-soak wet anchor. Both pots still need confirmation of actual drainage and usable internal depth; use current root-zone observations and their existing History records for care.
+
+## October 28 Alpine Spires Chinese evergreen
+
+**P41 / #15 [Alpine Spires Chinese evergreen](./plants/houseplants/aglaonema-commutatum-alpine-spires.md)** is a new Home Depot purchase, nursery-labelled _Aglaonema commutatum_, Igneous™ Alpine Spires™. The tag is documented; repotting, specimen photographs, pot, medium, placement, and starting measurements remain pending. Begin with indirect light and manual moisture checks: allow some upper-mix drying, check below the surface, and drain excess water. Do not apply the cactus whole-pot dry plateau or set a watering calendar. Keep it away from chewing pets and children; plant tissue and sap can irritate. The profile's Sources section supports this general Aglaonema guidance without claiming cultivar-specific tolerances.
 
 ## October 21 nursery houseplants
 

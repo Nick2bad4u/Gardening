@@ -877,7 +877,11 @@ function identificationLabel(markdown) {
         [/seller-labeled.*but probable/v, "Likely Revised ID"],
         [/^seller-labeled/v, "Seller Label"],
         [/^owner-associated.*listing/v, "Owner-Associated Listing"],
-        [/^labeled/v, "Nursery Label"],
+        [
+            /^owner-confirmed specimen.*cultivar name follows.*listing/v,
+            "Owner-Associated Listing",
+        ],
+        [/^(?:labeled|nursery-labell?ed)/v, "Nursery Label"],
         [/^very high/v, "Very Strong Match"],
         [/^high/v, "Strong Match"],
         [/^probable cultivar/v, "Likely Cultivar"],

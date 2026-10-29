@@ -36,5 +36,6 @@
     { "hex": "#74A6B0", "id": "P37", "name": "Ice blue" },
     { "hex": "#3D9C89", "id": "P38", "name": "Fern teal" },
     { "hex": "#C15C82", "id": "P39", "name": "Fittonia pink" },
-    { "hex": "#356F48", "id": "P40", "name": "Peperomia green" }
+    { "hex": "#356F48", "id": "P40", "name": "Peperomia green" },
+    { "hex": "#A95770", "id": "P41", "name": "Aglaonema rose" }
 ]

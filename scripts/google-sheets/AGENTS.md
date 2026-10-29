@@ -50,8 +50,9 @@
   No quantum-sensor claim/conversion/DLI/inferred care threshold.
   Preset/context stays in Notes; light fields stay App entries AJ/AK, History AR/AS.
   No bulk Light/Humidity/Temperature.
-- History A:BO/67; App entries A:BG/59; App bulk A:BX/76. P39/P40 weights append
-  at BW/BX; preserve A:BV and compatibility with unupgraded 74-column staging.
+- History A:BO/67; App entries A:BG/59; App bulk A:BY/77. P39/P40 weights remain
+  at BW/BX; P41 appends at BY. Preserve A:BX and compatibility with unupgraded
+  74- and 76-column staging until an explicit inventory upgrade.
   Leaf/air temperatures:
   staging uses unitless headers plus entry units; History uses °C headers.
   Preserve positions/offline rows and aligned retries/corrections.

@@ -508,7 +508,7 @@ describe("guarded workbook environment plan", () => {
         );
 
         expect(formula.startsWith(previous.slice(0, -1))).toBe(true);
-        expect(formula).toContain("ISERROR('Light & humidity'!A1:J5190)");
+        expect(formula).toContain("ISERROR('Light & humidity'!A1:J5191)");
         expect(formula).toContain("ISERROR('Environment data'!M1:R5000)");
         expect(formula).toContain("ISERROR(History!AQ2:AS5000)");
         expect(formula).not.toContain("Dashboard!U3");
@@ -574,8 +574,8 @@ describe("guarded workbook environment plan", () => {
                 ].includes(request.updateCells.start.sheetId)
             )
         ).toBe(true);
-        expect(plan.verification.selector).toBe("B118");
-        expect(plan.verification.evidence).toBe("A191:J5190");
+        expect(plan.verification.selector).toBe("B119");
+        expect(plan.verification.evidence).toBe("A192:J5191");
     });
 
     it("rejects schema/header drift, inventory drift, existing destinations and chart-ID collisions", () => {
@@ -733,8 +733,8 @@ describe("guarded workbook environment plan", () => {
             formulas.some((formula) => formula.includes("IFNA(LOOKUP"))
         ).toBe(false);
         expect(formulas.slice(-2)).toStrictEqual([
-            "=XLOOKUP(1,ARRAYFORMULA(('Environment data'!$B$2:$B$5000=\"P40\")*ISNUMBER('Environment data'!$F$2:$F$5000)),'Environment data'!$F$2:$F$5000,\"\",0,-1)",
-            "=XLOOKUP(1,ARRAYFORMULA(('Environment data'!$B$2:$B$5000=\"P40\")*ISNUMBER('Environment data'!$F$2:$F$5000)),'Environment data'!$A$2:$A$5000,\"\",0,-1)",
+            "=XLOOKUP(1,ARRAYFORMULA(('Environment data'!$B$2:$B$5000=\"P41\")*ISNUMBER('Environment data'!$F$2:$F$5000)),'Environment data'!$F$2:$F$5000,\"\",0,-1)",
+            "=XLOOKUP(1,ARRAYFORMULA(('Environment data'!$B$2:$B$5000=\"P41\")*ISNUMBER('Environment data'!$F$2:$F$5000)),'Environment data'!$A$2:$A$5000,\"\",0,-1)",
         ]);
     });
 });

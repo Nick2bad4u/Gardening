@@ -65,6 +65,7 @@ const otherPositions = new Map([
     ["P38", "Desk to right of tables"],
     ["P39", "Quarantine in another room"],
     ["P40", "Quarantine in another room"],
+    ["P41", "Position unrecorded"],
 ]);
 
 /**

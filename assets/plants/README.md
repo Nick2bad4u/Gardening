@@ -54,6 +54,7 @@ the collection plant has the same identification.
 | Houseplant-04 | `#8`                 | _Tradescantia spathacea Tricolor_ - Tricolor oyster plant                       |     10 | [profile](../../docs/plants/houseplants/tradescantia-spathacea-tricolor.md)          | [open](./tradescantia-spathacea-tricolor/)                |
 | Houseplant-06 | `#13`                | _Fittonia albivenis_ - Nightly nerve plant                                      |     10 | [profile](../../docs/plants/houseplants/fittonia-albivenis-nightly.md)               | [open](./fittonia-albivenis-nightly/)                     |
 | Houseplant-07 | `#14`                | _Peperomia obtusifolia_ - Spice is Nice peperomia                               |     10 | [profile](../../docs/plants/houseplants/peperomia-obtusifolia-spice-is-nice.md)      | [open](./peperomia-obtusifolia-spice-is-nice/)            |
+| Houseplant-08 | `#15`                | _Aglaonema commutatum_ - Alpine Spires Chinese evergreen                        |     10 | [profile](../../docs/plants/houseplants/aglaonema-commutatum-alpine-spires.md)       | [open](./aglaonema-commutatum-alpine-spires/)             |
 
 See [ATTRIBUTION.md](./ATTRIBUTION.md) for a compact attribution table and
 [photo-manifest.json](./photo-manifest.json) for machine-readable metadata and hashes.

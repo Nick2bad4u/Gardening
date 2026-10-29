@@ -20,8 +20,8 @@ describe("watering placement source", () => {
         const placements = await getWateringPlacements();
         const ids = new Set(placements.map(({ id }) => id));
 
-        expect(placements).toHaveLength(38);
-        expect(ids.size).toBe(38);
+        expect(placements).toHaveLength(39);
+        expect(ids.size).toBe(39);
         expect(
             placements
                 .map(({ id }) => id)
@@ -136,6 +136,7 @@ describe("watering placement source", () => {
             { id: "P38", position: "Desk to right of tables" },
             { id: "P39", position: "Quarantine in another room" },
             { id: "P40", position: "Quarantine in another room" },
+            { id: "P41", position: "Position unrecorded" },
         ]);
         expect(others[0]).toMatchObject({ x: 170, y: 1305 });
         expect(others[5]).toMatchObject({ x: 390, y: 1435 });

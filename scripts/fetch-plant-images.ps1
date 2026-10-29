@@ -545,6 +545,17 @@ $plantCatalog = @(
         CommonsSearch = 'Peperomia obtusifolia'
         INaturalistName = 'Peperomia obtusifolia'
         ScopeNote = 'Species-reference photographs may show plain green or variegated Peperomia obtusifolia selections; none is assumed to show Savory Delights Spice is Nice. The owned plant''s exact cultivar is unverified.'
+    },
+    [pscustomobject]@{
+        Id = 'Houseplant-08'
+        LabelId = '#15'
+        Slug = 'aglaonema-commutatum-alpine-spires'
+        ScientificName = 'Aglaonema commutatum'
+        CommonName = 'Alpine Spires Chinese evergreen'
+        CommonsCategory = 'Aglaonema commutatum'
+        CommonsSearch = 'Aglaonema commutatum'
+        INaturalistName = 'Aglaonema commutatum'
+        ScopeNote = 'Species-reference photographs may show other leaf colors or named selections of Aglaonema commutatum; none is assumed to show Igneous Alpine Spires. They are not photographs of P41 and do not establish the owned plant''s cultivar identity.'
     }
 )
 
@@ -587,6 +598,9 @@ $rejectedSourceUrls = @(
 # File metadata does not always name a visible flower. These visually checked
 # overrides keep the lifecycle labels honest without guessing from plant size.
 $subjectOverrides = @{
+    'https://commons.wikimedia.org/wiki/File:Aglaonema_commutatum_(lipstick).jpg' = 'habit'
+    'https://commons.wikimedia.org/wiki/File:Aglaonema_commutatum_%27Silver_Queen%27_in_Hyogo_Prefectural_Flower_Center.jpg' = 'habit'
+    'https://commons.wikimedia.org/wiki/File:%E7%99%BD%E9%A6%AC%E7%B2%97%E8%82%8B%E8%8D%89_Aglaonema_commutatum_%27White_Tip%27_-%E9%A6%99%E6%B8%AF%E5%85%AC%E5%9C%92_Hong_Kong_Park-_(14599546520).jpg' = 'flower'
     'https://commons.wikimedia.org/wiki/File:Nerve_plant_@_Leyam,_Vadakkethara,_Thenkurissi,_Palakkad.jpg' = 'flower'
     'https://commons.wikimedia.org/wiki/File:Peperomia_obtusifolia_(baby_rubber_plant)_4.jpg' = 'habit'
     'https://commons.wikimedia.org/wiki/File:Aeonium_haworthii_PICT3759.jpg' = 'flower'

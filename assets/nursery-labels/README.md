@@ -191,3 +191,27 @@ Copyright Nick; all rights reserved. These local evidence copies are available
 to the field guide; dedicated Gyazo Collections and remote publication remain
 pending. The photography setting does not establish final plant placement,
 pot dimensions, medium, or a watering event.
+
+## October 28 Alpine Spires label
+
+One full-frame photograph supplied October 28, 2026 documents the front tag
+for **P41 / #15 / Houseplant-08**. The owner reports purchasing the plant that
+day at Home Depot for $19.99; exact capture time, store location, and receipt
+are unrecorded. The actual specimen has not yet been photographed, and the
+owner plans to supply photographs after repotting.
+
+| File                                                                      | Evidence role                                                                                                                   |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| [P41 Alpine Spires front label](./2026-10-28-p41-alpine-spires-label.jpg) | Proven Winners leafjoy; Igneous™ Alpine Spires™; _Aglaonema commutatum_; visible “I'm New” badge; printed plant reference image |
+
+The tag also shows Atrium, Cocoon, SpaScene, and WorkLife placement categories;
+these do not establish measured growing conditions. Barcode wording “trial”
+and seeing only one plant in the store are owner reports; the barcode side is
+not visible. Neither observation proves rarity or a commercial release date.
+
+The original supplied image remains private. The maintained JPEG sanitizer
+removed private metadata without cropping, resizing, or re-encoding the primary
+image. The publication copy retains the supplied 960 × 1280 resolution; a
+decoded-pixel comparison found zero changed pixels. Copyright Nick; all rights
+reserved. This is nursery-label evidence, separate from pending specimen
+photographs and repot/setup evidence.

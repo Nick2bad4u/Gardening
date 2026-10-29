@@ -203,6 +203,7 @@ export function appsScriptApi(context) {
         refreshGardenWorkbookPage38: null,
         refreshGardenWorkbookPage39: null,
         refreshGardenWorkbookPage40: null,
+        refreshGardenWorkbookPage41: null,
         refreshGardenWorkbookPages01To10: null,
         refreshGardenWorkbookPages11To20: null,
         refreshGardenWorkbookPages21To30: null,

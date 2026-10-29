@@ -223,7 +223,7 @@ describe("dashboard rolling measured minimum", () => {
             dashboardWeightWindowHeaders
         );
 
-        for (const row of [7, 44])
+        for (const row of [7, 45])
             expect(nativeFormula(row)).toBe(dashboardMinimumWeightFormula(row));
         const formula = dashboardMinimumWeightFormula(7);
 
@@ -246,7 +246,7 @@ describe("dashboard rolling measured minimum", () => {
 
         expect(snapshot).toStrictEqual(before);
         expect(plan.ranges).toStrictEqual([
-            "Dashboard!AF6:AG44",
+            "Dashboard!AF6:AG45",
             "Integrity!B12",
         ]);
         expect(plan.requests[0]).toStrictEqual({
@@ -299,7 +299,7 @@ describe("dashboard rolling measured minimum", () => {
         dashboard.basicFilter = {
             range: {
                 endColumnIndex: 31,
-                endRowIndex: 44,
+                endRowIndex: 45,
                 sheetId: 1,
                 startColumnIndex: 0,
                 startRowIndex: 5,
@@ -312,7 +312,7 @@ describe("dashboard rolling measured minimum", () => {
         ).toBe(false);
         expect(plan.requests.at(-1)).toMatchObject({
             setBasicFilter: {
-                filter: { range: { endColumnIndex: 33, endRowIndex: 44 } },
+                filter: { range: { endColumnIndex: 33, endRowIndex: 45 } },
             },
         });
     });
@@ -364,7 +364,7 @@ describe("dashboard rolling measured minimum", () => {
                 bandedRangeId: 77,
                 range: {
                     endColumnIndex: 31,
-                    endRowIndex: 44,
+                    endRowIndex: 45,
                     sheetId: 1,
                     startColumnIndex: 0,
                     startRowIndex: 5,

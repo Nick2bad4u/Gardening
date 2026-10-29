@@ -26,6 +26,13 @@ Quick log is hidden for compatibility; use the mobile logger or AppSheet for rou
 
 ## Identity and Common Fields
 
+The maintained P41 / #15 Alpine Spires enrollment leaves pot size, substrate,
+placement, repotting, and initial measurements pending. Its nursery-label image
+is not a specimen photo. Record its first real measurements through the ordinary
+actions; use partial-drying moisture checks and drainage rather than a cactus
+dry-weight trigger. The [deployment record](../scripts/google-sheets/README.md#october-28-alpine-spires-enrollment-candidate)
+distinguishes the maintained enrollment from verified production availability.
+
 - **P-ID** identifies the tracked plant/container over time. **Pot label** is the physical label such as A1 or #2. Saved rows retain the label at entry, so an old label can be correct historical evidence.
 - **Observed at / Started at / Date** means when the action or measurement happened. Backdate an observation to its real time when appropriate; **Recorded** separately stores when it was saved.
 - In the phone logger, **Observed at** uses the current time when you save or queue an entry. Edit it to record earlier care, or choose **Use current time** to resume automatic timing. Queued entries and retries keep their original observation time.

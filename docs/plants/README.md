@@ -1,8 +1,10 @@
 # Plant profiles
 
-Last updated: 2026-10-24
+Last updated: 2026-10-28
 
-These **49 pages cover 48 active profile records and one historical record, across 38 tracker allocations**. Each profile combines identification, botanical background, collection photographs, and practical care for its current pot. Use the guides with plant-condition and moisture checks rather than a fixed watering calendar.
+These **50 pages cover 49 active profile records and one historical record, across 39 tracker allocations**. Each profile combines identification, botanical background, collection photographs, and practical care for its current pot. Use the guides with plant-condition and moisture checks rather than a fixed watering calendar.
+
+**October 28 acquisition:** [Alpine Spires Chinese evergreen](./houseplants/aglaonema-commutatum-alpine-spires.md) is **Houseplant-08 / #15 / P41**, nursery-labelled _Aglaonema commutatum_, Igneous™ Alpine Spires™. Home Depot purchase for $19.99; the tag is documented, while repotting, specimen photographs, physical setup, and placement remain pending.
 
 **New acquisition:** [Arctic Ice echeveria](./succulents/echeveria-arctic-ice.md)
 is enrolled as **Succulent-17 / #11 / P37**, acquired October 6, 2026 at Home
@@ -24,7 +26,7 @@ the best current match and the evidence that could confirm or change it. The
 [pot-label reference](./labels.md) collects the print layouts, native origins,
 publication years, warnings, and orientation instructions.
 
-The [container guide](../containers.md) separates 45 current botanical profile
+The [container guide](../containers.md) separates 46 current botanical profile
 groups from three whole-planter overviews. Documented botanical members of shared
 planters have their own profiles; the terrarium retains provisional identities
 within its overview. Each container keeps one P-ID and care history. Use the
@@ -122,14 +124,15 @@ The owner bought both Lithops nursery pots and the split rock at Home Depot, How
 
 ## Houseplants
 
-| Inventory ID  | Label ID | Profile                                                                                                         | Identification status                                                                                                    |
-| ------------- | -------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Houseplant-01 | `#3`     | [Money tree (_Pachira glabra_)](./houseplants/pachira-glabra.md)                                                | Genus tag; working species ID                                                                                            |
-| Houseplant-03 | `#7`     | [Peperomia Bicolor (_Peperomia obtusifolia_ 'Obtipan Bicolor')](./houseplants/peperomia-obtipan-bicolor.md)     | Nursery-labeled cultivar; P31; purchased 2026-09-20                                                                      |
-| Houseplant-04 | `#8`     | [Tricolor oyster plant (_Tradescantia spathacea_ 'Tricolor')](./houseplants/tradescantia-spathacea-tricolor.md) | Nursery-labeled under _Rhoeo_; P32; purchased 2026-09-20                                                                 |
-| Houseplant-05 | `#12`    | [Terrarium](./houseplants/terrarium.md)                                                                         | Aggregate; photo-based probable and tentative identities; P38                                                            |
-| Houseplant-06 | `#13`    | [Nightly nerve plant](./houseplants/fittonia-albivenis-nightly.md)                                              | Nursery-labelled Fittonia albivenis, Network News™ Nightly™; P39; purchased 2026-10-21 at Home Depot, Howell             |
-| Houseplant-07 | `#14`    | [Spice is Nice peperomia](./houseplants/peperomia-obtusifolia-spice-is-nice.md)                                 | Nursery-labelled Peperomia obtusifolia, Savory Delights™ Spice is Nice™; P40; purchased 2026-10-21 at Home Depot, Howell |
+| Inventory ID  | Label ID | Profile                                                                                                         | Identification status                                                                                                                       |
+| ------------- | -------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Houseplant-01 | `#3`     | [Money tree (_Pachira glabra_)](./houseplants/pachira-glabra.md)                                                | Genus tag; working species ID                                                                                                               |
+| Houseplant-03 | `#7`     | [Peperomia Bicolor (_Peperomia obtusifolia_ 'Obtipan Bicolor')](./houseplants/peperomia-obtipan-bicolor.md)     | Nursery-labeled cultivar; P31; purchased 2026-09-20                                                                                         |
+| Houseplant-04 | `#8`     | [Tricolor oyster plant (_Tradescantia spathacea_ 'Tricolor')](./houseplants/tradescantia-spathacea-tricolor.md) | Nursery-labeled under _Rhoeo_; P32; purchased 2026-09-20                                                                                    |
+| Houseplant-05 | `#12`    | [Terrarium](./houseplants/terrarium.md)                                                                         | Aggregate; photo-based probable and tentative identities; P38                                                                               |
+| Houseplant-06 | `#13`    | [Nightly nerve plant](./houseplants/fittonia-albivenis-nightly.md)                                              | Nursery-labelled Fittonia albivenis, Network News™ Nightly™; P39; purchased 2026-10-21 at Home Depot, Howell                                |
+| Houseplant-07 | `#14`    | [Spice is Nice peperomia](./houseplants/peperomia-obtusifolia-spice-is-nice.md)                                 | Nursery-labelled Peperomia obtusifolia, Savory Delights™ Spice is Nice™; P40; purchased 2026-10-21 at Home Depot, Howell                    |
+| Houseplant-08 | `#15`    | [Alpine Spires Chinese evergreen](./houseplants/aglaonema-commutatum-alpine-spires.md)                          | Nursery-labelled Aglaonema commutatum, Igneous™ Alpine Spires™; P41; purchased 2026-10-28 at Home Depot for $19.99; specimen photos pending |
 
 Nightly nerve plant and Spice is Nice peperomia remain quarantined in another room. The owner plans October 25 glass-pot repots in 75% Molly's Aroid Mix + 25% Molly's Orchid Mix and a later position on the shelf beside P38. Irregular pot dimensions and photographs remain pending; no completed repot is reported. The October 21 owner-reported RO watering remains dated evidence; see the [setup record](../setup.md).
 

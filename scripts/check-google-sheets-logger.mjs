@@ -83,7 +83,7 @@ assert.ok(
     isImageUrls(webPlantImageUrls),
     "Logger image URLs must have the expected record shape."
 );
-assert.equal(Object.keys(webPlantImageUrls).length, 34);
+assert.equal(Object.keys(webPlantImageUrls).length, 35);
 assert.ok(
     Object.entries(webPlantImageUrls)
         .filter(
@@ -93,6 +93,7 @@ assert.ok(
                     "P32",
                     "P39",
                     "P40",
+                    "P41",
                 ].includes(id)
         )
         .every(([, { currentImageUrl }]) =>
@@ -648,6 +649,15 @@ for (const payload of [
     assert.equal(provenance[2], payload.ppfd === 0 ? "Estimated" : "Measured");
     assert.equal(provenance[8], payload.ppfd === 0 ? "Light app" : "Lux meter");
 }
+const alpineSpiresImage = required(
+    webPlantImageUrls["P41"],
+    "P41 label-only image record"
+);
+assert.equal(alpineSpiresImage.currentImageUrl, "");
+assert.equal(
+    alpineSpiresImage.nurseryLabelImageUrl,
+    "https://nick2bad4u.github.io/Gardening/assets/nursery-labels/2026-10-28-p41-alpine-spires-label.jpg"
+);
 const inspectProvenance = strings(
     loggerFunction("historyProvenanceRow_")(
         {},
@@ -659,7 +669,7 @@ const inspectProvenance = strings(
 assert.equal(inspectProvenance[2], "Observed");
 assert.equal(inspectProvenance[8], "Observed");
 const appSheetBulkHeaders = strings(evaluateLogger("APP_SHEET_BULK_HEADERS"));
-assert.equal(appSheetBulkHeaders.length, 76);
+assert.equal(appSheetBulkHeaders.length, 77);
 assert.deepEqual(appSheetBulkHeaders.slice(62, 74), [
     ...careHeaders.slice(0, 5),
     ...careHeaders.slice(8, 15),
@@ -682,6 +692,7 @@ assert.deepEqual(
 assert.deepEqual(appSheetBulkHeaders.slice(74), [
     "P39 weight (g)",
     "P40 weight (g)",
+    "P41 weight (g)",
 ]);
 assert.equal(appSheetBulkHeaders[36], "Notes");
 assert.equal(appSheetBulkHeaders[39], "Status");
@@ -1266,11 +1277,11 @@ const forecastFormulaRow = strings(
 );
 assert.match(
     required(forecastFormulaRow[20], "forecast formula"),
-    /'Dry-down models'!\$E\$2:\$E\$39/v
+    /'Dry-down models'!\$E\$2:\$E\$40/v
 );
 assert.match(
     required(forecastFormulaRow[30], "forecast formula"),
-    /'Dry-down models'!\$G\$2:\$G\$39/v
+    /'Dry-down models'!\$G\$2:\$G\$40/v
 );
 assert.doesNotMatch(
     required(forecastFormulaRow[30], "forecast formula"),
@@ -1401,7 +1412,7 @@ function isCallable(value) {
 
 /**
  * @param {unknown} value @returns {value is Record<string, {currentImageUrl:
- *   string}>}
+ *   string; nurseryLabelImageUrl?: string}>}
  */
 function isImageUrls(value) {
     return (

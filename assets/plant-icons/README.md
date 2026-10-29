@@ -2,7 +2,7 @@
 
 These standalone multicolor SVGs are generated from
 [`assets/artwork/plant-icons.svg`](../artwork/plant-icons.svg).
-The 57 files cover 49 field-guide profiles (including the historical removed
+The 58 files cover 50 field-guide profiles (including the historical removed
 profile), five archived plant portraits, and three whole-planter portraits.
 They can be used without loading the complete sprite. The current shared-pot
 portraits are
