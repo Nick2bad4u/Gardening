@@ -52,6 +52,16 @@ image and does not establish rarity or a registered cultivar name. The
 [plant profile](../../docs/plants/houseplants/aglaonema-commutatum-alpine-spires.md)
 keeps those evidence distinctions.
 
+**October 29 evidence follow-up:** the new barcode photograph directly shows
+`PW Leafjoy Trial 12cm`, sticker price **$19.98**, UPC **810160692423**, and
+`Grown by TPC- Stuarts Draft, VA`. The original **$19.99** remains the owner's
+reported payment, without a supplied receipt or correction. The front photo is
+a decoded-pixel duplicate and reuses the existing archive. Both images remain
+label evidence; retail 12cm is not a measured pot dimension or repot record.
+The profile also records the matching [leafjoy store listing](https://leafjoystore.com/products/igneous-alpine-spires),
+found by the owner October 29, with source qualifications. Original one-time
+enrollment statements below describe the evidence available at that rollout.
+
 Pot dimensions, drainage, medium, placement, prior care, and starting measurements
 remain unrecorded. Repotting and specimen photographs are pending. P41 has manual
 partial-drying guidance: inspect the mix below the surface and confirm drainage;

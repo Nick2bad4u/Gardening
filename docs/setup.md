@@ -1,6 +1,6 @@
 # Setup and equipment
 
-Last updated: 2026-10-28
+Last updated: 2026-10-29
 
 The [equipment and supplies inventory](./equipment/inventory.md) lists the collection's products and model references. All four wooden tables are the [LEJANEOYE two-tier bamboo side-table model](https://www.amazon.com/dp/B0D25H73ZS), identified September 17; measured tabletop dimensions are recorded separately from seller specifications.
 
@@ -9,6 +9,8 @@ The [container guide](./containers.md) separates the 46 current botanical profil
 ## October 28 Alpine Spires — setup pending
 
 **P41 / #15 [Alpine Spires Chinese evergreen](./plants/houseplants/aglaonema-commutatum-alpine-spires.md)** was purchased October 28, 2026, at Home Depot for $19.99. The label names _Aglaonema commutatum_, Igneous™ Alpine Spires™; only the tag has been photographed. The owner plans to repot and then supply plant photographs. Current and replacement pot dimensions, drainage, medium, position, room conditions, and leaf-level light are unrecorded. No lamp schedule or table/shelf position is assigned, and no completed repot or watering is inferred. Record the actual setup after repotting; the planting keeps P41.
+
+**October 29 barcode evidence:** the sticker says “PW Leafjoy Trial 12cm”. This is a retail designation, not a measured pot diameter, depth, usable root volume, or drainage confirmation. Its $19.98 sticker price remains separate from the owner-reported $19.99 paid on October 28. “Grown by TPC- Stuarts Draft, VA” identifies the sticker's grower location, not the owner's room or purchase store. The new photograph supplies no specimen or completed-repot evidence; see the [profile barcode record](./plants/houseplants/aglaonema-commutatum-alpine-spires.md#october-29-barcode-evidence).
 
 ## October 21 nursery houseplants — setup pending
 

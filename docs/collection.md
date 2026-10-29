@@ -1,6 +1,6 @@
 # Plant collection
 
-Last updated: 2026-10-28
+Last updated: 2026-10-29
 
 This is the current working inventory plus historical records for plants
 removed from the collection. Photo-based identifications are marked as probable, with nursery names retained alongside them.
@@ -32,7 +32,7 @@ each container's member list, care context, and existing history.
 
 ## October 28 Alpine Spires acquisition
 
-**Houseplant-08 / #15 / P41** is [Alpine Spires Chinese evergreen](./plants/houseplants/aglaonema-commutatum-alpine-spires.md), nursery-labelled _Aglaonema commutatum_, Igneous™ Alpine Spires™. The owner bought it **October 28, 2026, at Home Depot for $19.99**; store location and receipt are unrecorded. The supplied photograph documents the leafjoy tag and its “I'm New” badge. The owner reports barcode wording “trial” and seeing only one in the store; the barcode side is not pictured, and these observations do not establish rarity or a release date.
+**Houseplant-08 / #15 / P41** is [Alpine Spires Chinese evergreen](./plants/houseplants/aglaonema-commutatum-alpine-spires.md), nursery-labelled _Aglaonema commutatum_, Igneous™ Alpine Spires™. The owner bought it **October 28, 2026, at Home Depot for $19.99**; store location and receipt are unrecorded. The supplied photograph documents the leafjoy tag and its “I'm New” badge. The owner reported barcode wording “trial” and seeing only one in the store. The barcode photograph supplied October 29 now documents “PW Leafjoy Trial 12cm”, a **$19.98 sticker price**, UPC `810160692423`, and grower wording “TPC- Stuarts Draft, VA”. Keep the sticker price separate from the owner-reported **$19.99 paid**; no receipt or payment correction was supplied. “Trial” does not establish rarity or a release date; retail 12cm is not an actual pot measurement, and the grower location is not the store or owner location.
 
 Repotting and photographs of the actual plant are planned. Current pot, medium, drainage, placement, light, and initial measurements remain unrecorded. Use manual moisture checks and indirect-light acclimation; no care event or dry-weight baseline is created by enrollment. The [profile](./plants/houseplants/aglaonema-commutatum-alpine-spires.md) separates label evidence from general Aglaonema care and includes the ingestion/sap warning.
 

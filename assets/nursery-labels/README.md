@@ -192,7 +192,7 @@ to the field guide; dedicated Gyazo Collections and remote publication remain
 pending. The photography setting does not establish final plant placement,
 pot dimensions, medium, or a watering event.
 
-## October 28 Alpine Spires label
+## October 28–29 Alpine Spires labels
 
 One full-frame photograph supplied October 28, 2026 documents the front tag
 for **P41 / #15 / Houseplant-08**. The owner reports purchasing the plant that
@@ -200,18 +200,29 @@ day at Home Depot for $19.99; exact capture time, store location, and receipt
 are unrecorded. The actual specimen has not yet been photographed, and the
 owner plans to supply photographs after repotting.
 
-| File                                                                      | Evidence role                                                                                                                   |
-| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| [P41 Alpine Spires front label](./2026-10-28-p41-alpine-spires-label.jpg) | Proven Winners leafjoy; Igneous™ Alpine Spires™; _Aglaonema commutatum_; visible “I'm New” badge; printed plant reference image |
+On October 29 the owner supplied the barcode sticker and the same front view.
+The resupplied front has identical decoded pixels to the existing archive, so
+it reuses that file. The new sticker shows **PW Leafjoy Trial 12cm**, **$19.98**,
+UPC **810160692423**, the code **PBS**, and **Grown by TPC- Stuarts Draft, VA**.
+The SKU is blurred and is not transcribed. The sticker price is separate from
+the earlier owner-reported $19.99 payment; no receipt or price correction was
+supplied. The grower-location text is not the store or owner's location.
 
-The tag also shows Atrium, Cocoon, SpaScene, and WorkLife placement categories;
-these do not establish measured growing conditions. Barcode wording “trial”
-and seeing only one plant in the store are owner reports; the barcode side is
-not visible. Neither observation proves rarity or a commercial release date.
+| File                                                                            | Evidence role                                                                                                                                 |
+| ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| [P41 Alpine Spires front label](./2026-10-28-p41-alpine-spires-label.jpg)       | Proven Winners leafjoy; Igneous™ Alpine Spires™; _Aglaonema commutatum_; visible “I'm New” badge; printed plant reference image               |
+| [P41 Alpine Spires barcode sticker](./2026-10-29-p41-alpine-spires-barcode.jpg) | Photographed trial wording, 12cm retail designation, sticker price, UPC, PBS code, and grower text; supplied October 29, capture date unknown |
 
-The original supplied image remains private. The maintained JPEG sanitizer
+The front tag also shows Atrium, Cocoon, SpaScene, and WorkLife placement
+categories; these do not establish measured growing conditions. “Trial” is now
+photographed label wording; seeing only one plant in the store remains the
+owner's report. Neither establishes rarity or a commercial release date. The
+12cm retail text is not a measured current pot dimension, confirmed drainage,
+or completed repot.
+
+The supplied originals remain private. The maintained JPEG sanitizer
 removed private metadata without cropping, resizing, or re-encoding the primary
-image. The publication copy retains the supplied 960 × 1280 resolution; a
-decoded-pixel comparison found zero changed pixels. Copyright Nick; all rights
+images. Both publication copies retain the supplied 960 × 1280 resolution;
+decoded-pixel comparisons found zero changed pixels. Copyright Nick; all rights
 reserved. This is nursery-label evidence, separate from pending specimen
 photographs and repot/setup evidence.

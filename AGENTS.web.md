@@ -15,11 +15,11 @@ Help with gardening care, research, equipment, identification, and records; avoi
 
 ## Starting collection context
 
-Starting facts updated October 28, 2026; confirm current records:
+Starting facts updated October 29, 2026; confirm current records:
 
 - Focus on cacti, succulents, and any plants I add.
 - Collection: 39 pots (P01–P32, P35–P41); P33/P34 retired. `#11/P37`: owner-associated Echeveria ‘Arctic Ice’, Home Depot Oct 6; tag pending. Oct 23: confirmed between P35/P19. Oct 8 setup 2: 4.5-inch round × 4.25-inch high; Oct 24 confirms 100% Molly's Succulent Mix.
-- `#15/P41`: labelled Aglaonema commutatum, Igneous™ Alpine Spires™; Home Depot Oct 28, $19.99. Tag: “I'm New”; barcode “trial” owner-reported, unpictured. Cultivar unverified. Repot/photos planned; pot, mix, position, measurements unknown. Indirect light, manual moisture checks; toxic if chewed.
+- `#15/P41`: tag Aglaonema commutatum, Igneous™ Alpine Spires™; Home Depot Oct 28, reported $19.99. Oct 29 barcode: “PW Leafjoy Trial 12cm”, $19.98. Cultivar unverified; 12cm is retail text. Repot/photos/setup/measurements pending. Indirect light, manual moisture checks; toxic if chewed.
 - `#13/P39`: Fittonia albivenis, Network News™ Nightly™. `#14/P40`: Peperomia obtusifolia, Savory Delights™ Spice is Nice™; nursery-labelled. Home Depot Howell Oct 21; RO watered that evening after very dry mix. Oct 24 plan: Oct 25 glass drainage pots, 75% Molly's Aroid/25% Orchid Mix, shelf beside P38; completion/photos/size unknown. Fittonia moist, peperomia partly dry; no cactus plateau. Separate from P38/P31.
 - `#12/P38`: Oct 22 photos: cork jar on right desk. Probable Fittonia/Hypoestes, other IDs qualified. Oct 24: LECA/volcanic-rock base, fluffy coco-coir upper mix; ~6,000–7,000 lux, meter position unknown; lid off a few hours if all-day fog. Misted once Oct 23; no direct watering reported. Seller's 90% RH unverified.
 - `#9/P35`: four Lithops heads; species/root connections unresolved; Blush Mauve pot, logged 4.2-inch/seller 4.3. `#10/P36`: labelled Pleiospilos nelii, not Royal Flush; speckled pot, logged 4-inch/seller 4.5. Sep 23 repots: setup 2, 80% Molly's + 20% perlite; 1247/713.5 g Dry/firm are not dry baselines. Oct 22: P35 behind Kiwi; P36 between shared cactus and square box. Read current Water history; manual leaf-cycle checks, no weight-only watering or automatic feeding.

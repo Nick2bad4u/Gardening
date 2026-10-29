@@ -85,15 +85,22 @@
         {
             "date": "2026-10-28",
             "sourcePath": "docs/plants/houseplants/aglaonema-commutatum-alpine-spires.md",
-            "text": "Purchased at Home Depot for $19.99. The supplied front tag names Igneous Alpine Spires, Aglaonema commutatum, and carries an I’m New badge. The owner reports an unpictured barcode marked trial and seeing only one in the store. Repotting and specimen photographs remain pending.",
+            "text": "Purchased at Home Depot for $19.99. The supplied front tag names Igneous Alpine Spires, Aglaonema commutatum, and carries an I’m New badge. The owner reported barcode trial wording and seeing only one in the store; the barcode photograph followed October 29. Repotting and specimen photographs remain pending.",
             "title": "Purchase and nursery-label evidence"
+        },
+        {
+            "date": "2026-10-29",
+            "sourcePath": "docs/plants/houseplants/aglaonema-commutatum-alpine-spires.md",
+            "text": "Barcode photograph supplied: PW Leafjoy Trial 12cm, $19.98 sticker price, UPC 810160692423, and Grown by TPC- Stuarts Draft, VA. The sticker price remains separate from the owner-reported $19.99 paid October 28; 12cm is a retail designation, not a pot measurement. Trial status is label wording, not proof of rarity or a release date. The blurred SKU, actual pot setup, specimen photographs, and completed repot remain unverified.",
+            "title": "Photographed trial barcode and retail details"
         }
     ],
     "nameStory": {
         "sourceIds": [
-            "kew"
+            "kew",
+            "leafjoy-store"
         ],
-        "text": "Kew accepts Aglaonema commutatum Schott, first published in 1856. Igneous Alpine Spires is the photographed nursery branding; its cultivar denomination, introduction date, and parentage remain unverified."
+        "text": "Kew accepts Aglaonema commutatum Schott, first published in 1856. Igneous Alpine Spires is the photographed nursery branding; its cultivar denomination, introduction date, and parentage remain unverified. The store associates Alpine Spires with Siam Pink in image alt text; this alias is not verified cultivar identity."
     },
     "slug": "aglaonema-commutatum-alpine-spires",
     "sources": [
@@ -114,6 +121,12 @@
             "id": "ncsu",
             "title": "NC State Extension: Aglaonema",
             "url": "https://plants.ces.ncsu.edu/plants/aglaonema/"
+        },
+        {
+            "accessed": "2026-10-29",
+            "id": "leafjoy-store",
+            "title": "leafjoy store: Igneous Alpine Spires",
+            "url": "https://leafjoystore.com/products/igneous-alpine-spires"
         }
     ]
 }

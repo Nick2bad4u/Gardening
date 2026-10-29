@@ -124,8 +124,12 @@ unchanged. Pending remote publication does not mean the plants are unreceived.
 
 The October 28 Alpine Spires acquisition adds an explicit pending record for
 **Houseplant-08 / P41 / #15**, bringing the manifest to 50 profile records.
-Only the [full-frame nursery-label photograph](../nursery-labels/2026-10-28-p41-alpine-spires-label.jpg)
-has been supplied; specimen photographs will follow the planned repot.
+The [full-frame front tag](../nursery-labels/2026-10-28-p41-alpine-spires-label.jpg)
+is now accompanied by the [barcode photograph supplied October 29](../nursery-labels/2026-10-29-p41-alpine-spires-barcode.jpg).
+The barcode confirms retail “Trial 12cm” wording and a $19.98 sticker price,
+separate from the owner-reported $19.99 paid October 28. These are label
+photographs, not specimen or completed-repot evidence; plant photographs will
+follow the planned repot.
 The record does not assert a completed repot or create a Gyazo Collection,
 capture, or specimen photograph. Existing remote placements and captures remain
 unchanged.

@@ -1,6 +1,6 @@
 # Pot labels
 
-Last updated: 2026-10-28
+Last updated: 2026-10-29
 
 This is the print reference for 49 active profile records across 39 tracked pot allocations. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
 
@@ -521,7 +521,7 @@ PARTIAL DRYING; CHECK BELOW THE SURFACE
 
 ## October 28 Alpine Spires label
 
-**#15 / P41 / Houseplant-08** is [Alpine Spires Chinese evergreen](./houseplants/aglaonema-commutatum-alpine-spires.md), nursery-labelled _Aglaonema commutatum_, Igneous™ Alpine Spires™. The owner reported the October 28 Home Depot purchase for $19.99. The supplied front-tag photograph shows “I'm New”; barcode “trial” wording is owner-reported and unpictured. Repot and specimen photos remain pending.
+**#15 / P41 / Houseplant-08** is [Alpine Spires Chinese evergreen](./houseplants/aglaonema-commutatum-alpine-spires.md), nursery-labelled _Aglaonema commutatum_, Igneous™ Alpine Spires™. The owner reported the October 28 Home Depot purchase for $19.99. The front-tag photograph shows “I'm New”. The barcode photograph supplied October 29 documents “PW Leafjoy Trial 12cm”, $19.98, UPC `810160692423`, and “Grown by TPC- Stuarts Draft, VA”. The sticker price does not replace the owner-reported $19.99 paid on October 28; retail 12cm is not a measured pot dimension, and the grower location is not the purchase store. “Trial” is label evidence, not proof of rarity or a release date. Repot and specimen photos remain pending.
 
 ```text
 #15 | ALPINE SPIRES CHINESE EVERGREEN
