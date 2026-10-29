@@ -1,16 +1,16 @@
 # Google Sheets observation logger
 
-Production logger **5.39.6 / immutable version 121** supports **38 container allocations**, using IDs `P01`–`P32` and `P35`–`P40`, and **50,000 History observation slots**. The October 24 rollouts reconcile known collection records, incorporate owner setup clarifications, and add scheduled-run diagnostics; October 23 records the table picker, toolbar spacing and button feedback, and empty-draft fix; October 22 records the verified P39/P40 enrollment, and earlier receipts retain the capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.40.0 / immutable version 122** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained candidate source is **5.40.0**, with **39 container allocations**
-through `P41`. Production remains **5.39.6 / immutable version 121** until the
-separate verified promotion recorded below.
-Production **AppSheet
-1.100135** was verified by an independent saved-definition readback on October 22.
-The table-picker, toolbar, button-feedback, empty-draft, and diagnostic releases do not change AppSheet. The rollout
-receipt below records the production checks separately from rehearsal results.
+Maintained source and the production deployment are **5.40.0**, with
+**39 container allocations** through `P41`. The verified source promotion is
+recorded below.
+Production **AppSheet 1.100137** was saved and read back on October 29 with
+P41's appended optional weight field. The rollout receipt below records the
+production checks separately from rehearsal results; earlier dated entries retain
+the version verified at that time.
 
 The mobile logger and AppSheet are the observation input surfaces. The unused
 `Quick log` compatibility tab is hidden. Every saved event becomes a new
@@ -32,7 +32,7 @@ for retained water, measured loss, forecast windows, and model evidence. The
 **Current weight difference** comparison starts at **Insights A586**.
 The [RO refill log](RO-REFILLS.md) records water-supply refill dates, amounts
 for the four storage containers, and a chart of gallons refilled per visit.
-The production **Plant colors** sheet maps its 38 active allocations to
+The production **Plant colors** sheet maps its 39 active allocations to
 consistent chart colors, with full names, swatches, and links to their charts.
 The October 9 chart snapshot keeps P01–P32, P35–P38 order so colors stay attached to the same plant;
 the cycle explorer changes color automatically with its selected plant.
@@ -41,9 +41,9 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
-## October 28 Alpine Spires enrollment candidate
+## October 28 Alpine Spires enrollment
 
-The maintained **5.40.0** candidate adds **P41 / #15 / Houseplant-08**, nursery-labelled
+The maintained and deployed **5.40.0** source adds **P41 / #15 / Houseplant-08**, nursery-labelled
 _Aglaonema commutatum_, leafjoy **Igneous™ Alpine Spires™**. The owner bought it
 at Home Depot on **October 28, 2026**, for **$19.99**. The supplied photograph is
 the nursery label, not a specimen photograph. Its “I'm New” badge is visible;
@@ -72,7 +72,7 @@ the roster, catalog, metadata formulas, validations, helper ranges, comparison
 blocks, palette, and chart bindings together. It rejects occupied destinations,
 replay, source/schema drift, and a workbook allocation that would exceed Google's
 cell limit when one plant page reaches the supported full History capacity.
-The reviewed source has **68 sheets**, **190 charts**, and **129 protections**.
+The pre-enrollment workbook had **68 sheets**, **190 charts**, and **129 protections**.
 
 The plan trims only the unused **Light & humidity O:V** columns after checking
 their stored cells, validations, notes, formula references, chart bindings,
@@ -91,10 +91,123 @@ copy's exact workbook ID, with no production workbook ID in its uploaded source.
 Native source readback matched the uploaded candidate. Its read-only trigger
 audit completed successfully at **21:17 EDT on October 28** and returned **zero
 triggers**, proving parser support and authorization without writing observations.
-The full migration, analytics, intake, preservation, production promotion, and
-AppSheet configuration checks remain separate gates; this candidate record is
-not a production deployment receipt. Private capture and rehearsal evidence is
-kept under the ignored `.cache/alpine-spires-enrollment/` directory.
+The disposable rehearsal proved the structural migration, native analytics,
+single-entry retry deduplication, and combined AppSheet staging intake. Synthetic
+observations were confined to that disposable copy. Its new dimension and
+interval roles were installed while empty; the current-cycle and calendar roles
+already had copy-only weight records. Further copy-only observations populated
+the expected **2 / 1 / 1 / 1** dimension, current-cycle, calendar, and interval
+series without rebinding. Private captures and rehearsal evidence remain under
+the ignored `.cache/alpine-spires-enrollment/` directory.
+
+### October 29 production promotion
+
+The final merged source commit
+`5cefc8b0073538d98db282644884ca98ff89d4f0` passed all five configured push
+workflows and all eight check runs, including SonarCloud, before production
+writes. The Pages run **40814783679** also completed successfully. The reviewed
+source's native rehearsal includes the corrected Dashboard row: P41 links to
+tracker and baseline row **40**, while its local formulas use Dashboard row **45**.
+
+The existing five-minute trigger was paused reversibly by changing its handler
+to the pure HTML `doGet` function, preserving its owner, Head deployment, timer,
+and notification settings. Its next `doGet` execution completed successfully;
+no queued observations were processed during the migration. A fresh native
+[production backup](https://docs.google.com/spreadsheets/d/1lLDSQ0RXjX1jgW3Cs3N1epCFaQCMrO_3M_sTIc6pCwo/edit)
+was created after the verified pause. Its **42,655 stored canonical, staging,
+and RO cells and notes** matched the freshly captured production ranges exactly.
+
+The complete native source/metadata/cell precondition digest matched again
+immediately before the write. The migration applied **116 preparation requests**
+and **6,719 reviewed value cells**, compressed losslessly into **863 requests**.
+Only the new App bulk **BY** header was written in intake data; the original
+**A:BX** values remained exact. Native `refreshGardenAnalytics` completed at
+**00:21:14 EDT**, publishing **Ready**, all **39** model IDs, and P41 setup **1**
+after the values were applied. The execution took about **26 seconds** including
+native service waits; its internal diagnostic stages totaled **7.695 seconds**.
+
+The post-migration preservation audit passed **567 checks**. Production retained
+all **2,060 observations**, **2,060 unique Observation IDs**, **1,686 Request ID
+groups**, and **169 History cell notes**, with exact stored values, formulas,
+notes, and request grouping. The first **76 App bulk columns**, App entries, and
+RO entries remained exact. Existing validation was preserved except the reviewed
+App entries plant selector expansion to 39 IDs; new BY cells are empty and retain
+the positive-weight validation. The result has **69 sheets**, **194 charts**,
+**130 protections**, the original relative sheet order and all **190 original
+chart IDs and positions**. All **396** captured new P41 destination cells matched
+the reviewed plan; Dashboard, tracker, and Baselines agree on P41 / #15 and its
+empty starting weight. No synthetic production observations were added.
+
+The final **34 chart requests** comprised **32 `updateChartSpec` requests**, one
+`deleteEmbeddedObject`, and one `addChart`: 29 reviewed existing-chart updates,
+three new P41 role updates, and replacement of only the newly duplicated P41
+interval role while retaining its new chart ID **1443159195**. All 190
+pre-enrollment chart IDs were retained. This deliberate recreation replaces the
+clone's P40 helper domain with the complete reviewed P41 **DL domain / DM
+series** and alternative text, retaining its position and border. The disposable
+rehearsal verified this replacement method; it does not establish that an
+`updateChartSpec` request alone would fail. Their request SHA-256 is
+`58b64b118bda0b12d9e962446f2870f8459d3f9908873c25adf7bb50a968a0ac`.
+Native readback preserved all existing chart styles and bindings, allowing only
+Google's matching deprecated `color` alias beside `colorStyle.rgbColor` and RGB
+float serialization. Numeric validation readback omits the dropdown-only
+`showCustomUi` flag; its condition and strictness remain exact.
+
+P41 has no observations, so Google omits its empty chart series and left-axis
+options in the returned metadata. Its domains and positions match the submitted
+P41 specs; this is the same native behavior demonstrated by the disposable
+empty-to-populated test above. This receipt records that limitation rather than
+claiming full production series readback. No fabricated records or styling
+trigger were introduced.
+
+Immutable **122** was created from the exact reviewed source and the existing
+deployment was updated in place at **00:27:57 EDT on October 29**. A separate
+read-only verification confirmed matching maintained, Head, and immutable source
+bytes, with aggregate source SHA-256
+`471a7f8b5b238b5536fbe714b3d9fe0dbf995867bb1fed844e25fe23805342be`.
+The existing phone URL, workbook binding, manifest, OAuth scopes, execution
+identity, and access settings were preserved.
+
+AppSheet **1.100137** was saved and confirmed after a fresh editor reload,
+with **77 physical App bulk fields / 78 attributes including RowNumber**.
+The original 77 attributes remain exact; P41 is an optional positive Decimal
+with two decimal places, shown for Weigh and Water + weigh and hidden for Water.
+Bulk Log retains the original 65 fields and appends P41 after P40 before Notes,
+for 66 fields. The 39-weight round validator, natural label order through #15,
+and portrait revision **04ba0f600720e5a8** were saved together. Regeneration's
+Round action enum order and optional Mist validation changes were restored to
+their captured definitions before the final save.
+All ten AppSheet table modes were rechecked: the eight canonical/helper tables
+remain `READ_ONLY`, and the two staging tables remain `ADDS_AND_UPDATES`.
+At **00:34:42 EDT**, the same existing trigger was restored to
+`processQueuedAppSheetEntries`, with **Head / every five minutes / owner Me /
+daily failure notifications** unchanged. The saved trigger list contained exactly
+one trigger; no duplicate or installer-created replacement was introduced.
+Its first restored scheduled `processQueuedAppSheetEntries` execution started
+at **00:39:34 EDT** and completed in **32.755 seconds** on Head. A fresh native
+read after that execution again matched all **42,655** original canonical,
+staging, and RO stored cells and notes, retaining **2,060 observations** and
+**1,686 request groups** with no synthetic production records.
+
+The unchanged phone URL displayed **Connected · Logger 5.40.0**, native analytics
+**Ready**, and **2,060 History records**. Its single picker selected **P41 / #15**
+with the nursery-labelled taxon, setup 1, an unrecorded pot, manual care, and no
+invented weight or watering. Bulk care contained **39 actual plant checkboxes**,
+including P41. The freshly synced AppSheet client displayed P41 / #15, **No log**,
+empty weight/dimension values, and the new rose-colored schematic portrait.
+Its inspected Bulk Log form showed **39** blank weight fields for Weigh and
+Water + weigh, and **zero** weight fields for Water. P41 appeared after P40
+before Notes; the inspection draft was canceled and discarded without saving.
+
+Published-feed checks had a separate transport limitation. Windows `curl`
+downloaded the public History CSV with **HTTP 200**, **2,060 records**, and
+**zero P41 observations**. Node and browser History reads timed out, and the
+public P41 history page showed its honest unavailable/Refresh state. The
+published tracker CSV GET timed out after **35 seconds** despite a successful
+header request. These checks do not establish browser availability of both
+published feeds. The authenticated native workbook, phone logger, and AppSheet
+checks above succeeded; no shared fetch behavior or additional retry loop was
+introduced to hide the published-feed limitation.
 
 ## October 24 owner setup clarifications and searchable placement map
 
@@ -3523,7 +3636,9 @@ collection-wide Water, Weigh, Water + weigh, Mist, Check, Inspect, Rotation, Mov
 Environment, Clean, Prune, Propagate, Pest, or Other round. It stores `Round ID`, observation time, one action
 selector, a compact EnumList of selected plant IDs, a hidden legacy weight-state
 field, optional shared care details, and active gram fields for P01–P32 and
-P35–P40 in production 5.38.0. The retired P33/P34 columns remain blank-only compatibility fields. Empty weight fields are
+P35–P41 in production 5.40.0. P41 appends at BY after P39 BW and P40 BX;
+the first 76 columns retain their positions and older 74- and 76-column queued
+rounds remain supported. The retired P33/P34 columns remain blank-only compatibility fields. Empty weight fields are
 skipped. `processQueuedAppSheetEntries()` combines the selected IDs and
 nonblank weights into no more than one deterministic
 `appsheet-bulk-{Round ID}-{Plant ID}` request per plant and sends the complete
@@ -3539,7 +3654,7 @@ individual readings; their fields are absent from bulk staging.
 In AppSheet, `Selected plants` is an EnumList of refs whose `Valid_If` is
 `SORT(Plant tracker[Plant ID])`. Keep that expression in place so shared-action
 rounds can select every current active record after the source schema changes.
-The maintained `Round action` validation must cover all 38 active weight fields and require
+The maintained `Round action` validation must cover all 39 active weight fields and require
 the retired P33/P34 fields blank; keep
 it aligned with [`appsheet-bulk-validation.txt`](./appsheet-bulk-validation.txt).
 The prior P01-P22-only check rejected valid weigh-only rounds for newer plants.

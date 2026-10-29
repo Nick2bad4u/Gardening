@@ -1,7 +1,7 @@
 # Spreadsheet and Logger Actions
 
 Use this guide to choose an action, record measurements, and correct saved care
-entries. The maintained 5.36.0 logger adds **Leaf VPD** in place of Support for
+entries. Starting with logger 5.36.0, **Leaf VPD** replaces Support for
 new entries. Existing Support records, corrections, and queued retries remain
 supported. Air, soil, and leaf measurements keep their own context.
 The [deployment record](../scripts/google-sheets/README.md) keeps the
@@ -26,12 +26,12 @@ Quick log is hidden for compatibility; use the mobile logger or AppSheet for rou
 
 ## Identity and Common Fields
 
-The maintained P41 / #15 Alpine Spires enrollment leaves pot size, substrate,
+The deployed P41 / #15 Alpine Spires enrollment leaves pot size, substrate,
 placement, repotting, and initial measurements pending. Its nursery-label image
 is not a specimen photo. Record its first real measurements through the ordinary
 actions; use partial-drying moisture checks and drainage rather than a cactus
-dry-weight trigger. The [deployment record](../scripts/google-sheets/README.md#october-28-alpine-spires-enrollment-candidate)
-distinguishes the maintained enrollment from verified production availability.
+dry-weight trigger. The [deployment record](../scripts/google-sheets/README.md#october-28-alpine-spires-enrollment)
+records production 5.40.0 / immutable 122 and the enrollment verification.
 
 - **P-ID** identifies the tracked plant/container over time. **Pot label** is the physical label such as A1 or #2. Saved rows retain the label at entry, so an old label can be correct historical evidence.
 - **Observed at / Started at / Date** means when the action or measurement happened. Backdate an observation to its real time when appropriate; **Recorded** separately stores when it was saved.

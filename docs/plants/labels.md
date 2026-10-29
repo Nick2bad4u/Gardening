@@ -14,7 +14,7 @@ planter (`P30`). Their Smart Planet Home / Altman Plants tags are archived; `#5`
 the probable _F. tuberculosa_ identification alongside its retail
 _F. tigrina_ name.
 
-Current numbered labels are **#1–#14**. Peperomia Bicolor uses **#7 / P31**, and Tricolor oyster plant uses **#8 / P32**.
+Current numbered labels are **#1–#15**. Peperomia Bicolor uses **#7 / P31**, Tricolor oyster plant uses **#8 / P32**, and Alpine Spires Chinese evergreen uses **#15 / P41**.
 
 The six Mountain Crest mappings were recorded after receipt on
 2026-08-28: `G1` Black Widow (`P27`), `G2` paper spine (`P23`), `G3` Royal

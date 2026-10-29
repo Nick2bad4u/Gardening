@@ -1,6 +1,6 @@
 # MSU fertilizer schedule
 
-Last updated: 2026-09-27
+Last updated: 2026-10-29
 
 This is the working nutrient plan for the collection's Tezula/Greencare **MSU
 13-3-15 Tap/Rain/RO formula**. It is a low-dose starting plan for these actual
@@ -13,6 +13,19 @@ decisions remain independent of the cactus rotation.
 
 The display uses the installed [AW200 + AeroLight 240 W pair](./aw200-and-aerolight-240w.md).
 Follow growth and normal drying when reviewing the feeding rate.
+
+## October 28 Chinese-evergreen arrival
+
+**P41 / #15 [Alpine Spires Chinese evergreen](../plants/houseplants/aglaonema-commutatum-alpine-spires.md)**
+is outside the cactus MSU rotation and the separate #7/#8 Foliage-Pro plan.
+Its nursery feeding, existing fertilizer charge, pot medium, and establishment
+are unrecorded; repotting and specimen photographs are pending. Enrollment does
+not start a feed/plain-water alternation or establish that fertilizer is due.
+Inspect the actual medium and existing fertilizer during ordinary care, and
+consider a feed only with healthy establishment and active growth. Until a
+supported feeding choice exists, use plain RO at an otherwise-ready watering;
+do not water merely to feed or collect a baseline. The profile's cited general
+Aglaonema guidance is a starting point, not an Alpine Spires fertilizer trial.
 
 ## September 20 foliage-basket exceptions
 

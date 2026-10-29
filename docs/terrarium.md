@@ -82,7 +82,7 @@ The divided foliage needs a whole frond and underside view; the moss needs
 close-ups of shoots and leaves before narrowing its identity. No fern or moss
 species is assigned merely because it is common in terrariums.
 
-The collection retains 45 botanical profile groups and now has 48 active
+The collection has 46 botanical profile groups and 49 active
 profile pages, including three aggregate overviews. These appearance groups do
 not create separate pots, labels, botanical member records, or weigh-ins.
 

@@ -6,9 +6,9 @@ workbook. It supports daily browsing, individual observations, collection-wide
 care/weight rounds, save receipts, dashboards, and per-plant charts without
 creating a second gardening database.
 
-Production **AppSheet 1.100135**, logger **5.38.0 / immutable version 114**, and
-the 38-container native workbook enrollment were verified on October 22, 2026. The
-[logger runbook](../scripts/google-sheets/README.md#october-22-houseplant-production-rollout)
+Production **AppSheet 1.100137**, logger **5.40.0 / immutable version 122**, and
+the **39-container** native workbook enrollment were verified on October 29, 2026. The
+[logger runbook](../scripts/google-sheets/README.md)
 records the verified deployment and preservation checks.
 Earlier dated records retain their verified historical state.
 
@@ -18,7 +18,7 @@ contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
 
-## October 28 Alpine Spires enrollment contract
+## October 29 Alpine Spires production rollout
 
 The maintained enrollment adds **P41 / #15 — Alpine Spires Chinese evergreen**,
 inventory **Houseplant-08**, for **39 container allocations**. The nursery label
@@ -27,31 +27,64 @@ Home Depot on **October 28, 2026**, for **$19.99**. Its label photograph is evid
 of the printed name; specimen photographs and the planned repot are pending.
 Pot size, medium, placement, initial weights, and watering remain unrecorded.
 
-App bulk extends its existing **76 physical columns (A:BX)** by appending
-**BY — P41 weight (g)**. Preserve A:BX and existing staging records. Configure
-the new field as an optional positive Decimal with two decimal places, visible
+App bulk now has **77 physical columns (A:BY)** and **78 AppSheet attributes**,
+including `_RowNumber`, after appending **BY — P41 weight (g)**. A:BX and existing
+staging records were preserved. The new field is an optional positive Decimal
+with two decimal places, visible
 for **Weigh** and **Water + weigh** and hidden for **Water**. Bulk Log places it
 after P40 and before Notes. The maintained round validator includes all
-**39 active weights**; natural label order must place **#15** after **#14**.
-Keep canonical and helper tables read-only, staging tables writable, and the
-Apps Script bridge as the only History writer.
+**39 active weights**; natural label order places **#15** after **#14**.
+Fresh saved-definition readback confirmed all eight canonical/helper tables
+remain read-only, while App entries and App bulk allow adds and updates without
+deletes. The Apps Script bridge remains the only History writer.
+
+The editor saved **1.100137** and reloaded with **No issues** and Save disabled.
+Comparison of all **77 existing App bulk attribute rows** found no changes to
+their types, formulas, key/label/show/edit/required flags, initial values,
+display names, descriptions, or search/scan/NFC/PII settings. Regeneration reset
+the round picker order and optional Mist amount validator; both were restored
+from the captured saved definition before the final save. Bulk Log's prior
+65-field order is preserved, with P41 inserted after P40 and before Notes.
 
 P41 uses manual moisture and drainage checks, without a dry-weight watering
 forecast. Enrollment creates no observation or completed repot event. The
 [plant profile](./plants/houseplants/aglaonema-commutatum-alpine-spires.md) keeps
 the label identity, acquisition details, and care evidence together. The
-[logger runbook](../scripts/google-sheets/README.md) records rehearsal and live
-publication separately; this contract does not itself establish a saved
-production AppSheet upgrade.
+[logger runbook](../scripts/google-sheets/README.md) records the disposable
+rehearsal, native backup, exact-source promotion, and production preservation
+checks.
 
-The prepared portrait revision **04ba0f600720e5a8** contains **39 SVGs** in the
+The saved portrait expression uses revision **04ba0f600720e5a8**, with **39 SVGs** in the
 owner-only [GardenPlantPortraits-04ba0f600720e5a8 folder](https://drive.google.com/drive/folders/1HrjbSfwqJReCeFgTh0VkaX6AQ12knaVK).
 Native Drive readback verified every file's byte count and MD5 against the
 maintained standalone artwork, exact folder membership, and owner-only
 permissions. P41's portrait is a schematic based on the printed label artwork,
 not a photograph of the collection plant. Earlier portrait folders remain
-available to cached clients. Uploading this revision does not update the saved
-AppSheet expression.
+available to cached clients. The reference-image expression is unchanged; P41
+has no specimen photograph yet.
+
+During migration, the existing five-minute queue trigger was reversibly paused
+by changing only its handler to `doGet`. After the native contract, immutable
+deployment, and saved AppSheet readback passed, the same trigger was restored to
+`processQueuedAppSheetEntries` at **04:34:42 UTC**. Readback showed exactly one
+trigger with Head, Minutes timer, Every 5 minutes, the same owner, and daily
+failure notifications. No trigger was deleted or added.
+The first restored scheduled execution began at **00:39:34 EDT**, completed in
+**32.755 seconds**, and logged **5.40.0**, **Ready** analytics, and zero queued,
+saved, correction, retry, or deferred single/bulk requests.
+
+Fresh signed-in clients confirmed the unchanged phone URL reports **Connected ·
+Logger 5.40.0**, with native calculations ready and 2,060 History rows. Its
+single-plant picker and 39-plant bulk selector include **P41 / #15**. P41 shows
+no watering or actual weight, an unrecorded pot, Setup 1, and manual houseplant
+care. The synced AppSheet card shows **Alpine Spires Chinese evergreen / #15**,
+**No log**, blank weight and dimensions, and the new schematic portrait.
+Bulk Log shows 39 blank plant-weight inputs for Weigh and Water + weigh, places
+P41 after P40 and before Notes, and hides all plant-weight inputs for Water.
+The inspection draft was cancelled and discarded without saving observations.
+Saved formula readback confirmed the reference-image expression is unchanged,
+the portrait expression uses all 39 IDs and revision `04ba0f600720e5a8`, and
+natural label order includes #15 after #14.
 
 ## October 22 houseplant production rollout
 
@@ -874,8 +907,8 @@ The Plants view sorts by the hidden virtual Number column
 the physical sequence A1-A3 through H1-H3, followed by the numbered plant and
 shared-planter labels #1–#12 in the saved October 9 mapping. The `#` group always sorts after every lettered
 label.
-Production IDs and writable picker values are P01–P32 and P35–P40, with numbered
-labels through #14. Do not replace plant IDs with the display-order helper.
+Production IDs and writable picker values are P01–P32 and P35–P41, with numbered
+labels through #15. Do not replace plant IDs with the display-order helper.
 
 Plants uses the Image virtual column `Plant portrait` as its square main
 image. Care history derives its round left-side `Plant image` through the
