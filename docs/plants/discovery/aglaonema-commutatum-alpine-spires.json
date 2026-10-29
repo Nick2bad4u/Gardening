@@ -1,0 +1,119 @@
+{
+    "anatomy": {
+        "intro": "Use this general Chinese-evergreen schematic to distinguish four structures. It is not a photograph or a verified depiction of P41 or its nursery selection.",
+        "parts": [
+            {
+                "function": "The broad pointed surface forms the main part of a simple leaf.",
+                "label": "Leaf blade"
+            },
+            {
+                "function": "The central midrib and branching side veins form the leaf’s visible vein network.",
+                "label": "Midrib and side veins"
+            },
+            {
+                "function": "This stalk connects one leaf blade to the stem.",
+                "label": "Petiole"
+            },
+            {
+                "function": "The upright axis supports leaves; older Chinese evergreens may develop a cane-like stem.",
+                "label": "Stem"
+            }
+        ],
+        "sourceIds": [
+            "ncsu",
+            "nparks"
+        ]
+    },
+    "comparisonSourceIds": [
+        "ncsu"
+    ],
+    "flowers": {
+        "sourceIds": [
+            "nparks"
+        ],
+        "text": "The species produces a pale spadix with a greenish-white spathe, followed by berries that turn red. No flowers or fruit have been documented for P41."
+    },
+    "growth": {
+        "note": "These are general structures to watch for during ordinary care, not an observed sequence, growth forecast, or fixed schedule for Alpine Spires.",
+        "sourceIds": [
+            "ncsu",
+            "nparks"
+        ],
+        "stages": [
+            {
+                "text": "A new leaf develops at the shoot tip and expands its blade.",
+                "title": "Leaf expansion"
+            },
+            {
+                "text": "Leaves on their individual petioles build an upright leafy habit.",
+                "title": "Leafy growth"
+            },
+            {
+                "text": "Older stems can become more exposed and cane-like; this has not been observed in P41.",
+                "title": "Older stems"
+            }
+        ]
+    },
+    "habitat": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "Kew places Aglaonema commutatum in the wet tropical biome, native to the Philippines and Sulawesi. The retail Alpine Spires name does not establish a wild origin or verified pedigree for this plant."
+    },
+    "image": {
+        "alt": "Generated general Chinese-evergreen anatomy schematic: 1 leaf blade, 2 midrib and side veins, 3 petiole, 4 stem. Not a photograph, specimen identification, or verified Alpine Spires cultivar depiction.",
+        "file": "assets/plant-explainers/aglaonema-commutatum-alpine-spires.webp",
+        "generatedOn": "2026-10-28",
+        "prompt": "Use case: scientific-educational botanical anatomy illustration for an existing personal gardening field guide. Create a brand new square 1024 x 1024 naturalistic watercolor and fine colored-pencil educational schematic of a generic Aglaonema commutatum (Chinese evergreen). Isolated on warm ivory background with clear margins. Upright short green cane stem, several exposed pinkish-green petioles, pointed elliptic green leaf blades with restrained cream mottling and muted pink central blush, visible midrib and branching lateral veins. General Chinese evergreen morphology; foliage colors inspired by nursery trade branding, not a verified cultivar or a depiction of the user's owned specimen. No pot, soil, roots, flowers or fruit. Show enough exposed stem and exposed petiole to make all four distinct annotation targets absolutely clear. Exactly four dark forest-green numbered circles with fine green leader lines and small endpoint dots, each number appears once: 1 points clearly to a broad leaf blade surface; 2 points precisely to a visible midrib/lateral vein junction on another leaf; 3 points to the middle of an exposed petiole (the leaf stalk BETWEEN blade and main cane, not a vein, stem or node); 4 points to the middle of exposed upright main cane stem below the leaf attachments. Spread callout circles around uncluttered ivory margins so no leaders cross. Numbers 1, 2, 3, 4 are the ONLY text, no other lettering or logo. This is illustrative educational art, not collection photographic evidence. Detailed but legible at phone width, no watermark.",
+        "reviewed": true
+    },
+    "lookalikes": [
+        {
+            "name": "Other patterned Chinese evergreens",
+            "profileSlug": null,
+            "text": "Many Aglaonema selections share green, cream, pink, or red markings. A similar leaf pattern does not independently verify Alpine Spires or a registered cultivar denomination."
+        }
+    ],
+    "mature": {
+        "sourceIds": [
+            "nparks",
+            "ncsu"
+        ],
+        "text": "Species references describe an upright, shrubby herbaceous plant with lance-shaped leaves; older stems may become exposed. Alpine Spires’ mature dimensions remain unverified, and P41 has not been measured."
+    },
+    "milestones": [
+        {
+            "date": "2026-10-28",
+            "sourcePath": "docs/plants/houseplants/aglaonema-commutatum-alpine-spires.md",
+            "text": "Purchased at Home Depot for $19.99. The supplied front tag names Igneous Alpine Spires, Aglaonema commutatum, and carries an I’m New badge. The owner reports an unpictured barcode marked trial and seeing only one in the store. Repotting and specimen photographs remain pending.",
+            "title": "Purchase and nursery-label evidence"
+        }
+    ],
+    "nameStory": {
+        "sourceIds": [
+            "kew"
+        ],
+        "text": "Kew accepts Aglaonema commutatum Schott, first published in 1856. Igneous Alpine Spires is the photographed nursery branding; its cultivar denomination, introduction date, and parentage remain unverified."
+    },
+    "slug": "aglaonema-commutatum-alpine-spires",
+    "sources": [
+        {
+            "accessed": "2026-10-28",
+            "id": "kew",
+            "title": "Kew: Aglaonema commutatum",
+            "url": "https://powo.science.kew.org/taxon/84050-1"
+        },
+        {
+            "accessed": "2026-10-28",
+            "id": "nparks",
+            "title": "NParks: Aglaonema commutatum",
+            "url": "https://www.nparks.gov.sg/florafaunaweb/flora/1/6/1611"
+        },
+        {
+            "accessed": "2026-10-28",
+            "id": "ncsu",
+            "title": "NC State Extension: Aglaonema",
+            "url": "https://plants.ces.ncsu.edu/plants/aglaonema/"
+        }
+    ]
+}

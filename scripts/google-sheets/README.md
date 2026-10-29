@@ -4,7 +4,9 @@ Production logger **5.39.6 / immutable version 121** supports **38 container all
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained source and production are **5.39.6 / immutable version 121**.
+Maintained candidate source is **5.40.0**, with **39 container allocations**
+through `P41`. Production remains **5.39.6 / immutable version 121** until the
+separate verified promotion recorded below.
 Production **AppSheet
 1.100135** was verified by an independent saved-definition readback on October 22.
 The table-picker, toolbar, button-feedback, empty-draft, and diagnostic releases do not change AppSheet. The rollout
@@ -38,6 +40,61 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## October 28 Alpine Spires enrollment candidate
+
+The maintained **5.40.0** candidate adds **P41 / #15 / Houseplant-08**, nursery-labelled
+_Aglaonema commutatum_, leafjoy **Igneous™ Alpine Spires™**. The owner bought it
+at Home Depot on **October 28, 2026**, for **$19.99**. The supplied photograph is
+the nursery label, not a specimen photograph. Its “I'm New” badge is visible;
+the owner-reported “trial” barcode wording is not independently visible in that
+image and does not establish rarity or a registered cultivar name. The
+[plant profile](../../docs/plants/houseplants/aglaonema-commutatum-alpine-spires.md)
+keeps those evidence distinctions.
+
+Pot dimensions, drainage, medium, placement, prior care, and starting measurements
+remain unrecorded. Repotting and specimen photographs are pending. P41 has manual
+partial-drying guidance: inspect the mix below the surface and confirm drainage;
+no cactus dry-weight reference, plateau, automatic watering forecast, or synthetic
+production observation is assigned. The label image is a separate nursery-label
+link; the schematic portrait is not presented as the owner's plant photograph.
+
+The source keeps **History A:BO / 67** and **App entries A:BG / 59** unchanged.
+It appends optional **P41 weight (g)** at **App bulk BY / column 77**, preserving
+the existing **A:BX / 76** columns and processing older 74- and 76-column queued
+rounds until an explicit upgrade. P39 BW and P40 BX weights retain their positions.
+The new plant has both single-entry and bulk-care choices, with an individual
+workbook page at sheet ID **202610410** and a public pot-history route.
+
+The guarded one-time
+[`alpine-spires-enrollment.mjs`](./alpine-spires-enrollment.mjs) planner updates
+the roster, catalog, metadata formulas, validations, helper ranges, comparison
+blocks, palette, and chart bindings together. It rejects occupied destinations,
+replay, source/schema drift, and a workbook allocation that would exceed Google's
+cell limit when one plant page reaches the supported full History capacity.
+The reviewed source has **68 sheets**, **190 charts**, and **129 protections**.
+
+The plan trims only the unused **Light & humidity O:V** columns after checking
+their stored cells, validations, notes, formula references, chart bindings,
+anchors, and structural metadata. A fresh complete tail read found no stored
+cells, validations, or notes there. Integrity's exact derived error-scan range
+changes from **K1:V50189** to **K1:N50189** with the trim; other references into
+the discarded tail fail the planner. This recovers **401,512** allocated cells
+without shrinking the evidence spill in **A:L** or its maintained columns through
+**N**. The resulting planned allocation is **18,759,587** cells; allowing a full
+50,000-observation P41 page remains below the cell limit at **19,749,609** cells.
+
+A native [pre-enrollment backup](https://docs.google.com/spreadsheets/d/1n2vsQH3fkyKDWwkT02bCbCl7VR93M5zWkTW3k6sRv2s/edit)
+and a separate [disposable rehearsal copy](https://docs.google.com/spreadsheets/d/10isi_sSXw0AzTmSOtE3zCHEd2Yyv6xSAcAbiiEQfyIg/edit)
+were created before structural writes. The disposable candidate is pinned to the
+copy's exact workbook ID, with no production workbook ID in its uploaded source.
+Native source readback matched the uploaded candidate. Its read-only trigger
+audit completed successfully at **21:17 EDT on October 28** and returned **zero
+triggers**, proving parser support and authorization without writing observations.
+The full migration, analytics, intake, preservation, production promotion, and
+AppSheet configuration checks remain separate gates; this candidate record is
+not a production deployment receipt. Private capture and rehearsal evidence is
+kept under the ignored `.cache/alpine-spires-enrollment/` directory.
 
 ## October 24 owner setup clarifications and searchable placement map
 

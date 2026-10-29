@@ -218,6 +218,10 @@ function portraitDescriptions() {
             "Three branching rosettes with cream-green spoon-shaped leaves and pink margins above a white planter.",
         ],
         [
+            "aglaonema-commutatum-alpine-spires",
+            "Schematic Chinese evergreen with pointed green, cream, and pink leaves in a neutral illustrative pot, inspired by the Alpine Spires nursery-label artwork; not a depiction or identification of the owned specimen or its pot.",
+        ],
+        [
             "astrophytum-ornatum",
             "A squat gray-green ribbed cactus with white flecks and long tan spines in a terracotta planter.",
         ],

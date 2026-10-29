@@ -172,6 +172,7 @@ describe("logger History-backed read models", () => {
         "P38",
         "P39",
         "P40",
+        "P41",
     ])(
         "withholds %s dry references while retaining measured weights and watering history",
         (plantId) => {

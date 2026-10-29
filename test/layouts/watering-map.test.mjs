@@ -467,7 +467,7 @@ describe("inline watering artwork", () => {
         const uniqueIds = new Set(ids);
 
         expect(uniqueIds.size).toBe(ids.length);
-        expect(document.querySelectorAll("[data-plant-slug]")).toHaveLength(38);
+        expect(document.querySelectorAll("[data-plant-slug]")).toHaveLength(39);
         expect(
             document.querySelectorAll(
                 "image, script, foreignObject, link, [src]"

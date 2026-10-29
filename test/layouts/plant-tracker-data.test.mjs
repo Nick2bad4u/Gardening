@@ -918,6 +918,7 @@ describe("manual container care", () => {
         ["P38", "Review the plants and enclosure"],
         ["P39", "Keep lightly moist"],
         ["P40", "Allow partial drying"],
+        ["P41", "Allow partial drying"],
     ])(
         "retains %s observations without creating dry/wet readiness or watering capacity",
         (plantId, guidance) => {

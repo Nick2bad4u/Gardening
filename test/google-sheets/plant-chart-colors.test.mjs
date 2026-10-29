@@ -96,6 +96,7 @@ describe("plant chart color identity", () => {
             "P38",
             "P39",
             "P40",
+            "P41",
         ]);
 
         const uniqueColors = new Set(palette.map((color) => color.hex));
@@ -194,9 +195,12 @@ describe("plant chart color identity", () => {
             "updateChartSpec.spec.subtitle",
             "Plant-colored solid circles: measured • neutral dotted diamonds: dry • neutral dashed squares: wet"
         );
+
+        const lastPlant = required(palette.at(-1));
+
         expect(measured).toHaveProperty(
             `updateChartSpec.spec.basicChart.series.${palette.length - 1}.colorStyle.rgbColor`,
-            plantColor("P40")
+            plantColor(lastPlant.id)
         );
         expect(measured).toHaveProperty(
             `updateChartSpec.spec.basicChart.series.${palette.length}.series.sourceRange.sources.0.startColumnIndex`,
@@ -306,16 +310,16 @@ describe("plant chart color identity", () => {
         const compact = compactSelectedPlantSeries(primary, shared);
         const identityColors = new Set(
             compact
-                .slice(0, 38)
+                .slice(0, palette.length)
                 .map((series) => JSON.stringify(series.colorStyle))
         );
 
-        expect(compact).toHaveLength(40);
-        expect(compact.slice(0, 38)).toStrictEqual(primary);
-        expect(identityColors.size).toBe(38);
+        expect(compact).toHaveLength(palette.length + shared.length);
+        expect(compact.slice(0, palette.length)).toStrictEqual(primary);
+        expect(identityColors.size).toBe(palette.length);
         expect(
             compact
-                .slice(38)
+                .slice(palette.length)
                 .map(({ lineStyle, pointStyle, series, targetAxis }) => ({
                     lineStyle,
                     pointStyle,
@@ -330,16 +334,18 @@ describe("plant chart color identity", () => {
                 targetAxis,
             }))
         );
-        expect(compact[38]?.colorStyle?.rgbColor).toStrictEqual({
+        expect(compact[palette.length]?.colorStyle?.rgbColor).toStrictEqual({
             blue: 104 / 255,
             green: 99 / 255,
             red: 95 / 255,
         });
-        expect(compact[39]?.colorStyle?.rgbColor).toStrictEqual({
-            blue: 166 / 255,
-            green: 160 / 255,
-            red: 154 / 255,
-        });
+        expect(compact[palette.length + 1]?.colorStyle?.rgbColor).toStrictEqual(
+            {
+                blue: 166 / 255,
+                green: 160 / 255,
+                red: 154 / 255,
+            }
+        );
         expect({ primary, shared }).toStrictEqual(before);
         expect(() => compactSelectedPlantSeries([], shared)).toThrow(
             "1–97 primary"

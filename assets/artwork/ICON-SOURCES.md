@@ -11,7 +11,7 @@ Two plant illustrations are adapted from SVG Repo sources:
 | `icon-cactus`    | [Cactus, SVG Repo 206109](https://www.svgrepo.com/svg/206109/cactus)         | SVG Repo                 | [CC0](https://www.svgrepo.com/page/licensing/#CC0)          | Redrawn and simplified for clear rendering from 16–52 px; colors were harmonized with the field-guide palette.       |
 | `icon-succulent` | [Succulents, SVG Repo 474474](https://www.svgrepo.com/svg/474474/succulents) | xiyou0608                | [Public domain](https://www.svgrepo.com/page/licensing/#PD) | Redrawn as a compact rosette while retaining the source illustration's concentric soil and layered-leaf composition. |
 
-The 57 `icon-plant-*` portraits and the remaining interface symbols are original
+The 58 `icon-plant-*` portraits and the remaining interface symbols are original
 repository artwork. Each portrait uses a different simplified silhouette,
 color pattern, growth habit, spine or leaf treatment, and pot where appropriate
 to evoke the plant named by that profile. The P29 portrait emphasizes paired,
@@ -80,6 +80,12 @@ portraits do not independently establish cultivar identity, health, or care
 needs. The source photographs retain the owner's separate rights.
 
 ## Terrarium and humidity symbols
+
+The October 28 Alpine Spires portrait for **P41 / #15** is original schematic
+vector artwork: pointed green leaves with cream markings and pink centers in
+a neutral illustrative pot. The nursery-label illustration informs the color
+motif; no specimen photograph has been supplied. The drawing does not establish
+the owned plant's appearance, identity, pot, placement, or completed repot.
 
 `icon-plant-terrarium` is original schematic repository artwork for **P38 / #12**, revised October 10 to follow the owner's [arrival photographs](../../docs/terrarium.md#arrival-photographs). The rounded glass jar and broad cork lid frame low moss, pink-veined and pale-speckled leaves, trailing greenery, and fern-like foliage. These simplified appearance groups replace the initial question-mark placeholder without confirming botanical identities, depicting a verified recovery, or establishing substrate composition or drainage layers. The source photographs retain the owner's separate rights.
 

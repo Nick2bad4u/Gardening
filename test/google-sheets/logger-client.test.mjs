@@ -4729,7 +4729,11 @@ describe("garden logger humidity observations", () => {
         ).toMatch(/relative humidity/iv);
     });
 
-    it.each(["P39", "P40"])(
+    it.each([
+        "P39",
+        "P40",
+        "P41",
+    ])(
         "keeps %s manual care when a stale cache supplies dry forecasts",
         (id) => {
             expect.hasAssertions();
@@ -7980,6 +7984,7 @@ describe("garden logger plant photos and portrait rendering", () => {
         ["P37", "echeveria-arctic-ice"],
         ["P39", "fittonia-albivenis-nightly"],
         ["P40", "peperomia-obtusifolia-spice-is-nice"],
+        ["P41", "aglaonema-commutatum-alpine-spires"],
     ])("uses the maintained explicit portrait for %s", (id, slug) => {
         expect.hasAssertions();
 

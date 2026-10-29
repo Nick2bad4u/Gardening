@@ -430,7 +430,7 @@ describe("dry-down formulas and workbook installation", () => {
 
             expect(required(baselineFormulas[0])[0]).toContain("XLOOKUP($A2,");
             expect(required(baselineFormulas[1])[1]).toContain(
-                "'Dry-down models'!$P$2:$P$39"
+                "'Dry-down models'!$P$2:$P$40"
             );
             expect(required(dashboardFormulas[1])[0]).toContain("XLOOKUP($B8,");
             expect(calls.some((call) => call.name === "History")).toBe(false);
@@ -878,7 +878,11 @@ describe("same-setup cycle learning", () => {
         }
     );
 
-    it.each(["P39", "P40"])(
+    it.each([
+        "P39",
+        "P40",
+        "P41",
+    ])(
         "withholds %s dry anchors, forecasts and plateau prompts while preserving measurements",
         (id) => {
             expect.hasAssertions();

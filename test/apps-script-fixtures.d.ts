@@ -595,6 +595,7 @@ export interface AppsScriptTestApi {
     refreshGardenWorkbookPage39: AppsScriptTestApi["refreshGardenWorkbookPages31To32"];
 
     refreshGardenWorkbookPage40: AppsScriptTestApi["refreshGardenWorkbookPages31To32"];
+    refreshGardenWorkbookPage41: AppsScriptTestApi["refreshGardenWorkbookPages31To32"];
     refreshGardenWorkbookPages01To10: () => {
         firstPlant: unknown;
         lastPlant: unknown;

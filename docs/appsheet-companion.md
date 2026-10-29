@@ -18,6 +18,41 @@ contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
 
+## October 28 Alpine Spires enrollment contract
+
+The maintained enrollment adds **P41 / #15 — Alpine Spires Chinese evergreen**,
+inventory **Houseplant-08**, for **39 container allocations**. The nursery label
+reads _Aglaonema commutatum_, Igneous™ Alpine Spires™. The owner purchased it at
+Home Depot on **October 28, 2026**, for **$19.99**. Its label photograph is evidence
+of the printed name; specimen photographs and the planned repot are pending.
+Pot size, medium, placement, initial weights, and watering remain unrecorded.
+
+App bulk extends its existing **76 physical columns (A:BX)** by appending
+**BY — P41 weight (g)**. Preserve A:BX and existing staging records. Configure
+the new field as an optional positive Decimal with two decimal places, visible
+for **Weigh** and **Water + weigh** and hidden for **Water**. Bulk Log places it
+after P40 and before Notes. The maintained round validator includes all
+**39 active weights**; natural label order must place **#15** after **#14**.
+Keep canonical and helper tables read-only, staging tables writable, and the
+Apps Script bridge as the only History writer.
+
+P41 uses manual moisture and drainage checks, without a dry-weight watering
+forecast. Enrollment creates no observation or completed repot event. The
+[plant profile](./plants/houseplants/aglaonema-commutatum-alpine-spires.md) keeps
+the label identity, acquisition details, and care evidence together. The
+[logger runbook](../scripts/google-sheets/README.md) records rehearsal and live
+publication separately; this contract does not itself establish a saved
+production AppSheet upgrade.
+
+The prepared portrait revision **04ba0f600720e5a8** contains **39 SVGs** in the
+owner-only [GardenPlantPortraits-04ba0f600720e5a8 folder](https://drive.google.com/drive/folders/1HrjbSfwqJReCeFgTh0VkaX6AQ12knaVK).
+Native Drive readback verified every file's byte count and MD5 against the
+maintained standalone artwork, exact folder membership, and owner-only
+permissions. P41's portrait is a schematic based on the printed label artwork,
+not a photograph of the collection plant. Earlier portrait folders remain
+available to cached clients. Uploading this revision does not update the saved
+AppSheet expression.
+
 ## October 22 houseplant production rollout
 
 Production enrollment adds **P39 / #13 — Nightly nerve plant** and **P40 / #14 —

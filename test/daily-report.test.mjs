@@ -537,8 +537,10 @@ describe("daily report evidence", () => {
     it.each([
         ["P39", "P01"],
         ["P40", "P01"],
+        ["P41", "P01"],
         ["P39", "P08"],
         ["P40", "P08"],
+        ["P41", "P08"],
     ])(
         "rejects manual-care %s promoted from otherwise valid %s evidence",
         (id, sourceId) => {
@@ -549,12 +551,16 @@ describe("daily report evidence", () => {
             candidate.id = id;
 
             expect(() => validateReport(report)).toThrow(
-                "Manual-care pots P39/P40 cannot use Water or dry-reference actions"
+                "Manual-care pots P39/P40/P41 cannot use Water or dry-reference actions"
             );
         }
     );
 
-    it.each(["P39", "P40"])(
+    it.each([
+        "P39",
+        "P40",
+        "P41",
+    ])(
         "keeps %s manual Check valid without invented measurements or calibration",
         (id) => {
             expect.hasAssertions();
@@ -594,8 +600,10 @@ describe("daily report evidence", () => {
     it.each([
         ["P39", "check"],
         ["P40", "check"],
+        ["P41", "check"],
         ["P39", "weigh"],
         ["P40", "weigh"],
+        ["P41", "weigh"],
     ])(
         "rejects calibration fields on %s %s while allowing measured mass changes",
         (id, action) => {
@@ -619,14 +627,14 @@ describe("daily report evidence", () => {
             candidate.dryReferenceGrams = 100;
 
             expect(() => validateReport(report)).toThrow(
-                "Manual-care pots P39/P40 cannot carry dry-reference or plateau calibration"
+                "Manual-care pots P39/P40/P41 cannot carry dry-reference or plateau calibration"
             );
 
             candidate.dryReferenceGrams = null;
             candidate.plateau = "not-supported";
 
             expect(() => validateReport(report)).toThrow(
-                "Manual-care pots P39/P40 cannot carry dry-reference or plateau calibration"
+                "Manual-care pots P39/P40/P41 cannot carry dry-reference or plateau calibration"
             );
 
             candidate.plateau = "unavailable";
@@ -635,7 +643,7 @@ describe("daily report evidence", () => {
             );
 
             expect(() => validateReport(report)).toThrow(
-                "Manual-care pots P39/P40 cannot carry dry-reference or plateau calibration"
+                "Manual-care pots P39/P40/P41 cannot carry dry-reference or plateau calibration"
             );
         }
     );

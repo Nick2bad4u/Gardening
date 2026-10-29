@@ -62,5 +62,11 @@
     "P37": [["echeveria-arctic-ice", "Arctic Ice echeveria"]],
     "P38": [["terrarium", "Terrarium"]],
     "P39": [["fittonia-albivenis-nightly", "Nightly nerve plant"]],
-    "P40": [["peperomia-obtusifolia-spice-is-nice", "Spice is Nice peperomia"]]
+    "P40": [["peperomia-obtusifolia-spice-is-nice", "Spice is Nice peperomia"]],
+    "P41": [
+        [
+            "aglaonema-commutatum-alpine-spires",
+            "Alpine Spires Chinese evergreen"
+        ]
+    ]
 }

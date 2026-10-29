@@ -110,21 +110,24 @@ describe("field guide source rendering", () => {
         );
         expect(profile?.labelMarkdown).toBe("`#11`");
         expect(profile?.identificationMarkdown).toContain(
-            "owner-associated Altman Plants listing"
+            "owner-confirmed specimen October 23, 2026"
         );
-        expect(profile?.bodyHtml).toContain("No first-water date");
+        expect(profile?.identificationMarkdown).toContain(
+            "physical nursery label pending"
+        );
+        expect(profile?.bodyHtml).toContain("October 8 partial watering");
         expect(plantSheetUrl("P37")).toContain("gid=202610370");
     });
 
-    it("assigns the received houseplants to P31/P32/P39/P40 while keeping abandoned orders in old plans", async () => {
+    it("assigns the received houseplants to P31/P32/P39/P40/P41 while keeping abandoned orders in old plans", async () => {
         expect.hasAssertions();
 
         const profiles = await getProfiles();
         const archived = await getOldPlans();
 
-        expect(profiles).toHaveLength(49);
+        expect(profiles).toHaveLength(50);
         expect(profiles.filter((profile) => !profile.historical)).toHaveLength(
-            48
+            49
         );
         expect(
             profiles.some((profile) =>
@@ -135,6 +138,7 @@ describe("field guide source rendering", () => {
         expect(plantSheetUrl("P32")).toContain("gid=202609340");
         expect(plantSheetUrl("P39")).toContain("gid=202610390");
         expect(plantSheetUrl("P40")).toContain("gid=202610400");
+        expect(plantSheetUrl("P41")).toContain("gid=202610410");
         expect(archived).toHaveLength(6);
         expect(
             archived.some((document) =>
@@ -151,6 +155,7 @@ describe("field guide source rendering", () => {
                         "P32",
                         "P39",
                         "P40",
+                        "P41",
                     ].includes(profile.trackerId ?? "")
                 )
                 .map((profile) => ({
@@ -187,7 +192,39 @@ describe("field guide source rendering", () => {
                 label: "#14",
                 slug: "peperomia-obtusifolia-spice-is-nice",
             },
+            {
+                id: "P41",
+                inventory: "Houseplant-08",
+                label: "#15",
+                slug: "aglaonema-commutatum-alpine-spires",
+            },
         ]);
+
+        const alpineSpires = profiles.find(
+            (profile) => profile.trackerId === "P41"
+        );
+
+        assert.ok(alpineSpires);
+
+        expect(alpineSpires.collectionRecord.photos).toStrictEqual([]);
+        expect(alpineSpires.allPhotos).toHaveLength(10);
+
+        for (const reference of alpineSpires.allPhotos) {
+            expect(reference.scope_note).toContain(
+                "none is assumed to show Igneous Alpine Spires"
+            );
+        }
+
+        expect(alpineSpires.avatar).toMatchObject({
+            external: false,
+            src: "../../assets/plants/aglaonema-commutatum-alpine-spires/commons-129160784-habit.jpg",
+        });
+        expect(alpineSpires.collectionRecord.pending_note).toContain(
+            "Specimen photographs will follow repotting"
+        );
+        expect(alpineSpires.bodyHtml).toContain(
+            "2026-10-28-p41-alpine-spires-label.jpg"
+        );
     });
 
     it("keeps the terrarium as one qualified Houseplants profile with local arrival evidence", async () => {
@@ -242,7 +279,7 @@ describe("field guide source rendering", () => {
         ).toStrictEqual(
             slugs.toSorted((left, right) => left.localeCompare(right))
         );
-        expect(potIds.size).toBe(38);
+        expect(potIds.size).toBe(39);
         expect(
             members
                 .map((profile) => profile.inventoryId)
@@ -556,6 +593,9 @@ describe("field guide source rendering", () => {
         expect(identificationLabel("unresolved identification")).toBe(
             "Working ID"
         );
+        expect(
+            identificationLabel("Nursery-labelled Aglaonema commutatum")
+        ).toBe("Nursery Label");
         expect(
             identificationLabel("Provisional genus-level foliage match")
         ).toBe("Tentative Genus");

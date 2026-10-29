@@ -163,10 +163,11 @@ function validateLastWatering(value, readAt) {
 }
 /** @param {Record<string, unknown>} pot @param {string} action */
 function validateManualCare(pot, action) {
-    if (pot["id"] !== "P39" && pot["id"] !== "P40") return;
+    if (pot["id"] !== "P39" && pot["id"] !== "P40" && pot["id"] !== "P41")
+        return;
     if (action === "water" || action === "reference")
         throw new TypeError(
-            "Manual-care pots P39/P40 cannot use Water or dry-reference actions; use a plant-specific Check and a separately labeled AI recommendation."
+            "Manual-care pots P39/P40/P41 cannot use Water or dry-reference actions; use a plant-specific Check and a separately labeled AI recommendation."
         );
     if (
         pot["dryReferenceGrams"] !== null ||
@@ -174,7 +175,7 @@ function validateManualCare(pot, action) {
         list(pot["plateauPoints"], "plateauPoints").length > 0
     )
         throw new TypeError(
-            "Manual-care pots P39/P40 cannot carry dry-reference or plateau calibration; keep descriptive measurements separate from readiness checks."
+            "Manual-care pots P39/P40/P41 cannot carry dry-reference or plateau calibration; keep descriptive measurements separate from readiness checks."
         );
 }
 /** @param {Record<string, unknown>} pot @param {number | null} readAt */

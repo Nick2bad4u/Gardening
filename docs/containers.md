@@ -1,9 +1,9 @@
 # Containers and shared planters
 
-Last updated: 2026-10-22
+Last updated: 2026-10-28
 
-The collection has **38 tracked containers**, including **five shared
-plantings**. Its **48 current profile pages** comprise **45 botanical profile
+The collection has **39 tracked containers**, including **five shared
+plantings**. Its **49 current profile pages** comprise **46 botanical profile
 groups and three whole-planter overviews**. One additional historical profile is
 kept for the removed silken pincushion. A profile may cover a clump or several
 heads of the same kind of plant.
@@ -42,8 +42,8 @@ changes in containers.
 
 Member profiles explain each plant's identification and care. Three overview
 pages describe combined plantings, including P38's provisional groups without
-separate member records. Another 33 containers each have one current botanical
-profile. Together these make 38 tracked containers.
+separate member records. Another 34 containers each have one current botanical
+profile. Together these make 39 tracked containers.
 
 ## Record care once, describe members separately
 
@@ -71,10 +71,10 @@ new growth, or deciding whether one member is being shaded.
 
 Two spreadsheet views make the collection easier to browse:
 
-- **Containers — 38 data rows:** one row per P-ID, with its label, members,
+- **Containers — 39 data rows:** one row per P-ID, with its label, members,
   shared care notes, setup context, and page links. Current setup, pot details,
   medium, last watering, and weight fields reference the existing `Plant tracker`.
-- **Container members — 45 data rows:** one row per current botanical profile
+- **Container members — 46 data rows:** one row per current botanical profile
   group, linked to its container, profile, and workbook page. The three aggregate
   overviews and the removed historical profile are excluded from member counts.
 

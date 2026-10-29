@@ -17,6 +17,11 @@ are maintained in each matching JSON record under
 are retained here so the website does not depend on a private generation cache.
 Original tool outputs are not part of the published site.
 
+The October 28, 2026 Alpine Spires addition shows general Chinese-evergreen
+anatomy: leaf blade, midrib and side veins, petiole, and stem. Its green, cream,
+and pink coloring follows the nursery-label context; it does not document the
+owned plant's appearance or confirm the trade selection's cultivar identity.
+
 This artwork is separate from the licensed reference photographs in
 [`assets/plants`](../plants/) and the collection's original photographic
 evidence. Their existing attribution and rights remain unchanged.
