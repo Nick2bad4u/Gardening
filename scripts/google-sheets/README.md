@@ -209,6 +209,31 @@ published feeds. The authenticated native workbook, phone logger, and AppSheet
 checks above succeeded; no shared fetch behavior or additional retry loop was
 introduced to hide the published-feed limitation.
 
+### October 29 published-feed follow-up
+
+A separate read-only browser investigation obtained **HTTP 200 for both published
+feeds at 05:28:15 UTC**, without changing repository code or workbook sharing.
+The page accepted the CSV pair and correctly showed no P41 observations. On a
+fresh reload, the tracker again returned HTTP 200 and parsed to **39 rows and
+36 columns**, including P41 / #15, while History exceeded the existing
+**20-second** deadline. The page retained the earlier successful pair and its
+original read time, explicitly labeling the failed refresh. It did not combine
+partial responses or present the saved data as fresh.
+
+Bounded stable, timestamp-busted, and smaller-range requests reproduced a quick
+HTTP 307 followed by a stalled published download. Removing the freshness
+parameter or narrowing the range was not an established repair. Anonymous
+original-workbook export and query alternatives returned HTTP 401; no private
+access or sharing setting was changed. The successful browser History body was
+not retained for a full recount, so the complete 2,060-record count above remains
+the earlier independent download's result, not a new browser-count claim.
+
+These observations establish intermittent availability along the published-CSV
+download path, with the exact upstream cause unestablished. They do not establish
+a deterministic client defect or permanent recovery. The existing saved-pair
+fallback and freshness warning behaved correctly. No runtime change, longer
+timeout, automatic retry loop, proxy, or alternate editable ledger was added.
+
 ## October 24 owner setup clarifications and searchable placement map
 
 The maintained 5.39.6 source incorporates the owner's October 24 clarification
