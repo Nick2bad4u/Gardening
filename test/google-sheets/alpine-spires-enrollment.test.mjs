@@ -291,7 +291,42 @@ function fixture() {
         ],
     ]))
         put(title, row, col, "P40");
-    put("Dashboard", 43, 2, "='Plant tracker'!B39");
+    put(
+        "Dashboard",
+        43,
+        2,
+        "='Plant tracker'!B39&IF('Plant tracker'!O39=\"\",\"\",\" · label \"&'Plant tracker'!O39)"
+    );
+    for (const [column, formula] of /** @type {[number, string][]} */ ([
+        [3, "='Plant tracker'!D39"],
+        [4, "='Plant tracker'!E39"],
+        [5, "=Baselines!D39"],
+        [6, "=Baselines!C39"],
+        [7, "=Baselines!W39"],
+        [9, "=Baselines!AF39"],
+        [10, "=Baselines!AG39"],
+        [11, "='Plant tracker'!I39"],
+        [12, "='Plant tracker'!K39"],
+        [16, "=Baselines!H39"],
+        [17, "=Baselines!I39"],
+        [18, "=Baselines!J39"],
+        [19, "=Baselines!K39"],
+        [20, "=Baselines!L39"],
+        [21, "=Baselines!S39"],
+    ]))
+        put("Dashboard", 43, column, formula);
+    put(
+        "Dashboard",
+        43,
+        8,
+        '=IF(AND(ISNUMBER(G44),G44>0,ISNUMBER(H44),H44>0),G44-H44,"")'
+    );
+    put(
+        "Dashboard",
+        43,
+        13,
+        '=COUNTIFS(History!$B$2:$B$50001,$B44,History!$C$2:$C$50001,"Water")'
+    );
     put("Container members", 45, 0, "Houseplant-07");
     put("Containers", 38, 17, "Old acquisition");
     put("Containers", 38, 18, "Old date");
@@ -666,6 +701,81 @@ function setCell(sheet, row, col, cell) {
 }
 
 describe("alpine Spires one-time enrollment", () => {
+    it("keeps P41 Dashboard identity, label and live weight attached to its own source row", () => {
+        expect.hasAssertions();
+
+        const plan = buildAlpineSpiresEnrollment(fixture().snapshot);
+        const cells = new Map(
+            /** @type {[string, string | number][]} */ ([
+                ["Baselines!C39", 1935],
+                ["Baselines!C40", 125],
+                ["Plant tracker!B39", "Peperomia Spice is Nice"],
+                ["Plant tracker!B40", "Alpine Spires Chinese evergreen"],
+                ["Plant tracker!O39", "#14"],
+                ["Plant tracker!O40", "#15"],
+            ])
+        );
+        const name = edited(plan, "Dashboard", 44, 2)?.formulaValue ?? "";
+        const references = Array.from(
+            name.matchAll(
+                /(?<sheet>'Plant tracker'|Baselines)!(?<cell>[A-Z]{1,3}\d{1,6})/gv
+            ),
+            (match) => {
+                const cell = match.groups?.["cell"],
+                    sheet = match.groups?.["sheet"];
+                if (sheet === undefined || cell === undefined)
+                    throw new Error("Missing direct source reference");
+                return cells.get(`${sheet.replaceAll("'", "")}!${cell}`);
+            }
+        );
+
+        expect(edited(plan, "Dashboard", 44, 1)).toStrictEqual({
+            stringValue: "P41",
+        });
+        expect(references).toStrictEqual([
+            "Alpine Spires Chinese evergreen",
+            "#15",
+            "#15",
+        ]);
+
+        const weight = edited(plan, "Dashboard", 44, 6)?.formulaValue ?? "";
+
+        expect(weight).toBe("=Baselines!C40");
+        expect(cells.get(weight.slice(1))).toBe(125);
+        expect(cells.get(weight.slice(1))).not.toBe(1935);
+
+        for (const column of [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            9,
+            10,
+            11,
+            12,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+        ])
+            expect(
+                edited(plan, "Dashboard", 44, column)?.formulaValue
+            ).not.toMatch(
+                /(?:'Plant tracker'|Baselines)!\$?[A-Z]{1,3}\$?39\b/v
+            );
+
+        expect(edited(plan, "Dashboard", 44, 8)?.formulaValue).toContain(
+            "G45-H45"
+        );
+        expect(edited(plan, "Dashboard", 44, 13)?.formulaValue).toContain(
+            "History!$B$2:$B$50001,$B45"
+        );
+    });
+
     it("adds permanent identity and truthful acquisition without fabricated setup or history", () => {
         expect.hasAssertions();
 

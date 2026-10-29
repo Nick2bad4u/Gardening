@@ -348,11 +348,7 @@ export function buildAlpineSpiresEnrollment(snapshot) {
                 to,
                 e.column,
                 transform(e.cell.userEnteredValue ?? {}, (f) =>
-                    shiftInventoryRow(
-                        extendAlpineSpiresFormula(f, title),
-                        from + 1,
-                        to + 1
-                    ).replaceAll("P40", "P41")
+                    copiedRowFormula(f, title, from, to)
                 )
             );
     }
@@ -1312,6 +1308,27 @@ function completeChartTemplate(metadata) {
             throw new Error("Canonical chart roles or series changed");
     }
     return structuredClone(page);
+}
+
+/**
+ * Dashboard display rows have a five-row header offset from tracker/baseline
+ * rows. Rebase their direct plant links independently of their local cells.
+ * Roster lookup bounds are already extended; History references stay intact.
+ *
+ * @param {string} formula @param {string} title @param {number} from @param
+ *   {number} to
+ */
+function copiedRowFormula(formula, title, from, to) {
+    const extended = extendAlpineSpiresFormula(formula, title);
+    const shifted = shiftInventoryRow(extended, from + 1, to + 1).replaceAll(
+        "P40",
+        "P41"
+    );
+    if (title !== "Dashboard") return shifted;
+    return shifted.replaceAll(
+        /(?<=(?:'Plant tracker'|Baselines)!\$?[A-Z]{1,3}\$?)39\b/gv,
+        "40"
+    );
 }
 
 /** @param {NativeSnapshot} metadata */
