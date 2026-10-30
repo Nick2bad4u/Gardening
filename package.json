@@ -128,7 +128,7 @@
         "git-cliff": "^2.14.2",
         "gitcliff-config-nick2bad4u": "^1.5.1",
         "gitleaks-config-nick2bad4u": "^1.0.5",
-        "happy-dom": "^20.14.5",
+        "happy-dom": "^21.0.4",
         "htmlhint": "^1.9.2",
         "htmlhint-config-nick2bad4u": "^1.0.0",
         "lychee-config-nick2bad4u": "^3.0.2",
