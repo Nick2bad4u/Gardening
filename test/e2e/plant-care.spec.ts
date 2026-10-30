@@ -91,6 +91,14 @@ async function inspectPrint(page: Readonly<Page>) {
         )
         .toBeVisible();
     await page.emulateMedia({ media: "screen" });
+    await expect
+        .soft(
+            care.getByRole("link", {
+                exact: true,
+                name: "NC State Extension: Aglaonema",
+            })
+        )
+        .toBeHidden();
 }
 
 async function prepare(
@@ -107,6 +115,39 @@ async function prepare(
 }
 
 test.describe("per-plant care references", { tag: "@care" }, () => {
+    test("printing opens the full comparison and restores the disclosure state", async ({
+        page,
+    }) => {
+        await prepare(page, "light", 1280);
+        await page.goto(guidePath);
+        const comparison = page.locator("[data-care-comparison]");
+        const rows = comparison.locator("[data-care-row]");
+        await expect.soft(rows).toHaveCount(49);
+        await page.emulateMedia({ media: "print" });
+        await expect
+            .soft(comparison.locator("[data-care-row]:visible"))
+            .toHaveCount(49);
+        await page.evaluate(() => {
+            dispatchEvent(new Event("beforeprint"));
+            dispatchEvent(new Event("beforeprint"));
+            dispatchEvent(new Event("afterprint"));
+        });
+        await expect
+            .soft(comparison.locator("[data-care-row]:visible"))
+            .toHaveCount(49);
+        await page.emulateMedia({ media: "screen" });
+        await expect
+            .soft(comparison.locator("[data-care-row]:visible"))
+            .toHaveCount(0);
+        await comparison
+            .getByText(/^Browse all \d+ active plant references$/v)
+            .click();
+        await page.emulateMedia({ media: "print" });
+        await page.emulateMedia({ media: "screen" });
+        await expect
+            .soft(comparison.locator("[data-care-row]:visible"))
+            .toHaveCount(49);
+    });
     for (const theme of ["dark", "light"] as const) {
         for (const width of [390, 1280]) {
             test(`light and moisture reference at ${width}px in ${theme}`, async ({

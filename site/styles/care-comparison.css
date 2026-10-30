@@ -82,11 +82,7 @@
 }
 
 @media print {
-    .care-comparison-browser::details-content {
-        content-visibility: visible;
-    }
-
-    .care-comparison-browser > summary {
+    .care-comparison-browser[open] > summary {
         display: none;
     }
 

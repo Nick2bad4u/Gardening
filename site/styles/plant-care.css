@@ -268,11 +268,7 @@
             break-inside: avoid;
         }
 
-        & .plant-care-evidence::details-content {
-            content-visibility: visible;
-        }
-
-        & .plant-care-evidence summary {
+        & .plant-care-evidence[open] summary {
             display: none;
         }
     }

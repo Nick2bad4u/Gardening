@@ -24,7 +24,7 @@ const range = (values: readonly [number, number] | null) =>
         watering decision. Read the measurement assumptions and exceptions below before changing
         care.
     </p>
-    <details class="care-comparison-browser">
+    <details class="care-comparison-browser" data-print-care>
         <summary>Browse all {active.length} active plant references</summary>
         <ul class="care-comparison-list">
             {active.map((profile) => {
@@ -77,3 +77,4 @@ const range = (values: readonly [number, number] | null) =>
         </ul>
     </details>
 </section>
+<script src="../client/care-print.js"></script>
