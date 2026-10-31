@@ -4,9 +4,9 @@ Production logger **5.40.0 / immutable version 122** supports **39 container all
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained source and the production deployment are **5.40.0**, with
-**39 container allocations** through `P41`. The verified source promotion is
-recorded below.
+Maintained source is **5.40.1**, pending publication; the last verified production
+deployment remains **5.40.0 / immutable version 122**, with **39 container
+allocations** through `P41`. The verified source promotion is recorded below.
 Production **AppSheet 1.100137** was saved and read back on October 29 with
 P41's appended optional weight field. The rollout receipt below records the
 production checks separately from rehearsal results; earlier dated entries retain
@@ -41,9 +41,42 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## October 30 refresh timeout and pot-artwork patch (pending publication)
+
+Maintained source **5.40.1** gives initial plant-list loading, background summary
+refresh, and recent History reads **120 seconds** per attempt, replacing the
+20-second read limits. Initial loading retains its single automatic retry;
+manual refresh retains the saved data and draft if either read fails. Repeated
+Refresh taps share the pending operation, while changed History filters can
+still supersede an older read. Expired callbacks cannot replace newer data or
+advance its source-read time. Save confirmation and queue deadlines are unchanged.
+
+The website's shared published-Sheet reader uses a **60-second total budget**
+per CSV, including redirects, body download, and at most one retry after a
+one-second pause for a network failure or HTTP 408/500/502/503/504. A deadline
+failure does not start another minute of waiting. Saved observations retain
+their original read time if the refresh fails. These changes apply to the
+placement map, tracker, and pot-history pages; they do not make Google publish
+new workbook edits sooner.
+
+The same release updates the original schematic pot artwork from owner-supplied
+photographs: P29 tiger jaws uses a tall tan ribbed pot, P35 shared Lithops uses a
+pink pot with raised dots, and P36 split rock uses a rounded turquoise/rust-orange
+pot. Both Lithops component portraits share P35's pot framing; P28 Royal Flush
+is unchanged. The public SVG exports, accessible descriptions, logger revision,
+and maintained AppSheet portrait mapping use revision **150fb634e7d4e805**.
+
+The patch is pending publication. All **39** AppSheet portraits have been
+uploaded into the private **GardenPlantPortraits-150fb634e7d4e805** folder beside
+the workbook. Exact filenames, sizes, Drive MD5 checksums, parent membership, and
+owner-only permissions were verified on October 30. The AppSheet expression still
+requires its separate saved editor change; its last verified production revision
+is **04ba0f600720e5a8**. No workbook schema, observations, table write modes, or
+trigger settings change.
+
 ## October 28 Alpine Spires enrollment
 
-The maintained and deployed **5.40.0** source adds **P41 / #15 / Houseplant-08**, nursery-labelled
+The **5.40.0** enrollment release added **P41 / #15 / Houseplant-08**, nursery-labelled
 _Aglaonema commutatum_, leafjoy **Igneous™ Alpine Spires™**. The owner bought it
 at Home Depot on **October 28, 2026**, for **$19.99**. The supplied photograph is
 the nursery label, not a specimen photograph. Its “I'm New” badge is visible;
@@ -3541,7 +3574,7 @@ Logger 5.14.6 and later keep the HTML shell independent from spreadsheet reads a
 the last successful plant list in that browser for up to six hours. A recent
 saved list opens immediately while Google refreshes it in the background, so a
 slow or dropped iframe callback cannot hide the usable logger. Without a recent
-saved list, the logger waits 20 seconds, retries the read-only bootstrap once,
+saved list, maintained logger 5.40.1 waits 120 seconds per attempt, retries the read-only bootstrap once,
 and then replaces the indefinite loading screen with **Retry connection** and
 **Reload logger** controls. If Google
 explicitly rejects a request and the follow-up History check confirms

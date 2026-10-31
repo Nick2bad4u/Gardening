@@ -9720,8 +9720,8 @@
   <symbol id="icon-plant-faucaria-tuberculosa" viewBox="0 0 64 64">
     <defs>
         <linearGradient id="faucaria-pot" x1="0" x2="0.9" y1="0" y2="1">
-            <stop offset="0" stop-color="#efc48d" />
-            <stop offset="1" stop-color="#c8864e" />
+            <stop offset="0" stop-color="#d4bea0" />
+            <stop offset="1" stop-color="#978169" />
         </linearGradient>
         <linearGradient id="jaws-leaf" x1="0" y1="0" x2="0.85" y2="1">
             <stop offset="0" stop-color="#a9bf78" />
@@ -9831,15 +9831,13 @@
         stroke-width="0"
         opacity="0.12"
     />
-    <ellipse
-        cx="32"
-        cy="45.5"
-        rx="23"
-        ry="2.1"
-        fill="#745c45"
-        stroke="none"
-        stroke-width="1"
-    />
+    <path d="M11 30V54C11 63 53 63 53 54V30Z" fill="url(#faucaria-pot)" stroke="#796552" stroke-width="1.4" />
+    <path d="M11.5 38Q32 45 52.5 38M11.5 45Q32 52 52.5 45M12 52Q32 59 52 52M14 57Q32 63 50 57" fill="none" stroke="#9a826b" stroke-width="3.5" />
+    <path d="M12 36Q32 43 52 36M12 43Q32 50 52 43M12.5 50Q32 57 51.5 50M14 55Q32 61 50 55" fill="none" stroke="#e1ceb4" stroke-width="2" stroke-linecap="round" />
+    <ellipse cx="32" cy="30" rx="21" ry="6.3" fill="#ceb899" stroke="#796552" stroke-width="1.4" />
+    <ellipse cx="32" cy="29.8" rx="18.7" ry="4.7" fill="#766755" />
+    <path d="M17 29l3-2 3 2-2 2ZM38 29l3-2 4 2-3 2ZM25 31l2-2 3 2-2 1" fill="#d5c9ad" />
+    <g transform="translate(7 -6) scale(0.78)">
     <use
         href="#jaws-blade"
         transform="translate(29 32) rotate(-21) scale(0.88)"
@@ -9864,20 +9862,8 @@
         href="#jaws-blade"
         transform="translate(33 45) rotate(36) scale(1.05)"
     />
-    <path
-        d="M7 45h50v7H7z"
-        fill="#efc792"
-        stroke="#6b4b31"
-        stroke-linejoin="round"
-        stroke-width="1.7"
-    />
-    <path
-        d="m10 52 4 9h36l4-9Z"
-        fill="url(#faucaria-pot)"
-        stroke="#6b4b31"
-        stroke-linejoin="round"
-        stroke-width="1.7"
-    />
+    </g>
+    <path d="M12 31Q32 38 52 31" fill="none" stroke="#dfc8a8" stroke-width="2" stroke-linecap="round" />
 </symbol>
 
   <symbol id="icon-plant-tiny-mixed-succulent-planter" viewBox="0 0 64 64">
@@ -18005,75 +17991,118 @@
 </symbol>
 <symbol id="icon-plant-lithops-shared-planter" viewBox="0 0 64 64">
 <defs>
-<linearGradient id="lithops-shared-planter-pot" x1="0" y1="0" x2="1" y2="1">
-<stop offset="0" stop-color="#ead8bc" />
-<stop offset="1" stop-color="#b79979" />
+<linearGradient id="lithops-shared-planter-pot" x1="0" y1="0" x2="1" y2="0.7">
+<stop offset="0" stop-color="#b7748a" />
+<stop offset="0.35" stop-color="#e9abbc" />
+<stop offset="1" stop-color="#a6637b" />
 </linearGradient>
 <linearGradient id="lithops-shared-planter-body" x1="0" y1="0" x2="1" y2="1">
 <stop offset="0" stop-color="#c9be94" />
 <stop offset="1" stop-color="#8e9170" />
 </linearGradient>
+<pattern id="lithops-shared-planter-hobnails" width="6" height="5" patternUnits="userSpaceOnUse">
+<ellipse cx="3" cy="2.9" rx="1.6" ry="1.4" fill="#985b73" opacity="0.55" />
+<ellipse cx="2.7" cy="2.2" rx="1.45" ry="1.15" fill="#efb7c6" />
+<ellipse cx="2.4" cy="1.9" rx="0.65" ry="0.4" fill="#f7d1dc" />
+</pattern>
 </defs>
 <ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
-<path d="M10 40H54L49 58Q32 62 15 58Z" fill="url(#lithops-shared-planter-pot)" stroke="#807563" stroke-width="1.5" />
-<ellipse cx="32" cy="40" rx="22" ry="6" fill="#705445" stroke="#807563" stroke-width="1.3" />
+<path d="M10 36V52C10 63 54 63 54 52V36Z" fill="url(#lithops-shared-planter-pot)" stroke="#89556b" stroke-width="1.4" />
+<path d="M11 39V52C11 61 53 61 53 52V39Q32 45 11 39Z" fill="url(#lithops-shared-planter-hobnails)" />
+<ellipse cx="32" cy="36" rx="22" ry="7" fill="#edb3c4" stroke="#89556b" stroke-width="1.3" />
+<ellipse cx="32" cy="35.7" rx="19.6" ry="5.2" fill="#756451" />
+<path d="M14 35l3-2 3 2-2 2ZM38 35l3-3 4 2-2 3ZM23 38l2-2 3 1-1 2ZM46 34l2-1 3 2-3 1" fill="#e2d3b7" />
+<g transform="translate(7 0) scale(0.78)">
 <path d="M16 37C10 22 13 18 22 19Q29 20 27 38Q22 43 16 37ZM29 38Q26 21 33 20C42 17 45 28 39 38Q34 42 29 38Z" fill="url(#lithops-shared-planter-body)" stroke="#656b51" stroke-width="1.2" />
 <path d="M32 42Q27 29 35 28Q42 27 40 42Q36 46 32 42ZM42 42Q39 28 46 28Q56 28 49 42Q46 46 42 42Z" fill="#bab09b" stroke="#776e5d" stroke-width="1.2" />
 <path d="M17 23L22 25 18 28 23 31M33 24L37 27 32 30M34 32L37 35M45 31L47 35" fill="none" stroke="#706d56" stroke-width="1.2" stroke-linecap="round" />
-<path d="M15 49Q32 55 49 49" fill="none" stroke="#fff4df" stroke-width="1.4" opacity="0.75" />
+</g>
+<path d="M11 37Q32 44 53 37" fill="none" stroke="#f4c1d0" stroke-width="2" stroke-linecap="round" />
 </symbol>
 <symbol id="icon-plant-lithops-lesliei" viewBox="0 0 64 64">
 <defs>
-<linearGradient id="lithops-lesliei-pot" x1="0" y1="0" x2="1" y2="1">
-<stop offset="0" stop-color="#dab7bb" />
-<stop offset="1" stop-color="#9e707c" />
+<linearGradient id="lithops-lesliei-pot" x1="0" y1="0" x2="1" y2="0.7">
+<stop offset="0" stop-color="#b7748a" />
+<stop offset="0.35" stop-color="#e9abbc" />
+<stop offset="1" stop-color="#a6637b" />
 </linearGradient>
 <linearGradient id="lithops-lesliei-body" x1="0" y1="0" x2="0.8" y2="1">
 <stop offset="0" stop-color="#d2b889" />
 <stop offset="1" stop-color="#8c775f" />
 </linearGradient>
+<pattern id="lithops-lesliei-hobnails" width="6" height="5" patternUnits="userSpaceOnUse">
+<ellipse cx="3" cy="2.9" rx="1.6" ry="1.4" fill="#985b73" opacity="0.55" />
+<ellipse cx="2.7" cy="2.2" rx="1.45" ry="1.15" fill="#efb7c6" />
+<ellipse cx="2.4" cy="1.9" rx="0.65" ry="0.4" fill="#f7d1dc" />
+</pattern>
 </defs>
 <ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
-<path d="M10 40H54L49 58Q32 62 15 58Z" fill="url(#lithops-lesliei-pot)" stroke="#815d68" stroke-width="1.5" />
-<ellipse cx="32" cy="40" rx="22" ry="6" fill="#705445" stroke="#815d68" stroke-width="1.3" />
+<path d="M10 36V52C10 63 54 63 54 52V36Z" fill="url(#lithops-lesliei-pot)" stroke="#89556b" stroke-width="1.4" />
+<path d="M11 39V52C11 61 53 61 53 52V39Q32 45 11 39Z" fill="url(#lithops-lesliei-hobnails)" />
+<ellipse cx="32" cy="36" rx="22" ry="7" fill="#edb3c4" stroke="#89556b" stroke-width="1.3" />
+<ellipse cx="32" cy="35.7" rx="19.6" ry="5.2" fill="#756451" />
+<path d="M14 35l3-2 3 2-2 2ZM38 35l3-3 4 2-2 3ZM23 38l2-2 3 1-1 2ZM46 34l2-1 3 2-3 1" fill="#e2d3b7" />
+<g transform="translate(7 0) scale(0.78)">
 <path d="M15 32C10 16 15 12 22 15L25 33Q21 38 15 32ZM27 33L28 15C36 11 40 18 35 32Q32 37 27 33Z" fill="url(#lithops-lesliei-body)" stroke="#71604d" stroke-width="1.2" />
 <path d="M29 41C24 26 29 21 36 24L39 42Q34 47 29 41ZM41 42L42 24C50 20 54 27 49 41Q46 46 41 42Z" fill="url(#lithops-lesliei-body)" stroke="#71604d" stroke-width="1.2" />
 <path d="M17 18L21 20 17 23 22 25M30 18L34 20 30 24M31 27L35 30 31 33 36 35M44 27L48 30 44 33" fill="none" stroke="#806240" stroke-width="1.4" stroke-linecap="round" />
-<path d="M15 49Q32 55 49 49" fill="none" stroke="#ffebed" stroke-width="1.4" opacity="0.75" />
+</g>
+<path d="M11 37Q32 44 53 37" fill="none" stroke="#f4c1d0" stroke-width="2" stroke-linecap="round" />
 </symbol>
 <symbol id="icon-plant-lithops-salicola" viewBox="0 0 64 64">
 <defs>
-<linearGradient id="lithops-salicola-pot" x1="0" y1="0" x2="1" y2="1">
-<stop offset="0" stop-color="#dab7bb" />
-<stop offset="1" stop-color="#9e707c" />
+<linearGradient id="lithops-salicola-pot" x1="0" y1="0" x2="1" y2="0.7">
+<stop offset="0" stop-color="#b7748a" />
+<stop offset="0.35" stop-color="#e9abbc" />
+<stop offset="1" stop-color="#a6637b" />
 </linearGradient>
 <linearGradient id="lithops-salicola-body" x1="0" y1="0" x2="0.8" y2="1">
 <stop offset="0" stop-color="#bdc2a9" />
 <stop offset="1" stop-color="#7d8970" />
 </linearGradient>
+<pattern id="lithops-salicola-hobnails" width="6" height="5" patternUnits="userSpaceOnUse">
+<ellipse cx="3" cy="2.9" rx="1.6" ry="1.4" fill="#985b73" opacity="0.55" />
+<ellipse cx="2.7" cy="2.2" rx="1.45" ry="1.15" fill="#efb7c6" />
+<ellipse cx="2.4" cy="1.9" rx="0.65" ry="0.4" fill="#f7d1dc" />
+</pattern>
 </defs>
 <ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
-<path d="M10 40H54L49 58Q32 62 15 58Z" fill="url(#lithops-salicola-pot)" stroke="#815d68" stroke-width="1.5" />
-<ellipse cx="32" cy="40" rx="22" ry="6" fill="#705445" stroke="#815d68" stroke-width="1.3" />
+<path d="M10 36V52C10 63 54 63 54 52V36Z" fill="url(#lithops-salicola-pot)" stroke="#89556b" stroke-width="1.4" />
+<path d="M11 39V52C11 61 53 61 53 52V39Q32 45 11 39Z" fill="url(#lithops-salicola-hobnails)" />
+<ellipse cx="32" cy="36" rx="22" ry="7" fill="#edb3c4" stroke="#89556b" stroke-width="1.3" />
+<ellipse cx="32" cy="35.7" rx="19.6" ry="5.2" fill="#756451" />
+<path d="M14 35l3-2 3 2-2 2ZM38 35l3-3 4 2-2 3ZM23 38l2-2 3 1-1 2ZM46 34l2-1 3 2-3 1" fill="#e2d3b7" />
+<g transform="translate(7 0) scale(0.78)">
 <path d="M15 32C10 16 15 12 22 15L25 33Q21 38 15 32ZM27 33L28 15C36 11 40 18 35 32Q32 37 27 33Z" fill="url(#lithops-salicola-body)" stroke="#606e5c" stroke-width="1.2" />
 <path d="M29 41C24 26 29 21 36 24L39 42Q34 47 29 41ZM41 42L42 24C50 20 54 27 49 41Q46 46 41 42Z" fill="url(#lithops-salicola-body)" stroke="#606e5c" stroke-width="1.2" />
 <path d="M16 19Q18 16 21 19L22 24Q19 26 17 23ZM29 19Q32 16 34 20L33 24 29 25ZM30 28Q32 25 35 28L36 33Q33 35 31 32ZM43 28Q46 25 48 29L47 33 43 34Z" fill="#7a8876" stroke="#d1c8a0" stroke-width="1.1" />
-<path d="M15 49Q32 55 49 49" fill="none" stroke="#ffebed" stroke-width="1.4" opacity="0.75" />
+</g>
+<path d="M11 37Q32 44 53 37" fill="none" stroke="#f4c1d0" stroke-width="2" stroke-linecap="round" />
 </symbol>
 <symbol id="icon-plant-pleiospilos-nelii" viewBox="0 0 64 64">
 <defs>
 <linearGradient id="pleiospilos-nelii-pot" x1="0" y1="0" x2="1" y2="1">
-<stop offset="0" stop-color="#e4d8ce" />
-<stop offset="1" stop-color="#b29b91" />
+<stop offset="0" stop-color="#8cbab4" />
+<stop offset="1" stop-color="#496f67" />
 </linearGradient>
 <radialGradient id="pleiospilos-nelii-body" cx="0.3" cy="0.2" r="0.9">
 <stop offset="0" stop-color="#c7c0a8" />
 <stop offset="1" stop-color="#8b8b7b" />
 </radialGradient>
+<clipPath id="pleiospilos-nelii-pot-surface">
+<path d="M11 36C4 44 9 55 21 59Q35 63 48 57C58 52 60 42 52 36Q32 31 11 36Z" />
+</clipPath>
 </defs>
 <ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
-<path d="M11 41H53L48 58Q32 62 16 58Z" fill="url(#pleiospilos-nelii-pot)" stroke="#807563" stroke-width="1.5" />
-<ellipse cx="32" cy="41" rx="21" ry="5" fill="#705445" stroke="#807563" stroke-width="1.3" />
+<path d="M11 36C4 44 9 55 21 59Q35 63 48 57C58 52 60 42 52 36Q32 31 11 36Z" fill="url(#pleiospilos-nelii-pot)" stroke="#655b48" stroke-width="1.5" />
+<g clip-path="url(#pleiospilos-nelii-pot-surface)" fill="#b37249" stroke="#c78c59" stroke-width="0.6">
+<path d="M9 39q4-2 6 1l-1 2q4 4-1 5l-4-2ZM21 42q2-3 4-1l-1 2q5 1 3 4l-5-1ZM33 41q5 0 4 3l-3 3-2-3ZM46 39q3-1 5 1l-1 2q5 0 3 4l-5-1-3-3ZM12 50q2-4 5-2l-1 3q4 0 2 4l-5-1ZM23 51q1-4 4-3l-1 3q5 2 2 5l-4-1ZM37 49q3-3 5-1l-1 2q5 0 3 4l-5-1ZM49 51q3-3 5-1l1 4q-3 5-6 2ZM18 58q1-4 4-2l3 4ZM32 58q1-4 4-2l3 4" />
+</g>
+<path d="M16 44l2 2-1 3M29 40l2 4-1 3M34 51l-1 4M45 44l-2 3M19 54l2 2" fill="none" stroke="#afd0c5" stroke-width="1.3" stroke-linecap="round" />
+<ellipse cx="32" cy="36.5" rx="20.5" ry="6.4" fill="#b57b53" stroke="#655b48" stroke-width="1.4" />
+<ellipse cx="32" cy="36.3" rx="18.6" ry="4.9" fill="#756857" />
+<path d="M17 35l3-2 3 2-2 2ZM39 36l3-2 4 2-3 2ZM26 39l2-2 3 1-1 2" fill="#ded0b0" />
+<g transform="translate(9 6) scale(0.72)">
 <path d="M14 35C8 12 22 7 29 17L31 40Q23 47 14 35ZM33 40L35 17C43 7 56 15 50 35Q42 47 33 40Z" fill="url(#pleiospilos-nelii-body)" stroke="#686958" stroke-width="1.5" />
 <path d="M31 38Q31 25 29 18M33 38Q33 25 35 18" fill="none" stroke="#555444" stroke-width="1.1" />
 <g fill="#696b57" opacity="0.8">
@@ -18086,7 +18115,8 @@
 <circle cx="39" cy="30" r="1" />
 <circle cx="43" cy="35" r="1" />
 </g>
-<path d="M17 50Q32 55 47 50" fill="none" stroke="#fff3e5" stroke-width="1.4" opacity="0.75" />
+</g>
+<path d="M13 38Q32 44 51 38" fill="none" stroke="#9ebeb3" stroke-width="1.5" stroke-linecap="round" />
 </symbol>
   <symbol id="icon-full-report" viewBox="0 0 64 64">
 <desc id="ui-full-report-description">A cream clipboard with blue report lines and a green leaf on a deep blue square.</desc>

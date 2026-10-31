@@ -191,10 +191,14 @@ export const DatedSnapshotOffline: Story = {
     play: async ({ canvasElement }) => {
         const { canvas, document, userEvent } =
             await websiteCanvas(canvasElement);
-        await waitFor(() =>
-            expect(document.querySelector(sourceSelector)).toHaveTextContent(
-                "Live refresh failed · showing published snapshot."
-            )
+        await waitFor(
+            () =>
+                expect(
+                    document.querySelector(sourceSelector)
+                ).toHaveTextContent(
+                    "Live refresh failed · showing published snapshot."
+                ),
+            { timeout: 5000 }
         );
         await expect(document.querySelector(sourceSelector)).toHaveTextContent(
             "Counts fixed at its source-read date."
@@ -439,10 +443,12 @@ export const Unavailable: Story = {
     args: { scenario: "invalid-snapshot" },
     play: async ({ canvasElement }) => {
         const { canvas, document } = await websiteCanvas(canvasElement);
-        await waitFor(() =>
-            expect(document.querySelector(sourceSelector)).toHaveTextContent(
-                "Watering log unavailable"
-            )
+        await waitFor(
+            () =>
+                expect(
+                    document.querySelector(sourceSelector)
+                ).toHaveTextContent("Watering log unavailable"),
+            { timeout: 5000 }
         );
         await expect(
             canvas.getByRole("button", { name: "Refresh data" })
@@ -462,10 +468,12 @@ export const RetryAfterFailure: Story = {
     play: async ({ canvasElement }) => {
         const { canvas, document, userEvent } =
             await websiteCanvas(canvasElement);
-        await waitFor(() =>
-            expect(document.querySelector(sourceSelector)).toHaveTextContent(
-                "Watering log unavailable"
-            )
+        await waitFor(
+            () =>
+                expect(
+                    document.querySelector(sourceSelector)
+                ).toHaveTextContent("Watering log unavailable"),
+            { timeout: 5000 }
         );
         await userEvent.click(
             canvas.getByRole("button", { name: "Refresh data" })
@@ -478,6 +486,24 @@ export const RetryAfterFailure: Story = {
         await expect(document.querySelector(imageSelector)).toBeVisible();
         await expect(
             canvas.getByRole("button", { name: svgLabel })
+        ).toBeEnabled();
+    },
+};
+
+export const AutomaticRetry: Story = {
+    args: { scenario: "auto-retry" },
+    play: async ({ canvasElement }) => {
+        const { canvas, document } = await websiteCanvas(canvasElement);
+        await waitFor(
+            () =>
+                expect(
+                    document.querySelector(sourceSelector)
+                ).toHaveTextContent(loadedMessage),
+            { timeout: 5000 }
+        );
+        await expect(document.querySelector(imageSelector)).toBeVisible();
+        await expect(
+            canvas.getByRole("button", { name: "Refresh data" })
         ).toBeEnabled();
     },
 };

@@ -230,7 +230,8 @@
     }
     const headers = history.split("\n", 1)[0];
     const nativeFetch = fetch.bind(globalThis);
-    const failedSources = new Set();
+    /** @type {Map<string | null, number>} */
+    const failedSources = new Map();
     /** @type {typeof fetch} */
     const fixtureFetch = async (input, init) => {
         const url = new URL(
@@ -252,15 +253,16 @@
                     // Keep the request pending for the loading-state story.
                 });
             const sourceId = url.searchParams.get("gid");
-            const hasPreviouslyFailed = failedSources.has(sourceId);
-            failedSources.add(sourceId);
+            const previousFailures = failedSources.get(sourceId) ?? 0;
+            failedSources.set(sourceId, previousFailures + 1);
             if (
                 [
                     "dated-error",
                     "error",
                     "invalid-snapshot",
                 ].includes(scenario) ||
-                (scenario === "retry" && !hasPreviouslyFailed)
+                (scenario === "retry" && previousFailures < 2) ||
+                (scenario === "auto-retry" && previousFailures < 1)
             ) {
                 return new Response("Fixture service unavailable", {
                     status: 503,

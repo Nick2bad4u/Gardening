@@ -17108,7 +17108,7 @@
             ].join("/");
             const PLANT_ICON_PATH = "/Gardening/assets/plant-icons/";
             // Generated from the exported artwork by sync-plant-icons.mjs.
-            const PLANT_ICON_REVISION = "04ba0f600720e5a8";
+            const PLANT_ICON_REVISION = "150fb634e7d4e805";
             const PLANT_ICON_CACHE = "gardenLoggerPlantPortraitsV1";
             const plantPortraitRequests = new Map();
             let plantPortraitCache;
@@ -17121,7 +17121,8 @@
             const OBSERVATION_QUEUE_LOCK = "gardenLoggerObservationQueueV1";
             const BOOTSTRAP_CACHE_KEY = "gardenLoggerBootstrapV5";
             const BOOTSTRAP_CACHE_MAX_AGE_MS = 6 * 60 * 60 * 1000;
-            const BOOTSTRAP_TIMEOUT_MS = 20000;
+            const BOOTSTRAP_TIMEOUT_MS = 120000;
+            const RECENT_HISTORY_TIMEOUT_MS = 120000;
             const BOOTSTRAP_AUTO_RETRIES = 1;
             const SAVE_WATCHDOG_MS = 20000;
             const QUEUE_WATCHDOG_MS = 45000;
@@ -25200,7 +25201,7 @@
                     if (attempt !== state.recentAttempt) return;
                     state.recentAttempt += 1;
                     setRecentUnavailable("History refresh timed out");
-                }, 20000);
+                }, RECENT_HISTORY_TIMEOUT_MS);
                 google.script.run
                     .withSuccessHandler((entries) => {
                         if (attempt !== state.recentAttempt) return;
@@ -26065,10 +26066,10 @@
                 "click",
                 recalculateWorkbook
             );
-            $("refreshDataButton").addEventListener(
-                "click",
-                refreshSavedPlantData
-            );
+            $("refreshDataButton").addEventListener("click", () => {
+                if (state.bootstrapRefreshTimer || state.recentTimer) return;
+                refreshSavedPlantData();
+            });
             $("compactHistoryToggle").addEventListener("click", () =>
                 setCompactHistory(
                     $("compactHistoryToggle").getAttribute("aria-pressed") !==

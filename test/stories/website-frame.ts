@@ -21,6 +21,7 @@ export interface WebsiteFrameProps {
 }
 
 type NetworkScenario =
+    | "auto-retry"
     | "empty"
     | "error"
     | "loading"
@@ -63,12 +64,13 @@ export const websiteArgTypes = {
             "empty",
             "error",
             "retry",
+            "auto-retry",
             "tracker-unavailable",
         ],
         table: {
             type: {
                 summary:
-                    "ready | humidity | houseplants | light | care-events | loading | empty | error | retry | tracker-unavailable | dated-error | dated-loading | invalid-snapshot",
+                    "ready | humidity | houseplants | light | care-events | loading | empty | error | retry | auto-retry | tracker-unavailable | dated-error | dated-loading | invalid-snapshot",
             },
         },
     },

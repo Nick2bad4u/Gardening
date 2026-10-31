@@ -1399,17 +1399,20 @@ describe("garden logger History details and current-cycle charts", () => {
             HTMLElement
         ).getHTML();
         behaviors.getWebAppBootstrap = ({ success }) => {
-            success({
-                ...workflowBootstrap(),
-                plants: workflowBootstrap().plants.map((plant) => ({
-                    ...plant,
-                    latestWeight: 418,
-                    potSetup: 3,
-                })),
-                serverTime: "2026-09-06T16:05:00Z",
-            });
+            window.setTimeout(() => {
+                success({
+                    ...workflowBootstrap(),
+                    plants: workflowBootstrap().plants.map((plant) => ({
+                        ...plant,
+                        latestWeight: 418,
+                        potSetup: 3,
+                    })),
+                    serverTime: "2026-09-06T16:06:15Z",
+                });
+            }, 75_000);
         };
         refreshWorkflow(window);
+        vi.advanceTimersByTime(75_000);
 
         expect(controls()).toStrictEqual(before);
         expect(
@@ -1539,6 +1542,84 @@ describe("garden logger History details and current-cycle charts", () => {
         }
     );
 
+    it("keeps a slow manual refresh bounded without losing drafts, selection, cache or History", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        const { behaviors, calls, window } = createLoggerWindow({
+            bootstrapData: { ...workflowBootstrap(), recent: [recentExample] },
+        });
+        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebAppBootstrap">[]} */
+        const summaries = [];
+        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getRecentWebObservations">[]} */
+        const history = [];
+        behaviors.getWebAppBootstrap = (handlers) => {
+            summaries.push(handlers);
+        };
+        behaviors.getRecentWebObservations = (handlers) => {
+            history.push(handlers);
+        };
+        enterWorkflowValue(window, "weight", "419.1");
+        enterWorkflowValue(window, "plantSearch", "Moon");
+        const selected = queryElement(
+            window.document,
+            "#plantSelect",
+            HTMLSelectElement
+        ).value;
+        const cache = window.localStorage.getItem("gardenLoggerBootstrapV5");
+        const list = queryElement(window.document, "#recentList", HTMLElement);
+        const historyBefore = list.getHTML();
+        const refresh = queryElement(
+            window.document,
+            "#refreshDataButton",
+            HTMLButtonElement
+        );
+        refreshWorkflow(window);
+        refreshWorkflow(window);
+        vi.advanceTimersByTime(75_000);
+        refreshWorkflow(window);
+
+        expect(summaries).toHaveLength(1);
+        expect(history).toHaveLength(1);
+        expect(refresh.getAttribute("aria-busy")).toBe("true");
+        expect(list.getAttribute("aria-busy")).toBe("true");
+
+        vi.advanceTimersByTime(45_000);
+
+        expect(refresh.getAttribute("aria-busy")).toBe("false");
+        expect(list.getAttribute("aria-busy")).toBe("false");
+
+        required(summaries[0]).success({
+            ...workflowBootstrap(),
+            version: "expired",
+        });
+        required(history[0]).success([]);
+
+        expect(window.localStorage.getItem("gardenLoggerBootstrapV5")).toBe(
+            cache
+        );
+        expect(list.getHTML()).toBe(historyBefore);
+        expect(
+            queryElement(window.document, "#weight", HTMLInputElement).value
+        ).toBe("419.1");
+        expect(
+            queryElement(window.document, "#plantSearch", HTMLInputElement)
+                .value
+        ).toBe("Moon");
+        expect(
+            queryElement(window.document, "#plantSelect", HTMLSelectElement)
+                .value
+        ).toBe(selected);
+        expect(
+            calls.filter(({ method }) => method.startsWith("save"))
+        ).toHaveLength(0);
+
+        refreshWorkflow(window);
+
+        expect(summaries).toHaveLength(2);
+        expect(history).toHaveLength(2);
+    });
+
     it("ignores stale summary and History refreshes and timed-out callbacks without advancing freshness", () => {
         expect.hasAssertions();
 
@@ -1558,10 +1639,11 @@ describe("garden logger History details and current-cycle charts", () => {
             history.push(handlers);
         };
         refreshWorkflow(window);
+        vi.advanceTimersByTime(120_000);
         refreshWorkflow(window);
         required(summaries[1]).success({
             ...workflowBootstrap(),
-            serverTime: "2026-09-06T16:05:00Z",
+            serverTime: "2026-09-06T16:07:00Z",
             weighedTodayPlantIds: ["P01", "P02"],
         });
         required(history[1]).success([{ ...recentExample, weight: 418 }]);
@@ -1587,7 +1669,7 @@ describe("garden logger History details and current-cycle charts", () => {
         ).toContain("Connected");
 
         refreshWorkflow(window);
-        vi.advanceTimersByTime(20_000);
+        vi.advanceTimersByTime(120_000);
         required(summaries[2]).success(workflowBootstrap());
         required(history[2]).success([]);
 
@@ -5069,6 +5151,8 @@ describe("garden logger bootstrap cache and connection recovery", () => {
     it("opens from a recent saved plant list while Google refreshes in the background", () => {
         expect.hasAssertions();
 
+        vi.useFakeTimers();
+
         /**
          * @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebAppBootstrap">
          *     | undefined}
@@ -5103,6 +5187,7 @@ describe("garden logger bootstrap cache and connection recovery", () => {
             queryElement(window.document, "#observedAt", HTMLInputElement).value
         ).not.toContain("2026-08-15");
 
+        vi.advanceTimersByTime(75_000);
         required(refreshHandlers).success({ ...bootstrap, version: "fresh" });
 
         expect(
@@ -5175,6 +5260,34 @@ describe("garden logger bootstrap cache and connection recovery", () => {
         );
     });
 
+    it("accepts an initial bootstrap after 75 seconds without launching a duplicate read", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        const { calls, window } = createLoggerWindow({
+            bootstrapBehavior: ({ success }) => {
+                setTimeout(() => {
+                    success(bootstrap);
+                }, 75_000);
+            },
+        });
+        vi.advanceTimersByTime(75_000);
+
+        expect(
+            calls.filter((call) => call.method === "getWebAppBootstrap")
+        ).toHaveLength(1);
+        expect(
+            queryElement(window.document, "#connectionStatus", HTMLElement)
+                .textContent
+        ).toBe("Connected · Logger test");
+
+        vi.advanceTimersByTime(120_000);
+
+        expect(
+            calls.filter((call) => call.method === "getWebAppBootstrap")
+        ).toHaveLength(1);
+    });
+
     it("automatically retries a dropped bootstrap callback and clears its watchdog after recovery", () => {
         expect.hasAssertions();
 
@@ -5191,7 +5304,7 @@ describe("garden logger bootstrap cache and connection recovery", () => {
             calls.filter((call) => call.method === "getWebAppBootstrap")
         ).toHaveLength(1);
 
-        vi.advanceTimersByTime(20_000);
+        vi.advanceTimersByTime(120_000);
 
         expect(
             calls.filter((call) => call.method === "getWebAppBootstrap")
@@ -5207,7 +5320,7 @@ describe("garden logger bootstrap cache and connection recovery", () => {
                 .textContent
         ).toBe("Connected · Logger test");
 
-        vi.advanceTimersByTime(20_000);
+        vi.advanceTimersByTime(120_000);
 
         expect(
             calls.filter((call) => call.method === "getWebAppBootstrap")
@@ -5225,7 +5338,7 @@ describe("garden logger bootstrap cache and connection recovery", () => {
             },
         });
 
-        vi.advanceTimersByTime(40_000);
+        vi.advanceTimersByTime(240_000);
 
         expect(
             calls.filter((call) => call.method === "getWebAppBootstrap")
@@ -5237,7 +5350,7 @@ describe("garden logger bootstrap cache and connection recovery", () => {
         expect(
             queryElement(window.document, "#loadingDetail", HTMLElement)
                 .textContent
-        ).toMatch(/did not answer within 20 seconds/v);
+        ).toMatch(/did not answer within 120 seconds/v);
         expect(
             queryElement(window.document, "#loadingActions", HTMLElement).hidden
         ).toBe(false);
@@ -5279,7 +5392,7 @@ describe("garden logger bootstrap cache and connection recovery", () => {
             },
         });
 
-        vi.advanceTimersByTime(20_000);
+        vi.advanceTimersByTime(120_000);
 
         expect(attempts).toHaveLength(2);
 
@@ -8667,6 +8780,35 @@ describe("garden logger local History loading and portraits", () => {
         expect(list.textContent).not.toContain("999");
     });
 
+    it("accepts History after 75 seconds and lets newer filters supersede a pending read", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        const { behaviors, window } = createLoggerWindow({
+            bootstrapData: { ...bootstrap, recent: [recentExample] },
+        });
+        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getRecentWebObservations">[]} */
+        const pending = [];
+        behaviors.getRecentWebObservations = (handlers) => {
+            pending.push(handlers);
+        };
+        changeRecentLimit(window, "25");
+        vi.advanceTimersByTime(75_000);
+        required(pending[0]).success([{ ...recentExample, weight: 418 }]);
+        const list = queryElement(window.document, "#recentList", HTMLElement);
+
+        expect(list.textContent).toContain("418 g");
+        expect(list.getAttribute("aria-busy")).toBe("false");
+
+        changeRecentLimit(window, "50");
+        changeRecentLimit(window, "100");
+        required(pending[2]).success([{ ...recentExample, weight: 417 }]);
+        required(pending[1]).success([{ ...recentExample, weight: 999 }]);
+
+        expect(list.textContent).toContain("417 g");
+        expect(list.textContent).not.toContain("999 g");
+    });
+
     it("announces failure, invalid response, timeout and offline locally without losing entries", () => {
         expect.hasAssertions();
 
@@ -8700,7 +8842,7 @@ describe("garden logger local History loading and portraits", () => {
         expect(list.firstElementChild).toBe(original);
 
         changeRecentLimit(window, "100");
-        vi.advanceTimersByTime(20_000);
+        vi.advanceTimersByTime(120_000);
 
         expect(status.textContent).toContain("timed out");
 

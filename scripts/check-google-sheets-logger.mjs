@@ -859,7 +859,8 @@ assert.match(
 assert.match(html, /state\.saveTimer = setTimeout\(\(\) => \{/v);
 assert.match(html, /state\.saveStartedAt = Date\.now\(\);/v);
 assert.match(html, /function browserIsOnline\(\)/v);
-assert.match(html, /const BOOTSTRAP_TIMEOUT_MS = 20000;/v);
+assert.match(html, /const BOOTSTRAP_TIMEOUT_MS = 120000;/v);
+assert.match(html, /const RECENT_HISTORY_TIMEOUT_MS = 120000;/v);
 assert.match(html, /const BOOTSTRAP_AUTO_RETRIES = 1;/v);
 assert.match(html, /const BOOTSTRAP_CACHE_KEY = "gardenLoggerBootstrapV5";/v);
 assert.match(

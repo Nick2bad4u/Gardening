@@ -303,20 +303,31 @@ export function standardDeviation(values) {
     return Math.sqrt(variance);
 }
 
+/** @param {Response} response */
+async function discardSheetErrorBody(response) {
+    try {
+        await response.body?.cancel();
+    } catch {
+        // Cleanup must not hide the HTTP status or extend the read budget.
+    }
+}
+
 /**
  * @param {string} url
  *
  * @returns {Promise<string>}
  */
 async function fetchCsv(url) {
-    const response = await fetch(`${url}&refresh=${Date.now()}`, {
-        cache: "no-store",
-        signal: AbortSignal.timeout(20_000),
-    });
-    if (!response.ok) {
-        throw new Error(`Google Sheets returned ${response.status}.`);
+    // Redirects, response bodies, and the optional retry share one total budget.
+    const signal = AbortSignal.timeout(60_000);
+    try {
+        return await readSheetCsv(url, signal);
+    } catch (error) {
+        signal.throwIfAborted();
+        if (!isRetryableSheetError(error)) throw error;
     }
-    return response.text();
+    await waitForSheetRetry(signal);
+    return readSheetCsv(url, signal);
 }
 
 /**
@@ -328,6 +339,22 @@ function isFiniteNumber(value) {
     return typeof value === "number" && Number.isFinite(value);
 }
 
+/** @param {unknown} error */
+function isRetryableSheetError(error) {
+    return (
+        error instanceof TypeError ||
+        (error instanceof Error &&
+            typeof error.cause === "number" &&
+            [
+                408,
+                500,
+                502,
+                503,
+                504,
+            ].includes(error.cause))
+    );
+}
+
 /**
  * @param {HistoryEvent[]} events
  * @param {(event: HistoryEvent) => boolean} predicate
@@ -336,6 +363,23 @@ function isFiniteNumber(value) {
  */
 function newest(events, predicate) {
     return sortEvents(events.filter((entry) => predicate(entry))).at(-1);
+}
+
+/** @param {string} url @param {AbortSignal} signal @returns {Promise<string>} */
+async function readSheetCsv(url, signal) {
+    signal.throwIfAborted();
+    const response = await fetch(`${url}&refresh=${Date.now()}`, {
+        cache: "no-store",
+        signal,
+    });
+    if (!response.ok) {
+        // Discard an error body rather than holding its connection open.
+        void discardSheetErrorBody(response);
+        throw new Error(`Google Sheets returned ${response.status}.`, {
+            cause: response.status,
+        });
+    }
+    return response.text();
 }
 
 /**
@@ -367,6 +411,27 @@ function sortEvents(events, direction = 1) {
         const { _index: leftIndex } = left;
         const { _index: rightIndex } = right;
         return direction * (dateDifference || leftIndex - rightIndex);
+    });
+}
+
+/** @param {AbortSignal} signal @returns {Promise<void>} */
+async function waitForSheetRetry(signal) {
+    await new Promise((resolve, reject) => {
+        const timer = setTimeout(() => {
+            signal.removeEventListener("abort", abort);
+            resolve(undefined);
+        }, 1000);
+        function abort() {
+            clearTimeout(timer);
+            reject(
+                new DOMException(
+                    "Google Sheets read timed out.",
+                    "TimeoutError"
+                )
+            );
+        }
+        signal.addEventListener("abort", abort, { once: true });
+        if (signal.aborted) abort();
     });
 }
 

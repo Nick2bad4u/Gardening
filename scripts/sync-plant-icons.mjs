@@ -287,7 +287,7 @@ function portraitDescriptions() {
         ],
         [
             "faucaria-tuberculosa",
-            "Three opposing pairs of thick triangular green leaves with pale marginal teeth and raised white tubercles.",
+            "Thick triangular green leaves with pale marginal teeth and raised white tubercles above a tall tan pot with broad horizontal ribs, following the owner's pot photograph.",
         ],
         [
             "fittonia-albivenis-nightly",
@@ -319,15 +319,15 @@ function portraitDescriptions() {
         ],
         [
             "lithops-lesliei",
-            "Schematic tan-brown living-stone heads for probable Lithops lesliei in the shared blush P35 planter; illustration does not confirm species or separate roots.",
+            "Schematic tan-brown living-stone heads for probable Lithops lesliei in the shared pink P35 pot with raised dots, following the owner's pot photograph; illustration does not confirm species or separate roots.",
         ],
         [
             "lithops-salicola",
-            "Schematic gray-green living-stone heads for probable Lithops salicola in the shared blush P35 planter; illustration does not confirm species or separate roots.",
+            "Schematic gray-green living-stone heads for probable Lithops salicola in the shared pink P35 pot with raised dots, following the owner's pot photograph; illustration does not confirm species or separate roots.",
         ],
         [
             "lithops-shared-planter",
-            "Schematic paired living-stone bodies in one neutral pot; not evidence of species, plant count, or completed planting.",
+            "Schematic paired living-stone bodies in the shared pink P35 pot with raised dots, following the owner's pot photograph; not evidence of species or rooted-plant count.",
         ],
         [
             "mammillaria-bombycina",
@@ -383,7 +383,7 @@ function portraitDescriptions() {
         ],
         [
             "pleiospilos-nelii",
-            "Schematic split-rock leaf pair in a neutral pot; color and form do not identify the acquired plant or its cultivar.",
+            "Schematic split-rock leaf pair in a small rounded pot with turquoise and rusty-orange mottled glaze, following the owner's pot photograph; the illustration does not identify the plant or its cultivar.",
         ],
         [
             "pleiospilos-nelii-royal-flush",

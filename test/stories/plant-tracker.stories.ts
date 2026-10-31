@@ -128,7 +128,11 @@ export const Unavailable: Story = {
     play: async ({ canvasElement }) => {
         const { canvas } = await websiteCanvas(canvasElement);
         await expect(
-            await canvas.findByText(/Live data unavailable/v)
+            await canvas.findByText(
+                /Live data unavailable/v,
+                {},
+                { timeout: 5000 }
+            )
         ).toBeVisible();
         await expect(
             canvas.getByRole("button", { name: "Refresh data" })
@@ -142,7 +146,11 @@ export const RetryAfterFailure: Story = {
         const { canvas, document, userEvent } =
             await websiteCanvas(canvasElement);
         await expect(
-            await canvas.findByText(/Live data unavailable/v)
+            await canvas.findByText(
+                /Live data unavailable/v,
+                {},
+                { timeout: 5000 }
+            )
         ).toBeVisible();
         await userEvent.click(
             canvas.getByRole("button", { name: "Refresh data" })

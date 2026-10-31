@@ -68,6 +68,18 @@ The Arctic Ice portrait for **#11 / P37**, first added October 6 and updated Oct
 
 The October 9 revision of the tiny mixed planter portrait for **#6 / P30** follows the five owner photographs supplied that day. Its shallow rounded green-glazed bowl has a dark narrow rim, mottled lower glaze, and multicolored mineral top dressing. Two pale rosettes, red-orange paddles, copper-orange shoots, and low purple foliage suggest the photographed arrangement without resolving the component plants' provisional identities. The separate component portraits still use illustrative pots to frame their foliage; they do not represent additional containers. Both revised portraits remain original simplified vectors, not photographs or botanical diagrams. The source photographs retain the owner's separate rights.
 
+## October 30 photo-derived pot revisions
+
+The October 30 pot revisions follow owner-supplied collection photographs:
+**P29 / Tiger jaws** has a tall tan cylinder with broad horizontal ribs;
+**P35 / shared Lithops** has a pink cylindrical pot with raised hobnail texture;
+and **P36 / split rock** has a squat rounded pot with mottled turquoise and
+rust-orange glaze. The two Lithops component portraits use the same pot framing
+as their shared-planter portrait. Existing foliage is retained and scaled to fit
+the revised framing. These original vector schematics are not measurements or
+identification evidence; the photographs retain the owner's separate rights.
+The **P28 / Royal Flush** portrait is unchanged.
+
 ## October 21 houseplant portraits
 
 The October 21 houseplant additions are original schematic vector portraits

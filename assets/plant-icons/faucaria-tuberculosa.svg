@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="faucaria-tuberculosa-title faucaria-tuberculosa-description" data-plant-slug="faucaria-tuberculosa" focusable="false">
   <title id="faucaria-tuberculosa-title">Tuberculate tiger jaws plant portrait</title>
-  <desc id="faucaria-tuberculosa-description">Three opposing pairs of thick triangular green leaves with pale marginal teeth and raised white tubercles.</desc>
+  <desc id="faucaria-tuberculosa-description">Thick triangular green leaves with pale marginal teeth and raised white tubercles above a tall tan pot with broad horizontal ribs, following the owner's pot photograph.</desc>
   <defs>
       <linearGradient id="faucaria-pot" x1="0" x2="0.9" y1="0" y2="1">
-          <stop offset="0" stop-color="#efc48d" />
-          <stop offset="1" stop-color="#c8864e" />
+          <stop offset="0" stop-color="#d4bea0" />
+          <stop offset="1" stop-color="#978169" />
       </linearGradient>
       <linearGradient id="jaws-leaf" x1="0" y1="0" x2="0.85" y2="1">
           <stop offset="0" stop-color="#a9bf78" />
@@ -114,15 +114,13 @@
       stroke-width="0"
       opacity="0.12"
   />
-  <ellipse
-      cx="32"
-      cy="45.5"
-      rx="23"
-      ry="2.1"
-      fill="#745c45"
-      stroke="none"
-      stroke-width="1"
-  />
+  <path d="M11 30V54C11 63 53 63 53 54V30Z" fill="url(#faucaria-pot)" stroke="#796552" stroke-width="1.4" />
+  <path d="M11.5 38Q32 45 52.5 38M11.5 45Q32 52 52.5 45M12 52Q32 59 52 52M14 57Q32 63 50 57" fill="none" stroke="#9a826b" stroke-width="3.5" />
+  <path d="M12 36Q32 43 52 36M12 43Q32 50 52 43M12.5 50Q32 57 51.5 50M14 55Q32 61 50 55" fill="none" stroke="#e1ceb4" stroke-width="2" stroke-linecap="round" />
+  <ellipse cx="32" cy="30" rx="21" ry="6.3" fill="#ceb899" stroke="#796552" stroke-width="1.4" />
+  <ellipse cx="32" cy="29.8" rx="18.7" ry="4.7" fill="#766755" />
+  <path d="M17 29l3-2 3 2-2 2ZM38 29l3-2 4 2-3 2ZM25 31l2-2 3 2-2 1" fill="#d5c9ad" />
+  <g transform="translate(7 -6) scale(0.78)">
   <use
       href="#jaws-blade"
       transform="translate(29 32) rotate(-21) scale(0.88)"
@@ -147,18 +145,6 @@
       href="#jaws-blade"
       transform="translate(33 45) rotate(36) scale(1.05)"
   />
-  <path
-      d="M7 45h50v7H7z"
-      fill="#efc792"
-      stroke="#6b4b31"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
-  <path
-      d="m10 52 4 9h36l4-9Z"
-      fill="url(#faucaria-pot)"
-      stroke="#6b4b31"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
+  </g>
+  <path d="M12 31Q32 38 52 31" fill="none" stroke="#dfc8a8" stroke-width="2" stroke-linecap="round" />
 </svg>

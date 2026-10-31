@@ -151,10 +151,12 @@ export const Unavailable: Story = {
     args: { scenario: "error" },
     play: async ({ canvasElement }) => {
         const { document } = await websiteCanvas(canvasElement);
-        await waitFor(() =>
-            expect(document.querySelector("#page-status")).toHaveTextContent(
-                "503"
-            )
+        await waitFor(
+            () =>
+                expect(
+                    document.querySelector("#page-status")
+                ).toHaveTextContent("503"),
+            { timeout: 5000 }
         );
     },
 };

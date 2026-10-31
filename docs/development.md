@@ -57,6 +57,14 @@ The live tracker and history read the published spreadsheet. They do not write o
 
 Tracker and pot-history pages share a browser-local snapshot of the last validated tracker/history CSV pair. A saved snapshot younger than 24 hours can render immediately while both feeds refresh; the visible freshness status gives its source-read time and reports refresh failures. A successful empty response replaces older data. The first visit still needs a network read, and a successful read of the published feeds does not prove that Google has published the latest workbook edit. Pot names, labels, and profile links are built into the page so they remain available during that first load.
 
+The shared CSV reader allows 60 seconds per feed, including redirects, response
+body download, and at most one retry after a one-second pause for a network
+failure or HTTP 408/500/502/503/504. Both attempts share the same deadline;
+timeouts and other HTTP errors do not trigger another attempt. Concurrent
+consumers share the pending read. The placement map uses this reader for History;
+tracker and pot-history pages validate both feeds before replacing their saved
+pair. Failed refreshes keep the saved source-read time and display a failure.
+
 The snapshot is bounded to 1,048,576 serialized characters and keyed by the complete source URLs and schema. Invalid, expired, future-dated, or incompatible snapshots are ignored; blocked or full browser storage leaves ordinary network reads working. Storybook paths do not persist synthetic observations. `docs/layouts/plant-sheet-cache.js` manages storage and refresh coordination; `plant-tracker-data.js` validates the CSV pair and applies the existing data calculations. Keep this browser cache out of report preparation: daily reports require new live reads, not a saved website preview.
 
 ## Maintained sources and page boundaries
