@@ -1,49 +1,50 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="terrarium-title terrarium-description" data-plant-slug="terrarium" focusable="false">
   <title id="terrarium-title">Terrarium plant portrait</title>
-  <desc id="terrarium-description">Schematic of the owned terrarium's rounded glass jar and broad cork lid, with moss, pink-veined and pale-speckled leaves, trailing greenery, and fern-like foliage. Plant identities and substrate composition remain unverified.</desc>
+  <desc id="terrarium-description">Schematic of the owned terrarium's pear-shaped clear bottle, narrow neck, large spherical brown cork stopper, and small hanging dark sensor above low mixed foliage, moss, and dark substrate. Plant identities and substrate composition remain unverified.</desc>
+  <desc id="terrarium-photo-description">Schematic mixed low foliage and moss in a pear-shaped clear bottle, with dark soil, a narrow neck, a large spherical brown cork stopper, and a small hanging black sensor.</desc>
   <defs>
-    <linearGradient id="terrarium-glass" x1="0" y1="0" x2="1" y2="0.8">
-      <stop offset="0" stop-color="#eef9ef" stop-opacity="0.92" />
-      <stop offset="0.45" stop-color="#c4e0d7" stop-opacity="0.5" />
-      <stop offset="1" stop-color="#83b0a3" stop-opacity="0.72" />
+    <linearGradient id="terrarium-glass" x1="0" y1="0" x2="1" y2="0.5">
+      <stop stop-color="#e8f6ef" stop-opacity="0.4" />
+      <stop offset="0.3" stop-color="#b9d5ca" stop-opacity="0.12" />
+      <stop offset="0.75" stop-color="#a8c3b8" stop-opacity="0.08" />
+      <stop offset="1" stop-color="#8aafa3" stop-opacity="0.35" />
     </linearGradient>
-    <linearGradient id="terrarium-cork" x1="0" y1="0" x2="0.4" y2="1">
-      <stop offset="0" stop-color="#dcb17b" />
-      <stop offset="1" stop-color="#947046" />
+    <radialGradient id="terrarium-cork" cx="0.3" cy="0.28" r="0.85">
+      <stop stop-color="#cea16c" />
+      <stop offset="0.52" stop-color="#a67543" />
+      <stop offset="1" stop-color="#5a402b" />
+    </radialGradient>
+    <linearGradient id="terrarium-soil" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#574332" />
+      <stop offset="1" stop-color="#292e26" />
     </linearGradient>
-    <linearGradient id="terrarium-medium" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#655344" />
-      <stop offset="1" stop-color="#393c31" />
-    </linearGradient>
-    <linearGradient id="terrarium-leaf" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#61946a" />
-      <stop offset="1" stop-color="#254f43" />
+    <linearGradient id="terrarium-foliage" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#9ab86c" />
+      <stop offset="1" stop-color="#356449" />
     </linearGradient>
   </defs>
-  <ellipse cx="32" cy="60" rx="23" ry="2.4" fill="#294d3d" opacity="0.15" />
   <g stroke-linecap="round" stroke-linejoin="round">
-    <path d="M16 13Q16 22 12 28C7 35 6 42 8 49Q10 59 32 59Q54 59 56 49C58 42 57 35 52 28Q48 22 48 13Z" fill="url(#terrarium-glass)" stroke="#638b82" stroke-width="1.6" />
-    <path d="M9 44Q20 38 32 42Q45 38 55 44L54 50Q52 56 32 56Q12 56 10 50Z" fill="url(#terrarium-medium)" />
-    <path d="M10 44Q12 40 17 41Q19 36 23 39Q27 37 30 42Q32 40 35 43Q40 37 45 40Q49 38 54 44Q49 48 42 46Q36 50 29 46Q21 48 17 45Q12 47 10 44Z" fill="#7d8950" stroke="#596343" stroke-width="0.8" />
-    <path d="M12 43Q17 39 20 42M21 41l3-1 3 3M35 44l4-2 4 1M45 43l3-2 3 2" fill="none" stroke="#b0b170" stroke-width="1.2" />
-    <path d="M15 47Q18 43 23 46M35 48l4-1M46 48l4-2" fill="none" stroke="#8e7654" stroke-width="1.4" />
-    <path d="M43 45Q47 34 43 24" fill="none" stroke="#4d7650" stroke-width="1.4" />
-    <path d="M44 28Q38 28 38 23Q43 23 44 28ZM45 32Q40 33 38 28Q43 27 45 32ZM46 37Q40 38 38 33Q43 32 46 37ZM45 29Q45 24 50 23Q51 27 45 29ZM46 34Q48 29 53 30Q52 34 46 34ZM46 40Q48 35 54 36Q53 41 46 40Z" fill="#679e59" stroke="#47734a" stroke-width="0.65" />
-    <path d="M22 43Q23 36 28 30" fill="none" stroke="#598252" stroke-width="1.2" />
-    <path d="M25 34Q17 34 18 27Q25 26 25 34ZM26 33Q25 25 32 24Q35 31 26 33Z" fill="#5d8a58" stroke="#365f43" stroke-width="0.9" />
-    <path d="m20 29 1 1m1 2 1-1m5-3 1-1m-1 4 2-1" fill="none" stroke="#e1e5c4" stroke-width="1.5" />
-    <path d="M24 47Q24 41 32 39M24 46Q21 40 17 38" fill="none" stroke="#aa7372" stroke-width="1.3" />
-    <path d="M24 46C24 36 33 34 39 37C40 46 32 50 24 46Z" fill="url(#terrarium-leaf)" stroke="#365e4b" stroke-width="1" />
-    <path d="M23 43C15 44 11 38 13 32C20 31 26 35 23 43Z" fill="url(#terrarium-leaf)" stroke="#365e4b" stroke-width="1" />
-    <path d="m25 46 11-7m-6 4-1-5m4 3 1-3m-6 7 5 1m-10-4-7-7m4 4 1-4m-3 2-4 1m8 3-5 1" fill="none" stroke="#d38391" stroke-width="0.95" />
-    <path d="M32 49Q42 50 48 43Q51 39 51 36" fill="none" stroke="#839d5c" stroke-width="1.1" />
-    <path d="M38 49Q33 44 38 43Q42 44 38 49ZM41 47Q43 51 47 48Q47 45 41 47ZM46 44Q41 41 44 38Q48 38 46 44ZM49 41Q51 44 54 41Q54 38 49 41Z" fill="#9ebc71" stroke="#617c49" stroke-width="0.65" />
-    <path d="M12 31Q8 40 11 47M17 21l-1 4M53 34Q56 42 53 49" fill="none" stroke="#f5fff8" stroke-width="1.8" opacity="0.8" />
-    <path d="M14 53Q32 61 50 53" fill="none" stroke="#d4ece0" stroke-width="1.7" opacity="0.8" />
-    <path d="M16 14Q32 20 48 14M16 17Q32 23 48 17" fill="none" stroke="#86a89c" stroke-width="1" />
-    <path d="M15 9Q32 4 49 9L48 15Q32 22 16 15Z" fill="url(#terrarium-cork)" stroke="#886642" stroke-width="1.2" />
-    <ellipse cx="32" cy="9" rx="17" ry="5.5" fill="#dcbc8e" stroke="#99754e" stroke-width="1.1" />
-    <path d="m21 8 2-1m4 4 1-1m5-3 2 1m5 2 2-1m-7 3 1 1m-17 2 2 1m5 1 1 1m15-2 2-1" fill="none" stroke="#a78054" stroke-width="1" />
-    <path d="M20 6Q31 2 44 7" fill="none" stroke="#efdab5" stroke-width="1" />
+    <ellipse cx="32" cy="60.5" rx="21" ry="1.8" fill="#294d3d" opacity="0.18" />
+    <path d="M24 20H40V26C40 30 45 33 49 39C55 48 54 55 46 58C40 61 24 61 18 58C10 55 9 48 15 39C19 33 24 30 24 26Z" fill="url(#terrarium-glass)" stroke="#789b90" stroke-width="1.3" />
+    <path d="M13 47Q20 44 28 46Q39 42 51 47L50 53C47 60 18 60 14 53Z" fill="url(#terrarium-soil)" />
+    <path d="M14 46Q16 41 21 43Q23 39 27 42Q32 39 35 43Q41 40 44 43Q48 41 51 46Q47 50 41 47Q35 50 29 47Q20 51 14 46Z" fill="#6f7e42" />
+    <path d="M16 46l3-1 2 1m3-2 2-1 2 1m6 1 3-1m5 2 3-2 2 1" fill="none" stroke="#aec078" stroke-width="1.2" />
+    <path d="M17 51l3 1m7-2 2 1m7 3 3-1m6-3 2 1" fill="none" stroke="#927c55" stroke-width="1" />
+    <path d="M24 46Q24 39 23 33M24 41 17 36M24 40 30 35" fill="none" stroke="#ae8878" stroke-width="1" />
+    <path d="M24 37C20 37 17 33 19 30C23 29 27 31 24 37ZM23 39C18 40 15 37 16 34C20 33 23 35 23 39ZM25 38C25 33 29 31 32 33C32 37 29 40 25 38Z" fill="url(#terrarium-foliage)" stroke="#41654a" stroke-width="0.65" />
+    <path d="m23 35-2-3m0 6-3-2m9 1 3-3" fill="none" stroke="#e4adb3" stroke-width="0.8" />
+    <path d="M28 49C23 46 23 41 27 39C32 40 34 46 28 49ZM28 48C30 41 36 40 39 43C39 48 33 51 28 48Z" fill="#83a964" stroke="#3c6848" stroke-width="0.8" />
+    <path d="m28 47-1-6m1 6 8-3m-8 1 4-1m-6 0-1-2m8 3 1 2" fill="none" stroke="#d7e1b4" stroke-width="0.75" />
+    <path d="M43 45Q45 39 43 35M44 40 48 37" fill="none" stroke="#65834c" stroke-width="1" />
+    <path d="M43 39C38 39 37 36 39 33C43 33 45 35 43 39ZM44 42C45 37 49 36 51 39C50 43 47 44 44 42Z" fill="#799353" stroke="#486349" stroke-width="0.65" />
+    <path d="M39 22 40 28" fill="none" stroke="#333e38" stroke-width="1.2" />
+    <path d="m36 27 7-1 1 9-7 1Z" fill="#28302d" stroke="#161d1c" stroke-width="0.65" />
+    <path d="m38 29 3-0.4m-2.7 2 3-0.4m-2.7 2 3-0.4" stroke="#55615b" stroke-width="0.6" />
+    <path d="M18 37C14 43 13 46 14 49M22 31l-1 2M48 43q4 7 0 11" fill="none" stroke="#edf9ef" stroke-width="1.6" opacity="0.8" />
+    <path d="M18 55Q31 61 46 55M25 25q6 2 13 0" fill="none" stroke="#d4e8da" stroke-width="1.1" opacity="0.85" />
+    <circle cx="32" cy="13.8" r="10.9" fill="url(#terrarium-cork)" stroke="#755336" stroke-width="0.9" />
+    <path d="M25 7q-3 3-3 7M24 18l1 1m3-11 1 1m3-3 1 1m3 2 1-1m3 5-1 1m-11 1-1 1m5 3 1-1m3 3 1-1m-4-7 1 1m-5 8 1 1m9-5 1 1" fill="none" stroke="#deb582" stroke-width="0.8" opacity="0.7" />
+    <path d="m28 10 1 1m4-2-1 1m5 3 1 1m-8 5-1 1m6-2 1 1m-12-3 1 1" stroke="#735337" stroke-width="0.9" />
+    <path d="M23 20Q32 23 41 20" fill="none" stroke="#e6eee1" stroke-width="0.9" opacity="0.9" />
   </g>
 </svg>

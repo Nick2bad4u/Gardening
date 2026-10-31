@@ -219,7 +219,7 @@ function portraitDescriptions() {
         ],
         [
             "aglaonema-commutatum-alpine-spires",
-            "Schematic Chinese evergreen with pointed green, cream, and pink leaves in a neutral illustrative pot, inspired by the Alpine Spires nursery-label artwork; not a depiction or identification of the owned specimen or its pot.",
+            "Schematic Alpine Spires Chinese evergreen with broad pointed coral-pink, pale yellow-green, and green leaves above a rounded-square turquoise and dark teal planter with diamond texture and a clear upper collar; appearance follows owner photographs without establishing identity or pot specifications.",
         ],
         [
             "astrophytum-ornatum",
@@ -291,7 +291,7 @@ function portraitDescriptions() {
         ],
         [
             "fittonia-albivenis-nightly",
-            "Schematic pink-veined nerve plant with pointed oval leaves, green margins, and branching stems in a neutral illustrative pot; follows the owner photos without establishing cultivar identity or pot specifications.",
+            "Schematic Nightly Fittonia with pale pink-veined leaves inside a tall clear cylinder with a knobbed lid and bright magenta textured wrapping around its lower half; follows owner photographs without establishing cultivar identity, drainage, or growing conditions.",
         ],
         [
             "four-succulent-planter",
@@ -363,7 +363,7 @@ function portraitDescriptions() {
         ],
         [
             "pachira-glabra",
-            "A slim tapering trunk with connected stalks and fans of long pointed green palmate leaflets in a blue planter.",
+            "Schematic Money Tree with long drooping green leaflets, a thick tan trunk, and multicolored mineral top dressing above a dark planter with diagonal teal, brown, and purple sections, following the owner's photograph.",
         ],
         [
             "parodia-leninghausii",
@@ -371,11 +371,11 @@ function portraitDescriptions() {
         ],
         [
             "peperomia-obtipan-bicolor",
-            "Illustrative branching baby rubber plant with thick oval green leaves and cream margins in a neutral pale pot; the nursery tag reads Peperomia obtipan Bicolor basket.",
+            "Schematic Peperomia Bicolor with thick oval green leaves and cream margins above a dark pot with bright geometric mosaic panels, small rim ornaments, and a butterfly; appearance follows owner photographs without establishing cultivar identity or pot specifications.",
         ],
         [
             "peperomia-obtusifolia-spice-is-nice",
-            "Schematic baby rubber plant with glossy rounded green leaves and upright branching stems in a neutral illustrative pot; follows the owner photos without establishing cultivar identity or pot specifications.",
+            "Schematic Spice is Nice Peperomia with glossy rounded green leaves above a tall purple planter with a narrow waist, flared base, and clear upper collar; follows owner photographs without establishing cultivar identity or pot specifications.",
         ],
         [
             "pilosocereus-pachycladus-variegated",
@@ -419,7 +419,7 @@ function portraitDescriptions() {
         ],
         [
             "terrarium",
-            "Schematic of the owned terrarium's rounded glass jar and broad cork lid, with moss, pink-veined and pale-speckled leaves, trailing greenery, and fern-like foliage. Plant identities and substrate composition remain unverified.",
+            "Schematic of the owned terrarium's pear-shaped clear bottle, narrow neck, large spherical brown cork stopper, and small hanging dark sensor above low mixed foliage, moss, and dark substrate. Plant identities and substrate composition remain unverified.",
         ],
         [
             "tiny-mixed-succulent-planter",
@@ -443,7 +443,7 @@ function portraitDescriptions() {
         ],
         [
             "tradescantia-spathacea-tricolor",
-            "Illustrative compact rosettes of narrow pointed leaves striped green, cream and pink with purple tones in a neutral pale pot; nursery-labeled Rhoeo spathacea Tricolor Basket.",
+            "Schematic Tricolor oyster plant with arching pointed green, cream, and pink leaves and purple undersides above a dark pot with diagonal pink, red, and green stripes and a colorful dragonfly; appearance follows owner photographs without establishing cultivar identity or pot specifications.",
         ],
     ]);
 }

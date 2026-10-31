@@ -4,8 +4,9 @@ Production logger **5.40.1 / immutable version 123** supports **39 container all
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained and production source **5.40.1** match immutable version **123**, verified
-October 31. Production **AppSheet 1.100138** uses the matching pot portraits;
+Maintained source is **5.40.2** for the seven-portrait update below. Production
+**5.40.1** matches immutable version **123**, verified October 31, before that
+artwork promotion. Production **AppSheet 1.100138** uses the preceding pot portraits;
 P41's appended optional weight field remains unchanged. The rollout receipt below
 records production checks separately from rehearsal results; earlier dated entries
 retain the version verified at that time.
@@ -38,6 +39,22 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## October 31 seven-portrait photo update
+
+Maintained **5.40.2** updates the portrait cache revision to **8cfb92a2dd0cdb06**.
+Eight owner-supplied photographs guide the original vector artwork for P21 Money
+Tree, P31 Peperomia Bicolor, P32 Tricolor oyster plant, P38 terrarium, P39 Nightly
+Fittonia, P40 Spice is Nice Peperomia, and P41 Alpine Spires. The
+[artwork source record](../../assets/artwork/ICON-SOURCES.md#october-31-photo-derived-plant-and-container-revisions)
+describes the visible foliage, pot patterns, covers, and ornaments.
+
+Only the logger version and artwork revision change in the three-file deployment;
+observation behavior, schema, runtime permissions, and trigger configuration are
+unchanged. The AppSheet manifest retains all 39 container IDs and targets a new
+revisioned portrait folder. Source photographs are not published by this artwork
+update, and the illustrations establish no care event, dimensions, drainage, or
+new botanical identification. Production verification is pending.
 
 ## October 30 refresh timeout and pot-artwork patch (published October 31)
 

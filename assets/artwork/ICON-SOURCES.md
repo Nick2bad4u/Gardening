@@ -80,6 +80,35 @@ the revised framing. These original vector schematics are not measurements or
 identification evidence; the photographs retain the owner's separate rights.
 The **P28 / Royal Flush** portrait is unchanged.
 
+## October 31 photo-derived plant and container revisions
+
+Five owner-supplied photographs guide three original vector portraits:
+**P31 / #7 Peperomia Bicolor** has rounded cream-edged green foliage above a
+dark planter with colorful geometric panels, small rim ornaments, and a butterfly;
+**P32 / #8 Tricolor oyster plant** has arching striped foliage and purple
+undersides above a dark planter with diagonal colored stripes and a dragonfly.
+Three angles of **P41 / #15 Alpine Spires** guide its coral-pink, pale yellow-green,
+and green leaves, clear upper collar, and rounded-square turquoise/dark teal
+planter with raised diamond texture. The photographs' warm and colored lighting
+is simplified into the shared illustration palette.
+
+These illustrations record visible appearance without establishing pot material,
+dimensions, drainage, medium, a repot date, care events, or cultivar identity.
+The source photographs retain the owner's separate rights. Their use as artwork
+references does not publish the original photographs.
+
+Three further owner-supplied photographs complete the seven-portrait revision.
+**P21 / #3 Money Tree** has long drooping green leaflets, a thick trunk,
+multicolored mineral top dressing, and a dark pot with diagonal teal, brown,
+and purple panels. **P38 / #12 terrarium** has a pear-shaped bottle, narrow
+neck, large spherical brown cork stopper, low mixed foliage, and a small
+hanging dark sensor. **P39 / #13 Nightly Fittonia** sits inside a tall clear
+cylinder with a knobbed lid and vivid magenta textured wrapping around its
+lower half. **P40 / #14 Spice is Nice Peperomia** has glossy rounded green
+leaves above a purple planter with a narrow waist, flared base, and clear
+upper collar. The simplifications describe appearance, without confirming
+the terrarium's botanical identities or prescribing these containers as care guidance.
+
 ## October 21 houseplant portraits
 
 The October 21 houseplant additions are original schematic vector portraits
@@ -93,13 +122,12 @@ needs. The source photographs retain the owner's separate rights.
 
 ## Terrarium and humidity symbols
 
-The October 28 Alpine Spires portrait for **P41 / #15** is original schematic
-vector artwork: pointed green leaves with cream markings and pink centers in
-a neutral illustrative pot. The nursery-label illustration informs the color
-motif; no specimen photograph has been supplied. The drawing does not establish
-the owned plant's appearance, identity, pot, placement, or completed repot.
+The October 28 Alpine Spires portrait for **P41 / #15** originally used the
+nursery-label illustration's color motif and a neutral illustrative pot. The
+October 31 revision above replaces that framing with an owner-photo-derived
+schematic. Neither version establishes identity, placement, or a completed repot.
 
-`icon-plant-terrarium` is original schematic repository artwork for **P38 / #12**, revised October 10 to follow the owner's [arrival photographs](../../docs/terrarium.md#arrival-photographs). The rounded glass jar and broad cork lid frame low moss, pink-veined and pale-speckled leaves, trailing greenery, and fern-like foliage. These simplified appearance groups replace the initial question-mark placeholder without confirming botanical identities, depicting a verified recovery, or establishing substrate composition or drainage layers. The source photographs retain the owner's separate rights.
+`icon-plant-terrarium` is original schematic repository artwork for **P38 / #12**. The October 10 revision followed the owner's [arrival photographs](../../docs/terrarium.md#arrival-photographs), replacing the initial question-mark placeholder with mixed foliage. The October 31 revision above follows the newly supplied container photograph. These simplified appearance groups do not confirm botanical identities, depict a verified recovery, or establish substrate composition or drainage layers. The source photographs retain the owner's separate rights.
 
 `icon-humidity` remains original schematic repository artwork added for P38 / #12. Its drop and percent marks represent relative humidity, not a watering recommendation. No reference photograph or third-party artwork was used for this symbol.
 

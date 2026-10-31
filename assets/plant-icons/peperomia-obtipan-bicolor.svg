@@ -1,32 +1,72 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="peperomia-obtipan-bicolor-title peperomia-obtipan-bicolor-description" data-plant-slug="peperomia-obtipan-bicolor" focusable="false">
   <title id="peperomia-obtipan-bicolor-title">Peperomia Bicolor plant portrait</title>
-  <desc id="peperomia-obtipan-bicolor-description">Illustrative branching baby rubber plant with thick oval green leaves and cream margins in a neutral pale pot; the nursery tag reads Peperomia obtipan Bicolor basket.</desc>
+  <desc id="peperomia-obtipan-bicolor-description">Schematic Peperomia Bicolor with thick oval green leaves and cream margins above a dark pot with bright geometric mosaic panels, small rim ornaments, and a butterfly; appearance follows owner photographs without establishing cultivar identity or pot specifications.</desc>
   <defs>
-  <linearGradient id="peperomia-obtipan-bicolor-pot" x1="0" y1="0" x2="0.8" y2="1">
-  <stop offset="0" stop-color="#f4eee1" />
-  <stop offset="1" stop-color="#c2baa8" />
+  <linearGradient id="p31-mosaic-glaze" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#668b78" />
+  <stop offset="1" stop-color="#233d3b" />
   </linearGradient>
-  <radialGradient id="peperomia-obtipan-bicolor-leaf-green" cx="0.3" cy="0.2" r="0.8">
-  <stop offset="0" stop-color="#8dad70" />
-  <stop offset="1" stop-color="#386c4a" />
+  <radialGradient id="p31-leaf-green" cx="0.3" cy="0.25" r="0.9">
+  <stop offset="0" stop-color="#a1b16d" />
+  <stop offset="1" stop-color="#547c58" />
   </radialGradient>
-  <g id="peperomia-obtipan-bicolor-leaf">
-  <path d="M0 1C-8 0-12-6-10-14-8-20 0-21 6-17 14-12 10-3 0 1Z" fill="#eee3a7" stroke="#9fa679" stroke-width="0.8" />
-  <path d="M0-1C-4-2-7-5-6-9L-7-13-3-16 1-15 4-16 7-12 6-8 7-5Z" fill="url(#peperomia-obtipan-bicolor-leaf-green)" />
-  <path d="M0-2Q2-9 0-15" fill="none" stroke="#cad69c" stroke-width="0.7" opacity="0.7" />
+  <linearGradient id="p31-butterfly-wing" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#cf7da3" />
+  <stop offset="0.5" stop-color="#9867b4" />
+  <stop offset="1" stop-color="#577dae" />
+  </linearGradient>
+  <clipPath id="p31-mosaic-surface">
+  <path d="M14 32H50L47 55Q46 60 32 60Q18 60 17 55Z" />
+  </clipPath>
+  <g id="p31-rounded-leaf">
+  <path d="M0 0C-6-1-9-6-6-11-4-15 3-15 7-11 12-6 8 0 0 0Z" fill="#eee2a7" stroke="#a5ab77" stroke-width="0.55" />
+  <path d="M0-1C-4-2-6-5-4-8L-4-11 0-10 2-12 5-9 7-9 6-5 4-5 4-2Z" fill="url(#p31-leaf-green)" />
+  <path d="M0-1Q2-6 0-11" fill="none" stroke="#c5d397" stroke-width="0.5" />
+  </g>
+  <g id="p31-rim-gnome">
+  <path d="M-2 3Q-3 6 0 7Q3 6 2 3" fill="#53833e" stroke="#24452d" stroke-width="0.45" />
+  <path d="M-2 0Q-3 4 0 5Q3 3 2 0Z" fill="#f2e6ca" stroke="#b6a489" stroke-width="0.35" />
+  <path d="M-2.6 0L-1-4 2.6-0.5Z" fill="#d74d3b" stroke="#803c32" stroke-width="0.4" />
+  <ellipse cx="0.4" cy="0.8" rx="1" ry="0.75" fill="#edb893" />
   </g>
   </defs>
-  <ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
-  <path d="M10 43H54L49 58Q32 62 15 58Z" fill="url(#peperomia-obtipan-bicolor-pot)" stroke="#807563" stroke-width="1.5" />
-  <ellipse cx="32" cy="43" rx="22" ry="4" fill="#6f5949" stroke="#807563" stroke-width="1.3" />
-  <path d="M15 51Q32 55 49 51" fill="none" stroke="#fff9eb" stroke-width="1.2" opacity="0.7" />
-  <path d="M32 45Q30 26 33 13M31 34L17 23M32 30L45 16M31 41L45 33" fill="none" stroke="#758857" stroke-width="2.5" stroke-linecap="round" />
-  <use href="#peperomia-obtipan-bicolor-leaf" transform="translate(32 17) rotate(-8) scale(0.78)" />
-  <use href="#peperomia-obtipan-bicolor-leaf" transform="translate(43 22) rotate(35) scale(0.82)" />
-  <use href="#peperomia-obtipan-bicolor-leaf" transform="translate(19 27) rotate(-55) scale(0.95)" />
-  <use href="#peperomia-obtipan-bicolor-leaf" transform="translate(34 30) rotate(35) scale(0.88)" />
-  <use href="#peperomia-obtipan-bicolor-leaf" transform="translate(28 36) rotate(-70) scale(1)" />
-  <use href="#peperomia-obtipan-bicolor-leaf" transform="translate(45 38) rotate(58) scale(0.9)" />
-  <use href="#peperomia-obtipan-bicolor-leaf" transform="translate(26 44) rotate(-67) scale(0.85)" />
-  <use href="#peperomia-obtipan-bicolor-leaf" transform="translate(33 44) rotate(35) scale(0.85)" />
+  <ellipse cx="32" cy="61" rx="21" ry="1.8" fill="#244b3b" opacity="0.12" />
+  <path d="M15 56Q32 59 49 56L47 60Q32 63 17 60Z" fill="#bf794b" stroke="#554532" stroke-width="1" />
+  <path d="M14 32H50L47 55Q46 60 32 60Q18 60 17 55Z" fill="url(#p31-mosaic-glaze)" stroke="#282e2c" stroke-width="1.4" />
+  <g clip-path="url(#p31-mosaic-surface)" stroke="#252e2d" stroke-width="1.3" stroke-linejoin="round">
+  <path d="M12 32L27 33 19 44Z" fill="#829948" />
+  <path d="M27 32L37 32 37 41 22 44Z" fill="#409396" />
+  <path d="M38 31L51 33 43 42 37 41Z" fill="#b54d44" />
+  <path d="M15 39L23 46 17 53Z" fill="#d7a33d" />
+  <path d="M24 44L36 42 32 53 21 56Z" fill="#34787d" />
+  <path d="M36 42L43 42 51 46 42 51Z" fill="#e4dfba" />
+  <path d="M44 48L51 46 49 58 40 56Z" fill="#3198ad" />
+  <path d="M32 49L41 52 40 61 26 61Z" fill="#e2ac3c" />
+  <path d="M17 54L26 52 27 61 18 61Z" fill="#825e36" />
+  </g>
+  <ellipse cx="32" cy="32" rx="18" ry="4" fill="#60513d" stroke="#29312c" stroke-width="1.4" />
+  <path d="M21 34L23 14M29 34L32 10M37 33L43 14M28 24L14 19M34 23L51 20" fill="none" stroke="#a97569" stroke-width="1.6" stroke-linecap="round" />
+  <path d="M22 14L20 4M34 14L37 3M45 19Q50 11 51 6" fill="none" stroke="#d1cb89" stroke-width="0.9" stroke-linecap="round" />
+  <use href="#p31-rounded-leaf" transform="translate(24 17) rotate(-31) scale(0.8)" />
+  <use href="#p31-rounded-leaf" transform="translate(34 15) rotate(12) scale(0.8)" />
+  <use href="#p31-rounded-leaf" transform="translate(43 19) rotate(51) scale(0.8)" />
+  <use href="#p31-rounded-leaf" transform="translate(16 23) rotate(-66) scale(0.8)" />
+  <use href="#p31-rounded-leaf" transform="translate(26 24) rotate(-18) scale(0.86)" />
+  <use href="#p31-rounded-leaf" transform="translate(37 25) rotate(37) scale(0.82)" />
+  <use href="#p31-rounded-leaf" transform="translate(47 27) rotate(74) scale(0.8)" />
+  <use href="#p31-rounded-leaf" transform="translate(19 30) rotate(-83) scale(0.77)" />
+  <use href="#p31-rounded-leaf" transform="translate(27 32) rotate(-37) scale(0.82)" />
+  <use href="#p31-rounded-leaf" transform="translate(38 32) rotate(43) scale(0.8)" />
+  <use href="#p31-rounded-leaf" transform="translate(48 32) rotate(123) scale(0.65)" />
+  <use href="#p31-rounded-leaf" transform="translate(17 32) rotate(-137) scale(0.6)" />
+  <path d="M19 32v4M31 31v5M43 32v4" fill="none" stroke="#d6a781" stroke-width="1.1" stroke-linecap="round" />
+  <use href="#p31-rim-gnome" transform="translate(19 37) rotate(-9) scale(0.7)" />
+  <use href="#p31-rim-gnome" transform="translate(31 37) scale(0.75)" />
+  <path d="M29 36.7L30.3 33.5 33 36.5Z" fill="#e9ae3c" />
+  <use href="#p31-rim-gnome" transform="translate(43 37) rotate(12) scale(0.7)" />
+  <g transform="translate(36 51) rotate(-19)">
+  <path d="M-1 0C-10-8-13-4-9 3L-2 4ZM1 0C10-8 13-4 9 3L2 4ZM-1 2C-7 3-8 8-3 7L0 3ZM1 2C7 3 8 8 3 7L0 3Z" fill="url(#p31-butterfly-wing)" stroke="#392f42" stroke-width="0.8" />
+  <path d="M0-2V6M-1-2-3-5M1-2 3-5" fill="none" stroke="#252d2b" stroke-width="1.1" stroke-linecap="round" />
+  <path d="M-2 1-8-2M2 1 8-2" fill="none" stroke="#cfa1c7" stroke-width="0.45" />
+  </g>
 </svg>

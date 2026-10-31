@@ -1,33 +1,57 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="fittonia-albivenis-nightly-title fittonia-albivenis-nightly-description" data-plant-slug="fittonia-albivenis-nightly" focusable="false">
   <title id="fittonia-albivenis-nightly-title">Nightly nerve plant plant portrait</title>
-  <desc id="fittonia-albivenis-nightly-description">Schematic pink-veined nerve plant with pointed oval leaves, green margins, and branching stems in a neutral illustrative pot; follows the owner photos without establishing cultivar identity or pot specifications.</desc>
+  <desc id="fittonia-albivenis-nightly-description">Schematic Nightly Fittonia with pale pink-veined leaves inside a tall clear cylinder with a knobbed lid and bright magenta textured wrapping around its lower half; follows owner photographs without establishing cultivar identity, drainage, or growing conditions.</desc>
+  <desc id="fittonia-nightly-photo-description">Schematic pale pink-veined Fittonia inside a tall clear straight-sided cylinder with a clear knobbed lid and a bright magenta textured wrap around its lower half.</desc>
   <defs>
+    <linearGradient id="fittonia-nightly-glass" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#ecf6ee" stop-opacity="0.4" />
+      <stop offset="0.32" stop-color="#c9dbd4" stop-opacity="0.1" />
+      <stop offset="0.75" stop-color="#bbcfc4" stop-opacity="0.12" />
+      <stop offset="1" stop-color="#9ab6ad" stop-opacity="0.4" />
+    </linearGradient>
+    <linearGradient id="fittonia-nightly-wrap" x1="0" y1="0" x2="1" y2="0.3">
+      <stop stop-color="#c3237b" />
+      <stop offset="0.3" stop-color="#f14da1" />
+      <stop offset="0.7" stop-color="#d52a87" />
+      <stop offset="1" stop-color="#9f2466" />
+    </linearGradient>
     <linearGradient id="fittonia-nightly-leaf" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#e9adb9" />
-      <stop offset="1" stop-color="#bb738e" />
+      <stop stop-color="#c5c29b" />
+      <stop offset="0.5" stop-color="#809473" />
+      <stop offset="1" stop-color="#42694f" />
     </linearGradient>
-    <linearGradient id="fittonia-nightly-pot" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#a5b8bc" />
-      <stop offset="1" stop-color="#647d86" />
-    </linearGradient>
-    <g id="fittonia-nightly-leaf-shape" stroke-linejoin="round">
-      <path d="M0 0C-10-5-11-14-3-23C8-18 12-7 0 0Z" fill="url(#fittonia-nightly-leaf)" stroke="#426c44" stroke-width="1.6" />
-      <path d="M0-1-3-20M-1-7-7-10M-2-12-7-15M0-5 5-9M-1-11 3-15" fill="none" stroke="#f6d5dc" stroke-width="1.2" stroke-linecap="round" />
-      <path d="M-5-9-4-5M2-8 3-5M-4-16-4-12M1-16 1-12" fill="none" stroke="#477846" stroke-width="1" stroke-linecap="round" />
+    <g id="fittonia-nightly-leaf-shape" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M0 0C-7-2-8-9-2-15C5-13 8-5 0 0Z" fill="url(#fittonia-nightly-leaf)" stroke="#48674c" stroke-width="0.9" />
+      <path d="M0-1-2-13M-0.5-4-4.5-6M-1-7-5-9M-0.7-4 3-7M-1.4-8 1.5-11M-3-5-4-3M1.4-5 3-4" fill="none" stroke="#f2b9c4" stroke-width="0.8" />
     </g>
+    <clipPath id="fittonia-nightly-wrap-clip">
+      <path d="M18 38Q32 42 46 38V55Q46 60 32 60Q18 60 18 55Z" />
+    </clipPath>
   </defs>
   <g stroke-linecap="round" stroke-linejoin="round">
-    <ellipse cx="32" cy="59" rx="21" ry="2.5" fill="#254638" opacity="0.14" />
-    <path d="M17 44H47L44 57Q32 61 20 57Z" fill="url(#fittonia-nightly-pot)" stroke="#52656e" stroke-width="1.5" />
-    <ellipse cx="32" cy="44" rx="15" ry="4" fill="#66523b" stroke="#52656e" stroke-width="1.5" />
-    <path d="M31 45 29 20M31 41 16 30M32 39 48 23M31 43 44 37" fill="none" stroke="#6f9556" stroke-width="2.4" />
-    <use href="#fittonia-nightly-leaf-shape" transform="translate(30 26) rotate(5) scale(0.85)" />
-    <use href="#fittonia-nightly-leaf-shape" transform="translate(39 30) rotate(53) scale(0.9)" />
-    <use href="#fittonia-nightly-leaf-shape" transform="translate(22 31) rotate(-58) scale(0.82)" />
-    <use href="#fittonia-nightly-leaf-shape" transform="translate(31 39) rotate(-22) scale(0.88)" />
-    <use href="#fittonia-nightly-leaf-shape" transform="translate(42 43) rotate(67) scale(0.76)" />
-    <use href="#fittonia-nightly-leaf-shape" transform="translate(26 45) rotate(-67) scale(0.9)" />
-    <use href="#fittonia-nightly-leaf-shape" transform="translate(32 48) rotate(37) scale(0.76)" />
-    <path d="M23 52Q31 55 39 53" fill="none" stroke="#cfdbda" stroke-width="1.2" opacity="0.65" />
+    <ellipse cx="32" cy="61" rx="18" ry="1.5" fill="#294d3d" opacity="0.18" />
+    <path d="M18 15H46V55Q46 60 32 60Q18 60 18 55Z" fill="url(#fittonia-nightly-glass)" stroke="#86a39a" stroke-width="1.2" />
+    <ellipse cx="32" cy="43" rx="13.5" ry="4" fill="#4c3e30" />
+    <path d="M31 44 29 23M32 41 40 28M31 39 22 32M33 42 41 36" fill="none" stroke="#ae8a7d" stroke-width="1.1" />
+    <use href="#fittonia-nightly-leaf-shape" transform="translate(29 30) rotate(-8) scale(0.76)" />
+    <use href="#fittonia-nightly-leaf-shape" transform="translate(34 31) rotate(52) scale(0.76)" />
+    <use href="#fittonia-nightly-leaf-shape" transform="translate(26 35) rotate(-52) scale(0.7)" />
+    <use href="#fittonia-nightly-leaf-shape" transform="translate(32 40) rotate(-10) scale(0.83)" />
+    <use href="#fittonia-nightly-leaf-shape" transform="translate(37 42) rotate(52) scale(0.66)" />
+    <path d="M20 18V36M43.5 20V35" fill="none" stroke="#f0f8ef" stroke-width="1.5" opacity="0.75" />
+    <path d="M22 19V32" stroke="#c5ded0" stroke-width="0.6" opacity="0.7" />
+    <path d="M18 38Q32 42 46 38V55Q46 60 32 60Q18 60 18 55Z" fill="url(#fittonia-nightly-wrap)" stroke="#9c316d" stroke-width="0.9" />
+    <g clip-path="url(#fittonia-nightly-wrap-clip)">
+      <path d="m18 41 5 2 4-1 5 2 5-2 5 1 5-2m-29 6 4-1 5 2 4-2 5 2 5-2 6 1m-29 5 5 2 4-1 5 2 5-2 5 1 5-2m-29 6 4-1 5 2 4-2 5 2 5-2 6 1" fill="none" stroke="#f978b6" stroke-width="1.1" opacity="0.85" />
+      <path d="m20 40-1 3 3 1-1 3 3 1-1 3 3 1-1 3 3 2m5-15-1 3 3 1-1 3 3 1-1 3 3 1-1 3 3 2m4-20-2 3 3 2-2 3 2 2-1 3 2 2" fill="none" stroke="#ab246d" stroke-width="0.9" opacity="0.75" />
+      <path d="M24 43v12" stroke="#ff9bcb" stroke-width="0.9" opacity="0.45" />
+    </g>
+    <path d="M20 56Q32 61 44 56" fill="none" stroke="#ee68ad" stroke-width="1.1" />
+    <ellipse cx="32" cy="14" rx="16" ry="5.4" fill="url(#fittonia-nightly-glass)" stroke="#819b91" stroke-width="1.2" />
+    <path d="M18 13.5Q32 6 46 13.5M19 15Q32 20 45 15" fill="none" stroke="#e7efdf" stroke-width="1" opacity="0.9" />
+    <path d="M23 13Q27 10 29 10H35Q39 10 42 13" fill="none" stroke="#a6bcb0" stroke-width="0.8" />
+    <path d="M29 10V6H35V10Q32 12 29 10Z" fill="url(#fittonia-nightly-glass)" stroke="#8ca196" stroke-width="0.8" />
+    <ellipse cx="32" cy="5.4" rx="4" ry="2.8" fill="url(#fittonia-nightly-glass)" stroke="#8ca196" stroke-width="0.9" />
+    <path d="M30 4.5q2-1 4 0" fill="none" stroke="#f2f7e8" stroke-width="0.9" />
   </g>
 </svg>

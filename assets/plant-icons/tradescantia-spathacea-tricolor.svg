@@ -1,33 +1,63 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="tradescantia-spathacea-tricolor-title tradescantia-spathacea-tricolor-description" data-plant-slug="tradescantia-spathacea-tricolor" focusable="false">
   <title id="tradescantia-spathacea-tricolor-title">Tricolor oyster plant plant portrait</title>
-  <desc id="tradescantia-spathacea-tricolor-description">Illustrative compact rosettes of narrow pointed leaves striped green, cream and pink with purple tones in a neutral pale pot; nursery-labeled Rhoeo spathacea Tricolor Basket.</desc>
+  <desc id="tradescantia-spathacea-tricolor-description">Schematic Tricolor oyster plant with arching pointed green, cream, and pink leaves and purple undersides above a dark pot with diagonal pink, red, and green stripes and a colorful dragonfly; appearance follows owner photographs without establishing cultivar identity or pot specifications.</desc>
   <defs>
-  <linearGradient id="tradescantia-spathacea-tricolor-pot" x1="0" y1="0" x2="0.8" y2="1">
-  <stop offset="0" stop-color="#f4eee1" />
-  <stop offset="1" stop-color="#c2baa8" />
+  <linearGradient id="p32-leaf-color" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#afc283" />
+  <stop offset="0.5" stop-color="#7c985d" />
+  <stop offset="1" stop-color="#b1798c" />
   </linearGradient>
-  <linearGradient id="tradescantia-spathacea-tricolor-leaf-color" x1="0" y1="0" x2="0.9" y2="1">
-  <stop offset="0" stop-color="#bf819f" />
-  <stop offset="0.5" stop-color="#708d61" />
-  <stop offset="1" stop-color="#916578" />
+  <linearGradient id="p32-wing-color" x1="0" y1="0" x2="1" y2="0.6">
+  <stop offset="0" stop-color="#c96dab" />
+  <stop offset="0.5" stop-color="#efbb42" />
+  <stop offset="1" stop-color="#ba699f" />
   </linearGradient>
-  <g id="tradescantia-spathacea-tricolor-leaf">
-  <path d="M0 1C-4-7-7-20 0-32 8-19 5-6 0 1Z" fill="url(#tradescantia-spathacea-tricolor-leaf-color)" stroke="#aa708f" stroke-width="0.8" />
-  <path d="M-1-1Q-4-17 0-29M2-4Q4-19 0-29" fill="none" stroke="#e6dcae" stroke-width="1" />
-  <path d="M0-2V-28" fill="none" stroke="#d694b6" stroke-width="0.85" />
+  <clipPath id="p32-pot-surface">
+  <path d="M13 32H51L48 55Q47 60 32 60Q17 60 16 55Z" />
+  </clipPath>
+  <g id="p32-striped-leaf">
+  <path d="M0 1C-4-5-6-14 0-24 7-14 5-5 0 1Z" fill="url(#p32-leaf-color)" stroke="#9d617e" stroke-width="0.6" />
+  <path d="M-1-1Q-4-12 0-22M2-2Q4-13 0-22" fill="none" stroke="#e5d9ab" stroke-width="0.9" />
+  <path d="M0-1Q1-12 0-22" fill="none" stroke="#d690aa" stroke-width="0.6" />
+  </g>
+  <g id="p32-purple-leaf">
+  <path d="M0 1C-4-5-6-14 0-24 7-14 5-5 0 1Z" fill="#ad4b7f" stroke="#794162" stroke-width="0.6" />
+  <path d="M0-1Q1-12 0-22" fill="none" stroke="#dc7da7" stroke-width="0.8" />
   </g>
   </defs>
-  <ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
-  <path d="M10 43H54L49 58Q32 62 15 58Z" fill="url(#tradescantia-spathacea-tricolor-pot)" stroke="#807563" stroke-width="1.5" />
-  <ellipse cx="32" cy="43" rx="22" ry="4" fill="#6f5949" stroke="#807563" stroke-width="1.3" />
-  <path d="M15 51Q32 55 49 51" fill="none" stroke="#fff9eb" stroke-width="1.2" opacity="0.7" />
-  <use href="#tradescantia-spathacea-tricolor-leaf" transform="translate(31 43) rotate(-66) scale(0.95)" />
-  <use href="#tradescantia-spathacea-tricolor-leaf" transform="translate(33 44) rotate(64) scale(0.95)" />
-  <use href="#tradescantia-spathacea-tricolor-leaf" transform="translate(29 42) rotate(-38) scale(1.08)" />
-  <use href="#tradescantia-spathacea-tricolor-leaf" transform="translate(35 43) rotate(38) scale(1.06)" />
-  <use href="#tradescantia-spathacea-tricolor-leaf" transform="translate(31 42) rotate(-13) scale(1.2)" />
-  <use href="#tradescantia-spathacea-tricolor-leaf" transform="translate(33 42) rotate(12) scale(1.15)" />
-  <use href="#tradescantia-spathacea-tricolor-leaf" transform="translate(32 44) rotate(-46) scale(0.72)" />
-  <use href="#tradescantia-spathacea-tricolor-leaf" transform="translate(32 44) rotate(42) scale(0.76)" />
-  <use href="#tradescantia-spathacea-tricolor-leaf" transform="translate(32 44) rotate(4) scale(0.88)" />
+  <ellipse cx="32" cy="61" rx="22" ry="1.8" fill="#244b3b" opacity="0.12" />
+  <path d="M14 56Q32 60 50 56L48 60Q32 63 16 60Z" fill="#758a5b" stroke="#303c35" stroke-width="1" />
+  <path d="M18 58l1 3M24 59l1 3M33 59v3M41 59l-1 3M47 58l-1 3" fill="none" stroke="#d5a64d" stroke-width="2" />
+  <path d="M13 32H51L48 55Q47 60 32 60Q17 60 16 55Z" fill="#293432" stroke="#232d2c" stroke-width="1.4" />
+  <g clip-path="url(#p32-pot-surface)" fill="none" stroke-linecap="round">
+  <path d="M8 47L23 30M12 59L35 31M28 62L53 29M42 63L56 45" stroke="#dd70a8" stroke-width="3.5" />
+  <path d="M15 64L41 31M34 64L57 35" stroke="#cd4054" stroke-width="3" />
+  <path d="M5 58L29 30M23 65L47 32M46 64L58 50" stroke="#6e9d77" stroke-width="2.4" />
+  <path d="M16 32L18 54" stroke="#bdc5a0" stroke-width="0.7" opacity="0.45" />
+  </g>
+  <ellipse cx="32" cy="32" rx="19" ry="4.3" fill="#68513e" stroke="#29312d" stroke-width="1.4" />
+  <path d="M20 33L24 16M32 32L32 14M41 33L45 18" fill="none" stroke="#9e5c72" stroke-width="1.5" />
+  <use href="#p32-purple-leaf" transform="translate(25 25) rotate(-20) scale(0.9)" />
+  <use href="#p32-purple-leaf" transform="translate(34 24) rotate(10) scale(0.9)" />
+  <use href="#p32-purple-leaf" transform="translate(42 27) rotate(37) scale(0.85)" />
+  <use href="#p32-purple-leaf" transform="translate(20 28) rotate(-52) scale(0.8)" />
+  <use href="#p32-striped-leaf" transform="translate(25 30) rotate(-55) scale(0.8)" />
+  <use href="#p32-striped-leaf" transform="translate(28 27) rotate(-19) scale(0.78)" />
+  <use href="#p32-striped-leaf" transform="translate(35 28) rotate(27) scale(0.9)" />
+  <use href="#p32-striped-leaf" transform="translate(40 31) rotate(67) scale(0.8)" />
+  <use href="#p32-striped-leaf" transform="translate(23 32) rotate(-81) scale(0.7)" />
+  <use href="#p32-striped-leaf" transform="translate(35 33) rotate(72) scale(0.72)" />
+  <path d="M35 28C44 25 51 29 49 40Q47 32 36 32Z" fill="url(#p32-leaf-color)" stroke="#9d617e" stroke-width="0.65" />
+  <path d="M37 29Q46 28 49 38" fill="none" stroke="#e5d9ab" stroke-width="1" />
+  <path d="M20 30Q12 28 10 35Q9 30 14 28Z" fill="#c29883" stroke="#9d617e" stroke-width="0.6" />
+  <g transform="translate(33 43)">
+  <path d="M-1-1C-8-9-16-10-15-6-14-2-6 0-1 1ZM1-1C8-9 16-10 15-6 14-2 6 0 1 1ZM-1 1C-9-2-15 0-13 3-9 5-4 3-1 2ZM1 1C9-2 15 0 13 3 9 5 4 3 1 2Z" fill="url(#p32-wing-color)" stroke="#4d3548" stroke-width="0.75" />
+  <circle cx="-12" cy="-6" r="1.5" fill="#76548f" stroke="#d394c9" stroke-width="0.6" />
+  <circle cx="12" cy="-6" r="1.5" fill="#76548f" stroke="#d394c9" stroke-width="0.6" />
+  <circle cx="-10" cy="2" r="1.2" fill="#76548f" />
+  <circle cx="10" cy="2" r="1.2" fill="#76548f" />
+  <path d="M0-4V10" fill="none" stroke="#222e2d" stroke-width="2.1" stroke-linecap="round" />
+  <path d="M-0.5-1V8M-1-5-3-8M1-5 3-8" fill="none" stroke="#afafa0" stroke-width="0.55" stroke-linecap="round" />
+  <circle cx="0" cy="-4" r="1.4" fill="#354139" stroke="#bcbaa4" stroke-width="0.5" />
+  </g>
 </svg>

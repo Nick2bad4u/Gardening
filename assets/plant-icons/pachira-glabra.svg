@@ -1,107 +1,64 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="pachira-glabra-title pachira-glabra-description" data-plant-slug="pachira-glabra" focusable="false">
   <title id="pachira-glabra-title">Money tree plant portrait</title>
-  <desc id="pachira-glabra-description">A slim tapering trunk with connected stalks and fans of long pointed green palmate leaflets in a blue planter.</desc>
+  <desc id="pachira-glabra-description">Schematic Money Tree with long drooping green leaflets, a thick tan trunk, and multicolored mineral top dressing above a dark planter with diagonal teal, brown, and purple sections, following the owner's photograph.</desc>
   <defs>
-      <linearGradient id="pachira-pot" x1="0" x2="0.9" y1="0" y2="1">
-          <stop offset="0" stop-color="#7dc1e7" />
-          <stop offset="1" stop-color="#347ab2" />
-      </linearGradient>
-      <linearGradient id="money-leaf" x1="0" y1="0" x2="0.85" y2="1">
-          <stop offset="0" stop-color="#a6c879" />
-          <stop offset="0.5" stop-color="#5a9b58" />
-          <stop offset="1" stop-color="#2e6948" />
-      </linearGradient>
-      <linearGradient id="money-trunk" x1="0" y1="0" x2="0.85" y2="1">
-          <stop offset="0" stop-color="#af9e76" />
-          <stop offset="0.5" stop-color="#877755" />
-          <stop offset="1" stop-color="#5e6144" />
-      </linearGradient>
-      <g id="money-blade">
-          <path
-              d="M0 0C-2-3-3.4-8 0-14 3.4-8 2-3 0 0Z"
-              fill="url(#money-leaf)"
-              stroke="#356747"
-              stroke-width="0.55"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-          />
-          <path
-              d="M0-1v-10.5"
-              fill="none"
-              stroke="#c2d498"
-              stroke-width="0.45"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-          />
-      </g>
-      <g id="money-fan">
-          <use href="#money-blade" transform="rotate(-68) scale(0.9)" />
-          <use href="#money-blade" transform="rotate(-35) scale(0.9)" />
-          <use href="#money-blade" transform="rotate(0) scale(1)" />
-          <use href="#money-blade" transform="rotate(35) scale(0.9)" />
-          <use href="#money-blade" transform="rotate(68) scale(0.9)" />
-      </g>
+  <linearGradient id="p21-painted-pot" x1="0" y1="0" x2="1" y2="1">
+  <stop offset="0" stop-color="#3c5551" />
+  <stop offset="0.55" stop-color="#263b3b" />
+  <stop offset="1" stop-color="#242e31" />
+  </linearGradient>
+  <linearGradient id="p21-trunk-color" x1="0" y1="0" x2="1" y2="0">
+  <stop offset="0" stop-color="#c0a477" />
+  <stop offset="0.48" stop-color="#927c54" />
+  <stop offset="1" stop-color="#5d6041" />
+  </linearGradient>
+  <linearGradient id="p21-leaf-color" x1="0" y1="0" x2="1" y2="0.9">
+  <stop offset="0" stop-color="#8eb461" />
+  <stop offset="0.5" stop-color="#4a8651" />
+  <stop offset="1" stop-color="#285f42" />
+  </linearGradient>
+  <clipPath id="p21-pot-surface">
+  <path d="M13 41H51L47 56Q45 61 32 61Q19 61 17 56Z" />
+  </clipPath>
+  <g id="p21-drooping-leaf">
+  <path d="M0 0C-5 2-7 9-4 15L-1 23C4 18 7 9 4 4Z" fill="url(#p21-leaf-color)" stroke="#3d7048" stroke-width="0.55" />
+  <path d="M0 1Q1 10-1 21" fill="none" stroke="#b7c77f" stroke-width="0.6" />
+  <path d="M0.5 6-3 4M0.5 10-4 7M0 14-3.5 11M0.5 6 3.5 4M0.5 10 4.5 7M0 14 3 11" fill="none" stroke="#94b676" stroke-width="0.4" opacity="0.7" />
+  </g>
   </defs>
-  <ellipse
-      cx="32"
-      cy="60.5"
-      rx="22"
-      ry="1.9"
-      fill="#244b3b"
-      stroke="none"
-      stroke-width="0"
-      opacity="0.12"
-  />
-  <ellipse
-      cx="32"
-      cy="45.5"
-      rx="22"
-      ry="2.1"
-      fill="#745c45"
-      stroke="none"
-      stroke-width="1"
-  />
-  <path
-      d="M28 47c3-9 3-21 3-28h3c-1 9 0 19 3 28Z"
-      fill="url(#money-trunk)"
-      stroke="#586348"
-      stroke-width="1.1"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <path
-      d="M32 45c-1-7 2-13 0-19"
-      fill="none"
-      stroke="#c0b386"
-      stroke-width="0.65"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <path
-      d="M32 29L19 23M32 27L46 21M32 35L16 33M32 35L48 32M32 26L33 18"
-      fill="none"
-      stroke="#63844e"
-      stroke-width="1.25"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <use href="#money-fan" transform="translate(19 23) rotate(-34) scale(0.88)" />
-  <use href="#money-fan" transform="translate(46 21) rotate(30) scale(0.9)" />
-  <use href="#money-fan" transform="translate(16 33) rotate(-45) scale(0.66)" />
-  <use href="#money-fan" transform="translate(48 32) rotate(48) scale(0.66)" />
-  <use href="#money-fan" transform="translate(33 18) rotate(0) scale(0.98)" />
-  <path
-      d="M8 45h48v7H8z"
-      fill="#82c4e8"
-      stroke="#28577e"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
-  <path
-      d="m11 52 4 9h34l4-9Z"
-      fill="url(#pachira-pot)"
-      stroke="#28577e"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
+  <ellipse cx="32" cy="61.5" rx="23" ry="1.7" fill="#244b3b" opacity="0.12" />
+  <path d="M15 57Q32 60 49 57L47 61Q32 63 17 61Z" fill="#30413c" stroke="#26332e" stroke-width="1" />
+  <path d="M13 41H51L47 56Q45 61 32 61Q19 61 17 56Z" fill="url(#p21-painted-pot)" stroke="#24332d" stroke-width="1.3" />
+  <g clip-path="url(#p21-pot-surface)" stroke="#253a37" stroke-width="1.2" stroke-linejoin="round">
+  <path d="M12 41L23 41 33 51 19 47Z" fill="#347780" />
+  <path d="M23 41L35 41 44 49 33 51Z" fill="#4e3d50" />
+  <path d="M35 41L52 40 49 48 44 49Z" fill="#62493f" />
+  <path d="M14 46L33 51 45 61 32 62Z" fill="#78583f" />
+  <path d="M15 49L29 62 19 61Z" fill="#286664" />
+  <path d="M33 51L47 48 52 58 44 61Z" fill="#2c4b4b" />
+  </g>
+  <ellipse cx="32" cy="41" rx="19" ry="5" fill="#5e5a43" stroke="#263b32" stroke-width="1.3" />
+  <g stroke="#6f8068" stroke-width="0.4" stroke-linejoin="round">
+  <path d="M15 41l3-3 3 2-1 3Z" fill="#a9b8a4" />
+  <path d="M20 43l2-3 4 1-1 3Z" fill="#8b9f77" />
+  <path d="M21 38l3-2 3 2-2 2Z" fill="#d1bd83" />
+  <path d="M38 38l3-2 3 2-2 2Z" fill="#8dbaa2" />
+  <path d="M43 41l3-3 3 3-3 2Z" fill="#c3cbb5" />
+  <path d="M35 43l3-3 4 2-3 3Z" fill="#a99d75" />
+  <path d="M27 44l2-3 4 2-2 2Z" fill="#c4d3b9" />
+  </g>
+  <path d="M27 42Q28 32 29 19L32 15 35 19Q34 32 37 42Q32 45 27 42Z" fill="url(#p21-trunk-color)" stroke="#646449" stroke-width="0.9" />
+  <path d="M30 39L31 24M33 40L32 30M29 34L29 37" fill="none" stroke="#d2bd8b" stroke-width="0.7" stroke-linecap="round" />
+  <path d="M31 25L22 15M33 23L43 12M32 20L31 8M29 31L18 24M35 29L43 23" fill="none" stroke="#7d8a4d" stroke-width="1.4" stroke-linecap="round" />
+  <use href="#p21-drooping-leaf" transform="translate(22 15) rotate(53) scale(0.8)" />
+  <use href="#p21-drooping-leaf" transform="translate(43 12) rotate(-44) scale(0.82)" />
+  <use href="#p21-drooping-leaf" transform="translate(19 24) rotate(25) scale(0.7)" />
+  <use href="#p21-drooping-leaf" transform="translate(42 23) rotate(-15) scale(0.71)" />
+  <use href="#p21-drooping-leaf" transform="translate(32 7) rotate(65) scale(1.03)" />
+  <use href="#p21-drooping-leaf" transform="translate(32 7) rotate(-66) scale(0.98)" />
+  <use href="#p21-drooping-leaf" transform="translate(31 7) rotate(30) scale(1.04)" />
+  <use href="#p21-drooping-leaf" transform="translate(33 7) rotate(-30) scale(1.04)" />
+  <use href="#p21-drooping-leaf" transform="translate(32 6) rotate(2) scale(1.11)" />
+  <use href="#p21-drooping-leaf" transform="translate(29 23) rotate(18) scale(0.79)" />
+  <use href="#p21-drooping-leaf" transform="translate(35 22) rotate(-14) scale(0.79)" />
 </svg>

@@ -1,33 +1,59 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="aglaonema-commutatum-alpine-spires-title aglaonema-commutatum-alpine-spires-description" data-plant-slug="aglaonema-commutatum-alpine-spires" focusable="false">
   <title id="aglaonema-commutatum-alpine-spires-title">Alpine Spires Chinese evergreen plant portrait</title>
-  <desc id="aglaonema-commutatum-alpine-spires-description">Schematic Chinese evergreen with pointed green, cream, and pink leaves in a neutral illustrative pot, inspired by the Alpine Spires nursery-label artwork; not a depiction or identification of the owned specimen or its pot.</desc>
+  <desc id="aglaonema-commutatum-alpine-spires-description">Schematic Alpine Spires Chinese evergreen with broad pointed coral-pink, pale yellow-green, and green leaves above a rounded-square turquoise and dark teal planter with diamond texture and a clear upper collar; appearance follows owner photographs without establishing identity or pot specifications.</desc>
   <defs>
-    <linearGradient id="alpine-spires-pot" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#ded6c1" />
-      <stop offset="1" stop-color="#a29780" />
+    <linearGradient id="alpine-spires-pot" x1="0" y1="0" x2="1" y2="0.6">
+      <stop stop-color="#123d3a" />
+      <stop offset="0.38" stop-color="#1b746b" />
+      <stop offset="0.42" stop-color="#19bfae" />
+      <stop offset="1" stop-color="#087f7d" />
     </linearGradient>
-    <linearGradient id="alpine-spires-blush" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#f0c3bf" />
-      <stop offset="1" stop-color="#cd8b9a" />
+    <linearGradient id="alpine-spires-blush" x1="0" y1="0" x2="0.8" y2="1">
+      <stop stop-color="#f5d4ae" />
+      <stop offset="0.48" stop-color="#ee9c89" />
+      <stop offset="1" stop-color="#d76779" />
     </linearGradient>
+    <linearGradient id="alpine-spires-leaf-green" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#a8b748" />
+      <stop offset="0.6" stop-color="#829946" />
+      <stop offset="1" stop-color="#3e7947" />
+    </linearGradient>
+    <pattern id="alpine-spires-lattice" width="5" height="5" patternUnits="userSpaceOnUse">
+      <path d="M0 2.5 2.5 0 5 2.5 2.5 5Z" fill="none" stroke="#9ae0b8" stroke-width="0.6" opacity="0.65" />
+      <path d="M0 3.3 2.5 0.8 5 3.3" fill="none" stroke="#073f40" stroke-width="0.7" opacity="0.7" />
+    </pattern>
+    <clipPath id="alpine-spires-pot-clip">
+      <path d="M18 37Q18 34 22 33L41 32Q46 33 47 37L46 56Q45 59 41 60L23 59Q19 58 18 55Z" />
+    </clipPath>
     <g id="alpine-spires-leaf" stroke-linejoin="round">
-      <path d="M0 0C-10-6-9-18-2-28C6-22 12-8 0 0Z" fill="#376c4e" stroke="#284e3d" stroke-width="1.2" />
-      <path d="M0-2C-6-9-5-19-2-25C4-20 6-9 0-2Z" fill="#d9dfbb" />
-      <path d="M0-3C-3-9-2-17-2-23C2-18 4-9 0-3Z" fill="url(#alpine-spires-blush)" />
-      <path d="M0-2-2-25M-1-9-6-14M-1-15-5-19M0-8 5-12M-1-15 2-19" fill="none" stroke="#e5e9ce" stroke-width="0.8" stroke-linecap="round" />
+      <path d="M0 0C-9-2-10-12-6-17C-4-20-1-22 0-25C3-22 10-17 9-10C8-4 4-1 0 0Z" fill="url(#alpine-spires-leaf-green)" stroke="#426943" stroke-width="0.85" />
+      <path d="M0-1C-5-3-7-7-6-11L-3-9-5-15-2-13-2-20 0-23 2-18 5-17 3-12 7-11 4-8 6-5C4-2 2-1 0-1Z" fill="url(#alpine-spires-blush)" />
+      <path d="M0-1Q1-12 0-23M0-7-5-10M0-12-5-16M0-8 6-12M0-14 4-18" fill="none" stroke="#f2c8a3" stroke-width="0.65" stroke-linecap="round" />
+      <path d="M-5-5-7-8M5-5 7-8M-6-14-4-17M4-19 6-17" fill="none" stroke="#bdd06b" stroke-width="0.9" stroke-linecap="round" />
     </g>
   </defs>
   <g stroke-linecap="round" stroke-linejoin="round">
-    <ellipse cx="32" cy="59" rx="20" ry="2.5" fill="#254638" opacity="0.14" />
-    <path d="M18 44H46L43 57Q32 61 21 57Z" fill="url(#alpine-spires-pot)" stroke="#847b69" stroke-width="1.5" />
-    <ellipse cx="32" cy="44" rx="14" ry="4" fill="#5e503c" stroke="#847b69" stroke-width="1.5" />
-    <path d="M31 45 29 17M32 43 18 28M32 40 46 24M32 44 44 36" fill="none" stroke="#bb8d91" stroke-width="2.2" />
-    <use href="#alpine-spires-leaf" transform="translate(30 31) rotate(-3) scale(0.85)" />
-    <use href="#alpine-spires-leaf" transform="translate(38 33) rotate(52) scale(0.86)" />
-    <use href="#alpine-spires-leaf" transform="translate(24 37) rotate(-52) scale(0.84)" />
-    <use href="#alpine-spires-leaf" transform="translate(33 42) rotate(12) scale(0.82)" />
-    <use href="#alpine-spires-leaf" transform="translate(39 45) rotate(67) scale(0.71)" />
-    <use href="#alpine-spires-leaf" transform="translate(27 46) rotate(-65) scale(0.7)" />
-    <path d="M24 53Q32 56 39 53" fill="none" stroke="#f0eada" stroke-width="1.1" />
+    <ellipse cx="32" cy="60" rx="18" ry="2" fill="#254638" opacity="0.15" />
+    <path d="M18 37Q18 34 22 33L41 32Q46 33 47 37L46 56Q45 59 41 60L23 59Q19 58 18 55Z" fill="url(#alpine-spires-pot)" stroke="#244f48" stroke-width="1.2" />
+    <g clip-path="url(#alpine-spires-pot-clip)">
+      <path d="M18 37H48V60H18Z" fill="url(#alpine-spires-lattice)" />
+      <path d="M18 43 30 45 47 43M18 47 30 49 47 47" fill="none" stroke="#0d6158" stroke-width="1.3" />
+      <path d="M19 42 30 44 46 42M19 46 30 48 46 46" fill="none" stroke="#8cc8a0" stroke-width="0.55" opacity="0.7" />
+      <path d="M30 38V58" stroke="#b3e8b9" stroke-width="0.7" opacity="0.45" />
+    </g>
+    <path d="M20 35Q32 39 45 34" fill="none" stroke="#61c7a2" stroke-width="1.3" />
+    <path d="M23 30V35Q32 39 42 34V29" fill="#9cb7a0" opacity="0.2" />
+    <path d="M23 30V35Q32 39 42 34V29" fill="none" stroke="#668f7b" stroke-width="0.8" />
+    <ellipse cx="32.5" cy="31" rx="9.5" ry="3" fill="#5b4432" />
+    <path d="M26 31 28 30M36 31 37 32M31 33 32 33" fill="none" stroke="#c9b58a" stroke-width="1.1" />
+    <path d="M31 32Q26 23 20 19M32 32Q34 20 44 16M31 32 30 11M32 32 41 27M30 32 18 27" fill="none" stroke="#d7ad91" stroke-width="1.9" />
+    <ellipse cx="32.5" cy="29.5" rx="10" ry="3" fill="none" stroke="#b6d2ad" stroke-width="1" />
+    <use href="#alpine-spires-leaf" transform="translate(29 24) rotate(-17) scale(0.77)" />
+    <use href="#alpine-spires-leaf" transform="translate(36 26) rotate(62) scale(0.94)" />
+    <use href="#alpine-spires-leaf" transform="translate(24 24) rotate(-68) scale(0.83)" />
+    <use href="#alpine-spires-leaf" transform="translate(24 28) rotate(-72) scale(0.76)" />
+    <use href="#alpine-spires-leaf" transform="translate(39 29) rotate(76) scale(0.88)" />
+    <use href="#alpine-spires-leaf" transform="translate(34 27) rotate(7) scale(0.86)" />
+    <use href="#alpine-spires-leaf" transform="translate(26 30) rotate(-35) scale(0.6)" />
   </g>
 </svg>

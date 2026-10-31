@@ -11241,110 +11241,67 @@
 </symbol>
 
   <symbol id="icon-plant-pachira-glabra" viewBox="0 0 64 64">
-    <defs>
-        <linearGradient id="pachira-pot" x1="0" x2="0.9" y1="0" y2="1">
-            <stop offset="0" stop-color="#7dc1e7" />
-            <stop offset="1" stop-color="#347ab2" />
-        </linearGradient>
-        <linearGradient id="money-leaf" x1="0" y1="0" x2="0.85" y2="1">
-            <stop offset="0" stop-color="#a6c879" />
-            <stop offset="0.5" stop-color="#5a9b58" />
-            <stop offset="1" stop-color="#2e6948" />
-        </linearGradient>
-        <linearGradient id="money-trunk" x1="0" y1="0" x2="0.85" y2="1">
-            <stop offset="0" stop-color="#af9e76" />
-            <stop offset="0.5" stop-color="#877755" />
-            <stop offset="1" stop-color="#5e6144" />
-        </linearGradient>
-        <g id="money-blade">
-            <path
-                d="M0 0C-2-3-3.4-8 0-14 3.4-8 2-3 0 0Z"
-                fill="url(#money-leaf)"
-                stroke="#356747"
-                stroke-width="0.55"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            />
-            <path
-                d="M0-1v-10.5"
-                fill="none"
-                stroke="#c2d498"
-                stroke-width="0.45"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            />
-        </g>
-        <g id="money-fan">
-            <use href="#money-blade" transform="rotate(-68) scale(0.9)" />
-            <use href="#money-blade" transform="rotate(-35) scale(0.9)" />
-            <use href="#money-blade" transform="rotate(0) scale(1)" />
-            <use href="#money-blade" transform="rotate(35) scale(0.9)" />
-            <use href="#money-blade" transform="rotate(68) scale(0.9)" />
-        </g>
-    </defs>
-    <ellipse
-        cx="32"
-        cy="60.5"
-        rx="22"
-        ry="1.9"
-        fill="#244b3b"
-        stroke="none"
-        stroke-width="0"
-        opacity="0.12"
-    />
-    <ellipse
-        cx="32"
-        cy="45.5"
-        rx="22"
-        ry="2.1"
-        fill="#745c45"
-        stroke="none"
-        stroke-width="1"
-    />
-    <path
-        d="M28 47c3-9 3-21 3-28h3c-1 9 0 19 3 28Z"
-        fill="url(#money-trunk)"
-        stroke="#586348"
-        stroke-width="1.1"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    />
-    <path
-        d="M32 45c-1-7 2-13 0-19"
-        fill="none"
-        stroke="#c0b386"
-        stroke-width="0.65"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    />
-    <path
-        d="M32 29L19 23M32 27L46 21M32 35L16 33M32 35L48 32M32 26L33 18"
-        fill="none"
-        stroke="#63844e"
-        stroke-width="1.25"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    />
-    <use href="#money-fan" transform="translate(19 23) rotate(-34) scale(0.88)" />
-    <use href="#money-fan" transform="translate(46 21) rotate(30) scale(0.9)" />
-    <use href="#money-fan" transform="translate(16 33) rotate(-45) scale(0.66)" />
-    <use href="#money-fan" transform="translate(48 32) rotate(48) scale(0.66)" />
-    <use href="#money-fan" transform="translate(33 18) rotate(0) scale(0.98)" />
-    <path
-        d="M8 45h48v7H8z"
-        fill="#82c4e8"
-        stroke="#28577e"
-        stroke-linejoin="round"
-        stroke-width="1.7"
-    />
-    <path
-        d="m11 52 4 9h34l4-9Z"
-        fill="url(#pachira-pot)"
-        stroke="#28577e"
-        stroke-linejoin="round"
-        stroke-width="1.7"
-    />
-  </symbol>
+<defs>
+<linearGradient id="p21-painted-pot" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#3c5551" />
+<stop offset="0.55" stop-color="#263b3b" />
+<stop offset="1" stop-color="#242e31" />
+</linearGradient>
+<linearGradient id="p21-trunk-color" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0" stop-color="#c0a477" />
+<stop offset="0.48" stop-color="#927c54" />
+<stop offset="1" stop-color="#5d6041" />
+</linearGradient>
+<linearGradient id="p21-leaf-color" x1="0" y1="0" x2="1" y2="0.9">
+<stop offset="0" stop-color="#8eb461" />
+<stop offset="0.5" stop-color="#4a8651" />
+<stop offset="1" stop-color="#285f42" />
+</linearGradient>
+<clipPath id="p21-pot-surface">
+<path d="M13 41H51L47 56Q45 61 32 61Q19 61 17 56Z" />
+</clipPath>
+<g id="p21-drooping-leaf">
+<path d="M0 0C-5 2-7 9-4 15L-1 23C4 18 7 9 4 4Z" fill="url(#p21-leaf-color)" stroke="#3d7048" stroke-width="0.55" />
+<path d="M0 1Q1 10-1 21" fill="none" stroke="#b7c77f" stroke-width="0.6" />
+<path d="M0.5 6-3 4M0.5 10-4 7M0 14-3.5 11M0.5 6 3.5 4M0.5 10 4.5 7M0 14 3 11" fill="none" stroke="#94b676" stroke-width="0.4" opacity="0.7" />
+</g>
+</defs>
+<ellipse cx="32" cy="61.5" rx="23" ry="1.7" fill="#244b3b" opacity="0.12" />
+<path d="M15 57Q32 60 49 57L47 61Q32 63 17 61Z" fill="#30413c" stroke="#26332e" stroke-width="1" />
+<path d="M13 41H51L47 56Q45 61 32 61Q19 61 17 56Z" fill="url(#p21-painted-pot)" stroke="#24332d" stroke-width="1.3" />
+<g clip-path="url(#p21-pot-surface)" stroke="#253a37" stroke-width="1.2" stroke-linejoin="round">
+<path d="M12 41L23 41 33 51 19 47Z" fill="#347780" />
+<path d="M23 41L35 41 44 49 33 51Z" fill="#4e3d50" />
+<path d="M35 41L52 40 49 48 44 49Z" fill="#62493f" />
+<path d="M14 46L33 51 45 61 32 62Z" fill="#78583f" />
+<path d="M15 49L29 62 19 61Z" fill="#286664" />
+<path d="M33 51L47 48 52 58 44 61Z" fill="#2c4b4b" />
+</g>
+<ellipse cx="32" cy="41" rx="19" ry="5" fill="#5e5a43" stroke="#263b32" stroke-width="1.3" />
+<g stroke="#6f8068" stroke-width="0.4" stroke-linejoin="round">
+<path d="M15 41l3-3 3 2-1 3Z" fill="#a9b8a4" />
+<path d="M20 43l2-3 4 1-1 3Z" fill="#8b9f77" />
+<path d="M21 38l3-2 3 2-2 2Z" fill="#d1bd83" />
+<path d="M38 38l3-2 3 2-2 2Z" fill="#8dbaa2" />
+<path d="M43 41l3-3 3 3-3 2Z" fill="#c3cbb5" />
+<path d="M35 43l3-3 4 2-3 3Z" fill="#a99d75" />
+<path d="M27 44l2-3 4 2-2 2Z" fill="#c4d3b9" />
+</g>
+<path d="M27 42Q28 32 29 19L32 15 35 19Q34 32 37 42Q32 45 27 42Z" fill="url(#p21-trunk-color)" stroke="#646449" stroke-width="0.9" />
+<path d="M30 39L31 24M33 40L32 30M29 34L29 37" fill="none" stroke="#d2bd8b" stroke-width="0.7" stroke-linecap="round" />
+<path d="M31 25L22 15M33 23L43 12M32 20L31 8M29 31L18 24M35 29L43 23" fill="none" stroke="#7d8a4d" stroke-width="1.4" stroke-linecap="round" />
+<use href="#p21-drooping-leaf" transform="translate(22 15) rotate(53) scale(0.8)" />
+<use href="#p21-drooping-leaf" transform="translate(43 12) rotate(-44) scale(0.82)" />
+<use href="#p21-drooping-leaf" transform="translate(19 24) rotate(25) scale(0.7)" />
+<use href="#p21-drooping-leaf" transform="translate(42 23) rotate(-15) scale(0.71)" />
+<use href="#p21-drooping-leaf" transform="translate(32 7) rotate(65) scale(1.03)" />
+<use href="#p21-drooping-leaf" transform="translate(32 7) rotate(-66) scale(0.98)" />
+<use href="#p21-drooping-leaf" transform="translate(31 7) rotate(30) scale(1.04)" />
+<use href="#p21-drooping-leaf" transform="translate(33 7) rotate(-30) scale(1.04)" />
+<use href="#p21-drooping-leaf" transform="translate(32 6) rotate(2) scale(1.11)" />
+<use href="#p21-drooping-leaf" transform="translate(29 23) rotate(18) scale(0.79)" />
+<use href="#p21-drooping-leaf" transform="translate(35 22) rotate(-14) scale(0.79)" />
+</symbol>
 
   <symbol id="icon-plant-shared-rehab-cactus-planter" viewBox="0 0 64 64">
     <defs>
@@ -17930,64 +17887,134 @@
 </symbol>
 <symbol id="icon-plant-peperomia-obtipan-bicolor" viewBox="0 0 64 64">
 <defs>
-<linearGradient id="peperomia-obtipan-bicolor-pot" x1="0" y1="0" x2="0.8" y2="1">
-<stop offset="0" stop-color="#f4eee1" />
-<stop offset="1" stop-color="#c2baa8" />
+<linearGradient id="p31-mosaic-glaze" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#668b78" />
+<stop offset="1" stop-color="#233d3b" />
 </linearGradient>
-<radialGradient id="peperomia-obtipan-bicolor-leaf-green" cx="0.3" cy="0.2" r="0.8">
-<stop offset="0" stop-color="#8dad70" />
-<stop offset="1" stop-color="#386c4a" />
+<radialGradient id="p31-leaf-green" cx="0.3" cy="0.25" r="0.9">
+<stop offset="0" stop-color="#a1b16d" />
+<stop offset="1" stop-color="#547c58" />
 </radialGradient>
-<g id="peperomia-obtipan-bicolor-leaf">
-<path d="M0 1C-8 0-12-6-10-14-8-20 0-21 6-17 14-12 10-3 0 1Z" fill="#eee3a7" stroke="#9fa679" stroke-width="0.8" />
-<path d="M0-1C-4-2-7-5-6-9L-7-13-3-16 1-15 4-16 7-12 6-8 7-5Z" fill="url(#peperomia-obtipan-bicolor-leaf-green)" />
-<path d="M0-2Q2-9 0-15" fill="none" stroke="#cad69c" stroke-width="0.7" opacity="0.7" />
+<linearGradient id="p31-butterfly-wing" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#cf7da3" />
+<stop offset="0.5" stop-color="#9867b4" />
+<stop offset="1" stop-color="#577dae" />
+</linearGradient>
+<clipPath id="p31-mosaic-surface">
+<path d="M14 32H50L47 55Q46 60 32 60Q18 60 17 55Z" />
+</clipPath>
+<g id="p31-rounded-leaf">
+<path d="M0 0C-6-1-9-6-6-11-4-15 3-15 7-11 12-6 8 0 0 0Z" fill="#eee2a7" stroke="#a5ab77" stroke-width="0.55" />
+<path d="M0-1C-4-2-6-5-4-8L-4-11 0-10 2-12 5-9 7-9 6-5 4-5 4-2Z" fill="url(#p31-leaf-green)" />
+<path d="M0-1Q2-6 0-11" fill="none" stroke="#c5d397" stroke-width="0.5" />
+</g>
+<g id="p31-rim-gnome">
+<path d="M-2 3Q-3 6 0 7Q3 6 2 3" fill="#53833e" stroke="#24452d" stroke-width="0.45" />
+<path d="M-2 0Q-3 4 0 5Q3 3 2 0Z" fill="#f2e6ca" stroke="#b6a489" stroke-width="0.35" />
+<path d="M-2.6 0L-1-4 2.6-0.5Z" fill="#d74d3b" stroke="#803c32" stroke-width="0.4" />
+<ellipse cx="0.4" cy="0.8" rx="1" ry="0.75" fill="#edb893" />
 </g>
 </defs>
-<ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
-<path d="M10 43H54L49 58Q32 62 15 58Z" fill="url(#peperomia-obtipan-bicolor-pot)" stroke="#807563" stroke-width="1.5" />
-<ellipse cx="32" cy="43" rx="22" ry="4" fill="#6f5949" stroke="#807563" stroke-width="1.3" />
-<path d="M15 51Q32 55 49 51" fill="none" stroke="#fff9eb" stroke-width="1.2" opacity="0.7" />
-<path d="M32 45Q30 26 33 13M31 34L17 23M32 30L45 16M31 41L45 33" fill="none" stroke="#758857" stroke-width="2.5" stroke-linecap="round" />
-<use href="#peperomia-obtipan-bicolor-leaf" transform="translate(32 17) rotate(-8) scale(0.78)" />
-<use href="#peperomia-obtipan-bicolor-leaf" transform="translate(43 22) rotate(35) scale(0.82)" />
-<use href="#peperomia-obtipan-bicolor-leaf" transform="translate(19 27) rotate(-55) scale(0.95)" />
-<use href="#peperomia-obtipan-bicolor-leaf" transform="translate(34 30) rotate(35) scale(0.88)" />
-<use href="#peperomia-obtipan-bicolor-leaf" transform="translate(28 36) rotate(-70) scale(1)" />
-<use href="#peperomia-obtipan-bicolor-leaf" transform="translate(45 38) rotate(58) scale(0.9)" />
-<use href="#peperomia-obtipan-bicolor-leaf" transform="translate(26 44) rotate(-67) scale(0.85)" />
-<use href="#peperomia-obtipan-bicolor-leaf" transform="translate(33 44) rotate(35) scale(0.85)" />
+<ellipse cx="32" cy="61" rx="21" ry="1.8" fill="#244b3b" opacity="0.12" />
+<path d="M15 56Q32 59 49 56L47 60Q32 63 17 60Z" fill="#bf794b" stroke="#554532" stroke-width="1" />
+<path d="M14 32H50L47 55Q46 60 32 60Q18 60 17 55Z" fill="url(#p31-mosaic-glaze)" stroke="#282e2c" stroke-width="1.4" />
+<g clip-path="url(#p31-mosaic-surface)" stroke="#252e2d" stroke-width="1.3" stroke-linejoin="round">
+<path d="M12 32L27 33 19 44Z" fill="#829948" />
+<path d="M27 32L37 32 37 41 22 44Z" fill="#409396" />
+<path d="M38 31L51 33 43 42 37 41Z" fill="#b54d44" />
+<path d="M15 39L23 46 17 53Z" fill="#d7a33d" />
+<path d="M24 44L36 42 32 53 21 56Z" fill="#34787d" />
+<path d="M36 42L43 42 51 46 42 51Z" fill="#e4dfba" />
+<path d="M44 48L51 46 49 58 40 56Z" fill="#3198ad" />
+<path d="M32 49L41 52 40 61 26 61Z" fill="#e2ac3c" />
+<path d="M17 54L26 52 27 61 18 61Z" fill="#825e36" />
+</g>
+<ellipse cx="32" cy="32" rx="18" ry="4" fill="#60513d" stroke="#29312c" stroke-width="1.4" />
+<path d="M21 34L23 14M29 34L32 10M37 33L43 14M28 24L14 19M34 23L51 20" fill="none" stroke="#a97569" stroke-width="1.6" stroke-linecap="round" />
+<path d="M22 14L20 4M34 14L37 3M45 19Q50 11 51 6" fill="none" stroke="#d1cb89" stroke-width="0.9" stroke-linecap="round" />
+<use href="#p31-rounded-leaf" transform="translate(24 17) rotate(-31) scale(0.8)" />
+<use href="#p31-rounded-leaf" transform="translate(34 15) rotate(12) scale(0.8)" />
+<use href="#p31-rounded-leaf" transform="translate(43 19) rotate(51) scale(0.8)" />
+<use href="#p31-rounded-leaf" transform="translate(16 23) rotate(-66) scale(0.8)" />
+<use href="#p31-rounded-leaf" transform="translate(26 24) rotate(-18) scale(0.86)" />
+<use href="#p31-rounded-leaf" transform="translate(37 25) rotate(37) scale(0.82)" />
+<use href="#p31-rounded-leaf" transform="translate(47 27) rotate(74) scale(0.8)" />
+<use href="#p31-rounded-leaf" transform="translate(19 30) rotate(-83) scale(0.77)" />
+<use href="#p31-rounded-leaf" transform="translate(27 32) rotate(-37) scale(0.82)" />
+<use href="#p31-rounded-leaf" transform="translate(38 32) rotate(43) scale(0.8)" />
+<use href="#p31-rounded-leaf" transform="translate(48 32) rotate(123) scale(0.65)" />
+<use href="#p31-rounded-leaf" transform="translate(17 32) rotate(-137) scale(0.6)" />
+<path d="M19 32v4M31 31v5M43 32v4" fill="none" stroke="#d6a781" stroke-width="1.1" stroke-linecap="round" />
+<use href="#p31-rim-gnome" transform="translate(19 37) rotate(-9) scale(0.7)" />
+<use href="#p31-rim-gnome" transform="translate(31 37) scale(0.75)" />
+<path d="M29 36.7L30.3 33.5 33 36.5Z" fill="#e9ae3c" />
+<use href="#p31-rim-gnome" transform="translate(43 37) rotate(12) scale(0.7)" />
+<g transform="translate(36 51) rotate(-19)">
+<path d="M-1 0C-10-8-13-4-9 3L-2 4ZM1 0C10-8 13-4 9 3L2 4ZM-1 2C-7 3-8 8-3 7L0 3ZM1 2C7 3 8 8 3 7L0 3Z" fill="url(#p31-butterfly-wing)" stroke="#392f42" stroke-width="0.8" />
+<path d="M0-2V6M-1-2-3-5M1-2 3-5" fill="none" stroke="#252d2b" stroke-width="1.1" stroke-linecap="round" />
+<path d="M-2 1-8-2M2 1 8-2" fill="none" stroke="#cfa1c7" stroke-width="0.45" />
+</g>
 </symbol>
 <symbol id="icon-plant-tradescantia-spathacea-tricolor" viewBox="0 0 64 64">
 <defs>
-<linearGradient id="tradescantia-spathacea-tricolor-pot" x1="0" y1="0" x2="0.8" y2="1">
-<stop offset="0" stop-color="#f4eee1" />
-<stop offset="1" stop-color="#c2baa8" />
+<linearGradient id="p32-leaf-color" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#afc283" />
+<stop offset="0.5" stop-color="#7c985d" />
+<stop offset="1" stop-color="#b1798c" />
 </linearGradient>
-<linearGradient id="tradescantia-spathacea-tricolor-leaf-color" x1="0" y1="0" x2="0.9" y2="1">
-<stop offset="0" stop-color="#bf819f" />
-<stop offset="0.5" stop-color="#708d61" />
-<stop offset="1" stop-color="#916578" />
+<linearGradient id="p32-wing-color" x1="0" y1="0" x2="1" y2="0.6">
+<stop offset="0" stop-color="#c96dab" />
+<stop offset="0.5" stop-color="#efbb42" />
+<stop offset="1" stop-color="#ba699f" />
 </linearGradient>
-<g id="tradescantia-spathacea-tricolor-leaf">
-<path d="M0 1C-4-7-7-20 0-32 8-19 5-6 0 1Z" fill="url(#tradescantia-spathacea-tricolor-leaf-color)" stroke="#aa708f" stroke-width="0.8" />
-<path d="M-1-1Q-4-17 0-29M2-4Q4-19 0-29" fill="none" stroke="#e6dcae" stroke-width="1" />
-<path d="M0-2V-28" fill="none" stroke="#d694b6" stroke-width="0.85" />
+<clipPath id="p32-pot-surface">
+<path d="M13 32H51L48 55Q47 60 32 60Q17 60 16 55Z" />
+</clipPath>
+<g id="p32-striped-leaf">
+<path d="M0 1C-4-5-6-14 0-24 7-14 5-5 0 1Z" fill="url(#p32-leaf-color)" stroke="#9d617e" stroke-width="0.6" />
+<path d="M-1-1Q-4-12 0-22M2-2Q4-13 0-22" fill="none" stroke="#e5d9ab" stroke-width="0.9" />
+<path d="M0-1Q1-12 0-22" fill="none" stroke="#d690aa" stroke-width="0.6" />
+</g>
+<g id="p32-purple-leaf">
+<path d="M0 1C-4-5-6-14 0-24 7-14 5-5 0 1Z" fill="#ad4b7f" stroke="#794162" stroke-width="0.6" />
+<path d="M0-1Q1-12 0-22" fill="none" stroke="#dc7da7" stroke-width="0.8" />
 </g>
 </defs>
-<ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
-<path d="M10 43H54L49 58Q32 62 15 58Z" fill="url(#tradescantia-spathacea-tricolor-pot)" stroke="#807563" stroke-width="1.5" />
-<ellipse cx="32" cy="43" rx="22" ry="4" fill="#6f5949" stroke="#807563" stroke-width="1.3" />
-<path d="M15 51Q32 55 49 51" fill="none" stroke="#fff9eb" stroke-width="1.2" opacity="0.7" />
-<use href="#tradescantia-spathacea-tricolor-leaf" transform="translate(31 43) rotate(-66) scale(0.95)" />
-<use href="#tradescantia-spathacea-tricolor-leaf" transform="translate(33 44) rotate(64) scale(0.95)" />
-<use href="#tradescantia-spathacea-tricolor-leaf" transform="translate(29 42) rotate(-38) scale(1.08)" />
-<use href="#tradescantia-spathacea-tricolor-leaf" transform="translate(35 43) rotate(38) scale(1.06)" />
-<use href="#tradescantia-spathacea-tricolor-leaf" transform="translate(31 42) rotate(-13) scale(1.2)" />
-<use href="#tradescantia-spathacea-tricolor-leaf" transform="translate(33 42) rotate(12) scale(1.15)" />
-<use href="#tradescantia-spathacea-tricolor-leaf" transform="translate(32 44) rotate(-46) scale(0.72)" />
-<use href="#tradescantia-spathacea-tricolor-leaf" transform="translate(32 44) rotate(42) scale(0.76)" />
-<use href="#tradescantia-spathacea-tricolor-leaf" transform="translate(32 44) rotate(4) scale(0.88)" />
+<ellipse cx="32" cy="61" rx="22" ry="1.8" fill="#244b3b" opacity="0.12" />
+<path d="M14 56Q32 60 50 56L48 60Q32 63 16 60Z" fill="#758a5b" stroke="#303c35" stroke-width="1" />
+<path d="M18 58l1 3M24 59l1 3M33 59v3M41 59l-1 3M47 58l-1 3" fill="none" stroke="#d5a64d" stroke-width="2" />
+<path d="M13 32H51L48 55Q47 60 32 60Q17 60 16 55Z" fill="#293432" stroke="#232d2c" stroke-width="1.4" />
+<g clip-path="url(#p32-pot-surface)" fill="none" stroke-linecap="round">
+<path d="M8 47L23 30M12 59L35 31M28 62L53 29M42 63L56 45" stroke="#dd70a8" stroke-width="3.5" />
+<path d="M15 64L41 31M34 64L57 35" stroke="#cd4054" stroke-width="3" />
+<path d="M5 58L29 30M23 65L47 32M46 64L58 50" stroke="#6e9d77" stroke-width="2.4" />
+<path d="M16 32L18 54" stroke="#bdc5a0" stroke-width="0.7" opacity="0.45" />
+</g>
+<ellipse cx="32" cy="32" rx="19" ry="4.3" fill="#68513e" stroke="#29312d" stroke-width="1.4" />
+<path d="M20 33L24 16M32 32L32 14M41 33L45 18" fill="none" stroke="#9e5c72" stroke-width="1.5" />
+<use href="#p32-purple-leaf" transform="translate(25 25) rotate(-20) scale(0.9)" />
+<use href="#p32-purple-leaf" transform="translate(34 24) rotate(10) scale(0.9)" />
+<use href="#p32-purple-leaf" transform="translate(42 27) rotate(37) scale(0.85)" />
+<use href="#p32-purple-leaf" transform="translate(20 28) rotate(-52) scale(0.8)" />
+<use href="#p32-striped-leaf" transform="translate(25 30) rotate(-55) scale(0.8)" />
+<use href="#p32-striped-leaf" transform="translate(28 27) rotate(-19) scale(0.78)" />
+<use href="#p32-striped-leaf" transform="translate(35 28) rotate(27) scale(0.9)" />
+<use href="#p32-striped-leaf" transform="translate(40 31) rotate(67) scale(0.8)" />
+<use href="#p32-striped-leaf" transform="translate(23 32) rotate(-81) scale(0.7)" />
+<use href="#p32-striped-leaf" transform="translate(35 33) rotate(72) scale(0.72)" />
+<path d="M35 28C44 25 51 29 49 40Q47 32 36 32Z" fill="url(#p32-leaf-color)" stroke="#9d617e" stroke-width="0.65" />
+<path d="M37 29Q46 28 49 38" fill="none" stroke="#e5d9ab" stroke-width="1" />
+<path d="M20 30Q12 28 10 35Q9 30 14 28Z" fill="#c29883" stroke="#9d617e" stroke-width="0.6" />
+<g transform="translate(33 43)">
+<path d="M-1-1C-8-9-16-10-15-6-14-2-6 0-1 1ZM1-1C8-9 16-10 15-6 14-2 6 0 1 1ZM-1 1C-9-2-15 0-13 3-9 5-4 3-1 2ZM1 1C9-2 15 0 13 3 9 5 4 3 1 2Z" fill="url(#p32-wing-color)" stroke="#4d3548" stroke-width="0.75" />
+<circle cx="-12" cy="-6" r="1.5" fill="#76548f" stroke="#d394c9" stroke-width="0.6" />
+<circle cx="12" cy="-6" r="1.5" fill="#76548f" stroke="#d394c9" stroke-width="0.6" />
+<circle cx="-10" cy="2" r="1.2" fill="#76548f" />
+<circle cx="10" cy="2" r="1.2" fill="#76548f" />
+<path d="M0-4V10" fill="none" stroke="#222e2d" stroke-width="2.1" stroke-linecap="round" />
+<path d="M-0.5-1V8M-1-5-3-8M1-5 3-8" fill="none" stroke="#afafa0" stroke-width="0.55" stroke-linecap="round" />
+<circle cx="0" cy="-4" r="1.4" fill="#354139" stroke="#bcbaa4" stroke-width="0.5" />
+</g>
 </symbol>
 <symbol id="icon-plant-lithops-shared-planter" viewBox="0 0 64 64">
 <defs>
@@ -18243,52 +18270,53 @@
 <g stroke-linecap="round" stroke-linejoin="round"><path d="m39 40 7 6" stroke="#342d4b" stroke-width="8"/><path d="m39 39 7 7" stroke="#efc791" stroke-width="6"/><circle cx="28" cy="28" r="15" fill="#f5ebd5"/><circle cx="28" cy="28" r="11" fill="#b6c6b3"/><path d="M24 33c-4-8 0-14 11-15 2 10-3 17-11 15Z" fill="#518a68"/><path d="m22 37 10-14" stroke="#d8e5ae" stroke-width="2"/></g>
   </symbol>
   <symbol id="icon-plant-terrarium" viewBox="0 0 64 64">
-<defs>
-  <linearGradient id="terrarium-glass" x1="0" y1="0" x2="1" y2="0.8">
-    <stop offset="0" stop-color="#eef9ef" stop-opacity="0.92" />
-    <stop offset="0.45" stop-color="#c4e0d7" stop-opacity="0.5" />
-    <stop offset="1" stop-color="#83b0a3" stop-opacity="0.72" />
-  </linearGradient>
-  <linearGradient id="terrarium-cork" x1="0" y1="0" x2="0.4" y2="1">
-    <stop offset="0" stop-color="#dcb17b" />
-    <stop offset="1" stop-color="#947046" />
-  </linearGradient>
-  <linearGradient id="terrarium-medium" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#655344" />
-    <stop offset="1" stop-color="#393c31" />
-  </linearGradient>
-  <linearGradient id="terrarium-leaf" x1="0" y1="0" x2="1" y2="1">
-    <stop offset="0" stop-color="#61946a" />
-    <stop offset="1" stop-color="#254f43" />
-  </linearGradient>
-</defs>
-<ellipse cx="32" cy="60" rx="23" ry="2.4" fill="#294d3d" opacity="0.15" />
-<g stroke-linecap="round" stroke-linejoin="round">
-  <path d="M16 13Q16 22 12 28C7 35 6 42 8 49Q10 59 32 59Q54 59 56 49C58 42 57 35 52 28Q48 22 48 13Z" fill="url(#terrarium-glass)" stroke="#638b82" stroke-width="1.6" />
-  <path d="M9 44Q20 38 32 42Q45 38 55 44L54 50Q52 56 32 56Q12 56 10 50Z" fill="url(#terrarium-medium)" />
-  <path d="M10 44Q12 40 17 41Q19 36 23 39Q27 37 30 42Q32 40 35 43Q40 37 45 40Q49 38 54 44Q49 48 42 46Q36 50 29 46Q21 48 17 45Q12 47 10 44Z" fill="#7d8950" stroke="#596343" stroke-width="0.8" />
-  <path d="M12 43Q17 39 20 42M21 41l3-1 3 3M35 44l4-2 4 1M45 43l3-2 3 2" fill="none" stroke="#b0b170" stroke-width="1.2" />
-  <path d="M15 47Q18 43 23 46M35 48l4-1M46 48l4-2" fill="none" stroke="#8e7654" stroke-width="1.4" />
-  <path d="M43 45Q47 34 43 24" fill="none" stroke="#4d7650" stroke-width="1.4" />
-  <path d="M44 28Q38 28 38 23Q43 23 44 28ZM45 32Q40 33 38 28Q43 27 45 32ZM46 37Q40 38 38 33Q43 32 46 37ZM45 29Q45 24 50 23Q51 27 45 29ZM46 34Q48 29 53 30Q52 34 46 34ZM46 40Q48 35 54 36Q53 41 46 40Z" fill="#679e59" stroke="#47734a" stroke-width="0.65" />
-  <path d="M22 43Q23 36 28 30" fill="none" stroke="#598252" stroke-width="1.2" />
-  <path d="M25 34Q17 34 18 27Q25 26 25 34ZM26 33Q25 25 32 24Q35 31 26 33Z" fill="#5d8a58" stroke="#365f43" stroke-width="0.9" />
-  <path d="m20 29 1 1m1 2 1-1m5-3 1-1m-1 4 2-1" fill="none" stroke="#e1e5c4" stroke-width="1.5" />
-  <path d="M24 47Q24 41 32 39M24 46Q21 40 17 38" fill="none" stroke="#aa7372" stroke-width="1.3" />
-  <path d="M24 46C24 36 33 34 39 37C40 46 32 50 24 46Z" fill="url(#terrarium-leaf)" stroke="#365e4b" stroke-width="1" />
-  <path d="M23 43C15 44 11 38 13 32C20 31 26 35 23 43Z" fill="url(#terrarium-leaf)" stroke="#365e4b" stroke-width="1" />
-  <path d="m25 46 11-7m-6 4-1-5m4 3 1-3m-6 7 5 1m-10-4-7-7m4 4 1-4m-3 2-4 1m8 3-5 1" fill="none" stroke="#d38391" stroke-width="0.95" />
-  <path d="M32 49Q42 50 48 43Q51 39 51 36" fill="none" stroke="#839d5c" stroke-width="1.1" />
-  <path d="M38 49Q33 44 38 43Q42 44 38 49ZM41 47Q43 51 47 48Q47 45 41 47ZM46 44Q41 41 44 38Q48 38 46 44ZM49 41Q51 44 54 41Q54 38 49 41Z" fill="#9ebc71" stroke="#617c49" stroke-width="0.65" />
-  <path d="M12 31Q8 40 11 47M17 21l-1 4M53 34Q56 42 53 49" fill="none" stroke="#f5fff8" stroke-width="1.8" opacity="0.8" />
-  <path d="M14 53Q32 61 50 53" fill="none" stroke="#d4ece0" stroke-width="1.7" opacity="0.8" />
-  <path d="M16 14Q32 20 48 14M16 17Q32 23 48 17" fill="none" stroke="#86a89c" stroke-width="1" />
-  <path d="M15 9Q32 4 49 9L48 15Q32 22 16 15Z" fill="url(#terrarium-cork)" stroke="#886642" stroke-width="1.2" />
-  <ellipse cx="32" cy="9" rx="17" ry="5.5" fill="#dcbc8e" stroke="#99754e" stroke-width="1.1" />
-  <path d="m21 8 2-1m4 4 1-1m5-3 2 1m5 2 2-1m-7 3 1 1m-17 2 2 1m5 1 1 1m15-2 2-1" fill="none" stroke="#a78054" stroke-width="1" />
-  <path d="M20 6Q31 2 44 7" fill="none" stroke="#efdab5" stroke-width="1" />
-</g>
-  </symbol>
+  <desc id="terrarium-photo-description">Schematic mixed low foliage and moss in a pear-shaped clear bottle, with dark soil, a narrow neck, a large spherical brown cork stopper, and a small hanging black sensor.</desc>
+  <defs>
+    <linearGradient id="terrarium-glass" x1="0" y1="0" x2="1" y2="0.5">
+      <stop stop-color="#e8f6ef" stop-opacity="0.4" />
+      <stop offset="0.3" stop-color="#b9d5ca" stop-opacity="0.12" />
+      <stop offset="0.75" stop-color="#a8c3b8" stop-opacity="0.08" />
+      <stop offset="1" stop-color="#8aafa3" stop-opacity="0.35" />
+    </linearGradient>
+    <radialGradient id="terrarium-cork" cx="0.3" cy="0.28" r="0.85">
+      <stop stop-color="#cea16c" />
+      <stop offset="0.52" stop-color="#a67543" />
+      <stop offset="1" stop-color="#5a402b" />
+    </radialGradient>
+    <linearGradient id="terrarium-soil" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#574332" />
+      <stop offset="1" stop-color="#292e26" />
+    </linearGradient>
+    <linearGradient id="terrarium-foliage" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#9ab86c" />
+      <stop offset="1" stop-color="#356449" />
+    </linearGradient>
+  </defs>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="32" cy="60.5" rx="21" ry="1.8" fill="#294d3d" opacity="0.18" />
+    <path d="M24 20H40V26C40 30 45 33 49 39C55 48 54 55 46 58C40 61 24 61 18 58C10 55 9 48 15 39C19 33 24 30 24 26Z" fill="url(#terrarium-glass)" stroke="#789b90" stroke-width="1.3" />
+    <path d="M13 47Q20 44 28 46Q39 42 51 47L50 53C47 60 18 60 14 53Z" fill="url(#terrarium-soil)" />
+    <path d="M14 46Q16 41 21 43Q23 39 27 42Q32 39 35 43Q41 40 44 43Q48 41 51 46Q47 50 41 47Q35 50 29 47Q20 51 14 46Z" fill="#6f7e42" />
+    <path d="M16 46l3-1 2 1m3-2 2-1 2 1m6 1 3-1m5 2 3-2 2 1" fill="none" stroke="#aec078" stroke-width="1.2" />
+    <path d="M17 51l3 1m7-2 2 1m7 3 3-1m6-3 2 1" fill="none" stroke="#927c55" stroke-width="1" />
+    <path d="M24 46Q24 39 23 33M24 41 17 36M24 40 30 35" fill="none" stroke="#ae8878" stroke-width="1" />
+    <path d="M24 37C20 37 17 33 19 30C23 29 27 31 24 37ZM23 39C18 40 15 37 16 34C20 33 23 35 23 39ZM25 38C25 33 29 31 32 33C32 37 29 40 25 38Z" fill="url(#terrarium-foliage)" stroke="#41654a" stroke-width="0.65" />
+    <path d="m23 35-2-3m0 6-3-2m9 1 3-3" fill="none" stroke="#e4adb3" stroke-width="0.8" />
+    <path d="M28 49C23 46 23 41 27 39C32 40 34 46 28 49ZM28 48C30 41 36 40 39 43C39 48 33 51 28 48Z" fill="#83a964" stroke="#3c6848" stroke-width="0.8" />
+    <path d="m28 47-1-6m1 6 8-3m-8 1 4-1m-6 0-1-2m8 3 1 2" fill="none" stroke="#d7e1b4" stroke-width="0.75" />
+    <path d="M43 45Q45 39 43 35M44 40 48 37" fill="none" stroke="#65834c" stroke-width="1" />
+    <path d="M43 39C38 39 37 36 39 33C43 33 45 35 43 39ZM44 42C45 37 49 36 51 39C50 43 47 44 44 42Z" fill="#799353" stroke="#486349" stroke-width="0.65" />
+    <path d="M39 22 40 28" fill="none" stroke="#333e38" stroke-width="1.2" />
+    <path d="m36 27 7-1 1 9-7 1Z" fill="#28302d" stroke="#161d1c" stroke-width="0.65" />
+    <path d="m38 29 3-0.4m-2.7 2 3-0.4m-2.7 2 3-0.4" stroke="#55615b" stroke-width="0.6" />
+    <path d="M18 37C14 43 13 46 14 49M22 31l-1 2M48 43q4 7 0 11" fill="none" stroke="#edf9ef" stroke-width="1.6" opacity="0.8" />
+    <path d="M18 55Q31 61 46 55M25 25q6 2 13 0" fill="none" stroke="#d4e8da" stroke-width="1.1" opacity="0.85" />
+    <circle cx="32" cy="13.8" r="10.9" fill="url(#terrarium-cork)" stroke="#755336" stroke-width="0.9" />
+    <path d="M25 7q-3 3-3 7M24 18l1 1m3-11 1 1m3-3 1 1m3 2 1-1m3 5-1 1m-11 1-1 1m5 3 1-1m3 3 1-1m-4-7 1 1m-5 8 1 1m9-5 1 1" fill="none" stroke="#deb582" stroke-width="0.8" opacity="0.7" />
+    <path d="m28 10 1 1m4-2-1 1m5 3 1 1m-8 5-1 1m6-2 1 1m-12-3 1 1" stroke="#735337" stroke-width="0.9" />
+    <path d="M23 20Q32 23 41 20" fill="none" stroke="#e6eee1" stroke-width="0.9" opacity="0.9" />
+  </g>
+</symbol>
   <symbol id="icon-humidity" viewBox="0 0 64 64">
 <desc id="ui-humidity-description">A blue drop and percentage marks represent a measured relative-humidity reading.</desc>
 <path d="M25 7C20 18 10 27 10 37a15 15 0 0 0 30 0C40 27 30 18 25 7Z" fill="#79bdd0" stroke="#386e82" stroke-width="3" />
@@ -18417,96 +18445,162 @@
 </g>
   </symbol>
   <symbol id="icon-plant-fittonia-albivenis-nightly" viewBox="0 0 64 64">
-<defs>
-  <linearGradient id="fittonia-nightly-leaf" x1="0" y1="0" x2="1" y2="1">
-    <stop stop-color="#e9adb9" />
-    <stop offset="1" stop-color="#bb738e" />
-  </linearGradient>
-  <linearGradient id="fittonia-nightly-pot" x1="0" y1="0" x2="1" y2="1">
-    <stop stop-color="#a5b8bc" />
-    <stop offset="1" stop-color="#647d86" />
-  </linearGradient>
-  <g id="fittonia-nightly-leaf-shape" stroke-linejoin="round">
-    <path d="M0 0C-10-5-11-14-3-23C8-18 12-7 0 0Z" fill="url(#fittonia-nightly-leaf)" stroke="#426c44" stroke-width="1.6" />
-    <path d="M0-1-3-20M-1-7-7-10M-2-12-7-15M0-5 5-9M-1-11 3-15" fill="none" stroke="#f6d5dc" stroke-width="1.2" stroke-linecap="round" />
-    <path d="M-5-9-4-5M2-8 3-5M-4-16-4-12M1-16 1-12" fill="none" stroke="#477846" stroke-width="1" stroke-linecap="round" />
+  <desc id="fittonia-nightly-photo-description">Schematic pale pink-veined Fittonia inside a tall clear straight-sided cylinder with a clear knobbed lid and a bright magenta textured wrap around its lower half.</desc>
+  <defs>
+    <linearGradient id="fittonia-nightly-glass" x1="0" y1="0" x2="1" y2="0">
+      <stop stop-color="#ecf6ee" stop-opacity="0.4" />
+      <stop offset="0.32" stop-color="#c9dbd4" stop-opacity="0.1" />
+      <stop offset="0.75" stop-color="#bbcfc4" stop-opacity="0.12" />
+      <stop offset="1" stop-color="#9ab6ad" stop-opacity="0.4" />
+    </linearGradient>
+    <linearGradient id="fittonia-nightly-wrap" x1="0" y1="0" x2="1" y2="0.3">
+      <stop stop-color="#c3237b" />
+      <stop offset="0.3" stop-color="#f14da1" />
+      <stop offset="0.7" stop-color="#d52a87" />
+      <stop offset="1" stop-color="#9f2466" />
+    </linearGradient>
+    <linearGradient id="fittonia-nightly-leaf" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#c5c29b" />
+      <stop offset="0.5" stop-color="#809473" />
+      <stop offset="1" stop-color="#42694f" />
+    </linearGradient>
+    <g id="fittonia-nightly-leaf-shape" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M0 0C-7-2-8-9-2-15C5-13 8-5 0 0Z" fill="url(#fittonia-nightly-leaf)" stroke="#48674c" stroke-width="0.9" />
+      <path d="M0-1-2-13M-0.5-4-4.5-6M-1-7-5-9M-0.7-4 3-7M-1.4-8 1.5-11M-3-5-4-3M1.4-5 3-4" fill="none" stroke="#f2b9c4" stroke-width="0.8" />
+    </g>
+    <clipPath id="fittonia-nightly-wrap-clip">
+      <path d="M18 38Q32 42 46 38V55Q46 60 32 60Q18 60 18 55Z" />
+    </clipPath>
+  </defs>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="32" cy="61" rx="18" ry="1.5" fill="#294d3d" opacity="0.18" />
+    <path d="M18 15H46V55Q46 60 32 60Q18 60 18 55Z" fill="url(#fittonia-nightly-glass)" stroke="#86a39a" stroke-width="1.2" />
+    <ellipse cx="32" cy="43" rx="13.5" ry="4" fill="#4c3e30" />
+    <path d="M31 44 29 23M32 41 40 28M31 39 22 32M33 42 41 36" fill="none" stroke="#ae8a7d" stroke-width="1.1" />
+    <use href="#fittonia-nightly-leaf-shape" transform="translate(29 30) rotate(-8) scale(0.76)" />
+    <use href="#fittonia-nightly-leaf-shape" transform="translate(34 31) rotate(52) scale(0.76)" />
+    <use href="#fittonia-nightly-leaf-shape" transform="translate(26 35) rotate(-52) scale(0.7)" />
+    <use href="#fittonia-nightly-leaf-shape" transform="translate(32 40) rotate(-10) scale(0.83)" />
+    <use href="#fittonia-nightly-leaf-shape" transform="translate(37 42) rotate(52) scale(0.66)" />
+    <path d="M20 18V36M43.5 20V35" fill="none" stroke="#f0f8ef" stroke-width="1.5" opacity="0.75" />
+    <path d="M22 19V32" stroke="#c5ded0" stroke-width="0.6" opacity="0.7" />
+    <path d="M18 38Q32 42 46 38V55Q46 60 32 60Q18 60 18 55Z" fill="url(#fittonia-nightly-wrap)" stroke="#9c316d" stroke-width="0.9" />
+    <g clip-path="url(#fittonia-nightly-wrap-clip)">
+      <path d="m18 41 5 2 4-1 5 2 5-2 5 1 5-2m-29 6 4-1 5 2 4-2 5 2 5-2 6 1m-29 5 5 2 4-1 5 2 5-2 5 1 5-2m-29 6 4-1 5 2 4-2 5 2 5-2 6 1" fill="none" stroke="#f978b6" stroke-width="1.1" opacity="0.85" />
+      <path d="m20 40-1 3 3 1-1 3 3 1-1 3 3 1-1 3 3 2m5-15-1 3 3 1-1 3 3 1-1 3 3 1-1 3 3 2m4-20-2 3 3 2-2 3 2 2-1 3 2 2" fill="none" stroke="#ab246d" stroke-width="0.9" opacity="0.75" />
+      <path d="M24 43v12" stroke="#ff9bcb" stroke-width="0.9" opacity="0.45" />
+    </g>
+    <path d="M20 56Q32 61 44 56" fill="none" stroke="#ee68ad" stroke-width="1.1" />
+    <ellipse cx="32" cy="14" rx="16" ry="5.4" fill="url(#fittonia-nightly-glass)" stroke="#819b91" stroke-width="1.2" />
+    <path d="M18 13.5Q32 6 46 13.5M19 15Q32 20 45 15" fill="none" stroke="#e7efdf" stroke-width="1" opacity="0.9" />
+    <path d="M23 13Q27 10 29 10H35Q39 10 42 13" fill="none" stroke="#a6bcb0" stroke-width="0.8" />
+    <path d="M29 10V6H35V10Q32 12 29 10Z" fill="url(#fittonia-nightly-glass)" stroke="#8ca196" stroke-width="0.8" />
+    <ellipse cx="32" cy="5.4" rx="4" ry="2.8" fill="url(#fittonia-nightly-glass)" stroke="#8ca196" stroke-width="0.9" />
+    <path d="M30 4.5q2-1 4 0" fill="none" stroke="#f2f7e8" stroke-width="0.9" />
   </g>
-</defs>
-<g stroke-linecap="round" stroke-linejoin="round">
-  <ellipse cx="32" cy="59" rx="21" ry="2.5" fill="#254638" opacity="0.14" />
-  <path d="M17 44H47L44 57Q32 61 20 57Z" fill="url(#fittonia-nightly-pot)" stroke="#52656e" stroke-width="1.5" />
-  <ellipse cx="32" cy="44" rx="15" ry="4" fill="#66523b" stroke="#52656e" stroke-width="1.5" />
-  <path d="M31 45 29 20M31 41 16 30M32 39 48 23M31 43 44 37" fill="none" stroke="#6f9556" stroke-width="2.4" />
-  <use href="#fittonia-nightly-leaf-shape" transform="translate(30 26) rotate(5) scale(0.85)" />
-  <use href="#fittonia-nightly-leaf-shape" transform="translate(39 30) rotate(53) scale(0.9)" />
-  <use href="#fittonia-nightly-leaf-shape" transform="translate(22 31) rotate(-58) scale(0.82)" />
-  <use href="#fittonia-nightly-leaf-shape" transform="translate(31 39) rotate(-22) scale(0.88)" />
-  <use href="#fittonia-nightly-leaf-shape" transform="translate(42 43) rotate(67) scale(0.76)" />
-  <use href="#fittonia-nightly-leaf-shape" transform="translate(26 45) rotate(-67) scale(0.9)" />
-  <use href="#fittonia-nightly-leaf-shape" transform="translate(32 48) rotate(37) scale(0.76)" />
-  <path d="M23 52Q31 55 39 53" fill="none" stroke="#cfdbda" stroke-width="1.2" opacity="0.65" />
-</g>
-  </symbol>
+</symbol>
   <symbol id="icon-plant-peperomia-obtusifolia-spice-is-nice" viewBox="0 0 64 64">
 <defs>
-  <radialGradient id="peperomia-spice-leaf" cx="0.3" cy="0.2" r="0.85">
-    <stop stop-color="#6eaa60" />
-    <stop offset="0.5" stop-color="#347744" />
-    <stop offset="1" stop-color="#1c4e38" />
-  </radialGradient>
-  <linearGradient id="peperomia-spice-pot" x1="0" y1="0" x2="1" y2="1">
-    <stop stop-color="#d9c5a3" />
-    <stop offset="1" stop-color="#ac9576" />
-  </linearGradient>
-  <g id="peperomia-spice-leaf-shape" stroke-linejoin="round">
-    <path d="M0 0C-9-1-12-8-9-14C-7-20 3-21 7-16C13-10 8-2 0 0Z" fill="url(#peperomia-spice-leaf)" stroke="#284f36" stroke-width="1.3" />
-    <path d="M0-2-1-14" fill="none" stroke="#81ab65" stroke-width="0.9" opacity="0.7" />
-    <path d="M-6-12Q-5-16-1-16" fill="none" stroke="#c6dc9e" stroke-width="1.4" stroke-linecap="round" opacity="0.65" />
-  </g>
-</defs>
-<g stroke-linecap="round" stroke-linejoin="round">
-  <ellipse cx="32" cy="59" rx="21" ry="2.5" fill="#254638" opacity="0.14" />
-  <path d="M17 43H47L44 57Q32 61 20 57Z" fill="url(#peperomia-spice-pot)" stroke="#86755e" stroke-width="1.5" />
-  <ellipse cx="32" cy="43" rx="15" ry="4" fill="#61503b" stroke="#86755e" stroke-width="1.5" />
-  <path d="M31 45 32 17M31 35 18 24M32 39 46 30M33 28 42 15" fill="none" stroke="#69964e" stroke-width="3" />
-  <use href="#peperomia-spice-leaf-shape" transform="translate(34 22) rotate(13) scale(0.82)" />
-  <use href="#peperomia-spice-leaf-shape" transform="translate(24 28) rotate(-62) scale(0.94)" />
-  <use href="#peperomia-spice-leaf-shape" transform="translate(40 29) rotate(57) scale(0.88)" />
-  <use href="#peperomia-spice-leaf-shape" transform="translate(31 38) rotate(-13) scale(1)" />
-  <use href="#peperomia-spice-leaf-shape" transform="translate(42 43) rotate(68) scale(0.9)" />
-  <use href="#peperomia-spice-leaf-shape" transform="translate(25 44) rotate(-64) scale(0.85)" />
-  <path d="M24 52Q32 55 39 53" fill="none" stroke="#f3e6ce" stroke-width="1.2" opacity="0.7" />
+<linearGradient id="p40-purple-vase" x1="0" y1="0" x2="1" y2="0.7">
+<stop offset="0" stop-color="#8766b7" />
+<stop offset="0.3" stop-color="#6650a0" />
+<stop offset="0.65" stop-color="#4e3a85" />
+<stop offset="1" stop-color="#353865" />
+</linearGradient>
+<radialGradient id="p40-glossy-leaf-color" cx="0.3" cy="0.2" r="0.85">
+<stop offset="0" stop-color="#90b467" />
+<stop offset="0.45" stop-color="#497e43" />
+<stop offset="1" stop-color="#275636" />
+</radialGradient>
+<clipPath id="p40-vase-surface">
+<path d="M21 31H43Q41 38 41 41C41 46 47 51 47 56Q47 61 32 61Q17 61 17 56C17 51 23 46 23 41Q23 38 21 31Z" />
+</clipPath>
+<g id="p40-rounded-leaf">
+<path d="M0 0C-5 0-9-4-7-8-5-12 2-13 6-9 10-5 7-1 0 0Z" fill="url(#p40-glossy-leaf-color)" stroke="#36663d" stroke-width="0.6" />
+<path d="M-4-8Q-1-11 3-9" fill="none" stroke="#c5d7a1" stroke-width="0.85" stroke-linecap="round" opacity="0.8" />
+<path d="M0-1Q-1-5 1-8" fill="none" stroke="#86ad6a" stroke-width="0.5" />
 </g>
-  </symbol>
+</defs>
+<ellipse cx="32" cy="61.5" rx="19" ry="1.6" fill="#244b3b" opacity="0.12" />
+<path d="M21 31H43Q41 38 41 41C41 46 47 51 47 56Q47 61 32 61Q17 61 17 56C17 51 23 46 23 41Q23 38 21 31Z" fill="url(#p40-purple-vase)" stroke="#3a3a65" stroke-width="1.2" />
+<g clip-path="url(#p40-vase-surface)" fill="none" stroke-linecap="round">
+<path d="M21 35Q27 38 34 36M26 40Q32 43 40 40M21 46Q28 49 35 46M18 53Q27 57 37 54M30 58Q39 59 46 55" stroke="#a38ac7" stroke-width="1" opacity="0.4" />
+<path d="M33 34Q38 35 43 33M23 43Q28 45 32 44M29 50Q37 53 43 50M18 57Q25 61 31 59" stroke="#b190c5" stroke-width="0.7" opacity="0.35" />
+</g>
+<path d="M18 57Q32 63 46 57" fill="none" stroke="#282f41" stroke-width="1.2" stroke-linecap="round" />
+<path d="M20 28H44L42 34Q32 37 22 34Z" fill="#c3d1c4" opacity="0.3" />
+<path d="M20 28L22 34Q32 37 42 34L44 28" fill="none" stroke="#9cafaa" stroke-width="0.9" />
+<ellipse cx="32" cy="28" rx="12" ry="3.8" fill="#b1c0ae" stroke="#8ba294" stroke-width="0.9" />
+<ellipse cx="32" cy="28" rx="10.3" ry="2.6" fill="#655d45" />
+<path d="M22 30L24 33M25 30l1 4M40 30l-1 3" fill="none" stroke="#e4e7d8" stroke-width="0.9" stroke-linecap="round" />
+<path d="M29 29L26 12M32 29L34 10M35 29L43 16M28 24L16 19M35 24L49 20M29 26L20 27" fill="none" stroke="#75a04b" stroke-width="1.5" stroke-linecap="round" />
+<use href="#p40-rounded-leaf" transform="translate(27 13) rotate(-24) scale(0.75)" />
+<use href="#p40-rounded-leaf" transform="translate(35 13) rotate(30) scale(0.75)" />
+<use href="#p40-rounded-leaf" transform="translate(21 18) rotate(-67) scale(0.83)" />
+<use href="#p40-rounded-leaf" transform="translate(32 20) rotate(-8) scale(0.72)" />
+<use href="#p40-rounded-leaf" transform="translate(41 19) rotate(56) scale(0.84)" />
+<use href="#p40-rounded-leaf" transform="translate(48 22) rotate(79) scale(0.72)" />
+<use href="#p40-rounded-leaf" transform="translate(23 25) rotate(-78) scale(0.83)" />
+<use href="#p40-rounded-leaf" transform="translate(35 25) rotate(23) scale(0.8)" />
+<use href="#p40-rounded-leaf" transform="translate(43 27) rotate(88) scale(0.8)" />
+<use href="#p40-rounded-leaf" transform="translate(26 28) rotate(-140) scale(0.71)" />
+<use href="#p40-rounded-leaf" transform="translate(33 29) rotate(-54) scale(0.8)" />
+</symbol>
   <symbol id="icon-plant-aglaonema-commutatum-alpine-spires" viewBox="0 0 64 64">
 <defs>
-  <linearGradient id="alpine-spires-pot" x1="0" y1="0" x2="1" y2="1">
-    <stop stop-color="#ded6c1" />
-    <stop offset="1" stop-color="#a29780" />
+  <linearGradient id="alpine-spires-pot" x1="0" y1="0" x2="1" y2="0.6">
+    <stop stop-color="#123d3a" />
+    <stop offset="0.38" stop-color="#1b746b" />
+    <stop offset="0.42" stop-color="#19bfae" />
+    <stop offset="1" stop-color="#087f7d" />
   </linearGradient>
-  <linearGradient id="alpine-spires-blush" x1="0" y1="0" x2="1" y2="1">
-    <stop stop-color="#f0c3bf" />
-    <stop offset="1" stop-color="#cd8b9a" />
+  <linearGradient id="alpine-spires-blush" x1="0" y1="0" x2="0.8" y2="1">
+    <stop stop-color="#f5d4ae" />
+    <stop offset="0.48" stop-color="#ee9c89" />
+    <stop offset="1" stop-color="#d76779" />
   </linearGradient>
+  <linearGradient id="alpine-spires-leaf-green" x1="0" y1="0" x2="1" y2="1">
+    <stop stop-color="#a8b748" />
+    <stop offset="0.6" stop-color="#829946" />
+    <stop offset="1" stop-color="#3e7947" />
+  </linearGradient>
+  <pattern id="alpine-spires-lattice" width="5" height="5" patternUnits="userSpaceOnUse">
+    <path d="M0 2.5 2.5 0 5 2.5 2.5 5Z" fill="none" stroke="#9ae0b8" stroke-width="0.6" opacity="0.65" />
+    <path d="M0 3.3 2.5 0.8 5 3.3" fill="none" stroke="#073f40" stroke-width="0.7" opacity="0.7" />
+  </pattern>
+  <clipPath id="alpine-spires-pot-clip">
+    <path d="M18 37Q18 34 22 33L41 32Q46 33 47 37L46 56Q45 59 41 60L23 59Q19 58 18 55Z" />
+  </clipPath>
   <g id="alpine-spires-leaf" stroke-linejoin="round">
-    <path d="M0 0C-10-6-9-18-2-28C6-22 12-8 0 0Z" fill="#376c4e" stroke="#284e3d" stroke-width="1.2" />
-    <path d="M0-2C-6-9-5-19-2-25C4-20 6-9 0-2Z" fill="#d9dfbb" />
-    <path d="M0-3C-3-9-2-17-2-23C2-18 4-9 0-3Z" fill="url(#alpine-spires-blush)" />
-    <path d="M0-2-2-25M-1-9-6-14M-1-15-5-19M0-8 5-12M-1-15 2-19" fill="none" stroke="#e5e9ce" stroke-width="0.8" stroke-linecap="round" />
+    <path d="M0 0C-9-2-10-12-6-17C-4-20-1-22 0-25C3-22 10-17 9-10C8-4 4-1 0 0Z" fill="url(#alpine-spires-leaf-green)" stroke="#426943" stroke-width="0.85" />
+    <path d="M0-1C-5-3-7-7-6-11L-3-9-5-15-2-13-2-20 0-23 2-18 5-17 3-12 7-11 4-8 6-5C4-2 2-1 0-1Z" fill="url(#alpine-spires-blush)" />
+    <path d="M0-1Q1-12 0-23M0-7-5-10M0-12-5-16M0-8 6-12M0-14 4-18" fill="none" stroke="#f2c8a3" stroke-width="0.65" stroke-linecap="round" />
+    <path d="M-5-5-7-8M5-5 7-8M-6-14-4-17M4-19 6-17" fill="none" stroke="#bdd06b" stroke-width="0.9" stroke-linecap="round" />
   </g>
 </defs>
 <g stroke-linecap="round" stroke-linejoin="round">
-  <ellipse cx="32" cy="59" rx="20" ry="2.5" fill="#254638" opacity="0.14" />
-  <path d="M18 44H46L43 57Q32 61 21 57Z" fill="url(#alpine-spires-pot)" stroke="#847b69" stroke-width="1.5" />
-  <ellipse cx="32" cy="44" rx="14" ry="4" fill="#5e503c" stroke="#847b69" stroke-width="1.5" />
-  <path d="M31 45 29 17M32 43 18 28M32 40 46 24M32 44 44 36" fill="none" stroke="#bb8d91" stroke-width="2.2" />
-  <use href="#alpine-spires-leaf" transform="translate(30 31) rotate(-3) scale(0.85)" />
-  <use href="#alpine-spires-leaf" transform="translate(38 33) rotate(52) scale(0.86)" />
-  <use href="#alpine-spires-leaf" transform="translate(24 37) rotate(-52) scale(0.84)" />
-  <use href="#alpine-spires-leaf" transform="translate(33 42) rotate(12) scale(0.82)" />
-  <use href="#alpine-spires-leaf" transform="translate(39 45) rotate(67) scale(0.71)" />
-  <use href="#alpine-spires-leaf" transform="translate(27 46) rotate(-65) scale(0.7)" />
-  <path d="M24 53Q32 56 39 53" fill="none" stroke="#f0eada" stroke-width="1.1" />
+  <ellipse cx="32" cy="60" rx="18" ry="2" fill="#254638" opacity="0.15" />
+  <path d="M18 37Q18 34 22 33L41 32Q46 33 47 37L46 56Q45 59 41 60L23 59Q19 58 18 55Z" fill="url(#alpine-spires-pot)" stroke="#244f48" stroke-width="1.2" />
+  <g clip-path="url(#alpine-spires-pot-clip)">
+    <path d="M18 37H48V60H18Z" fill="url(#alpine-spires-lattice)" />
+    <path d="M18 43 30 45 47 43M18 47 30 49 47 47" fill="none" stroke="#0d6158" stroke-width="1.3" />
+    <path d="M19 42 30 44 46 42M19 46 30 48 46 46" fill="none" stroke="#8cc8a0" stroke-width="0.55" opacity="0.7" />
+    <path d="M30 38V58" stroke="#b3e8b9" stroke-width="0.7" opacity="0.45" />
+  </g>
+  <path d="M20 35Q32 39 45 34" fill="none" stroke="#61c7a2" stroke-width="1.3" />
+  <path d="M23 30V35Q32 39 42 34V29" fill="#9cb7a0" opacity="0.2" />
+  <path d="M23 30V35Q32 39 42 34V29" fill="none" stroke="#668f7b" stroke-width="0.8" />
+  <ellipse cx="32.5" cy="31" rx="9.5" ry="3" fill="#5b4432" />
+  <path d="M26 31 28 30M36 31 37 32M31 33 32 33" fill="none" stroke="#c9b58a" stroke-width="1.1" />
+  <path d="M31 32Q26 23 20 19M32 32Q34 20 44 16M31 32 30 11M32 32 41 27M30 32 18 27" fill="none" stroke="#d7ad91" stroke-width="1.9" />
+  <ellipse cx="32.5" cy="29.5" rx="10" ry="3" fill="none" stroke="#b6d2ad" stroke-width="1" />
+  <use href="#alpine-spires-leaf" transform="translate(29 24) rotate(-17) scale(0.77)" />
+  <use href="#alpine-spires-leaf" transform="translate(36 26) rotate(62) scale(0.94)" />
+  <use href="#alpine-spires-leaf" transform="translate(24 24) rotate(-68) scale(0.83)" />
+  <use href="#alpine-spires-leaf" transform="translate(24 28) rotate(-72) scale(0.76)" />
+  <use href="#alpine-spires-leaf" transform="translate(39 29) rotate(76) scale(0.88)" />
+  <use href="#alpine-spires-leaf" transform="translate(34 27) rotate(7) scale(0.86)" />
+  <use href="#alpine-spires-leaf" transform="translate(26 30) rotate(-35) scale(0.6)" />
 </g>
   </symbol>
 </svg>
