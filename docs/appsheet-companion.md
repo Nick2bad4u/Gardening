@@ -6,7 +6,7 @@ workbook. It supports daily browsing, individual observations, collection-wide
 care/weight rounds, save receipts, dashboards, and per-plant charts without
 creating a second gardening database.
 
-Production **AppSheet 1.100138**, logger **5.40.1 / immutable version 123**, and
+Production **AppSheet 1.100139**, logger **5.40.2 / immutable version 124**, and
 the **39-container** native workbook were verified on October 31, 2026. The
 [logger runbook](../scripts/google-sheets/README.md)
 records the verified deployment and preservation checks.
@@ -17,6 +17,22 @@ The owner-only
 contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
+
+## October 31 seven-portrait photo update
+
+AppSheet **1.100139** uses portrait revision **8cfb92a2dd0cdb06** for the
+photo-derived P21 Money Tree, P31 Peperomia Bicolor, P32 Tricolor oyster plant,
+P38 terrarium, P39 Nightly Fittonia, P40 Spice is Nice Peperomia, and P41 Alpine
+Spires artwork. A fresh editor reload confirmed the saved expression; a client
+reload and sync displayed all seven revised portraits.
+
+The private revisioned folder contains all **39** portraits, verified by exact
+name, size, Drive MD5 checksum, parent membership, and owner-only permissions.
+The update changed only the portrait expression; all 39 ID mappings, table write
+modes, schemas, validators, and observation records were retained. The
+[logger rollout receipt](../scripts/google-sheets/README.md#october-31-seven-portrait-photo-update)
+records the folder, native backup, deployment, runtime checks, and workbook
+preservation. Earlier portrait folders remain available to cached clients.
 
 ## October 31 photographed-pot portrait update
 
