@@ -1,13 +1,12 @@
 # Google Sheets observation logger
 
-Production logger **5.40.2 / immutable version 124** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.40.3 / immutable version 125** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained source is **5.40.3**, pending the cactus and succulent portrait rollout
-below. Production **5.40.2** matches immutable version **124**, verified October 31
-after the seven-portrait update. Production
-**AppSheet 1.100139** uses portrait revision **8cfb92a2dd0cdb06**;
+Maintained source and production **5.40.3** match immutable version **125**,
+verified October 31 after the cactus and succulent portrait update below. Production
+**AppSheet 1.100140** uses portrait revision **23e95f9e4dfdf1fa**;
 P41's appended optional weight field remains unchanged. The rollout receipt below
 records production checks separately from rehearsal results; earlier dated entries
 retain the version verified at that time.
@@ -53,8 +52,44 @@ documents the October album references and appearance-only scope.
 The logger changes only its version and portrait revision. The AppSheet manifest
 preserves all 39 IDs and slug mappings while targeting the new revisioned folder.
 No workbook schema, care behavior, runtime permissions, or trigger configuration
-changes. Source photographs remain private. Production promotion and preservation
-verification are pending; the current verified baseline above remains 5.40.2.
+changes. Source photographs remain private.
+
+Commit **7116d3d** passed all five push workflows and eight check runs, including
+SonarCloud, Socket, and both hosted secret scans.
+[Pages run 41244976062](https://github.com/Nick2bad4u/Gardening/actions/runs/41244976062)
+published the site; exact public readback matched all eleven changed SVG exports.
+Local validation passed **495** focused artwork and logger-client tests, source
+lint and types, formatting, and the **223-page** site check. The revised portraits
+were inspected at 160, 64, and 32 px in both themes; the rebuilt Lithops page also
+passed desktop and 390 px light/dark checks without overflow or console errors.
+
+All **39** AppSheet portraits are in the private
+[GardenPlantPortraits-23e95f9e4dfdf1fa folder](https://drive.google.com/drive/folders/1Qlpa7KPSjk1dCF9Y0bmRYkQKb4PhNkfI)
+beside the workbook. Exact names, sizes, Drive MD5 checksums, parent membership,
+and owner-only permissions passed verification. AppSheet **1.100140** saved the
+maintained expression, which persisted after editor reload. The synced client
+loaded all **39** images from that revision at **150 px** natural width, including
+the nine revised container portraits. Earlier folders remain available to cached clients.
+
+A [native workbook backup](https://docs.google.com/spreadsheets/d/1N3UBoTOCYbzNks8b48A3NachvxkcP1YYCGfY2HEufUA/edit)
+preceded promotion. Source readback matched immutable **125**, preserving the
+existing logger URL, owner-only access, and execution identity. The live logger
+displayed **Connected · Logger 5.40.3**, **Calculations ready**, and **2,175** used
+History slots. Its **17:56:57 EDT** bootstrap completed in **18.629 seconds**.
+
+The single five-minute `processQueuedAppSheetEntries` trigger was retained.
+Its **17:59:34 EDT** execution completed in **15.456 seconds**; logs reported
+**5.40.3**, **Ready** analytics, a **44,852-byte** payload, and zero queued, saved,
+correction, retry, or deferred single/bulk requests. These measured runs do not
+establish a latency guarantee. No installer or trigger recreation ran.
+
+The **21-range** comparison preserved all **2,175** observations and unique IDs,
+**1,778** request groups, staging and RO refill records, stored formulas, notes,
+and validations. All **69** tabs, **194** charts, and **130** protections were
+preserved, including chart specifications and positions. Google returned two
+protection lists in a different order; comparison by stable protection ID retained
+every field. The **67/59/77-column** History/App entries/App bulk contracts remain
+unchanged. No synthetic production observations were submitted.
 
 ## October 31 seven-portrait photo update
 

@@ -6,7 +6,7 @@ workbook. It supports daily browsing, individual observations, collection-wide
 care/weight rounds, save receipts, dashboards, and per-plant charts without
 creating a second gardening database.
 
-Production **AppSheet 1.100139**, logger **5.40.2 / immutable version 124**, and
+Production **AppSheet 1.100140**, logger **5.40.3 / immutable version 125**, and
 the **39-container** native workbook were verified on October 31, 2026. The
 [logger runbook](../scripts/google-sheets/README.md)
 records the verified deployment and preservation checks.
@@ -17,6 +17,25 @@ The owner-only
 contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
+
+## October 31 cactus and succulent portrait update
+
+AppSheet **1.100140** uses portrait revision **23e95f9e4dfdf1fa** for the revised
+P01, P06, P14, P20, P22, P23, P25, P28, and P35 container artwork. The photographs
+guide plant silhouettes, visible colors, top dressing, and containers; these
+schematics do not establish new botanical identities or care observations.
+
+The saved Plant tracker → Plant portrait expression matches maintained source
+after editor reload. The synced client loaded all **39** portraits from the new
+revision at **150 px** natural width. The private folder's exact names, byte
+counts, Drive MD5 checksums, parent membership, and owner-only permissions passed
+verification. Earlier folders remain available to cached clients.
+
+Only the portrait expression was edited in AppSheet. ID mappings, table write
+modes, schemas, validators, and observation data were not edited. The
+[logger rollout receipt](../scripts/google-sheets/README.md#october-31-cactus-and-succulent-portrait-update)
+records the folder, native backup, immutable deployment, successful runtime
+executions, and preserved observations, charts, and protections.
 
 ## October 31 seven-portrait photo update
 
