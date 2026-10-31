@@ -6,8 +6,8 @@ workbook. It supports daily browsing, individual observations, collection-wide
 care/weight rounds, save receipts, dashboards, and per-plant charts without
 creating a second gardening database.
 
-Production **AppSheet 1.100137**, logger **5.40.0 / immutable version 122**, and
-the **39-container** native workbook enrollment were verified on October 29, 2026. The
+Production **AppSheet 1.100138**, logger **5.40.1 / immutable version 123**, and
+the **39-container** native workbook were verified on October 31, 2026. The
 [logger runbook](../scripts/google-sheets/README.md)
 records the verified deployment and preservation checks.
 Earlier dated records retain their verified historical state.
@@ -17,6 +17,22 @@ The owner-only
 contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
+
+## October 31 photographed-pot portrait update
+
+AppSheet **1.100138** uses portrait revision **150fb634e7d4e805**. The saved
+Plant tracker → Plant portrait expression was read back after reload, then the
+synced Plants view showed P29 in its tall tan ribbed pot, P35 in its pink raised-dot
+pot, and P36 in its rounded turquoise/rust-orange pot. P28 Royal Flush is unchanged.
+
+The private
+[GardenPlantPortraits-150fb634e7d4e805 folder](https://drive.google.com/drive/folders/1jOGkR2Jx-dMPRxO2NDaWKT74Zq9qelSL)
+contains all **39** matching SVGs. Exact names, sizes, Drive MD5 checksums, parent
+membership, and owner-only access passed verification; earlier folders remain for
+cached clients. This update changed only the portrait expression. Table write modes,
+schemas, validators, and observation data were not edited. The
+[logger rollout receipt](../scripts/google-sheets/README.md#october-30-refresh-timeout-and-pot-artwork-patch-published-october-31)
+records source promotion, successful native executions, and workbook preservation.
 
 ## October 29 Alpine Spires production rollout
 

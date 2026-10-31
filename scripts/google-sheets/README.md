@@ -1,16 +1,14 @@
 # Google Sheets observation logger
 
-Production logger **5.40.0 / immutable version 122** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.40.1 / immutable version 123** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained source is **5.40.1**, pending publication; the last verified production
-deployment remains **5.40.0 / immutable version 122**, with **39 container
-allocations** through `P41`. The verified source promotion is recorded below.
-Production **AppSheet 1.100137** was saved and read back on October 29 with
-P41's appended optional weight field. The rollout receipt below records the
-production checks separately from rehearsal results; earlier dated entries retain
-the version verified at that time.
+Maintained and production source **5.40.1** match immutable version **123**, verified
+October 31. Production **AppSheet 1.100138** uses the matching pot portraits;
+P41's appended optional weight field remains unchanged. The rollout receipt below
+records production checks separately from rehearsal results; earlier dated entries
+retain the version verified at that time.
 
 The mobile logger and AppSheet are the observation input surfaces. The unused
 `Quick log` compatibility tab is hidden. Every saved event becomes a new
@@ -41,7 +39,7 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
-## October 30 refresh timeout and pot-artwork patch (pending publication)
+## October 30 refresh timeout and pot-artwork patch (published October 31)
 
 Maintained source **5.40.1** gives initial plant-list loading, background summary
 refresh, and recent History reads **120 seconds** per attempt, replacing the
@@ -66,13 +64,42 @@ pot. Both Lithops component portraits share P35's pot framing; P28 Royal Flush
 is unchanged. The public SVG exports, accessible descriptions, logger revision,
 and maintained AppSheet portrait mapping use revision **150fb634e7d4e805**.
 
-The patch is pending publication. All **39** AppSheet portraits have been
-uploaded into the private **GardenPlantPortraits-150fb634e7d4e805** folder beside
-the workbook. Exact filenames, sizes, Drive MD5 checksums, parent membership, and
-owner-only permissions were verified on October 30. The AppSheet expression still
-requires its separate saved editor change; its last verified production revision
-is **04ba0f600720e5a8**. No workbook schema, observations, table write modes, or
-trigger settings change.
+All **39** AppSheet portraits are in the private
+[GardenPlantPortraits-150fb634e7d4e805 folder](https://drive.google.com/drive/folders/1jOGkR2Jx-dMPRxO2NDaWKT74Zq9qelSL)
+beside the workbook. Exact filenames, sizes, Drive MD5 checksums, parent membership,
+and owner-only permissions were verified. AppSheet **1.100138** saved the new
+portrait expression; reload and sync confirmed the new P29, P35, and P36 pots.
+Earlier portrait folders remain available to cached clients.
+
+Commit **0dd875e** passed website/browser checks, logger coverage, SonarCloud,
+Socket, and both hosted secret scans.
+[Pages run 41212026003](https://github.com/Nick2bad4u/Gardening/actions/runs/41212026003)
+published the site, and public readback matched all five changed SVG exports and
+the shared CSV reader to the maintained files. The instruction chain was shortened
+to **32,125 bytes**, preserving the owner's automatic-publication rule within the
+unchanged **32,768-byte** lint limit.
+
+A [native backup](https://docs.google.com/spreadsheets/d/1VpzPMf3gKz5WBeoEofY0sHMNnFX7NBrwjubZ4ldhOds/edit)
+preceded promotion. Exact source readback matched immutable **123**, and the
+existing phone URL, owner-only access, and execution identity were preserved.
+The signed-in logger displayed **Connected · Logger 5.40.1**, **Calculations ready**,
+and **2,175** used History slots. Its first bootstrap completed in **80.673 seconds**,
+within the new deadline; a subsequent manual refresh completed successfully.
+This is one measured response, not a latency guarantee.
+
+The existing single queue trigger remained **Head → Time-driven → Minutes timer →
+Every 5 minutes**. Its **11:09:34 EDT** execution completed in **21.907 seconds**;
+logs identified **5.40.1**, **Ready** analytics, a **44,853-byte** analytics payload,
+and zero queued/saved/correction/retry/deferred single or bulk requests. No installer
+or trigger recreation was run.
+
+Before/after comparison of **21 captured ranges** preserved all **2,175** History
+observations and unique observation IDs, **1,778** request groups, staging and RO
+refill records, stored formulas, notes, and validations. Workbook metadata and the
+67/59/77-column History/App entries/App bulk contracts were unchanged. Integrity
+checks passed for IDs, calculation anchors, and formula errors; existing calibration
+and missing-anchor action indicators remain gardening follow-ups. No synthetic
+production observations were submitted.
 
 ## October 28 Alpine Spires enrollment
 
