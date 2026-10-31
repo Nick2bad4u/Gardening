@@ -1,12 +1,12 @@
 # Google Sheets observation logger
 
-Production logger **5.40.1 / immutable version 123** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.40.2 / immutable version 124** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained source is **5.40.2** for the seven-portrait update below. Production
-**5.40.1** matches immutable version **123**, verified October 31, before that
-artwork promotion. Production **AppSheet 1.100138** uses the preceding pot portraits;
+Maintained source and production **5.40.2** match immutable version **124**,
+verified October 31 after the seven-portrait update below. Production
+**AppSheet 1.100139** uses portrait revision **8cfb92a2dd0cdb06**;
 P41's appended optional weight field remains unchanged. The rollout receipt below
 records production checks separately from rehearsal results; earlier dated entries
 retain the version verified at that time.
@@ -54,7 +54,42 @@ observation behavior, schema, runtime permissions, and trigger configuration are
 unchanged. The AppSheet manifest retains all 39 container IDs and targets a new
 revisioned portrait folder. Source photographs are not published by this artwork
 update, and the illustrations establish no care event, dimensions, drainage, or
-new botanical identification. Production verification is pending.
+new botanical identification.
+
+Commit **415ac89** passed all five push workflows and eight check runs, including
+SonarCloud, Socket, and both hosted secret scans.
+[Pages run 41230298251](https://github.com/Nick2bad4u/Gardening/actions/runs/41230298251)
+published the site; exact public readback matched all seven changed SVG exports.
+Local checks passed **1,958 logger tests**, **87 artwork/placement tests**, and
+**250 Chromium/mobile browser checks**, alongside source lint, types, formatting,
+and the **223-page** site check.
+
+All **39** portraits are in the private
+[GardenPlantPortraits-8cfb92a2dd0cdb06 folder](https://drive.google.com/drive/folders/1v-jIRc4F6842OFd-ABb7Tkny_EaJgMYP)
+beside the workbook. Exact names, sizes, Drive MD5 checksums, parent membership,
+and owner-only permissions passed verification. AppSheet **1.100139** saved the
+maintained expression, and editor reload confirmed it persisted. A client reload
+and sync displayed all seven revised portraits. Earlier portrait folders remain
+available to cached clients.
+
+A [native workbook backup](https://docs.google.com/spreadsheets/d/1Sl_tsMuBhDkdWoOL9lFdVbHQDHgxsYNns4nR68d6e9A/edit)
+preceded promotion. Exact source readback matched immutable **124**, preserving
+the existing logger URL, owner-only access, and execution identity. The signed-in
+logger displayed **Connected · Logger 5.40.2**, **Calculations ready**, and
+**2,175** used History slots. Its **14:49:35 EDT** bootstrap completed in
+**77.451 seconds**.
+
+The single five-minute `processQueuedAppSheetEntries` trigger was retained.
+Its **14:49:34 EDT** execution completed in **12.756 seconds**, with logs reporting
+**5.40.2**, **Ready** analytics, a **44,853-byte** payload, and zero queued, saved,
+correction, retry, or deferred single/bulk requests. These are measured executions,
+not latency guarantees; no installer or trigger recreation ran.
+
+Comparison of **21 captured ranges** preserved all **2,175** observations and
+unique observation IDs, **1,778** request groups, staging and RO refill records,
+stored formulas, notes, and validations. Workbook metadata and the
+**67/59/77-column** History/App entries/App bulk contracts were unchanged.
+No synthetic production observations were submitted.
 
 ## October 30 refresh timeout and pot-artwork patch (published October 31)
 
