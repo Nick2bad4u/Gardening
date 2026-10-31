@@ -35,5 +35,5 @@
   configuration. Inspect relevant checks for the exact pushed SHA before
   claiming a CI or deployment repair succeeded.
 - For an authorized commit, follow `agent-commit-message-instructions.md`.
-  This directory's guidance does not itself authorize commits, pushes, or a
-  workflow dispatch.
+  Apply the owner's standing implementation/publication authorization in the root
+  `AGENTS.md`, including its explicit task overrides and live verification rules.

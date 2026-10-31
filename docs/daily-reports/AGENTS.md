@@ -49,11 +49,12 @@
 - Follow the exact checks and publication sequence in `README.md`: build/check
   the report, run `test/daily-report.test.mjs`, check the dated JSON
   with ESLint and Prettier, then review `git diff --check`.
-- The documented standing authorization applies to the scheduled daily-report
+- The scheduled daily-report authorization applies to that
   task's reviewed dated JSON only. Generated HTML is an ignored build artifact. Use an inspected isolated
   worktree when another task or dirty checkout is present. It does not grant
   permission to publish unrelated edits, record care, change the workbook, or
-  deploy Apps Script.
+  deploy Apps Script. Separately requested implementation changes follow the
+  owner's standing authorization in the root `AGENTS.md`.
 - For an authorized publication, verify Website Checks and Pages for the exact
   pushed commit and the resulting public report date/recommendations. Push
   success alone is not deployment proof. Preserve the existing scheduler;

@@ -124,10 +124,22 @@
 - Inspect `git status --short --branch` before editing. Preserve all staged,
   unstaged, and untracked user work; do not reset, discard, or overwrite it.
 - Keep changes focused and update navigation links when adding or moving a page.
-  Do not commit, push, publish, or rewrite history unless the user explicitly
-  authorizes that action. The documented standing daily-report publication
-  permission is limited to that task and its report files; follow its runbook
-  without extending that permission to unrelated changes.
+- The owner grants standing authorization: a request to implement or change
+  something in this repository includes completing the relevant maintained
+  changes, validation, logical commits, pushing those changes to `main` through
+  the existing Git workflow, deploying every affected website, logger, workbook,
+  or AppSheet surface, and verifying the live result. Complete that work
+  automatically without asking for separate commit, push, or deployment approval.
+  A source push alone does not finish a task that also needs a production rollout.
+- Explicit analysis-only, review-only, local-only, or no-publication instructions
+  override that standing authorization for the task. Preserve unrelated work;
+  do not include it in commits or deployments. The authorization does not permit
+  force pushes, history rewrites, unrelated deletions, or fabricated production
+  observations. Retain all backup, integrity, validation, and deployment safeguards
+  in these instructions and the applicable runbooks.
+- Scheduled daily-report publication retains its report-specific scope and
+  runbook. User-requested changes outside that scheduled task follow the standing
+  authorization above; the report's limited scope does not restrict them.
 - Do not place credentials, private tokens, precise home-location data, or other
   unnecessary personal information in documentation, HTML, image metadata, or
   fixtures.
