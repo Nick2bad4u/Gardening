@@ -1,105 +1,113 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="echeveria-raindrops-title echeveria-raindrops-description" data-plant-slug="echeveria-raindrops" focusable="false">
   <title id="echeveria-raindrops-title">Raindrops echeveria plant portrait</title>
-  <desc id="echeveria-raindrops-description">A blue-green succulent rosette with rounded raised leaf bumps in a yellow planter.</desc>
+  <desc id="echeveria-raindrops-description">A broad low open rosette with spatulate sage-green leaves, small pointed tips, muted mauve margins, and sparse raised bumps above mineral top dressing in a sage-green faceted pot.</desc>
   <defs>
-      <linearGradient id="rain-pot" x1="0" x2="0.9" y1="0" y2="1">
-          <stop offset="0" stop-color="#f8dc68" />
-          <stop offset="1" stop-color="#dfa12e" />
+      <linearGradient id="p25-pot" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#92a58a" />
+          <stop offset="1" stop-color="#536c59" />
       </linearGradient>
-      <linearGradient id="raindrop-color" x1="0" y1="0" x2="0.85" y2="1">
-          <stop offset="0" stop-color="#bdd7c2" />
-          <stop offset="0.5" stop-color="#95bca6" />
-          <stop offset="1" stop-color="#699a8e" />
+      <clipPath id="p25-pot-clip">
+          <path d="M9 39H55L50 56Q48 61 32 61Q16 61 14 56Z" />
+      </clipPath>
+      <linearGradient id="p25-leaf" x1="0.2" y1="0" x2="0.7" y2="1">
+          <stop offset="0" stop-color="#b6c4ac" />
+          <stop offset="0.5" stop-color="#95ab94" />
+          <stop offset="1" stop-color="#657e71" />
       </linearGradient>
-      <radialGradient id="raindrop-bump" cx="35%" cy="22%" r="85%">
-          <stop offset="0" stop-color="#d5dfba" />
-          <stop offset="0.5" stop-color="#acbf9b" />
-          <stop offset="1" stop-color="#7f9c85" />
-      </radialGradient>
-      <g id="raindrop-leaf">
+      <linearGradient id="p25-mauve" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#b4a9ac" />
+          <stop offset="1" stop-color="#8c8f80" />
+      </linearGradient>
+      <g id="p25-leaf-shape">
           <path
-              d="M0 2C-5-1-9-7-8.5-13-8-18-4-19 0-19.5 4-19 8-18 8.5-13 9-7 5-1 0 2Z"
-              fill="url(#raindrop-color)"
-              stroke="#637f76"
-              stroke-width="0.65"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              d="M0 2C-2-5-8-10-8.5-16Q-9-21-3-22L0-25 2.5-22Q8.5-21 8.5-16C8-10 2-5 0 2Z"
+              fill="url(#p25-leaf)"
+              stroke="#687e72"
+              stroke-width="0.9"
           />
           <path
-              d="M-7-14q1-3 4-3.6M3-17.6q3 0.6 4 3.6"
+              d="M-8.4-17Q-8-21-3-22L0-25 2.5-22Q8-21 8.4-17"
               fill="none"
-              stroke="#b97d80"
-              stroke-width="0.65"
+              stroke="#b59aa2"
+              stroke-width="1"
               stroke-linecap="round"
-              stroke-linejoin="round"
-          />
-          <ellipse
-              cx="0"
-              cy="-15.1"
-              rx="2.45"
-              ry="1.7"
-              fill="url(#raindrop-bump)"
-              stroke="#839a86"
-              stroke-width="0.35"
           />
           <path
-              d="M-1.8-15.8q1.5-1.1 3.3 0"
+              d="M0-2Q1-9 0-18"
               fill="none"
-              stroke="#c5d4b6"
-              stroke-width="0.6"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              stroke="#c5ceb6"
+              stroke-width="0.65"
+              opacity="0.55"
           />
       </g>
   </defs>
-  <ellipse
-      cx="32"
-      cy="60.5"
-      rx="23"
-      ry="1.9"
-      fill="#244b3b"
-      stroke="none"
-      stroke-width="0"
-      opacity="0.12"
+  <ellipse cx="32" cy="61" rx="24" ry="1.8" fill="#244b3b" opacity="0.12" />
+  <path
+      d="M9 39H55L50 56Q48 61 32 61Q16 61 14 56Z"
+      fill="url(#p25-pot)"
+      stroke="#71816b"
+      stroke-width="1.3"
   />
-  <ellipse
-      cx="32"
-      cy="45.5"
-      rx="23"
-      ry="2.1"
-      fill="#745c45"
-      stroke="none"
-      stroke-width="1"
-  />
-  <g transform="translate(32 31) scale(1.17 0.79)">
-      <use href="#raindrop-leaf" transform="rotate(0) scale(1)" />
-      <use href="#raindrop-leaf" transform="rotate(51.43) scale(1)" />
-      <use href="#raindrop-leaf" transform="rotate(102.86) scale(1)" />
-      <use href="#raindrop-leaf" transform="rotate(154.29) scale(1)" />
-      <use href="#raindrop-leaf" transform="rotate(205.71) scale(1)" />
-      <use href="#raindrop-leaf" transform="rotate(257.14) scale(1)" />
-      <use href="#raindrop-leaf" transform="rotate(308.57) scale(1)" />
-      <use href="#raindrop-leaf" transform="rotate(30) scale(0.62)" />
-      <use href="#raindrop-leaf" transform="rotate(102) scale(0.62)" />
-      <use href="#raindrop-leaf" transform="rotate(174) scale(0.62)" />
-      <use href="#raindrop-leaf" transform="rotate(246) scale(0.62)" />
-      <use href="#raindrop-leaf" transform="rotate(318) scale(0.62)" />
-      <use href="#raindrop-leaf" transform="rotate(0) scale(0.31)" />
-      <use href="#raindrop-leaf" transform="rotate(120) scale(0.31)" />
-      <use href="#raindrop-leaf" transform="rotate(240) scale(0.31)" />
+  <g clip-path="url(#p25-pot-clip)" fill="#c3cfb5" opacity="0.45">
+      <path
+          d="M9 41L17 45 15 53 11 48ZM21 43L29 47 26 56 19 52ZM34 44L42 47 39 57 31 53ZM47 42L55 43 52 52 44 52ZM15 55L20 53 25 60 18 62ZM28 57L33 54 39 61 29 63ZM42 58L48 54 51 60 45 63Z"
+      />
   </g>
   <path
-      d="M7 45h50v7H7z"
-      fill="#f8dd6a"
-      stroke="#725016"
-      stroke-linejoin="round"
-      stroke-width="1.7"
+      d="M17 46L21 43M29 47L34 44M42 47L47 42M26 56L31 53M39 57L44 52"
+      fill="none"
+      stroke="#71816b"
+      stroke-width="0.6"
+      opacity="0.55"
   />
+  <ellipse cx="32" cy="39" rx="23" ry="8.5" fill="#71816b" />
+  <ellipse cx="32" cy="38.7" rx="21.5" ry="7.2" fill="#75604c" />
+  <g stroke="#6d604d" stroke-width="0.4" stroke-linejoin="round">
+      <path
+          d="M12 38l4-3 3 2-2 4ZM21 34l4-2 3 3-3 2ZM41 34l4-2 4 3-3 2ZM45 40l4-2 4 3-3 2ZM29 43l4-3 4 3-3 2"
+          fill="#d8d1b7"
+      />
+      <path d="M17 42l3-3 4 2-2 3ZM35 34l3-2 3 3-4 2ZM38 43l4-3 3 3-2 2" fill="#b87952" />
+      <path d="M27 34l4-2 2 3-4 2ZM21 43l4-2 3 2-3 2ZM48 36l3-1 2 2-3 1" fill="#454d49" />
+  </g>
   <path
-      d="m10 52 4 9h36l4-9Z"
-      fill="url(#rain-pot)"
-      stroke="#725016"
-      stroke-linejoin="round"
-      stroke-width="1.7"
+      d="M30 32C22 25 12 26 5 31Q9 37 22 37L31 35ZM33 32C42 25 51 27 59 33Q54 38 44 37L33 35ZM30 34Q18 37 15 41L22 44Q29 44 33 35ZM34 34Q40 37 49 40L44 44Q38 44 32 35Z"
+      fill="url(#p25-mauve)"
+      stroke="#766c70"
+      stroke-width="0.8"
+  />
+  <path d="M9 30Q30 19 54 30L49 39Q33 44 14 38Z" fill="#526a5b" />
+  <g transform="translate(32 31.5) scale(1.1 0.45)">
+      <use href="#p25-leaf-shape" transform="rotate(-25) scale(0.93 1.02)" />
+      <use href="#p25-leaf-shape" transform="rotate(32) scale(0.9 1.1)" />
+      <use href="#p25-leaf-shape" transform="rotate(-78) scale(1.02 1.02)" />
+      <use href="#p25-leaf-shape" transform="rotate(83) scale(1.02 1.02)" />
+      <use href="#p25-leaf-shape" transform="rotate(-128) scale(0.85 0.96)" />
+      <use href="#p25-leaf-shape" transform="rotate(140) scale(0.9 0.96)" />
+      <use href="#p25-leaf-shape" transform="rotate(183) scale(0.85 0.92)" />
+      <use
+          href="#p25-leaf-shape"
+          transform="translate(-0.5 -1) rotate(-50) scale(0.45 0.57)"
+      />
+      <use
+          href="#p25-leaf-shape"
+          transform="translate(0 -1) rotate(36) scale(0.48 0.59)"
+      />
+      <use
+          href="#p25-leaf-shape"
+          transform="translate(-1 0) rotate(-137) scale(0.43 0.55)"
+      />
+      <use
+          href="#p25-leaf-shape"
+          transform="translate(0.5 0) rotate(116) scale(0.45 0.51)"
+      />
+      <use href="#p25-leaf-shape" transform="rotate(176) scale(0.25 0.32)" />
+      <use href="#p25-leaf-shape" transform="rotate(-15) scale(0.23 0.35)" />
+  </g>
+  <path
+      d="M15 31Q16 28.8 18 30Q19 31 17.5 32Q16 32.5 15 31ZM42 36Q43 34 45 35Q46 36 44.5 36.8Q43 37 42 36Z"
+      fill="#b8c0a0"
+      stroke="#8b9d85"
+      stroke-width="0.4"
   />
 </svg>

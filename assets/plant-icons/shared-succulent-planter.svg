@@ -1,92 +1,278 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="shared-succulent-planter-title shared-succulent-planter-description" data-plant-slug="shared-succulent-planter" focusable="false">
   <title id="shared-succulent-planter-title">Shared succulent planter · #2 plant portrait</title>
-  <desc id="shared-succulent-planter-description">A red-edged blue-green rosette, bright round-leaved elephant bush, silver teaspoons, and copper spoons share a low charcoal rectangular planter.</desc>
+  <desc id="shared-succulent-planter-description">Tall round-leaved green foliage, silver and copper spoon-shaped leaves, and purple-blue and pointed green rosettes share a deep dark wood-grained box; schematic appearance does not resolve the component identifications.</desc>
   <defs>
-    <linearGradient id="shared-succulent-pot" x1="0" y1="0" x2="0" y2="1">
-      <stop stop-color="#686c67"/>
-      <stop offset="1" stop-color="#343e3a"/>
-    </linearGradient>
-    <linearGradient id="shared-succulent-green" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#c4d86b"/>
-      <stop offset="0.45" stop-color="#83ac5a"/>
-      <stop offset="1" stop-color="#426944"/>
-    </linearGradient>
-    <linearGradient id="shared-succulent-rosette" x1="0" y1="0" x2="0" y2="1">
-      <stop stop-color="#c5ccc0"/>
-      <stop offset="0.55" stop-color="#94b0a5"/>
-      <stop offset="1" stop-color="#536f69"/>
-    </linearGradient>
-    <linearGradient id="shared-succulent-silver" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#e0e3d5"/>
-      <stop offset="1" stop-color="#9cae9e"/>
-    </linearGradient>
-    <linearGradient id="shared-succulent-copper" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="#d8b895"/>
-      <stop offset="1" stop-color="#956849"/>
-    </linearGradient>
-    <g id="shared-succulent-round-pair">
-      <ellipse cx="-2.3" cy="-1" rx="2.8" ry="2.1" transform="rotate(25 -2.3 -1)" fill="url(#shared-succulent-green)" stroke="#4e7247" stroke-width="0.35"/>
-      <ellipse cx="2.2" cy="-2" rx="2.5" ry="2" transform="rotate(-32 2.2 -2)" fill="url(#shared-succulent-green)" stroke="#4e7247" stroke-width="0.35"/>
-      <path d="M-4 -1.4L-2 -0.9M1 -2.4L3 -3" stroke="#d6e6a2" stroke-width="0.4" stroke-linecap="round"/>
-    </g>
-    <g id="shared-succulent-rosette-leaf">
-      <path d="M0 0C-5 -3 -6 -10 -2 -14C-0.8 -15 0 -16 0 -17C1 -15 3 -14 4 -12C7 -7 4 -2 0 0Z" fill="url(#shared-succulent-rosette)" stroke="#b27d82" stroke-width="0.5"/>
-      <path d="M0 -2C-1 -6 -2 -10 0 -14" fill="none" stroke="#d3d9c9" stroke-width="0.55" opacity="0.65"/>
-    </g>
-    <g id="shared-succulent-spoon">
-      <path d="M0 0C-6 -1 -10 -5 -8 -8C-5 -12 0 -6 0 0Z" fill="url(#shared-succulent-silver)" stroke="#849b8a" stroke-width="0.5"/>
-      <path d="M-1 -1L-7 -7" stroke="#e9ebdf" stroke-width="0.6"/>
-    </g>
+      <linearGradient id="p20-oct-wood" x1="0" y1="0" x2="0.9" y2="1">
+          <stop stop-color="#77634c" />
+          <stop offset="0.45" stop-color="#51483d" />
+          <stop offset="1" stop-color="#352f2c" />
+      </linearGradient>
+      <linearGradient id="p20-oct-green" x1="0" y1="0" x2="0.8" y2="1">
+          <stop stop-color="#d4df68" />
+          <stop offset="0.4" stop-color="#a2bd54" />
+          <stop offset="1" stop-color="#558148" />
+      </linearGradient>
+      <linearGradient id="p20-oct-silver" x1="0" y1="0" x2="0.8" y2="1">
+          <stop stop-color="#e6e7de" />
+          <stop offset="0.5" stop-color="#c9d2c9" />
+          <stop offset="1" stop-color="#8faaa0" />
+      </linearGradient>
+      <linearGradient id="p20-oct-copper" x1="0" y1="0" x2="0.3" y2="1">
+          <stop stop-color="#dcac73" />
+          <stop offset="0.45" stop-color="#bf9465" />
+          <stop offset="1" stop-color="#8d7958" />
+      </linearGradient>
+      <linearGradient id="p20-oct-new-copper" x1="0" y1="0" x2="1" y2="1">
+          <stop stop-color="#e9ad68" />
+          <stop offset="1" stop-color="#ba6f49" />
+      </linearGradient>
+      <linearGradient id="p20-oct-purple" x1="0" y1="0" x2="0.6" y2="1">
+          <stop stop-color="#c5bdca" />
+          <stop offset="0.5" stop-color="#9eacb5" />
+          <stop offset="1" stop-color="#757d92" />
+      </linearGradient>
+      <linearGradient id="p20-oct-rosette-green" x1="0" y1="0" x2="0.5" y2="1">
+          <stop stop-color="#d1d89e" />
+          <stop offset="0.5" stop-color="#9fb775" />
+          <stop offset="1" stop-color="#608551" />
+      </linearGradient>
+      <clipPath id="p20-oct-box-face">
+          <path d="M9 44 48 39 48 58 13 62Z" />
+      </clipPath>
+      <g id="p20-oct-round-pair">
+          <ellipse
+              cx="-2"
+              cy="-1.1"
+              rx="2.2"
+              ry="1.65"
+              transform="rotate(20 -2 -1.1)"
+              fill="url(#p20-oct-green)"
+              stroke="#72934f"
+              stroke-width="0.25"
+          />
+          <ellipse
+              cx="2"
+              cy="-2.3"
+              rx="2.1"
+              ry="1.6"
+              transform="rotate(-32 2 -2.3)"
+              fill="url(#p20-oct-green)"
+              stroke="#72934f"
+              stroke-width="0.25"
+          />
+          <path
+              d="M-3.3-1.7-1.3-1.1M1-2.7 2.7-3"
+              stroke="#e1e6a2"
+              stroke-width="0.3"
+              stroke-linecap="round"
+          />
+      </g>
+      <g id="p20-oct-silver-leaf">
+          <path
+              d="M0 0C-4-0.5-10-3-10-6.5-10-10-5.2-11-3.5-8.4-1.6-6-0.7-2.5 0 0Z"
+              fill="url(#p20-oct-silver)"
+              stroke="#8d9f92"
+              stroke-width="0.4"
+          />
+          <path
+              d="M-0.8-1.5-6.7-7.5"
+              stroke="#e9eae0"
+              stroke-width="0.45"
+              stroke-linecap="round"
+          />
+      </g>
+      <g id="p20-oct-purple-leaf">
+          <path
+              d="M0 0C-3.9-1.7-5.5-7.2-2.3-10.1L0-12C0.8-9.8 3.5-8.1 3.8-5.7 4-2.6 1.4-0.4 0 0Z"
+              fill="url(#p20-oct-purple)"
+              stroke="#bc8b9b"
+              stroke-width="0.45"
+          />
+          <path d="M0-1.2-0.6-8.9" stroke="#d4c9d1" stroke-width="0.35" opacity="0.7" />
+      </g>
+      <g id="p20-oct-green-leaf">
+          <path
+              d="M0 0C-3.7-2.4-4.4-6.3-0.8-11L0-13C0.5-10.6 4.2-6.8 3.8-3.9 3.3-1.5 1.3-0.4 0 0Z"
+              fill="url(#p20-oct-rosette-green)"
+              stroke="#bb9679"
+              stroke-width="0.45"
+          />
+          <path d="M0-1.4 0-9.4" stroke="#dbe0ac" stroke-width="0.4" opacity="0.7" />
+      </g>
   </defs>
-  <ellipse cx="33" cy="58" rx="24" ry="2.5" fill="#243c30" opacity="0.15"/>
-  <path d="M7 40L56 36L54 55L11 59Z" fill="url(#shared-succulent-pot)" stroke="#34443b" stroke-width="0.9"/>
-  <path d="M7 39L54 34L59 39L11 46Z" fill="#95988b" stroke="#34443b" stroke-width="0.8"/>
-  <path d="M12 40L52 36L55 39L13 43Z" fill="#665442"/>
-  <path d="M13 48L52 43" stroke="#91968c" stroke-width="0.7"/>
-  <path d="M39 38L37 10" stroke="#888b64" stroke-width="1.5"/>
-  <use href="#shared-succulent-spoon" transform="translate(38 31)"/>
-  <use href="#shared-succulent-spoon" transform="translate(38 29) scale(-1 1)"/>
-  <use href="#shared-succulent-spoon" transform="translate(37.5 24)"/>
-  <use href="#shared-succulent-spoon" transform="translate(37.5 22) scale(-1 1)"/>
-  <use href="#shared-succulent-spoon" transform="translate(37 17) scale(0.8)"/>
-  <use href="#shared-succulent-spoon" transform="translate(37 15) scale(-0.8 0.8)"/>
-  <path d="M49 38L49 18" stroke="#8e7851" stroke-width="1.25"/>
-  <path d="M49 31C42 31 40 25 43 23C47 22 49 27 49 31ZM49 25C55 25 59 20 56 17C53 15 49 21 49 25ZM49 36C54 37 60 33 58 29C55 26 50 31 49 36Z" fill="url(#shared-succulent-copper)" stroke="#96795a" stroke-width="0.6"/>
-  <path d="M48 29L43 25M50 24L55 19M51 35L57 30" stroke="#e0c5a4" stroke-width="0.45"/>
-  <path d="M24 42L24 18L19 9M24 32L12 24L8 20M24 27L30 19L30 13M24 37L13 35L7 30M20 25L16 17" fill="none" stroke="#795c44" stroke-linecap="round" stroke-width="1.5"/>
-  <g>
-    <use href="#shared-succulent-round-pair" transform="translate(19 10) scale(0.8)"/>
-    <use href="#shared-succulent-round-pair" transform="translate(22 16)"/>
-    <use href="#shared-succulent-round-pair" transform="translate(24 22)"/>
-    <use href="#shared-succulent-round-pair" transform="translate(30 14) scale(0.8)"/>
-    <use href="#shared-succulent-round-pair" transform="translate(29 20)"/>
-    <use href="#shared-succulent-round-pair" transform="translate(8 21) scale(0.8)"/>
-    <use href="#shared-succulent-round-pair" transform="translate(14 25)"/>
-    <use href="#shared-succulent-round-pair" transform="translate(18 19) scale(0.9)"/>
-    <use href="#shared-succulent-round-pair" transform="translate(20 29)"/>
-    <use href="#shared-succulent-round-pair" transform="translate(27 28)"/>
-    <use href="#shared-succulent-round-pair" transform="translate(8 31) scale(0.8)"/>
-    <use href="#shared-succulent-round-pair" transform="translate(15 35)"/>
-    <use href="#shared-succulent-round-pair" transform="translate(24 35)"/>
-    <use href="#shared-succulent-round-pair" transform="translate(22 40) scale(0.8)"/>
+  <ellipse cx="33" cy="61.7" rx="24" ry="1.5" fill="#263e32" opacity="0.15" />
+  <path
+      d="M9 44 48 39 59 44 54 59 13 62Z"
+      fill="url(#p20-oct-wood)"
+      stroke="#514a40"
+      stroke-width="0.75"
+      stroke-linejoin="round"
+  />
+  <path d="m48 39 11 5-5 15-6-1Z" fill="#3b342e" />
+  <path
+      d="M8 43 46 36 60 42 21 51Z"
+      fill="#8a7a66"
+      stroke="#52483c"
+      stroke-width="0.65"
+      stroke-linejoin="round"
+  />
+  <path d="m12 43 33-5 10 4-34 6Z" fill="#504431" />
+  <g clip-path="url(#p20-oct-box-face)" fill="none" stroke-linecap="round">
+      <path
+          d="m11 50 35-5m-33 7 31-4m-30 7 32-4m-30 7 29-4m-29 5 28-3"
+          stroke="#b59c77"
+          stroke-width="0.45"
+          opacity="0.48"
+      />
+      <path
+          d="M13 49c9 1 15-3 24-3m-21 8c8 0 14-3 27-3m-23 9 18-2"
+          stroke="#2e2a24"
+          stroke-width="0.45"
+      />
+      <path d="M28 52c3-2 7-2 9-1-1 2-6 3-9 1Z" stroke="#77634c" stroke-width="0.45" />
   </g>
-  <g transform="translate(40 42)">
-    <use href="#shared-succulent-rosette-leaf" transform="rotate(15) scale(1 0.9)"/>
-    <use href="#shared-succulent-rosette-leaf" transform="rotate(70) scale(0.95 0.85)"/>
-    <use href="#shared-succulent-rosette-leaf" transform="rotate(125) scale(0.95 0.8)"/>
-    <use href="#shared-succulent-rosette-leaf" transform="rotate(180) scale(0.85 0.65)"/>
-    <use href="#shared-succulent-rosette-leaf" transform="rotate(230) scale(0.9 0.8)"/>
-    <use href="#shared-succulent-rosette-leaf" transform="rotate(285) scale(0.95 0.85)"/>
-    <use href="#shared-succulent-rosette-leaf" transform="rotate(340) scale(0.65 0.65)"/>
-    <use href="#shared-succulent-rosette-leaf" transform="rotate(45) scale(0.65 0.6)"/>
-    <use href="#shared-succulent-rosette-leaf" transform="rotate(110) scale(0.65 0.55)"/>
-    <use href="#shared-succulent-rosette-leaf" transform="rotate(175) scale(0.6 0.5)"/>
-    <use href="#shared-succulent-rosette-leaf" transform="rotate(240) scale(0.6 0.55)"/>
-    <use href="#shared-succulent-rosette-leaf" transform="rotate(310) scale(0.4 0.4)"/>
-    <use href="#shared-succulent-rosette-leaf" transform="rotate(30) scale(0.4 0.4)"/>
-    <use href="#shared-succulent-rosette-leaf" transform="rotate(115) scale(0.4 0.35)"/>
-    <use href="#shared-succulent-rosette-leaf" transform="rotate(210) scale(0.35 0.3)"/>
-    <use href="#shared-succulent-rosette-leaf" transform="rotate(295) scale(0.22 0.22)"/>
-    <use href="#shared-succulent-rosette-leaf" transform="rotate(60) scale(0.22 0.22)"/>
+  <path
+      d="m49 48 7-2m-7 5 6-2m-6 5 5-2"
+      fill="none"
+      stroke="#7c6b53"
+      stroke-width="0.45"
+      opacity="0.6"
+  />
+  <path
+      d="M25 42 26 23 23 9 21 4M26 30 17 24 13 16M25 24 32 17 33 7M26 20 20 16M25 35 11 32M28 29 37 22M18 24 10 26"
+      fill="none"
+      stroke="#816645"
+      stroke-width="1.1"
+      stroke-linecap="round"
+  />
+  <use href="#p20-oct-round-pair" transform="translate(21 5) rotate(-15) scale(0.8)" />
+  <use href="#p20-oct-round-pair" transform="translate(23 10) rotate(5) scale(0.9)" />
+  <use href="#p20-oct-round-pair" transform="translate(25 16) rotate(-10) scale(1.05)" />
+  <use href="#p20-oct-round-pair" transform="translate(24 23) rotate(-15) scale(1.08)" />
+  <use href="#p20-oct-round-pair" transform="translate(33 8) rotate(10) scale(0.75)" />
+  <use href="#p20-oct-round-pair" transform="translate(31 14) rotate(25) scale(0.9)" />
+  <use href="#p20-oct-round-pair" transform="translate(30 20) rotate(-5) scale(0.9)" />
+  <use href="#p20-oct-round-pair" transform="translate(14 16) rotate(-25) scale(0.8)" />
+  <use href="#p20-oct-round-pair" transform="translate(16 22) rotate(-13) scale(1)" />
+  <use href="#p20-oct-round-pair" transform="translate(12 27) rotate(-5) scale(0.9)" />
+  <use href="#p20-oct-round-pair" transform="translate(19 28) rotate(10) scale(1)" />
+  <use href="#p20-oct-round-pair" transform="translate(25 30) rotate(-12) scale(1.1)" />
+  <use href="#p20-oct-round-pair" transform="translate(10 32) rotate(-25) scale(0.8)" />
+  <use href="#p20-oct-round-pair" transform="translate(17 35) rotate(5) scale(0.92)" />
+  <use href="#p20-oct-round-pair" transform="translate(30 36) rotate(10) scale(1)" />
+  <use href="#p20-oct-round-pair" transform="translate(35 25) rotate(-15) scale(0.82)" />
+  <use href="#p20-oct-round-pair" transform="translate(36 30) rotate(10) scale(0.85)" />
+  <use href="#p20-oct-round-pair" transform="translate(27 40) rotate(20) scale(0.86)" />
+  <use href="#p20-oct-round-pair" transform="translate(20 19) rotate(30) scale(0.9)" />
+  <use href="#p20-oct-round-pair" transform="translate(28 25) rotate(-15) scale(1)" />
+  <use href="#p20-oct-round-pair" transform="translate(20 32) rotate(-15) scale(0.9)" />
+  <use href="#p20-oct-round-pair" transform="translate(33 33) rotate(35) scale(1)" />
+  <use href="#p20-oct-round-pair" transform="translate(11 22) rotate(-10) scale(0.7)" />
+  <path
+      d="M44 39 44 23 46 13M43 29 50 21M43 34 53 30"
+      fill="none"
+      stroke="#9f9c7a"
+      stroke-width="1.2"
+      stroke-linecap="round"
+  />
+  <use href="#p20-oct-silver-leaf" transform="translate(45 17) rotate(-20) scale(0.7)" />
+  <use href="#p20-oct-silver-leaf" transform="translate(46 16) rotate(58) scale(0.7)" />
+  <use href="#p20-oct-silver-leaf" transform="translate(44 23) rotate(-12) scale(0.9)" />
+  <use href="#p20-oct-silver-leaf" transform="translate(45 24) rotate(100) scale(0.9)" />
+  <use href="#p20-oct-silver-leaf" transform="translate(44 29) rotate(-24) scale(0.95)" />
+  <use href="#p20-oct-silver-leaf" transform="translate(44 31) rotate(100) scale(1)" />
+  <use href="#p20-oct-silver-leaf" transform="translate(43 35) rotate(-36) scale(1)" />
+  <use href="#p20-oct-silver-leaf" transform="translate(47 36) rotate(90) scale(0.8)" />
+  <use href="#p20-oct-silver-leaf" transform="translate(51 29) rotate(80) scale(0.8)" />
+  <use href="#p20-oct-silver-leaf" transform="translate(42 38) rotate(-28) scale(0.9)" />
+  <g transform="translate(19 34) scale(0.9 0.83)">
+      <use href="#p20-oct-purple-leaf" transform="rotate(0) scale(0.93 1.00)" />
+      <use href="#p20-oct-purple-leaf" transform="rotate(51) scale(1.00 1.05)" />
+      <use href="#p20-oct-purple-leaf" transform="rotate(104) scale(1.07 1.00)" />
+      <use href="#p20-oct-purple-leaf" transform="rotate(155) scale(0.93 1.05)" />
+      <use href="#p20-oct-purple-leaf" transform="rotate(207) scale(1.00 1.00)" />
+      <use href="#p20-oct-purple-leaf" transform="rotate(258) scale(1.07 1.05)" />
+      <use href="#p20-oct-purple-leaf" transform="rotate(310) scale(0.93 1.00)" />
+      <use href="#p20-oct-purple-leaf" transform="rotate(22) scale(0.60 0.65)" />
+      <use href="#p20-oct-purple-leaf" transform="rotate(84) scale(0.65 0.68)" />
+      <use href="#p20-oct-purple-leaf" transform="rotate(145) scale(0.70 0.65)" />
+      <use href="#p20-oct-purple-leaf" transform="rotate(209) scale(0.60 0.68)" />
+      <use href="#p20-oct-purple-leaf" transform="rotate(272) scale(0.65 0.65)" />
+      <use href="#p20-oct-purple-leaf" transform="rotate(334) scale(0.70 0.68)" />
+      <use href="#p20-oct-purple-leaf" transform="rotate(5) scale(0.28 0.30)" />
+      <use href="#p20-oct-purple-leaf" transform="rotate(96) scale(0.30 0.32)" />
+      <use href="#p20-oct-purple-leaf" transform="rotate(190) scale(0.32 0.30)" />
+      <use href="#p20-oct-purple-leaf" transform="rotate(282) scale(0.28 0.32)" />
   </g>
+  <path
+      d="M37 45 37 32 35 23M37 39 47 36M37 35 26 30"
+      fill="none"
+      stroke="#9c8061"
+      stroke-width="1.6"
+      stroke-linecap="round"
+  />
+  <path
+      d="M37 36C31 35 23 33 19 28 25 26 34 29 37 36Z"
+      fill="url(#p20-oct-copper)"
+      stroke="#9c8563"
+      stroke-width="0.45"
+  />
+  <path
+      d="M38 39C42 32 54 32 61 35 58 40 46 42 38 39Z"
+      fill="url(#p20-oct-copper)"
+      stroke="#9c8563"
+      stroke-width="0.45"
+  />
+  <path
+      d="M36 32C31 29 28 24 30 20 35 21 37 27 36 32Z"
+      fill="url(#p20-oct-new-copper)"
+      stroke="#bc8e67"
+      stroke-width="0.4"
+  />
+  <path
+      d="M37 33C36 26 39 23 44 23 44 28 41 31 37 33Z"
+      fill="url(#p20-oct-new-copper)"
+      stroke="#bc8e67"
+      stroke-width="0.4"
+  />
+  <path
+      d="M35 29C32 25 32 21 34 18 37 20 38 26 35 29Z"
+      fill="#c9a47a"
+      stroke="#a48e71"
+      stroke-width="0.4"
+  />
+  <path
+      d="M36 38 24 29M41 38 55 36M34 29 31 23M39 30 42 25"
+      fill="none"
+      stroke="#e0bf90"
+      stroke-width="0.4"
+      opacity="0.65"
+      stroke-linecap="round"
+  />
+  <path
+      d="M37 45c1 2.5 4 4.9 4.1 8.1-3.3-0.6-5.5-3.8-5.5-7.1Z"
+      fill="url(#p20-oct-copper)"
+      stroke="#8f795d"
+      stroke-width="0.4"
+  />
+  <g transform="translate(21 44) rotate(10) scale(0.94 0.77)">
+      <use href="#p20-oct-green-leaf" transform="rotate(0) scale(0.93 1.00)" />
+      <use href="#p20-oct-green-leaf" transform="rotate(55) scale(1.00 1.05)" />
+      <use href="#p20-oct-green-leaf" transform="rotate(112) scale(1.07 1.00)" />
+      <use href="#p20-oct-green-leaf" transform="rotate(175) scale(0.93 1.05)" />
+      <use href="#p20-oct-green-leaf" transform="rotate(234) scale(1.00 1.00)" />
+      <use href="#p20-oct-green-leaf" transform="rotate(295) scale(1.07 1.05)" />
+      <use href="#p20-oct-green-leaf" transform="rotate(26) scale(0.60 0.64)" />
+      <use href="#p20-oct-green-leaf" transform="rotate(92) scale(0.64 0.67)" />
+      <use href="#p20-oct-green-leaf" transform="rotate(154) scale(0.68 0.64)" />
+      <use href="#p20-oct-green-leaf" transform="rotate(218) scale(0.60 0.67)" />
+      <use href="#p20-oct-green-leaf" transform="rotate(281) scale(0.64 0.64)" />
+      <use href="#p20-oct-green-leaf" transform="rotate(342) scale(0.68 0.67)" />
+      <use href="#p20-oct-green-leaf" transform="rotate(12) scale(0.30 0.32)" />
+      <use href="#p20-oct-green-leaf" transform="rotate(107) scale(0.32 0.34)" />
+      <use href="#p20-oct-green-leaf" transform="rotate(201) scale(0.34 0.32)" />
+      <use href="#p20-oct-green-leaf" transform="rotate(292) scale(0.30 0.34)" />
+  </g>
+  <path d="m31 44 2-1 1 1.5-1.3 1Z" fill="#c3b49b" />
+  <path d="m43 43 2-1 1 1.5-2 0.8Z" fill="#b37d5f" />
 </svg>

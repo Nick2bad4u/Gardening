@@ -215,7 +215,7 @@ function portraitDescriptions() {
     return new Map([
         [
             "aeonium-haworthii-dream-color",
-            "Three branching rosettes with cream-green spoon-shaped leaves and pink margins above a white planter.",
+            "A full canopy of overlapping broad green rosettes with muted pink edges above colorful polished stones in a tall round white pot with a pale gray lower section.",
         ],
         [
             "aglaonema-commutatum-alpine-spires",
@@ -235,7 +235,7 @@ function portraitDescriptions() {
         ],
         [
             "chamaelobivia-hybrid",
-            "A crowded mound of short ribbed peanut-shaped green stems in a blue planter.",
+            "A low broad cluster of short oval green cactus stems with pale-gold spines above mixed mineral top dressing in a sage-green faceted pot.",
         ],
         [
             "cleistocactus-colademononis",
@@ -259,7 +259,7 @@ function portraitDescriptions() {
         ],
         [
             "echeveria-raindrops",
-            "A blue-green succulent rosette with rounded raised leaf bumps in a yellow planter.",
+            "A broad low open rosette with spatulate sage-green leaves, small pointed tips, muted mauve margins, and sparse raised bumps above mineral top dressing in a sage-green faceted pot.",
         ],
         [
             "echeveria-setosa-deminuta",
@@ -303,7 +303,7 @@ function portraitDescriptions() {
         ],
         [
             "gymnocalycium-mihanovichii-variegated",
-            "A round green ribbed cactus with blush, bronze, and cream variegated sectors in a blue planter.",
+            "A small dark burgundy ribbed cactus with pale spreading spines and mixed mineral top dressing in a yellow faceted pot, following the October owner photograph.",
         ],
         [
             "gymnocalycium-saglionis",
@@ -319,15 +319,15 @@ function portraitDescriptions() {
         ],
         [
             "lithops-lesliei",
-            "Schematic tan-brown living-stone heads for probable Lithops lesliei in the shared pink P35 pot with raised dots, following the owner's pot photograph; illustration does not confirm species or separate roots.",
+            "Low paired tan-brown heads with pale branching top patterns for probable Lithops lesliei in the shared pink P35 pot with raised dots; schematic appearance does not confirm species or separate roots.",
         ],
         [
             "lithops-salicola",
-            "Schematic gray-green living-stone heads for probable Lithops salicola in the shared pink P35 pot with raised dots, following the owner's pot photograph; illustration does not confirm species or separate roots.",
+            "Low paired pale gray-green heads with broad olive top windows for probable Lithops salicola in the shared pink P35 pot with raised dots; schematic appearance does not confirm species or separate roots.",
         ],
         [
             "lithops-shared-planter",
-            "Schematic paired living-stone bodies in the shared pink P35 pot with raised dots, following the owner's pot photograph; not evidence of species or rooted-plant count.",
+            "Low paired tan-brown and gray-green living-stone heads with patterned tops among mineral top dressing in the shared pink P35 pot with raised dots; schematic appearance does not establish species or rooted-plant count.",
         ],
         [
             "mammillaria-bombycina",
@@ -351,7 +351,7 @@ function portraitDescriptions() {
         ],
         [
             "myrtillocactus-geometrizans-indigo-wave",
-            "A blue-green monstrose cactus with irregular folded ridges and knobby fan-shaped growth in a purple planter.",
+            "A narrow upright ribbed cactus section joins an uneven folded crest extending sideways above mixed mineral top dressing in an orange-brown faceted pot.",
         ],
         [
             "nyctocereus-serpentinus",
@@ -387,7 +387,7 @@ function portraitDescriptions() {
         ],
         [
             "pleiospilos-nelii-royal-flush",
-            "Two thick, dark-speckled purple split-rock leaves separated by a deep dark fissure in a white planter.",
+            "Low paired purple split-rock leaves with subtle speckles and a central fissure above mineral top dressing in an orange-brown faceted pot.",
         ],
         [
             "portulacaria-afra",
@@ -407,7 +407,7 @@ function portraitDescriptions() {
         ],
         [
             "shared-succulent-planter",
-            "A red-edged blue-green rosette, bright round-leaved elephant bush, silver teaspoons, and copper spoons share a low charcoal rectangular planter.",
+            "Tall round-leaved green foliage, silver and copper spoon-shaped leaves, and purple-blue and pointed green rosettes share a deep dark wood-grained box; schematic appearance does not resolve the component identifications.",
         ],
         [
             "stenocactus-phyllacanthus",
@@ -415,7 +415,7 @@ function portraitDescriptions() {
         ],
         [
             "tephrocactus-articulatus-papyracanthus",
-            "Jointed gray-green cactus segments with long tapered ivory spines curling like paper ribbons.",
+            "A compact gray-green cactus body with long flat curling pale spines spreading above mineral top dressing in a dark green faceted pot.",
         ],
         [
             "terrarium",

@@ -1,163 +1,291 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="gymnocalycium-mihanovichii-variegated-title gymnocalycium-mihanovichii-variegated-description" data-plant-slug="gymnocalycium-mihanovichii-variegated" focusable="false">
   <title id="gymnocalycium-mihanovichii-variegated-title">Variegated moon cactus plant portrait</title>
-  <desc id="gymnocalycium-mihanovichii-variegated-description">A round green ribbed cactus with blush, bronze, and cream variegated sectors in a blue planter.</desc>
+  <desc id="gymnocalycium-mihanovichii-variegated-description">A small dark burgundy ribbed cactus with pale spreading spines and mixed mineral top dressing in a yellow faceted pot, following the October owner photograph.</desc>
   <defs>
-      <linearGradient id="gym-var-pot" x1="0" x2="0.8" y1="0" y2="1">
-          <stop offset="0" stop-color="#79c2e9" />
-          <stop offset="1" stop-color="#377fb6" />
+      <linearGradient id="p01-oct22-pot" x1="0" y1="0" x2="1" y2="0.3">
+          <stop stop-color="#f1ce56" />
+          <stop offset="0.35" stop-color="#dba522" />
+          <stop offset="1" stop-color="#a67a20" />
       </linearGradient>
-      <radialGradient id="varmoon-body" cx="35%" cy="23%" r="80%">
-          <stop offset="0" stop-color="#80ac77" />
-          <stop offset="0.5" stop-color="#438361" />
-          <stop offset="1" stop-color="#285746" />
+      <clipPath id="p01-oct22-pot-clip">
+          <path d="M10 35H54L50 55Q48 60 32 61Q16 60 14 55Z" />
+      </clipPath>
+      <radialGradient id="p01-oct22-body" cx="0.3" cy="0.25" r="0.85">
+          <stop stop-color="#80505b" />
+          <stop offset="0.5" stop-color="#55313c" />
+          <stop offset="1" stop-color="#2b292d" />
       </radialGradient>
-      <clipPath id="varmoon-clip" clipPathUnits="userSpaceOnUse">
+      <clipPath id="p01-oct22-body-clip">
           <path
-              d="M12 47c-3-6-3-13 0-19 4-7 10-11 20-11s17 4 21 11c3 6 3 13-1 19Z"
-              fill="none"
-              stroke="none"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              d="M32 17Q27 15 24 19Q19 18 17 23Q14 25 16 29Q12 33 16 37Q16 42 22 43Q26 47 32 45Q38 47 43 43Q48 42 48 37Q52 33 48 29Q49 24 45 22Q42 17 38 19Q35 16 32 17Z"
           />
       </clipPath>
-      <linearGradient id="varmoon-rose" x1="0" y1="0" x2="0.85" y2="1">
-          <stop offset="0" stop-color="#bd8c80" />
-          <stop offset="0.5" stop-color="#d19a83" />
-          <stop offset="1" stop-color="#987a60" />
-      </linearGradient>
-      <linearGradient id="varmoon-gold" x1="0" y1="0" x2="0.85" y2="1">
-          <stop offset="0" stop-color="#d8cb82" />
-          <stop offset="0.5" stop-color="#c6b566" />
-          <stop offset="1" stop-color="#8c9964" />
-      </linearGradient>
-      <g id="gymnocalycium-mihanovichii-variegated-detail-1">
+      <g id="p01-oct22-spines">
           <path
-              d="M-2.4 2Q0 4 2.4 2L0 0Z"
-              fill="#273e36"
-              stroke="none"
-              stroke-width="0"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              opacity="0.28"
-          />
-          <path
-              d="M0 0q-2-1-3.2-0.5M0 0q2-1 3.2-0.5M0 0q-1.7 1.8-2.5 1.9M0 0q1.7 1.8 2.5 1.9M0 0q0.6-1.8 0.2-3"
+              d="M0 0q-2-2-3.6-1.7M0 0q2-2 3.6-1.7M0 0q-2 2-3.4 2M0 0q2 2 3.4 2M0 0q0-2-0.7-3.2"
               fill="none"
-              stroke="#dfccb0"
-              stroke-width="0.55"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              stroke="#ead7ba"
+              stroke-width="0.65"
           />
-          <ellipse
-              cx="0"
-              cy="0"
-              rx="0.85"
-              ry="0.62"
-              fill="#e6d7b8"
-              stroke="#8a7058"
-              stroke-width="0.25"
-          />
+          <ellipse rx="0.8" ry="0.55" fill="#dcc3a5" />
       </g>
   </defs>
-  <ellipse
-      cx="32"
-      cy="60.5"
-      rx="22"
-      ry="1.9"
-      fill="#244b3b"
-      stroke="none"
-      stroke-width="0"
-      opacity="0.12"
-  />
-  <ellipse
-      cx="32"
-      cy="45.5"
-      rx="22"
-      ry="2.1"
-      fill="#745c45"
-      stroke="none"
-      stroke-width="1"
-  />
-  <path
-      d="M12 47c-3-6-3-13 0-19 4-7 10-11 20-11s17 4 21 11c3 6 3 13-1 19Z"
-      fill="url(#varmoon-body)"
-      stroke="#244b3b"
-      stroke-width="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <g clip-path="url(#varmoon-clip)">
+  <g stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="32" cy="61" rx="23" ry="1.6" fill="#274537" opacity="0.16" />
       <path
-          d="M25 17c-7 7-8 15-8 21l4 9h6c-4-12-6-21 1-30Z"
-          fill="url(#varmoon-rose)"
-          stroke="none"
-          stroke-width="1"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          d="M10 35H54L50 55Q48 60 32 61Q16 60 14 55Z"
+          fill="url(#p01-oct22-pot)"
+          stroke="#a67a20"
+          stroke-width="1.1"
+      />
+      <g clip-path="url(#p01-oct22-pot-clip)">
+          <path
+              d="M10 36 18 40 16 48 11 45Z"
+              fill="#a67a20"
+              opacity="0.48"
+              stroke="#a67a20"
+              stroke-width="0.45"
+          />
+          <path
+              d="M18 40 27 41 25 49 16 48Z"
+              fill="#f1ce56"
+              opacity="0.5"
+              stroke="#a67a20"
+              stroke-width="0.45"
+          />
+          <path
+              d="M27 41 37 41 38 49 25 49Z"
+              fill="#dba522"
+              opacity="0.35"
+              stroke="#a67a20"
+              stroke-width="0.45"
+          />
+          <path
+              d="M37 41 46 39 48 47 38 49Z"
+              fill="#f1ce56"
+              opacity="0.3"
+              stroke="#a67a20"
+              stroke-width="0.45"
+          />
+          <path
+              d="M46 39 54 36 53 44 48 47Z"
+              fill="#a67a20"
+              opacity="0.38"
+              stroke="#a67a20"
+              stroke-width="0.45"
+          />
+          <path
+              d="M11 45 16 48 15 55 12 52Z"
+              fill="#f1ce56"
+              opacity="0.32"
+              stroke="#a67a20"
+              stroke-width="0.45"
+          />
+          <path
+              d="M16 48 25 49 22 57 15 55Z"
+              fill="#a67a20"
+              opacity="0.3"
+              stroke="#a67a20"
+              stroke-width="0.45"
+          />
+          <path
+              d="M25 49 38 49 36 58 22 57Z"
+              fill="#f1ce56"
+              opacity="0.45"
+              stroke="#a67a20"
+              stroke-width="0.45"
+          />
+          <path
+              d="M38 49 48 47 49 54 36 58Z"
+              fill="#a67a20"
+              opacity="0.42"
+              stroke="#a67a20"
+              stroke-width="0.45"
+          />
+          <path
+              d="M48 47 53 44 52 52 49 54Z"
+              fill="#f1ce56"
+              opacity="0.28"
+              stroke="#a67a20"
+              stroke-width="0.45"
+          />
+          <path
+              d="M15 55 22 57 25 61 17 59Z"
+              fill="#f1ce56"
+              opacity="0.3"
+              stroke="#a67a20"
+              stroke-width="0.45"
+          />
+          <path
+              d="M22 57 36 58 32 62 25 61Z"
+              fill="#a67a20"
+              opacity="0.25"
+              stroke="#a67a20"
+              stroke-width="0.45"
+          />
+          <path
+              d="M36 58 49 54 47 59 32 62Z"
+              fill="#dba522"
+              opacity="0.4"
+              stroke="#a67a20"
+              stroke-width="0.45"
+          />
+      </g>
+      <ellipse
+          cx="32"
+          cy="35"
+          rx="22"
+          ry="6.5"
+          fill="#5a4435"
+          stroke="#dba522"
+          stroke-width="1.6"
       />
       <path
-          d="M37 18c6 9 8 19 5 29h7c4-12-3-25-8-29Z"
-          fill="url(#varmoon-gold)"
-          stroke="none"
-          stroke-width="1"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          d="m15 34.15 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#e4d5ba"
+          stroke="#5c5145"
+          stroke-width="0.35"
       />
       <path
-          d="M31 18c-2 7 0 11 1 15s-1 10 1 14h4c-3-13-5-20-3-29Z"
-          fill="#b8a16d"
-          stroke="none"
-          stroke-width="0"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          opacity="0.7"
+          d="m19 36.7 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#af6650"
+          stroke="#5c5145"
+          stroke-width="0.35"
       />
       <path
-          d="M32 18c-2 7 1 9-1 14s2 9 1 15M24 20c-7 9-7 15-5 27m19-27c7 9 9 15 7 27M15 26c-4 6-5 14-2 21m35-21c4 6 5 14 2 21"
+          d="m24 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#bdc4bc"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m29 38.4 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#3a3b35"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m35 38.4 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#ddcdb1"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m41 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#b96e50"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m47 35.85 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#e1d8c3"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m14 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#3b4440"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m21 39.25 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#e8ddc6"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m28 40.1 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#b87757"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m37 40.1 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#8e9b91"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m44 39.25 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#343c36"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m50 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#ae785e"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m15 31.6 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#bfbeb0"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m21 30.75 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#3a3e36"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m45 30.75 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#cbb99c"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m50 32.45 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#d8cfc0"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <g transform="translate(10.24 6.4) scale(0.68)">
+          <path
+              d="M32 17Q27 15 24 19Q19 18 17 23Q14 25 16 29Q12 33 16 37Q16 42 22 43Q26 47 32 45Q38 47 43 43Q48 42 48 37Q52 33 48 29Q49 24 45 22Q42 17 38 19Q35 16 32 17Z"
+              fill="url(#p01-oct22-body)"
+              stroke="#372e31"
+              stroke-width="1.15"
+          />
+          <g clip-path="url(#p01-oct22-body-clip)">
+              <path
+                  d="M31 18C26 23 25 28 27 33Q24 40 29 46M33 18C38 23 39 29 37 33Q40 40 35 46M26 18Q18 23 21 29Q17 35 23 44M39 19Q47 23 44 29Q49 35 42 44"
+                  fill="none"
+                  stroke="#a16872"
+                  stroke-width="1.9"
+              />
+              <path
+                  d="M31 19Q29 25 30 29Q28 35 31 44M35 19Q39 26 39 29Q42 36 39 43M24 21Q19 29 21 33Q19 38 23 42M43 22Q46 28 45 32Q48 37 44 41"
+                  fill="none"
+                  stroke="#3a2933"
+                  stroke-width="1.8"
+              />
+              <path
+                  d="M26 22 25 25M28 34l-0.5 4m9-13 1 2m0 9 0.5 3M19 27l-0.5 2m25 6 1 2"
+                  fill="none"
+                  stroke="#bb8f87"
+                  stroke-width="0.65"
+              />
+          </g>
+          <use href="#p01-oct22-spines" transform="translate(30 20) scale(0.7)" />
+          <use href="#p01-oct22-spines" transform="translate(35 21) scale(0.7)" />
+          <use href="#p01-oct22-spines" transform="translate(24 25) scale(0.9)" />
+          <use href="#p01-oct22-spines" transform="translate(40 25) scale(0.9)" />
+          <use href="#p01-oct22-spines" transform="translate(18 31) scale(0.9)" />
+          <use href="#p01-oct22-spines" transform="translate(28 31) scale(0.95)" />
+          <use href="#p01-oct22-spines" transform="translate(37 31) scale(0.95)" />
+          <use href="#p01-oct22-spines" transform="translate(46 32) scale(0.9)" />
+          <use href="#p01-oct22-spines" transform="translate(22 39) scale(0.85)" />
+          <use href="#p01-oct22-spines" transform="translate(31 40) scale(0.9)" />
+          <use href="#p01-oct22-spines" transform="translate(42 40) scale(0.85)" />
+      </g>
+      <path
+          d="M11 36Q16 41 25 41M40 41q9-1 13-5"
           fill="none"
-          stroke="#bdd3a2"
-          stroke-width="0.85"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          stroke="#f1ce56"
+          stroke-width="0.9"
       />
   </g>
-  <use
-      href="#gymnocalycium-mihanovichii-variegated-detail-1"
-      transform="translate(31 23) scale(0.72)"
-  />
-  <use
-      href="#gymnocalycium-mihanovichii-variegated-detail-1"
-      transform="translate(21 29) scale(0.8)"
-  />
-  <use
-      href="#gymnocalycium-mihanovichii-variegated-detail-1"
-      transform="translate(43 29) scale(0.8)"
-  />
-  <use
-      href="#gymnocalycium-mihanovichii-variegated-detail-1"
-      transform="translate(15 38) scale(0.8)"
-  />
-  <use
-      href="#gymnocalycium-mihanovichii-variegated-detail-1"
-      transform="translate(32 37) scale(0.86)"
-  />
-  <use
-      href="#gymnocalycium-mihanovichii-variegated-detail-1"
-      transform="translate(47 40) scale(0.8)"
-  />
-  <path
-      d="M8 45h48v7H8z"
-      fill="#80c5e8"
-      stroke="#28577e"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
-  <path
-      d="m11 52 4 9h34l4-9Z"
-      fill="url(#gym-var-pot)"
-      stroke="#28577e"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
 </svg>

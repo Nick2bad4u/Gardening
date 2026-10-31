@@ -1,173 +1,309 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="chamaelobivia-hybrid-title chamaelobivia-hybrid-description" data-plant-slug="chamaelobivia-hybrid" focusable="false">
   <title id="chamaelobivia-hybrid-title">Chamaelobivia / peanut cactus hybrid plant portrait</title>
-  <desc id="chamaelobivia-hybrid-description">A crowded mound of short ribbed peanut-shaped green stems in a blue planter.</desc>
+  <desc id="chamaelobivia-hybrid-description">A low broad cluster of short oval green cactus stems with pale-gold spines above mixed mineral top dressing in a sage-green faceted pot.</desc>
   <defs>
-      <linearGradient id="cham-pot" x1="0" x2="0.9" y1="0" y2="1">
-          <stop offset="0" stop-color="#7fc2e8" />
-          <stop offset="1" stop-color="#367fb7" />
+      <linearGradient id="p14-oct22-pot" x1="0" y1="0" x2="1" y2="0.3">
+          <stop stop-color="#afc1a0" />
+          <stop offset="0.35" stop-color="#7f9477" />
+          <stop offset="1" stop-color="#4b6557" />
       </linearGradient>
-      <linearGradient id="peanut-body" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stop-color="#91bc83" />
-          <stop offset="0.5" stop-color="#529465" />
-          <stop offset="1" stop-color="#2d6852" />
-      </linearGradient>
-      <clipPath id="peanut-clip" clipPathUnits="userSpaceOnUse">
-          <path
-              d="M-4.4 16V-2c0-5 1.6-7.5 4.4-7.5S4.4-7 4.4-2v18Z"
-              fill="none"
-              stroke="none"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-          />
+      <clipPath id="p14-oct22-pot-clip">
+          <path d="M10 35H54L50 55Q48 60 32 61Q16 60 14 55Z" />
       </clipPath>
-      <g id="peanut-stem">
+      <radialGradient id="p14-oct22-stem-fill" cx="0.32" cy="0.25" r="0.9">
+          <stop stop-color="#b2bd70" />
+          <stop offset="0.5" stop-color="#6c914e" />
+          <stop offset="1" stop-color="#385d3e" />
+      </radialGradient>
+      <g id="p14-oct22-spine">
           <path
-              d="M-4.4 16V-2c0-5 1.6-7.5 4.4-7.5S4.4-7 4.4-2v18Z"
-              fill="url(#peanut-body)"
-              stroke="#244b3b"
-              stroke-width="1.05"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-          />
-          <g clip-path="url(#peanut-clip)">
-              <path
-                  d="M0-9V12M-2.6-7c1 5 1 12 0.3 19M2.6-7c-1 5-1 12-0.3 19"
-                  fill="none"
-                  stroke="#aed099"
-                  stroke-width="0.58"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-              />
-              <use
-                  href="#chamaelobivia-hybrid-detail-1"
-                  transform="translate(-2.4 -5) scale(0.32)"
-              />
-              <use
-                  href="#chamaelobivia-hybrid-detail-1"
-                  transform="translate(0 -5) scale(0.32)"
-              />
-              <use
-                  href="#chamaelobivia-hybrid-detail-1"
-                  transform="translate(2.4 -5) scale(0.32)"
-              />
-              <use
-                  href="#chamaelobivia-hybrid-detail-1"
-                  transform="translate(-2.4 0) scale(0.32)"
-              />
-              <use
-                  href="#chamaelobivia-hybrid-detail-1"
-                  transform="translate(0 0) scale(0.32)"
-              />
-              <use
-                  href="#chamaelobivia-hybrid-detail-1"
-                  transform="translate(2.4 0) scale(0.32)"
-              />
-              <use
-                  href="#chamaelobivia-hybrid-detail-1"
-                  transform="translate(-2.4 5) scale(0.32)"
-              />
-              <use
-                  href="#chamaelobivia-hybrid-detail-1"
-                  transform="translate(0 5) scale(0.32)"
-              />
-              <use
-                  href="#chamaelobivia-hybrid-detail-1"
-                  transform="translate(2.4 5) scale(0.32)"
-              />
-              <use
-                  href="#chamaelobivia-hybrid-detail-1"
-                  transform="translate(-2.4 10) scale(0.32)"
-              />
-              <use
-                  href="#chamaelobivia-hybrid-detail-1"
-                  transform="translate(0 10) scale(0.32)"
-              />
-              <use
-                  href="#chamaelobivia-hybrid-detail-1"
-                  transform="translate(2.4 10) scale(0.32)"
-              />
-          </g>
-      </g>
-      <g id="chamaelobivia-hybrid-detail-1">
-          <path
-              d="M-2.8 0H2.8M-2-1.8 2 1.8M-2 1.8 2-1.8M0-2.8V2.8"
+              d="M-1.2 0H1.2M0-1.2v2.4m-0.8-0.8 1.6 1.6m-1.6 0 1.6-1.6"
               fill="none"
-              stroke="#f0e6c9"
-              stroke-width="0.48"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              stroke="#ead49f"
+              stroke-width="0.42"
           />
+          <circle r="0.35" fill="#c9a86c" />
+      </g>
+      <g id="p14-oct22-stem">
           <ellipse
-              cx="0"
-              cy="0"
-              rx="0.62"
-              ry="0.62"
-              fill="#e3c994"
-              stroke="none"
-              stroke-width="1"
+              rx="4.7"
+              ry="8"
+              fill="url(#p14-oct22-stem-fill)"
+              stroke="#4c623b"
+              stroke-width="0.75"
           />
+          <path
+              d="M0-7.5Q-1 0 0 7M-2.5-6Q-3.5 0-2 6M2.5-6Q3.5 0 2 6"
+              fill="none"
+              stroke="#b2bd78"
+              stroke-width="0.6"
+          />
+          <use href="#p14-oct22-spine" transform="translate(-2.5 -4)" />
+          <use href="#p14-oct22-spine" transform="translate(0 -5)" />
+          <use href="#p14-oct22-spine" transform="translate(2.4 -4)" />
+          <use href="#p14-oct22-spine" transform="translate(-3 -0.5)" />
+          <use href="#p14-oct22-spine" transform="translate(0 -1)" />
+          <use href="#p14-oct22-spine" transform="translate(3 0)" />
+          <use href="#p14-oct22-spine" transform="translate(-2.5 3)" />
+          <use href="#p14-oct22-spine" transform="translate(0 3.5)" />
+          <use href="#p14-oct22-spine" transform="translate(2.5 3.8)" />
+          <use href="#p14-oct22-spine" transform="translate(0 6.5)" />
       </g>
   </defs>
-  <ellipse
-      cx="32"
-      cy="60.5"
-      rx="24"
-      ry="1.9"
-      fill="#244b3b"
-      stroke="none"
-      stroke-width="0"
-      opacity="0.12"
-  />
-  <ellipse
-      cx="32"
-      cy="44.5"
-      rx="24"
-      ry="2.1"
-      fill="#745c45"
-      stroke="none"
-      stroke-width="1"
-  />
-  <use
-      href="#peanut-stem"
-      transform="translate(13 35) rotate(-26) scale(0.8 0.88)"
-  />
-  <use
-      href="#peanut-stem"
-      transform="translate(22 29) rotate(-12) scale(1 1.15)"
-  />
-  <use
-      href="#peanut-stem"
-      transform="translate(41 26) rotate(10) scale(1 1.48)"
-  />
-  <use
-      href="#peanut-stem"
-      transform="translate(32 33) rotate(-3) scale(1.05 1.16)"
-  />
-  <use
-      href="#peanut-stem"
-      transform="translate(51 36) rotate(28) scale(0.8 0.82)"
-  />
-  <use
-      href="#peanut-stem"
-      transform="translate(20 42) rotate(-27) scale(1 0.84)"
-  />
-  <use
-      href="#peanut-stem"
-      transform="translate(38 42) rotate(16) scale(1.1 0.95)"
-  />
-  <path
-      d="M6 44h52v8H6z"
-      fill="#83c6e9"
-      stroke="#28577e"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
-  <path
-      d="m10 52 4 9h36l4-9Z"
-      fill="url(#cham-pot)"
-      stroke="#28577e"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
+  <g stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="32" cy="61" rx="23" ry="1.6" fill="#274537" opacity="0.16" />
+      <path
+          d="M10 35H54L50 55Q48 60 32 61Q16 60 14 55Z"
+          fill="url(#p14-oct22-pot)"
+          stroke="#4b6557"
+          stroke-width="1.1"
+      />
+      <g clip-path="url(#p14-oct22-pot-clip)">
+          <path
+              d="M10 36 18 40 16 48 11 45Z"
+              fill="#4b6557"
+              opacity="0.48"
+              stroke="#4b6557"
+              stroke-width="0.45"
+          />
+          <path
+              d="M18 40 27 41 25 49 16 48Z"
+              fill="#afc1a0"
+              opacity="0.5"
+              stroke="#4b6557"
+              stroke-width="0.45"
+          />
+          <path
+              d="M27 41 37 41 38 49 25 49Z"
+              fill="#7f9477"
+              opacity="0.35"
+              stroke="#4b6557"
+              stroke-width="0.45"
+          />
+          <path
+              d="M37 41 46 39 48 47 38 49Z"
+              fill="#afc1a0"
+              opacity="0.3"
+              stroke="#4b6557"
+              stroke-width="0.45"
+          />
+          <path
+              d="M46 39 54 36 53 44 48 47Z"
+              fill="#4b6557"
+              opacity="0.38"
+              stroke="#4b6557"
+              stroke-width="0.45"
+          />
+          <path
+              d="M11 45 16 48 15 55 12 52Z"
+              fill="#afc1a0"
+              opacity="0.32"
+              stroke="#4b6557"
+              stroke-width="0.45"
+          />
+          <path
+              d="M16 48 25 49 22 57 15 55Z"
+              fill="#4b6557"
+              opacity="0.3"
+              stroke="#4b6557"
+              stroke-width="0.45"
+          />
+          <path
+              d="M25 49 38 49 36 58 22 57Z"
+              fill="#afc1a0"
+              opacity="0.45"
+              stroke="#4b6557"
+              stroke-width="0.45"
+          />
+          <path
+              d="M38 49 48 47 49 54 36 58Z"
+              fill="#4b6557"
+              opacity="0.42"
+              stroke="#4b6557"
+              stroke-width="0.45"
+          />
+          <path
+              d="M48 47 53 44 52 52 49 54Z"
+              fill="#afc1a0"
+              opacity="0.28"
+              stroke="#4b6557"
+              stroke-width="0.45"
+          />
+          <path
+              d="M15 55 22 57 25 61 17 59Z"
+              fill="#afc1a0"
+              opacity="0.3"
+              stroke="#4b6557"
+              stroke-width="0.45"
+          />
+          <path
+              d="M22 57 36 58 32 62 25 61Z"
+              fill="#4b6557"
+              opacity="0.25"
+              stroke="#4b6557"
+              stroke-width="0.45"
+          />
+          <path
+              d="M36 58 49 54 47 59 32 62Z"
+              fill="#7f9477"
+              opacity="0.4"
+              stroke="#4b6557"
+              stroke-width="0.45"
+          />
+      </g>
+      <ellipse
+          cx="32"
+          cy="35"
+          rx="22"
+          ry="6.5"
+          fill="#5a4435"
+          stroke="#7f9477"
+          stroke-width="1.6"
+      />
+      <path
+          d="m15 34.15 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#e4d5ba"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m19 36.7 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#af6650"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m24 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#bdc4bc"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m29 38.4 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#3a3b35"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m35 38.4 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#ddcdb1"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m41 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#b96e50"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m47 35.85 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#e1d8c3"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m14 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#3b4440"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m21 39.25 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#e8ddc6"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m28 40.1 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#b87757"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m37 40.1 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#8e9b91"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m44 39.25 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#343c36"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m50 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#ae785e"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m15 31.6 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#bfbeb0"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m21 30.75 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#3a3e36"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m45 30.75 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#cbb99c"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <path
+          d="m50 32.45 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#d8cfc0"
+          stroke="#5c5145"
+          stroke-width="0.35"
+      />
+      <use href="#p14-oct22-stem" transform="translate(19 28) rotate(-35) scale(1 0.7)" />
+      <use href="#p14-oct22-stem" transform="translate(28 25) rotate(-20) scale(1 0.8)" />
+      <use
+          href="#p14-oct22-stem"
+          transform="translate(37 25) rotate(15) scale(1.1 0.75)"
+      />
+      <use
+          href="#p14-oct22-stem"
+          transform="translate(46 28) rotate(40) scale(0.9 0.7)"
+      />
+      <use
+          href="#p14-oct22-stem"
+          transform="translate(14 32) rotate(-60) scale(0.75 0.68)"
+      />
+      <use href="#p14-oct22-stem" transform="translate(23 32) rotate(-28) scale(1 0.7)" />
+      <use
+          href="#p14-oct22-stem"
+          transform="translate(32 30) rotate(-5) scale(1.1 0.85)"
+      />
+      <use href="#p14-oct22-stem" transform="translate(40 33) rotate(35) scale(1 0.7)" />
+      <use
+          href="#p14-oct22-stem"
+          transform="translate(50 34) rotate(60) scale(0.7 0.6)"
+      />
+      <use
+          href="#p14-oct22-stem"
+          transform="translate(20 37) rotate(-50) scale(0.9 0.6)"
+      />
+      <use
+          href="#p14-oct22-stem"
+          transform="translate(29 37) rotate(-15) scale(1 0.55)"
+      />
+      <use href="#p14-oct22-stem" transform="translate(38 38) rotate(25) scale(1 0.5)" />
+      <use
+          href="#p14-oct22-stem"
+          transform="translate(45 37) rotate(55) scale(0.8 0.5)"
+      />
+      <path
+          d="M11 36Q16 41 25 41M40 41q9-1 13-5"
+          fill="none"
+          stroke="#afc1a0"
+          stroke-width="0.9"
+      />
+  </g>
 </svg>

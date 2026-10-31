@@ -1,164 +1,82 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="pleiospilos-nelii-royal-flush-title pleiospilos-nelii-royal-flush-description" data-plant-slug="pleiospilos-nelii-royal-flush" focusable="false">
   <title id="pleiospilos-nelii-royal-flush-title">Royal Flush split rock plant portrait</title>
-  <desc id="pleiospilos-nelii-royal-flush-description">Two thick, dark-speckled purple split-rock leaves separated by a deep dark fissure in a white planter.</desc>
+  <desc id="pleiospilos-nelii-royal-flush-description">Low paired purple split-rock leaves with subtle speckles and a central fissure above mineral top dressing in an orange-brown faceted pot.</desc>
   <defs>
-      <linearGradient id="pleio-pot" x1="0" x2="0.9" y1="0" y2="1">
-          <stop offset="0" stop-color="#fffdf7" />
-          <stop offset="1" stop-color="#d4d0c7" />
+      <linearGradient id="p28-pot" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#c18458" />
+          <stop offset="1" stop-color="#824a35" />
       </linearGradient>
-      <radialGradient id="splitrock-leaf" cx="35%" cy="23%" r="80%">
-          <stop offset="0" stop-color="#aa849b" />
-          <stop offset="0.5" stop-color="#84637f" />
-          <stop offset="1" stop-color="#61485f" />
+      <clipPath id="p28-pot-clip">
+          <path d="M9 39H55L50 56Q48 61 32 61Q16 61 14 56Z" />
+      </clipPath>
+      <radialGradient id="p28-purple" cx="0.3" cy="0.15" r="0.9">
+          <stop offset="0" stop-color="#b18b9e" />
+          <stop offset="0.5" stop-color="#8b687f" />
+          <stop offset="1" stop-color="#5c465d" />
       </radialGradient>
-      <clipPath id="splitrock-left" clipPathUnits="userSpaceOnUse">
+      <clipPath id="p28-leaves-clip">
           <path
-              d="M31 20c-5-4-12 2-15 8-3 7-1 14 4 18h9c4-7 7-16 2-26Z"
-              fill="none"
-              stroke="none"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              d="M31 23C25 19 18 24 17 30Q15 39 28 41L31 39Q33 30 31 23ZM34 23C41 20 47 27 47 33Q47 41 34 41L32 39Q31 29 34 23Z"
           />
       </clipPath>
-      <clipPath id="splitrock-right" clipPathUnits="userSpaceOnUse">
-          <path
-              d="M34 20c7-3 14 5 15 11 1 6-1 11-5 15H32c0-8-2-18 2-26Z"
-              fill="none"
-              stroke="none"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-          />
-      </clipPath>
-      <pattern
-          id="splitrock-speckles"
-          width="4.8"
-          height="5.1"
-          patternUnits="userSpaceOnUse"
-      >
-          <ellipse
-              cx="1"
-              cy="1.4"
-              rx="0.45"
-              ry="0.45"
-              fill="#594455"
-              stroke="none"
-              stroke-width="1"
-          />
-          <ellipse
-              cx="3.3"
-              cy="3.8"
-              rx="0.34"
-              ry="0.34"
-              fill="#6b5064"
-              stroke="none"
-              stroke-width="1"
-          />
-          <ellipse
-              cx="3.6"
-              cy="0.5"
-              rx="0.23"
-              ry="0.23"
-              fill="#cfacba"
-              stroke="none"
-              stroke-width="1"
-          />
+      <pattern id="p28-speckles" width="4.7" height="4.3" patternUnits="userSpaceOnUse">
+          <circle cx="1.1" cy="1.1" r="0.32" fill="#554354" />
+          <circle cx="3.4" cy="3" r="0.28" fill="#604a60" />
+          <circle cx="3.8" cy="0.8" r="0.2" fill="#c5a4b1" />
       </pattern>
   </defs>
-  <ellipse
-      cx="32"
-      cy="60.5"
-      rx="22"
-      ry="1.9"
-      fill="#244b3b"
-      stroke="none"
-      stroke-width="0"
-      opacity="0.12"
-  />
-  <ellipse
-      cx="32"
-      cy="45.5"
-      rx="22"
-      ry="2.1"
-      fill="#745c45"
-      stroke="none"
-      stroke-width="1"
-  />
+  <ellipse cx="32" cy="61" rx="24" ry="1.8" fill="#244b3b" opacity="0.12" />
   <path
-      d="M29 20q3 1 6 0l5 27H26Z"
-      fill="#423440"
-      stroke="none"
-      stroke-width="1"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      d="M9 39H55L50 56Q48 61 32 61Q16 61 14 56Z"
+      fill="url(#p28-pot)"
+      stroke="#895b40"
+      stroke-width="1.3"
   />
-  <path
-      d="M31 20c-5-4-12 2-15 8-3 7-1 14 4 18h9c4-7 7-16 2-26Z"
-      fill="url(#splitrock-leaf)"
-      stroke="#59475b"
-      stroke-width="1.25"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <g clip-path="url(#splitrock-left)">
+  <g clip-path="url(#p28-pot-clip)" fill="#e2a277" opacity="0.45">
       <path
-          d="M31 20c-5-4-12 2-15 8-3 7-1 14 4 18h9c4-7 7-16 2-26Z"
-          fill="url(#splitrock-speckles)"
-          stroke="none"
-          stroke-width="1"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          d="M9 41L17 45 15 53 11 48ZM21 43L29 47 26 56 19 52ZM34 44L42 47 39 57 31 53ZM47 42L55 43 52 52 44 52ZM15 55L20 53 25 60 18 62ZM28 57L33 54 39 61 29 63ZM42 58L48 54 51 60 45 63Z"
       />
+  </g>
+  <path
+      d="M17 46L21 43M29 47L34 44M42 47L47 42M26 56L31 53M39 57L44 52"
+      fill="none"
+      stroke="#895b40"
+      stroke-width="0.6"
+      opacity="0.55"
+  />
+  <ellipse cx="32" cy="39" rx="23" ry="8.5" fill="#895b40" />
+  <ellipse cx="32" cy="38.7" rx="21.5" ry="7.2" fill="#75604c" />
+  <g stroke="#6d604d" stroke-width="0.4" stroke-linejoin="round">
       <path
-          d="M20 28q2-4 6-5"
+          d="M12 38l4-3 3 2-2 4ZM21 34l4-2 3 3-3 2ZM41 34l4-2 4 3-3 2ZM45 40l4-2 4 3-3 2ZM29 43l4-3 4 3-3 2"
+          fill="#d8d1b7"
+      />
+      <path d="M17 42l3-3 4 2-2 3ZM35 34l3-2 3 3-4 2ZM38 43l4-3 3 3-2 2" fill="#b87952" />
+      <path d="M27 34l4-2 2 3-4 2ZM21 43l4-2 3 2-3 2ZM48 36l3-1 2 2-3 1" fill="#454d49" />
+  </g>
+  <path d="M29 26Q32 22 36 26L36 40Q32 44 28 40Z" fill="#423342" />
+  <path
+      d="M31 23C25 19 18 24 17 30Q15 39 28 41L31 39Q33 30 31 23ZM34 23C41 20 47 27 47 33Q47 41 34 41L32 39Q31 29 34 23Z"
+      fill="url(#p28-purple)"
+      stroke="#654c60"
+      stroke-width="0.85"
+  />
+  <g clip-path="url(#p28-leaves-clip)">
+      <rect x="15" y="20" width="34" height="23" fill="url(#p28-speckles)" />
+      <path
+          d="M20 29Q22 23 28 24M37 24Q43 26 44 30"
           fill="none"
-          stroke="#cfafbc"
+          stroke="#c7a6b5"
           stroke-width="0.8"
           stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.7"
+          opacity="0.65"
       />
   </g>
   <path
-      d="M34 20c7-3 14 5 15 11 1 6-1 11-5 15H32c0-8-2-18 2-26Z"
-      fill="url(#splitrock-leaf)"
-      stroke="#59475b"
-      stroke-width="1.25"
+      d="M31 24Q33 31 31.5 38"
+      fill="none"
+      stroke="#49384c"
+      stroke-width="1"
       stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <g clip-path="url(#splitrock-right)">
-      <path
-          d="M34 20c7-3 14 5 15 11 1 6-1 11-5 15H32c0-8-2-18 2-26Z"
-          fill="url(#splitrock-speckles)"
-          stroke="none"
-          stroke-width="1"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-      />
-      <path
-          d="M37 23q4 1 6 5"
-          fill="none"
-          stroke="#c8a8b7"
-          stroke-width="0.7"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.65"
-      />
-  </g>
-  <path
-      d="M8 45h48v7H8z"
-      fill="#fffdf8"
-      stroke="#625b51"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
-  <path
-      d="m11 52 4 9h34l4-9Z"
-      fill="url(#pleio-pot)"
-      stroke="#625b51"
-      stroke-linejoin="round"
-      stroke-width="1.7"
   />
 </svg>

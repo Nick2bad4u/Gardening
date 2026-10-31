@@ -109,6 +109,43 @@ leaves above a purple planter with a narrow waist, flared base, and clear
 upper collar. The simplifications describe appearance, without confirming
 the terrarium's botanical identities or prescribing these containers as care guidance.
 
+## October 31 cactus and succulent photo revisions
+
+The owner's October 20 close-ups and October 22 collection overview guide eight
+further original vector portraits. The documented table grid distinguishes
+**P01 / A1 variegated moon cactus**, the dark burgundy ribbed plant in a yellow
+faceted pot, from the unchanged **P27 / G1 Black Widow** at the front of the table.
+**P06 / B3 Indigo Wave** has a narrow upright section and an uneven folded crest
+extending sideways above an orange-brown faceted pot. **P14 / E2 peanut hybrid**
+forms a low, broad cluster of short oval stems in a sage-green faceted pot.
+**P23 / G2 paper spine** has a compact body and long pale papery spines above a
+dark green faceted pot. **P25 / H2 Raindrops** uses a broad, low open rosette with
+spatulate leaves, muted mauve margins, and restrained bumps in a sage-green
+faceted pot. **P28 / G3 Royal Flush** retains paired purple leaves while adopting
+the photographed orange-brown faceted pot. Their mixed mineral top dressing is
+simplified for small-icon legibility.
+
+**P22 / #4 Kiwi aeonium** has a full overlapping canopy of broad green rosettes
+with muted pink edges above colorful polished stones and a tall white/gray round
+pot. **P20 / #2 shared succulent planter** combines taller round-leaved foliage,
+silver and copper spoon-shaped leaves, and two contrasting rosette appearance
+groups in a deeper dark wood-grained box. The drawing preserves the distinction
+between a visible appearance group and a confirmed botanical identification.
+
+The October 16 close-up also guides revised low, paired, patterned living-stone
+heads for **P35 / #9 shared Lithops** and its two component portraits. The pink
+hobnail pot framing is retained. Tan-brown and gray-green appearance groups remain
+schematic; the component profiles retain their probable identifications and do
+not represent separate pots. Transient flowers are omitted. These three exports
+represent one tracked container, bringing this revision to nine containers and
+eleven portrait files.
+
+These owner-photo-informed schematics do not establish rooted-plant counts,
+new identities, health, pot dimensions, drainage, or care events. Photo lighting
+and observed colors are simplified into the shared illustration palette.
+Source photographs retain the owner's separate rights and are not published by
+this artwork update.
+
 ## October 21 houseplant portraits
 
 The October 21 houseplant additions are original schematic vector portraits

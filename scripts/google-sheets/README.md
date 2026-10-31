@@ -4,8 +4,9 @@ Production logger **5.40.2 / immutable version 124** supports **39 container all
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained source and production **5.40.2** match immutable version **124**,
-verified October 31 after the seven-portrait update below. Production
+Maintained source is **5.40.3**, pending the cactus and succulent portrait rollout
+below. Production **5.40.2** matches immutable version **124**, verified October 31
+after the seven-portrait update. Production
 **AppSheet 1.100139** uses portrait revision **8cfb92a2dd0cdb06**;
 P41's appended optional weight field remains unchanged. The rollout receipt below
 records production checks separately from rehearsal results; earlier dated entries
@@ -39,6 +40,21 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## October 31 cactus and succulent portrait update
+
+Maintained **5.40.3** uses artwork revision **23e95f9e4dfdf1fa** for nine tracked
+containers: P01, P06, P14, P20, P22, P23, P25, P28, and P35. P35's two component
+portraits share the revised low living-stone bodies and existing pink pot,
+making eleven changed public SVG exports. The
+[artwork source record](../../assets/artwork/ICON-SOURCES.md#october-31-cactus-and-succulent-photo-revisions)
+documents the October album references and appearance-only scope.
+
+The logger changes only its version and portrait revision. The AppSheet manifest
+preserves all 39 IDs and slug mappings while targeting the new revisioned folder.
+No workbook schema, care behavior, runtime permissions, or trigger configuration
+changes. Source photographs remain private. Production promotion and preservation
+verification are pending; the current verified baseline above remains 5.40.2.
 
 ## October 31 seven-portrait photo update
 

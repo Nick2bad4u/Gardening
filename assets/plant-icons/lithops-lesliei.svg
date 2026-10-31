@@ -1,32 +1,125 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="lithops-lesliei-title lithops-lesliei-description" data-plant-slug="lithops-lesliei" focusable="false">
   <title id="lithops-lesliei-title">Lithops lesliei plant portrait</title>
-  <desc id="lithops-lesliei-description">Schematic tan-brown living-stone heads for probable Lithops lesliei in the shared pink P35 pot with raised dots, following the owner's pot photograph; illustration does not confirm species or separate roots.</desc>
+  <desc id="lithops-lesliei-description">Low paired tan-brown heads with pale branching top patterns for probable Lithops lesliei in the shared pink P35 pot with raised dots; schematic appearance does not confirm species or separate roots.</desc>
   <defs>
-  <linearGradient id="lithops-lesliei-pot" x1="0" y1="0" x2="1" y2="0.7">
-  <stop offset="0" stop-color="#b7748a" />
-  <stop offset="0.35" stop-color="#e9abbc" />
-  <stop offset="1" stop-color="#a6637b" />
-  </linearGradient>
-  <linearGradient id="lithops-lesliei-body" x1="0" y1="0" x2="0.8" y2="1">
-  <stop offset="0" stop-color="#d2b889" />
-  <stop offset="1" stop-color="#8c775f" />
-  </linearGradient>
-  <pattern id="lithops-lesliei-hobnails" width="6" height="5" patternUnits="userSpaceOnUse">
-  <ellipse cx="3" cy="2.9" rx="1.6" ry="1.4" fill="#985b73" opacity="0.55" />
-  <ellipse cx="2.7" cy="2.2" rx="1.45" ry="1.15" fill="#efb7c6" />
-  <ellipse cx="2.4" cy="1.9" rx="0.65" ry="0.4" fill="#f7d1dc" />
-  </pattern>
+      <linearGradient id="lithops-lesliei-pot" x1="0" y1="0" x2="1" y2="0.7">
+          <stop offset="0" stop-color="#b7748a" />
+          <stop offset="0.35" stop-color="#e9abbc" />
+          <stop offset="1" stop-color="#a6637b" />
+      </linearGradient>
+      <pattern
+          id="lithops-lesliei-hobnails"
+          width="6"
+          height="5"
+          patternUnits="userSpaceOnUse"
+      >
+          <ellipse cx="3" cy="2.9" rx="1.6" ry="1.4" fill="#985b73" opacity="0.55" />
+          <ellipse cx="2.7" cy="2.2" rx="1.45" ry="1.15" fill="#efb7c6" />
+          <ellipse cx="2.4" cy="1.9" rx="0.65" ry="0.4" fill="#f7d1dc" />
+      </pattern>
+      <linearGradient id="photo-lithops-lesliei-tan-side" x1="0" y1="0" x2="0" y2="1">
+          <stop stop-color="#b8a27c" />
+          <stop offset="1" stop-color="#7b6a52" />
+      </linearGradient>
+      <radialGradient id="photo-lithops-lesliei-tan-top" cx="0.35" cy="0.3" r="0.85">
+          <stop stop-color="#d7bd89" />
+          <stop offset="1" stop-color="#b89e73" />
+      </radialGradient>
+      <g id="photo-lithops-lesliei-tan-head">
+          <ellipse cx="0" cy="3.2" rx="8.6" ry="2.1" fill="#39382c" opacity="0.2" />
+          <path
+              d="M-8-0.7C-8.2 2.3-6.9 4.4-3.8 4.7L-0.7 4.2 0.2 0.2-0.7-4.8C-4.3-5.5-7.6-3.8-8-0.7ZM0.7-4.6 0.5 0.6 1 4.3C4.4 4.9 7.8 2.8 8 0.2 8.6-3 5.6-5.1 0.7-4.6Z"
+              fill="url(#photo-lithops-lesliei-tan-side)"
+              stroke="#74634c"
+              stroke-width="0.65"
+              stroke-linejoin="round"
+          />
+          <path
+              d="M-7.6-1C-7.9-3.3-4.9-5.1-1.2-4.6L-0.7-1.1-1.2 2.1C-4.3 2.9-7.3 1.5-7.6-1ZM1.1-4.4C4.3-5 7.9-3.3 7.7-0.8 7.7 1.3 4.7 2.9 1.1 2.2L0.8-1Z"
+              fill="url(#photo-lithops-lesliei-tan-top)"
+              stroke="#d3bc92"
+              stroke-width="0.45"
+          />
+          <path
+              d="M-6.2-1.4-5.2-2.9-3.8-2.7-3-3.9-1.9-3.7-1.8-2.1-3-1.3-2 0.2-2.5 1.3-4.1 1.4-4.4 0.3-5.8 0.2ZM2-3.4 3.2-3.5 3.8-2.6 5.6-2.7 6.5-1.6 5.9-0.7 6.4 0.4 4.9 1.3 4.1 0.5 2.4 1.4 1.9 0.2 2.7-0.7Z"
+              fill="#8e7a5e"
+          />
+          <path
+              d="M-5.1-1.8-4.2-1.5-4.5-0.5-5.3-0.8ZM-3.3-2.4-2.6-2.8-2.4-2-3-1.8ZM-3.8 0.4-3.2 0.1-2.7 0.7-3.2 1ZM3.3-2.5 4-2.3 3.7-1.5 3.1-1.7ZM4.8-0.5 5.5-0.3 5.2 0.3 4.5 0.1ZM2.7 0.1 3.3 0.4 2.8 0.9Z"
+              fill="#ceb582"
+          />
+          <path
+              d="M-0.5-4.6-0.3-1.1-0.5 3.5"
+              fill="none"
+              stroke="#605340"
+              stroke-width="0.7"
+              stroke-linecap="round"
+          />
+          <path
+              d="M-6.5-3.2Q-4.7-4.6-2.1-4.2M2-4.1Q4.3-4.5 6-3.3"
+              fill="none"
+              stroke="#e8d2a4"
+              stroke-width="0.5"
+              stroke-linecap="round"
+          />
+      </g>
   </defs>
   <ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
-  <path d="M10 36V52C10 63 54 63 54 52V36Z" fill="url(#lithops-lesliei-pot)" stroke="#89556b" stroke-width="1.4" />
-  <path d="M11 39V52C11 61 53 61 53 52V39Q32 45 11 39Z" fill="url(#lithops-lesliei-hobnails)" />
-  <ellipse cx="32" cy="36" rx="22" ry="7" fill="#edb3c4" stroke="#89556b" stroke-width="1.3" />
+  <path
+      d="M10 36V52C10 63 54 63 54 52V36Z"
+      fill="url(#lithops-lesliei-pot)"
+      stroke="#89556b"
+      stroke-width="1.4"
+  />
+  <path
+      d="M11 39V52C11 61 53 61 53 52V39Q32 45 11 39Z"
+      fill="url(#lithops-lesliei-hobnails)"
+  />
+  <ellipse
+      cx="32"
+      cy="36"
+      rx="22"
+      ry="7"
+      fill="#edb3c4"
+      stroke="#89556b"
+      stroke-width="1.3"
+  />
   <ellipse cx="32" cy="35.7" rx="19.6" ry="5.2" fill="#756451" />
-  <path d="M14 35l3-2 3 2-2 2ZM38 35l3-3 4 2-2 3ZM23 38l2-2 3 1-1 2ZM46 34l2-1 3 2-3 1" fill="#e2d3b7" />
-  <g transform="translate(7 0) scale(0.78)">
-  <path d="M15 32C10 16 15 12 22 15L25 33Q21 38 15 32ZM27 33L28 15C36 11 40 18 35 32Q32 37 27 33Z" fill="url(#lithops-lesliei-body)" stroke="#71604d" stroke-width="1.2" />
-  <path d="M29 41C24 26 29 21 36 24L39 42Q34 47 29 41ZM41 42L42 24C50 20 54 27 49 41Q46 46 41 42Z" fill="url(#lithops-lesliei-body)" stroke="#71604d" stroke-width="1.2" />
-  <path d="M17 18L21 20 17 23 22 25M30 18L34 20 30 24M31 27L35 30 31 33 36 35M44 27L48 30 44 33" fill="none" stroke="#806240" stroke-width="1.4" stroke-linecap="round" />
-  </g>
-  <path d="M11 37Q32 44 53 37" fill="none" stroke="#f4c1d0" stroke-width="2" stroke-linecap="round" />
+  <path
+      d="M14 35l3-2 3 2-2 2ZM38 35l3-3 4 2-2 3ZM23 38l2-2 3 1-1 2ZM46 34l2-1 3 2-3 1"
+      fill="#e2d3b7"
+  />
+  <path
+      d="M14 34l2-2 3 0.8-0.4 2.5-3 1ZM20 31l2-1.1 2.2 0.9-1 2ZM29 32l2-1 2 1.1-0.6 2-2.5 0.3ZM44 32l2-1.3 2.8 1.5-1.7 2.2ZM18 37l2.8-1.5 2 1-0.8 2-2.6 0.1ZM32 37l2.5-1.3 2 1.4-1 2-2.9-0.2ZM45 37l2-1.2 2.7 1.3-0.4 1.6-3.2 0.4Z"
+      fill="#d8c3a2"
+      stroke="#aa957b"
+      stroke-width="0.3"
+  />
+  <path
+      d="M24 36l2-1.3 2.2 1.2-0.7 1.6-2.4 0.3ZM38 34l1.7-1.7 2.1 0.8-0.5 2ZM14 37l1.7-1.1 2.1 1.5-0.7 1.4ZM40 38l2-1 2 1.3-0.8 1.3-2.5 0.2Z"
+      fill="#bd8067"
+      stroke="#865e50"
+      stroke-width="0.3"
+  />
+  <path
+      d="M25 31l2.3-1 1.5 2-1.4 1ZM35 30l2-0.5 1.4 1.6-1.3 1.2ZM49 35l1.6-0.3 0.6 1.7-1.8 1ZM29 38l1.8-0.7 1.2 1.6-1.7 1.1Z"
+      fill="#a6b8b3"
+      stroke="#71867f"
+      stroke-width="0.3"
+  />
+  <use
+      href="#photo-lithops-lesliei-tan-head"
+      transform="translate(24.5 28.7) rotate(-12) scale(1.05)"
+  />
+  <use
+      href="#photo-lithops-lesliei-tan-head"
+      transform="translate(39.1 33.4) rotate(11) scale(1.08)"
+  />
+  <path
+      d="M11 37Q32 44 53 37"
+      fill="none"
+      stroke="#f4c1d0"
+      stroke-width="2"
+      stroke-linecap="round"
+  />
 </svg>

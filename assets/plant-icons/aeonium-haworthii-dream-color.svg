@@ -1,115 +1,130 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="aeonium-haworthii-dream-color-title aeonium-haworthii-dream-color-description" data-plant-slug="aeonium-haworthii-dream-color" focusable="false">
   <title id="aeonium-haworthii-dream-color-title">Kiwi aeonium plant portrait</title>
-  <desc id="aeonium-haworthii-dream-color-description">Three branching rosettes with cream-green spoon-shaped leaves and pink margins above a white planter.</desc>
+  <desc id="aeonium-haworthii-dream-color-description">A full canopy of overlapping broad green rosettes with muted pink edges above colorful polished stones in a tall round white pot with a pale gray lower section.</desc>
   <defs>
-      <linearGradient id="aeonium-pot" x1="0" x2="0.9" y1="0" y2="1">
-          <stop offset="0" stop-color="#fffdf7" />
-          <stop offset="1" stop-color="#d4d0c7" />
+      <linearGradient id="p22-oct-pot" x1="0" y1="0" x2="1" y2="0">
+          <stop stop-color="#d7d3c9" />
+          <stop offset="0.3" stop-color="#fffdf5" />
+          <stop offset="0.65" stop-color="#f6f3e8" />
+          <stop offset="1" stop-color="#c8c5bc" />
       </linearGradient>
-      <linearGradient id="kiwi-color" x1="0" y1="0" x2="0.85" y2="1">
-          <stop offset="0" stop-color="#b2c982" />
-          <stop offset="0.5" stop-color="#ced899" />
-          <stop offset="1" stop-color="#e3dda0" />
+      <linearGradient id="p22-oct-pot-base" x1="0" y1="0" x2="1" y2="0">
+          <stop stop-color="#b1b6af" />
+          <stop offset="0.4" stop-color="#d9dcd2" />
+          <stop offset="1" stop-color="#a5ada5" />
       </linearGradient>
-      <g id="kiwi-leaf" transform="scale(0.8 1)">
+      <radialGradient id="p22-oct-leaf" cx="48%" cy="49%" r="68%">
+          <stop stop-color="#8eae78" />
+          <stop offset="0.56" stop-color="#789466" />
+          <stop offset="0.86" stop-color="#9d7c84" />
+          <stop offset="1" stop-color="#ab778b" />
+      </radialGradient>
+      <linearGradient id="p22-oct-leaf-shadow" x1="0" y1="0" x2="1" y2="1">
+          <stop stop-color="#a4b38b" />
+          <stop offset="1" stop-color="#5c725c" />
+      </linearGradient>
+      <clipPath id="p22-oct-soil">
+          <ellipse cx="32" cy="42.7" rx="17" ry="5.6" />
+      </clipPath>
+      <g id="p22-oct-leaf-shape">
           <path
-              d="M0 1C-3-1-5-5-4.5-8.5-4-10.5-1-11.6 0-12.5 1-11.6 4-10.5 4.5-8.5 5-5 3-1 0 1Z"
-              fill="url(#kiwi-color)"
-              stroke="#af5971"
-              stroke-width="0.65"
-              stroke-linecap="round"
+              d="M0 0C-4-0.6-7-4-6-7.2-5.3-10.6-1.8-11.3 0-11.5 1.3-11.8 5-9.1 5.7-6.5 6.2-3.7 2.5-0.1 0 0Z"
+              fill="url(#p22-oct-leaf)"
+              stroke="#bc7e96"
+              stroke-width="0.45"
               stroke-linejoin="round"
           />
+          <path
+              d="M0-1.2C-0.8-3.5-1.1-7.5-0.2-9.7"
+              fill="none"
+              stroke="#b6c392"
+              stroke-width="0.3"
+              opacity="0.45"
+          />
       </g>
-      <g id="aeonium-haworthii-dream-color-detail-1">
-          <use href="#kiwi-leaf" transform="rotate(0) scale(1)" />
-          <use href="#kiwi-leaf" transform="rotate(40) scale(1)" />
-          <use href="#kiwi-leaf" transform="rotate(80) scale(1)" />
-          <use href="#kiwi-leaf" transform="rotate(120) scale(1)" />
-          <use href="#kiwi-leaf" transform="rotate(160) scale(1)" />
-          <use href="#kiwi-leaf" transform="rotate(200) scale(1)" />
-          <use href="#kiwi-leaf" transform="rotate(240) scale(1)" />
-          <use href="#kiwi-leaf" transform="rotate(280) scale(1)" />
-          <use href="#kiwi-leaf" transform="rotate(320) scale(1)" />
-          <use href="#kiwi-leaf" transform="rotate(23) scale(0.68)" />
-          <use href="#kiwi-leaf" transform="rotate(74.43) scale(0.68)" />
-          <use href="#kiwi-leaf" transform="rotate(125.86) scale(0.68)" />
-          <use href="#kiwi-leaf" transform="rotate(177.29) scale(0.68)" />
-          <use href="#kiwi-leaf" transform="rotate(228.71) scale(0.68)" />
-          <use href="#kiwi-leaf" transform="rotate(280.14) scale(0.68)" />
-          <use href="#kiwi-leaf" transform="rotate(331.57) scale(0.68)" />
-          <use href="#kiwi-leaf" transform="rotate(0) scale(0.36)" />
-          <use href="#kiwi-leaf" transform="rotate(90) scale(0.36)" />
-          <use href="#kiwi-leaf" transform="rotate(180) scale(0.36)" />
-          <use href="#kiwi-leaf" transform="rotate(270) scale(0.36)" />
+      <g id="p22-oct-rosette">
+          <use href="#p22-oct-leaf-shape" transform="rotate(7) scale(0.93 1.00)" />
+          <use href="#p22-oct-leaf-shape" transform="rotate(61) scale(1.00 1.05)" />
+          <use href="#p22-oct-leaf-shape" transform="rotate(116) scale(1.07 1.00)" />
+          <use href="#p22-oct-leaf-shape" transform="rotate(174) scale(0.93 1.05)" />
+          <use href="#p22-oct-leaf-shape" transform="rotate(229) scale(1.00 1.00)" />
+          <use href="#p22-oct-leaf-shape" transform="rotate(289) scale(1.07 1.05)" />
+          <use href="#p22-oct-leaf-shape" transform="rotate(29) scale(0.52 0.56)" />
+          <use href="#p22-oct-leaf-shape" transform="rotate(95) scale(0.56 0.59)" />
+          <use href="#p22-oct-leaf-shape" transform="rotate(159) scale(0.60 0.56)" />
+          <use href="#p22-oct-leaf-shape" transform="rotate(220) scale(0.52 0.59)" />
+          <use href="#p22-oct-leaf-shape" transform="rotate(281) scale(0.56 0.56)" />
+          <use href="#p22-oct-leaf-shape" transform="rotate(339) scale(0.60 0.59)" />
+          <use href="#p22-oct-leaf-shape" transform="rotate(13) scale(0.30 0.32)" />
+          <use href="#p22-oct-leaf-shape" transform="rotate(105) scale(0.32 0.34)" />
+          <use href="#p22-oct-leaf-shape" transform="rotate(198) scale(0.34 0.32)" />
+          <use href="#p22-oct-leaf-shape" transform="rotate(285) scale(0.30 0.34)" />
+          <ellipse cx="0" cy="-0.4" rx="0.8" ry="1" fill="#a3bb6d" />
       </g>
   </defs>
-  <ellipse
-      cx="32"
-      cy="60.5"
-      rx="23"
-      ry="1.9"
-      fill="#244b3b"
-      stroke="none"
-      stroke-width="0"
-      opacity="0.12"
-  />
-  <ellipse
-      cx="32"
-      cy="45.5"
-      rx="23"
-      ry="2.1"
-      fill="#745c45"
-      stroke="none"
-      stroke-width="1"
+  <ellipse cx="32" cy="61" rx="18" ry="1.8" fill="#263e32" opacity="0.14" />
+  <path
+      d="M14.2 41.5C14.7 49.7 17.2 56.7 20 59 25.6 62.2 39.1 62.2 44.5 59 47.5 56.7 49.6 49.2 49.8 41.5Z"
+      fill="url(#p22-oct-pot)"
+      stroke="#8d9185"
+      stroke-width="0.8"
   />
   <path
-      d="M31 46c1-9 0-15 1-23m0 14c-6-3-12-8-14-12m14 7c5-2 10-6 14-10"
+      d="M15.8 50.5C18 52.2 45.9 52.4 48.2 50.5 47.2 54.5 45.8 57.8 44.5 59 39.1 62.2 25.6 62.2 20 59 18.5 57.6 16.8 54.2 15.8 50.5Z"
+      fill="url(#p22-oct-pot-base)"
+  />
+  <path
+      d="M18.4 47.5C19.3 53 20 56.6 22.2 58.1"
       fill="none"
-      stroke="#70553d"
-      stroke-width="2.8"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <path
-      d="M30.5 43v-8m1-2 0.3-7"
-      fill="none"
-      stroke="#b4986c"
-      stroke-width="0.65"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <use
-      href="#aeonium-haworthii-dream-color-detail-1"
-      transform="translate(18 24) scale(0.91 0.78)"
-  />
-  <use
-      href="#aeonium-haworthii-dream-color-detail-1"
-      transform="translate(46 24) scale(0.95 0.8) rotate(10)"
-  />
-  <use
-      href="#aeonium-haworthii-dream-color-detail-1"
-      transform="translate(32 17) scale(1.1 0.94)"
-  />
-  <path
-      d="M7 45h50v7H7z"
-      fill="#fffdf8"
-      stroke="#625b51"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
-  <path
-      d="m10 52 4 9h36l4-9Z"
-      fill="url(#aeonium-pot)"
-      stroke="#625b51"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
-  <path
-      d="M14 56h36"
-      fill="none"
-      stroke="#efebe1"
-      stroke-linecap="round"
+      stroke="#fffef6"
       stroke-width="1.1"
+      stroke-linecap="round"
   />
+  <ellipse
+      cx="32"
+      cy="41.8"
+      rx="17.9"
+      ry="6.1"
+      fill="#f9f6eb"
+      stroke="#a4a598"
+      stroke-width="0.65"
+  />
+  <ellipse cx="32" cy="42.3" rx="16.5" ry="4.7" fill="#66533b" />
+  <g
+      clip-path="url(#p22-oct-soil)"
+      stroke="#665840"
+      stroke-width="0.25"
+      stroke-linejoin="round"
+  >
+      <path d="m15 41 3-2 2 1-0.5 3-3 0.3Z" fill="#cba575" />
+      <path d="m20 43 2.5-2 2 1.5-0.8 3-3 0Z" fill="#638b96" />
+      <path d="m26 44 3-2 2.1 1.6-0.7 2.8-3.5 0.2Z" fill="#bca453" />
+      <path d="m32 44 2-1.8 3.3 0.7 0.3 2.8-3.7 1Z" fill="#73807e" />
+      <path d="m39 43 2-1.5 2.5 1-0.2 3-3 0.5Z" fill="#9c6f8c" />
+      <path d="m45 40 3-1 2 2-1 2.5-3.7-0.8Z" fill="#c5ab55" />
+      <path d="m17 44 1.7-1.2 1.8 1-0.1 1.8-2.7 0.3Z" fill="#8f6065" />
+      <path d="m24 45 1.5-1.1 1 1-0.2 2-2-0.2Z" fill="#d8b397" />
+      <path d="m30 41 2-1 2 1.5-1 2-2.5-0.2Z" fill="#af7752" />
+      <path d="m36 46 2-1.5 2 1-0.5 1.4-3 0.2Z" fill="#c7b89f" />
+      <path d="m43 45 2-1.6 2 1-1.1 1.8-2 0.3Z" fill="#729693" />
+  </g>
+  <path
+      d="M31 43.5 31 27M30.8 37 20 29M31 33 41 24"
+      fill="none"
+      stroke="#725442"
+      stroke-width="2"
+      stroke-linecap="round"
+  />
+  <path
+      d="M15 34C6 31 6 22 10 18L27 13 43 14C52 18 58 28 51 35L40 41 22 42Z"
+      fill="url(#p22-oct-leaf-shadow)"
+  />
+  <use
+      href="#p22-oct-rosette"
+      transform="translate(16 21) rotate(-13) scale(0.81 0.76)"
+  />
+  <use href="#p22-oct-rosette" transform="translate(32 16) rotate(17) scale(1.18 0.98)" />
+  <use href="#p22-oct-rosette" transform="translate(45 28) rotate(25) scale(0.97 0.86)" />
+  <use href="#p22-oct-rosette" transform="translate(12 34) rotate(-27) scale(0.64 0.6)" />
+  <use href="#p22-oct-rosette" transform="translate(27 33) rotate(-11) scale(1.2 1.03)" />
 </svg>

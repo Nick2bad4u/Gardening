@@ -3627,169 +3627,294 @@
     />
 </symbol>
 
-  <symbol
-      id="icon-plant-gymnocalycium-mihanovichii-variegated"
-      viewBox="0 0 64 64"
-  >
-    <defs>
-        <linearGradient id="gym-var-pot" x1="0" x2="0.8" y1="0" y2="1">
-            <stop offset="0" stop-color="#79c2e9" />
-            <stop offset="1" stop-color="#377fb6" />
-        </linearGradient>
-        <radialGradient id="varmoon-body" cx="35%" cy="23%" r="80%">
-            <stop offset="0" stop-color="#80ac77" />
-            <stop offset="0.5" stop-color="#438361" />
-            <stop offset="1" stop-color="#285746" />
-        </radialGradient>
-        <clipPath id="varmoon-clip" clipPathUnits="userSpaceOnUse">
-            <path
-                d="M12 47c-3-6-3-13 0-19 4-7 10-11 20-11s17 4 21 11c3 6 3 13-1 19Z"
-                fill="none"
-                stroke="none"
-                stroke-width="1"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            />
-        </clipPath>
-        <linearGradient id="varmoon-rose" x1="0" y1="0" x2="0.85" y2="1">
-            <stop offset="0" stop-color="#bd8c80" />
-            <stop offset="0.5" stop-color="#d19a83" />
-            <stop offset="1" stop-color="#987a60" />
-        </linearGradient>
-        <linearGradient id="varmoon-gold" x1="0" y1="0" x2="0.85" y2="1">
-            <stop offset="0" stop-color="#d8cb82" />
-            <stop offset="0.5" stop-color="#c6b566" />
-            <stop offset="1" stop-color="#8c9964" />
-        </linearGradient>
-        <g id="gymnocalycium-mihanovichii-variegated-detail-1">
-            <path
-                d="M-2.4 2Q0 4 2.4 2L0 0Z"
-                fill="#273e36"
-                stroke="none"
-                stroke-width="0"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                opacity="0.28"
-            />
-            <path
-                d="M0 0q-2-1-3.2-0.5M0 0q2-1 3.2-0.5M0 0q-1.7 1.8-2.5 1.9M0 0q1.7 1.8 2.5 1.9M0 0q0.6-1.8 0.2-3"
-                fill="none"
-                stroke="#dfccb0"
-                stroke-width="0.55"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            />
-            <ellipse
-                cx="0"
-                cy="0"
-                rx="0.85"
-                ry="0.62"
-                fill="#e6d7b8"
-                stroke="#8a7058"
-                stroke-width="0.25"
-            />
-        </g>
-    </defs>
-    <ellipse
-        cx="32"
-        cy="60.5"
-        rx="22"
-        ry="1.9"
-        fill="#244b3b"
-        stroke="none"
-        stroke-width="0"
-        opacity="0.12"
-    />
-    <ellipse
-        cx="32"
-        cy="45.5"
-        rx="22"
-        ry="2.1"
-        fill="#745c45"
-        stroke="none"
-        stroke-width="1"
-    />
-    <path
-        d="M12 47c-3-6-3-13 0-19 4-7 10-11 20-11s17 4 21 11c3 6 3 13-1 19Z"
-        fill="url(#varmoon-body)"
-        stroke="#244b3b"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    />
-    <g clip-path="url(#varmoon-clip)">
+  <symbol id="icon-plant-gymnocalycium-mihanovichii-variegated" viewBox="0 0 64 64">
+<defs>
+    <linearGradient id="p01-oct22-pot" x1="0" y1="0" x2="1" y2="0.3">
+        <stop stop-color="#f1ce56" />
+        <stop offset="0.35" stop-color="#dba522" />
+        <stop offset="1" stop-color="#a67a20" />
+    </linearGradient>
+    <clipPath id="p01-oct22-pot-clip">
+        <path d="M10 35H54L50 55Q48 60 32 61Q16 60 14 55Z" />
+    </clipPath>
+    <radialGradient id="p01-oct22-body" cx="0.3" cy="0.25" r="0.85">
+        <stop stop-color="#80505b" />
+        <stop offset="0.5" stop-color="#55313c" />
+        <stop offset="1" stop-color="#2b292d" />
+    </radialGradient>
+    <clipPath id="p01-oct22-body-clip">
         <path
-            d="M25 17c-7 7-8 15-8 21l4 9h6c-4-12-6-21 1-30Z"
-            fill="url(#varmoon-rose)"
-            stroke="none"
-            stroke-width="1"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            d="M32 17Q27 15 24 19Q19 18 17 23Q14 25 16 29Q12 33 16 37Q16 42 22 43Q26 47 32 45Q38 47 43 43Q48 42 48 37Q52 33 48 29Q49 24 45 22Q42 17 38 19Q35 16 32 17Z"
         />
+    </clipPath>
+    <g id="p01-oct22-spines">
         <path
-            d="M37 18c6 9 8 19 5 29h7c4-12-3-25-8-29Z"
-            fill="url(#varmoon-gold)"
-            stroke="none"
-            stroke-width="1"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        />
-        <path
-            d="M31 18c-2 7 0 11 1 15s-1 10 1 14h4c-3-13-5-20-3-29Z"
-            fill="#b8a16d"
-            stroke="none"
-            stroke-width="0"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            opacity="0.7"
-        />
-        <path
-            d="M32 18c-2 7 1 9-1 14s2 9 1 15M24 20c-7 9-7 15-5 27m19-27c7 9 9 15 7 27M15 26c-4 6-5 14-2 21m35-21c4 6 5 14 2 21"
+            d="M0 0q-2-2-3.6-1.7M0 0q2-2 3.6-1.7M0 0q-2 2-3.4 2M0 0q2 2 3.4 2M0 0q0-2-0.7-3.2"
             fill="none"
-            stroke="#bdd3a2"
-            stroke-width="0.85"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            stroke="#ead7ba"
+            stroke-width="0.65"
+        />
+        <ellipse rx="0.8" ry="0.55" fill="#dcc3a5" />
+    </g>
+</defs>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="32" cy="61" rx="23" ry="1.6" fill="#274537" opacity="0.16" />
+    <path
+        d="M10 35H54L50 55Q48 60 32 61Q16 60 14 55Z"
+        fill="url(#p01-oct22-pot)"
+        stroke="#a67a20"
+        stroke-width="1.1"
+    />
+    <g clip-path="url(#p01-oct22-pot-clip)">
+        <path
+            d="M10 36 18 40 16 48 11 45Z"
+            fill="#a67a20"
+            opacity="0.48"
+            stroke="#a67a20"
+            stroke-width="0.45"
+        />
+        <path
+            d="M18 40 27 41 25 49 16 48Z"
+            fill="#f1ce56"
+            opacity="0.5"
+            stroke="#a67a20"
+            stroke-width="0.45"
+        />
+        <path
+            d="M27 41 37 41 38 49 25 49Z"
+            fill="#dba522"
+            opacity="0.35"
+            stroke="#a67a20"
+            stroke-width="0.45"
+        />
+        <path
+            d="M37 41 46 39 48 47 38 49Z"
+            fill="#f1ce56"
+            opacity="0.3"
+            stroke="#a67a20"
+            stroke-width="0.45"
+        />
+        <path
+            d="M46 39 54 36 53 44 48 47Z"
+            fill="#a67a20"
+            opacity="0.38"
+            stroke="#a67a20"
+            stroke-width="0.45"
+        />
+        <path
+            d="M11 45 16 48 15 55 12 52Z"
+            fill="#f1ce56"
+            opacity="0.32"
+            stroke="#a67a20"
+            stroke-width="0.45"
+        />
+        <path
+            d="M16 48 25 49 22 57 15 55Z"
+            fill="#a67a20"
+            opacity="0.3"
+            stroke="#a67a20"
+            stroke-width="0.45"
+        />
+        <path
+            d="M25 49 38 49 36 58 22 57Z"
+            fill="#f1ce56"
+            opacity="0.45"
+            stroke="#a67a20"
+            stroke-width="0.45"
+        />
+        <path
+            d="M38 49 48 47 49 54 36 58Z"
+            fill="#a67a20"
+            opacity="0.42"
+            stroke="#a67a20"
+            stroke-width="0.45"
+        />
+        <path
+            d="M48 47 53 44 52 52 49 54Z"
+            fill="#f1ce56"
+            opacity="0.28"
+            stroke="#a67a20"
+            stroke-width="0.45"
+        />
+        <path
+            d="M15 55 22 57 25 61 17 59Z"
+            fill="#f1ce56"
+            opacity="0.3"
+            stroke="#a67a20"
+            stroke-width="0.45"
+        />
+        <path
+            d="M22 57 36 58 32 62 25 61Z"
+            fill="#a67a20"
+            opacity="0.25"
+            stroke="#a67a20"
+            stroke-width="0.45"
+        />
+        <path
+            d="M36 58 49 54 47 59 32 62Z"
+            fill="#dba522"
+            opacity="0.4"
+            stroke="#a67a20"
+            stroke-width="0.45"
         />
     </g>
-    <use
-        href="#gymnocalycium-mihanovichii-variegated-detail-1"
-        transform="translate(31 23) scale(0.72)"
-    />
-    <use
-        href="#gymnocalycium-mihanovichii-variegated-detail-1"
-        transform="translate(21 29) scale(0.8)"
-    />
-    <use
-        href="#gymnocalycium-mihanovichii-variegated-detail-1"
-        transform="translate(43 29) scale(0.8)"
-    />
-    <use
-        href="#gymnocalycium-mihanovichii-variegated-detail-1"
-        transform="translate(15 38) scale(0.8)"
-    />
-    <use
-        href="#gymnocalycium-mihanovichii-variegated-detail-1"
-        transform="translate(32 37) scale(0.86)"
-    />
-    <use
-        href="#gymnocalycium-mihanovichii-variegated-detail-1"
-        transform="translate(47 40) scale(0.8)"
+    <ellipse
+        cx="32"
+        cy="35"
+        rx="22"
+        ry="6.5"
+        fill="#5a4435"
+        stroke="#dba522"
+        stroke-width="1.6"
     />
     <path
-        d="M8 45h48v7H8z"
-        fill="#80c5e8"
-        stroke="#28577e"
-        stroke-linejoin="round"
-        stroke-width="1.7"
+        d="m15 34.15 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#e4d5ba"
+        stroke="#5c5145"
+        stroke-width="0.35"
     />
     <path
-        d="m11 52 4 9h34l4-9Z"
-        fill="url(#gym-var-pot)"
-        stroke="#28577e"
-        stroke-linejoin="round"
-        stroke-width="1.7"
+        d="m19 36.7 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#af6650"
+        stroke="#5c5145"
+        stroke-width="0.35"
     />
+    <path
+        d="m24 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#bdc4bc"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m29 38.4 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#3a3b35"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m35 38.4 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#ddcdb1"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m41 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#b96e50"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m47 35.85 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#e1d8c3"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m14 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#3b4440"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m21 39.25 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#e8ddc6"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m28 40.1 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#b87757"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m37 40.1 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#8e9b91"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m44 39.25 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#343c36"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m50 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#ae785e"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m15 31.6 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#bfbeb0"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m21 30.75 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#3a3e36"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m45 30.75 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#cbb99c"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m50 32.45 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#d8cfc0"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <g transform="translate(10.24 6.4) scale(0.68)">
+        <path
+            d="M32 17Q27 15 24 19Q19 18 17 23Q14 25 16 29Q12 33 16 37Q16 42 22 43Q26 47 32 45Q38 47 43 43Q48 42 48 37Q52 33 48 29Q49 24 45 22Q42 17 38 19Q35 16 32 17Z"
+            fill="url(#p01-oct22-body)"
+            stroke="#372e31"
+            stroke-width="1.15"
+        />
+        <g clip-path="url(#p01-oct22-body-clip)">
+            <path
+                d="M31 18C26 23 25 28 27 33Q24 40 29 46M33 18C38 23 39 29 37 33Q40 40 35 46M26 18Q18 23 21 29Q17 35 23 44M39 19Q47 23 44 29Q49 35 42 44"
+                fill="none"
+                stroke="#a16872"
+                stroke-width="1.9"
+            />
+            <path
+                d="M31 19Q29 25 30 29Q28 35 31 44M35 19Q39 26 39 29Q42 36 39 43M24 21Q19 29 21 33Q19 38 23 42M43 22Q46 28 45 32Q48 37 44 41"
+                fill="none"
+                stroke="#3a2933"
+                stroke-width="1.8"
+            />
+            <path
+                d="M26 22 25 25M28 34l-0.5 4m9-13 1 2m0 9 0.5 3M19 27l-0.5 2m25 6 1 2"
+                fill="none"
+                stroke="#bb8f87"
+                stroke-width="0.65"
+            />
+        </g>
+        <use href="#p01-oct22-spines" transform="translate(30 20) scale(0.7)" />
+        <use href="#p01-oct22-spines" transform="translate(35 21) scale(0.7)" />
+        <use href="#p01-oct22-spines" transform="translate(24 25) scale(0.9)" />
+        <use href="#p01-oct22-spines" transform="translate(40 25) scale(0.9)" />
+        <use href="#p01-oct22-spines" transform="translate(18 31) scale(0.9)" />
+        <use href="#p01-oct22-spines" transform="translate(28 31) scale(0.95)" />
+        <use href="#p01-oct22-spines" transform="translate(37 31) scale(0.95)" />
+        <use href="#p01-oct22-spines" transform="translate(46 32) scale(0.9)" />
+        <use href="#p01-oct22-spines" transform="translate(22 39) scale(0.85)" />
+        <use href="#p01-oct22-spines" transform="translate(31 40) scale(0.9)" />
+        <use href="#p01-oct22-spines" transform="translate(42 40) scale(0.85)" />
+    </g>
+    <path
+        d="M11 36Q16 41 25 41M40 41q9-1 13-5"
+        fill="none"
+        stroke="#f1ce56"
+        stroke-width="0.9"
+    />
+</g>
 </symbol>
 
   <symbol id="icon-plant-gymnocalycium-saglionis" viewBox="0 0 64 64">
@@ -4115,243 +4240,300 @@
     />
 </symbol>
 
-  <symbol
-      id="icon-plant-myrtillocactus-geometrizans-indigo-wave"
-      viewBox="0 0 64 64"
-  >
-    <defs>
-        <linearGradient id="indigo-pot" x1="0" x2="0.9" y1="0" y2="1">
-            <stop offset="0" stop-color="#aa7bca" />
-            <stop offset="1" stop-color="#6b489b" />
-        </linearGradient>
-        <linearGradient id="wave-body" x1="0" y1="0" x2="0.85" y2="1">
-            <stop offset="0" stop-color="#a2c5b3" />
-            <stop offset="0.5" stop-color="#68a294" />
-            <stop offset="1" stop-color="#3f766d" />
-        </linearGradient>
-        <clipPath id="wave-clip" clipPathUnits="userSpaceOnUse">
-            <path
-                d="M10 45c-2-4-4-6-3-10-4-4-2-8 2-8-3-5-2-9 2-9 3 0 2 5 5 5-1-7 0-11 4-10 3 1 1 6 4 7 0-5 2-10 5-9 3 1 0 7 4 8 3-3 3-7 6-6 4 1 0 7 4 9 2-3 4-6 7-4 3 2 0 6 2 8 5-2 7 3 4 7 4 3 2 8-2 12Z"
-                fill="none"
-                stroke="none"
-                stroke-width="1"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            />
-        </clipPath>
-    </defs>
-    <ellipse
-        cx="32"
-        cy="60.5"
-        rx="24"
-        ry="1.9"
-        fill="#244b3b"
-        stroke="none"
-        stroke-width="0"
-        opacity="0.12"
-    />
-    <ellipse
-        cx="32"
-        cy="43.5"
-        rx="24"
-        ry="2.1"
-        fill="#745c45"
-        stroke="none"
-        stroke-width="1"
-    />
-    <path
-        d="M10 45c-2-4-4-6-3-10-4-4-2-8 2-8-3-5-2-9 2-9 3 0 2 5 5 5-1-7 0-11 4-10 3 1 1 6 4 7 0-5 2-10 5-9 3 1 0 7 4 8 3-3 3-7 6-6 4 1 0 7 4 9 2-3 4-6 7-4 3 2 0 6 2 8 5-2 7 3 4 7 4 3 2 8-2 12Z"
-        fill="url(#wave-body)"
-        stroke="#244b3b"
-        stroke-width="1.45"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    />
-    <g clip-path="url(#wave-clip)">
+  <symbol id="icon-plant-myrtillocactus-geometrizans-indigo-wave" viewBox="0 0 64 64">
+<defs>
+    <linearGradient id="p06-oct22-pot" x1="0" y1="0" x2="1" y2="0.3">
+        <stop stop-color="#e6a174" />
+        <stop offset="0.35" stop-color="#ba6745" />
+        <stop offset="1" stop-color="#79432e" />
+    </linearGradient>
+    <clipPath id="p06-oct22-pot-clip">
+        <path d="M10 35H54L50 55Q48 60 32 61Q16 60 14 55Z" />
+    </clipPath>
+    <linearGradient id="p06-oct22-body" x1="0" y1="0" x2="1" y2="0.5">
+        <stop stop-color="#94b995" />
+        <stop offset="0.32" stop-color="#4c846d" />
+        <stop offset="0.66" stop-color="#6d995e" />
+        <stop offset="1" stop-color="#a6b369" />
+    </linearGradient>
+    <clipPath id="p06-oct22-body-clip">
         <path
-            d="M12 20c-3 8 9 8 5 14s3 8 5 12M21 15c-5 9 7 8 2 17s5 8 5 14M29 14c-5 10 6 9 2 17s2 10 2 15M38 16c0 8-6 10-1 15s-1 10 1 15M47 21c-6 7 0 8-4 14s0 8 0 11M53 28c-5 2-4 7-3 10s-2 6-3 8M8 29c4 0 5 6 10 7m5-10c4 0 6 2 8 5m6-8c-3 1-4 3-5 5m15 6c-2-3-5-2-7 0"
+            d="M25 38C23 30 23 22 24 12Q24 7 27 7Q30 7 30 11L29 25Q30 29 34 28Q35 24 37 25Q38 22 40 24Q41 26 42 23Q43 21 45 23Q46 25 47 22Q48 20 50 22Q51 24 52 21Q53 19 55 21Q56 23 57 22Q59 23 58 26Q60 28 57 30Q58 32 55 32Q54 35 51 34Q49 37 47 35Q44 38 42 36Q39 39 36 36Q33 39 30 37L29 40Z"
+        />
+    </clipPath>
+    <g id="p06-oct22-areole">
+        <path
+            d="m-1.5 0 3 0m-1.5-1.3v2.6"
             fill="none"
-            stroke="#3e7667"
-            stroke-width="1.05"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            stroke="#e7d9b7"
+            stroke-width="0.45"
+        />
+        <circle r="0.45" fill="#b9ad7f" />
+    </g>
+</defs>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="32" cy="61" rx="23" ry="1.6" fill="#274537" opacity="0.16" />
+    <path
+        d="M10 35H54L50 55Q48 60 32 61Q16 60 14 55Z"
+        fill="url(#p06-oct22-pot)"
+        stroke="#79432e"
+        stroke-width="1.1"
+    />
+    <g clip-path="url(#p06-oct22-pot-clip)">
+        <path
+            d="M10 36 18 40 16 48 11 45Z"
+            fill="#79432e"
+            opacity="0.48"
+            stroke="#79432e"
+            stroke-width="0.45"
         />
         <path
-            d="M11 22q1 5 5 7m5-11q-1 5 2 7m6-10q-1 5 2 8m6-5q-2 4-1 7m10-2q-3 3-2 6m-31 8q2 0 4 3m10-4q-1 3 2 6"
-            fill="none"
-            stroke="#c2d9bb"
-            stroke-width="0.9"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            d="M18 40 27 41 25 49 16 48Z"
+            fill="#e6a174"
+            opacity="0.5"
+            stroke="#79432e"
+            stroke-width="0.45"
+        />
+        <path
+            d="M27 41 37 41 38 49 25 49Z"
+            fill="#ba6745"
+            opacity="0.35"
+            stroke="#79432e"
+            stroke-width="0.45"
+        />
+        <path
+            d="M37 41 46 39 48 47 38 49Z"
+            fill="#e6a174"
+            opacity="0.3"
+            stroke="#79432e"
+            stroke-width="0.45"
+        />
+        <path
+            d="M46 39 54 36 53 44 48 47Z"
+            fill="#79432e"
+            opacity="0.38"
+            stroke="#79432e"
+            stroke-width="0.45"
+        />
+        <path
+            d="M11 45 16 48 15 55 12 52Z"
+            fill="#e6a174"
+            opacity="0.32"
+            stroke="#79432e"
+            stroke-width="0.45"
+        />
+        <path
+            d="M16 48 25 49 22 57 15 55Z"
+            fill="#79432e"
+            opacity="0.3"
+            stroke="#79432e"
+            stroke-width="0.45"
+        />
+        <path
+            d="M25 49 38 49 36 58 22 57Z"
+            fill="#e6a174"
+            opacity="0.45"
+            stroke="#79432e"
+            stroke-width="0.45"
+        />
+        <path
+            d="M38 49 48 47 49 54 36 58Z"
+            fill="#79432e"
+            opacity="0.42"
+            stroke="#79432e"
+            stroke-width="0.45"
+        />
+        <path
+            d="M48 47 53 44 52 52 49 54Z"
+            fill="#e6a174"
+            opacity="0.28"
+            stroke="#79432e"
+            stroke-width="0.45"
+        />
+        <path
+            d="M15 55 22 57 25 61 17 59Z"
+            fill="#e6a174"
+            opacity="0.3"
+            stroke="#79432e"
+            stroke-width="0.45"
+        />
+        <path
+            d="M22 57 36 58 32 62 25 61Z"
+            fill="#79432e"
+            opacity="0.25"
+            stroke="#79432e"
+            stroke-width="0.45"
+        />
+        <path
+            d="M36 58 49 54 47 59 32 62Z"
+            fill="#ba6745"
+            opacity="0.4"
+            stroke="#79432e"
+            stroke-width="0.45"
         />
     </g>
     <ellipse
-        cx="11"
-        cy="23"
-        rx="0.62"
-        ry="0.62"
-        fill="#dfd9b3"
-        stroke="none"
-        stroke-width="1"
-    />
-    <path
-        d="M11 23l-0.8-1.3m0.8 1.3 1.1-0.6"
-        fill="none"
-        stroke="#c9cba2"
-        stroke-width="0.4"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    />
-    <ellipse
-        cx="20"
-        cy="19"
-        rx="0.62"
-        ry="0.62"
-        fill="#dfd9b3"
-        stroke="none"
-        stroke-width="1"
-    />
-    <path
-        d="M20 19l-0.8-1.3m0.8 1.3 1.1-0.6"
-        fill="none"
-        stroke="#c9cba2"
-        stroke-width="0.4"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    />
-    <ellipse
-        cx="29"
-        cy="17"
-        rx="0.62"
-        ry="0.62"
-        fill="#dfd9b3"
-        stroke="none"
-        stroke-width="1"
-    />
-    <path
-        d="M29 17l-0.8-1.3m0.8 1.3 1.1-0.6"
-        fill="none"
-        stroke="#c9cba2"
-        stroke-width="0.4"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    />
-    <ellipse
-        cx="38"
-        cy="20"
-        rx="0.62"
-        ry="0.62"
-        fill="#dfd9b3"
-        stroke="none"
-        stroke-width="1"
-    />
-    <path
-        d="M38 20l-0.8-1.3m0.8 1.3 1.1-0.6"
-        fill="none"
-        stroke="#c9cba2"
-        stroke-width="0.4"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    />
-    <ellipse
-        cx="47"
-        cy="24"
-        rx="0.62"
-        ry="0.62"
-        fill="#dfd9b3"
-        stroke="none"
-        stroke-width="1"
-    />
-    <path
-        d="M47 24l-0.8-1.3m0.8 1.3 1.1-0.6"
-        fill="none"
-        stroke="#c9cba2"
-        stroke-width="0.4"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    />
-    <ellipse
-        cx="53"
-        cy="31"
-        rx="0.62"
-        ry="0.62"
-        fill="#dfd9b3"
-        stroke="none"
-        stroke-width="1"
-    />
-    <path
-        d="M53 31l-0.8-1.3m0.8 1.3 1.1-0.6"
-        fill="none"
-        stroke="#c9cba2"
-        stroke-width="0.4"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    />
-    <ellipse
-        cx="19"
-        cy="38"
-        rx="0.62"
-        ry="0.62"
-        fill="#dfd9b3"
-        stroke="none"
-        stroke-width="1"
-    />
-    <path
-        d="M19 38l-0.8-1.3m0.8 1.3 1.1-0.6"
-        fill="none"
-        stroke="#c9cba2"
-        stroke-width="0.4"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    />
-    <ellipse
-        cx="31"
+        cx="32"
         cy="35"
-        rx="0.62"
-        ry="0.62"
-        fill="#dfd9b3"
-        stroke="none"
-        stroke-width="1"
+        rx="22"
+        ry="6.5"
+        fill="#5a4435"
+        stroke="#ba6745"
+        stroke-width="1.6"
     />
     <path
-        d="M31 35l-0.8-1.3m0.8 1.3 1.1-0.6"
+        d="m15 34.15 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#e4d5ba"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m19 36.7 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#af6650"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m24 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#bdc4bc"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m29 38.4 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#3a3b35"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m35 38.4 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#ddcdb1"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m41 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#b96e50"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m47 35.85 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#e1d8c3"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m14 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#3b4440"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m21 39.25 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#e8ddc6"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m28 40.1 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#b87757"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m37 40.1 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#8e9b91"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m44 39.25 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#343c36"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m50 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#ae785e"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m15 31.6 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#bfbeb0"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m21 30.75 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#3a3e36"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m45 30.75 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#cbb99c"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m50 32.45 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#d8cfc0"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <g transform="translate(3.2 0.5) scale(0.9)">
+        <path
+            d="M25 38C23 30 23 22 24 12Q24 7 27 7Q30 7 30 11L29 25Q30 29 34 28Q35 24 37 25Q38 22 40 24Q41 26 42 23Q43 21 45 23Q46 25 47 22Q48 20 50 22Q51 24 52 21Q53 19 55 21Q56 23 57 22Q59 23 58 26Q60 28 57 30Q58 32 55 32Q54 35 51 34Q49 37 47 35Q44 38 42 36Q39 39 36 36Q33 39 30 37L29 40Z"
+            fill="url(#p06-oct22-body)"
+            stroke="#385c47"
+            stroke-width="1.05"
+        />
+        <g clip-path="url(#p06-oct22-body-clip)">
+            <path
+                d="M26 8C24 20 25 30 28 39M29 9C27 20 27 29 30 36M29 27Q30 34 35 36M34 28Q33 34 37 37M37 25Q35 31 39 36M40 24Q37 31 42 36M43 23Q40 30 45 35M46 23Q43 28 47 35M49 22Q46 28 50 34M52 21Q49 27 53 33M55 21Q52 27 56 31M58 24Q54 28 58 30"
+                fill="none"
+                stroke="#345b43"
+                stroke-width="1.2"
+            />
+            <path
+                d="M26 10Q25 21 26 28M28 9Q27 17 28 23M30 29q0 5 3 6m4-9q-2 5 1 8m2-9q-2 5 1 8m2-9q-2 5 1 8m2-9q-2 5 1 8m2-9q-2 5 1 8m2-10q-2 5 1 8m2-9q-2 5 1 8"
+                fill="none"
+                stroke="#c0cc8b"
+                stroke-width="0.8"
+            />
+            <path
+                d="M30 32q6 5 13 1t14-6M33 35q7 4 14-1t10-5"
+                fill="none"
+                stroke="#789959"
+                stroke-width="0.75"
+            />
+        </g>
+        <use href="#p06-oct22-areole" transform="translate(26 14) scale(0.7)" />
+        <use href="#p06-oct22-areole" transform="translate(25 21) scale(0.7)" />
+        <use href="#p06-oct22-areole" transform="translate(26 28) scale(0.7)" />
+        <use href="#p06-oct22-areole" transform="translate(28 35) scale(0.7)" />
+        <use href="#p06-oct22-areole" transform="translate(29 11) scale(0.7)" />
+        <use href="#p06-oct22-areole" transform="translate(29 19) scale(0.7)" />
+        <use href="#p06-oct22-areole" transform="translate(33 33) scale(0.7)" />
+        <use href="#p06-oct22-areole" transform="translate(37 29) scale(0.7)" />
+        <use href="#p06-oct22-areole" transform="translate(39 34) scale(0.7)" />
+        <use href="#p06-oct22-areole" transform="translate(42 28) scale(0.7)" />
+        <use href="#p06-oct22-areole" transform="translate(44 33) scale(0.7)" />
+        <use href="#p06-oct22-areole" transform="translate(47 27) scale(0.7)" />
+        <use href="#p06-oct22-areole" transform="translate(49 32) scale(0.7)" />
+        <use href="#p06-oct22-areole" transform="translate(52 26) scale(0.7)" />
+        <use href="#p06-oct22-areole" transform="translate(54 29) scale(0.7)" />
+        <use href="#p06-oct22-areole" transform="translate(56 25) scale(0.7)" />
+    </g>
+    <path
+        d="M11 36Q16 41 25 41M40 41q9-1 13-5"
         fill="none"
-        stroke="#c9cba2"
-        stroke-width="0.4"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        stroke="#e6a174"
+        stroke-width="0.9"
     />
-    <ellipse
-        cx="40"
-        cy="38"
-        rx="0.62"
-        ry="0.62"
-        fill="#dfd9b3"
-        stroke="none"
-        stroke-width="1"
-    />
-    <path
-        d="M40 38l-0.8-1.3m0.8 1.3 1.1-0.6"
-        fill="none"
-        stroke="#c9cba2"
-        stroke-width="0.4"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    />
-    <path
-        d="M6 43h52v8H6z"
-        fill="#b084cf"
-        stroke="#493467"
-        stroke-linejoin="round"
-        stroke-width="1.7"
-    />
-    <path
-        d="m10 51 4 10h36l4-10Z"
-        fill="url(#indigo-pot)"
-        stroke="#493467"
-        stroke-linejoin="round"
-        stroke-width="1.7"
-    />
+</g>
 </symbol>
 
   <symbol id="icon-plant-nyctocereus-serpentinus" viewBox="0 0 64 64">
@@ -4756,175 +4938,311 @@
 </symbol>
 
   <symbol id="icon-plant-chamaelobivia-hybrid" viewBox="0 0 64 64">
-    <defs>
-        <linearGradient id="cham-pot" x1="0" x2="0.9" y1="0" y2="1">
-            <stop offset="0" stop-color="#7fc2e8" />
-            <stop offset="1" stop-color="#367fb7" />
-        </linearGradient>
-        <linearGradient id="peanut-body" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#91bc83" />
-            <stop offset="0.5" stop-color="#529465" />
-            <stop offset="1" stop-color="#2d6852" />
-        </linearGradient>
-        <clipPath id="peanut-clip" clipPathUnits="userSpaceOnUse">
-            <path
-                d="M-4.4 16V-2c0-5 1.6-7.5 4.4-7.5S4.4-7 4.4-2v18Z"
-                fill="none"
-                stroke="none"
-                stroke-width="1"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            />
-        </clipPath>
-        <g id="peanut-stem">
-            <path
-                d="M-4.4 16V-2c0-5 1.6-7.5 4.4-7.5S4.4-7 4.4-2v18Z"
-                fill="url(#peanut-body)"
-                stroke="#244b3b"
-                stroke-width="1.05"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            />
-            <g clip-path="url(#peanut-clip)">
-                <path
-                    d="M0-9V12M-2.6-7c1 5 1 12 0.3 19M2.6-7c-1 5-1 12-0.3 19"
-                    fill="none"
-                    stroke="#aed099"
-                    stroke-width="0.58"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                />
-                <use
-                    href="#chamaelobivia-hybrid-detail-1"
-                    transform="translate(-2.4 -5) scale(0.32)"
-                />
-                <use
-                    href="#chamaelobivia-hybrid-detail-1"
-                    transform="translate(0 -5) scale(0.32)"
-                />
-                <use
-                    href="#chamaelobivia-hybrid-detail-1"
-                    transform="translate(2.4 -5) scale(0.32)"
-                />
-                <use
-                    href="#chamaelobivia-hybrid-detail-1"
-                    transform="translate(-2.4 0) scale(0.32)"
-                />
-                <use
-                    href="#chamaelobivia-hybrid-detail-1"
-                    transform="translate(0 0) scale(0.32)"
-                />
-                <use
-                    href="#chamaelobivia-hybrid-detail-1"
-                    transform="translate(2.4 0) scale(0.32)"
-                />
-                <use
-                    href="#chamaelobivia-hybrid-detail-1"
-                    transform="translate(-2.4 5) scale(0.32)"
-                />
-                <use
-                    href="#chamaelobivia-hybrid-detail-1"
-                    transform="translate(0 5) scale(0.32)"
-                />
-                <use
-                    href="#chamaelobivia-hybrid-detail-1"
-                    transform="translate(2.4 5) scale(0.32)"
-                />
-                <use
-                    href="#chamaelobivia-hybrid-detail-1"
-                    transform="translate(-2.4 10) scale(0.32)"
-                />
-                <use
-                    href="#chamaelobivia-hybrid-detail-1"
-                    transform="translate(0 10) scale(0.32)"
-                />
-                <use
-                    href="#chamaelobivia-hybrid-detail-1"
-                    transform="translate(2.4 10) scale(0.32)"
-                />
-            </g>
-        </g>
-        <g id="chamaelobivia-hybrid-detail-1">
-            <path
-                d="M-2.8 0H2.8M-2-1.8 2 1.8M-2 1.8 2-1.8M0-2.8V2.8"
-                fill="none"
-                stroke="#f0e6c9"
-                stroke-width="0.48"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            />
-            <ellipse
-                cx="0"
-                cy="0"
-                rx="0.62"
-                ry="0.62"
-                fill="#e3c994"
-                stroke="none"
-                stroke-width="1"
-            />
-        </g>
-    </defs>
+<defs>
+    <linearGradient id="p14-oct22-pot" x1="0" y1="0" x2="1" y2="0.3">
+        <stop stop-color="#afc1a0" />
+        <stop offset="0.35" stop-color="#7f9477" />
+        <stop offset="1" stop-color="#4b6557" />
+    </linearGradient>
+    <clipPath id="p14-oct22-pot-clip">
+        <path d="M10 35H54L50 55Q48 60 32 61Q16 60 14 55Z" />
+    </clipPath>
+    <radialGradient id="p14-oct22-stem-fill" cx="0.32" cy="0.25" r="0.9">
+        <stop stop-color="#b2bd70" />
+        <stop offset="0.5" stop-color="#6c914e" />
+        <stop offset="1" stop-color="#385d3e" />
+    </radialGradient>
+    <g id="p14-oct22-spine">
+        <path
+            d="M-1.2 0H1.2M0-1.2v2.4m-0.8-0.8 1.6 1.6m-1.6 0 1.6-1.6"
+            fill="none"
+            stroke="#ead49f"
+            stroke-width="0.42"
+        />
+        <circle r="0.35" fill="#c9a86c" />
+    </g>
+    <g id="p14-oct22-stem">
+        <ellipse
+            rx="4.7"
+            ry="8"
+            fill="url(#p14-oct22-stem-fill)"
+            stroke="#4c623b"
+            stroke-width="0.75"
+        />
+        <path
+            d="M0-7.5Q-1 0 0 7M-2.5-6Q-3.5 0-2 6M2.5-6Q3.5 0 2 6"
+            fill="none"
+            stroke="#b2bd78"
+            stroke-width="0.6"
+        />
+        <use href="#p14-oct22-spine" transform="translate(-2.5 -4)" />
+        <use href="#p14-oct22-spine" transform="translate(0 -5)" />
+        <use href="#p14-oct22-spine" transform="translate(2.4 -4)" />
+        <use href="#p14-oct22-spine" transform="translate(-3 -0.5)" />
+        <use href="#p14-oct22-spine" transform="translate(0 -1)" />
+        <use href="#p14-oct22-spine" transform="translate(3 0)" />
+        <use href="#p14-oct22-spine" transform="translate(-2.5 3)" />
+        <use href="#p14-oct22-spine" transform="translate(0 3.5)" />
+        <use href="#p14-oct22-spine" transform="translate(2.5 3.8)" />
+        <use href="#p14-oct22-spine" transform="translate(0 6.5)" />
+    </g>
+</defs>
+<g stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="32" cy="61" rx="23" ry="1.6" fill="#274537" opacity="0.16" />
+    <path
+        d="M10 35H54L50 55Q48 60 32 61Q16 60 14 55Z"
+        fill="url(#p14-oct22-pot)"
+        stroke="#4b6557"
+        stroke-width="1.1"
+    />
+    <g clip-path="url(#p14-oct22-pot-clip)">
+        <path
+            d="M10 36 18 40 16 48 11 45Z"
+            fill="#4b6557"
+            opacity="0.48"
+            stroke="#4b6557"
+            stroke-width="0.45"
+        />
+        <path
+            d="M18 40 27 41 25 49 16 48Z"
+            fill="#afc1a0"
+            opacity="0.5"
+            stroke="#4b6557"
+            stroke-width="0.45"
+        />
+        <path
+            d="M27 41 37 41 38 49 25 49Z"
+            fill="#7f9477"
+            opacity="0.35"
+            stroke="#4b6557"
+            stroke-width="0.45"
+        />
+        <path
+            d="M37 41 46 39 48 47 38 49Z"
+            fill="#afc1a0"
+            opacity="0.3"
+            stroke="#4b6557"
+            stroke-width="0.45"
+        />
+        <path
+            d="M46 39 54 36 53 44 48 47Z"
+            fill="#4b6557"
+            opacity="0.38"
+            stroke="#4b6557"
+            stroke-width="0.45"
+        />
+        <path
+            d="M11 45 16 48 15 55 12 52Z"
+            fill="#afc1a0"
+            opacity="0.32"
+            stroke="#4b6557"
+            stroke-width="0.45"
+        />
+        <path
+            d="M16 48 25 49 22 57 15 55Z"
+            fill="#4b6557"
+            opacity="0.3"
+            stroke="#4b6557"
+            stroke-width="0.45"
+        />
+        <path
+            d="M25 49 38 49 36 58 22 57Z"
+            fill="#afc1a0"
+            opacity="0.45"
+            stroke="#4b6557"
+            stroke-width="0.45"
+        />
+        <path
+            d="M38 49 48 47 49 54 36 58Z"
+            fill="#4b6557"
+            opacity="0.42"
+            stroke="#4b6557"
+            stroke-width="0.45"
+        />
+        <path
+            d="M48 47 53 44 52 52 49 54Z"
+            fill="#afc1a0"
+            opacity="0.28"
+            stroke="#4b6557"
+            stroke-width="0.45"
+        />
+        <path
+            d="M15 55 22 57 25 61 17 59Z"
+            fill="#afc1a0"
+            opacity="0.3"
+            stroke="#4b6557"
+            stroke-width="0.45"
+        />
+        <path
+            d="M22 57 36 58 32 62 25 61Z"
+            fill="#4b6557"
+            opacity="0.25"
+            stroke="#4b6557"
+            stroke-width="0.45"
+        />
+        <path
+            d="M36 58 49 54 47 59 32 62Z"
+            fill="#7f9477"
+            opacity="0.4"
+            stroke="#4b6557"
+            stroke-width="0.45"
+        />
+    </g>
     <ellipse
         cx="32"
-        cy="60.5"
-        rx="24"
-        ry="1.9"
-        fill="#244b3b"
-        stroke="none"
-        stroke-width="0"
-        opacity="0.12"
-    />
-    <ellipse
-        cx="32"
-        cy="44.5"
-        rx="24"
-        ry="2.1"
-        fill="#745c45"
-        stroke="none"
-        stroke-width="1"
-    />
-    <use
-        href="#peanut-stem"
-        transform="translate(13 35) rotate(-26) scale(0.8 0.88)"
-    />
-    <use
-        href="#peanut-stem"
-        transform="translate(22 29) rotate(-12) scale(1 1.15)"
-    />
-    <use
-        href="#peanut-stem"
-        transform="translate(41 26) rotate(10) scale(1 1.48)"
-    />
-    <use
-        href="#peanut-stem"
-        transform="translate(32 33) rotate(-3) scale(1.05 1.16)"
-    />
-    <use
-        href="#peanut-stem"
-        transform="translate(51 36) rotate(28) scale(0.8 0.82)"
-    />
-    <use
-        href="#peanut-stem"
-        transform="translate(20 42) rotate(-27) scale(1 0.84)"
-    />
-    <use
-        href="#peanut-stem"
-        transform="translate(38 42) rotate(16) scale(1.1 0.95)"
+        cy="35"
+        rx="22"
+        ry="6.5"
+        fill="#5a4435"
+        stroke="#7f9477"
+        stroke-width="1.6"
     />
     <path
-        d="M6 44h52v8H6z"
-        fill="#83c6e9"
-        stroke="#28577e"
-        stroke-linejoin="round"
-        stroke-width="1.7"
+        d="m15 34.15 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#e4d5ba"
+        stroke="#5c5145"
+        stroke-width="0.35"
     />
     <path
-        d="m10 52 4 9h36l4-9Z"
-        fill="url(#cham-pot)"
-        stroke="#28577e"
-        stroke-linejoin="round"
-        stroke-width="1.7"
+        d="m19 36.7 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#af6650"
+        stroke="#5c5145"
+        stroke-width="0.35"
     />
+    <path
+        d="m24 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#bdc4bc"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m29 38.4 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#3a3b35"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m35 38.4 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#ddcdb1"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m41 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#b96e50"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m47 35.85 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#e1d8c3"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m14 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#3b4440"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m21 39.25 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#e8ddc6"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m28 40.1 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#b87757"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m37 40.1 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#8e9b91"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m44 39.25 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#343c36"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m50 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#ae785e"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m15 31.6 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#bfbeb0"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m21 30.75 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#3a3e36"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m45 30.75 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#cbb99c"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <path
+        d="m50 32.45 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+        fill="#d8cfc0"
+        stroke="#5c5145"
+        stroke-width="0.35"
+    />
+    <use href="#p14-oct22-stem" transform="translate(19 28) rotate(-35) scale(1 0.7)" />
+    <use href="#p14-oct22-stem" transform="translate(28 25) rotate(-20) scale(1 0.8)" />
+    <use
+        href="#p14-oct22-stem"
+        transform="translate(37 25) rotate(15) scale(1.1 0.75)"
+    />
+    <use
+        href="#p14-oct22-stem"
+        transform="translate(46 28) rotate(40) scale(0.9 0.7)"
+    />
+    <use
+        href="#p14-oct22-stem"
+        transform="translate(14 32) rotate(-60) scale(0.75 0.68)"
+    />
+    <use href="#p14-oct22-stem" transform="translate(23 32) rotate(-28) scale(1 0.7)" />
+    <use
+        href="#p14-oct22-stem"
+        transform="translate(32 30) rotate(-5) scale(1.1 0.85)"
+    />
+    <use href="#p14-oct22-stem" transform="translate(40 33) rotate(35) scale(1 0.7)" />
+    <use
+        href="#p14-oct22-stem"
+        transform="translate(50 34) rotate(60) scale(0.7 0.6)"
+    />
+    <use
+        href="#p14-oct22-stem"
+        transform="translate(20 37) rotate(-50) scale(0.9 0.6)"
+    />
+    <use
+        href="#p14-oct22-stem"
+        transform="translate(29 37) rotate(-15) scale(1 0.55)"
+    />
+    <use href="#p14-oct22-stem" transform="translate(38 38) rotate(25) scale(1 0.5)" />
+    <use
+        href="#p14-oct22-stem"
+        transform="translate(45 37) rotate(55) scale(0.8 0.5)"
+    />
+    <path
+        d="M11 36Q16 41 25 41M40 41q9-1 13-5"
+        fill="none"
+        stroke="#afc1a0"
+        stroke-width="0.9"
+    />
+</g>
 </symbol>
 
   <symbol id="icon-plant-espostoa-melanostele-nana" viewBox="0 0 64 64">
@@ -8394,314 +8712,220 @@
     />
 </symbol>
 
-  <symbol
-      id="icon-plant-tephrocactus-articulatus-papyracanthus"
-      viewBox="0 0 64 64"
-  >
-    <defs>
-        <linearGradient id="tephro-pot" x1="0" x2="0.9" y1="0" y2="1">
-            <stop offset="0" stop-color="#efa068" />
-            <stop offset="1" stop-color="#c25838" />
-        </linearGradient>
-        <radialGradient id="paper-body" cx="35%" cy="23%" r="80%">
-            <stop offset="0" stop-color="#b2bba5" />
-            <stop offset="0.5" stop-color="#909f90" />
-            <stop offset="1" stop-color="#6a8075" />
-        </radialGradient>
-        <linearGradient id="paper-spine" x1="0" y1="0" x2="0.85" y2="1">
-            <stop offset="0" stop-color="#fff5db" />
-            <stop offset="0.5" stop-color="#e9dcc0" />
-            <stop offset="1" stop-color="#c3b596" />
-        </linearGradient>
-    </defs>
-    <ellipse
-        cx="32"
-        cy="60.5"
-        rx="20"
-        ry="1.9"
-        fill="#244b3b"
-        stroke="none"
-        stroke-width="0"
-        opacity="0.12"
-    />
-    <ellipse
-        cx="32"
-        cy="45.5"
-        rx="20"
-        ry="2.1"
-        fill="#745c45"
-        stroke="none"
-        stroke-width="1"
-    />
+  <symbol id="icon-plant-tephrocactus-articulatus-papyracanthus" viewBox="0 0 64 64">
+<defs>
+    <linearGradient id="p23-pot" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#587765" />
+        <stop offset="1" stop-color="#263f36" />
+    </linearGradient>
+    <clipPath id="p23-pot-clip">
+        <path d="M9 39H55L50 56Q48 61 32 61Q16 61 14 56Z" />
+    </clipPath>
+    <radialGradient id="p23-body" cx="0.3" cy="0.2" r="0.85">
+        <stop offset="0" stop-color="#a7af91" />
+        <stop offset="1" stop-color="#5b7360" />
+    </radialGradient>
+    <linearGradient id="p23-paper" x1="0" y1="0" x2="0.8" y2="1">
+        <stop offset="0" stop-color="#fff6db" />
+        <stop offset="0.6" stop-color="#e3d9ba" />
+        <stop offset="1" stop-color="#b7ac8c" />
+    </linearGradient>
+</defs>
+<ellipse cx="32" cy="61" rx="24" ry="1.8" fill="#244b3b" opacity="0.12" />
+<path
+    d="M9 39H55L50 56Q48 61 32 61Q16 61 14 56Z"
+    fill="url(#p23-pot)"
+    stroke="#405a48"
+    stroke-width="1.3"
+/>
+<g clip-path="url(#p23-pot-clip)" fill="#8ba08b" opacity="0.45">
     <path
-        d="M22 47c-2-6-1-11 4-14 6-4 14-1 15 6l1 8Z"
-        fill="url(#paper-body)"
-        stroke="#244b3b"
-        stroke-width="1.35"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        d="M9 41L17 45 15 53 11 48ZM21 43L29 47 26 56 19 52ZM34 44L42 47 39 57 31 53ZM47 42L55 43 52 52 44 52ZM15 55L20 53 25 60 18 62ZM28 57L33 54 39 61 29 63ZM42 58L48 54 51 60 45 63Z"
     />
+</g>
+<path
+    d="M17 46L21 43M29 47L34 44M42 47L47 42M26 56L31 53M39 57L44 52"
+    fill="none"
+    stroke="#405a48"
+    stroke-width="0.6"
+    opacity="0.55"
+/>
+<ellipse cx="32" cy="39" rx="23" ry="8.5" fill="#405a48" />
+<ellipse cx="32" cy="38.7" rx="21.5" ry="7.2" fill="#75604c" />
+<g stroke="#6d604d" stroke-width="0.4" stroke-linejoin="round">
     <path
-        d="M23 35c-4-4-5-9-2-14 3-5 9-6 13-2 5 5 6 11 2 16-3 4-10 4-13 0Z"
-        fill="url(#paper-body)"
-        stroke="#244b3b"
-        stroke-width="1.35"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        d="M12 38l4-3 3 2-2 4ZM21 34l4-2 3 3-3 2ZM41 34l4-2 4 3-3 2ZM45 40l4-2 4 3-3 2ZM29 43l4-3 4 3-3 2"
+        fill="#d8d1b7"
     />
-    <path
-        d="M33 23c-4-4-4-9-1-13 3-4 9-3 12 1 4 6 2 12-3 15-3 1-6 0-8-3Z"
-        fill="url(#paper-body)"
-        stroke="#244b3b"
-        stroke-width="1.35"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    />
-    <path
-        d="M25 25c-7-2-10-8-15-7-4 0-5 4-2 5 2 1 4-1 3-2-1 1-2 1-3 0 0-1 1-2 3-1 4 1 7 5 14 6Z"
-        fill="url(#paper-spine)"
-        stroke="#a09370"
-        stroke-width="0.42"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        paint-order="stroke fill"
-    />
-    <path
-        d="M37 15c-3-5-8-5-10-8-1-2 0-4 2-4-1 2 0 3 2 4 3 2 5 4 7 8Z"
-        fill="url(#paper-spine)"
-        stroke="#a09370"
-        stroke-width="0.42"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        paint-order="stroke fill"
-    />
-    <path
-        d="M40 24c8-4 8-12 14-11 4 0 5 4 2 6 0-2 0-3-2-3-5-1-6 7-14 9Z"
-        fill="url(#paper-spine)"
-        stroke="#a09370"
-        stroke-width="0.42"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        paint-order="stroke fill"
-    />
-    <path
-        d="M27 37c-7-1-10 1-15 4-4 2-7 0-7-2 2 1 4 1 6 0 6-3 10-5 16-3Z"
-        fill="url(#paper-spine)"
-        stroke="#a09370"
-        stroke-width="0.42"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        paint-order="stroke fill"
-    />
-    <path
-        d="M37 36c5-2 9 0 13 4 3 3 6 4 9 2-1 3-5 4-9 0-5-5-8-6-13-5Z"
-        fill="url(#paper-spine)"
-        stroke="#a09370"
-        stroke-width="0.42"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        paint-order="stroke fill"
-    />
-    <path
-        d="M31 29c-3-6-9-9-13-8 3-3 10 1 14 7Z"
-        fill="url(#paper-spine)"
-        stroke="#a09370"
-        stroke-width="0.42"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        paint-order="stroke fill"
-    />
-    <ellipse
-        cx="25"
-        cy="25"
-        rx="0.95"
-        ry="0.7"
-        fill="#e7dbbe"
-        stroke="#899574"
-        stroke-width="0.3"
-    />
-    <ellipse
-        cx="37"
-        cy="15"
-        rx="0.95"
-        ry="0.7"
-        fill="#e7dbbe"
-        stroke="#899574"
-        stroke-width="0.3"
-    />
-    <ellipse
-        cx="40"
-        cy="24"
-        rx="0.95"
-        ry="0.7"
-        fill="#e7dbbe"
-        stroke="#899574"
-        stroke-width="0.3"
-    />
-    <ellipse
-        cx="27"
-        cy="37"
-        rx="0.95"
-        ry="0.7"
-        fill="#e7dbbe"
-        stroke="#899574"
-        stroke-width="0.3"
-    />
-    <ellipse
-        cx="37"
-        cy="36"
-        rx="0.95"
-        ry="0.7"
-        fill="#e7dbbe"
-        stroke="#899574"
-        stroke-width="0.3"
-    />
-    <ellipse
-        cx="31"
-        cy="29"
-        rx="0.95"
-        ry="0.7"
-        fill="#e7dbbe"
-        stroke="#899574"
-        stroke-width="0.3"
-    />
-    <path
-        d="M22 27q1 2 2 3m10-17q-1 3 0 5m-7 23 1 2"
-        fill="none"
-        stroke="#c4cab2"
-        stroke-width="0.8"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    />
-    <path
-        d="M10 45h44v7H10z"
-        fill="#f2a56c"
-        stroke="#5f3a2a"
-        stroke-linejoin="round"
-        stroke-width="1.7"
-    />
-    <path
-        d="m13 52 4 9h30l4-9Z"
-        fill="url(#tephro-pot)"
-        stroke="#5f3a2a"
-        stroke-linejoin="round"
-        stroke-width="1.7"
-    />
+    <path d="M17 42l3-3 4 2-2 3ZM35 34l3-2 3 3-4 2ZM38 43l4-3 3 3-2 2" fill="#b87952" />
+    <path d="M27 34l4-2 2 3-4 2ZM21 43l4-2 3 2-3 2ZM48 36l3-1 2 2-3 1" fill="#454d49" />
+</g>
+<path
+    d="M23 37C20 31 23 27 29 27Q37 26 39 34L38 40Q30 44 23 37Z"
+    fill="url(#p23-body)"
+    stroke="#546852"
+    stroke-width="0.9"
+/>
+<path
+    d="M35 37Q38 32 41 35L42 39 37 41Z"
+    fill="#899678"
+    stroke="#546852"
+    stroke-width="0.7"
+/>
+<path
+    d="M25 30l2-1M32 29l2 1M23 35l2 1M33 36l2 1M29 40l2-1"
+    fill="none"
+    stroke="#d5cfad"
+    stroke-width="1.3"
+    stroke-linecap="round"
+/>
+<g fill="url(#p23-paper)" stroke="#a89d80" stroke-width="0.45" stroke-linejoin="round">
+    <path d="M27 31C19 25 15 14 17 8Q13 13 17 22C20 29 24 32 27 33Z" />
+    <path d="M31 29C30 22 29 13 34 6Q30 9 29 16C27 22 28 28 30 31Z" />
+    <path d="M34 32C43 28 47 18 45 12Q48 17 45 23C43 29 38 32 34 34Z" />
+    <path d="M25 35C15 36 12 29 6 28Q4 29 6 31C7 29 10 31 13 34Q19 38 25 37Z" />
+    <path d="M36 36C43 33 50 35 57 31Q54 35 50 36C45 37 39 36 36 38Z" />
+    <path d="M29 38C24 43 17 44 12 40Q15 45 21 44C25 44 29 41 31 39Z" />
+    <path d="M34 37C34 42 40 47 46 45Q41 45 39 42L36 36Z" />
+    <path d="M25 32C17 27 11 25 9 20Q9 25 15 28C19 30 22 31 25 34Z" />
+</g>
+<path
+    d="M27 31Q21 24 18 15M31 28Q30 19 32 12M35 33Q42 28 44 21"
+    fill="none"
+    stroke="#fff8e7"
+    stroke-width="0.55"
+    stroke-linecap="round"
+/>
 </symbol>
 
   <symbol id="icon-plant-aeonium-haworthii-dream-color" viewBox="0 0 64 64">
-    <defs>
-        <linearGradient id="aeonium-pot" x1="0" x2="0.9" y1="0" y2="1">
-            <stop offset="0" stop-color="#fffdf7" />
-            <stop offset="1" stop-color="#d4d0c7" />
-        </linearGradient>
-        <linearGradient id="kiwi-color" x1="0" y1="0" x2="0.85" y2="1">
-            <stop offset="0" stop-color="#b2c982" />
-            <stop offset="0.5" stop-color="#ced899" />
-            <stop offset="1" stop-color="#e3dda0" />
-        </linearGradient>
-        <g id="kiwi-leaf" transform="scale(0.8 1)">
-            <path
-                d="M0 1C-3-1-5-5-4.5-8.5-4-10.5-1-11.6 0-12.5 1-11.6 4-10.5 4.5-8.5 5-5 3-1 0 1Z"
-                fill="url(#kiwi-color)"
-                stroke="#af5971"
-                stroke-width="0.65"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            />
-        </g>
-        <g id="aeonium-haworthii-dream-color-detail-1">
-            <use href="#kiwi-leaf" transform="rotate(0) scale(1)" />
-            <use href="#kiwi-leaf" transform="rotate(40) scale(1)" />
-            <use href="#kiwi-leaf" transform="rotate(80) scale(1)" />
-            <use href="#kiwi-leaf" transform="rotate(120) scale(1)" />
-            <use href="#kiwi-leaf" transform="rotate(160) scale(1)" />
-            <use href="#kiwi-leaf" transform="rotate(200) scale(1)" />
-            <use href="#kiwi-leaf" transform="rotate(240) scale(1)" />
-            <use href="#kiwi-leaf" transform="rotate(280) scale(1)" />
-            <use href="#kiwi-leaf" transform="rotate(320) scale(1)" />
-            <use href="#kiwi-leaf" transform="rotate(23) scale(0.68)" />
-            <use href="#kiwi-leaf" transform="rotate(74.43) scale(0.68)" />
-            <use href="#kiwi-leaf" transform="rotate(125.86) scale(0.68)" />
-            <use href="#kiwi-leaf" transform="rotate(177.29) scale(0.68)" />
-            <use href="#kiwi-leaf" transform="rotate(228.71) scale(0.68)" />
-            <use href="#kiwi-leaf" transform="rotate(280.14) scale(0.68)" />
-            <use href="#kiwi-leaf" transform="rotate(331.57) scale(0.68)" />
-            <use href="#kiwi-leaf" transform="rotate(0) scale(0.36)" />
-            <use href="#kiwi-leaf" transform="rotate(90) scale(0.36)" />
-            <use href="#kiwi-leaf" transform="rotate(180) scale(0.36)" />
-            <use href="#kiwi-leaf" transform="rotate(270) scale(0.36)" />
-        </g>
-    </defs>
-    <ellipse
-        cx="32"
-        cy="60.5"
-        rx="23"
-        ry="1.9"
-        fill="#244b3b"
-        stroke="none"
-        stroke-width="0"
-        opacity="0.12"
-    />
-    <ellipse
-        cx="32"
-        cy="45.5"
-        rx="23"
-        ry="2.1"
-        fill="#745c45"
-        stroke="none"
-        stroke-width="1"
-    />
-    <path
-        d="M31 46c1-9 0-15 1-23m0 14c-6-3-12-8-14-12m14 7c5-2 10-6 14-10"
-        fill="none"
-        stroke="#70553d"
-        stroke-width="2.8"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    />
-    <path
-        d="M30.5 43v-8m1-2 0.3-7"
-        fill="none"
-        stroke="#b4986c"
-        stroke-width="0.65"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    />
-    <use
-        href="#aeonium-haworthii-dream-color-detail-1"
-        transform="translate(18 24) scale(0.91 0.78)"
-    />
-    <use
-        href="#aeonium-haworthii-dream-color-detail-1"
-        transform="translate(46 24) scale(0.95 0.8) rotate(10)"
-    />
-    <use
-        href="#aeonium-haworthii-dream-color-detail-1"
-        transform="translate(32 17) scale(1.1 0.94)"
-    />
-    <path
-        d="M7 45h50v7H7z"
-        fill="#fffdf8"
-        stroke="#625b51"
-        stroke-linejoin="round"
-        stroke-width="1.7"
-    />
-    <path
-        d="m10 52 4 9h36l4-9Z"
-        fill="url(#aeonium-pot)"
-        stroke="#625b51"
-        stroke-linejoin="round"
-        stroke-width="1.7"
-    />
-    <path
-        d="M14 56h36"
-        fill="none"
-        stroke="#efebe1"
-        stroke-linecap="round"
-        stroke-width="1.1"
-    />
-  </symbol>
+<defs>
+    <linearGradient id="p22-oct-pot" x1="0" y1="0" x2="1" y2="0">
+        <stop stop-color="#d7d3c9" />
+        <stop offset="0.3" stop-color="#fffdf5" />
+        <stop offset="0.65" stop-color="#f6f3e8" />
+        <stop offset="1" stop-color="#c8c5bc" />
+    </linearGradient>
+    <linearGradient id="p22-oct-pot-base" x1="0" y1="0" x2="1" y2="0">
+        <stop stop-color="#b1b6af" />
+        <stop offset="0.4" stop-color="#d9dcd2" />
+        <stop offset="1" stop-color="#a5ada5" />
+    </linearGradient>
+    <radialGradient id="p22-oct-leaf" cx="48%" cy="49%" r="68%">
+        <stop stop-color="#8eae78" />
+        <stop offset="0.56" stop-color="#789466" />
+        <stop offset="0.86" stop-color="#9d7c84" />
+        <stop offset="1" stop-color="#ab778b" />
+    </radialGradient>
+    <linearGradient id="p22-oct-leaf-shadow" x1="0" y1="0" x2="1" y2="1">
+        <stop stop-color="#a4b38b" />
+        <stop offset="1" stop-color="#5c725c" />
+    </linearGradient>
+    <clipPath id="p22-oct-soil">
+        <ellipse cx="32" cy="42.7" rx="17" ry="5.6" />
+    </clipPath>
+    <g id="p22-oct-leaf-shape">
+        <path
+            d="M0 0C-4-0.6-7-4-6-7.2-5.3-10.6-1.8-11.3 0-11.5 1.3-11.8 5-9.1 5.7-6.5 6.2-3.7 2.5-0.1 0 0Z"
+            fill="url(#p22-oct-leaf)"
+            stroke="#bc7e96"
+            stroke-width="0.45"
+            stroke-linejoin="round"
+        />
+        <path
+            d="M0-1.2C-0.8-3.5-1.1-7.5-0.2-9.7"
+            fill="none"
+            stroke="#b6c392"
+            stroke-width="0.3"
+            opacity="0.45"
+        />
+    </g>
+    <g id="p22-oct-rosette">
+        <use href="#p22-oct-leaf-shape" transform="rotate(7) scale(0.93 1.00)" />
+        <use href="#p22-oct-leaf-shape" transform="rotate(61) scale(1.00 1.05)" />
+        <use href="#p22-oct-leaf-shape" transform="rotate(116) scale(1.07 1.00)" />
+        <use href="#p22-oct-leaf-shape" transform="rotate(174) scale(0.93 1.05)" />
+        <use href="#p22-oct-leaf-shape" transform="rotate(229) scale(1.00 1.00)" />
+        <use href="#p22-oct-leaf-shape" transform="rotate(289) scale(1.07 1.05)" />
+        <use href="#p22-oct-leaf-shape" transform="rotate(29) scale(0.52 0.56)" />
+        <use href="#p22-oct-leaf-shape" transform="rotate(95) scale(0.56 0.59)" />
+        <use href="#p22-oct-leaf-shape" transform="rotate(159) scale(0.60 0.56)" />
+        <use href="#p22-oct-leaf-shape" transform="rotate(220) scale(0.52 0.59)" />
+        <use href="#p22-oct-leaf-shape" transform="rotate(281) scale(0.56 0.56)" />
+        <use href="#p22-oct-leaf-shape" transform="rotate(339) scale(0.60 0.59)" />
+        <use href="#p22-oct-leaf-shape" transform="rotate(13) scale(0.30 0.32)" />
+        <use href="#p22-oct-leaf-shape" transform="rotate(105) scale(0.32 0.34)" />
+        <use href="#p22-oct-leaf-shape" transform="rotate(198) scale(0.34 0.32)" />
+        <use href="#p22-oct-leaf-shape" transform="rotate(285) scale(0.30 0.34)" />
+        <ellipse cx="0" cy="-0.4" rx="0.8" ry="1" fill="#a3bb6d" />
+    </g>
+</defs>
+<ellipse cx="32" cy="61" rx="18" ry="1.8" fill="#263e32" opacity="0.14" />
+<path
+    d="M14.2 41.5C14.7 49.7 17.2 56.7 20 59 25.6 62.2 39.1 62.2 44.5 59 47.5 56.7 49.6 49.2 49.8 41.5Z"
+    fill="url(#p22-oct-pot)"
+    stroke="#8d9185"
+    stroke-width="0.8"
+/>
+<path
+    d="M15.8 50.5C18 52.2 45.9 52.4 48.2 50.5 47.2 54.5 45.8 57.8 44.5 59 39.1 62.2 25.6 62.2 20 59 18.5 57.6 16.8 54.2 15.8 50.5Z"
+    fill="url(#p22-oct-pot-base)"
+/>
+<path
+    d="M18.4 47.5C19.3 53 20 56.6 22.2 58.1"
+    fill="none"
+    stroke="#fffef6"
+    stroke-width="1.1"
+    stroke-linecap="round"
+/>
+<ellipse
+    cx="32"
+    cy="41.8"
+    rx="17.9"
+    ry="6.1"
+    fill="#f9f6eb"
+    stroke="#a4a598"
+    stroke-width="0.65"
+/>
+<ellipse cx="32" cy="42.3" rx="16.5" ry="4.7" fill="#66533b" />
+<g
+    clip-path="url(#p22-oct-soil)"
+    stroke="#665840"
+    stroke-width="0.25"
+    stroke-linejoin="round"
+>
+    <path d="m15 41 3-2 2 1-0.5 3-3 0.3Z" fill="#cba575" />
+    <path d="m20 43 2.5-2 2 1.5-0.8 3-3 0Z" fill="#638b96" />
+    <path d="m26 44 3-2 2.1 1.6-0.7 2.8-3.5 0.2Z" fill="#bca453" />
+    <path d="m32 44 2-1.8 3.3 0.7 0.3 2.8-3.7 1Z" fill="#73807e" />
+    <path d="m39 43 2-1.5 2.5 1-0.2 3-3 0.5Z" fill="#9c6f8c" />
+    <path d="m45 40 3-1 2 2-1 2.5-3.7-0.8Z" fill="#c5ab55" />
+    <path d="m17 44 1.7-1.2 1.8 1-0.1 1.8-2.7 0.3Z" fill="#8f6065" />
+    <path d="m24 45 1.5-1.1 1 1-0.2 2-2-0.2Z" fill="#d8b397" />
+    <path d="m30 41 2-1 2 1.5-1 2-2.5-0.2Z" fill="#af7752" />
+    <path d="m36 46 2-1.5 2 1-0.5 1.4-3 0.2Z" fill="#c7b89f" />
+    <path d="m43 45 2-1.6 2 1-1.1 1.8-2 0.3Z" fill="#729693" />
+</g>
+<path
+    d="M31 43.5 31 27M30.8 37 20 29M31 33 41 24"
+    fill="none"
+    stroke="#725442"
+    stroke-width="2"
+    stroke-linecap="round"
+/>
+<path
+    d="M15 34C6 31 6 22 10 18L27 13 43 14C52 18 58 28 51 35L40 41 22 42Z"
+    fill="url(#p22-oct-leaf-shadow)"
+/>
+<use
+    href="#p22-oct-rosette"
+    transform="translate(16 21) rotate(-13) scale(0.81 0.76)"
+/>
+<use href="#p22-oct-rosette" transform="translate(32 16) rotate(17) scale(1.18 0.98)" />
+<use href="#p22-oct-rosette" transform="translate(45 28) rotate(25) scale(0.97 0.86)" />
+<use href="#p22-oct-rosette" transform="translate(12 34) rotate(-27) scale(0.64 0.6)" />
+<use href="#p22-oct-rosette" transform="translate(27 33) rotate(-11) scale(1.2 1.03)" />
+</symbol>
 
   <symbol id="icon-plant-echeveria-pulidonis" viewBox="0 0 64 64">
     <defs>
@@ -8857,108 +9081,116 @@
     <path d="M12 31.5C16 35 24 36.7 32 36.7S48 35 52 31.5" fill="none" stroke="#ecede1" stroke-width="0.65" opacity="0.65" />
   </symbol>
   <symbol id="icon-plant-echeveria-raindrops" viewBox="0 0 64 64">
-    <defs>
-        <linearGradient id="rain-pot" x1="0" x2="0.9" y1="0" y2="1">
-            <stop offset="0" stop-color="#f8dc68" />
-            <stop offset="1" stop-color="#dfa12e" />
-        </linearGradient>
-        <linearGradient id="raindrop-color" x1="0" y1="0" x2="0.85" y2="1">
-            <stop offset="0" stop-color="#bdd7c2" />
-            <stop offset="0.5" stop-color="#95bca6" />
-            <stop offset="1" stop-color="#699a8e" />
-        </linearGradient>
-        <radialGradient id="raindrop-bump" cx="35%" cy="22%" r="85%">
-            <stop offset="0" stop-color="#d5dfba" />
-            <stop offset="0.5" stop-color="#acbf9b" />
-            <stop offset="1" stop-color="#7f9c85" />
-        </radialGradient>
-        <g id="raindrop-leaf">
-            <path
-                d="M0 2C-5-1-9-7-8.5-13-8-18-4-19 0-19.5 4-19 8-18 8.5-13 9-7 5-1 0 2Z"
-                fill="url(#raindrop-color)"
-                stroke="#637f76"
-                stroke-width="0.65"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            />
-            <path
-                d="M-7-14q1-3 4-3.6M3-17.6q3 0.6 4 3.6"
-                fill="none"
-                stroke="#b97d80"
-                stroke-width="0.65"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            />
-            <ellipse
-                cx="0"
-                cy="-15.1"
-                rx="2.45"
-                ry="1.7"
-                fill="url(#raindrop-bump)"
-                stroke="#839a86"
-                stroke-width="0.35"
-            />
-            <path
-                d="M-1.8-15.8q1.5-1.1 3.3 0"
-                fill="none"
-                stroke="#c5d4b6"
-                stroke-width="0.6"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            />
-        </g>
-    </defs>
-    <ellipse
-        cx="32"
-        cy="60.5"
-        rx="23"
-        ry="1.9"
-        fill="#244b3b"
-        stroke="none"
-        stroke-width="0"
-        opacity="0.12"
-    />
-    <ellipse
-        cx="32"
-        cy="45.5"
-        rx="23"
-        ry="2.1"
-        fill="#745c45"
-        stroke="none"
-        stroke-width="1"
-    />
-    <g transform="translate(32 31) scale(1.17 0.79)">
-        <use href="#raindrop-leaf" transform="rotate(0) scale(1)" />
-        <use href="#raindrop-leaf" transform="rotate(51.43) scale(1)" />
-        <use href="#raindrop-leaf" transform="rotate(102.86) scale(1)" />
-        <use href="#raindrop-leaf" transform="rotate(154.29) scale(1)" />
-        <use href="#raindrop-leaf" transform="rotate(205.71) scale(1)" />
-        <use href="#raindrop-leaf" transform="rotate(257.14) scale(1)" />
-        <use href="#raindrop-leaf" transform="rotate(308.57) scale(1)" />
-        <use href="#raindrop-leaf" transform="rotate(30) scale(0.62)" />
-        <use href="#raindrop-leaf" transform="rotate(102) scale(0.62)" />
-        <use href="#raindrop-leaf" transform="rotate(174) scale(0.62)" />
-        <use href="#raindrop-leaf" transform="rotate(246) scale(0.62)" />
-        <use href="#raindrop-leaf" transform="rotate(318) scale(0.62)" />
-        <use href="#raindrop-leaf" transform="rotate(0) scale(0.31)" />
-        <use href="#raindrop-leaf" transform="rotate(120) scale(0.31)" />
-        <use href="#raindrop-leaf" transform="rotate(240) scale(0.31)" />
+<defs>
+    <linearGradient id="p25-pot" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#92a58a" />
+        <stop offset="1" stop-color="#536c59" />
+    </linearGradient>
+    <clipPath id="p25-pot-clip">
+        <path d="M9 39H55L50 56Q48 61 32 61Q16 61 14 56Z" />
+    </clipPath>
+    <linearGradient id="p25-leaf" x1="0.2" y1="0" x2="0.7" y2="1">
+        <stop offset="0" stop-color="#b6c4ac" />
+        <stop offset="0.5" stop-color="#95ab94" />
+        <stop offset="1" stop-color="#657e71" />
+    </linearGradient>
+    <linearGradient id="p25-mauve" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#b4a9ac" />
+        <stop offset="1" stop-color="#8c8f80" />
+    </linearGradient>
+    <g id="p25-leaf-shape">
+        <path
+            d="M0 2C-2-5-8-10-8.5-16Q-9-21-3-22L0-25 2.5-22Q8.5-21 8.5-16C8-10 2-5 0 2Z"
+            fill="url(#p25-leaf)"
+            stroke="#687e72"
+            stroke-width="0.9"
+        />
+        <path
+            d="M-8.4-17Q-8-21-3-22L0-25 2.5-22Q8-21 8.4-17"
+            fill="none"
+            stroke="#b59aa2"
+            stroke-width="1"
+            stroke-linecap="round"
+        />
+        <path
+            d="M0-2Q1-9 0-18"
+            fill="none"
+            stroke="#c5ceb6"
+            stroke-width="0.65"
+            opacity="0.55"
+        />
     </g>
+</defs>
+<ellipse cx="32" cy="61" rx="24" ry="1.8" fill="#244b3b" opacity="0.12" />
+<path
+    d="M9 39H55L50 56Q48 61 32 61Q16 61 14 56Z"
+    fill="url(#p25-pot)"
+    stroke="#71816b"
+    stroke-width="1.3"
+/>
+<g clip-path="url(#p25-pot-clip)" fill="#c3cfb5" opacity="0.45">
     <path
-        d="M7 45h50v7H7z"
-        fill="#f8dd6a"
-        stroke="#725016"
-        stroke-linejoin="round"
-        stroke-width="1.7"
+        d="M9 41L17 45 15 53 11 48ZM21 43L29 47 26 56 19 52ZM34 44L42 47 39 57 31 53ZM47 42L55 43 52 52 44 52ZM15 55L20 53 25 60 18 62ZM28 57L33 54 39 61 29 63ZM42 58L48 54 51 60 45 63Z"
     />
+</g>
+<path
+    d="M17 46L21 43M29 47L34 44M42 47L47 42M26 56L31 53M39 57L44 52"
+    fill="none"
+    stroke="#71816b"
+    stroke-width="0.6"
+    opacity="0.55"
+/>
+<ellipse cx="32" cy="39" rx="23" ry="8.5" fill="#71816b" />
+<ellipse cx="32" cy="38.7" rx="21.5" ry="7.2" fill="#75604c" />
+<g stroke="#6d604d" stroke-width="0.4" stroke-linejoin="round">
     <path
-        d="m10 52 4 9h36l4-9Z"
-        fill="url(#rain-pot)"
-        stroke="#725016"
-        stroke-linejoin="round"
-        stroke-width="1.7"
+        d="M12 38l4-3 3 2-2 4ZM21 34l4-2 3 3-3 2ZM41 34l4-2 4 3-3 2ZM45 40l4-2 4 3-3 2ZM29 43l4-3 4 3-3 2"
+        fill="#d8d1b7"
     />
-  </symbol>
+    <path d="M17 42l3-3 4 2-2 3ZM35 34l3-2 3 3-4 2ZM38 43l4-3 3 3-2 2" fill="#b87952" />
+    <path d="M27 34l4-2 2 3-4 2ZM21 43l4-2 3 2-3 2ZM48 36l3-1 2 2-3 1" fill="#454d49" />
+</g>
+<path
+    d="M30 32C22 25 12 26 5 31Q9 37 22 37L31 35ZM33 32C42 25 51 27 59 33Q54 38 44 37L33 35ZM30 34Q18 37 15 41L22 44Q29 44 33 35ZM34 34Q40 37 49 40L44 44Q38 44 32 35Z"
+    fill="url(#p25-mauve)"
+    stroke="#766c70"
+    stroke-width="0.8"
+/>
+<path d="M9 30Q30 19 54 30L49 39Q33 44 14 38Z" fill="#526a5b" />
+<g transform="translate(32 31.5) scale(1.1 0.45)">
+    <use href="#p25-leaf-shape" transform="rotate(-25) scale(0.93 1.02)" />
+    <use href="#p25-leaf-shape" transform="rotate(32) scale(0.9 1.1)" />
+    <use href="#p25-leaf-shape" transform="rotate(-78) scale(1.02 1.02)" />
+    <use href="#p25-leaf-shape" transform="rotate(83) scale(1.02 1.02)" />
+    <use href="#p25-leaf-shape" transform="rotate(-128) scale(0.85 0.96)" />
+    <use href="#p25-leaf-shape" transform="rotate(140) scale(0.9 0.96)" />
+    <use href="#p25-leaf-shape" transform="rotate(183) scale(0.85 0.92)" />
+    <use
+        href="#p25-leaf-shape"
+        transform="translate(-0.5 -1) rotate(-50) scale(0.45 0.57)"
+    />
+    <use
+        href="#p25-leaf-shape"
+        transform="translate(0 -1) rotate(36) scale(0.48 0.59)"
+    />
+    <use
+        href="#p25-leaf-shape"
+        transform="translate(-1 0) rotate(-137) scale(0.43 0.55)"
+    />
+    <use
+        href="#p25-leaf-shape"
+        transform="translate(0.5 0) rotate(116) scale(0.45 0.51)"
+    />
+    <use href="#p25-leaf-shape" transform="rotate(176) scale(0.25 0.32)" />
+    <use href="#p25-leaf-shape" transform="rotate(-15) scale(0.23 0.35)" />
+</g>
+<path
+    d="M15 31Q16 28.8 18 30Q19 31 17.5 32Q16 32.5 15 31ZM42 36Q43 34 45 35Q46 36 44.5 36.8Q43 37 42 36Z"
+    fill="#b8c0a0"
+    stroke="#8b9d85"
+    stroke-width="0.4"
+/>
+</symbol>
 
   <symbol id="icon-plant-kalanchoe-bracteata" viewBox="0 0 64 64">
     <defs>
@@ -9291,166 +9523,84 @@
   </symbol>
 
   <symbol id="icon-plant-pleiospilos-nelii-royal-flush" viewBox="0 0 64 64">
-    <defs>
-        <linearGradient id="pleio-pot" x1="0" x2="0.9" y1="0" y2="1">
-            <stop offset="0" stop-color="#fffdf7" />
-            <stop offset="1" stop-color="#d4d0c7" />
-        </linearGradient>
-        <radialGradient id="splitrock-leaf" cx="35%" cy="23%" r="80%">
-            <stop offset="0" stop-color="#aa849b" />
-            <stop offset="0.5" stop-color="#84637f" />
-            <stop offset="1" stop-color="#61485f" />
-        </radialGradient>
-        <clipPath id="splitrock-left" clipPathUnits="userSpaceOnUse">
-            <path
-                d="M31 20c-5-4-12 2-15 8-3 7-1 14 4 18h9c4-7 7-16 2-26Z"
-                fill="none"
-                stroke="none"
-                stroke-width="1"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            />
-        </clipPath>
-        <clipPath id="splitrock-right" clipPathUnits="userSpaceOnUse">
-            <path
-                d="M34 20c7-3 14 5 15 11 1 6-1 11-5 15H32c0-8-2-18 2-26Z"
-                fill="none"
-                stroke="none"
-                stroke-width="1"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            />
-        </clipPath>
-        <pattern
-            id="splitrock-speckles"
-            width="4.8"
-            height="5.1"
-            patternUnits="userSpaceOnUse"
-        >
-            <ellipse
-                cx="1"
-                cy="1.4"
-                rx="0.45"
-                ry="0.45"
-                fill="#594455"
-                stroke="none"
-                stroke-width="1"
-            />
-            <ellipse
-                cx="3.3"
-                cy="3.8"
-                rx="0.34"
-                ry="0.34"
-                fill="#6b5064"
-                stroke="none"
-                stroke-width="1"
-            />
-            <ellipse
-                cx="3.6"
-                cy="0.5"
-                rx="0.23"
-                ry="0.23"
-                fill="#cfacba"
-                stroke="none"
-                stroke-width="1"
-            />
-        </pattern>
-    </defs>
-    <ellipse
-        cx="32"
-        cy="60.5"
-        rx="22"
-        ry="1.9"
-        fill="#244b3b"
-        stroke="none"
-        stroke-width="0"
-        opacity="0.12"
-    />
-    <ellipse
-        cx="32"
-        cy="45.5"
-        rx="22"
-        ry="2.1"
-        fill="#745c45"
-        stroke="none"
-        stroke-width="1"
-    />
+<defs>
+    <linearGradient id="p28-pot" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#c18458" />
+        <stop offset="1" stop-color="#824a35" />
+    </linearGradient>
+    <clipPath id="p28-pot-clip">
+        <path d="M9 39H55L50 56Q48 61 32 61Q16 61 14 56Z" />
+    </clipPath>
+    <radialGradient id="p28-purple" cx="0.3" cy="0.15" r="0.9">
+        <stop offset="0" stop-color="#b18b9e" />
+        <stop offset="0.5" stop-color="#8b687f" />
+        <stop offset="1" stop-color="#5c465d" />
+    </radialGradient>
+    <clipPath id="p28-leaves-clip">
+        <path
+            d="M31 23C25 19 18 24 17 30Q15 39 28 41L31 39Q33 30 31 23ZM34 23C41 20 47 27 47 33Q47 41 34 41L32 39Q31 29 34 23Z"
+        />
+    </clipPath>
+    <pattern id="p28-speckles" width="4.7" height="4.3" patternUnits="userSpaceOnUse">
+        <circle cx="1.1" cy="1.1" r="0.32" fill="#554354" />
+        <circle cx="3.4" cy="3" r="0.28" fill="#604a60" />
+        <circle cx="3.8" cy="0.8" r="0.2" fill="#c5a4b1" />
+    </pattern>
+</defs>
+<ellipse cx="32" cy="61" rx="24" ry="1.8" fill="#244b3b" opacity="0.12" />
+<path
+    d="M9 39H55L50 56Q48 61 32 61Q16 61 14 56Z"
+    fill="url(#p28-pot)"
+    stroke="#895b40"
+    stroke-width="1.3"
+/>
+<g clip-path="url(#p28-pot-clip)" fill="#e2a277" opacity="0.45">
     <path
-        d="M29 20q3 1 6 0l5 27H26Z"
-        fill="#423440"
-        stroke="none"
-        stroke-width="1"
+        d="M9 41L17 45 15 53 11 48ZM21 43L29 47 26 56 19 52ZM34 44L42 47 39 57 31 53ZM47 42L55 43 52 52 44 52ZM15 55L20 53 25 60 18 62ZM28 57L33 54 39 61 29 63ZM42 58L48 54 51 60 45 63Z"
+    />
+</g>
+<path
+    d="M17 46L21 43M29 47L34 44M42 47L47 42M26 56L31 53M39 57L44 52"
+    fill="none"
+    stroke="#895b40"
+    stroke-width="0.6"
+    opacity="0.55"
+/>
+<ellipse cx="32" cy="39" rx="23" ry="8.5" fill="#895b40" />
+<ellipse cx="32" cy="38.7" rx="21.5" ry="7.2" fill="#75604c" />
+<g stroke="#6d604d" stroke-width="0.4" stroke-linejoin="round">
+    <path
+        d="M12 38l4-3 3 2-2 4ZM21 34l4-2 3 3-3 2ZM41 34l4-2 4 3-3 2ZM45 40l4-2 4 3-3 2ZM29 43l4-3 4 3-3 2"
+        fill="#d8d1b7"
+    />
+    <path d="M17 42l3-3 4 2-2 3ZM35 34l3-2 3 3-4 2ZM38 43l4-3 3 3-2 2" fill="#b87952" />
+    <path d="M27 34l4-2 2 3-4 2ZM21 43l4-2 3 2-3 2ZM48 36l3-1 2 2-3 1" fill="#454d49" />
+</g>
+<path d="M29 26Q32 22 36 26L36 40Q32 44 28 40Z" fill="#423342" />
+<path
+    d="M31 23C25 19 18 24 17 30Q15 39 28 41L31 39Q33 30 31 23ZM34 23C41 20 47 27 47 33Q47 41 34 41L32 39Q31 29 34 23Z"
+    fill="url(#p28-purple)"
+    stroke="#654c60"
+    stroke-width="0.85"
+/>
+<g clip-path="url(#p28-leaves-clip)">
+    <rect x="15" y="20" width="34" height="23" fill="url(#p28-speckles)" />
+    <path
+        d="M20 29Q22 23 28 24M37 24Q43 26 44 30"
+        fill="none"
+        stroke="#c7a6b5"
+        stroke-width="0.8"
         stroke-linecap="round"
-        stroke-linejoin="round"
+        opacity="0.65"
     />
-    <path
-        d="M31 20c-5-4-12 2-15 8-3 7-1 14 4 18h9c4-7 7-16 2-26Z"
-        fill="url(#splitrock-leaf)"
-        stroke="#59475b"
-        stroke-width="1.25"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    />
-    <g clip-path="url(#splitrock-left)">
-        <path
-            d="M31 20c-5-4-12 2-15 8-3 7-1 14 4 18h9c4-7 7-16 2-26Z"
-            fill="url(#splitrock-speckles)"
-            stroke="none"
-            stroke-width="1"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        />
-        <path
-            d="M20 28q2-4 6-5"
-            fill="none"
-            stroke="#cfafbc"
-            stroke-width="0.8"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-opacity="0.7"
-        />
-    </g>
-    <path
-        d="M34 20c7-3 14 5 15 11 1 6-1 11-5 15H32c0-8-2-18 2-26Z"
-        fill="url(#splitrock-leaf)"
-        stroke="#59475b"
-        stroke-width="1.25"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    />
-    <g clip-path="url(#splitrock-right)">
-        <path
-            d="M34 20c7-3 14 5 15 11 1 6-1 11-5 15H32c0-8-2-18 2-26Z"
-            fill="url(#splitrock-speckles)"
-            stroke="none"
-            stroke-width="1"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-        />
-        <path
-            d="M37 23q4 1 6 5"
-            fill="none"
-            stroke="#c8a8b7"
-            stroke-width="0.7"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-opacity="0.65"
-        />
-    </g>
-    <path
-        d="M8 45h48v7H8z"
-        fill="#fffdf8"
-        stroke="#625b51"
-        stroke-linejoin="round"
-        stroke-width="1.7"
-    />
-    <path
-        d="m11 52 4 9h34l4-9Z"
-        fill="url(#pleio-pot)"
-        stroke="#625b51"
-        stroke-linejoin="round"
-        stroke-width="1.7"
-    />
+</g>
+<path
+    d="M31 24Q33 31 31.5 38"
+    fill="none"
+    stroke="#49384c"
+    stroke-width="1"
+    stroke-linecap="round"
+/>
 </symbol>
 
   <symbol id="icon-plant-portulacaria-afra" viewBox="0 0 64 64">
@@ -11393,95 +11543,281 @@
   </symbol>
 
   <symbol id="icon-plant-shared-succulent-planter" viewBox="0 0 64 64">
-    <defs>
-      <linearGradient id="shared-succulent-pot" x1="0" y1="0" x2="0" y2="1">
-        <stop stop-color="#686c67"/>
-        <stop offset="1" stop-color="#343e3a"/>
-      </linearGradient>
-      <linearGradient id="shared-succulent-green" x1="0" y1="0" x2="1" y2="1">
-        <stop stop-color="#c4d86b"/>
-        <stop offset="0.45" stop-color="#83ac5a"/>
-        <stop offset="1" stop-color="#426944"/>
-      </linearGradient>
-      <linearGradient id="shared-succulent-rosette" x1="0" y1="0" x2="0" y2="1">
-        <stop stop-color="#c5ccc0"/>
-        <stop offset="0.55" stop-color="#94b0a5"/>
-        <stop offset="1" stop-color="#536f69"/>
-      </linearGradient>
-      <linearGradient id="shared-succulent-silver" x1="0" y1="0" x2="1" y2="1">
-        <stop stop-color="#e0e3d5"/>
-        <stop offset="1" stop-color="#9cae9e"/>
-      </linearGradient>
-      <linearGradient id="shared-succulent-copper" x1="0" y1="0" x2="1" y2="1">
-        <stop stop-color="#d8b895"/>
-        <stop offset="1" stop-color="#956849"/>
-      </linearGradient>
-      <g id="shared-succulent-round-pair">
-        <ellipse cx="-2.3" cy="-1" rx="2.8" ry="2.1" transform="rotate(25 -2.3 -1)" fill="url(#shared-succulent-green)" stroke="#4e7247" stroke-width="0.35"/>
-        <ellipse cx="2.2" cy="-2" rx="2.5" ry="2" transform="rotate(-32 2.2 -2)" fill="url(#shared-succulent-green)" stroke="#4e7247" stroke-width="0.35"/>
-        <path d="M-4 -1.4L-2 -0.9M1 -2.4L3 -3" stroke="#d6e6a2" stroke-width="0.4" stroke-linecap="round"/>
-      </g>
-      <g id="shared-succulent-rosette-leaf">
-        <path d="M0 0C-5 -3 -6 -10 -2 -14C-0.8 -15 0 -16 0 -17C1 -15 3 -14 4 -12C7 -7 4 -2 0 0Z" fill="url(#shared-succulent-rosette)" stroke="#b27d82" stroke-width="0.5"/>
-        <path d="M0 -2C-1 -6 -2 -10 0 -14" fill="none" stroke="#d3d9c9" stroke-width="0.55" opacity="0.65"/>
-      </g>
-      <g id="shared-succulent-spoon">
-        <path d="M0 0C-6 -1 -10 -5 -8 -8C-5 -12 0 -6 0 0Z" fill="url(#shared-succulent-silver)" stroke="#849b8a" stroke-width="0.5"/>
-        <path d="M-1 -1L-7 -7" stroke="#e9ebdf" stroke-width="0.6"/>
-      </g>
-    </defs>
-    <ellipse cx="33" cy="58" rx="24" ry="2.5" fill="#243c30" opacity="0.15"/>
-    <path d="M7 40L56 36L54 55L11 59Z" fill="url(#shared-succulent-pot)" stroke="#34443b" stroke-width="0.9"/>
-    <path d="M7 39L54 34L59 39L11 46Z" fill="#95988b" stroke="#34443b" stroke-width="0.8"/>
-    <path d="M12 40L52 36L55 39L13 43Z" fill="#665442"/>
-    <path d="M13 48L52 43" stroke="#91968c" stroke-width="0.7"/>
-    <path d="M39 38L37 10" stroke="#888b64" stroke-width="1.5"/>
-    <use href="#shared-succulent-spoon" transform="translate(38 31)"/>
-    <use href="#shared-succulent-spoon" transform="translate(38 29) scale(-1 1)"/>
-    <use href="#shared-succulent-spoon" transform="translate(37.5 24)"/>
-    <use href="#shared-succulent-spoon" transform="translate(37.5 22) scale(-1 1)"/>
-    <use href="#shared-succulent-spoon" transform="translate(37 17) scale(0.8)"/>
-    <use href="#shared-succulent-spoon" transform="translate(37 15) scale(-0.8 0.8)"/>
-    <path d="M49 38L49 18" stroke="#8e7851" stroke-width="1.25"/>
-    <path d="M49 31C42 31 40 25 43 23C47 22 49 27 49 31ZM49 25C55 25 59 20 56 17C53 15 49 21 49 25ZM49 36C54 37 60 33 58 29C55 26 50 31 49 36Z" fill="url(#shared-succulent-copper)" stroke="#96795a" stroke-width="0.6"/>
-    <path d="M48 29L43 25M50 24L55 19M51 35L57 30" stroke="#e0c5a4" stroke-width="0.45"/>
-    <path d="M24 42L24 18L19 9M24 32L12 24L8 20M24 27L30 19L30 13M24 37L13 35L7 30M20 25L16 17" fill="none" stroke="#795c44" stroke-linecap="round" stroke-width="1.5"/>
-    <g>
-      <use href="#shared-succulent-round-pair" transform="translate(19 10) scale(0.8)"/>
-      <use href="#shared-succulent-round-pair" transform="translate(22 16)"/>
-      <use href="#shared-succulent-round-pair" transform="translate(24 22)"/>
-      <use href="#shared-succulent-round-pair" transform="translate(30 14) scale(0.8)"/>
-      <use href="#shared-succulent-round-pair" transform="translate(29 20)"/>
-      <use href="#shared-succulent-round-pair" transform="translate(8 21) scale(0.8)"/>
-      <use href="#shared-succulent-round-pair" transform="translate(14 25)"/>
-      <use href="#shared-succulent-round-pair" transform="translate(18 19) scale(0.9)"/>
-      <use href="#shared-succulent-round-pair" transform="translate(20 29)"/>
-      <use href="#shared-succulent-round-pair" transform="translate(27 28)"/>
-      <use href="#shared-succulent-round-pair" transform="translate(8 31) scale(0.8)"/>
-      <use href="#shared-succulent-round-pair" transform="translate(15 35)"/>
-      <use href="#shared-succulent-round-pair" transform="translate(24 35)"/>
-      <use href="#shared-succulent-round-pair" transform="translate(22 40) scale(0.8)"/>
+<defs>
+    <linearGradient id="p20-oct-wood" x1="0" y1="0" x2="0.9" y2="1">
+        <stop stop-color="#77634c" />
+        <stop offset="0.45" stop-color="#51483d" />
+        <stop offset="1" stop-color="#352f2c" />
+    </linearGradient>
+    <linearGradient id="p20-oct-green" x1="0" y1="0" x2="0.8" y2="1">
+        <stop stop-color="#d4df68" />
+        <stop offset="0.4" stop-color="#a2bd54" />
+        <stop offset="1" stop-color="#558148" />
+    </linearGradient>
+    <linearGradient id="p20-oct-silver" x1="0" y1="0" x2="0.8" y2="1">
+        <stop stop-color="#e6e7de" />
+        <stop offset="0.5" stop-color="#c9d2c9" />
+        <stop offset="1" stop-color="#8faaa0" />
+    </linearGradient>
+    <linearGradient id="p20-oct-copper" x1="0" y1="0" x2="0.3" y2="1">
+        <stop stop-color="#dcac73" />
+        <stop offset="0.45" stop-color="#bf9465" />
+        <stop offset="1" stop-color="#8d7958" />
+    </linearGradient>
+    <linearGradient id="p20-oct-new-copper" x1="0" y1="0" x2="1" y2="1">
+        <stop stop-color="#e9ad68" />
+        <stop offset="1" stop-color="#ba6f49" />
+    </linearGradient>
+    <linearGradient id="p20-oct-purple" x1="0" y1="0" x2="0.6" y2="1">
+        <stop stop-color="#c5bdca" />
+        <stop offset="0.5" stop-color="#9eacb5" />
+        <stop offset="1" stop-color="#757d92" />
+    </linearGradient>
+    <linearGradient id="p20-oct-rosette-green" x1="0" y1="0" x2="0.5" y2="1">
+        <stop stop-color="#d1d89e" />
+        <stop offset="0.5" stop-color="#9fb775" />
+        <stop offset="1" stop-color="#608551" />
+    </linearGradient>
+    <clipPath id="p20-oct-box-face">
+        <path d="M9 44 48 39 48 58 13 62Z" />
+    </clipPath>
+    <g id="p20-oct-round-pair">
+        <ellipse
+            cx="-2"
+            cy="-1.1"
+            rx="2.2"
+            ry="1.65"
+            transform="rotate(20 -2 -1.1)"
+            fill="url(#p20-oct-green)"
+            stroke="#72934f"
+            stroke-width="0.25"
+        />
+        <ellipse
+            cx="2"
+            cy="-2.3"
+            rx="2.1"
+            ry="1.6"
+            transform="rotate(-32 2 -2.3)"
+            fill="url(#p20-oct-green)"
+            stroke="#72934f"
+            stroke-width="0.25"
+        />
+        <path
+            d="M-3.3-1.7-1.3-1.1M1-2.7 2.7-3"
+            stroke="#e1e6a2"
+            stroke-width="0.3"
+            stroke-linecap="round"
+        />
     </g>
-    <g transform="translate(40 42)">
-      <use href="#shared-succulent-rosette-leaf" transform="rotate(15) scale(1 0.9)"/>
-      <use href="#shared-succulent-rosette-leaf" transform="rotate(70) scale(0.95 0.85)"/>
-      <use href="#shared-succulent-rosette-leaf" transform="rotate(125) scale(0.95 0.8)"/>
-      <use href="#shared-succulent-rosette-leaf" transform="rotate(180) scale(0.85 0.65)"/>
-      <use href="#shared-succulent-rosette-leaf" transform="rotate(230) scale(0.9 0.8)"/>
-      <use href="#shared-succulent-rosette-leaf" transform="rotate(285) scale(0.95 0.85)"/>
-      <use href="#shared-succulent-rosette-leaf" transform="rotate(340) scale(0.65 0.65)"/>
-      <use href="#shared-succulent-rosette-leaf" transform="rotate(45) scale(0.65 0.6)"/>
-      <use href="#shared-succulent-rosette-leaf" transform="rotate(110) scale(0.65 0.55)"/>
-      <use href="#shared-succulent-rosette-leaf" transform="rotate(175) scale(0.6 0.5)"/>
-      <use href="#shared-succulent-rosette-leaf" transform="rotate(240) scale(0.6 0.55)"/>
-      <use href="#shared-succulent-rosette-leaf" transform="rotate(310) scale(0.4 0.4)"/>
-      <use href="#shared-succulent-rosette-leaf" transform="rotate(30) scale(0.4 0.4)"/>
-      <use href="#shared-succulent-rosette-leaf" transform="rotate(115) scale(0.4 0.35)"/>
-      <use href="#shared-succulent-rosette-leaf" transform="rotate(210) scale(0.35 0.3)"/>
-      <use href="#shared-succulent-rosette-leaf" transform="rotate(295) scale(0.22 0.22)"/>
-      <use href="#shared-succulent-rosette-leaf" transform="rotate(60) scale(0.22 0.22)"/>
+    <g id="p20-oct-silver-leaf">
+        <path
+            d="M0 0C-4-0.5-10-3-10-6.5-10-10-5.2-11-3.5-8.4-1.6-6-0.7-2.5 0 0Z"
+            fill="url(#p20-oct-silver)"
+            stroke="#8d9f92"
+            stroke-width="0.4"
+        />
+        <path
+            d="M-0.8-1.5-6.7-7.5"
+            stroke="#e9eae0"
+            stroke-width="0.45"
+            stroke-linecap="round"
+        />
     </g>
-  </symbol>
+    <g id="p20-oct-purple-leaf">
+        <path
+            d="M0 0C-3.9-1.7-5.5-7.2-2.3-10.1L0-12C0.8-9.8 3.5-8.1 3.8-5.7 4-2.6 1.4-0.4 0 0Z"
+            fill="url(#p20-oct-purple)"
+            stroke="#bc8b9b"
+            stroke-width="0.45"
+        />
+        <path d="M0-1.2-0.6-8.9" stroke="#d4c9d1" stroke-width="0.35" opacity="0.7" />
+    </g>
+    <g id="p20-oct-green-leaf">
+        <path
+            d="M0 0C-3.7-2.4-4.4-6.3-0.8-11L0-13C0.5-10.6 4.2-6.8 3.8-3.9 3.3-1.5 1.3-0.4 0 0Z"
+            fill="url(#p20-oct-rosette-green)"
+            stroke="#bb9679"
+            stroke-width="0.45"
+        />
+        <path d="M0-1.4 0-9.4" stroke="#dbe0ac" stroke-width="0.4" opacity="0.7" />
+    </g>
+</defs>
+<ellipse cx="33" cy="61.7" rx="24" ry="1.5" fill="#263e32" opacity="0.15" />
+<path
+    d="M9 44 48 39 59 44 54 59 13 62Z"
+    fill="url(#p20-oct-wood)"
+    stroke="#514a40"
+    stroke-width="0.75"
+    stroke-linejoin="round"
+/>
+<path d="m48 39 11 5-5 15-6-1Z" fill="#3b342e" />
+<path
+    d="M8 43 46 36 60 42 21 51Z"
+    fill="#8a7a66"
+    stroke="#52483c"
+    stroke-width="0.65"
+    stroke-linejoin="round"
+/>
+<path d="m12 43 33-5 10 4-34 6Z" fill="#504431" />
+<g clip-path="url(#p20-oct-box-face)" fill="none" stroke-linecap="round">
+    <path
+        d="m11 50 35-5m-33 7 31-4m-30 7 32-4m-30 7 29-4m-29 5 28-3"
+        stroke="#b59c77"
+        stroke-width="0.45"
+        opacity="0.48"
+    />
+    <path
+        d="M13 49c9 1 15-3 24-3m-21 8c8 0 14-3 27-3m-23 9 18-2"
+        stroke="#2e2a24"
+        stroke-width="0.45"
+    />
+    <path d="M28 52c3-2 7-2 9-1-1 2-6 3-9 1Z" stroke="#77634c" stroke-width="0.45" />
+</g>
+<path
+    d="m49 48 7-2m-7 5 6-2m-6 5 5-2"
+    fill="none"
+    stroke="#7c6b53"
+    stroke-width="0.45"
+    opacity="0.6"
+/>
+<path
+    d="M25 42 26 23 23 9 21 4M26 30 17 24 13 16M25 24 32 17 33 7M26 20 20 16M25 35 11 32M28 29 37 22M18 24 10 26"
+    fill="none"
+    stroke="#816645"
+    stroke-width="1.1"
+    stroke-linecap="round"
+/>
+<use href="#p20-oct-round-pair" transform="translate(21 5) rotate(-15) scale(0.8)" />
+<use href="#p20-oct-round-pair" transform="translate(23 10) rotate(5) scale(0.9)" />
+<use href="#p20-oct-round-pair" transform="translate(25 16) rotate(-10) scale(1.05)" />
+<use href="#p20-oct-round-pair" transform="translate(24 23) rotate(-15) scale(1.08)" />
+<use href="#p20-oct-round-pair" transform="translate(33 8) rotate(10) scale(0.75)" />
+<use href="#p20-oct-round-pair" transform="translate(31 14) rotate(25) scale(0.9)" />
+<use href="#p20-oct-round-pair" transform="translate(30 20) rotate(-5) scale(0.9)" />
+<use href="#p20-oct-round-pair" transform="translate(14 16) rotate(-25) scale(0.8)" />
+<use href="#p20-oct-round-pair" transform="translate(16 22) rotate(-13) scale(1)" />
+<use href="#p20-oct-round-pair" transform="translate(12 27) rotate(-5) scale(0.9)" />
+<use href="#p20-oct-round-pair" transform="translate(19 28) rotate(10) scale(1)" />
+<use href="#p20-oct-round-pair" transform="translate(25 30) rotate(-12) scale(1.1)" />
+<use href="#p20-oct-round-pair" transform="translate(10 32) rotate(-25) scale(0.8)" />
+<use href="#p20-oct-round-pair" transform="translate(17 35) rotate(5) scale(0.92)" />
+<use href="#p20-oct-round-pair" transform="translate(30 36) rotate(10) scale(1)" />
+<use href="#p20-oct-round-pair" transform="translate(35 25) rotate(-15) scale(0.82)" />
+<use href="#p20-oct-round-pair" transform="translate(36 30) rotate(10) scale(0.85)" />
+<use href="#p20-oct-round-pair" transform="translate(27 40) rotate(20) scale(0.86)" />
+<use href="#p20-oct-round-pair" transform="translate(20 19) rotate(30) scale(0.9)" />
+<use href="#p20-oct-round-pair" transform="translate(28 25) rotate(-15) scale(1)" />
+<use href="#p20-oct-round-pair" transform="translate(20 32) rotate(-15) scale(0.9)" />
+<use href="#p20-oct-round-pair" transform="translate(33 33) rotate(35) scale(1)" />
+<use href="#p20-oct-round-pair" transform="translate(11 22) rotate(-10) scale(0.7)" />
+<path
+    d="M44 39 44 23 46 13M43 29 50 21M43 34 53 30"
+    fill="none"
+    stroke="#9f9c7a"
+    stroke-width="1.2"
+    stroke-linecap="round"
+/>
+<use href="#p20-oct-silver-leaf" transform="translate(45 17) rotate(-20) scale(0.7)" />
+<use href="#p20-oct-silver-leaf" transform="translate(46 16) rotate(58) scale(0.7)" />
+<use href="#p20-oct-silver-leaf" transform="translate(44 23) rotate(-12) scale(0.9)" />
+<use href="#p20-oct-silver-leaf" transform="translate(45 24) rotate(100) scale(0.9)" />
+<use href="#p20-oct-silver-leaf" transform="translate(44 29) rotate(-24) scale(0.95)" />
+<use href="#p20-oct-silver-leaf" transform="translate(44 31) rotate(100) scale(1)" />
+<use href="#p20-oct-silver-leaf" transform="translate(43 35) rotate(-36) scale(1)" />
+<use href="#p20-oct-silver-leaf" transform="translate(47 36) rotate(90) scale(0.8)" />
+<use href="#p20-oct-silver-leaf" transform="translate(51 29) rotate(80) scale(0.8)" />
+<use href="#p20-oct-silver-leaf" transform="translate(42 38) rotate(-28) scale(0.9)" />
+<g transform="translate(19 34) scale(0.9 0.83)">
+    <use href="#p20-oct-purple-leaf" transform="rotate(0) scale(0.93 1.00)" />
+    <use href="#p20-oct-purple-leaf" transform="rotate(51) scale(1.00 1.05)" />
+    <use href="#p20-oct-purple-leaf" transform="rotate(104) scale(1.07 1.00)" />
+    <use href="#p20-oct-purple-leaf" transform="rotate(155) scale(0.93 1.05)" />
+    <use href="#p20-oct-purple-leaf" transform="rotate(207) scale(1.00 1.00)" />
+    <use href="#p20-oct-purple-leaf" transform="rotate(258) scale(1.07 1.05)" />
+    <use href="#p20-oct-purple-leaf" transform="rotate(310) scale(0.93 1.00)" />
+    <use href="#p20-oct-purple-leaf" transform="rotate(22) scale(0.60 0.65)" />
+    <use href="#p20-oct-purple-leaf" transform="rotate(84) scale(0.65 0.68)" />
+    <use href="#p20-oct-purple-leaf" transform="rotate(145) scale(0.70 0.65)" />
+    <use href="#p20-oct-purple-leaf" transform="rotate(209) scale(0.60 0.68)" />
+    <use href="#p20-oct-purple-leaf" transform="rotate(272) scale(0.65 0.65)" />
+    <use href="#p20-oct-purple-leaf" transform="rotate(334) scale(0.70 0.68)" />
+    <use href="#p20-oct-purple-leaf" transform="rotate(5) scale(0.28 0.30)" />
+    <use href="#p20-oct-purple-leaf" transform="rotate(96) scale(0.30 0.32)" />
+    <use href="#p20-oct-purple-leaf" transform="rotate(190) scale(0.32 0.30)" />
+    <use href="#p20-oct-purple-leaf" transform="rotate(282) scale(0.28 0.32)" />
+</g>
+<path
+    d="M37 45 37 32 35 23M37 39 47 36M37 35 26 30"
+    fill="none"
+    stroke="#9c8061"
+    stroke-width="1.6"
+    stroke-linecap="round"
+/>
+<path
+    d="M37 36C31 35 23 33 19 28 25 26 34 29 37 36Z"
+    fill="url(#p20-oct-copper)"
+    stroke="#9c8563"
+    stroke-width="0.45"
+/>
+<path
+    d="M38 39C42 32 54 32 61 35 58 40 46 42 38 39Z"
+    fill="url(#p20-oct-copper)"
+    stroke="#9c8563"
+    stroke-width="0.45"
+/>
+<path
+    d="M36 32C31 29 28 24 30 20 35 21 37 27 36 32Z"
+    fill="url(#p20-oct-new-copper)"
+    stroke="#bc8e67"
+    stroke-width="0.4"
+/>
+<path
+    d="M37 33C36 26 39 23 44 23 44 28 41 31 37 33Z"
+    fill="url(#p20-oct-new-copper)"
+    stroke="#bc8e67"
+    stroke-width="0.4"
+/>
+<path
+    d="M35 29C32 25 32 21 34 18 37 20 38 26 35 29Z"
+    fill="#c9a47a"
+    stroke="#a48e71"
+    stroke-width="0.4"
+/>
+<path
+    d="M36 38 24 29M41 38 55 36M34 29 31 23M39 30 42 25"
+    fill="none"
+    stroke="#e0bf90"
+    stroke-width="0.4"
+    opacity="0.65"
+    stroke-linecap="round"
+/>
+<path
+    d="M37 45c1 2.5 4 4.9 4.1 8.1-3.3-0.6-5.5-3.8-5.5-7.1Z"
+    fill="url(#p20-oct-copper)"
+    stroke="#8f795d"
+    stroke-width="0.4"
+/>
+<g transform="translate(21 44) rotate(10) scale(0.94 0.77)">
+    <use href="#p20-oct-green-leaf" transform="rotate(0) scale(0.93 1.00)" />
+    <use href="#p20-oct-green-leaf" transform="rotate(55) scale(1.00 1.05)" />
+    <use href="#p20-oct-green-leaf" transform="rotate(112) scale(1.07 1.00)" />
+    <use href="#p20-oct-green-leaf" transform="rotate(175) scale(0.93 1.05)" />
+    <use href="#p20-oct-green-leaf" transform="rotate(234) scale(1.00 1.00)" />
+    <use href="#p20-oct-green-leaf" transform="rotate(295) scale(1.07 1.05)" />
+    <use href="#p20-oct-green-leaf" transform="rotate(26) scale(0.60 0.64)" />
+    <use href="#p20-oct-green-leaf" transform="rotate(92) scale(0.64 0.67)" />
+    <use href="#p20-oct-green-leaf" transform="rotate(154) scale(0.68 0.64)" />
+    <use href="#p20-oct-green-leaf" transform="rotate(218) scale(0.60 0.67)" />
+    <use href="#p20-oct-green-leaf" transform="rotate(281) scale(0.64 0.64)" />
+    <use href="#p20-oct-green-leaf" transform="rotate(342) scale(0.68 0.67)" />
+    <use href="#p20-oct-green-leaf" transform="rotate(12) scale(0.30 0.32)" />
+    <use href="#p20-oct-green-leaf" transform="rotate(107) scale(0.32 0.34)" />
+    <use href="#p20-oct-green-leaf" transform="rotate(201) scale(0.34 0.32)" />
+    <use href="#p20-oct-green-leaf" transform="rotate(292) scale(0.30 0.34)" />
+</g>
+<path d="m31 44 2-1 1 1.5-1.3 1Z" fill="#c3b49b" />
+<path d="m43 43 2-1 1 1.5-2 0.8Z" fill="#b37d5f" />
+</symbol>
 
 
   <symbol id="icon-plant-echeveria-cubic-frost" viewBox="0 0 64 64">
@@ -18018,93 +18354,448 @@
 </symbol>
 <symbol id="icon-plant-lithops-shared-planter" viewBox="0 0 64 64">
 <defs>
-<linearGradient id="lithops-shared-planter-pot" x1="0" y1="0" x2="1" y2="0.7">
-<stop offset="0" stop-color="#b7748a" />
-<stop offset="0.35" stop-color="#e9abbc" />
-<stop offset="1" stop-color="#a6637b" />
-</linearGradient>
-<linearGradient id="lithops-shared-planter-body" x1="0" y1="0" x2="1" y2="1">
-<stop offset="0" stop-color="#c9be94" />
-<stop offset="1" stop-color="#8e9170" />
-</linearGradient>
-<pattern id="lithops-shared-planter-hobnails" width="6" height="5" patternUnits="userSpaceOnUse">
-<ellipse cx="3" cy="2.9" rx="1.6" ry="1.4" fill="#985b73" opacity="0.55" />
-<ellipse cx="2.7" cy="2.2" rx="1.45" ry="1.15" fill="#efb7c6" />
-<ellipse cx="2.4" cy="1.9" rx="0.65" ry="0.4" fill="#f7d1dc" />
-</pattern>
+    <linearGradient id="lithops-shared-planter-pot" x1="0" y1="0" x2="1" y2="0.7">
+        <stop offset="0" stop-color="#b7748a" />
+        <stop offset="0.35" stop-color="#e9abbc" />
+        <stop offset="1" stop-color="#a6637b" />
+    </linearGradient>
+    <pattern
+        id="lithops-shared-planter-hobnails"
+        width="6"
+        height="5"
+        patternUnits="userSpaceOnUse"
+    >
+        <ellipse cx="3" cy="2.9" rx="1.6" ry="1.4" fill="#985b73" opacity="0.55" />
+        <ellipse cx="2.7" cy="2.2" rx="1.45" ry="1.15" fill="#efb7c6" />
+        <ellipse cx="2.4" cy="1.9" rx="0.65" ry="0.4" fill="#f7d1dc" />
+    </pattern>
+    <linearGradient
+        id="photo-lithops-shared-planter-tan-side"
+        x1="0"
+        y1="0"
+        x2="0"
+        y2="1"
+    >
+        <stop stop-color="#b8a27c" />
+        <stop offset="1" stop-color="#7b6a52" />
+    </linearGradient>
+    <radialGradient
+        id="photo-lithops-shared-planter-tan-top"
+        cx="0.35"
+        cy="0.3"
+        r="0.85"
+    >
+        <stop stop-color="#d7bd89" />
+        <stop offset="1" stop-color="#b89e73" />
+    </radialGradient>
+    <linearGradient
+        id="photo-lithops-shared-planter-gray-side"
+        x1="0"
+        y1="0"
+        x2="0"
+        y2="1"
+    >
+        <stop stop-color="#b8bcaa" />
+        <stop offset="1" stop-color="#899789" />
+    </linearGradient>
+    <radialGradient
+        id="photo-lithops-shared-planter-gray-top"
+        cx="0.35"
+        cy="0.3"
+        r="0.85"
+    >
+        <stop stop-color="#dedcc0" />
+        <stop offset="1" stop-color="#b7c0a6" />
+    </radialGradient>
+    <g id="photo-lithops-shared-planter-tan-head">
+        <ellipse cx="0" cy="3.2" rx="8.6" ry="2.1" fill="#39382c" opacity="0.2" />
+        <path
+            d="M-8-0.7C-8.2 2.3-6.9 4.4-3.8 4.7L-0.7 4.2 0.2 0.2-0.7-4.8C-4.3-5.5-7.6-3.8-8-0.7ZM0.7-4.6 0.5 0.6 1 4.3C4.4 4.9 7.8 2.8 8 0.2 8.6-3 5.6-5.1 0.7-4.6Z"
+            fill="url(#photo-lithops-shared-planter-tan-side)"
+            stroke="#74634c"
+            stroke-width="0.65"
+            stroke-linejoin="round"
+        />
+        <path
+            d="M-7.6-1C-7.9-3.3-4.9-5.1-1.2-4.6L-0.7-1.1-1.2 2.1C-4.3 2.9-7.3 1.5-7.6-1ZM1.1-4.4C4.3-5 7.9-3.3 7.7-0.8 7.7 1.3 4.7 2.9 1.1 2.2L0.8-1Z"
+            fill="url(#photo-lithops-shared-planter-tan-top)"
+            stroke="#d3bc92"
+            stroke-width="0.45"
+        />
+        <path
+            d="M-6.2-1.4-5.2-2.9-3.8-2.7-3-3.9-1.9-3.7-1.8-2.1-3-1.3-2 0.2-2.5 1.3-4.1 1.4-4.4 0.3-5.8 0.2ZM2-3.4 3.2-3.5 3.8-2.6 5.6-2.7 6.5-1.6 5.9-0.7 6.4 0.4 4.9 1.3 4.1 0.5 2.4 1.4 1.9 0.2 2.7-0.7Z"
+            fill="#8e7a5e"
+        />
+        <path
+            d="M-5.1-1.8-4.2-1.5-4.5-0.5-5.3-0.8ZM-3.3-2.4-2.6-2.8-2.4-2-3-1.8ZM-3.8 0.4-3.2 0.1-2.7 0.7-3.2 1ZM3.3-2.5 4-2.3 3.7-1.5 3.1-1.7ZM4.8-0.5 5.5-0.3 5.2 0.3 4.5 0.1ZM2.7 0.1 3.3 0.4 2.8 0.9Z"
+            fill="#ceb582"
+        />
+        <path
+            d="M-0.5-4.6-0.3-1.1-0.5 3.5"
+            fill="none"
+            stroke="#605340"
+            stroke-width="0.7"
+            stroke-linecap="round"
+        />
+        <path
+            d="M-6.5-3.2Q-4.7-4.6-2.1-4.2M2-4.1Q4.3-4.5 6-3.3"
+            fill="none"
+            stroke="#e8d2a4"
+            stroke-width="0.5"
+            stroke-linecap="round"
+        />
+    </g>
+    <g id="photo-lithops-shared-planter-gray-head">
+        <ellipse cx="0" cy="3" rx="8.3" ry="2.2" fill="#303c31" opacity="0.2" />
+        <path
+            d="M-7.8-0.8C-8.5 2.4-6.2 4.6-2.8 4.5L-0.7 3.9 0.1-0.2-0.8-4.6C-4.6-5.1-7.6-3.3-7.8-0.8ZM0.7-4.6 0.6-0.1 1 4.2C4.8 4.5 7.9 2.7 8 0 8.4-3.4 4.8-5 0.7-4.6Z"
+            fill="url(#photo-lithops-shared-planter-gray-side)"
+            stroke="#5d6c5a"
+            stroke-width="0.65"
+            stroke-linejoin="round"
+        />
+        <path
+            d="M-7.4-1C-7.7-3.3-4.6-5.2-1.3-4.3L-0.8-1.1-1.2 1.9C-4.8 2.8-7.6 1.1-7.4-1ZM1.2-4.3C5-4.8 7.7-3.1 7.6-0.9 7.4 1.6 4.6 2.5 1.2 1.9L0.9-1.2Z"
+            fill="url(#photo-lithops-shared-planter-gray-top)"
+            stroke="#c6c9ac"
+            stroke-width="0.45"
+        />
+        <path
+            d="M-6.3-1.2-5.9-2.4-4.9-2.5-4.4-3.3-3.3-3.1-2.8-3.6-1.8-3.1-2.3-2.1-1.8-1.2-2.1 0.5-3.2 0.4-3.7 1-4.7 0.6-5.9 0.7-5.6-0.3ZM2-3.3 3.4-3 4.3-3.3 5.1-2.6 6.2-2.1 6-1.3 6.5-0.4 5.4 0.3 5.2 0.9 3.8 0.5 3 0.9 2 0.3 2.3-0.8 1.9-1.9Z"
+            fill="#6b7c65"
+        />
+        <path
+            d="M-4.8-1.7-4.2-1.5-4.4-0.8-5-1ZM-3-2.6-2.4-2.3-2.8-1.9ZM3.1-2.1 3.7-2 3.4-1.5ZM4.6-0.6 5.2-0.4 4.9 0.2 4.4-0.1Z"
+            fill="#c1c1a0"
+        />
+        <path
+            d="M-0.4-4.3-0.2-0.8-0.4 3.2"
+            fill="none"
+            stroke="#52634f"
+            stroke-width="0.7"
+            stroke-linecap="round"
+        />
+        <path
+            d="M-6.6-3Q-4.4-4.6-2.1-4M2-4Q4.6-4.4 6.1-3"
+            fill="none"
+            stroke="#d5d9bc"
+            stroke-width="0.5"
+            stroke-linecap="round"
+        />
+    </g>
 </defs>
 <ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
-<path d="M10 36V52C10 63 54 63 54 52V36Z" fill="url(#lithops-shared-planter-pot)" stroke="#89556b" stroke-width="1.4" />
-<path d="M11 39V52C11 61 53 61 53 52V39Q32 45 11 39Z" fill="url(#lithops-shared-planter-hobnails)" />
-<ellipse cx="32" cy="36" rx="22" ry="7" fill="#edb3c4" stroke="#89556b" stroke-width="1.3" />
+<path
+    d="M10 36V52C10 63 54 63 54 52V36Z"
+    fill="url(#lithops-shared-planter-pot)"
+    stroke="#89556b"
+    stroke-width="1.4"
+/>
+<path
+    d="M11 39V52C11 61 53 61 53 52V39Q32 45 11 39Z"
+    fill="url(#lithops-shared-planter-hobnails)"
+/>
+<ellipse
+    cx="32"
+    cy="36"
+    rx="22"
+    ry="7"
+    fill="#edb3c4"
+    stroke="#89556b"
+    stroke-width="1.3"
+/>
 <ellipse cx="32" cy="35.7" rx="19.6" ry="5.2" fill="#756451" />
-<path d="M14 35l3-2 3 2-2 2ZM38 35l3-3 4 2-2 3ZM23 38l2-2 3 1-1 2ZM46 34l2-1 3 2-3 1" fill="#e2d3b7" />
-<g transform="translate(7 0) scale(0.78)">
-<path d="M16 37C10 22 13 18 22 19Q29 20 27 38Q22 43 16 37ZM29 38Q26 21 33 20C42 17 45 28 39 38Q34 42 29 38Z" fill="url(#lithops-shared-planter-body)" stroke="#656b51" stroke-width="1.2" />
-<path d="M32 42Q27 29 35 28Q42 27 40 42Q36 46 32 42ZM42 42Q39 28 46 28Q56 28 49 42Q46 46 42 42Z" fill="#bab09b" stroke="#776e5d" stroke-width="1.2" />
-<path d="M17 23L22 25 18 28 23 31M33 24L37 27 32 30M34 32L37 35M45 31L47 35" fill="none" stroke="#706d56" stroke-width="1.2" stroke-linecap="round" />
-</g>
-<path d="M11 37Q32 44 53 37" fill="none" stroke="#f4c1d0" stroke-width="2" stroke-linecap="round" />
+<path
+    d="M14 35l3-2 3 2-2 2ZM38 35l3-3 4 2-2 3ZM23 38l2-2 3 1-1 2ZM46 34l2-1 3 2-3 1"
+    fill="#e2d3b7"
+/>
+<path
+    d="M14 34l2-2 3 0.8-0.4 2.5-3 1ZM20 31l2-1.1 2.2 0.9-1 2ZM29 32l2-1 2 1.1-0.6 2-2.5 0.3ZM44 32l2-1.3 2.8 1.5-1.7 2.2ZM18 37l2.8-1.5 2 1-0.8 2-2.6 0.1ZM32 37l2.5-1.3 2 1.4-1 2-2.9-0.2ZM45 37l2-1.2 2.7 1.3-0.4 1.6-3.2 0.4Z"
+    fill="#d8c3a2"
+    stroke="#aa957b"
+    stroke-width="0.3"
+/>
+<path
+    d="M24 36l2-1.3 2.2 1.2-0.7 1.6-2.4 0.3ZM38 34l1.7-1.7 2.1 0.8-0.5 2ZM14 37l1.7-1.1 2.1 1.5-0.7 1.4ZM40 38l2-1 2 1.3-0.8 1.3-2.5 0.2Z"
+    fill="#bd8067"
+    stroke="#865e50"
+    stroke-width="0.3"
+/>
+<path
+    d="M25 31l2.3-1 1.5 2-1.4 1ZM35 30l2-0.5 1.4 1.6-1.3 1.2ZM49 35l1.6-0.3 0.6 1.7-1.8 1ZM29 38l1.8-0.7 1.2 1.6-1.7 1.1Z"
+    fill="#a6b8b3"
+    stroke="#71867f"
+    stroke-width="0.3"
+/>
+<use
+    href="#photo-lithops-shared-planter-tan-head"
+    transform="translate(25 27.3) rotate(-12) scale(0.9)"
+/>
+<use
+    href="#photo-lithops-shared-planter-tan-head"
+    transform="translate(40 28.5) rotate(10) scale(0.84)"
+/>
+<use
+    href="#photo-lithops-shared-planter-gray-head"
+    transform="translate(22.8 33.5) rotate(8) scale(0.9)"
+/>
+<use
+    href="#photo-lithops-shared-planter-gray-head"
+    transform="translate(38.2 35) rotate(-12) scale(0.88)"
+/>
+<path
+    d="M11 37Q32 44 53 37"
+    fill="none"
+    stroke="#f4c1d0"
+    stroke-width="2"
+    stroke-linecap="round"
+/>
 </symbol>
 <symbol id="icon-plant-lithops-lesliei" viewBox="0 0 64 64">
 <defs>
-<linearGradient id="lithops-lesliei-pot" x1="0" y1="0" x2="1" y2="0.7">
-<stop offset="0" stop-color="#b7748a" />
-<stop offset="0.35" stop-color="#e9abbc" />
-<stop offset="1" stop-color="#a6637b" />
-</linearGradient>
-<linearGradient id="lithops-lesliei-body" x1="0" y1="0" x2="0.8" y2="1">
-<stop offset="0" stop-color="#d2b889" />
-<stop offset="1" stop-color="#8c775f" />
-</linearGradient>
-<pattern id="lithops-lesliei-hobnails" width="6" height="5" patternUnits="userSpaceOnUse">
-<ellipse cx="3" cy="2.9" rx="1.6" ry="1.4" fill="#985b73" opacity="0.55" />
-<ellipse cx="2.7" cy="2.2" rx="1.45" ry="1.15" fill="#efb7c6" />
-<ellipse cx="2.4" cy="1.9" rx="0.65" ry="0.4" fill="#f7d1dc" />
-</pattern>
+    <linearGradient id="lithops-lesliei-pot" x1="0" y1="0" x2="1" y2="0.7">
+        <stop offset="0" stop-color="#b7748a" />
+        <stop offset="0.35" stop-color="#e9abbc" />
+        <stop offset="1" stop-color="#a6637b" />
+    </linearGradient>
+    <pattern
+        id="lithops-lesliei-hobnails"
+        width="6"
+        height="5"
+        patternUnits="userSpaceOnUse"
+    >
+        <ellipse cx="3" cy="2.9" rx="1.6" ry="1.4" fill="#985b73" opacity="0.55" />
+        <ellipse cx="2.7" cy="2.2" rx="1.45" ry="1.15" fill="#efb7c6" />
+        <ellipse cx="2.4" cy="1.9" rx="0.65" ry="0.4" fill="#f7d1dc" />
+    </pattern>
+    <linearGradient id="photo-lithops-lesliei-tan-side" x1="0" y1="0" x2="0" y2="1">
+        <stop stop-color="#b8a27c" />
+        <stop offset="1" stop-color="#7b6a52" />
+    </linearGradient>
+    <radialGradient id="photo-lithops-lesliei-tan-top" cx="0.35" cy="0.3" r="0.85">
+        <stop stop-color="#d7bd89" />
+        <stop offset="1" stop-color="#b89e73" />
+    </radialGradient>
+    <g id="photo-lithops-lesliei-tan-head">
+        <ellipse cx="0" cy="3.2" rx="8.6" ry="2.1" fill="#39382c" opacity="0.2" />
+        <path
+            d="M-8-0.7C-8.2 2.3-6.9 4.4-3.8 4.7L-0.7 4.2 0.2 0.2-0.7-4.8C-4.3-5.5-7.6-3.8-8-0.7ZM0.7-4.6 0.5 0.6 1 4.3C4.4 4.9 7.8 2.8 8 0.2 8.6-3 5.6-5.1 0.7-4.6Z"
+            fill="url(#photo-lithops-lesliei-tan-side)"
+            stroke="#74634c"
+            stroke-width="0.65"
+            stroke-linejoin="round"
+        />
+        <path
+            d="M-7.6-1C-7.9-3.3-4.9-5.1-1.2-4.6L-0.7-1.1-1.2 2.1C-4.3 2.9-7.3 1.5-7.6-1ZM1.1-4.4C4.3-5 7.9-3.3 7.7-0.8 7.7 1.3 4.7 2.9 1.1 2.2L0.8-1Z"
+            fill="url(#photo-lithops-lesliei-tan-top)"
+            stroke="#d3bc92"
+            stroke-width="0.45"
+        />
+        <path
+            d="M-6.2-1.4-5.2-2.9-3.8-2.7-3-3.9-1.9-3.7-1.8-2.1-3-1.3-2 0.2-2.5 1.3-4.1 1.4-4.4 0.3-5.8 0.2ZM2-3.4 3.2-3.5 3.8-2.6 5.6-2.7 6.5-1.6 5.9-0.7 6.4 0.4 4.9 1.3 4.1 0.5 2.4 1.4 1.9 0.2 2.7-0.7Z"
+            fill="#8e7a5e"
+        />
+        <path
+            d="M-5.1-1.8-4.2-1.5-4.5-0.5-5.3-0.8ZM-3.3-2.4-2.6-2.8-2.4-2-3-1.8ZM-3.8 0.4-3.2 0.1-2.7 0.7-3.2 1ZM3.3-2.5 4-2.3 3.7-1.5 3.1-1.7ZM4.8-0.5 5.5-0.3 5.2 0.3 4.5 0.1ZM2.7 0.1 3.3 0.4 2.8 0.9Z"
+            fill="#ceb582"
+        />
+        <path
+            d="M-0.5-4.6-0.3-1.1-0.5 3.5"
+            fill="none"
+            stroke="#605340"
+            stroke-width="0.7"
+            stroke-linecap="round"
+        />
+        <path
+            d="M-6.5-3.2Q-4.7-4.6-2.1-4.2M2-4.1Q4.3-4.5 6-3.3"
+            fill="none"
+            stroke="#e8d2a4"
+            stroke-width="0.5"
+            stroke-linecap="round"
+        />
+    </g>
 </defs>
 <ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
-<path d="M10 36V52C10 63 54 63 54 52V36Z" fill="url(#lithops-lesliei-pot)" stroke="#89556b" stroke-width="1.4" />
-<path d="M11 39V52C11 61 53 61 53 52V39Q32 45 11 39Z" fill="url(#lithops-lesliei-hobnails)" />
-<ellipse cx="32" cy="36" rx="22" ry="7" fill="#edb3c4" stroke="#89556b" stroke-width="1.3" />
+<path
+    d="M10 36V52C10 63 54 63 54 52V36Z"
+    fill="url(#lithops-lesliei-pot)"
+    stroke="#89556b"
+    stroke-width="1.4"
+/>
+<path
+    d="M11 39V52C11 61 53 61 53 52V39Q32 45 11 39Z"
+    fill="url(#lithops-lesliei-hobnails)"
+/>
+<ellipse
+    cx="32"
+    cy="36"
+    rx="22"
+    ry="7"
+    fill="#edb3c4"
+    stroke="#89556b"
+    stroke-width="1.3"
+/>
 <ellipse cx="32" cy="35.7" rx="19.6" ry="5.2" fill="#756451" />
-<path d="M14 35l3-2 3 2-2 2ZM38 35l3-3 4 2-2 3ZM23 38l2-2 3 1-1 2ZM46 34l2-1 3 2-3 1" fill="#e2d3b7" />
-<g transform="translate(7 0) scale(0.78)">
-<path d="M15 32C10 16 15 12 22 15L25 33Q21 38 15 32ZM27 33L28 15C36 11 40 18 35 32Q32 37 27 33Z" fill="url(#lithops-lesliei-body)" stroke="#71604d" stroke-width="1.2" />
-<path d="M29 41C24 26 29 21 36 24L39 42Q34 47 29 41ZM41 42L42 24C50 20 54 27 49 41Q46 46 41 42Z" fill="url(#lithops-lesliei-body)" stroke="#71604d" stroke-width="1.2" />
-<path d="M17 18L21 20 17 23 22 25M30 18L34 20 30 24M31 27L35 30 31 33 36 35M44 27L48 30 44 33" fill="none" stroke="#806240" stroke-width="1.4" stroke-linecap="round" />
-</g>
-<path d="M11 37Q32 44 53 37" fill="none" stroke="#f4c1d0" stroke-width="2" stroke-linecap="round" />
+<path
+    d="M14 35l3-2 3 2-2 2ZM38 35l3-3 4 2-2 3ZM23 38l2-2 3 1-1 2ZM46 34l2-1 3 2-3 1"
+    fill="#e2d3b7"
+/>
+<path
+    d="M14 34l2-2 3 0.8-0.4 2.5-3 1ZM20 31l2-1.1 2.2 0.9-1 2ZM29 32l2-1 2 1.1-0.6 2-2.5 0.3ZM44 32l2-1.3 2.8 1.5-1.7 2.2ZM18 37l2.8-1.5 2 1-0.8 2-2.6 0.1ZM32 37l2.5-1.3 2 1.4-1 2-2.9-0.2ZM45 37l2-1.2 2.7 1.3-0.4 1.6-3.2 0.4Z"
+    fill="#d8c3a2"
+    stroke="#aa957b"
+    stroke-width="0.3"
+/>
+<path
+    d="M24 36l2-1.3 2.2 1.2-0.7 1.6-2.4 0.3ZM38 34l1.7-1.7 2.1 0.8-0.5 2ZM14 37l1.7-1.1 2.1 1.5-0.7 1.4ZM40 38l2-1 2 1.3-0.8 1.3-2.5 0.2Z"
+    fill="#bd8067"
+    stroke="#865e50"
+    stroke-width="0.3"
+/>
+<path
+    d="M25 31l2.3-1 1.5 2-1.4 1ZM35 30l2-0.5 1.4 1.6-1.3 1.2ZM49 35l1.6-0.3 0.6 1.7-1.8 1ZM29 38l1.8-0.7 1.2 1.6-1.7 1.1Z"
+    fill="#a6b8b3"
+    stroke="#71867f"
+    stroke-width="0.3"
+/>
+<use
+    href="#photo-lithops-lesliei-tan-head"
+    transform="translate(24.5 28.7) rotate(-12) scale(1.05)"
+/>
+<use
+    href="#photo-lithops-lesliei-tan-head"
+    transform="translate(39.1 33.4) rotate(11) scale(1.08)"
+/>
+<path
+    d="M11 37Q32 44 53 37"
+    fill="none"
+    stroke="#f4c1d0"
+    stroke-width="2"
+    stroke-linecap="round"
+/>
 </symbol>
 <symbol id="icon-plant-lithops-salicola" viewBox="0 0 64 64">
 <defs>
-<linearGradient id="lithops-salicola-pot" x1="0" y1="0" x2="1" y2="0.7">
-<stop offset="0" stop-color="#b7748a" />
-<stop offset="0.35" stop-color="#e9abbc" />
-<stop offset="1" stop-color="#a6637b" />
-</linearGradient>
-<linearGradient id="lithops-salicola-body" x1="0" y1="0" x2="0.8" y2="1">
-<stop offset="0" stop-color="#bdc2a9" />
-<stop offset="1" stop-color="#7d8970" />
-</linearGradient>
-<pattern id="lithops-salicola-hobnails" width="6" height="5" patternUnits="userSpaceOnUse">
-<ellipse cx="3" cy="2.9" rx="1.6" ry="1.4" fill="#985b73" opacity="0.55" />
-<ellipse cx="2.7" cy="2.2" rx="1.45" ry="1.15" fill="#efb7c6" />
-<ellipse cx="2.4" cy="1.9" rx="0.65" ry="0.4" fill="#f7d1dc" />
-</pattern>
+    <linearGradient id="lithops-salicola-pot" x1="0" y1="0" x2="1" y2="0.7">
+        <stop offset="0" stop-color="#b7748a" />
+        <stop offset="0.35" stop-color="#e9abbc" />
+        <stop offset="1" stop-color="#a6637b" />
+    </linearGradient>
+    <pattern
+        id="lithops-salicola-hobnails"
+        width="6"
+        height="5"
+        patternUnits="userSpaceOnUse"
+    >
+        <ellipse cx="3" cy="2.9" rx="1.6" ry="1.4" fill="#985b73" opacity="0.55" />
+        <ellipse cx="2.7" cy="2.2" rx="1.45" ry="1.15" fill="#efb7c6" />
+        <ellipse cx="2.4" cy="1.9" rx="0.65" ry="0.4" fill="#f7d1dc" />
+    </pattern>
+    <linearGradient id="photo-lithops-salicola-gray-side" x1="0" y1="0" x2="0" y2="1">
+        <stop stop-color="#b8bcaa" />
+        <stop offset="1" stop-color="#899789" />
+    </linearGradient>
+    <radialGradient id="photo-lithops-salicola-gray-top" cx="0.35" cy="0.3" r="0.85">
+        <stop stop-color="#dedcc0" />
+        <stop offset="1" stop-color="#b7c0a6" />
+    </radialGradient>
+    <g id="photo-lithops-salicola-gray-head">
+        <ellipse cx="0" cy="3" rx="8.3" ry="2.2" fill="#303c31" opacity="0.2" />
+        <path
+            d="M-7.8-0.8C-8.5 2.4-6.2 4.6-2.8 4.5L-0.7 3.9 0.1-0.2-0.8-4.6C-4.6-5.1-7.6-3.3-7.8-0.8ZM0.7-4.6 0.6-0.1 1 4.2C4.8 4.5 7.9 2.7 8 0 8.4-3.4 4.8-5 0.7-4.6Z"
+            fill="url(#photo-lithops-salicola-gray-side)"
+            stroke="#5d6c5a"
+            stroke-width="0.65"
+            stroke-linejoin="round"
+        />
+        <path
+            d="M-7.4-1C-7.7-3.3-4.6-5.2-1.3-4.3L-0.8-1.1-1.2 1.9C-4.8 2.8-7.6 1.1-7.4-1ZM1.2-4.3C5-4.8 7.7-3.1 7.6-0.9 7.4 1.6 4.6 2.5 1.2 1.9L0.9-1.2Z"
+            fill="url(#photo-lithops-salicola-gray-top)"
+            stroke="#c6c9ac"
+            stroke-width="0.45"
+        />
+        <path
+            d="M-6.3-1.2-5.9-2.4-4.9-2.5-4.4-3.3-3.3-3.1-2.8-3.6-1.8-3.1-2.3-2.1-1.8-1.2-2.1 0.5-3.2 0.4-3.7 1-4.7 0.6-5.9 0.7-5.6-0.3ZM2-3.3 3.4-3 4.3-3.3 5.1-2.6 6.2-2.1 6-1.3 6.5-0.4 5.4 0.3 5.2 0.9 3.8 0.5 3 0.9 2 0.3 2.3-0.8 1.9-1.9Z"
+            fill="#6b7c65"
+        />
+        <path
+            d="M-4.8-1.7-4.2-1.5-4.4-0.8-5-1ZM-3-2.6-2.4-2.3-2.8-1.9ZM3.1-2.1 3.7-2 3.4-1.5ZM4.6-0.6 5.2-0.4 4.9 0.2 4.4-0.1Z"
+            fill="#c1c1a0"
+        />
+        <path
+            d="M-0.4-4.3-0.2-0.8-0.4 3.2"
+            fill="none"
+            stroke="#52634f"
+            stroke-width="0.7"
+            stroke-linecap="round"
+        />
+        <path
+            d="M-6.6-3Q-4.4-4.6-2.1-4M2-4Q4.6-4.4 6.1-3"
+            fill="none"
+            stroke="#d5d9bc"
+            stroke-width="0.5"
+            stroke-linecap="round"
+        />
+    </g>
 </defs>
 <ellipse cx="32" cy="60" rx="23" ry="2" fill="#294d3d" opacity="0.12" />
-<path d="M10 36V52C10 63 54 63 54 52V36Z" fill="url(#lithops-salicola-pot)" stroke="#89556b" stroke-width="1.4" />
-<path d="M11 39V52C11 61 53 61 53 52V39Q32 45 11 39Z" fill="url(#lithops-salicola-hobnails)" />
-<ellipse cx="32" cy="36" rx="22" ry="7" fill="#edb3c4" stroke="#89556b" stroke-width="1.3" />
+<path
+    d="M10 36V52C10 63 54 63 54 52V36Z"
+    fill="url(#lithops-salicola-pot)"
+    stroke="#89556b"
+    stroke-width="1.4"
+/>
+<path
+    d="M11 39V52C11 61 53 61 53 52V39Q32 45 11 39Z"
+    fill="url(#lithops-salicola-hobnails)"
+/>
+<ellipse
+    cx="32"
+    cy="36"
+    rx="22"
+    ry="7"
+    fill="#edb3c4"
+    stroke="#89556b"
+    stroke-width="1.3"
+/>
 <ellipse cx="32" cy="35.7" rx="19.6" ry="5.2" fill="#756451" />
-<path d="M14 35l3-2 3 2-2 2ZM38 35l3-3 4 2-2 3ZM23 38l2-2 3 1-1 2ZM46 34l2-1 3 2-3 1" fill="#e2d3b7" />
-<g transform="translate(7 0) scale(0.78)">
-<path d="M15 32C10 16 15 12 22 15L25 33Q21 38 15 32ZM27 33L28 15C36 11 40 18 35 32Q32 37 27 33Z" fill="url(#lithops-salicola-body)" stroke="#606e5c" stroke-width="1.2" />
-<path d="M29 41C24 26 29 21 36 24L39 42Q34 47 29 41ZM41 42L42 24C50 20 54 27 49 41Q46 46 41 42Z" fill="url(#lithops-salicola-body)" stroke="#606e5c" stroke-width="1.2" />
-<path d="M16 19Q18 16 21 19L22 24Q19 26 17 23ZM29 19Q32 16 34 20L33 24 29 25ZM30 28Q32 25 35 28L36 33Q33 35 31 32ZM43 28Q46 25 48 29L47 33 43 34Z" fill="#7a8876" stroke="#d1c8a0" stroke-width="1.1" />
-</g>
-<path d="M11 37Q32 44 53 37" fill="none" stroke="#f4c1d0" stroke-width="2" stroke-linecap="round" />
+<path
+    d="M14 35l3-2 3 2-2 2ZM38 35l3-3 4 2-2 3ZM23 38l2-2 3 1-1 2ZM46 34l2-1 3 2-3 1"
+    fill="#e2d3b7"
+/>
+<path
+    d="M14 34l2-2 3 0.8-0.4 2.5-3 1ZM20 31l2-1.1 2.2 0.9-1 2ZM29 32l2-1 2 1.1-0.6 2-2.5 0.3ZM44 32l2-1.3 2.8 1.5-1.7 2.2ZM18 37l2.8-1.5 2 1-0.8 2-2.6 0.1ZM32 37l2.5-1.3 2 1.4-1 2-2.9-0.2ZM45 37l2-1.2 2.7 1.3-0.4 1.6-3.2 0.4Z"
+    fill="#d8c3a2"
+    stroke="#aa957b"
+    stroke-width="0.3"
+/>
+<path
+    d="M24 36l2-1.3 2.2 1.2-0.7 1.6-2.4 0.3ZM38 34l1.7-1.7 2.1 0.8-0.5 2ZM14 37l1.7-1.1 2.1 1.5-0.7 1.4ZM40 38l2-1 2 1.3-0.8 1.3-2.5 0.2Z"
+    fill="#bd8067"
+    stroke="#865e50"
+    stroke-width="0.3"
+/>
+<path
+    d="M25 31l2.3-1 1.5 2-1.4 1ZM35 30l2-0.5 1.4 1.6-1.3 1.2ZM49 35l1.6-0.3 0.6 1.7-1.8 1ZM29 38l1.8-0.7 1.2 1.6-1.7 1.1Z"
+    fill="#a6b8b3"
+    stroke="#71867f"
+    stroke-width="0.3"
+/>
+<use
+    href="#photo-lithops-salicola-gray-head"
+    transform="translate(24.5 28.7) rotate(-12) scale(1.05)"
+/>
+<use
+    href="#photo-lithops-salicola-gray-head"
+    transform="translate(39.1 33.4) rotate(11) scale(1.08)"
+/>
+<path
+    d="M11 37Q32 44 53 37"
+    fill="none"
+    stroke="#f4c1d0"
+    stroke-width="2"
+    stroke-linecap="round"
+/>
 </symbol>
 <symbol id="icon-plant-pleiospilos-nelii" viewBox="0 0 64 64">
 <defs>
