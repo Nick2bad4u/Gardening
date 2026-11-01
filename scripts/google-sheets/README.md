@@ -4,12 +4,12 @@ Production logger **5.40.3 / immutable version 125** supports **39 container all
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained source and production **5.40.3** match immutable version **125**,
-verified October 31 after the cactus and succulent portrait update below. Production
-**AppSheet 1.100140** uses portrait revision **23e95f9e4dfdf1fa**;
-P41's appended optional weight field remains unchanged. The rollout receipt below
-records production checks separately from rehearsal results; earlier dated entries
-retain the version verified at that time.
+Maintained source **5.40.4** prepares the remaining cactus and front-grid portrait
+update described below. Production remains **5.40.3 / immutable version 125**,
+with **AppSheet 1.100140** using portrait revision **23e95f9e4dfdf1fa** until the
+new artwork is deliberately promoted. Source readback and the saved AppSheet
+expression matched that baseline on November 1. P41's appended optional weight
+field remains unchanged; the earlier dated receipts retain their verified versions.
 
 The mobile logger and AppSheet are the observation input surfaces. The unused
 `Quick log` compatibility tab is hidden. Every saved event becomes a new
@@ -39,6 +39,21 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## November 1 remaining cactus portrait update
+
+Maintained **5.40.4** revises **19 tracked containers**: the remaining 18 older
+front-grid portraits and P19's shared cactus planter. The latter's three
+component illustrations use the same shared-pot framing, making **22 changed
+public SVG exports**. The
+[artwork source record](../../assets/artwork/ICON-SOURCES.md#november-1-remaining-cactus-and-front-grid-portraits)
+records the photo evidence, observed pot colors, and appearance-only scope.
+
+The logger source changes only its version and portrait revision. The AppSheet
+manifest retains all 39 IDs and slug mappings. No schema, care behavior, runtime
+permissions, or trigger configuration changes are required. Deployment and
+production-preservation verification are pending; the October 31 receipt below
+describes the currently deployed baseline.
 
 ## October 31 cactus and succulent portrait update
 

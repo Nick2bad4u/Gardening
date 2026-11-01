@@ -223,15 +223,15 @@ function portraitDescriptions() {
         ],
         [
             "astrophytum-ornatum",
-            "A squat gray-green ribbed cactus with white flecks and long tan spines in a terracotta planter.",
+            "Photo-informed schematic of Monk's hood with a low angular star-ribbed green body, many fine pale flecks and sparse long straw-brown spines, in mixed mineral top dressing and an orange-brown faceted pot.",
         ],
         [
             "austrocylindropuntia-subulata",
-            "A slim branching green cylindrical stem with pale awl-shaped leaves in a yellow planter.",
+            "Several short upright green cactus stems bearing pale areoles, fine spines and narrow pointed lime-green leaves, in a white faceted pot with mixed mineral dressing.",
         ],
         [
             "cereus-forbesii-ming-thing",
-            "A low blue-green monstrose cactus clump with irregular connected folds in a purple planter.",
+            "A broad low clump of irregular blue-green knobby cactus lobes with scattered pale areoles and fine brown spines, in a dark sage-green faceted pot.",
         ],
         [
             "chamaelobivia-hybrid",
@@ -239,7 +239,7 @@ function portraitDescriptions() {
         ],
         [
             "cleistocactus-colademononis",
-            "Three pale-haired cactus stems trailing from a hanging terracotta basket.",
+            "An isolated schematic view of P19 / #1's monkey-tail cactus: softly hairy pale-green stems curve upward and outward over the same broad dark etched shared-planter framing, not a separate hanging basket.",
         ],
         [
             "echeveria-arctic-ice",
@@ -267,23 +267,23 @@ function portraitDescriptions() {
         ],
         [
             "echinocereus-rigidissimus-rubispinus",
-            "An upright cactus wrapped in close cream and muted-pink comb-like spine bands in a terracotta planter.",
+            "A tapered oval cactus with dense overlapping cream comb-like spines and a pale lightly rose-tinted crown, above mineral gravel in a dark green faceted pot.",
         ],
         [
             "echinopsis-spachiana",
-            "A cluster of upright ribbed green torch cacti with rows of golden spine clusters in a blue planter.",
+            "An isolated schematic view of P19 / #1's probable golden torch: an upright green ribbed column with dense pale-gold radial spines, using the same broad dark etched shared-planter framing, not a separate pot.",
         ],
         [
             "echinopsis-subdenudata",
-            "A rounded dark-green ribbed cactus with large white woolly areoles in a terracotta planter.",
+            "Photo-informed schematic of Domino as a low bright-green rounded cactus with broad ribs, conspicuous soft white areole tufts and very short fine spines, in mixed mineral top dressing and a sage-green faceted pot.",
         ],
         [
             "espostoa-melanostele-nana",
-            "An upright gray-green cactus wrapped in dense cream-colored wool in a purple planter.",
+            "A rounded cylindrical cactus densely covered in cream wool, with a softly shaded tan base, above mineral gravel in a white faceted pot.",
         ],
         [
             "euphorbia-obesa-hybrid",
-            "A round muted-green body with fine dotted ribs, faint brown banding, and a tiny crown in a yellow planter.",
+            "Photo-informed schematic of Dragon's Egg as a round grey-green body with closely spaced raised ribs and small pale tan dots, in mixed mineral top dressing and a yellow faceted pot. The probable hybrid identification remains qualified in the plant profile.",
         ],
         [
             "faucaria-tuberculosa",
@@ -299,7 +299,7 @@ function portraitDescriptions() {
         ],
         [
             "gymnocalycium-mihanovichii-black-widow",
-            "A low wine-purple cactus with muted green mottling, rib chins, and pale radial spines in a mustard planter.",
+            "Photo-informed schematic of Black Widow with a low angular burgundy-red ribbed body, pointed chin-like ridges and fine pale spreading spines, in mixed mineral top dressing and a teal-blue faceted pot. This is P27, distinct from P01 in its yellow pot.",
         ],
         [
             "gymnocalycium-mihanovichii-variegated",
@@ -307,7 +307,7 @@ function portraitDescriptions() {
         ],
         [
             "gymnocalycium-saglionis",
-            "A broad blue-green cactus with heavy ribs and curved reddish-brown spines in a terracotta planter.",
+            "Photo-informed schematic of Giant chin as a broad muted-green globe with large rounded chin-like ribs, pale areoles and long dark spreading spines, in mixed mineral top dressing and a sage-green faceted pot.",
         ],
         [
             "kalanchoe-bracteata",
@@ -335,19 +335,19 @@ function portraitDescriptions() {
         ],
         [
             "mammillaria-mammillaris",
-            "A clustered green cactus with rounded tubercles, pale radial spines, and red club-shaped fruits.",
+            "A low green cactus with distinct rounded tubercles, small white woolly patches, pale radial spines, and bright red club-shaped fruits, above mineral gravel in a yellow faceted pot.",
         ],
         [
             "mammillaria-plumosa",
-            "Three rounded cactus offsets covered in soft white feather-like spines in a blue planter.",
+            "A broad low cluster of softly rounded cactus heads covered in feathery white spines, with pale cream centers, above mineral gravel in a teal-blue faceted pot.",
         ],
         [
             "mammillaria-rekoi",
-            "A rounded green cactus with close tubercles, pale radial spines, and dark hooked central spines in a blue planter.",
+            "A rounded green cactus with dense fine pale-gold radial spines and a few curved hooked central spines, above mineral gravel in an orange-brown faceted pot.",
         ],
         [
             "myrtillocactus-geometrizans-fukurokuryuzinboku",
-            "A continuous blue-green column with staggered rounded rib swellings in a terracotta planter.",
+            "A single upright bright green cactus with rounded projecting rib swellings and sparse short dark spines, above mixed mineral dressing in a teal-blue faceted pot.",
         ],
         [
             "myrtillocactus-geometrizans-indigo-wave",
@@ -355,11 +355,11 @@ function portraitDescriptions() {
         ],
         [
             "nyctocereus-serpentinus",
-            "Three slender curving green cactus stems with pale areoles in a terracotta planter.",
+            "A low irregular lime-green cactus body growing sideways across mixed mineral dressing, with fine pale spines in a white faceted pot.",
         ],
         [
             "oreocereus-trollii",
-            "An upright gray-green cactus covered in long cream wool and reddish spines.",
+            "An irregular upright gray-green cactus covered in long wispy white wool, with scattered reddish-brown spines extending through it, above mineral gravel in a white faceted pot.",
         ],
         [
             "pachira-glabra",
@@ -367,7 +367,7 @@ function portraitDescriptions() {
         ],
         [
             "parodia-leninghausii",
-            "An upright green cactus densely covered with golden ribs and radial spines in a purple planter.",
+            "An upright round-ended green cactus column with many fine golden spines and a denser golden crown, above mixed mineral dressing in a dark green faceted pot.",
         ],
         [
             "peperomia-obtipan-bicolor",
@@ -379,7 +379,7 @@ function portraitDescriptions() {
         ],
         [
             "pilosocereus-pachycladus-variegated",
-            "A blue-green columnar cactus with lengthwise cream variegation and golden spine clusters in a terracotta planter.",
+            "An isolated schematic view of P19 / #1's probable variegated blue torch: a tall ribbed blue-green column with irregular cream streaks and fine golden spines, using the same broad dark etched shared-planter framing, not a separate pot.",
         ],
         [
             "pleiospilos-nelii",
@@ -399,11 +399,11 @@ function portraitDescriptions() {
         ],
         [
             "sempervivum-coconut-crystal",
-            "A tightly layered lime-green rosette with pointed leaves and muted burgundy leaf bases in a yellow planter.",
+            "A low lime-green pointed-leaf rosette with open russet-tinted outer leaves and a tightly folded center, above mixed mineral dressing in a yellow faceted pot.",
         ],
         [
             "shared-rehab-cactus-planter",
-            "A cream-striped blue-green column, golden-spined torch, and pale hairy trailing monkey-tail stems share a dark round planter with light etched markings.",
+            "A tall pale cream-streaked blue-green column rises behind a shorter green golden-spined torch and softly hairy curved monkey-tail stems in the broad dark etched round planter shared by P19 / #1.",
         ],
         [
             "shared-succulent-planter",
@@ -411,7 +411,7 @@ function portraitDescriptions() {
         ],
         [
             "stenocactus-phyllacanthus",
-            "A squat green cactus with closely packed wavy ribs and long flattened tan crown spines.",
+            "Photo-informed schematic of a low green Grass-blade cactus with many thin wavy ribs, white crown tufts and sparse long brown-and-cream spines, in mixed mineral top dressing and a teal-blue faceted pot.",
         ],
         [
             "tephrocactus-articulatus-papyracanthus",

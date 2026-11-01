@@ -1,137 +1,513 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="gymnocalycium-mihanovichii-black-widow-title gymnocalycium-mihanovichii-black-widow-description" data-plant-slug="gymnocalycium-mihanovichii-black-widow" focusable="false">
   <title id="gymnocalycium-mihanovichii-black-widow-title">Black Widow chin cactus plant portrait</title>
-  <desc id="gymnocalycium-mihanovichii-black-widow-description">A low wine-purple cactus with muted green mottling, rib chins, and pale radial spines in a mustard planter.</desc>
+  <desc id="gymnocalycium-mihanovichii-black-widow-description">Photo-informed schematic of Black Widow with a low angular burgundy-red ribbed body, pointed chin-like ridges and fine pale spreading spines, in mixed mineral top dressing and a teal-blue faceted pot. This is P27, distinct from P01 in its yellow pot.</desc>
+  <desc id="nov01-a-p27-description">
+      Photo-informed schematic of Black Widow with a low angular burgundy-red ribbed body,
+      pointed chin-like ridges and fine pale spreading spines, in mixed mineral top
+      dressing and a teal-blue faceted pot. This is P27, distinct from P01 in its yellow
+      pot.
+  </desc>
   <defs>
-      <linearGradient id="widow-pot" x1="0" x2="0.8" y1="0" y2="1">
-          <stop offset="0" stop-color="#f8db64" />
-          <stop offset="1" stop-color="#dfa02e" />
+      <linearGradient id="nov01-a-p27-pot" x1="0" y1="0" x2="1" y2="0.3">
+          <stop stop-color="#80c4cc" />
+          <stop offset="0.4" stop-color="#368e9d" />
+          <stop offset="1" stop-color="#255d68" />
       </linearGradient>
-      <radialGradient id="blackwidow-body" cx="35%" cy="23%" r="80%">
-          <stop offset="0" stop-color="#845866" />
-          <stop offset="0.5" stop-color="#563446" />
-          <stop offset="1" stop-color="#2f2938" />
-      </radialGradient>
-      <clipPath id="blackwidow-clip" clipPathUnits="userSpaceOnUse">
+      <clipPath id="nov01-a-p27-pot-clip">
           <path
-              d="M11 46c-3-6-2-12 2-16l5-3 3-4 7-2 4-2 5 3 7 1 4 5c5 3 8 10 5 18Z"
-              fill="none"
-              stroke="none"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-          />
-      </clipPath>
-      <g id="gymnocalycium-mihanovichii-black-widow-detail-1">
-          <path
-              d="M-2.4 2Q0 4 2.4 2L0 0Z"
-              fill="#273e36"
+              d="M10 35H54L50 55Q48 60 32 61Q16 60 14 55Z"
+              fill="#fff"
               stroke="none"
               stroke-width="0"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+          />
+      </clipPath>
+      <radialGradient id="nov01-a-p27-body" cx="0.32" cy="0.22" r="0.9">
+          <stop stop-color="#a9646c" />
+          <stop offset="1" stop-color="#3b2938" />
+      </radialGradient>
+      <clipPath id="nov01-a-p27-body-clip">
+          <path
+              d="M31 16Q27 14 25 18L21 18Q20 20 21 24L17 25Q17 28 21 30L19 34Q20 37 25 37L28 40Q31 41 33 38L38 40Q41 40 42 35L46 34Q47 31 44 28L46 24Q45 22 41 22L41 18Q39 17 37 20Q35 17 31 16Z"
+              fill="#fff"
+              stroke="none"
+              stroke-width="0"
+          />
+      </clipPath>
+  </defs>
+  <g stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="32" cy="61" rx="23" ry="1.6" fill="#274537" opacity="0.16" />
+      <path
+          d="M10 35H54L50 55Q48 60 32 61Q16 60 14 55Z"
+          fill="url(#nov01-a-p27-pot)"
+          stroke="#255d68"
+          stroke-width="1.1"
+      />
+      <g clip-path="url(#nov01-a-p27-pot-clip)">
+          <path
+              d="M10 36 18 40 16 48 11 45Z"
+              fill="#255d68"
+              stroke="#255d68"
+              stroke-width="0.45"
+              opacity="0.48"
+          />
+          <path
+              d="M18 40 27 41 25 49 16 48Z"
+              fill="#80c4cc"
+              stroke="#255d68"
+              stroke-width="0.45"
+              opacity="0.5"
+          />
+          <path
+              d="M27 41 37 41 38 49 25 49Z"
+              fill="#368e9d"
+              stroke="#255d68"
+              stroke-width="0.45"
+              opacity="0.35"
+          />
+          <path
+              d="M37 41 46 39 48 47 38 49Z"
+              fill="#80c4cc"
+              stroke="#255d68"
+              stroke-width="0.45"
+              opacity="0.3"
+          />
+          <path
+              d="M46 39 54 36 53 44 48 47Z"
+              fill="#255d68"
+              stroke="#255d68"
+              stroke-width="0.45"
+              opacity="0.38"
+          />
+          <path
+              d="M11 45 16 48 15 55 12 52Z"
+              fill="#80c4cc"
+              stroke="#255d68"
+              stroke-width="0.45"
+              opacity="0.32"
+          />
+          <path
+              d="M16 48 25 49 22 57 15 55Z"
+              fill="#255d68"
+              stroke="#255d68"
+              stroke-width="0.45"
+              opacity="0.3"
+          />
+          <path
+              d="M25 49 38 49 36 58 22 57Z"
+              fill="#80c4cc"
+              stroke="#255d68"
+              stroke-width="0.45"
+              opacity="0.45"
+          />
+          <path
+              d="M38 49 48 47 49 54 36 58Z"
+              fill="#255d68"
+              stroke="#255d68"
+              stroke-width="0.45"
+              opacity="0.42"
+          />
+          <path
+              d="M48 47 53 44 52 52 49 54Z"
+              fill="#80c4cc"
+              stroke="#255d68"
+              stroke-width="0.45"
               opacity="0.28"
           />
           <path
-              d="M0 0q-2-1-3.2-0.5M0 0q2-1 3.2-0.5M0 0q-1.7 1.8-2.5 1.9M0 0q1.7 1.8 2.5 1.9M0 0q0.6-1.8 0.2-3"
-              fill="none"
-              stroke="#dfccb0"
-              stroke-width="0.55"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              d="M15 55 22 57 25 61 17 59Z"
+              fill="#80c4cc"
+              stroke="#255d68"
+              stroke-width="0.45"
+              opacity="0.3"
           />
-          <ellipse
-              cx="0"
-              cy="0"
-              rx="0.85"
-              ry="0.62"
-              fill="#e6d7b8"
-              stroke="#8a7058"
-              stroke-width="0.25"
+          <path
+              d="M22 57 36 58 32 62 25 61Z"
+              fill="#255d68"
+              stroke="#255d68"
+              stroke-width="0.45"
+              opacity="0.25"
+          />
+          <path
+              d="M36 58 49 54 47 59 32 62Z"
+              fill="#368e9d"
+              stroke="#255d68"
+              stroke-width="0.45"
+              opacity="0.4"
           />
       </g>
-  </defs>
-  <ellipse
-      cx="32"
-      cy="60.5"
-      rx="23"
-      ry="1.9"
-      fill="#244b3b"
-      stroke="none"
-      stroke-width="0"
-      opacity="0.12"
-  />
-  <ellipse
-      cx="32"
-      cy="45.5"
-      rx="23"
-      ry="2.1"
-      fill="#745c45"
-      stroke="none"
-      stroke-width="1"
-  />
-  <path
-      d="M11 46c-3-6-2-12 2-16l5-3 3-4 7-2 4-2 5 3 7 1 4 5c5 3 8 10 5 18Z"
-      fill="url(#blackwidow-body)"
-      stroke="#332b37"
-      stroke-width="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <g clip-path="url(#blackwidow-clip)">
-      <path
-          d="M10 42c5-6 8-4 10 5h-9Zm23-22c3 7 1 9-1 12-2 3 0 9 3 15h7c-4-7-4-12-5-18Z"
-          fill="#596d53"
-          stroke="none"
-          stroke-width="0"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          opacity="0.45"
+      <ellipse
+          cx="32"
+          cy="35"
+          rx="22"
+          ry="6.5"
+          fill="#584838"
+          stroke="#368e9d"
+          stroke-width="1.6"
       />
       <path
-          d="M32 20c-2 3 1 5 0 8s-2 6-1 9 1 7 0 10M22 24c-4 3-3 6-2 8s-3 5-2 9l1 6m21-23c4 3 3 6 2 8s3 5 2 9l-1 6M15 29c-4 4-2 7-3 10m37-10c4 4 2 7 3 10"
+          d="m15 34.15 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#e4d5ba"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m19 36.7 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#af6650"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m24 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#bdc4bc"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m29 38.4 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#3a3b35"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m35 38.4 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#ddcdb1"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m41 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#b96e50"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m47 35.85 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#e1d8c3"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m14 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#3b4440"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m21 39.25 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#e8ddc6"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m28 40.1 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#b87757"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m37 40.1 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#8e9b91"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m44 39.25 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#343c36"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m50 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#ae785e"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m15 31.6 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#bfbeb0"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m21 30.75 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#3a3e36"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m45 30.75 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#cbb99c"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m50 32.45 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#d8cfc0"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="M31 16Q27 14 25 18L21 18Q20 20 21 24L17 25Q17 28 21 30L19 34Q20 37 25 37L28 40Q31 41 33 38L38 40Q41 40 42 35L46 34Q47 31 44 28L46 24Q45 22 41 22L41 18Q39 17 37 20Q35 17 31 16Z"
+          fill="url(#nov01-a-p27-body)"
+          stroke="#593b45"
+          stroke-width="0.9"
+      />
+      <g clip-path="url(#nov01-a-p27-body-clip)">
+          <path
+              d="M32 20 25 18 24 25 17 26 24 28 20 35 28 32 28 40 33 34 39 40 37 30 45 33 40 27 47 24 38 24 42 17 34 23Z"
+              fill="#623643"
+              stroke="none"
+              stroke-width="0"
+          />
+          <path
+              d="M32 20 28 25 24 25M32 20 35 26 40 27M28 25 28 32 24 37M35 26 33 34 39 40M24 28 20 30M37 30 42 35"
+              fill="none"
+              stroke="#c78c8c"
+              stroke-width="1.05"
+          />
+          <path
+              d="M25 18 28 25 20 23M42 17 35 26M28 32 33 34M24 28l4-3m7 1 2 4"
+              fill="none"
+              stroke="#492b37"
+              stroke-width="1.2"
+          />
+      </g>
+      <ellipse cx="26" cy="19" rx="0.65" ry="0.52" fill="#d9ceb2" />
+      <path
+          d="M26 19Q25.06 17.65 25.28 16.3"
           fill="none"
-          stroke="#aa8590"
-          stroke-width="0.85"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M26 19Q27.49 18.56 29.28 18.12"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M26 19Q27.1 20.93 27.04 22.86"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M26 19Q24.8 19.36 23.3 19.72"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <ellipse cx="35" cy="19" rx="0.65" ry="0.52" fill="#d9ceb2" />
+      <path
+          d="M35 19Q34.28 17.61 34.76 16.21"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M35 19Q36.64 18.85 38.39 18.7"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M35 19Q35.77 20.99 35.35 22.98"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M35 19Q33.66 19.12 32.21 19.24"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <ellipse cx="21" cy="25" rx="0.65" ry="0.52" fill="#d9ceb2" />
+      <path
+          d="M21 25Q20.55 23.26 21.31 21.51"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M21 25Q23.17 25.19 25.23 25.37"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M21 25Q21.38 27.49 20.56 29.98"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M21 25Q19.2 24.85 17.51 24.69"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <ellipse cx="40" cy="25" rx="0.65" ry="0.52" fill="#d9ceb2" />
+      <path
+          d="M40 25Q39.25 23.26 39.69 21.51"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M40 25Q42.06 24.81 44.23 24.63"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M40 25Q40.82 27.49 40.44 29.98"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M40 25Q38.31 25.15 36.51 25.31"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <ellipse cx="29" cy="25" rx="0.65" ry="0.52" fill="#d9ceb2" />
+      <path
+          d="M29 25Q28.17 23.62 28.51 22.24"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M29 25Q30.57 24.7 32.35 24.41"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M29 25Q29.94 26.97 29.69 28.94"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M29 25Q27.73 25.24 26.24 25.49"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <ellipse cx="35" cy="29" rx="0.65" ry="0.52" fill="#d9ceb2" />
+      <path
+          d="M35 29Q34.06 27.65 34.28 26.3"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M35 29Q36.49 28.56 38.28 28.12"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M35 29Q36.1 30.93 36.04 32.86"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M35 29Q33.8 29.36 32.3 29.72"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <ellipse cx="23" cy="34" rx="0.65" ry="0.52" fill="#d9ceb2" />
+      <path
+          d="M23 34Q22.25 32.26 22.69 30.51"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M23 34Q25.06 33.81 27.23 33.63"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M23 34Q23.82 36.49 23.44 38.98"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M23 34Q21.31 34.15 19.51 34.31"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <ellipse cx="31" cy="36" rx="0.65" ry="0.52" fill="#d9ceb2" />
+      <path
+          d="M31 36Q30.52 34.61 31.24 33.21"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M31 36Q32.75 36.15 34.39 36.3"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M31 36Q31.42 37.99 30.65 39.98"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M31 36Q29.55 35.88 28.21 35.76"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <ellipse cx="41" cy="34" rx="0.65" ry="0.52" fill="#d9ceb2" />
+      <path
+          d="M41 34Q40.25 32.26 40.69 30.51"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M41 34Q43.06 33.81 45.23 33.63"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M41 34Q41.82 36.49 41.44 38.98"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M41 34Q39.31 34.15 37.51 34.31"
+          fill="none"
+          stroke="#ddc7ac"
+          stroke-width="0.45"
+      />
+      <path
+          d="M30 24q0-3 1-4m3 7q1-3 1-5"
+          fill="none"
+          stroke="#463436"
+          stroke-width="0.55"
+      />
+      <path
+          d="M11 36Q16 41 25 41M40 41q9-1 13-5"
+          fill="none"
+          stroke="#80c4cc"
+          stroke-width="0.9"
       />
   </g>
-  <use
-      href="#gymnocalycium-mihanovichii-black-widow-detail-1"
-      transform="translate(32 25) scale(0.85)"
-  />
-  <use
-      href="#gymnocalycium-mihanovichii-black-widow-detail-1"
-      transform="translate(21 29) scale(0.9)"
-  />
-  <use
-      href="#gymnocalycium-mihanovichii-black-widow-detail-1"
-      transform="translate(42 29) scale(0.9)"
-  />
-  <use
-      href="#gymnocalycium-mihanovichii-black-widow-detail-1"
-      transform="translate(15 38) scale(0.9)"
-  />
-  <use
-      href="#gymnocalycium-mihanovichii-black-widow-detail-1"
-      transform="translate(30 36) scale(1)"
-  />
-  <use
-      href="#gymnocalycium-mihanovichii-black-widow-detail-1"
-      transform="translate(45 40) scale(0.9)"
-  />
-  <path
-      d="M7 45h50v7H7z"
-      fill="#f8dc68"
-      stroke="#725016"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
-  <path
-      d="m10 52 4 9h36l4-9Z"
-      fill="url(#widow-pot)"
-      stroke="#725016"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
 </svg>

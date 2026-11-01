@@ -1,582 +1,378 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="mammillaria-rekoi-title mammillaria-rekoi-description" data-plant-slug="mammillaria-rekoi" focusable="false">
   <title id="mammillaria-rekoi-title">Hook-spined pincushion cactus plant portrait</title>
-  <desc id="mammillaria-rekoi-description">A rounded green cactus with close tubercles, pale radial spines, and dark hooked central spines in a blue planter.</desc>
+  <desc id="mammillaria-rekoi-description">A rounded green cactus with dense fine pale-gold radial spines and a few curved hooked central spines, above mineral gravel in an orange-brown faceted pot.</desc>
   <defs>
-      <linearGradient id="rekoi-pot" x1="0" x2="0.9" y1="0" y2="1">
-          <stop offset="0" stop-color="#7bc0e6" />
-          <stop offset="1" stop-color="#357cb4" />
+      <linearGradient id="p16-nov01-pot" x1="0" y1="0" x2="1" y2="0.25">
+          <stop stop-color="#d38a69" />
+          <stop offset="0.42" stop-color="#ae5c43" />
+          <stop offset="1" stop-color="#754333" />
       </linearGradient>
-      <radialGradient id="hooks-body" cx="35%" cy="23%" r="80%">
-          <stop offset="0" stop-color="#a3b484" />
-          <stop offset="0.5" stop-color="#6d956a" />
-          <stop offset="1" stop-color="#3c6a51" />
-      </radialGradient>
-      <clipPath id="hooks-clip" clipPathUnits="userSpaceOnUse">
+      <clipPath id="p16-nov01-pot-clip">
           <path
-              d="M15 46c-3-9-2-19 3-25 7-9 21-9 28 0 5 6 6 16 3 25Z"
+              d="M10 40H54L50.8 55.5Q49.5 60.5 32 61Q14.5 60.5 13.2 55.5Z"
               fill="none"
-              stroke="none"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
           />
       </clipPath>
-      <g id="mammillaria-rekoi-detail-1">
+      <radialGradient id="p16-nov01-body" cx="0.32" cy="0.25" r="0.9">
+          <stop stop-color="#b8bd6d" />
+          <stop offset="0.5" stop-color="#7c9453" />
+          <stop offset="1" stop-color="#45683f" />
+      </radialGradient>
+      <clipPath id="p16-nov01-clip">
           <path
-              d="M-2.8 0H2.8M-2-1.8 2 1.8M-2 1.8 2-1.8M0-2.8V2.8"
+              d="M18.5 32C18.8 21.8 24.1 16.3 32.3 16C40.8 16.2 45.4 23.5 45 32.6C44.9 38.3 39.2 41 31.5 41Q20 40.5 18.5 32Z"
               fill="none"
-              stroke="#ded4ad"
+          />
+      </clipPath>
+      <g id="p16-nov01-spines">
+          <path d="M0 0l3.6 0" fill="none" stroke="#eadcb2" stroke-width="0.22" />
+          <path d="M0 0l3.83 1.22" fill="none" stroke="#eadcb2" stroke-width="0.22" />
+          <path d="M0 0l3.06 1.95" fill="none" stroke="#eadcb2" stroke-width="0.22" />
+          <path d="M0 0l1.64 2.33" fill="none" stroke="#eadcb2" stroke-width="0.22" />
+          <path d="M0 0l0.29 2.76" fill="none" stroke="#eadcb2" stroke-width="0.22" />
+          <path d="M0 0l-0.83 3.12" fill="none" stroke="#eadcb2" stroke-width="0.22" />
+          <path d="M0 0l-2.07 2.86" fill="none" stroke="#eadcb2" stroke-width="0.22" />
+          <path d="M0 0l-3.4 1.83" fill="none" stroke="#eadcb2" stroke-width="0.22" />
+          <path d="M0 0l-4.12 0.56" fill="none" stroke="#eadcb2" stroke-width="0.22" />
+          <path d="M0 0l-3.78 -0.49" fill="none" stroke="#eadcb2" stroke-width="0.22" />
+          <path d="M0 0l-2.78 -1.41" fill="none" stroke="#eadcb2" stroke-width="0.22" />
+          <path d="M0 0l-1.81 -2.48" fill="none" stroke="#eadcb2" stroke-width="0.22" />
+          <path d="M0 0l-0.9 -3.39" fill="none" stroke="#eadcb2" stroke-width="0.22" />
+          <path d="M0 0l0.36 -3.54" fill="none" stroke="#eadcb2" stroke-width="0.22" />
+          <path d="M0 0l1.87 -2.84" fill="none" stroke="#eadcb2" stroke-width="0.22" />
+          <path d="M0 0l2.95 -1.83" fill="none" stroke="#eadcb2" stroke-width="0.22" />
+          <path d="M0 0l3.2 -0.95" fill="none" stroke="#eadcb2" stroke-width="0.22" />
+          <path
+              d="M0 0Q1.7-3.7 2.4-3.3Q3-2.6 2.1-2.2"
+              fill="none"
+              stroke="#b58d5d"
               stroke-width="0.48"
-              stroke-linecap="round"
-              stroke-linejoin="round"
           />
-          <ellipse
-              cx="0"
-              cy="0"
-              rx="0.62"
-              ry="0.62"
-              fill="#e3c994"
-              stroke="none"
-              stroke-width="1"
-          />
-          <path
-              d="M0 0C1.3 1.2 2 3.2 0.6 3.7c-0.8 0.2-1.2-0.3-0.9-0.9"
-              fill="none"
-              stroke="#875941"
-              stroke-width="0.62"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-          />
-      </g>
-      <g id="mammillaria-rekoi-detail-2">
-          <path
-              d="M-2.8 0H2.8M-2-1.8 2 1.8M-2 1.8 2-1.8M0-2.8V2.8"
-              fill="none"
-              stroke="#ded4ad"
-              stroke-width="0.48"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-          />
-          <ellipse
-              cx="0"
-              cy="0"
-              rx="0.62"
-              ry="0.62"
-              fill="#e3c994"
-              stroke="none"
-              stroke-width="1"
-          />
+          <circle r="0.35" fill="#d8b57d" />
       </g>
   </defs>
-  <ellipse
-      cx="32"
-      cy="60.5"
-      rx="20"
-      ry="1.9"
-      fill="#244b3b"
-      stroke="none"
-      stroke-width="0"
-      opacity="0.12"
-  />
-  <ellipse
-      cx="32"
-      cy="45.5"
-      rx="20"
-      ry="2.1"
-      fill="#745c45"
-      stroke="none"
-      stroke-width="1"
-  />
-  <path
-      d="M15 46c-3-9-2-19 3-25 7-9 21-9 28 0 5 6 6 16 3 25Z"
-      fill="url(#hooks-body)"
-      stroke="#244b3b"
-      stroke-width="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <g clip-path="url(#hooks-clip)">
-      <ellipse
-          cx="14"
-          cy="17.8"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
+  <g stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="32" cy="61.5" rx="23" ry="1.35" fill="#294839" opacity="0.15" />
+      <path
+          d="M10 40H54L50.8 55.5Q49.5 60.5 32 61Q14.5 60.5 13.2 55.5Z"
+          fill="url(#p16-nov01-pot)"
+          stroke="#754333"
+          stroke-width="0.85"
       />
-      <use
-          href="#mammillaria-rekoi-detail-1"
-          transform="translate(14 17) scale(0.88)"
-      />
-      <ellipse
-          cx="20"
-          cy="17.8"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-2"
-          transform="translate(20 17) scale(0.88)"
-      />
-      <ellipse
-          cx="26"
-          cy="17.8"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-1"
-          transform="translate(26 17) scale(0.88)"
-      />
+      <g clip-path="url(#p16-nov01-pot-clip)">
+          <path d="M9 40 17 43 19 49 12 51Z" fill="#754333" opacity="0.33" />
+          <path d="M17 43 26 45 25 52 19 49Z" fill="#d38a69" opacity="0.6" />
+          <path d="M26 45 36 45 39 51 25 52Z" fill="#ae5c43" opacity="0.5" />
+          <path d="M36 45 46 43 45 49 39 51Z" fill="#d38a69" opacity="0.38" />
+          <path d="M46 43 55 40 52 51 45 49Z" fill="#754333" opacity="0.3" />
+          <path d="M12 51 19 49 22 56 14 59Z" fill="#d38a69" opacity="0.33" />
+          <path d="M19 49 25 52 22 56Z" fill="#754333" opacity="0.24" />
+          <path d="M25 52 39 51 36 58 22 56Z" fill="#d38a69" opacity="0.46" />
+          <path d="M39 51 45 49 50 56 36 58Z" fill="#754333" opacity="0.33" />
+          <path d="M45 49 52 51 50 56Z" fill="#d38a69" opacity="0.4" />
+          <path d="M14 59 22 56 27 62 18 61Z" fill="#754333" opacity="0.25" />
+          <path d="M22 56 36 58 34 62 27 62Z" fill="#d38a69" opacity="0.35" />
+          <path d="M36 58 50 56 47 61 34 62Z" fill="#ae5c43" opacity="0.45" />
+      </g>
       <ellipse
           cx="32"
-          cy="17.8"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-2"
-          transform="translate(32 17) scale(0.88)"
-      />
-      <ellipse
-          cx="38"
-          cy="17.8"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-1"
-          transform="translate(38 17) scale(0.88)"
-      />
-      <ellipse
-          cx="44"
-          cy="17.8"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-2"
-          transform="translate(44 17) scale(0.88)"
-      />
-      <ellipse
-          cx="17"
-          cy="23.3"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-2"
-          transform="translate(17 22.5) scale(0.88)"
-      />
-      <ellipse
-          cx="23"
-          cy="23.3"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-1"
-          transform="translate(23 22.5) scale(0.88)"
-      />
-      <ellipse
-          cx="29"
-          cy="23.3"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-2"
-          transform="translate(29 22.5) scale(0.88)"
-      />
-      <ellipse
-          cx="35"
-          cy="23.3"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-1"
-          transform="translate(35 22.5) scale(0.88)"
-      />
-      <ellipse
-          cx="41"
-          cy="23.3"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-2"
-          transform="translate(41 22.5) scale(0.88)"
-      />
-      <ellipse
-          cx="47"
-          cy="23.3"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-1"
-          transform="translate(47 22.5) scale(0.88)"
-      />
-      <ellipse
-          cx="14"
-          cy="28.8"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-1"
-          transform="translate(14 28) scale(0.88)"
-      />
-      <ellipse
-          cx="20"
-          cy="28.8"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-2"
-          transform="translate(20 28) scale(0.88)"
-      />
-      <ellipse
-          cx="26"
-          cy="28.8"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-1"
-          transform="translate(26 28) scale(0.88)"
-      />
-      <ellipse
-          cx="32"
-          cy="28.8"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-2"
-          transform="translate(32 28) scale(0.88)"
-      />
-      <ellipse
-          cx="38"
-          cy="28.8"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-1"
-          transform="translate(38 28) scale(0.88)"
-      />
-      <ellipse
-          cx="44"
-          cy="28.8"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-2"
-          transform="translate(44 28) scale(0.88)"
-      />
-      <ellipse
-          cx="17"
-          cy="34.3"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-2"
-          transform="translate(17 33.5) scale(0.88)"
-      />
-      <ellipse
-          cx="23"
-          cy="34.3"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-1"
-          transform="translate(23 33.5) scale(0.88)"
-      />
-      <ellipse
-          cx="29"
-          cy="34.3"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-2"
-          transform="translate(29 33.5) scale(0.88)"
-      />
-      <ellipse
-          cx="35"
-          cy="34.3"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-1"
-          transform="translate(35 33.5) scale(0.88)"
-      />
-      <ellipse
-          cx="41"
-          cy="34.3"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-2"
-          transform="translate(41 33.5) scale(0.88)"
-      />
-      <ellipse
-          cx="47"
-          cy="34.3"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-1"
-          transform="translate(47 33.5) scale(0.88)"
-      />
-      <ellipse
-          cx="14"
-          cy="39.8"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-1"
-          transform="translate(14 39) scale(0.88)"
-      />
-      <ellipse
-          cx="20"
-          cy="39.8"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-2"
-          transform="translate(20 39) scale(0.88)"
-      />
-      <ellipse
-          cx="26"
-          cy="39.8"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-1"
-          transform="translate(26 39) scale(0.88)"
-      />
-      <ellipse
-          cx="32"
-          cy="39.8"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-2"
-          transform="translate(32 39) scale(0.88)"
-      />
-      <ellipse
-          cx="38"
-          cy="39.8"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-1"
-          transform="translate(38 39) scale(0.88)"
-      />
-      <ellipse
-          cx="44"
-          cy="39.8"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-2"
-          transform="translate(44 39) scale(0.88)"
-      />
-      <ellipse
-          cx="17"
-          cy="45.3"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-2"
-          transform="translate(17 44.5) scale(0.88)"
-      />
-      <ellipse
-          cx="23"
-          cy="45.3"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-1"
-          transform="translate(23 44.5) scale(0.88)"
-      />
-      <ellipse
-          cx="29"
-          cy="45.3"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-2"
-          transform="translate(29 44.5) scale(0.88)"
-      />
-      <ellipse
-          cx="35"
-          cy="45.3"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-1"
-          transform="translate(35 44.5) scale(0.88)"
-      />
-      <ellipse
-          cx="41"
-          cy="45.3"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-2"
-          transform="translate(41 44.5) scale(0.88)"
-      />
-      <ellipse
-          cx="47"
-          cy="45.3"
-          rx="2.5"
-          ry="2"
-          fill="#80a375"
-          stroke="#4c744f"
-          stroke-width="0.35"
-      />
-      <use
-          href="#mammillaria-rekoi-detail-1"
-          transform="translate(47 44.5) scale(0.88)"
+          cy="40"
+          rx="22"
+          ry="6.6"
+          fill="#ae5c43"
+          stroke="#754333"
+          stroke-width="0.85"
+      />
+      <ellipse cx="32" cy="39.7" rx="20.4" ry="5.3" fill="#65594b" />
+      <path
+          d="M12.5 37.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#d6c9ac"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M16.5 35.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#a56950"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M21.5 34.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#a7b8b1"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M41.5 34.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#393f39"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M46.5 36.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#d8b894"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M48.5 39.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#776655"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M13 40.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#d6c9ac"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M19.5 38.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#a56950"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M41.5 38.6l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#a7b8b1"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M26.5 36.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#393f39"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M34.5 36.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#d8b894"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <ellipse cx="32" cy="39" rx="14" ry="2.8" fill="#333c2d" opacity="0.24" />
+      <path
+          d="M18.5 32C18.8 21.8 24.1 16.3 32.3 16C40.8 16.2 45.4 23.5 45 32.6C44.9 38.3 39.2 41 31.5 41Q20 40.5 18.5 32Z"
+          fill="url(#p16-nov01-body)"
+          stroke="#718251"
+          stroke-width="0.6"
+      />
+      <g clip-path="url(#p16-nov01-clip)">
+          <ellipse cx="33.23" cy="28.5" rx="2.3" ry="2.4" fill="#a6b369" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(33.23 28.5) rotate(-16) scale(0.9)"
+          />
+          <ellipse cx="30.11" cy="30.15" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(30.11 30.15) rotate(1) scale(0.98)"
+          />
+          <ellipse cx="32.3" cy="25.27" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(32.3 25.27) rotate(-15) scale(1.06)"
+          />
+          <ellipse cx="34.48" cy="31.59" rx="2.3" ry="2.4" fill="#a6b369" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(34.48 31.59) rotate(2) scale(0.9)"
+          />
+          <ellipse cx="27.41" cy="27.73" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(27.41 27.73) rotate(-14) scale(0.98)"
+          />
+          <ellipse cx="36.36" cy="25.85" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(36.36 25.85) rotate(3) scale(1.06)"
+          />
+          <ellipse cx="30.54" cy="33.69" rx="2.3" ry="2.4" fill="#a6b369" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(30.54 33.69) rotate(-13) scale(0.9)"
+          />
+          <ellipse cx="29.2" cy="23.37" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(29.2 23.37) rotate(4) scale(0.98)"
+          />
+          <ellipse cx="38.08" cy="30.62" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(38.08 30.62) rotate(-12) scale(1.06)"
+          />
+          <ellipse cx="25.67" cy="30.99" rx="2.3" ry="2.4" fill="#a6b369" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(25.67 30.99) rotate(5) scale(0.9)"
+          />
+          <ellipse cx="35.05" cy="22.28" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(35.05 22.28) rotate(-11) scale(0.98)"
+          />
+          <ellipse cx="34.26" cy="35.37" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(34.26 35.37) rotate(6) scale(1.06)"
+          />
+          <ellipse cx="25.19" cy="24.74" rx="2.3" ry="2.4" fill="#a6b369" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(25.19 24.74) rotate(-10) scale(0.9)"
+          />
+          <ellipse cx="40" cy="26.82" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(40 26.82) rotate(7) scale(0.98)"
+          />
+          <ellipse cx="27.12" cy="35.12" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(27.12 35.12) rotate(-9) scale(1.06)"
+          />
+          <ellipse cx="30.87" cy="20.19" rx="2.3" ry="2.4" fill="#a6b369" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(30.87 20.19) rotate(8) scale(0.9)"
+          />
+          <ellipse cx="38.93" cy="34.07" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(38.93 34.07) rotate(-8) scale(0.98)"
+          />
+          <ellipse cx="22.67" cy="28.87" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(22.67 28.87) rotate(9) scale(1.06)"
+          />
+          <ellipse cx="38.81" cy="22.04" rx="2.3" ry="2.4" fill="#a6b369" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(38.81 22.04) rotate(-7) scale(0.9)"
+          />
+          <ellipse cx="31.54" cy="37.9" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(31.54 37.9) rotate(10) scale(0.98)"
+          />
+          <ellipse cx="25.52" cy="21.09" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(25.52 21.09) rotate(-6) scale(1.06)"
+          />
+          <ellipse cx="42.27" cy="29.82" rx="2.3" ry="2.4" fill="#a6b369" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(42.27 29.82) rotate(11) scale(0.9)"
+          />
+          <ellipse cx="23.3" cy="34.28" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(23.3 34.28) rotate(-5) scale(0.98)"
+          />
+          <ellipse cx="34.38" cy="18.42" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(34.38 18.42) rotate(12) scale(1.06)"
+          />
+          <ellipse cx="37.5" cy="37.66" rx="2.3" ry="2.4" fill="#a6b369" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(37.5 37.66) rotate(-4) scale(0.9)"
+          />
+          <ellipse cx="21.24" cy="25.23" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(21.24 25.23) rotate(13) scale(0.98)"
+          />
+          <ellipse cx="42.45" cy="23.89" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(42.45 23.89) rotate(-3) scale(1.06)"
+          />
+          <ellipse cx="27.47" cy="38.82" rx="2.3" ry="2.4" fill="#a6b369" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(27.47 38.82) rotate(14) scale(0.9)"
+          />
+          <ellipse cx="27.96" cy="17.78" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(27.96 17.78) rotate(-2) scale(0.98)"
+          />
+          <ellipse cx="42.76" cy="33.89" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(42.76 33.89) rotate(15) scale(1.06)"
+          />
+          <ellipse cx="20.05" cy="31.51" rx="2.3" ry="2.4" fill="#a6b369" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(20.05 31.51) rotate(-1) scale(0.9)"
+          />
+          <ellipse cx="38.79" cy="18.42" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(38.79 18.42) rotate(16) scale(0.98)"
+          />
+          <ellipse cx="34.16" cy="40.49" rx="2.3" ry="2.4" fill="#87a05b" opacity="0.6" />
+          <use
+              href="#p16-nov01-spines"
+              transform="translate(34.16 40.49) rotate(0) scale(1.06)"
+          />
+      </g>
+      <path d="M20 26l-3 -2" fill="none" stroke="#dfc795" stroke-width="0.4" />
+      <path d="M20 34l-2 3" fill="none" stroke="#dfc795" stroke-width="0.4" />
+      <path d="M25 19l-2 -3" fill="none" stroke="#dfc795" stroke-width="0.4" />
+      <path d="M32 17l1 -4" fill="none" stroke="#dfc795" stroke-width="0.4" />
+      <path d="M39 20l3 -3" fill="none" stroke="#dfc795" stroke-width="0.4" />
+      <path d="M44 27l3 0" fill="none" stroke="#dfc795" stroke-width="0.4" />
+      <path d="M43 35l3 2" fill="none" stroke="#dfc795" stroke-width="0.4" />
+      <path d="M35 40l1 2.4" fill="none" stroke="#dfc795" stroke-width="0.4" />
+      <path
+          d="M44.5 42.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#d6c9ac"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M39.5 43.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#a56950"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M34.5 43.6l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#a7b8b1"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M28.5 43.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#393f39"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M22.5 42.9l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#d8b894"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M17.5 41.9l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#776655"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M11 40Q15.5 45.5 25 46M39 45.9Q49 44.8 53 40"
+          fill="none"
+          stroke="#d38a69"
+          stroke-width="0.85"
       />
   </g>
-  <path
-      d="M10 45h44v7H10z"
-      fill="#80c4e8"
-      stroke="#28577e"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
-  <path
-      d="m13 52 4 9h30l4-9Z"
-      fill="url(#rekoi-pot)"
-      stroke="#28577e"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
 </svg>

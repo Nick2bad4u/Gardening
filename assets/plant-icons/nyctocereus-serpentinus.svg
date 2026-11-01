@@ -1,199 +1,471 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="nyctocereus-serpentinus-title nyctocereus-serpentinus-description" data-plant-slug="nyctocereus-serpentinus" focusable="false">
   <title id="nyctocereus-serpentinus-title">Serpent cactus plant portrait</title>
-  <desc id="nyctocereus-serpentinus-description">Three slender curving green cactus stems with pale areoles in a terracotta planter.</desc>
+  <desc id="nyctocereus-serpentinus-description">A low irregular lime-green cactus body growing sideways across mixed mineral dressing, with fine pale spines in a white faceted pot.</desc>
   <defs>
-      <linearGradient id="nycto-pot" x1="0" x2="0.9" y1="0" y2="1">
-          <stop offset="0" stop-color="#f3a36a" />
-          <stop offset="1" stop-color="#c35b39" />
+      <linearGradient id="p03-nov01-pot" x1="0" y1="0" x2="1" y2="0.4">
+          <stop offset="0" stop-color="#fcfaf0" />
+          <stop offset="0.4" stop-color="#d7ddd8" />
+          <stop offset="1" stop-color="#96a6a1" />
       </linearGradient>
-      <linearGradient id="serpent-body" x1="0" y1="0" x2="0.85" y2="1">
-          <stop offset="0" stop-color="#91bc83" />
-          <stop offset="0.5" stop-color="#529465" />
-          <stop offset="1" stop-color="#2d6852" />
-      </linearGradient>
-      <g id="nyctocereus-serpentinus-detail-1">
+      <clipPath id="p03-nov01-pot-clip">
+          <path d="M10 36H54L50 55Q48 60 32 61Q16 60 14 55Z" fill="#fff" />
+      </clipPath>
+      <radialGradient id="p03-nov01-body" cx="0.27" cy="0.2" r="0.9">
+          <stop offset="0" stop-color="#c1d955" />
+          <stop offset="0.5" stop-color="#78a63d" />
+          <stop offset="1" stop-color="#355f30" />
+      </radialGradient>
+      <g id="p03-nov01-spine">
           <path
-              d="M-2.8 0H2.8M-2-1.8 2 1.8M-2 1.8 2-1.8M0-2.8V2.8"
+              d="M0 0L-2.3-0.69M0 0L1.84-1.265M0 0L-0.46-2.3M0 0L0.46 2.76M0 0L-1.725 2.07M0 0L1.725 1.725"
               fill="none"
-              stroke="#e6dfbf"
-              stroke-width="0.48"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              stroke="#e9e8c0"
+              stroke-width="0.25"
           />
-          <ellipse
-              cx="0"
-              cy="0"
-              rx="0.62"
-              ry="0.62"
-              fill="#e3c994"
-              stroke="none"
-              stroke-width="1"
+          <circle r="0.3" fill="#f2e8c8" />
+      </g>
+      <clipPath id="p03-nov01-body-clip">
+          <path
+              d="M17 34C13 30 15 25 19 24L23 22 27 23 31 22 36 24 39 27 44 27Q50 27 50 32L48 36 44 37 40 35 37 37 31 36 27 37 22 35Z"
+              fill="#fff"
+          />
+      </clipPath>
+  </defs>
+  <g stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="32" cy="61" rx="23" ry="1.7" fill="#284a3c" opacity="0.16" />
+      <path
+          d="M10 36H54L50 55Q48 60 32 61Q16 60 14 55Z"
+          fill="url(#p03-nov01-pot)"
+          stroke="#96a6a1"
+          stroke-width="0.85"
+      />
+      <g clip-path="url(#p03-nov01-pot-clip)">
+          <path
+              d="M10 36 18 41 16 49 11 45Z"
+              fill="#96a6a1"
+              opacity="0.55"
+              stroke="#96a6a1"
+              stroke-width="0.3"
+          />
+          <path
+              d="M18 41 27 43 25 50 16 49Z"
+              fill="#fcfaf0"
+              opacity="0.6"
+              stroke="#96a6a1"
+              stroke-width="0.3"
+          />
+          <path
+              d="M27 43 37 43 38 50 25 50Z"
+              fill="#d7ddd8"
+              opacity="0.3"
+              stroke="#96a6a1"
+              stroke-width="0.3"
+          />
+          <path
+              d="M37 43 46 41 48 48 38 50Z"
+              fill="#fcfaf0"
+              opacity="0.35"
+              stroke="#96a6a1"
+              stroke-width="0.3"
+          />
+          <path
+              d="M46 41 54 36 53 44 48 48Z"
+              fill="#96a6a1"
+              opacity="0.6"
+              stroke="#96a6a1"
+              stroke-width="0.3"
+          />
+          <path
+              d="M11 45 16 49 15 55 12 52Z"
+              fill="#fcfaf0"
+              opacity="0.35"
+              stroke="#96a6a1"
+              stroke-width="0.3"
+          />
+          <path
+              d="M16 49 25 50 22 57 15 55Z"
+              fill="#96a6a1"
+              opacity="0.35"
+              stroke="#96a6a1"
+              stroke-width="0.3"
+          />
+          <path
+              d="M25 50 38 50 36 58 22 57Z"
+              fill="#fcfaf0"
+              opacity="0.5"
+              stroke="#96a6a1"
+              stroke-width="0.3"
+          />
+          <path
+              d="M38 50 48 48 49 54 36 58Z"
+              fill="#96a6a1"
+              opacity="0.42"
+              stroke="#96a6a1"
+              stroke-width="0.3"
+          />
+          <path
+              d="M48 48 53 44 52 52 49 54Z"
+              fill="#fcfaf0"
+              opacity="0.3"
+              stroke="#96a6a1"
+              stroke-width="0.3"
+          />
+          <path
+              d="M15 55 22 57 25 61 17 59Z"
+              fill="#fcfaf0"
+              opacity="0.45"
+              stroke="#96a6a1"
+              stroke-width="0.3"
+          />
+          <path
+              d="M22 57 36 58 32 62 25 61Z"
+              fill="#96a6a1"
+              opacity="0.32"
+              stroke="#96a6a1"
+              stroke-width="0.3"
+          />
+          <path
+              d="M36 58 49 54 47 59 32 62Z"
+              fill="#d7ddd8"
+              opacity="0.45"
+              stroke="#96a6a1"
+              stroke-width="0.3"
           />
       </g>
-  </defs>
-  <ellipse
-      cx="32"
-      cy="60.5"
-      rx="22"
-      ry="1.9"
-      fill="#244b3b"
-      stroke="none"
-      stroke-width="0"
-      opacity="0.12"
-  />
-  <ellipse
-      cx="32"
-      cy="45.5"
-      rx="22"
-      ry="2.1"
-      fill="#745c45"
-      stroke="none"
-      stroke-width="1"
-  />
-  <path
-      d="M22 47c-2-7-7-12-8-18-1-6 1-11 4-15"
-      fill="none"
-      stroke="#244b3b"
-      stroke-width="8.7"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <path
-      d="M22 47c-2-7-7-12-8-18-1-6 1-11 4-15"
-      fill="none"
-      stroke="url(#serpent-body)"
-      stroke-width="6.4"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <path
-      d="M22 47c-2-7-7-12-8-18-1-6 1-11 4-15"
-      fill="none"
-      stroke="#c0d49e"
-      stroke-width="0.65"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <use
-      href="#nyctocereus-serpentinus-detail-1"
-      transform="translate(21 42) scale(0.68)"
-  />
-  <use
-      href="#nyctocereus-serpentinus-detail-1"
-      transform="translate(17 35) scale(0.68)"
-  />
-  <use
-      href="#nyctocereus-serpentinus-detail-1"
-      transform="translate(14 28) scale(0.68)"
-  />
-  <use
-      href="#nyctocereus-serpentinus-detail-1"
-      transform="translate(15 21) scale(0.68)"
-  />
-  <use
-      href="#nyctocereus-serpentinus-detail-1"
-      transform="translate(18 15) scale(0.68)"
-  />
-  <path
-      d="M32 47c1-8 5-13 11-14 5-1 8 1 10 4"
-      fill="none"
-      stroke="#244b3b"
-      stroke-width="8.7"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <path
-      d="M32 47c1-8 5-13 11-14 5-1 8 1 10 4"
-      fill="none"
-      stroke="url(#serpent-body)"
-      stroke-width="6.4"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <path
-      d="M32 47c1-8 5-13 11-14 5-1 8 1 10 4"
-      fill="none"
-      stroke="#c0d49e"
-      stroke-width="0.65"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <use
-      href="#nyctocereus-serpentinus-detail-1"
-      transform="translate(33 42) scale(0.68)"
-  />
-  <use
-      href="#nyctocereus-serpentinus-detail-1"
-      transform="translate(37 37) scale(0.68)"
-  />
-  <use
-      href="#nyctocereus-serpentinus-detail-1"
-      transform="translate(43 33) scale(0.68)"
-  />
-  <use
-      href="#nyctocereus-serpentinus-detail-1"
-      transform="translate(49 34) scale(0.68)"
-  />
-  <path
-      d="M27 47c-2-8-3-19 1-25 4-7 12-8 18-4"
-      fill="none"
-      stroke="#244b3b"
-      stroke-width="8.7"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <path
-      d="M27 47c-2-8-3-19 1-25 4-7 12-8 18-4"
-      fill="none"
-      stroke="url(#serpent-body)"
-      stroke-width="6.4"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <path
-      d="M27 47c-2-8-3-19 1-25 4-7 12-8 18-4"
-      fill="none"
-      stroke="#c0d49e"
-      stroke-width="0.65"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <use
-      href="#nyctocereus-serpentinus-detail-1"
-      transform="translate(27 42) scale(0.68)"
-  />
-  <use
-      href="#nyctocereus-serpentinus-detail-1"
-      transform="translate(26 35) scale(0.68)"
-  />
-  <use
-      href="#nyctocereus-serpentinus-detail-1"
-      transform="translate(27 28) scale(0.68)"
-  />
-  <use
-      href="#nyctocereus-serpentinus-detail-1"
-      transform="translate(30 21) scale(0.68)"
-  />
-  <use
-      href="#nyctocereus-serpentinus-detail-1"
-      transform="translate(37 17) scale(0.68)"
-  />
-  <use
-      href="#nyctocereus-serpentinus-detail-1"
-      transform="translate(44 17) scale(0.68)"
-  />
-  <path
-      d="M8 45h48v7H8z"
-      fill="#f5aa71"
-      stroke="#5f3a2a"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
-  <path
-      d="m11 52 4 9h34l4-9Z"
-      fill="url(#nycto-pot)"
-      stroke="#5f3a2a"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
+      <ellipse cx="32" cy="36" rx="22" ry="7.5" fill="#d7ddd8" />
+      <ellipse cx="32" cy="35.8" rx="20.6" ry="6.2" fill="#66503d" />
+      <path
+          d="M14 34l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#e5d9bd"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M18 31l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#ad6b50"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M23 30l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#b8c5ba"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M29 30l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#343c37"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M35 30l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#d8c4a1"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M41 30l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#995c49"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M47 32l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#b8c5ba"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M49 35l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#d8c4a1"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M15 38l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#343c37"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M20 38l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#995c49"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M24 40l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#e5d9bd"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M29 40l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#ad6b50"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M35 40l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#b8c5ba"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M41 40l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#343c37"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M46 38l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#ad6b50"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M51 37l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#995c49"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M18 35l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#d8c4a1"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M24 34l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#343c37"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M42 34l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#e5d9bd"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M36 35l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#ad6b50"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M30 35l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#995c49"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M32 38l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#d8c4a1"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M17 34C13 30 15 25 19 24L23 22 27 23 31 22 36 24 39 27 44 27Q50 27 50 32L48 36 44 37 40 35 37 37 31 36 27 37 22 35Z"
+          fill="url(#p03-nov01-body)"
+          stroke="#54743b"
+          stroke-width="0.8"
+      />
+      <g clip-path="url(#p03-nov01-body-clip)">
+          <path
+              d="M18 25Q17 31 20 35M23 24Q21 30 25 36M28 24Q26 31 29 36M33 24Q31 30 34 36M38 28Q36 31 39 35M43 29Q41 33 44 36M47 29Q45 33 48 35"
+              fill="none"
+              stroke="#b3ce6d"
+              stroke-width="0.85"
+          />
+          <ellipse
+              cx="17"
+              cy="25"
+              rx="0.85"
+              ry="1.25"
+              transform="rotate(-15 17 25)"
+              fill="#b7d362"
+              stroke="#6e993d"
+              stroke-width="0.25"
+          />
+          <ellipse
+              cx="18.9"
+              cy="25.899"
+              rx="0.85"
+              ry="1.25"
+              transform="rotate(0 18.9 25.899)"
+              fill="#b7d362"
+              stroke="#6e993d"
+              stroke-width="0.25"
+          />
+          <ellipse
+              cx="20.8"
+              cy="26.622"
+              rx="0.85"
+              ry="1.25"
+              transform="rotate(15 20.8 26.622)"
+              fill="#b7d362"
+              stroke="#6e993d"
+              stroke-width="0.25"
+          />
+          <ellipse
+              cx="22.7"
+              cy="27.036"
+              rx="0.85"
+              ry="1.25"
+              transform="rotate(-15 22.7 27.036)"
+              fill="#b7d362"
+              stroke="#6e993d"
+              stroke-width="0.25"
+          />
+          <ellipse
+              cx="24.6"
+              cy="27.084"
+              rx="0.85"
+              ry="1.25"
+              transform="rotate(0 24.6 27.084)"
+              fill="#b7d362"
+              stroke="#6e993d"
+              stroke-width="0.25"
+          />
+          <ellipse
+              cx="26.5"
+              cy="26.798"
+              rx="0.85"
+              ry="1.25"
+              transform="rotate(15 26.5 26.798)"
+              fill="#b7d362"
+              stroke="#6e993d"
+              stroke-width="0.25"
+          />
+          <ellipse
+              cx="28.4"
+              cy="26.292"
+              rx="0.85"
+              ry="1.25"
+              transform="rotate(-15 28.4 26.292)"
+              fill="#b7d362"
+              stroke="#6e993d"
+              stroke-width="0.25"
+          />
+          <ellipse
+              cx="30.3"
+              cy="25.734"
+              rx="0.85"
+              ry="1.25"
+              transform="rotate(0 30.3 25.734)"
+              fill="#b7d362"
+              stroke="#6e993d"
+              stroke-width="0.25"
+          />
+          <ellipse
+              cx="32.2"
+              cy="25.305"
+              rx="0.85"
+              ry="1.25"
+              transform="rotate(15 32.2 25.305)"
+              fill="#b7d362"
+              stroke="#6e993d"
+              stroke-width="0.25"
+          />
+          <ellipse
+              cx="34.1"
+              cy="25.154"
+              rx="0.85"
+              ry="1.25"
+              transform="rotate(-15 34.1 25.154)"
+              fill="#b7d362"
+              stroke="#6e993d"
+              stroke-width="0.25"
+          />
+          <ellipse
+              cx="36"
+              cy="25.362"
+              rx="0.85"
+              ry="1.25"
+              transform="rotate(0 36 25.362)"
+              fill="#b7d362"
+              stroke="#6e993d"
+              stroke-width="0.25"
+          />
+          <ellipse
+              cx="37.9"
+              cy="25.922"
+              rx="0.85"
+              ry="1.25"
+              transform="rotate(15 37.9 25.922)"
+              fill="#b7d362"
+              stroke="#6e993d"
+              stroke-width="0.25"
+          />
+          <ellipse
+              cx="39.8"
+              cy="26.741"
+              rx="0.85"
+              ry="1.25"
+              transform="rotate(-15 39.8 26.741)"
+              fill="#b7d362"
+              stroke="#6e993d"
+              stroke-width="0.25"
+          />
+          <ellipse
+              cx="41.7"
+              cy="27.663"
+              rx="0.85"
+              ry="1.25"
+              transform="rotate(0 41.7 27.663)"
+              fill="#b7d362"
+              stroke="#6e993d"
+              stroke-width="0.25"
+          />
+          <ellipse
+              cx="43.6"
+              cy="28.505"
+              rx="0.85"
+              ry="1.25"
+              transform="rotate(15 43.6 28.505)"
+              fill="#b7d362"
+              stroke="#6e993d"
+              stroke-width="0.25"
+          />
+          <ellipse
+              cx="45.5"
+              cy="29.107"
+              rx="0.85"
+              ry="1.25"
+              transform="rotate(-15 45.5 29.107)"
+              fill="#b7d362"
+              stroke="#6e993d"
+              stroke-width="0.25"
+          />
+      </g>
+      <use href="#p03-nov01-spine" transform="translate(17 27) scale(0.8)" />
+      <use href="#p03-nov01-spine" transform="translate(20 24) scale(0.75)" />
+      <use href="#p03-nov01-spine" transform="translate(24 23.5) scale(0.75)" />
+      <use href="#p03-nov01-spine" transform="translate(28 24) scale(0.65)" />
+      <use href="#p03-nov01-spine" transform="translate(32 25) scale(0.75)" />
+      <use href="#p03-nov01-spine" transform="translate(36 26) scale(0.8)" />
+      <use href="#p03-nov01-spine" transform="translate(40 28) scale(0.85)" />
+      <use href="#p03-nov01-spine" transform="translate(44 29) scale(0.8)" />
+      <use href="#p03-nov01-spine" transform="translate(48 30) scale(0.9)" />
+      <use href="#p03-nov01-spine" transform="translate(17 31) scale(1)" />
+      <use href="#p03-nov01-spine" transform="translate(21 30) scale(1)" />
+      <use href="#p03-nov01-spine" transform="translate(25 30) scale(0.95)" />
+      <use href="#p03-nov01-spine" transform="translate(29 31) scale(1)" />
+      <use href="#p03-nov01-spine" transform="translate(33 32) scale(1)" />
+      <use href="#p03-nov01-spine" transform="translate(37 33) scale(1)" />
+      <use href="#p03-nov01-spine" transform="translate(42 33) scale(0.85)" />
+      <use href="#p03-nov01-spine" transform="translate(47 34) scale(0.8)" />
+      <use href="#p03-nov01-spine" transform="translate(22 34) scale(0.85)" />
+      <use href="#p03-nov01-spine" transform="translate(28 35) scale(0.85)" />
+      <use href="#p03-nov01-spine" transform="translate(34 35) scale(0.8)" />
+      <path
+          d="M11 37Q16 42 24 42M40 42Q48 41 53 37"
+          fill="none"
+          stroke="#fcfaf0"
+          stroke-width="0.7"
+          opacity="0.8"
+      />
+  </g>
 </svg>

@@ -1,161 +1,679 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="astrophytum-ornatum-title astrophytum-ornatum-description" data-plant-slug="astrophytum-ornatum" focusable="false">
   <title id="astrophytum-ornatum-title">Monk's hood cactus plant portrait</title>
-  <desc id="astrophytum-ornatum-description">A squat gray-green ribbed cactus with white flecks and long tan spines in a terracotta planter.</desc>
+  <desc id="astrophytum-ornatum-description">Photo-informed schematic of Monk's hood with a low angular star-ribbed green body, many fine pale flecks and sparse long straw-brown spines, in mixed mineral top dressing and an orange-brown faceted pot.</desc>
+  <desc id="nov01-a-p09-description">
+      Photo-informed schematic of Monk's hood with a low angular star-ribbed green body,
+      many fine pale flecks and sparse long straw-brown spines, in mixed mineral top
+      dressing and an orange-brown faceted pot.
+  </desc>
   <defs>
-      <linearGradient id="astro-pot" x1="0" x2="0.9" y1="0" y2="1">
-          <stop offset="0" stop-color="#f19a62" />
-          <stop offset="1" stop-color="#c65335" />
+      <linearGradient id="nov01-a-p09-pot" x1="0" y1="0" x2="1" y2="0.3">
+          <stop stop-color="#e0a175" />
+          <stop offset="0.4" stop-color="#b66b48" />
+          <stop offset="1" stop-color="#7d4630" />
       </linearGradient>
-      <radialGradient id="ornatum-body" cx="35%" cy="23%" r="80%">
-          <stop offset="0" stop-color="#9daf96" />
-          <stop offset="0.5" stop-color="#607e6d" />
-          <stop offset="1" stop-color="#3b594e" />
-      </radialGradient>
-      <clipPath id="ornatum-clip" clipPathUnits="userSpaceOnUse">
+      <clipPath id="nov01-a-p09-pot-clip">
           <path
-              d="M11 47c-1-10 2-18 8-23l7-5 6-3 7 4 7 5c5 6 8 13 7 22Z"
-              fill="none"
+              d="M10 35H54L50 55Q48 60 32 61Q16 60 14 55Z"
+              fill="#fff"
               stroke="none"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              stroke-width="0"
           />
       </clipPath>
-      <pattern
-          id="ornatum-flecks"
-          width="4.6"
-          height="5.2"
-          patternUnits="userSpaceOnUse"
-      >
-          <ellipse
-              cx="1"
-              cy="1.6"
-              rx="0.5"
-              ry="0.7"
-              fill="#eeebd9"
-              stroke="none"
-              stroke-width="1"
-          />
-          <ellipse
-              cx="3.3"
-              cy="3.9"
-              rx="0.4"
-              ry="0.4"
-              fill="#eeebd9"
-              stroke="none"
-              stroke-width="1"
-          />
-      </pattern>
-      <g id="astrophytum-ornatum-detail-1">
+      <radialGradient id="nov01-a-p09-body" cx="0.32" cy="0.22" r="0.9">
+          <stop stop-color="#6c8b53" />
+          <stop offset="1" stop-color="#254b3c" />
+      </radialGradient>
+      <clipPath id="nov01-a-p09-body-clip">
           <path
-              d="M0 0-2-5m2 5 2-4m-2 4-4-2m4 2 4-1"
-              fill="none"
-              stroke="#c59a54"
-              stroke-width="0.85"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              d="M20 38Q17 35 18 29L16 25Q19 23 22 22L22 15L28 18Q30 14 32 13Q35 15 37 19L42 16Q43 19 43 23L48 26Q48 29 44 32Q47 35 45 38L38 39Q35 43 32 42L27 39Q22 41 20 38Z"
+              fill="#fff"
+              stroke="none"
+              stroke-width="0"
           />
-          <ellipse
-              cx="0"
-              cy="0"
-              rx="0.9"
-              ry="0.9"
-              fill="#f0e6c9"
-              stroke="#8b7549"
-              stroke-width="0.3"
+      </clipPath>
+  </defs>
+  <g stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="32" cy="61" rx="23" ry="1.6" fill="#274537" opacity="0.16" />
+      <path
+          d="M10 35H54L50 55Q48 60 32 61Q16 60 14 55Z"
+          fill="url(#nov01-a-p09-pot)"
+          stroke="#7d4630"
+          stroke-width="1.1"
+      />
+      <g clip-path="url(#nov01-a-p09-pot-clip)">
+          <path
+              d="M10 36 18 40 16 48 11 45Z"
+              fill="#7d4630"
+              stroke="#7d4630"
+              stroke-width="0.45"
+              opacity="0.48"
+          />
+          <path
+              d="M18 40 27 41 25 49 16 48Z"
+              fill="#e0a175"
+              stroke="#7d4630"
+              stroke-width="0.45"
+              opacity="0.5"
+          />
+          <path
+              d="M27 41 37 41 38 49 25 49Z"
+              fill="#b66b48"
+              stroke="#7d4630"
+              stroke-width="0.45"
+              opacity="0.35"
+          />
+          <path
+              d="M37 41 46 39 48 47 38 49Z"
+              fill="#e0a175"
+              stroke="#7d4630"
+              stroke-width="0.45"
+              opacity="0.3"
+          />
+          <path
+              d="M46 39 54 36 53 44 48 47Z"
+              fill="#7d4630"
+              stroke="#7d4630"
+              stroke-width="0.45"
+              opacity="0.38"
+          />
+          <path
+              d="M11 45 16 48 15 55 12 52Z"
+              fill="#e0a175"
+              stroke="#7d4630"
+              stroke-width="0.45"
+              opacity="0.32"
+          />
+          <path
+              d="M16 48 25 49 22 57 15 55Z"
+              fill="#7d4630"
+              stroke="#7d4630"
+              stroke-width="0.45"
+              opacity="0.3"
+          />
+          <path
+              d="M25 49 38 49 36 58 22 57Z"
+              fill="#e0a175"
+              stroke="#7d4630"
+              stroke-width="0.45"
+              opacity="0.45"
+          />
+          <path
+              d="M38 49 48 47 49 54 36 58Z"
+              fill="#7d4630"
+              stroke="#7d4630"
+              stroke-width="0.45"
+              opacity="0.42"
+          />
+          <path
+              d="M48 47 53 44 52 52 49 54Z"
+              fill="#e0a175"
+              stroke="#7d4630"
+              stroke-width="0.45"
+              opacity="0.28"
+          />
+          <path
+              d="M15 55 22 57 25 61 17 59Z"
+              fill="#e0a175"
+              stroke="#7d4630"
+              stroke-width="0.45"
+              opacity="0.3"
+          />
+          <path
+              d="M22 57 36 58 32 62 25 61Z"
+              fill="#7d4630"
+              stroke="#7d4630"
+              stroke-width="0.45"
+              opacity="0.25"
+          />
+          <path
+              d="M36 58 49 54 47 59 32 62Z"
+              fill="#b66b48"
+              stroke="#7d4630"
+              stroke-width="0.45"
+              opacity="0.4"
           />
       </g>
-  </defs>
-  <ellipse
-      cx="32"
-      cy="60.5"
-      rx="21"
-      ry="1.9"
-      fill="#244b3b"
-      stroke="none"
-      stroke-width="0"
-      opacity="0.12"
-  />
-  <ellipse
-      cx="32"
-      cy="45.5"
-      rx="21"
-      ry="2.1"
-      fill="#745c45"
-      stroke="none"
-      stroke-width="1"
-  />
-  <path
-      d="M11 47c-1-10 2-18 8-23l7-5 6-3 7 4 7 5c5 6 8 13 7 22Z"
-      fill="url(#ornatum-body)"
-      stroke="#244b3b"
-      stroke-width="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <g clip-path="url(#ornatum-clip)">
-      <path
-          d="M32 16 21 27 19 47h8l1-17ZM32 16l5 13 2 18h12l-8-20Z"
-          fill="#315d4f"
-          stroke="none"
-          stroke-width="0"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          opacity="0.32"
+      <ellipse
+          cx="32"
+          cy="35"
+          rx="22"
+          ry="6.5"
+          fill="#584838"
+          stroke="#b66b48"
+          stroke-width="1.6"
       />
       <path
-          d="M23 21c-7 11-8 18-7 27h5c-1-13 2-21 7-29ZM32 16c-2 14-2 24-1 32h4c-2-14-3-23-3-32Zm8 6c5 8 6 18 5 26h5c1-12-2-20-10-26Z"
-          fill="url(#ornatum-flecks)"
-          stroke="none"
-          stroke-width="1"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          d="m15 34.15 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#e4d5ba"
+          stroke="#63574a"
+          stroke-width="0.35"
       />
       <path
-          d="M32 16c-3 10-3 22-1 31M24 20c-5 9-6 16-5 27m20-27c5 8 7 18 6 27"
+          d="m19 36.7 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#af6650"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m24 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#bdc4bc"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m29 38.4 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#3a3b35"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m35 38.4 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#ddcdb1"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m41 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#b96e50"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m47 35.85 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#e1d8c3"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m14 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#3b4440"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m21 39.25 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#e8ddc6"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m28 40.1 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#b87757"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m37 40.1 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#8e9b91"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m44 39.25 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#343c36"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m50 37.55 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#ae785e"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m15 31.6 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#bfbeb0"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m21 30.75 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#3a3e36"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m45 30.75 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#cbb99c"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="m50 32.45 1.3-1.5 2.3 0.5 0.3 2.1-2 1-1.9-0.8Z"
+          fill="#d8cfc0"
+          stroke="#63574a"
+          stroke-width="0.35"
+      />
+      <path
+          d="M20 38Q17 35 18 29L16 25Q19 23 22 22L22 15L28 18Q30 14 32 13Q35 15 37 19L42 16Q43 19 43 23L48 26Q48 29 44 32Q47 35 45 38L38 39Q35 43 32 42L27 39Q22 41 20 38Z"
+          fill="url(#nov01-a-p09-body)"
+          stroke="#38513c"
+          stroke-width="0.85"
+      />
+      <g clip-path="url(#nov01-a-p09-body-clip)">
+          <path
+              d="M32 20 22 14 23 26 19 37 29 31Z"
+              fill="#527347"
+              stroke="none"
+              stroke-width="0"
+          />
+          <path
+              d="M32 20 43 15 40 29 46 38 34 31Z"
+              fill="#30583e"
+              stroke="none"
+              stroke-width="0"
+          />
+          <path
+              d="M32 20 29 31 27 39 33 42 38 39 34 31Z"
+              fill="#68824e"
+              stroke="none"
+              stroke-width="0"
+          />
+          <path
+              d="M16.44 13.11l0.37 0.2M17.72 12.92l0.49 -0.2M19.32 12.8l0.25 0.2M22.2 13.06l0.49 0.2M23.17 13.19l0.25 -0.2M25.05 13.15l0.37 0.2M27.89 12.82l0.25 0.2M28.7 12.83l0.37 -0.2M30.7 13l0.49 0.2M33.49 13.18l0.37 0.2M34.33 13.03l0.49 -0.2M36.26 12.85l0.25 0.2M39 12.94l0.49 0.2M40.03 13.13l0.25 -0.2M41.73 13.2l0.37 0.2M44.45 12.89l0.25 0.2M45.79 12.8l0.37 -0.2M47.17 12.89l0.49 0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.85"
+          />
+          <path
+              d="M15.25 14.17l0.25 -0.2M16.17 14.05l0.37 0.2M18 14.12l0.49 -0.2M20.73 14.44l0.37 -0.2M21.91 14.4l0.49 0.2M23.44 14.22l0.25 -0.2M26.16 14.08l0.49 -0.2M27.68 14.25l0.25 0.2M28.88 14.42l0.37 -0.2M31.61 14.28l0.25 -0.2M33.42 14.1l0.37 0.2M34.35 14.06l0.49 -0.2M37.11 14.38l0.37 -0.2M39.1 14.45l0.49 0.2M39.9 14.33l0.25 -0.2M42.71 14.05l0.49 -0.2M44.68 14.14l0.25 0.2M45.54 14.33l0.37 -0.2M48.4 14.38l0.25 -0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.7"
+          />
+          <path
+              d="M15.27 15.37l0.25 -0.2M16.11 15.56l0.37 0.2M18.9 15.65l0.25 0.2M20.9 15.47l0.37 -0.2M21.71 15.32l0.49 0.2M24.55 15.5l0.37 0.2M26.43 15.67l0.49 -0.2M27.4 15.68l0.25 0.2M30.27 15.35l0.49 0.2M31.89 15.31l0.25 -0.2M33.15 15.44l0.37 0.2M36.04 15.7l0.25 0.2M37.32 15.58l0.37 -0.2M38.92 15.39l0.49 0.2M41.79 15.39l0.37 0.2M42.78 15.58l0.49 -0.2M44.65 15.7l0.25 0.2M47.49 15.44l0.49 0.2M48.3 15.31l0.25 -0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.7"
+          />
+          <path
+              d="M15.04 16.94l0.25 -0.2M17.92 16.72l0.49 -0.2M19.04 16.57l0.25 0.2M20.8 16.58l0.37 -0.2M23.65 16.92l0.25 -0.2M24.53 16.93l0.37 0.2M26.49 16.78l0.49 -0.2M29.3 16.56l0.37 -0.2M30.1 16.69l0.49 0.2M32.09 16.88l0.25 -0.2M34.86 16.83l0.49 -0.2M35.77 16.64l0.25 0.2M37.6 16.55l0.37 -0.2M40.33 16.83l0.25 -0.2M41.51 16.95l0.37 0.2M43.05 16.88l0.49 -0.2M45.77 16.56l0.37 -0.2M47.28 16.6l0.49 0.2M48.48 16.78l0.25 -0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.85"
+          />
+          <path
+              d="M16.6 17.82l0.37 0.2M17.64 17.83l0.49 -0.2M19.33 18l0.25 0.2M22.04 18.18l0.49 0.2M23.4 18.03l0.25 -0.2M24.76 17.85l0.37 0.2M27.48 17.94l0.25 0.2M29.16 18.13l0.37 -0.2M30.21 18.2l0.49 0.2M32.95 17.89l0.37 0.2M34.87 17.8l0.49 -0.2M35.71 17.89l0.25 0.2M38.5 18.2l0.49 0.2M40.5 18.13l0.25 -0.2M41.31 17.94l0.37 0.2M44.14 17.85l0.25 0.2M46.03 18.03l0.37 -0.2M47 18.18l0.49 0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.7"
+          />
+          <path
+              d="M14.71 19.08l0.25 -0.2M16.7 19.25l0.37 0.2M17.5 19.42l0.49 -0.2M20.31 19.28l0.37 -0.2M22.27 19.1l0.49 0.2M23.15 19.06l0.25 -0.2M26 19.38l0.49 -0.2M27.77 19.45l0.25 0.2M28.87 19.33l0.37 -0.2M31.75 19.05l0.25 -0.2M33.21 19.14l0.37 0.2M34.64 19.33l0.49 -0.2M37.52 19.38l0.37 -0.2M38.64 19.19l0.49 0.2M40.39 19.06l0.25 -0.2M43.25 19.28l0.49 -0.2M44.13 19.43l0.25 0.2M46.09 19.42l0.37 -0.2M48.9 19.08l0.25 -0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.7"
+          />
+          <path
+              d="M14.92 20.67l0.25 -0.2M16.52 20.68l0.37 0.2M19.4 20.35l0.25 0.2M20.37 20.31l0.37 -0.2M22.25 20.44l0.49 0.2M25.09 20.7l0.37 0.2M25.9 20.58l0.49 -0.2M27.9 20.39l0.25 0.2M30.69 20.39l0.49 0.2M31.53 20.58l0.25 -0.2M33.46 20.7l0.37 0.2M36.2 20.44l0.25 0.2M37.23 20.31l0.37 -0.2M38.93 20.35l0.49 0.2M41.65 20.68l0.37 0.2M42.99 20.67l0.49 -0.2M44.37 20.5l0.25 0.2M47.08 20.32l0.49 0.2M48.75 20.47l0.25 -0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.85"
+          />
+          <path
+              d="M15.2 21.78l0.25 -0.2M17.93 21.56l0.49 -0.2M19.11 21.69l0.25 0.2M20.64 21.88l0.37 -0.2M23.36 21.83l0.25 -0.2M24.88 21.64l0.37 0.2M26.08 21.55l0.49 -0.2M28.81 21.83l0.37 -0.2M30.62 21.95l0.49 0.2M31.55 21.88l0.25 -0.2M34.31 21.56l0.49 -0.2M36.3 21.6l0.25 0.2M37.1 21.78l0.37 -0.2M39.91 21.92l0.25 -0.2M41.88 21.75l0.37 0.2M42.74 21.58l0.49 -0.2M45.6 21.72l0.37 -0.2M47.37 21.9l0.49 0.2M48.47 21.94l0.25 -0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.7"
+          />
+          <path
+              d="M16.1 22.94l0.37 0.2M18.1 23.13l0.49 -0.2M18.91 23.2l0.25 0.2M21.75 22.89l0.49 0.2M23.63 22.8l0.25 -0.2M24.6 22.89l0.37 0.2M27.47 23.2l0.25 0.2M29.09 23.13l0.37 -0.2M30.35 22.94l0.49 0.2M33.24 22.85l0.37 0.2M34.52 23.03l0.49 -0.2M36.12 23.18l0.25 0.2M38.99 23l0.49 0.2M39.98 22.83l0.25 -0.2M41.85 22.82l0.37 0.2M44.69 23.15l0.25 0.2M45.5 23.19l0.37 -0.2M47.5 23.05l0.49 0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.7"
+          />
+          <path
+              d="M15.12 24.38l0.25 -0.2M16.24 24.45l0.37 0.2M18 24.33l0.49 -0.2M20.85 24.05l0.37 -0.2M21.73 24.14l0.49 0.2M23.69 24.33l0.25 -0.2M26.5 24.38l0.49 -0.2M27.3 24.19l0.25 0.2M29.29 24.06l0.37 -0.2M32.06 24.28l0.25 -0.2M32.97 24.43l0.37 0.2M34.8 24.42l0.49 -0.2M37.53 24.08l0.37 -0.2M38.71 24.07l0.49 0.2M40.25 24.22l0.25 -0.2M42.97 24.44l0.49 -0.2M44.48 24.3l0.25 0.2M45.68 24.12l0.37 -0.2M48.41 24.17l0.25 -0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.85"
+          />
+          <path
+              d="M14.84 25.58l0.25 -0.2M16.53 25.39l0.37 0.2M19.24 25.39l0.25 0.2M20.6 25.58l0.37 -0.2M21.96 25.7l0.49 0.2M24.68 25.44l0.37 0.2M26.36 25.31l0.49 -0.2M27.41 25.35l0.25 0.2M30.15 25.68l0.49 0.2M32.07 25.67l0.25 -0.2M32.91 25.5l0.37 0.2M35.7 25.32l0.25 0.2M37.7 25.47l0.37 -0.2M38.51 25.65l0.49 0.2M41.34 25.55l0.37 0.2M43.23 25.37l0.49 -0.2M44.2 25.3l0.25 0.2M47.07 25.61l0.49 0.2M48.69 25.7l0.25 -0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.7"
+          />
+          <path
+              d="M14.7 26.55l0.25 -0.2M17.51 26.83l0.49 -0.2M19.47 26.95l0.25 0.2M20.35 26.88l0.37 -0.2M23.2 26.56l0.25 -0.2M24.97 26.6l0.37 0.2M26.07 26.78l0.49 -0.2M28.95 26.92l0.37 -0.2M30.41 26.75l0.49 0.2M31.84 26.58l0.25 -0.2M34.72 26.72l0.49 -0.2M35.84 26.9l0.25 0.2M37.59 26.94l0.37 -0.2M40.45 26.62l0.25 -0.2M41.33 26.55l0.37 0.2M43.29 26.67l0.49 -0.2M46.1 26.95l0.37 -0.2M46.9 26.86l0.49 0.2M48.89 26.66l0.25 -0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.7"
+          />
+          <path
+              d="M16.6 28.2l0.37 0.2M17.57 28.13l0.49 -0.2M19.45 27.94l0.25 0.2M22.29 27.85l0.49 0.2M23.1 28.03l0.25 -0.2M25.1 28.18l0.37 0.2M27.89 28l0.25 0.2M28.73 27.83l0.37 -0.2M30.66 27.82l0.49 0.2M33.4 28.15l0.37 0.2M34.43 28.19l0.49 -0.2M36.13 28.05l0.25 0.2M38.85 27.8l0.49 0.2M40.19 27.92l0.25 -0.2M41.57 28.11l0.37 0.2M44.28 28.11l0.25 0.2M45.95 27.91l0.37 -0.2M47.01 27.8l0.49 0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.85"
+          />
+          <path
+              d="M15.13 29.38l0.25 -0.2M16.31 29.19l0.37 0.2M17.84 29.06l0.49 -0.2M20.56 29.28l0.37 -0.2M22.08 29.43l0.49 0.2M23.28 29.42l0.25 -0.2M26.01 29.08l0.49 -0.2M27.82 29.07l0.25 0.2M28.75 29.22l0.37 -0.2M31.51 29.44l0.25 -0.2M33.5 29.3l0.37 0.2M34.3 29.12l0.49 -0.2M37.11 29.17l0.37 -0.2M39.08 29.36l0.49 0.2M39.94 29.45l0.25 -0.2M42.8 29.16l0.49 -0.2M44.57 29.05l0.25 0.2M45.67 29.12l0.37 -0.2M48.55 29.44l0.25 -0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.7"
+          />
+          <path
+              d="M15.3 30.31l0.25 -0.2M16.11 30.35l0.37 0.2M18.95 30.68l0.25 0.2M20.83 30.67l0.37 -0.2M21.8 30.5l0.49 0.2M24.67 30.32l0.37 0.2M26.29 30.47l0.49 -0.2M27.55 30.65l0.25 0.2M30.44 30.55l0.49 0.2M31.72 30.37l0.25 -0.2M33.32 30.3l0.37 0.2M36.19 30.61l0.25 0.2M37.18 30.7l0.37 -0.2M39.05 30.61l0.49 0.2M41.89 30.3l0.37 0.2M42.7 30.37l0.49 -0.2M44.7 30.56l0.25 0.2M47.49 30.65l0.49 0.2M48.32 30.47l0.25 -0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.7"
+          />
+          <path
+              d="M15.2 31.78l0.25 -0.2M18.05 31.92l0.49 -0.2M18.93 31.75l0.25 0.2M20.89 31.58l0.37 -0.2M23.7 31.72l0.25 -0.2M24.5 31.9l0.37 0.2M26.49 31.94l0.49 -0.2M29.26 31.62l0.37 -0.2M30.17 31.55l0.49 0.2M32 31.67l0.25 -0.2M34.73 31.95l0.49 -0.2M35.91 31.86l0.25 0.2M37.45 31.66l0.37 -0.2M40.17 31.62l0.25 -0.2M41.68 31.81l0.37 0.2M42.88 31.94l0.49 -0.2M45.61 31.72l0.37 -0.2M47.42 31.57l0.49 0.2M48.35 31.58l0.25 -0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.85"
+          />
+          <path
+              d="M16.44 33l0.37 0.2M17.8 32.83l0.49 -0.2M19.16 32.82l0.25 0.2M21.88 33.15l0.49 0.2M23.56 33.19l0.25 -0.2M24.61 33.05l0.37 0.2M27.35 32.8l0.25 0.2M29.27 32.92l0.37 -0.2M30.11 33.11l0.49 0.2M32.9 33.11l0.37 0.2M34.9 32.91l0.49 -0.2M35.71 32.8l0.25 0.2M38.54 33.06l0.49 0.2M40.43 33.19l0.25 -0.2M41.4 33.15l0.37 0.2M44.27 32.82l0.25 0.2M45.89 32.83l0.37 -0.2M47.15 33l0.49 0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.7"
+          />
+          <path
+              d="M14.71 34.08l0.25 -0.2M16.67 34.07l0.37 0.2M17.55 34.22l0.49 -0.2M20.4 34.44l0.37 -0.2M22.17 34.3l0.49 0.2M23.27 34.12l0.25 -0.2M26.15 34.17l0.49 -0.2M27.61 34.36l0.25 0.2M29.04 34.45l0.37 -0.2M31.92 34.16l0.25 -0.2M33.04 34.05l0.37 0.2M34.79 34.12l0.49 -0.2M37.65 34.44l0.37 -0.2M38.53 34.4l0.49 0.2M40.49 34.22l0.25 -0.2M43.3 34.08l0.49 -0.2M44.1 34.25l0.25 0.2M46.09 34.42l0.37 -0.2M48.86 34.27l0.25 -0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.7"
+          />
+          <path
+              d="M14.77 35.47l0.25 -0.2M16.65 35.65l0.37 0.2M19.49 35.55l0.25 0.2M20.3 35.37l0.37 -0.2M22.3 35.3l0.49 0.2M25.09 35.61l0.37 0.2M25.93 35.7l0.49 -0.2M27.86 35.61l0.25 0.2M30.6 35.3l0.49 0.2M31.63 35.37l0.25 -0.2M33.33 35.56l0.37 0.2M36.05 35.65l0.25 0.2M37.39 35.47l0.37 -0.2M38.77 35.32l0.49 0.2M41.48 35.5l0.37 0.2M43.15 35.67l0.49 -0.2M44.21 35.68l0.25 0.2M46.95 35.35l0.49 0.2M48.87 35.31l0.25 -0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.85"
+          />
+          <path
+              d="M15.04 36.94l0.25 -0.2M17.76 36.62l0.49 -0.2M19.28 36.55l0.25 0.2M20.48 36.67l0.37 -0.2M23.21 36.95l0.25 -0.2M25.02 36.86l0.37 0.2M25.95 36.66l0.49 -0.2M28.71 36.62l0.37 -0.2M30.7 36.81l0.49 0.2M31.5 36.94l0.25 -0.2M34.31 36.72l0.49 -0.2M36.28 36.57l0.25 0.2M37.14 36.58l0.37 -0.2M40 36.92l0.25 -0.2M41.77 36.93l0.37 0.2M42.87 36.77l0.49 -0.2M45.75 36.56l0.37 -0.2M47.21 36.7l0.49 0.2M48.63 36.88l0.25 -0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.7"
+          />
+          <path
+              d="M16.15 37.8l0.37 0.2M18.03 37.92l0.49 -0.2M19 38.11l0.25 0.2M21.87 38.11l0.49 0.2M23.49 37.91l0.25 -0.2M24.75 37.8l0.37 0.2M27.64 38.06l0.25 0.2M28.92 38.19l0.37 -0.2M30.52 38.15l0.49 0.2M33.39 37.82l0.37 0.2M34.38 37.83l0.49 -0.2M36.25 38l0.25 0.2M39.09 38.18l0.49 0.2M39.9 38.02l0.25 -0.2M41.9 37.85l0.37 0.2M44.69 37.95l0.25 0.2M45.52 38.13l0.37 -0.2M47.46 38.2l0.49 0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.7"
+          />
+          <path
+              d="M15.25 39.17l0.25 -0.2M16.13 39.36l0.37 0.2M18.09 39.45l0.49 -0.2M20.9 39.16l0.37 -0.2M21.7 39.05l0.49 0.2M23.69 39.12l0.25 -0.2M26.46 39.44l0.49 -0.2M27.37 39.4l0.25 0.2M29.2 39.22l0.37 -0.2M31.93 39.08l0.25 -0.2M33.11 39.25l0.37 0.2M34.65 39.42l0.49 -0.2M37.37 39.27l0.37 -0.2M38.88 39.1l0.49 0.2M40.08 39.06l0.25 -0.2M42.81 39.38l0.49 -0.2M44.62 39.45l0.25 0.2M45.55 39.33l0.37 -0.2M48.32 39.05l0.25 -0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.85"
+          />
+          <path
+              d="M15 40.7l0.25 -0.2M16.36 40.61l0.37 0.2M19.08 40.3l0.25 0.2M20.76 40.37l0.37 -0.2M21.81 40.56l0.49 0.2M24.55 40.65l0.37 0.2M26.47 40.47l0.49 -0.2M27.31 40.32l0.25 0.2M30.1 40.5l0.49 0.2M32.1 40.67l0.25 -0.2M32.91 40.68l0.37 0.2M35.74 40.35l0.25 0.2M37.63 40.31l0.37 -0.2M38.6 40.45l0.49 0.2M41.47 40.7l0.37 0.2M43.09 40.58l0.49 -0.2M44.35 40.39l0.25 0.2M47.23 40.4l0.49 0.2M48.53 40.59l0.25 -0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.7"
+          />
+          <path
+              d="M14.75 41.66l0.25 -0.2M17.6 41.62l0.49 -0.2M19.37 41.81l0.25 0.2M20.47 41.94l0.37 -0.2M23.35 41.72l0.25 -0.2M24.81 41.57l0.37 0.2M26.24 41.58l0.49 -0.2M29.12 41.92l0.37 -0.2M30.24 41.93l0.49 0.2M31.99 41.77l0.25 -0.2M34.85 41.56l0.49 -0.2M35.73 41.7l0.25 0.2M37.69 41.88l0.37 -0.2M40.5 41.83l0.25 -0.2M41.3 41.64l0.37 0.2M43.29 41.55l0.49 -0.2M46.06 41.84l0.37 -0.2M46.97 41.95l0.49 0.2M48.8 41.88l0.25 -0.2"
+              fill="none"
+              stroke="#e3e8d6"
+              stroke-width="0.55"
+              opacity="0.7"
+          />
+          <path
+              d="M32 20 22 14M32 20 43 15M32 20 49 26M32 20 38 39M32 20 27 39M32 20 15 24"
+              fill="none"
+              stroke="#a9bb80"
+              stroke-width="0.8"
+          />
+      </g>
+      <ellipse cx="23" cy="17" rx="0.85" ry="0.72" fill="#eee9df" />
+      <path
+          d="m22.15 17 -0.7-0.9m0.5 0.7-0.5 0.8m1.05-0.95-0.5-0.9m1.2 1.1 0.6-0.8m0.2 2.1 0.8 0.4m-1.9 0.3-0.3 0.9"
           fill="none"
-          stroke="#c4ceb0"
+          stroke="#fffaf1"
+          stroke-width="0.4"
+      />
+      <ellipse cx="23" cy="17" rx="0.2" ry="0.16" fill="#d9ceb2" />
+      <path
+          d="M23 17Q21.88 14.97 21.91 12.94"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M23 17Q25.31 16.34 27.93 15.68"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M23 17Q24.36 19.9 24.55 22.8"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M23 17Q21.13 17.54 18.94 18.09"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <ellipse cx="32" cy="15" rx="0.85" ry="0.72" fill="#eee9df" />
+      <path
+          d="m31.15 15 -0.7-0.9m0.5 0.7-0.5 0.8m1.05-0.95-0.5-0.9m1.2 1.1 0.6-0.8m0.2 2.1 0.8 0.4m-1.9 0.3-0.3 0.9"
+          fill="none"
+          stroke="#fffaf1"
+          stroke-width="0.4"
+      />
+      <ellipse cx="32" cy="15" rx="0.2" ry="0.16" fill="#d9ceb2" />
+      <path
+          d="M32 15Q31.29 12.9 31.78 10.81"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M32 15Q34.52 14.87 37.09 14.73"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M32 15Q32.76 18 32.31 20.99"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M32 15Q29.93 15.11 27.81 15.22"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <ellipse cx="42" cy="19" rx="0.85" ry="0.72" fill="#eee9df" />
+      <path
+          d="m41.15 19 -0.7-0.9m0.5 0.7-0.5 0.8m1.05-0.95-0.5-0.9m1.2 1.1 0.6-0.8m0.2 2.1 0.8 0.4m-1.9 0.3-0.3 0.9"
+          fill="none"
+          stroke="#fffaf1"
+          stroke-width="0.4"
+      />
+      <ellipse cx="42" cy="19" rx="0.2" ry="0.16" fill="#d9ceb2" />
+      <path
+          d="M42 19Q40.88 16.97 40.91 14.94"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M42 19Q44.31 18.34 46.93 17.68"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M42 19Q43.36 21.9 43.55 24.8"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M42 19Q40.13 19.54 37.94 20.09"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <ellipse cx="44" cy="29" rx="0.85" ry="0.72" fill="#eee9df" />
+      <path
+          d="m43.15 29 -0.7-0.9m0.5 0.7-0.5 0.8m1.05-0.95-0.5-0.9m1.2 1.1 0.6-0.8m0.2 2.1 0.8 0.4m-1.9 0.3-0.3 0.9"
+          fill="none"
+          stroke="#fffaf1"
+          stroke-width="0.4"
+      />
+      <ellipse cx="44" cy="29" rx="0.2" ry="0.16" fill="#d9ceb2" />
+      <path
+          d="M44 29Q43.62 26.56 44.43 24.12"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M44 29Q47.02 29.26 49.93 29.52"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M44 29Q44.29 32.49 43.39 35.97"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M44 29Q41.51 28.79 39.12 28.57"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <ellipse cx="36" cy="36" rx="0.85" ry="0.72" fill="#eee9df" />
+      <path
+          d="m35.15 36 -0.7-0.9m0.5 0.7-0.5 0.8m1.05-0.95-0.5-0.9m1.2 1.1 0.6-0.8m0.2 2.1 0.8 0.4m-1.9 0.3-0.3 0.9"
+          fill="none"
+          stroke="#fffaf1"
+          stroke-width="0.4"
+      />
+      <ellipse cx="36" cy="36" rx="0.2" ry="0.16" fill="#d9ceb2" />
+      <path
+          d="M36 36Q34.79 33.63 34.73 31.27"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M36 36Q38.72 35.23 41.75 34.46"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M36 36Q37.49 39.38 37.81 42.76"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M36 36Q33.79 36.63 31.27 37.27"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <ellipse cx="22" cy="32" rx="0.85" ry="0.72" fill="#eee9df" />
+      <path
+          d="m21.15 32 -0.7-0.9m0.5 0.7-0.5 0.8m1.05-0.95-0.5-0.9m1.2 1.1 0.6-0.8m0.2 2.1 0.8 0.4m-1.9 0.3-0.3 0.9"
+          fill="none"
+          stroke="#fffaf1"
+          stroke-width="0.4"
+      />
+      <ellipse cx="22" cy="32" rx="0.2" ry="0.16" fill="#d9ceb2" />
+      <path
+          d="M22 32Q21.22 29.91 21.63 27.82"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M22 32Q24.49 31.78 27.08 31.56"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M22 32Q22.86 34.99 22.52 37.98"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M22 32Q19.96 32.18 17.82 32.37"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <ellipse cx="31" cy="24" rx="0.85" ry="0.72" fill="#eee9df" />
+      <path
+          d="m30.15 24 -0.7-0.9m0.5 0.7-0.5 0.8m1.05-0.95-0.5-0.9m1.2 1.1 0.6-0.8m0.2 2.1 0.8 0.4m-1.9 0.3-0.3 0.9"
+          fill="none"
+          stroke="#fffaf1"
+          stroke-width="0.4"
+      />
+      <ellipse cx="31" cy="24" rx="0.2" ry="0.16" fill="#d9ceb2" />
+      <path
+          d="M31 24Q29.88 21.97 29.91 19.94"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M31 24Q33.31 23.34 35.93 22.68"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M31 24Q32.36 26.9 32.55 29.8"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M31 24Q29.13 24.54 26.94 25.09"
+          fill="none"
+          stroke="#c1a076"
+          stroke-width="0.45"
+      />
+      <path
+          d="M11 36Q16 41 25 41M40 41q9-1 13-5"
+          fill="none"
+          stroke="#e0a175"
           stroke-width="0.9"
-          stroke-linecap="round"
-          stroke-linejoin="round"
       />
   </g>
-  <use
-      href="#astrophytum-ornatum-detail-1"
-      transform="translate(24 24) rotate(-20)"
-  />
-  <use
-      href="#astrophytum-ornatum-detail-1"
-      transform="translate(32 20) rotate(0)"
-  />
-  <use
-      href="#astrophytum-ornatum-detail-1"
-      transform="translate(41 26) rotate(25)"
-  />
-  <use
-      href="#astrophytum-ornatum-detail-1"
-      transform="translate(18 36) rotate(-45)"
-  />
-  <use
-      href="#astrophytum-ornatum-detail-1"
-      transform="translate(31 34) rotate(0)"
-  />
-  <use
-      href="#astrophytum-ornatum-detail-1"
-      transform="translate(47 38) rotate(50)"
-  />
-  <path
-      d="M9 45h46v7H9z"
-      fill="#f4a56d"
-      stroke="#5f3a2a"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
-  <path
-      d="m12 52 4 9h32l4-9Z"
-      fill="url(#astro-pot)"
-      stroke="#5f3a2a"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
 </svg>

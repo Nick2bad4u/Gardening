@@ -146,6 +146,46 @@ and observed colors are simplified into the shared illustration palette.
 Source photographs retain the owner's separate rights and are not published by
 this artwork update.
 
+## November 1 remaining cactus and front-grid portraits
+
+The November 1 revision completes the small faceted-pot portraits for the
+24-container front grid. Eighteen older portraits gain rounded pot openings,
+filled polygon facets, mineral top dressing, and individual plant detail. The
+owner's collection overview supplied October 22 governs visible pot colors and
+overall silhouettes; the maintained September 16 close-ups provide rib, spine,
+wool, leaf, and surface detail. The six front-grid portraits revised October 31
+are retained.
+
+| Pot appearance | Newly revised containers                                                                              |
+| -------------- | ----------------------------------------------------------------------------------------------------- |
+| Teal-blue      | P02 / A2 Feather cactus, P04 / B1 Grass-blade cactus, P17 / F2 Boobie cactus, P27 / G1 Black Widow    |
+| White          | P03 / A3 Serpent cactus, P05 / B2 Old Man of the Andes, P13 / E1 Dwarf old man, P26 / H3 Eve's needle |
+| Sage green     | P07 / C1 Giant chin cactus, P11 / D2 Domino cactus                                                    |
+| Dark green     | P08 / C2 Rainbow hedgehog, P12 / D3 Ming Thing, P18 / F3 Yellow tower                                 |
+| Orange-brown   | P09 / C3 Monk's hood, P16 / F1 Hook-spined pincushion                                                 |
+| Yellow         | P10 / D1 Dragon's Egg, P15 / E3 Woolly nipple cactus, P24 / H1 Coconut Crystal                        |
+
+P10 is a Euphorbia and P24 a Sempervivum; including their portraits completes the
+same physical grid without classifying them as cacti. P27's teal-blue pot remains
+distinct from P01's yellow pot. Soft feathered heads, long wool, comb-like radial
+spines, rounded rib swellings, wavy ribs, and low rosettes preserve the different
+visible forms instead of reusing one generic plant silhouette.
+
+The revision also refines **P19 / #1 shared cactus planter** and its three
+component portraits. A tall pale-variegated column, shorter golden-spined green
+torch, and hairy curved monkey-tail stems share the photographed broad charcoal
+pot with thin crossing diagonal lines. Each component illustration isolates its
+subject in the same shared-container framing. They represent neither separate
+pots nor additional inventory records; the two columnar identifications retain
+their existing probable qualifiers. These four exports bring the revision to
+**22 portraits for 19 tracked containers**.
+
+These original schematic vectors describe photo-supported appearance under the
+photographed lighting. They do not establish exact plant counts, identity,
+health, pot dimensions, drainage, material, a repot date, or a care event.
+Historical removed and archived portraits are unchanged. The photographs retain
+the owner's separate rights and are not published by this artwork revision.
+
 ## October 21 houseplant portraits
 
 The October 21 houseplant additions are original schematic vector portraits

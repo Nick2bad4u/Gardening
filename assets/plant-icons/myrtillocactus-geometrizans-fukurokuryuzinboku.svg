@@ -1,137 +1,392 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="myrtillocactus-geometrizans-fukurokuryuzinboku-title myrtillocactus-geometrizans-fukurokuryuzinboku-description" data-plant-slug="myrtillocactus-geometrizans-fukurokuryuzinboku" focusable="false">
   <title id="myrtillocactus-geometrizans-fukurokuryuzinboku-title">Boobie cactus plant portrait</title>
-  <desc id="myrtillocactus-geometrizans-fukurokuryuzinboku-description">A continuous blue-green column with staggered rounded rib swellings in a terracotta planter.</desc>
+  <desc id="myrtillocactus-geometrizans-fukurokuryuzinboku-description">A single upright bright green cactus with rounded projecting rib swellings and sparse short dark spines, above mixed mineral dressing in a teal-blue faceted pot.</desc>
   <defs>
-      <linearGradient id="fukuro-pot" x1="0" x2="0.9" y1="0" y2="1">
-          <stop offset="0" stop-color="#f1a36b" />
-          <stop offset="1" stop-color="#c35a39" />
+      <linearGradient id="p17-nov01-pot" x1="0" y1="0" x2="1" y2="0.4">
+          <stop offset="0" stop-color="#238ba2" />
+          <stop offset="0.4" stop-color="#06687f" />
+          <stop offset="1" stop-color="#114a5a" />
       </linearGradient>
-      <linearGradient id="boobie-body" x1="0" y1="0" x2="0.85" y2="1">
-          <stop offset="0" stop-color="#a4c3a6" />
-          <stop offset="0.5" stop-color="#75a285" />
-          <stop offset="1" stop-color="#446f61" />
-      </linearGradient>
-      <clipPath id="boobie-clip" clipPathUnits="userSpaceOnUse">
-          <path
-              d="M23 47c-2-4-1-8 1-10-3-4-3-8 0-11-2-4-1-8 2-10-1-5 1-9 6-9 5 0 8 4 7 9 4 2 5 6 3 10 3 3 4 7 1 11 2 3 2 7 0 10Z"
-              fill="none"
-              stroke="none"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-          />
+      <clipPath id="p17-nov01-pot-clip">
+          <path d="M10 36H54L50 55Q48 60 32 61Q16 60 14 55Z" fill="#fff" />
       </clipPath>
+      <radialGradient id="p17-nov01-body" cx="0.27" cy="0.2" r="0.9">
+          <stop offset="0" stop-color="#b8d766" />
+          <stop offset="0.5" stop-color="#8eb344" />
+          <stop offset="1" stop-color="#4e7536" />
+      </radialGradient>
+      <radialGradient id="p17-nov01-swelling" cx="0.27" cy="0.2" r="0.9">
+          <stop offset="0" stop-color="#c1df76" />
+          <stop offset="0.5" stop-color="#9bbe50" />
+          <stop offset="1" stop-color="#648b3a" />
+      </radialGradient>
   </defs>
-  <ellipse
-      cx="32"
-      cy="60.5"
-      rx="18"
-      ry="1.9"
-      fill="#244b3b"
-      stroke="none"
-      stroke-width="0"
-      opacity="0.12"
-  />
-  <ellipse
-      cx="32"
-      cy="45.5"
-      rx="18"
-      ry="2.1"
-      fill="#745c45"
-      stroke="none"
-      stroke-width="1"
-  />
-  <path
-      d="M23 47c-2-4-1-8 1-10-3-4-3-8 0-11-2-4-1-8 2-10-1-5 1-9 6-9 5 0 8 4 7 9 4 2 5 6 3 10 3 3 4 7 1 11 2 3 2 7 0 10Z"
-      fill="url(#boobie-body)"
-      stroke="#244b3b"
-      stroke-width="1.45"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <g clip-path="url(#boobie-clip)">
+  <g stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="32" cy="61" rx="23" ry="1.7" fill="#284a3c" opacity="0.16" />
       <path
-          d="M32 8c-1 7-1 14 0 20s-1 13 0 20"
-          fill="none"
-          stroke="#bfd0a7"
-          stroke-width="0.9"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          d="M10 36H54L50 55Q48 60 32 61Q16 60 14 55Z"
+          fill="url(#p17-nov01-pot)"
+          stroke="#114a5a"
+          stroke-width="0.85"
+      />
+      <g clip-path="url(#p17-nov01-pot-clip)">
+          <path
+              d="M10 36 18 41 16 49 11 45Z"
+              fill="#114a5a"
+              opacity="0.55"
+              stroke="#114a5a"
+              stroke-width="0.3"
+          />
+          <path
+              d="M18 41 27 43 25 50 16 49Z"
+              fill="#238ba2"
+              opacity="0.6"
+              stroke="#114a5a"
+              stroke-width="0.3"
+          />
+          <path
+              d="M27 43 37 43 38 50 25 50Z"
+              fill="#06687f"
+              opacity="0.3"
+              stroke="#114a5a"
+              stroke-width="0.3"
+          />
+          <path
+              d="M37 43 46 41 48 48 38 50Z"
+              fill="#238ba2"
+              opacity="0.35"
+              stroke="#114a5a"
+              stroke-width="0.3"
+          />
+          <path
+              d="M46 41 54 36 53 44 48 48Z"
+              fill="#114a5a"
+              opacity="0.6"
+              stroke="#114a5a"
+              stroke-width="0.3"
+          />
+          <path
+              d="M11 45 16 49 15 55 12 52Z"
+              fill="#238ba2"
+              opacity="0.35"
+              stroke="#114a5a"
+              stroke-width="0.3"
+          />
+          <path
+              d="M16 49 25 50 22 57 15 55Z"
+              fill="#114a5a"
+              opacity="0.35"
+              stroke="#114a5a"
+              stroke-width="0.3"
+          />
+          <path
+              d="M25 50 38 50 36 58 22 57Z"
+              fill="#238ba2"
+              opacity="0.5"
+              stroke="#114a5a"
+              stroke-width="0.3"
+          />
+          <path
+              d="M38 50 48 48 49 54 36 58Z"
+              fill="#114a5a"
+              opacity="0.42"
+              stroke="#114a5a"
+              stroke-width="0.3"
+          />
+          <path
+              d="M48 48 53 44 52 52 49 54Z"
+              fill="#238ba2"
+              opacity="0.3"
+              stroke="#114a5a"
+              stroke-width="0.3"
+          />
+          <path
+              d="M15 55 22 57 25 61 17 59Z"
+              fill="#238ba2"
+              opacity="0.45"
+              stroke="#114a5a"
+              stroke-width="0.3"
+          />
+          <path
+              d="M22 57 36 58 32 62 25 61Z"
+              fill="#114a5a"
+              opacity="0.32"
+              stroke="#114a5a"
+              stroke-width="0.3"
+          />
+          <path
+              d="M36 58 49 54 47 59 32 62Z"
+              fill="#06687f"
+              opacity="0.45"
+              stroke="#114a5a"
+              stroke-width="0.3"
+          />
+      </g>
+      <ellipse cx="32" cy="36" rx="22" ry="7.5" fill="#06687f" />
+      <ellipse cx="32" cy="35.8" rx="20.6" ry="6.2" fill="#66503d" />
+      <path
+          d="M14 34l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#e5d9bd"
+          stroke="#625348"
+          stroke-width="0.35"
       />
       <path
-          d="M26 15c-5 2-6 7-2 10 4 2 8-1 6-5-1-2-3-3-4-5Zm11 10c-3 0-5 3-4 6 1 5 7 5 9 1 1-4-2-7-5-7Zm-11 11c-5 1-5 6-2 8 4 2 8 0 7-4-1-3-3-5-5-4Z"
-          fill="#80ab8e"
-          stroke="#517c65"
+          d="M18 31l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#ad6b50"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M23 30l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#b8c5ba"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M29 30l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#343c37"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M35 30l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#d8c4a1"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M41 30l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#995c49"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M47 32l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#b8c5ba"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M49 35l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#d8c4a1"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M15 38l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#343c37"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M20 38l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#995c49"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M24 40l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#e5d9bd"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M29 40l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#ad6b50"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M35 40l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#b8c5ba"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M41 40l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#343c37"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M46 38l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#ad6b50"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M51 37l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#995c49"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M18 35l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#d8c4a1"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M24 34l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#343c37"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M42 34l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#e5d9bd"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M36 35l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#ad6b50"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M30 35l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#995c49"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M32 38l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#d8c4a1"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M25 38Q21 35 22 30L21 27Q19 23 24 22L25 17Q23 14 27 13L29 9Q27 5 31 5L34 6Q37 2 39 6L39 9Q44 10 42 14L40 18 41 23Q45 26 41 29L40 34Q40 39 34 40Z"
+          fill="url(#p17-nov01-body)"
+          stroke="#668b3c"
           stroke-width="0.75"
-          stroke-linecap="round"
-          stroke-linejoin="round"
       />
       <path
-          d="M25 17q-3 2-2 4m13 7q-2 1-1 3m-9 7q-2 1-2 3"
+          d="M28 11Q31 15 29 21Q26 27 29 33L28 38M36 9Q34 14 36 20Q34 25 36 31L34 39"
           fill="none"
-          stroke="#c0d3ad"
-          stroke-width="0.8"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          stroke="#5d8238"
+          stroke-width="0.65"
+          opacity="0.7"
+      />
+      <path
+          d="M28 13Q26 9 30 9Q34 10 33 13Q32 17 29 16Z"
+          fill="url(#p17-nov01-swelling)"
+          stroke="#769842"
+          stroke-width="0.45"
+      />
+      <path
+          d="M35 10Q36 6 38 8L40 10Q42 13 39 14Q35 14 35 10Z"
+          fill="url(#p17-nov01-swelling)"
+          stroke="#769842"
+          stroke-width="0.45"
+      />
+      <path
+          d="M25 21Q25 16 29 17Q32 18 30 23Q28 26 25 24Z"
+          fill="url(#p17-nov01-swelling)"
+          stroke="#769842"
+          stroke-width="0.45"
+      />
+      <path
+          d="M34 19Q34 14 37 15Q40 18 39 22Q38 25 35 23Z"
+          fill="url(#p17-nov01-swelling)"
+          stroke="#769842"
+          stroke-width="0.45"
+      />
+      <path
+          d="M23 29Q22 26 25 26Q29 28 27 31Q25 34 23 31Z"
+          fill="url(#p17-nov01-swelling)"
+          stroke="#769842"
+          stroke-width="0.45"
+      />
+      <path
+          d="M32 31Q32 25 35 26Q39 28 37 32Q36 35 33 33Z"
+          fill="url(#p17-nov01-swelling)"
+          stroke="#769842"
+          stroke-width="0.45"
+      />
+      <path
+          d="M27 36Q26 33 29 33Q32 34 31 37Q29 39 27 36Z"
+          fill="url(#p17-nov01-swelling)"
+          stroke="#769842"
+          stroke-width="0.45"
+      />
+      <ellipse cx="30" cy="9" rx="0.5" ry="0.38" fill="#d8c8a1" />
+      <path
+          d="M30 9l-0.4-1.5m0.4 1.5 1.1-0.7"
+          fill="none"
+          stroke="#5d4e3a"
+          stroke-width="0.35"
+      />
+      <ellipse cx="38" cy="8" rx="0.5" ry="0.38" fill="#d8c8a1" />
+      <path
+          d="M38 8l-0.4-1.5m0.4 1.5 1.1-0.7"
+          fill="none"
+          stroke="#5d4e3a"
+          stroke-width="0.35"
+      />
+      <ellipse cx="29" cy="16" rx="0.5" ry="0.38" fill="#d8c8a1" />
+      <path
+          d="M29 16l-0.4-1.5m0.4 1.5 1.1-0.7"
+          fill="none"
+          stroke="#5d4e3a"
+          stroke-width="0.35"
+      />
+      <ellipse cx="39" cy="14" rx="0.5" ry="0.38" fill="#d8c8a1" />
+      <path
+          d="M39 14l-0.4-1.5m0.4 1.5 1.1-0.7"
+          fill="none"
+          stroke="#5d4e3a"
+          stroke-width="0.35"
+      />
+      <ellipse cx="25" cy="23" rx="0.5" ry="0.38" fill="#d8c8a1" />
+      <path
+          d="M25 23l-0.4-1.5m0.4 1.5 1.1-0.7"
+          fill="none"
+          stroke="#5d4e3a"
+          stroke-width="0.35"
+      />
+      <ellipse cx="37" cy="23" rx="0.5" ry="0.38" fill="#d8c8a1" />
+      <path
+          d="M37 23l-0.4-1.5m0.4 1.5 1.1-0.7"
+          fill="none"
+          stroke="#5d4e3a"
+          stroke-width="0.35"
+      />
+      <ellipse cx="23" cy="30" rx="0.5" ry="0.38" fill="#d8c8a1" />
+      <path
+          d="M23 30l-0.4-1.5m0.4 1.5 1.1-0.7"
+          fill="none"
+          stroke="#5d4e3a"
+          stroke-width="0.35"
+      />
+      <ellipse cx="35" cy="32" rx="0.5" ry="0.38" fill="#d8c8a1" />
+      <path
+          d="M35 32l-0.4-1.5m0.4 1.5 1.1-0.7"
+          fill="none"
+          stroke="#5d4e3a"
+          stroke-width="0.35"
+      />
+      <ellipse cx="29" cy="37" rx="0.5" ry="0.38" fill="#d8c8a1" />
+      <path
+          d="M29 37l-0.4-1.5m0.4 1.5 1.1-0.7"
+          fill="none"
+          stroke="#5d4e3a"
+          stroke-width="0.35"
+      />
+      <path
+          d="M27 19Q27 17 29 18M29 28Q29 25 30 24M32 7l0.5 1"
+          fill="none"
+          stroke="#d5de90"
+          stroke-width="0.7"
+          opacity="0.65"
+      />
+      <path
+          d="M11 37Q16 42 24 42M40 42Q48 41 53 37"
+          fill="none"
+          stroke="#238ba2"
+          stroke-width="0.7"
+          opacity="0.8"
       />
   </g>
-  <ellipse
-      cx="32"
-      cy="11"
-      rx="0.7"
-      ry="0.8"
-      fill="#e2d6aa"
-      stroke="#849365"
-      stroke-width="0.25"
-  />
-  <ellipse
-      cx="25"
-      cy="21"
-      rx="0.7"
-      ry="0.8"
-      fill="#e2d6aa"
-      stroke="#849365"
-      stroke-width="0.25"
-  />
-  <ellipse
-      cx="38"
-      cy="31"
-      rx="0.7"
-      ry="0.8"
-      fill="#e2d6aa"
-      stroke="#849365"
-      stroke-width="0.25"
-  />
-  <ellipse
-      cx="27"
-      cy="41"
-      rx="0.7"
-      ry="0.8"
-      fill="#e2d6aa"
-      stroke="#849365"
-      stroke-width="0.25"
-  />
-  <ellipse
-      cx="39"
-      cy="18"
-      rx="0.7"
-      ry="0.8"
-      fill="#e2d6aa"
-      stroke="#849365"
-      stroke-width="0.25"
-  />
-  <path
-      d="M12 45h40v7H12z"
-      fill="#f4a76e"
-      stroke="#5f3a2a"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
-  <path
-      d="m15 52 3 9h28l3-9Z"
-      fill="url(#fukuro-pot)"
-      stroke="#5f3a2a"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
 </svg>

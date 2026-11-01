@@ -1,1374 +1,1400 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="oreocereus-trollii-title oreocereus-trollii-description" data-plant-slug="oreocereus-trollii" focusable="false">
   <title id="oreocereus-trollii-title">Old Man of the Andes plant portrait</title>
-  <desc id="oreocereus-trollii-description">An upright gray-green cactus covered in long cream wool and reddish spines.</desc>
+  <desc id="oreocereus-trollii-description">An irregular upright gray-green cactus covered in long wispy white wool, with scattered reddish-brown spines extending through it, above mineral gravel in a white faceted pot.</desc>
   <defs>
-      <linearGradient id="oreo-pot" x1="0" x2="0.9" y1="0" y2="1">
-          <stop offset="0" stop-color="#f3a56d" />
-          <stop offset="1" stop-color="#c65f3b" />
+      <linearGradient id="p05-nov01-pot" x1="0" y1="0" x2="1" y2="0.25">
+          <stop stop-color="#fffdf3" />
+          <stop offset="0.42" stop-color="#e0e2dc" />
+          <stop offset="1" stop-color="#aab3b1" />
       </linearGradient>
-      <linearGradient id="andes-body" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stop-color="#8b9d83" />
-          <stop offset="0.5" stop-color="#b7bea7" />
-          <stop offset="1" stop-color="#7f9680" />
-      </linearGradient>
-      <clipPath id="andes-clip" clipPathUnits="userSpaceOnUse">
+      <clipPath id="p05-nov01-pot-clip">
           <path
-              d="M19 47c-2-5-2-11-1-16 1-11 6-17 14-17s13 6 14 17c1 5 1 11-1 16Z"
+              d="M10 40H54L50.8 55.5Q49.5 60.5 32 61Q14.5 60.5 13.2 55.5Z"
               fill="none"
-              stroke="none"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
           />
       </clipPath>
-      <g id="oreocereus-trollii-detail-1">
+      <radialGradient id="p05-nov01-body" cx="0.32" cy="0.25" r="0.9">
+          <stop stop-color="#d9dfc6" />
+          <stop offset="0.5" stop-color="#a9baa1" />
+          <stop offset="1" stop-color="#7c907e" />
+      </radialGradient>
+      <clipPath id="p05-nov01-body-clip">
           <path
-              d="M0 0c-2-1-4-3-5-5M0 0c2-1 3-4 3-6M0 0l4 1.5"
+              d="M22 37C19 32 19.5 22 22 16C23.7 11.7 28 10 32.5 11C38.6 10.8 42 15.5 43 22.8C44 30 43 36.2 39 39Q29 42 22 37Z"
               fill="none"
-              stroke="#a46953"
-              stroke-width="0.72"
-              stroke-linecap="round"
-              stroke-linejoin="round"
           />
-          <ellipse
-              cx="0"
-              cy="0"
-              rx="0.75"
-              ry="0.6"
-              fill="#e6dcc0"
-              stroke="none"
-              stroke-width="1"
+      </clipPath>
+  </defs>
+  <g stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="32" cy="61.5" rx="23" ry="1.35" fill="#294839" opacity="0.15" />
+      <path
+          d="M10 40H54L50.8 55.5Q49.5 60.5 32 61Q14.5 60.5 13.2 55.5Z"
+          fill="url(#p05-nov01-pot)"
+          stroke="#aab3b1"
+          stroke-width="0.85"
+      />
+      <g clip-path="url(#p05-nov01-pot-clip)">
+          <path d="M9 40 17 43 19 49 12 51Z" fill="#aab3b1" opacity="0.33" />
+          <path d="M17 43 26 45 25 52 19 49Z" fill="#fffdf3" opacity="0.6" />
+          <path d="M26 45 36 45 39 51 25 52Z" fill="#e0e2dc" opacity="0.5" />
+          <path d="M36 45 46 43 45 49 39 51Z" fill="#fffdf3" opacity="0.38" />
+          <path d="M46 43 55 40 52 51 45 49Z" fill="#aab3b1" opacity="0.3" />
+          <path d="M12 51 19 49 22 56 14 59Z" fill="#fffdf3" opacity="0.33" />
+          <path d="M19 49 25 52 22 56Z" fill="#aab3b1" opacity="0.24" />
+          <path d="M25 52 39 51 36 58 22 56Z" fill="#fffdf3" opacity="0.46" />
+          <path d="M39 51 45 49 50 56 36 58Z" fill="#aab3b1" opacity="0.33" />
+          <path d="M45 49 52 51 50 56Z" fill="#fffdf3" opacity="0.4" />
+          <path d="M14 59 22 56 27 62 18 61Z" fill="#aab3b1" opacity="0.25" />
+          <path d="M22 56 36 58 34 62 27 62Z" fill="#fffdf3" opacity="0.35" />
+          <path d="M36 58 50 56 47 61 34 62Z" fill="#e0e2dc" opacity="0.45" />
+      </g>
+      <ellipse
+          cx="32"
+          cy="40"
+          rx="22"
+          ry="6.6"
+          fill="#e0e2dc"
+          stroke="#aab3b1"
+          stroke-width="0.85"
+      />
+      <ellipse cx="32" cy="39.7" rx="20.4" ry="5.3" fill="#65594b" />
+      <path
+          d="M12.5 37.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#d6c9ac"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M16.5 35.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#a56950"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M21.5 34.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#a7b8b1"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M41.5 34.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#393f39"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M46.5 36.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#d8b894"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M48.5 39.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#776655"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M13 40.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#d6c9ac"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M19.5 38.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#a56950"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M41.5 38.6l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#a7b8b1"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M26.5 36.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#393f39"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M34.5 36.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#d8b894"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <ellipse cx="32" cy="39" rx="14" ry="2.8" fill="#333c2d" opacity="0.24" />
+      <path
+          d="M22 37C19 32 19.5 22 22 16C23.7 11.7 28 10 32.5 11C38.6 10.8 42 15.5 43 22.8C44 30 43 36.2 39 39Q29 42 22 37Z"
+          fill="url(#p05-nov01-body)"
+          stroke="#a8b09d"
+          stroke-width="0.6"
+      />
+      <g clip-path="url(#p05-nov01-body-clip)">
+          <path
+              d="M20 9C17.6 18 23 23 19.5 29Q18 36 21 42"
+              fill="none"
+              stroke="#fdfbf1"
+              stroke-width="0.8"
+              opacity="0.8"
+          />
+          <path
+              d="M21.65 9.9C20.96 18 22.94 23 22.86 29Q19.65 36 20.94 42"
+              fill="none"
+              stroke="#eeeede"
+              stroke-width="0.43"
+              opacity="0.8"
+          />
+          <path
+              d="M23.3 10.8C17.81 18 29.39 23 19.71 29Q21.3 36 27.39 42"
+              fill="none"
+              stroke="#eeeede"
+              stroke-width="0.43"
+              opacity="0.8"
+          />
+          <path
+              d="M24.95 11.7C26.43 18 24.07 23 28.33 29Q22.95 36 22.07 42"
+              fill="none"
+              stroke="#fdfbf1"
+              stroke-width="0.43"
+              opacity="0.8"
+          />
+          <path
+              d="M26.6 12.6C20.28 18 33.52 23 22.18 29Q24.6 36 31.52 42"
+              fill="none"
+              stroke="#eeeede"
+              stroke-width="0.8"
+              opacity="0.8"
+          />
+          <path
+              d="M28.25 9C29.07 18 28.03 23 30.97 29Q26.25 36 26.03 42"
+              fill="none"
+              stroke="#eeeede"
+              stroke-width="0.43"
+              opacity="0.8"
+          />
+          <path
+              d="M29.9 9.9C25.61 18 34.79 23 27.51 29Q27.9 36 32.79 42"
+              fill="none"
+              stroke="#fdfbf1"
+              stroke-width="0.43"
+              opacity="0.8"
+          />
+          <path
+              d="M31.55 10.8C29.35 18 34.35 23 31.25 29Q29.55 36 32.35 42"
+              fill="none"
+              stroke="#eeeede"
+              stroke-width="0.43"
+              opacity="0.8"
+          />
+          <path
+              d="M33.2 11.7C32.33 18 34.67 23 34.23 29Q31.2 36 32.67 42"
+              fill="none"
+              stroke="#eeeede"
+              stroke-width="0.8"
+              opacity="0.8"
+          />
+          <path
+              d="M34.85 12.6C29.49 18 40.81 23 31.39 29Q32.85 36 38.81 42"
+              fill="none"
+              stroke="#fdfbf1"
+              stroke-width="0.43"
+              opacity="0.8"
+          />
+          <path
+              d="M36.5 9C37.93 18 35.67 23 39.83 29Q34.5 36 33.67 42"
+              fill="none"
+              stroke="#eeeede"
+              stroke-width="0.43"
+              opacity="0.8"
+          />
+          <path
+              d="M38.15 9.9C31.79 18 45.11 23 33.69 29Q36.15 36 43.11 42"
+              fill="none"
+              stroke="#eeeede"
+              stroke-width="0.43"
+              opacity="0.8"
+          />
+          <path
+              d="M39.8 10.8C40.73 18 39.47 23 42.63 29Q37.8 36 37.47 42"
+              fill="none"
+              stroke="#fdfbf1"
+              stroke-width="0.8"
+              opacity="0.8"
+          />
+          <path
+              d="M41.45 11.7C36.98 18 46.52 23 38.88 29Q39.45 36 44.52 42"
+              fill="none"
+              stroke="#eeeede"
+              stroke-width="0.43"
+              opacity="0.8"
+          />
+          <path
+              d="M43.1 12.6C41.1 18 45.7 23 43 29Q41.1 36 43.7 42"
+              fill="none"
+              stroke="#eeeede"
+              stroke-width="0.43"
+              opacity="0.8"
+          />
+          <path
+              d="M20.5 12q3 0 4 1q2 3 -1.5 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M23.15 16.21q4.45 -3.33 5.45 1q-1.33 3 -2.22 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M26.85 20.42q3.77 -2.22 4.77 1q-0.22 3 -1.89 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M31.13 24.63q1.97 -0.37 2.97 1q1.63 3 -0.98 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M34.64 28.84q1.67 -3.95 2.67 1q-1.95 3 -0.84 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M37.19 33.05q3.32 -1.03 4.32 1q0.97 3 -1.66 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M20.97 12.26q4.5 -1.34 5.5 1q0.66 3 -2.25 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M24.85 16.47q3.48 -3.85 4.48 1q-1.85 3 -1.74 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M29.08 20.68q1.76 -0.2 2.76 1q1.8 3 -0.88 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M32.4 24.89q1.86 -2.55 2.86 1q-0.55 3 -0.93 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M34.88 29.1q3.63 -3.07 4.63 1q-1.07 3 -1.82 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M37.83 33.31q4.48 -0.03 5.48 1q1.97 3 -2.24 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M22.86 12.52q3.16 -3.56 4.16 1q-1.56 3 -1.58 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M27.01 16.73q1.61 -1.89 2.61 1q0.11 3 -0.8 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M30.13 20.94q2.09 -0.58 3.09 1q1.42 3 -1.05 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M32.6 25.15q3.91 -4 4.91 1q-2 3 -1.95 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M35.72 29.36q4.39 -0.76 5.39 1q1.24 3 -2.2 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M20.87 33.57q2.84 -1.66 3.84 1q0.34 3 -1.42 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M24.9 12.78q1.52 -3.7 2.52 1q-1.7 3 -0.76 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M27.84 16.99q2.37 -0.08 3.37 1q1.92 3 -1.19 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M30.33 21.2q4.14 -2.86 5.14 1q-0.86 3 -2.07 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M33.65 25.41q4.24 -2.77 5.24 1q-0.77 3 -2.12 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M37.88 29.62q2.52 -0.11 3.52 1q1.89 3 -1.26 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M22.76 33.83q1.5 -3.75 2.5 1q-1.75 3 -0.75 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M25.54 13.04q2.68 -1.56 3.68 1q0.44 3 -1.34 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M28.09 17.25q4.33 -0.84 5.33 1q1.16 3 -2.16 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M31.6 21.46q4.03 -3.99 5.03 1q-1.99 3 -2.02 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M35.88 25.67q2.23 -0.51 3.23 1q1.49 3 -1.11 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M39.58 29.88q1.56 -1.99 2.56 1q0.01 3 -0.78 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M23.23 34.09q3 -3.49 4 1q-1.49 3 -1.5 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M25.88 13.3q4.45 -0.01 5.45 1q1.99 3 -2.22 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M29.58 17.51q3.77 -3.15 4.77 1q-1.15 3 -1.89 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M33.86 21.72q1.97 -2.45 2.97 1q-0.45 3 -0.98 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M37.37 25.93q1.68 -0.25 2.68 1q1.75 3 -0.84 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M20.92 30.14q3.32 -3.89 4.32 1q-1.89 3 -1.66 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M23.7 34.35q4.5 -1.24 5.5 1q0.76 3 -2.25 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M27.58 13.56q3.48 -1.13 4.48 1q0.87 3 -1.74 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M31.81 17.77q1.76 -3.92 2.76 1q-1.92 3 -0.88 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M35.13 21.98q1.86 -0.31 2.86 1q1.69 3 -0.93 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M37.61 26.19q3.63 -2.33 4.63 1q-0.33 3 -1.82 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M21.56 30.4q4.48 -3.25 5.48 1q-1.25 3 -2.24 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M25.59 34.61q3.16 0 4.16 1q2 3 -1.58 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M29.74 13.82q1.61 -3.41 2.61 1q-1.41 3 -0.8 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M32.86 18.03q2.09 -2.12 3.09 1q-0.12 3 -1.05 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M35.33 22.24q3.91 -0.43 4.91 1q1.57 3 -1.95 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M38.45 26.45q4.39 -3.97 5.39 1q-1.97 3 -2.2 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M23.6 30.66q2.84 -0.94 3.84 1q1.06 3 -1.42 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M27.63 34.87q1.52 -1.44 2.52 1q0.56 3 -0.76 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M30.57 14.08q2.37 -3.81 3.37 1q-1.81 3 -1.19 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M33.06 18.29q4.14 -0.16 5.14 1q1.84 3 -2.07 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M36.38 22.5q4.24 -2.65 5.24 1q-0.65 3 -2.12 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M21.61 26.71q2.52 -2.98 3.52 1q-0.98 3 -1.26 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M25.49 30.92q1.5 -0.05 2.5 1q1.95 3 -0.75 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M28.27 35.13q2.68 -3.63 3.68 1q-1.63 3 -1.34 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M30.82 14.34q4.33 -1.79 5.33 1q0.21 3 -2.16 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M34.34 18.55q4.03 -0.66 5.03 1q1.34 3 -2.01 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M38.61 22.76q2.22 -4 3.22 1q-2 3 -1.11 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M23.31 26.97q1.56 -0.68 2.56 1q1.32 3 -0.78 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M25.96 31.18q3 -1.77 4 1q0.23 3 -1.5 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M28.61 35.39q4.45 -3.64 5.45 1q-1.64 3 -2.22 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M32.31 14.6q3.77 -0.05 4.77 1q1.95 3 -1.89 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M36.59 18.81q1.97 -2.96 2.97 1q-0.96 3 -0.98 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M40.1 23.02q1.68 -2.67 2.68 1q-0.67 3 -0.84 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M23.65 27.23q3.33 -0.15 4.33 1q1.85 3 -1.66 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M26.43 31.44q4.5 -3.8 5.5 1q-1.8 3 -2.25 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M30.31 35.65q3.48 -1.46 4.48 1q0.54 3 -1.74 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M34.54 14.86q1.76 -0.93 2.76 1q1.07 3 -0.88 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M37.86 19.07q1.86 -3.97 2.86 1q-1.97 3 -0.93 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M21.34 23.28q3.63 -0.44 4.63 1q1.56 3 -1.82 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M24.29 27.49q4.48 -2.1 5.48 1q-0.1 3 -2.24 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M28.32 31.7q3.16 -3.42 4.16 1q-1.42 3 -1.58 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M32.47 35.91q1.61 0 2.61 1q2 3 -0.8 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M35.59 15.12q2.09 -3.24 3.09 1q-1.24 3 -1.05 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M38.05 19.33q3.91 -2.35 4.91 1q-0.35 3 -1.96 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M22.18 23.54q4.39 -0.3 5.39 1q1.7 3 -2.2 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M26.33 27.75q2.83 -3.92 3.83 1q-1.92 3 -1.42 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M30.36 31.96q1.52 -1.15 2.52 1q0.85 3 -0.76 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M33.3 36.17q2.37 -1.22 3.37 1q0.78 3 -1.19 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M35.79 15.38q4.15 -3.89 5.15 1q-1.89 3 -2.07 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M20.11 19.59q4.24 -0.26 5.24 1q1.74 3 -2.12 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M24.34 23.8q2.52 -2.43 3.52 1q-0.43 3 -1.26 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M28.22 28.01q1.5 -3.17 2.5 1q-1.17 3 -0.75 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M31 32.22q2.68 -0.01 3.68 1q1.99 3 -1.34 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M33.55 36.43q4.33 -3.48 5.33 1q-1.48 3 -2.16 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M37.07 15.64q4.03 -2.02 5.03 1q-0.02 3 -2.01 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M22.34 19.85q2.22 -0.5 3.22 1q1.5 3 -1.11 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M26.04 24.06q1.56 -3.99 2.56 1q-1.99 3 -0.78 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M28.69 28.27q3 -0.86 4 1q1.14 3 -1.5 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M31.34 32.48q4.45 -1.54 5.45 1q0.46 3 -2.22 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M35.05 36.69q3.77 -3.76 4.77 1q-1.76 3 -1.88 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M39.32 15.9q1.97 -0.12 2.97 1q1.88 3 -0.98 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M23.83 20.11q1.68 -2.75 2.68 1q-0.75 3 -0.84 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M26.38 24.32q3.33 -2.88 4.33 1q-0.88 3 -1.66 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M29.16 28.53q4.5 -0.07 5.5 1q1.93 3 -2.25 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M33.04 32.74q3.47 -3.68 4.47 1q-1.68 3 -1.74 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M37.27 36.95q1.76 -1.68 2.76 1q0.32 3 -0.88 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M21.59 16.16q1.86 -0.74 2.86 1q1.26 3 -0.93 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M24.07 20.37q3.63 -4 4.63 1q-2 3 -1.82 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M27.02 24.58q4.48 -0.6 5.48 1q1.4 3 -2.24 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M31.05 28.79q3.16 -1.87 4.16 1q0.13 3 -1.58 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M35.2 33q1.6 -3.58 2.6 1q-1.58 3 -0.8 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M38.32 12.21q2.1 -0.03 3.1 1q1.97 3 -1.05 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M21.78 16.42q3.91 -3.05 4.91 1q-1.05 3 -1.96 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M24.91 20.63q4.39 -2.57 5.39 1q-0.57 3 -2.2 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M29.06 24.84q2.83 -0.19 3.83 1q1.81 3 -1.42 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M33.09 29.05q1.52 -3.84 2.52 1q-1.84 3 -0.76 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M36.03 33.26q2.37 -1.36 3.37 1q0.64 3 -1.19 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M38.52 12.47q4.15 -1.01 5.15 1q0.99 3 -2.07 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M22.84 16.68q4.24 -3.95 5.24 1q-1.95 3 -2.12 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M27.07 20.89q2.52 -0.38 3.52 1q1.62 3 -1.26 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M30.95 25.1q1.5 -2.2 2.5 1q-0.2 3 -0.75 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M33.73 29.31q2.68 -3.35 3.68 1q-1.35 3 -1.34 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M36.28 33.52q4.33 0 5.33 1q2 3 -2.16 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M20.8 12.73q4.03 -3.32 5.03 1q-1.32 3 -2.01 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M25.07 16.94q2.22 -2.25 3.22 1q-0.25 3 -1.11 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M28.77 21.15q1.56 -0.36 2.56 1q1.64 3 -0.78 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M31.42 25.36q3.01 -3.94 4.01 1q-1.94 3 -1.5 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M34.07 29.57q4.45 -1.05 5.45 1q0.95 3 -2.22 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M37.78 33.78q3.77 -1.32 4.77 1q0.68 3 -1.88 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M23.05 12.99q1.96 -3.86 2.96 1q-1.86 3 -0.98 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M26.56 17.2q1.68 -0.21 2.68 1q1.79 3 -0.84 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M29.11 21.41q3.33 -2.53 4.33 1q-0.53 3 -1.66 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M31.89 25.62q4.5 -3.08 5.5 1q-1.08 3 -2.25 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M35.77 29.83q3.47 -0.02 4.47 1q1.98 3 -1.74 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M40 34.04q1.76 -3.55 2.76 1q-1.55 3 -0.88 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M24.32 13.25q1.86 -1.91 2.86 1q0.09 3 -0.93 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M26.8 17.46q3.64 -0.57 4.64 1q1.43 3 -1.82 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M29.75 21.67q4.48 -4 5.48 1q-2 3 -2.24 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M33.78 25.88q3.16 -0.77 4.16 1q1.23 3 -1.58 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M37.93 30.09q1.6 -1.64 2.6 1q0.36 3 -0.8 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M22.05 34.3q2.1 -3.71 3.1 1q-1.71 3 -1.05 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M24.51 13.51q3.91 -0.09 4.91 1q1.91 3 -1.96 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M27.64 17.72q4.39 -2.85 5.39 1q-0.85 3 -2.2 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M31.79 21.93q2.83 -2.79 3.83 1q-0.79 3 -1.42 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M35.82 26.14q1.52 -0.1 2.52 1q1.9 3 -0.76 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M38.76 30.35q2.38 -3.74 3.38 1q-1.74 3 -1.19 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M22.25 34.56q4.15 -1.58 5.15 1q0.42 3 -2.07 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M25.57 13.77q4.24 -0.82 5.24 1q1.18 3 -2.12 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M29.8 17.98q2.52 -3.99 3.52 1q-1.99 3 -1.26 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M33.68 22.19q1.5 -0.53 2.5 1q1.47 3 -0.75 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M36.46 26.4q2.68 -1.97 3.68 1q0.03 3 -1.34 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M20.01 30.61q4.33 -3.51 5.33 1q-1.51 3 -2.16 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M23.53 34.82q4.03 -0.02 5.03 1q1.98 3 -2.01 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M27.8 14.03q2.22 -3.14 3.22 1q-1.14 3 -1.11 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M31.5 18.24q1.56 -2.47 2.56 1q-0.47 3 -0.78 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M34.15 22.45q3.01 -0.24 4.01 1q1.76 3 -1.5 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M36.8 26.66q4.45 -3.88 5.45 1q-1.88 3 -2.22 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M21.51 30.87q3.77 -1.26 4.77 1q0.74 3 -1.88 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M25.78 35.08q1.96 -1.11 2.96 1q0.89 3 -0.98 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M29.29 14.29q1.68 -3.93 2.68 1q-1.93 3 -0.84 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M31.84 18.5q3.33 -0.32 4.33 1q1.68 3 -1.66 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M34.62 22.71q4.5 -2.31 5.5 1q-0.31 3 -2.25 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M38.5 26.92q3.47 -3.27 4.47 1q-1.27 3 -1.74 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M23.73 31.13q1.75 0 2.75 1q2 3 -0.88 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
+          />
+          <path
+              d="M27.05 35.34q1.86 -3.39 2.86 1q-1.39 3 -0.93 2.5q-2 0.5-3-0.5"
+              fill="none"
+              stroke="#fffdf5"
+              stroke-width="0.3"
+              opacity="0.8"
           />
       </g>
-  </defs>
-  <ellipse
-      cx="32"
-      cy="60.5"
-      rx="14"
-      ry="1.9"
-      fill="#244b3b"
-      stroke="none"
-      stroke-width="0"
-      opacity="0.12"
-  />
-  <ellipse
-      cx="32"
-      cy="45.5"
-      rx="14"
-      ry="2.1"
-      fill="#745c45"
-      stroke="none"
-      stroke-width="1"
-  />
-  <path
-      d="M19 47c-2-5-2-11-1-16 1-11 6-17 14-17s13 6 14 17c1 5 1 11-1 16Z"
-      fill="url(#andes-body)"
-      stroke="#627c68"
-      stroke-width="1.3"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <g clip-path="url(#andes-clip)">
-      <path
-          d="M17 4c-1.4 1.65 0.84 3.58 -0.56 5.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M35.54 36.46c-0.7 1.95 0.42 4.23 -0.28 6.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M24.08 25.92c0 2.25 0 4.88 0 7.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M42.62 15.38c0.7 2.55 -0.42 5.53 0.28 8.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M31.16 4.84c1.4 2.85 -0.84 6.17 0.56 9.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M19.71 37.3c-1.4 3.15 0.84 6.83 -0.56 10.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M38.25 26.76c-0.7 3.45 0.42 7.48 -0.28 11.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M26.79 16.22c0 1.65 0 3.58 0 5.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M45.33 5.68c0.7 1.95 -0.42 4.23 0.28 6.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M33.87 38.14c1.4 2.25 -0.84 4.88 0.56 7.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M22.41 27.6c-1.4 2.55 0.84 5.53 -0.56 8.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M40.95 17.06c-0.7 2.85 0.42 6.17 -0.28 9.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M29.49 6.52c0 3.15 0 6.83 0 10.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M18.03 38.98c0.7 3.45 -0.42 7.48 0.28 11.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M36.57 28.44c1.4 1.65 -0.84 3.58 0.56 5.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M25.12 17.9c-1.4 1.95 0.84 4.23 -0.56 6.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M43.66 7.36c-0.7 2.25 0.42 4.88 -0.28 7.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M32.2 39.82c0 2.55 0 5.53 0 8.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M20.74 29.28c0.7 2.85 -0.42 6.17 0.28 9.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M39.28 18.74c1.4 3.15 -0.84 6.83 0.56 10.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M27.82 8.19c-1.4 3.45 0.84 7.48 -0.56 11.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M46.36 40.65c-0.7 1.65 0.42 3.58 -0.28 5.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M34.9 30.11c0 1.95 0 4.23 0 6.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M23.44 19.57c0.7 2.25 -0.42 4.88 0.28 7.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M41.98 9.03c1.4 2.55 -0.84 5.53 0.56 8.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M30.53 41.49c-1.4 2.85 0.84 6.17 -0.56 9.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M19.07 30.95c-0.7 3.15 0.42 6.83 -0.28 10.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M37.61 20.41c0 3.45 0 7.48 0 11.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M26.15 9.87c0.7 1.65 -0.42 3.58 0.28 5.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M44.69 42.33c1.4 1.95 -0.84 4.23 0.56 6.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M33.23 31.79c-1.4 2.25 0.84 4.88 -0.56 7.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M21.77 21.25c-0.7 2.55 0.42 5.53 -0.28 8.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M40.31 10.71c0 2.85 0 6.17 0 9.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M28.85 43.17c0.7 3.15 -0.42 6.83 0.28 10.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M17.39 32.63c1.4 3.45 -0.84 7.48 0.56 11.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M35.94 22.09c-1.4 1.65 0.84 3.58 -0.56 5.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M24.48 11.55c-0.7 1.95 0.42 4.23 -0.28 6.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M43.02 44.01c0 2.25 0 4.88 0 7.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M31.56 33.47c0.7 2.55 -0.42 5.53 0.28 8.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M20.1 22.93c1.4 2.85 -0.84 6.17 0.56 9.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M38.64 12.39c-1.4 3.15 0.84 6.83 -0.56 10.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M27.18 44.85c-0.7 3.45 0.42 7.48 -0.28 11.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M45.72 34.31c0 1.65 0 3.58 0 5.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M34.26 23.77c0.7 1.95 -0.42 4.23 0.28 6.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M22.8 13.23c1.4 2.25 -0.84 4.88 0.56 7.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M41.35 45.69c-1.4 2.55 0.84 5.53 -0.56 8.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M29.89 35.15c-0.7 2.85 0.42 6.17 -0.28 9.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M18.43 24.61c0 3.15 0 6.83 0 10.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M36.97 14.07c0.7 3.45 -0.42 7.48 0.28 11.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M25.51 46.53c1.4 1.65 -0.84 3.58 0.56 5.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M44.05 35.99c-1.4 1.95 0.84 4.23 -0.56 6.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M32.59 25.45c-0.7 2.25 0.42 4.88 -0.28 7.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M21.13 14.91c0 2.55 0 5.53 0 8.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M39.67 4.37c0.7 2.85 -0.42 6.17 0.28 9.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M28.22 36.83c1.4 3.15 -0.84 6.83 0.56 10.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M46.76 26.29c-1.4 3.45 0.84 7.48 -0.56 11.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M35.3 15.75c-0.7 1.65 0.42 3.58 -0.28 5.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M23.84 5.21c0 1.95 0 4.23 0 6.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M42.38 37.66c0.7 2.25 -0.42 4.88 0.28 7.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M30.92 27.12c1.4 2.55 -0.84 5.53 0.56 8.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M19.46 16.58c-1.4 2.85 0.84 6.17 -0.56 9.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M38 6.04c-0.7 3.15 0.42 6.83 -0.28 10.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M26.54 38.5c0 3.45 0 7.48 0 11.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M45.08 27.96c0.7 1.65 -0.42 3.58 0.28 5.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M33.63 17.42c1.4 1.95 -0.84 4.23 0.56 6.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M22.17 6.88c-1.4 2.25 0.84 4.88 -0.56 7.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M40.71 39.34c-0.7 2.55 0.42 5.53 -0.28 8.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M29.25 28.8c0 2.85 0 6.17 0 9.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M17.79 18.26c0.7 3.15 -0.42 6.83 0.28 10.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M36.33 7.72c1.4 3.45 -0.84 7.48 0.56 11.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M24.87 40.18c-1.4 1.65 0.84 3.58 -0.56 5.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M43.41 29.64c-0.7 1.95 0.42 4.23 -0.28 6.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M31.95 19.1c0 2.25 0 4.88 0 7.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M20.49 8.56c0.7 2.55 -0.42 5.53 0.28 8.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M39.04 41.02c1.4 2.85 -0.84 6.17 0.56 9.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M27.58 30.48c-1.4 3.15 0.84 6.83 -0.56 10.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M46.12 19.94c-0.7 3.45 0.42 7.48 -0.28 11.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M34.66 9.4c0 1.65 0 3.58 0 5.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M23.2 41.86c0.7 1.95 -0.42 4.23 0.28 6.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M41.74 31.32c1.4 2.25 -0.84 4.88 0.56 7.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M30.28 20.78c-1.4 2.55 0.84 5.53 -0.56 8.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M18.82 10.24c-0.7 2.85 0.42 6.17 -0.28 9.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M37.36 42.7c0 3.15 0 6.83 0 10.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M25.9 32.16c0.7 3.45 -0.42 7.48 0.28 11.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M44.45 21.62c1.4 1.65 -0.84 3.58 0.56 5.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M32.99 11.08c-1.4 1.95 0.84 4.23 -0.56 6.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M21.53 43.54c-0.7 2.25 0.42 4.88 -0.28 7.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M40.07 33c0 2.55 0 5.53 0 8.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M28.61 22.46c0.7 2.85 -0.42 6.17 0.28 9.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M17.15 11.92c1.4 3.15 -0.84 6.83 0.56 10.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M35.69 44.38c-1.4 3.45 0.84 7.48 -0.56 11.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M24.23 33.84c-0.7 1.65 0.42 3.58 -0.28 5.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M42.77 23.3c0 1.95 0 4.23 0 6.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M31.31 12.76c0.7 2.25 -0.42 4.88 0.28 7.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M19.86 45.22c1.4 2.55 -0.84 5.53 0.56 8.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M38.4 34.68c-1.4 2.85 0.84 6.17 -0.56 9.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M26.94 24.14c-0.7 3.15 0.42 6.83 -0.28 10.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M45.48 13.59c0 3.45 0 7.48 0 11.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M34.02 46.05c0.7 1.65 -0.42 3.58 0.28 5.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M22.56 35.51c1.4 1.95 -0.84 4.23 0.56 6.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M41.1 24.97c-1.4 2.25 0.84 4.88 -0.56 7.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M29.64 14.43c-0.7 2.55 0.42 5.53 -0.28 8.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M18.18 46.89c0 2.85 0 6.17 0 9.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M36.73 36.35c0.7 3.15 -0.42 6.83 0.28 10.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M25.27 25.81c1.4 3.45 -0.84 7.48 0.56 11.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M43.81 15.27c-1.4 1.65 0.84 3.58 -0.56 5.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M32.35 4.73c-0.7 1.95 0.42 4.23 -0.28 6.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M20.89 37.19c0 2.25 0 4.88 0 7.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M39.43 26.65c0.7 2.55 -0.42 5.53 0.28 8.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M27.97 16.11c1.4 2.85 -0.84 6.17 0.56 9.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M46.51 5.57c-1.4 3.15 0.84 6.83 -0.56 10.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M35.05 38.03c-0.7 3.45 0.42 7.48 -0.28 11.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M23.59 27.49c0 1.65 0 3.58 0 5.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M42.14 16.95c0.7 1.95 -0.42 4.23 0.28 6.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M30.68 6.41c1.4 2.25 -0.84 4.88 0.56 7.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M19.22 38.87c-1.4 2.55 0.84 5.53 -0.56 8.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M37.76 28.33c-0.7 2.85 0.42 6.17 -0.28 9.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M26.3 17.79c0 3.15 0 6.83 0 10.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M44.84 7.25c0.7 3.45 -0.42 7.48 0.28 11.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M33.38 39.71c1.4 1.65 -0.84 3.58 0.56 5.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M21.92 29.17c-1.4 1.95 0.84 4.23 -0.56 6.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M40.46 18.63c-0.7 2.25 0.42 4.88 -0.28 7.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M29 8.09c0 2.55 0 5.53 0 8.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M17.55 40.55c0.7 2.85 -0.42 6.17 0.28 9.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M36.09 30.01c1.4 3.15 -0.84 6.83 0.56 10.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M24.63 19.47c-1.4 3.45 0.84 7.48 -0.56 11.5"
-          fill="none"
-          stroke="#aeb59b"
-          stroke-width="0.35"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.5"
-      />
-      <path
-          d="M43.17 8.93c-0.7 1.65 0.42 3.58 -0.28 5.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M31.71 41.39c0 1.95 0 4.23 0 6.5"
-          fill="none"
-          stroke="#f5f0df"
-          stroke-width="0.48"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.85"
-      />
-      <path
-          d="M19 10q-3 7 1.2 17"
-          fill="none"
-          stroke="#f8f2e3"
-          stroke-width="0.34"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.6"
-      />
-      <path
-          d="M21.3 14.6q4 7 -0.8 17"
-          fill="none"
-          stroke="#f8f2e3"
-          stroke-width="0.34"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.6"
-      />
-      <path
-          d="M23.6 19.2q-3 7 1.2 17"
-          fill="none"
-          stroke="#f8f2e3"
-          stroke-width="0.34"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.6"
-      />
-      <path
-          d="M25.9 23.799999999999997q4 7 -0.8 17"
-          fill="none"
-          stroke="#f8f2e3"
-          stroke-width="0.34"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.6"
-      />
-      <path
-          d="M28.2 10q-3 7 1.2 17"
-          fill="none"
-          stroke="#f8f2e3"
-          stroke-width="0.34"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.6"
-      />
-      <path
-          d="M30.5 14.6q4 7 -0.8 17"
-          fill="none"
-          stroke="#f8f2e3"
-          stroke-width="0.34"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.6"
-      />
-      <path
-          d="M32.8 19.2q-3 7 1.2 17"
-          fill="none"
-          stroke="#f8f2e3"
-          stroke-width="0.34"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.6"
-      />
-      <path
-          d="M35.099999999999994 23.799999999999997q4 7 -0.8 17"
-          fill="none"
-          stroke="#f8f2e3"
-          stroke-width="0.34"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.6"
-      />
-      <path
-          d="M37.4 10q-3 7 1.2 17"
-          fill="none"
-          stroke="#f8f2e3"
-          stroke-width="0.34"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.6"
-      />
-      <path
-          d="M39.7 14.6q4 7 -0.8 17"
-          fill="none"
-          stroke="#f8f2e3"
-          stroke-width="0.34"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.6"
-      />
-      <path
-          d="M42 19.2q-3 7 1.2 17"
-          fill="none"
-          stroke="#f8f2e3"
-          stroke-width="0.34"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.6"
-      />
-      <path
-          d="M44.3 23.799999999999997q4 7 -0.8 17"
-          fill="none"
-          stroke="#f8f2e3"
-          stroke-width="0.34"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.6"
+      <path d="M23 15q-5 -4 -6 -3.2" fill="none" stroke="#f4f1e1" stroke-width="0.55" />
+      <path d="M29 12q-1 -5 -1.2 -4" fill="none" stroke="#f4f1e1" stroke-width="0.55" />
+      <path d="M37 13q4 -4 4.8 -3.2" fill="none" stroke="#f4f1e1" stroke-width="0.55" />
+      <path d="M41 21q6 -1 7.2 -0.8" fill="none" stroke="#f4f1e1" stroke-width="0.55" />
+      <path d="M43 30q5 4 6 3.2" fill="none" stroke="#f4f1e1" stroke-width="0.55" />
+      <path d="M38 38q2 4 2.4 3.2" fill="none" stroke="#f4f1e1" stroke-width="0.55" />
+      <path d="M24 38q-4 3 -4.8 2.4" fill="none" stroke="#f4f1e1" stroke-width="0.55" />
+      <path d="M20 28q-4 0 -4.8 0" fill="none" stroke="#f4f1e1" stroke-width="0.55" />
+      <path d="M21 19q-4 -1 -4.8 -0.8" fill="none" stroke="#f4f1e1" stroke-width="0.55" />
+      <path d="M23 18l-5 -5" fill="none" stroke="#a66540" stroke-width="0.7" />
+      <path d="M23 18l-3.25 -3.25" fill="none" stroke="#d6a86d" stroke-width="0.32" />
+      <path d="M30 13l-1 -6" fill="none" stroke="#a66540" stroke-width="0.7" />
+      <path d="M30 13l-0.65 -3.9" fill="none" stroke="#d6a86d" stroke-width="0.32" />
+      <path d="M38 16l4 -5" fill="none" stroke="#a66540" stroke-width="0.7" />
+      <path d="M38 16l2.6 -3.25" fill="none" stroke="#d6a86d" stroke-width="0.32" />
+      <path d="M42 23l6 -1" fill="none" stroke="#a66540" stroke-width="0.7" />
+      <path d="M42 23l3.9 -0.65" fill="none" stroke="#d6a86d" stroke-width="0.32" />
+      <path d="M40 31l6 3" fill="none" stroke="#a66540" stroke-width="0.7" />
+      <path d="M40 31l3.9 1.95" fill="none" stroke="#d6a86d" stroke-width="0.32" />
+      <path d="M33 27l3 -5" fill="none" stroke="#a66540" stroke-width="0.7" />
+      <path d="M33 27l1.95 -3.25" fill="none" stroke="#d6a86d" stroke-width="0.32" />
+      <path d="M25 29l-6 2" fill="none" stroke="#a66540" stroke-width="0.7" />
+      <path d="M25 29l-3.9 1.3" fill="none" stroke="#d6a86d" stroke-width="0.32" />
+      <path d="M28 37l-2 5" fill="none" stroke="#a66540" stroke-width="0.7" />
+      <path d="M28 37l-1.3 3.25" fill="none" stroke="#d6a86d" stroke-width="0.32" />
+      <path d="M36 37l3 5" fill="none" stroke="#a66540" stroke-width="0.7" />
+      <path d="M36 37l1.95 3.25" fill="none" stroke="#d6a86d" stroke-width="0.32" />
+      <path d="M22 23l-5 -2" fill="none" stroke="#a66540" stroke-width="0.7" />
+      <path d="M22 23l-3.25 -1.3" fill="none" stroke="#d6a86d" stroke-width="0.32" />
+      <path d="M32 19l-2 -4" fill="none" stroke="#a66540" stroke-width="0.7" />
+      <path d="M32 19l-1.3 -2.6" fill="none" stroke="#d6a86d" stroke-width="0.32" />
+      <path
+          d="M44.5 42.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#d6c9ac"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M39.5 43.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#a56950"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M34.5 43.6l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#a7b8b1"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M28.5 43.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#393f39"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M22.5 42.9l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#d8b894"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M17.5 41.9l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#776655"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M11 40Q15.5 45.5 25 46M39 45.9Q49 44.8 53 40"
+          fill="none"
+          stroke="#fffdf3"
+          stroke-width="0.85"
       />
   </g>
-  <use
-      href="#oreocereus-trollii-detail-1"
-      transform="translate(25 22) rotate(-30)"
-  />
-  <use
-      href="#oreocereus-trollii-detail-1"
-      transform="translate(35 18) rotate(0)"
-  />
-  <use
-      href="#oreocereus-trollii-detail-1"
-      transform="translate(42 26) rotate(35)"
-  />
-  <use
-      href="#oreocereus-trollii-detail-1"
-      transform="translate(22 36) rotate(-35)"
-  />
-  <use
-      href="#oreocereus-trollii-detail-1"
-      transform="translate(37 36) rotate(30)"
-  />
-  <path
-      d="M16 45h32v7H16z"
-      fill="#f5b17a"
-      stroke="#5f3a2a"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
-  <path
-      d="m18 52 3 9h22l3-9Z"
-      fill="url(#oreo-pot)"
-      stroke="#5f3a2a"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
-  <path
-      d="M21 55h22"
-      fill="none"
-      stroke="#ffd0a4"
-      stroke-linecap="round"
-      stroke-width="1.1"
-  />
 </svg>

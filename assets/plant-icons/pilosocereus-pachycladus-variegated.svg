@@ -1,173 +1,229 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="pilosocereus-pachycladus-variegated-title pilosocereus-pachycladus-variegated-description" data-plant-slug="pilosocereus-pachycladus-variegated" focusable="false">
   <title id="pilosocereus-pachycladus-variegated-title">Variegated blue torch cactus plant portrait</title>
-  <desc id="pilosocereus-pachycladus-variegated-description">A blue-green columnar cactus with lengthwise cream variegation and golden spine clusters in a terracotta planter.</desc>
+  <desc id="pilosocereus-pachycladus-variegated-description">An isolated schematic view of P19 / #1's probable variegated blue torch: a tall ribbed blue-green column with irregular cream streaks and fine golden spines, using the same broad dark etched shared-planter framing, not a separate pot.</desc>
+  <desc>
+      An isolated schematic view of P19 / #1's probable variegated blue torch: a tall
+      ribbed blue-green column with irregular cream streaks and fine golden spines, using
+      the same broad dark etched shared-planter framing, not a separate pot.
+  </desc>
   <defs>
-      <linearGradient id="pilo-pot" x1="0" x2="0.9" y1="0" y2="1">
-          <stop offset="0" stop-color="#f2a36a" />
-          <stop offset="1" stop-color="#c25a38" />
+      <linearGradient id="p19nov-blue-pot" x1="0" y1="0" x2="1" y2="0">
+          <stop stop-color="#645b50" />
+          <stop offset="0.2" stop-color="#4d4b43" />
+          <stop offset="0.65" stop-color="#343a34" />
+          <stop offset="1" stop-color="#494b42" />
       </linearGradient>
-      <linearGradient id="bluetorch-body" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stop-color="#739f92" />
-          <stop offset="0.5" stop-color="#8ab5a2" />
-          <stop offset="1" stop-color="#467c70" />
+      <radialGradient id="p19nov-blue-soil" cx="40%" cy="25%" r="80%">
+          <stop stop-color="#7d6d53" />
+          <stop offset="1" stop-color="#42392e" />
+      </radialGradient>
+      <linearGradient id="p19nov-blue-blue" x1="0" y1="0" x2="1" y2="0">
+          <stop stop-color="#597867" />
+          <stop offset="0.25" stop-color="#a7bfa0" />
+          <stop offset="0.52" stop-color="#779a86" />
+          <stop offset="0.8" stop-color="#8da78a" />
+          <stop offset="1" stop-color="#486f5a" />
       </linearGradient>
-      <clipPath id="bluetorch-clip" clipPathUnits="userSpaceOnUse">
+      <linearGradient id="p19nov-blue-torch" x1="0" y1="0" x2="1" y2="0">
+          <stop stop-color="#385b3b" />
+          <stop offset="0.3" stop-color="#8da05f" />
+          <stop offset="0.6" stop-color="#4e754a" />
+          <stop offset="1" stop-color="#274d36" />
+      </linearGradient>
+      <clipPath id="p19nov-blue-pot-clip">
           <path
-              d="M21 47V18c0-9 4-13 11-13s11 4 11 13v29Z"
-              fill="none"
-              stroke="none"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              d="M6 42C7.1 52.1 11 57.4 18.4 60 25.9 62.3 42 61.8 49.1 58.7 54.1 56.2 57 49.4 58 42Z"
           />
       </clipPath>
-      <linearGradient id="bluetorch-cream" x1="0" y1="0" x2="0.3" y2="1">
-          <stop offset="0" stop-color="#e5d9a2" />
-          <stop offset="0.5" stop-color="#d4cb91" />
-          <stop offset="1" stop-color="#bcc194" />
-      </linearGradient>
-      <g id="pilosocereus-pachycladus-variegated-detail-1">
-          <path
-              d="M-2.8 0H2.8M-2-1.8 2 1.8M-2 1.8 2-1.8M0-2.8V2.8"
-              fill="none"
-              stroke="#d2b877"
-              stroke-width="0.48"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-          />
-          <ellipse
-              cx="0"
-              cy="0"
-              rx="0.62"
-              ry="0.62"
-              fill="#e3c994"
-              stroke="none"
-              stroke-width="1"
-          />
-      </g>
+      <clipPath id="p19nov-blue-soil-clip">
+          <ellipse cx="32" cy="42" rx="24.2" ry="6.5" />
+      </clipPath>
   </defs>
-  <ellipse
-      cx="32"
-      cy="60.5"
-      rx="15"
-      ry="1.9"
-      fill="#244b3b"
-      stroke="none"
-      stroke-width="0"
-      opacity="0.12"
-  />
-  <ellipse
-      cx="32"
-      cy="45.5"
-      rx="15"
-      ry="2.1"
-      fill="#745c45"
-      stroke="none"
-      stroke-width="1"
-  />
+  <ellipse cx="32" cy="61.8" rx="23.7" ry="1.5" fill="#21372b" opacity="0.16" />
   <path
-      d="M21 47V18c0-9 4-13 11-13s11 4 11 13v29Z"
-      fill="url(#bluetorch-body)"
-      stroke="#244b3b"
-      stroke-width="1.45"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      d="M6 42C7.1 52.1 11 57.4 18.4 60 25.9 62.3 42 61.8 49.1 58.7 54.1 56.2 57 49.4 58 42Z"
+      fill="url(#p19nov-blue-pot)"
+      stroke="#394237"
+      stroke-width="0.7"
   />
-  <g clip-path="url(#bluetorch-clip)">
+  <g clip-path="url(#p19nov-blue-pot-clip)">
       <path
-          d="M30 5c-1 9 1 15 0 22s1 14 0 20h7c-2-9-1-14-2-21s1-14-1-21Z"
-          fill="url(#bluetorch-cream)"
-          stroke="none"
-          stroke-width="1"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-      />
-      <path
-          d="M24 9c-1 11 0 24-1 38h2c1-11-1-28 1-40Z"
-          fill="#c1cdab"
-          stroke="none"
-          stroke-width="1"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-      />
-      <path
-          d="M27 7c-2 10 0 27-1 40m7-41v41M38 8c2 10 0 26 1 39"
+          d="M-7.4 42Q-10.54 52.5 -14.87 64 M-2.34 42Q-6.23 52.98 -11.61 64 M1.62 42Q-2.06 52.76 -7.15 64 M6.74 42Q3.68 52.16 -0.56 64 M11.73 42Q8.06 52.06 2.99 64 M15.7 42Q11.81 52.61 6.43 64 M20.89 42Q17.74 53 13.4 64 M25.8 42Q22.39 52.66 17.69 64 M29.79 42Q25.8 52.09 20.29 64 M35.03 42Q31.68 52.12 27.05 64 M39.87 42Q36.69 52.71 32.29 64 M43.88 42Q39.95 52.99 34.53 64 M49.17 42Q45.56 52.55 40.57 64 M53.93 42Q50.86 52.04 46.62 64 M57.98 42Q54.24 52.2 49.08 64 M63.31 42Q59.46 52.8 54.14 64 M67.99 42Q64.88 52.96 60.59 64 M-7.4 42Q-3.48 52.5 1.93 64 M-2.34 42Q1.29 52.98 6.32 64 M1.62 42Q4.69 52.76 8.93 64 M6.74 42Q10.46 52.16 15.59 64 M11.73 42Q15.6 52.06 20.94 64 M15.7 42Q18.83 52.61 23.14 64 M20.89 42Q24.34 53 29.11 64 M25.8 42Q29.78 52.66 35.29 64 M29.79 42Q33.1 52.09 37.67 64 M35.03 42Q38.25 52.12 42.68 64 M39.87 42Q43.82 52.71 49.27 64 M43.88 42Q47.45 52.99 52.38 64 M49.17 42Q52.25 52.55 56.51 64 M53.93 42Q57.71 52.04 62.92 64 M57.98 42Q61.8 52.2 67.07 64 M63.31 42Q66.41 52.8 70.68 64 M67.99 42Q71.51 52.96 76.38 64"
           fill="none"
-          stroke="#bfd2b8"
-          stroke-width="0.75"
+          stroke="#d3c8ac"
+          stroke-width="0.39"
           stroke-linecap="round"
-          stroke-linejoin="round"
+          opacity="0.87"
       />
       <path
-          d="M28.3 8c-1 12 0 25-0.3 39m8.5-39c2 11 1 26 1 39"
+          d="M11 57.5C24 61.1 43 60 53.5 55"
           fill="none"
-          stroke="#517e69"
-          stroke-width="0.6"
+          stroke="#aaa58d"
+          stroke-width="0.3"
           stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-opacity="0.8"
+          opacity="0.48"
       />
-      <use
-          href="#pilosocereus-pachycladus-variegated-detail-1"
-          transform="translate(24 14) scale(0.61)"
+  </g>
+  <ellipse
+      cx="32"
+      cy="42"
+      rx="26"
+      ry="7.8"
+      fill="#686758"
+      stroke="#42483c"
+      stroke-width="0.65"
+  />
+  <ellipse cx="32" cy="42" rx="24.2" ry="6.5" fill="url(#p19nov-blue-soil)" />
+  <g
+      clip-path="url(#p19nov-blue-soil-clip)"
+      stroke="#5c4d3a"
+      stroke-width="0.2"
+      stroke-linejoin="round"
+  >
+      <path
+          d="M6.6 36L7.1 34.9L8.13 35.15L8.4 36.55L7.5 37.05Z M49.95 41.91L50.91 40.81L52.91 41.06L53.43 42.46L51.69 42.96Z M46.42 36.42L47.22 35.32L48.9 35.57L49.34 36.97L47.88 37.47Z M42.89 42.33L43.54 41.23L44.9 41.48L45.25 42.88L44.07 43.38Z M39.36 36.84L39.85 35.74L40.89 35.99L41.16 37.39L40.26 37.89Z M34.71 42.75L35.67 41.65L37.67 41.9L38.19 43.3L36.45 43.8Z M31.18 37.26L31.98 36.16L33.66 36.41L34.1 37.81L32.64 38.31Z"
+          fill="#a66d51"
       />
-      <use
-          href="#pilosocereus-pachycladus-variegated-detail-1"
-          transform="translate(38 14) scale(0.61)"
+      <path
+          d="M19.49 41.73L20.14 40.63L21.5 40.88L21.85 42.28L20.67 42.78Z M15.96 36.24L16.45 35.14L17.49 35.39L17.76 36.79L16.86 37.29Z M11.31 42.15L12.27 41.05L14.27 41.3L14.79 42.7L13.05 43.2Z M7.78 36.66L8.58 35.56L10.26 35.81L10.7 37.21L9.24 37.71Z M52.25 42.57L52.9 41.47L54.26 41.72L54.61 43.12L53.43 43.62Z M48.72 37.08L49.22 35.98L50.25 36.23L50.52 37.63L49.62 38.13Z M44.07 42.99L45.03 41.89L47.03 42.14L47.55 43.54L45.81 44.04Z"
+          fill="#c2b49a"
       />
-      <use
-          href="#pilosocereus-pachycladus-variegated-detail-1"
-          transform="translate(24 20) scale(0.61)"
+      <path
+          d="M32.38 36.06L33.18 34.96L34.86 35.21L35.3 36.61L33.84 37.11Z M28.85 41.97L29.5 40.87L30.86 41.12L31.21 42.52L30.03 43.02Z M25.32 36.48L25.82 35.38L26.85 35.63L27.12 37.03L26.22 37.53Z M20.67 42.39L21.63 41.29L23.63 41.54L24.15 42.94L22.41 43.44Z M17.14 36.9L17.94 35.8L19.62 36.05L20.06 37.45L18.6 37.95Z M13.61 42.81L14.26 41.71L15.62 41.96L15.97 43.36L14.79 43.86Z M10.08 37.32L10.58 36.22L11.61 36.47L11.88 37.87L10.98 38.37Z"
+          fill="#d8cfb5"
       />
-      <use
-          href="#pilosocereus-pachycladus-variegated-detail-1"
-          transform="translate(38 20) scale(0.61)"
+      <path
+          d="M45.27 41.79L46.23 40.69L48.23 40.94L48.75 42.34L47.01 42.84Z M41.74 36.3L42.54 35.2L44.22 35.45L44.66 36.85L43.2 37.35Z M38.21 42.21L38.86 41.11L40.22 41.36L40.57 42.76L39.39 43.26Z M34.68 36.72L35.17 35.62L36.21 35.87L36.48 37.27L35.58 37.77Z M30.03 42.63L30.99 41.53L32.99 41.78L33.51 43.18L31.77 43.68Z M26.5 37.14L27.3 36.04L28.98 36.29L29.42 37.69L27.96 38.19Z M22.97 43.05L23.62 41.95L24.98 42.2L25.33 43.6L24.15 44.1Z"
+          fill="#85938c"
       />
-      <use
-          href="#pilosocereus-pachycladus-variegated-detail-1"
-          transform="translate(24 26) scale(0.61)"
+      <path
+          d="M11.28 36.12L11.78 35.02L12.81 35.27L13.08 36.67L12.18 37.17Z M6.63 42.03L7.59 40.93L9.59 41.18L10.11 42.58L8.37 43.08Z M51.1 36.54L51.9 35.44L53.58 35.69L54.02 37.09L52.56 37.59Z M47.57 42.45L48.22 41.35L49.58 41.6L49.93 43L48.75 43.5Z M44.04 36.96L44.54 35.86L45.57 36.11L45.84 37.51L44.94 38.01Z M39.39 42.87L40.35 41.77L42.35 42.02L42.87 43.42L41.13 43.92Z"
+          fill="#594b3b"
       />
-      <use
-          href="#pilosocereus-pachycladus-variegated-detail-1"
-          transform="translate(38 26) scale(0.61)"
+      <path
+          d="M24.17 41.85L24.82 40.75L26.18 41L26.53 42.4L25.35 42.9Z M20.64 36.36L21.13 35.26L22.17 35.51L22.44 36.91L21.54 37.41Z M15.99 42.27L16.95 41.17L18.95 41.42L19.47 42.82L17.73 43.32Z M12.46 36.78L13.26 35.68L14.94 35.93L15.38 37.33L13.92 37.83Z M8.93 42.69L9.58 41.59L10.94 41.84L11.29 43.24L10.11 43.74Z M53.4 37.2L53.89 36.1L54.93 36.35L55.2 37.75L54.3 38.25Z"
+          fill="#bf8765"
       />
-      <use
-          href="#pilosocereus-pachycladus-variegated-detail-1"
-          transform="translate(24 32) scale(0.61)"
-      />
-      <use
-          href="#pilosocereus-pachycladus-variegated-detail-1"
-          transform="translate(38 32) scale(0.61)"
-      />
-      <use
-          href="#pilosocereus-pachycladus-variegated-detail-1"
-          transform="translate(24 38) scale(0.61)"
-      />
-      <use
-          href="#pilosocereus-pachycladus-variegated-detail-1"
-          transform="translate(38 38) scale(0.61)"
-      />
-      <use
-          href="#pilosocereus-pachycladus-variegated-detail-1"
-          transform="translate(24 44) scale(0.61)"
-      />
-      <use
-          href="#pilosocereus-pachycladus-variegated-detail-1"
-          transform="translate(38 44) scale(0.61)"
+      <path
+          d="M37.06 36.18L37.86 35.08L39.54 35.33L39.98 36.73L38.52 37.23Z M33.53 42.09L34.18 40.99L35.54 41.24L35.89 42.64L34.71 43.14Z M30 36.6L30.49 35.5L31.53 35.75L31.8 37.15L30.9 37.65Z M25.35 42.51L26.31 41.41L28.31 41.66L28.83 43.06L27.09 43.56Z M21.82 37.02L22.62 35.92L24.3 36.17L24.74 37.57L23.28 38.07Z M18.29 42.93L18.94 41.83L20.3 42.08L20.65 43.48L19.47 43.98Z"
+          fill="#a6b1a1"
       />
   </g>
   <path
-      d="M15 45h34v7H15z"
-      fill="#f3a66d"
-      stroke="#5f3a2a"
-      stroke-linejoin="round"
-      stroke-width="1.7"
+      d="M9 44.1C20 48.7 43 48.6 55 44"
+      fill="none"
+      stroke="#9c9a83"
+      stroke-width="0.4"
+      stroke-linecap="round"
+      opacity="0.7"
+  />
+  <defs>
+      <clipPath id="p19nov-blue-blue-clip">
+          <path
+              d="M27.5 44C27.3 34 29.5 14.8 29.5 9.399999999999999C29.5 4.1 40.5 3.9 40.5 9.399999999999999L38.5 44Z"
+          />
+      </clipPath>
+  </defs>
+  <path
+      d="M27.5 44C27.3 34 29.5 14.8 29.5 9.399999999999999C29.5 4.1 40.5 3.9 40.5 9.399999999999999L38.5 44Z"
+      fill="url(#p19nov-blue-blue)"
+      stroke="#567565"
+      stroke-width="0.6"
+  />
+  <g clip-path="url(#p19nov-blue-blue-clip)">
+      <path
+          d="M33.2 4.8C32.5 13.8 31.9 17.8 31.2 23.8L32.4 40 31 44 29 44C30.7 34 30.8 13.8 31.5 4.8Z"
+          fill="#d1cf8a"
+          opacity="0.9"
+      />
+      <path
+          d="M37.2 6.8C36.8 15.8 37 21.8 35.2 43L36.7 44C37.7 23.8 38.8 15.8 38.6 7.8Z"
+          fill="#d7d79c"
+          opacity="0.82"
+      />
+      <path
+          d="M34.6 5.8C34.3 18.8 33.4 31 33.1 44"
+          fill="none"
+          stroke="#bdd2b6"
+          stroke-width="0.9"
+          stroke-linecap="round"
+          opacity="0.6"
+      />
+      <path
+          d="M31.15 7.199999999999999C30.85 15.8 29.15 34 29.15 44"
+          fill="none"
+          stroke="#547c65"
+          stroke-width="0.75"
+          stroke-linecap="round"
+          opacity="0.8"
+      />
+      <path
+          d="M31.85 7.6C31.75 15.8 29.95 34 29.85 44"
+          fill="none"
+          stroke="#d0d8b0"
+          stroke-width="0.4"
+          stroke-linecap="round"
+          opacity="0.8"
+      />
+      <path
+          d="M33.68 7.199999999999999C33.38 15.8 31.68 34 31.68 44"
+          fill="none"
+          stroke="#547c65"
+          stroke-width="0.75"
+          stroke-linecap="round"
+          opacity="0.8"
+      />
+      <path
+          d="M34.38 7.6C34.28 15.8 32.48 34 32.38 44"
+          fill="none"
+          stroke="#d0d8b0"
+          stroke-width="0.4"
+          stroke-linecap="round"
+          opacity="0.8"
+      />
+      <path
+          d="M36.65 7.199999999999999C36.35 15.8 34.65 34 34.65 44"
+          fill="none"
+          stroke="#547c65"
+          stroke-width="0.75"
+          stroke-linecap="round"
+          opacity="0.8"
+      />
+      <path
+          d="M37.35 7.6C37.25 15.8 35.45 34 35.35 44"
+          fill="none"
+          stroke="#d0d8b0"
+          stroke-width="0.4"
+          stroke-linecap="round"
+          opacity="0.8"
+      />
+      <path
+          d="M39.07 7.199999999999999C38.77 15.8 37.07 34 37.07 44"
+          fill="none"
+          stroke="#547c65"
+          stroke-width="0.75"
+          stroke-linecap="round"
+          opacity="0.8"
+      />
+      <path
+          d="M39.77 7.6C39.67 15.8 37.87 34 37.77 44"
+          fill="none"
+          stroke="#d0d8b0"
+          stroke-width="0.4"
+          stroke-linecap="round"
+          opacity="0.8"
+      />
+  </g>
+  <path
+      d="M30.2 9.2l0.9 0M30.2 9.2l0.8 0.9M30.2 9.2l-0.3 1.5M30.2 9.2l-0.8 0.4M30.2 9.2l-1.1 -0.4M30.2 9.2l-0.5 -1.4M30.2 9.2l0.5 -0.7 M33 10.1l0.9 0.1M33 10.1l0.7 1M33 10.1l-0.4 1.4M33 10.1l-0.8 0.3M33 10.1l-1.1 -0.6M33 10.1l-0.3 -1.5M33 10.1l0.6 -0.7 M36.6 9.2l0.9 0.2M36.6 9.2l0.5 1.1M36.6 9.2l-0.6 1.4M36.6 9.2l-0.8 0.2M36.6 9.2l-1 -0.7M36.6 9.2l-0.1 -1.5M36.6 9.2l0.6 -0.6 M39.5 10.1l0.8 0.3M39.5 10.1l0.4 1.1M39.5 10.1l-0.7 1.3M39.5 10.1l-0.9 0.2M39.5 10.1l-0.9 -0.8M39.5 10.1l0 -1.5M39.5 10.1l0.7 -0.6 M30 12.4l0.9 0.1M30 12.4l0.7 1M30 12.4l-0.4 1.4M30 12.4l-0.8 0.3M30 12.4l-1.1 -0.6M30 12.4l-0.3 -1.5M30 12.4l0.6 -0.7 M32.9 13.3l0.9 0.2M32.9 13.3l0.5 1.1M32.9 13.3l-0.6 1.4M32.9 13.3l-0.8 0.2M32.9 13.3l-1 -0.7M32.9 13.3l-0.1 -1.5M32.9 13.3l0.6 -0.6 M36.5 12.4l0.8 0.3M36.5 12.4l0.4 1.1M36.5 12.4l-0.7 1.3M36.5 12.4l-0.9 0.2M36.5 12.4l-0.9 -0.8M36.5 12.4l0 -1.5M36.5 12.4l0.7 -0.6 M39.3 13.3l0.8 0.4M39.3 13.3l0.3 1.2M39.3 13.3l-0.9 1.2M39.3 13.3l-0.9 0.1M39.3 13.3l-0.8 -0.9M39.3 13.3l0.2 -1.5M39.3 13.3l0.7 -0.5 M29.8 15.5l0.9 0.2M29.8 15.5l0.5 1.1M29.8 15.5l-0.6 1.4M29.8 15.5l-0.8 0.2M29.8 15.5l-1 -0.7M29.8 15.5l-0.1 -1.5M29.8 15.5l0.6 -0.6 M32.7 16.4l0.8 0.3M32.7 16.4l0.4 1.1M32.7 16.4l-0.7 1.3M32.7 16.4l-0.9 0.2M32.7 16.4l-0.9 -0.8M32.7 16.4l0 -1.5M32.7 16.4l0.7 -0.6 M36.3 15.5l0.8 0.4M36.3 15.5l0.3 1.2M36.3 15.5l-0.9 1.2M36.3 15.5l-0.9 0.1M36.3 15.5l-0.8 -0.9M36.3 15.5l0.2 -1.5M36.3 15.5l0.7 -0.5 M39.2 16.4l0.8 0.5M39.2 16.4l0.2 1.2M39.2 16.4l-1 1.1M39.2 16.4l-0.9 0M39.2 16.4l-0.7 -1M39.2 16.4l0.4 -1.5M39.2 16.4l0.8 -0.4 M29.7 18.7l0.8 0.3M29.7 18.7l0.4 1.1M29.7 18.7l-0.7 1.3M29.7 18.7l-0.9 0.2M29.7 18.7l-0.9 -0.8M29.7 18.7l0 -1.5M29.7 18.7l0.7 -0.6 M32.5 19.5l0.8 0.4M32.5 19.5l0.3 1.2M32.5 19.5l-0.9 1.2M32.5 19.5l-0.9 0.1M32.5 19.5l-0.8 -0.9M32.5 19.5l0.2 -1.5M32.5 19.5l0.7 -0.5 M36.2 18.7l0.8 0.5M36.2 18.7l0.2 1.2M36.2 18.7l-1 1.1M36.2 18.7l-0.9 0M36.2 18.7l-0.7 -1M36.2 18.7l0.4 -1.5M36.2 18.7l0.8 -0.4 M39 19.5l0.7 0.5M39 19.5l0 1.2M39 19.5l-1.1 1M39 19.5l-0.9 -0.1M39 19.5l-0.6 -1M39 19.5l0.5 -1.4M39 19.5l0.8 -0.3 M29.5 21.8l0.8 0.4M29.5 21.8l0.3 1.2M29.5 21.8l-0.9 1.2M29.5 21.8l-0.9 0.1M29.5 21.8l-0.8 -0.9M29.5 21.8l0.2 -1.5M29.5 21.8l0.7 -0.5 M32.4 22.7l0.8 0.5M32.4 22.7l0.2 1.2M32.4 22.7l-1 1.1M32.4 22.7l-0.9 0M32.4 22.7l-0.7 -1M32.4 22.7l0.4 -1.5M32.4 22.7l0.8 -0.4 M36 21.8l0.7 0.5M36 21.8l0 1.2M36 21.8l-1.1 1M36 21.8l-0.9 -0.1M36 21.8l-0.6 -1M36 21.8l0.5 -1.4M36 21.8l0.8 -0.3 M38.9 22.7l0.6 0.6M38.9 22.7l-0.1 1.2M38.9 22.7l-1.2 0.9M38.9 22.7l-0.9 -0.2M38.9 22.7l-0.5 -1.1M38.9 22.7l0.7 -1.3M38.9 22.7l0.9 -0.2 M29.4 25l0.8 0.5M29.4 25l0.2 1.2M29.4 25l-1 1.1M29.4 25l-0.9 0M29.4 25l-0.7 -1M29.4 25l0.4 -1.5M29.4 25l0.8 -0.4 M32.2 25.9l0.7 0.5M32.2 25.9l0 1.2M32.2 25.9l-1.1 1M32.2 25.9l-0.9 -0.1M32.2 25.9l-0.6 -1M32.2 25.9l0.5 -1.4M32.2 25.9l0.8 -0.3 M35.8 25l0.6 0.6M35.8 25l-0.1 1.2M35.8 25l-1.2 0.9M35.8 25l-0.9 -0.2M35.8 25l-0.5 -1.1M35.8 25l0.7 -1.3M35.8 25l0.9 -0.2 M38.7 25.9l0.6 0.7M38.7 25.9l-0.2 1.2M38.7 25.9l-1.3 0.7M38.7 25.9l-0.8 -0.3M38.7 25.9l-0.4 -1.1M38.7 25.9l0.8 -1.3M38.7 25.9l0.9 -0.1 M29.2 28.1l0.7 0.5M29.2 28.1l0 1.2M29.2 28.1l-1.1 1M29.2 28.1l-0.9 -0.1M29.2 28.1l-0.6 -1M29.2 28.1l0.5 -1.4M29.2 28.1l0.8 -0.3 M32.1 29l0.6 0.6M32.1 29l-0.1 1.2M32.1 29l-1.2 0.9M32.1 29l-0.9 -0.2M32.1 29l-0.5 -1.1M32.1 29l0.7 -1.3M32.1 29l0.9 -0.2 M35.7 28.1l0.6 0.7M35.7 28.1l-0.2 1.2M35.7 28.1l-1.3 0.7M35.7 28.1l-0.8 -0.3M35.7 28.1l-0.4 -1.1M35.7 28.1l0.8 -1.3M35.7 28.1l0.9 -0.1 M38.5 29l0.5 0.7M38.5 29l-0.4 1.1M38.5 29l-1.4 0.6M38.5 29l-0.8 -0.4M38.5 29l-0.2 -1.2M38.5 29l0.9 -1.2M38.5 29l0.9 0 M29 31.3l0.6 0.6M29 31.3l-0.1 1.2M29 31.3l-1.2 0.9M29 31.3l-0.9 -0.2M29 31.3l-0.5 -1.1M29 31.3l0.7 -1.3M29 31.3l0.9 -0.2 M31.9 32.2l0.6 0.7M31.9 32.2l-0.2 1.2M31.9 32.2l-1.3 0.7M31.9 32.2l-0.8 -0.3M31.9 32.2l-0.4 -1.1M31.9 32.2l0.8 -1.3M31.9 32.2l0.9 -0.1 M35.5 31.3l0.5 0.7M35.5 31.3l-0.4 1.1M35.5 31.3l-1.4 0.6M35.5 31.3l-0.8 -0.4M35.5 31.3l-0.2 -1.2M35.5 31.3l0.9 -1.2M35.5 31.3l0.9 0 M38.4 32.2l0.4 0.8M38.4 32.2l-0.5 1.1M38.4 32.2l-1.4 0.4M38.4 32.2l-0.7 -0.5M38.4 32.2l-0.1 -1.2M38.4 32.2l1.1 -1.1M38.4 32.2l0.9 0.1 M28.9 34.4l0.6 0.7M28.9 34.4l-0.2 1.2M28.9 34.4l-1.3 0.7M28.9 34.4l-0.8 -0.3M28.9 34.4l-0.4 -1.1M28.9 34.4l0.8 -1.3M28.9 34.4l0.9 -0.1 M31.7 35.3l0.5 0.7M31.7 35.3l-0.4 1.1M31.7 35.3l-1.4 0.6M31.7 35.3l-0.8 -0.4M31.7 35.3l-0.2 -1.2M31.7 35.3l0.9 -1.2M31.7 35.3l0.9 0 M35.4 34.4l0.4 0.8M35.4 34.4l-0.5 1.1M35.4 34.4l-1.4 0.4M35.4 34.4l-0.7 -0.5M35.4 34.4l-0.1 -1.2M35.4 34.4l1.1 -1.1M35.4 34.4l0.9 0.1 M38.2 35.3l0.3 0.8M38.2 35.3l-0.6 1M38.2 35.3l-1.5 0.3M38.2 35.3l-0.7 -0.6M38.2 35.3l0 -1.2M38.2 35.3l1.2 -0.9M38.2 35.3l0.9 0.2 M28.7 37.6l0.5 0.7M28.7 37.6l-0.4 1.1M28.7 37.6l-1.4 0.6M28.7 37.6l-0.8 -0.4M28.7 37.6l-0.2 -1.2M28.7 37.6l0.9 -1.2M28.7 37.6l0.9 0 M31.6 38.4l0.4 0.8M31.6 38.4l-0.5 1.1M31.6 38.4l-1.4 0.4M31.6 38.4l-0.7 -0.5M31.6 38.4l-0.1 -1.2M31.6 38.4l1.1 -1.1M31.6 38.4l0.9 0.1 M35.2 37.6l0.3 0.8M35.2 37.6l-0.6 1M35.2 37.6l-1.5 0.3M35.2 37.6l-0.7 -0.6M35.2 37.6l0 -1.2M35.2 37.6l1.2 -0.9M35.2 37.6l0.9 0.2 M38.1 38.4l0.2 0.9M38.1 38.4l-0.7 1M38.1 38.4l-1.5 0.1M38.1 38.4l-0.6 -0.6M38.1 38.4l0.2 -1.2M38.1 38.4l1.3 -0.8M38.1 38.4l0.8 0.3 M28.5 40.7l0.4 0.8M28.5 40.7l-0.5 1.1M28.5 40.7l-1.4 0.4M28.5 40.7l-0.7 -0.5M28.5 40.7l-0.1 -1.2M28.5 40.7l1.1 -1.1M28.5 40.7l0.9 0.1 M31.4 41.6l0.3 0.8M31.4 41.6l-0.6 1M31.4 41.6l-1.5 0.3M31.4 41.6l-0.7 -0.6M31.4 41.6l0 -1.2M31.4 41.6l1.2 -0.9M31.4 41.6l0.9 0.2 M35 40.7l0.2 0.9M35 40.7l-0.7 1M35 40.7l-1.5 0.1M35 40.7l-0.6 -0.6M35 40.7l0.2 -1.2M35 40.7l1.3 -0.8M35 40.7l0.8 0.3 M37.9 41.6l0.1 0.9M37.9 41.6l-0.8 0.9M37.9 41.6l-1.5 -0.1M37.9 41.6l-0.5 -0.7M37.9 41.6l0.3 -1.2M37.9 41.6l1.4 -0.7M37.9 41.6l0.8 0.4"
+      fill="none"
+      stroke="#d9c88a"
+      stroke-width="0.2"
+      stroke-linecap="round"
+      opacity="0.93"
   />
   <path
-      d="m18 52 3 9h22l3-9Z"
-      fill="url(#pilo-pot)"
-      stroke="#5f3a2a"
-      stroke-linejoin="round"
-      stroke-width="1.7"
+      d="M29.86 9.2a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M32.72 10.1a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M36.35 9.2a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M39.21 10.1a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M29.69 12.35a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M32.55 13.25a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M36.18 12.35a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M39.04 13.25a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M29.53 15.5a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M32.39 16.4a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M36.02 15.5a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M38.88 16.4a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M29.37 18.65a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M32.23 19.55a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M35.86 18.65a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M38.72 19.55a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M29.21 21.8a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M32.07 22.7a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M35.7 21.8a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M38.56 22.7a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M29.05 24.95a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M31.91 25.85a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M35.54 24.95a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M38.4 25.85a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M28.89 28.1a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M31.75 29a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M35.38 28.1a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M38.24 29a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M28.73 31.25a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M31.59 32.15a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M35.22 31.25a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M38.08 32.15a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M28.57 34.4a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M31.43 35.3a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M35.06 34.4a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M37.92 35.3a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M28.41 37.55a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M31.27 38.45a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M34.9 37.55a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M37.76 38.45a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M28.25 40.7a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M31.11 41.6a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M34.74 40.7a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z M37.6 41.6a0.3 0.39 0 1 0 0.6 0a0.3 0.39 0 1 0 -0.6 0Z"
+      fill="#ede2b5"
   />
 </svg>

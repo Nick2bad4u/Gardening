@@ -1,548 +1,489 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="echinocereus-rigidissimus-rubispinus-title echinocereus-rigidissimus-rubispinus-description" data-plant-slug="echinocereus-rigidissimus-rubispinus" focusable="false">
   <title id="echinocereus-rigidissimus-rubispinus-title">Rainbow hedgehog cactus plant portrait</title>
-  <desc id="echinocereus-rigidissimus-rubispinus-description">An upright cactus wrapped in close cream and muted-pink comb-like spine bands in a terracotta planter.</desc>
+  <desc id="echinocereus-rigidissimus-rubispinus-description">A tapered oval cactus with dense overlapping cream comb-like spines and a pale lightly rose-tinted crown, above mineral gravel in a dark green faceted pot.</desc>
   <defs>
-      <linearGradient id="rubi-pot" x1="0" x2="0.9" y1="0" y2="1">
-          <stop offset="0" stop-color="#f2a269" />
-          <stop offset="1" stop-color="#c65a39" />
+      <linearGradient id="p08-nov01-pot" x1="0" y1="0" x2="1" y2="0.25">
+          <stop stop-color="#8b9d83" />
+          <stop offset="0.42" stop-color="#526d59" />
+          <stop offset="1" stop-color="#344f43" />
       </linearGradient>
-      <linearGradient id="rainbow-body" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stop-color="#d3cab3" />
-          <stop offset="0.5" stop-color="#79957d" />
-          <stop offset="1" stop-color="#596e61" />
-      </linearGradient>
-      <linearGradient id="rainbow-bands" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#b98393" />
-          <stop offset="0.25" stop-color="#ede0c7" />
-          <stop offset="0.5" stop-color="#c79d9e" />
-          <stop offset="0.75" stop-color="#e7d7ba" />
-          <stop offset="1" stop-color="#aa807e" />
-      </linearGradient>
-      <clipPath id="rainbow-clip" clipPathUnits="userSpaceOnUse">
+      <clipPath id="p08-nov01-pot-clip">
           <path
-              d="M19 47V23c0-11 4-16 13-16s13 5 13 16v24Z"
+              d="M10 40H54L50.8 55.5Q49.5 60.5 32 61Q14.5 60.5 13.2 55.5Z"
               fill="none"
-              stroke="none"
-              stroke-width="1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
           />
       </clipPath>
-      <g id="echinocereus-rigidissimus-rubispinus-detail-1">
+      <radialGradient id="p08-nov01-body" cx="0.32" cy="0.25" r="0.9">
+          <stop stop-color="#819371" />
+          <stop offset="0.5" stop-color="#4e6b51" />
+          <stop offset="1" stop-color="#2e493b" />
+      </radialGradient>
+      <clipPath id="p08-nov01-clip">
           <path
-              d="M-0.3 0-2-0.5m1.7 0.5H-2.1m1.8 0-1.7 0.5M0.3 0 2-0.5m-1.7 0H2.1M0.3 0 2 0.5"
+              d="M23.5 38C21.2 31 23.1 18 27 13.4C29.8 10.4 34.8 10.3 37.3 14.2C40.4 19.3 42 30 40.1 37.4Q33 42 23.5 38Z"
               fill="none"
-              stroke="#c49a9e"
-              stroke-width="0.46"
-              stroke-linecap="round"
-              stroke-linejoin="round"
           />
-          <ellipse
-              cx="0"
-              cy="0"
-              rx="0.3"
-              ry="0.45"
-              fill="#a18d79"
-              stroke="none"
-              stroke-width="1"
-          />
-      </g>
-      <g id="echinocereus-rigidissimus-rubispinus-detail-2">
+      </clipPath>
+      <g id="p08-nov01-comb">
           <path
-              d="M-0.3 0-2-0.5m1.7 0.5H-2.1m1.8 0-1.7 0.5M0.3 0 2-0.5m-1.7 0H2.1M0.3 0 2 0.5"
+              d="M0 0Q2.87 0.77 2.3 0.85"
               fill="none"
-              stroke="#eee2c8"
-              stroke-width="0.46"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              stroke="#e7d8ae"
+              stroke-width="0.24"
           />
-          <ellipse
-              cx="0"
-              cy="0"
-              rx="0.3"
-              ry="0.45"
-              fill="#a18d79"
-              stroke="none"
-              stroke-width="1"
+          <path
+              d="M0 0Q1.99 0.9 1.59 1.52"
+              fill="none"
+              stroke="#e7d8ae"
+              stroke-width="0.24"
           />
+          <path
+              d="M0 0Q0.73 0.98 0.58 1.9"
+              fill="none"
+              stroke="#e7d8ae"
+              stroke-width="0.24"
+          />
+          <path
+              d="M0 0Q-0.68 0.98 -0.54 1.91"
+              fill="none"
+              stroke="#e7d8ae"
+              stroke-width="0.24"
+          />
+          <path
+              d="M0 0Q-1.95 0.91 -1.56 1.54"
+              fill="none"
+              stroke="#e7d8ae"
+              stroke-width="0.24"
+          />
+          <path
+              d="M0 0Q-2.85 0.78 -2.28 0.88"
+              fill="none"
+              stroke="#e7d8ae"
+              stroke-width="0.24"
+          />
+          <path
+              d="M0 0Q-3.19 0.61 -2.55 0.04"
+              fill="none"
+              stroke="#e7d8ae"
+              stroke-width="0.24"
+          />
+          <path
+              d="M0 0Q-2.91 0.44 -2.32 -0.8"
+              fill="none"
+              stroke="#e7d8ae"
+              stroke-width="0.24"
+          />
+          <path
+              d="M0 0Q-2.06 0.3 -1.65 -1.49"
+              fill="none"
+              stroke="#e7d8ae"
+              stroke-width="0.24"
+          />
+          <path
+              d="M0 0Q-0.81 0.22 -0.65 -1.89"
+              fill="none"
+              stroke="#e7d8ae"
+              stroke-width="0.24"
+          />
+          <path
+              d="M0 0Q0.6 0.22 0.48 -1.92"
+              fill="none"
+              stroke="#e7d8ae"
+              stroke-width="0.24"
+          />
+          <path
+              d="M0 0Q1.89 0.29 1.51 -1.57"
+              fill="none"
+              stroke="#e7d8ae"
+              stroke-width="0.24"
+          />
+          <path
+              d="M0 0Q2.81 0.42 2.25 -0.92"
+              fill="none"
+              stroke="#e7d8ae"
+              stroke-width="0.24"
+          />
+          <ellipse rx="0.34" ry="0.55" fill="#b99169" />
       </g>
   </defs>
-  <ellipse
-      cx="32"
-      cy="60.5"
-      rx="14"
-      ry="1.9"
-      fill="#244b3b"
-      stroke="none"
-      stroke-width="0"
-      opacity="0.12"
-  />
-  <ellipse
-      cx="32"
-      cy="45.5"
-      rx="14"
-      ry="2.1"
-      fill="#745c45"
-      stroke="none"
-      stroke-width="1"
-  />
-  <path
-      d="M19 47V23c0-11 4-16 13-16s13 5 13 16v24Z"
-      fill="url(#rainbow-body)"
-      stroke="#45685b"
-      stroke-width="1.4"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-  />
-  <g clip-path="url(#rainbow-clip)">
+  <g stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="32" cy="61.5" rx="23" ry="1.35" fill="#294839" opacity="0.15" />
       <path
-          d="M19 47V23c0-11 4-16 13-16s13 5 13 16v24Z"
-          fill="url(#rainbow-bands)"
-          stroke="none"
-          stroke-width="0"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          opacity="0.36"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(19.6 9.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(24.4 9.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(29.2 9.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(34 9.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(38.8 9.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(43.6 9.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(20.1 11.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(24.9 11.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(29.7 11.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(34.5 11.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(39.3 11.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(44.1 11.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(19.6 13.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(24.4 13.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(29.2 13.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(34 13.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(38.8 13.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(43.6 13.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(20.1 15.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(24.9 15.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(29.7 15.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(34.5 15.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(39.3 15.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(44.1 15.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(19.6 18.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(24.4 18.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(29.2 18.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(34 18.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(38.8 18.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(43.6 18.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(20.1 20.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(24.9 20.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(29.7 20.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(34.5 20.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(39.3 20.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(44.1 20.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(19.6 22.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(24.4 22.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(29.2 22.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(34 22.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(38.8 22.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(43.6 22.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(20.1 24.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(24.9 24.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(29.7 24.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(34.5 24.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(39.3 24.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(44.1 24.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(19.6 27.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(24.4 27.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(29.2 27.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(34 27.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(38.8 27.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(43.6 27.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(20.1 29.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(24.9 29.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(29.7 29.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(34.5 29.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(39.3 29.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(44.1 29.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(19.6 31.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(24.4 31.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(29.2 31.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(34 31.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(38.8 31.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(43.6 31.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(20.1 33.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(24.9 33.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(29.7 33.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(34.5 33.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(39.3 33.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(44.1 33.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(19.6 36.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(24.4 36.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(29.2 36.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(34 36.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(38.8 36.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(43.6 36.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(20.1 38.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(24.9 38.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(29.7 38.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(34.5 38.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(39.3 38.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-1"
-          transform="translate(44.1 38.45)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(19.6 40.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(24.4 40.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(29.2 40.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(34 40.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(38.8 40.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(43.6 40.7)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(20.1 42.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(24.9 42.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(29.7 42.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(34.5 42.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(39.3 42.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(44.1 42.95)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(19.6 45.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(24.4 45.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(29.2 45.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(34 45.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(38.8 45.2)"
-      />
-      <use
-          href="#echinocereus-rigidissimus-rubispinus-detail-2"
-          transform="translate(43.6 45.2)"
+          d="M10 40H54L50.8 55.5Q49.5 60.5 32 61Q14.5 60.5 13.2 55.5Z"
+          fill="url(#p08-nov01-pot)"
+          stroke="#344f43"
+          stroke-width="0.85"
+      />
+      <g clip-path="url(#p08-nov01-pot-clip)">
+          <path d="M9 40 17 43 19 49 12 51Z" fill="#344f43" opacity="0.33" />
+          <path d="M17 43 26 45 25 52 19 49Z" fill="#8b9d83" opacity="0.6" />
+          <path d="M26 45 36 45 39 51 25 52Z" fill="#526d59" opacity="0.5" />
+          <path d="M36 45 46 43 45 49 39 51Z" fill="#8b9d83" opacity="0.38" />
+          <path d="M46 43 55 40 52 51 45 49Z" fill="#344f43" opacity="0.3" />
+          <path d="M12 51 19 49 22 56 14 59Z" fill="#8b9d83" opacity="0.33" />
+          <path d="M19 49 25 52 22 56Z" fill="#344f43" opacity="0.24" />
+          <path d="M25 52 39 51 36 58 22 56Z" fill="#8b9d83" opacity="0.46" />
+          <path d="M39 51 45 49 50 56 36 58Z" fill="#344f43" opacity="0.33" />
+          <path d="M45 49 52 51 50 56Z" fill="#8b9d83" opacity="0.4" />
+          <path d="M14 59 22 56 27 62 18 61Z" fill="#344f43" opacity="0.25" />
+          <path d="M22 56 36 58 34 62 27 62Z" fill="#8b9d83" opacity="0.35" />
+          <path d="M36 58 50 56 47 61 34 62Z" fill="#526d59" opacity="0.45" />
+      </g>
+      <ellipse
+          cx="32"
+          cy="40"
+          rx="22"
+          ry="6.6"
+          fill="#526d59"
+          stroke="#344f43"
+          stroke-width="0.85"
+      />
+      <ellipse cx="32" cy="39.7" rx="20.4" ry="5.3" fill="#65594b" />
+      <path
+          d="M12.5 37.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#d6c9ac"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M16.5 35.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#a56950"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M21.5 34.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#a7b8b1"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M41.5 34.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#393f39"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M46.5 36.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#d8b894"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M48.5 39.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#776655"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M13 40.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#d6c9ac"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M19.5 38.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#a56950"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M41.5 38.6l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#a7b8b1"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M26.5 36.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#393f39"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M34.5 36.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#d8b894"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <ellipse cx="32" cy="39" rx="14" ry="2.8" fill="#333c2d" opacity="0.24" />
+      <path
+          d="M23.5 38C21.2 31 23.1 18 27 13.4C29.8 10.4 34.8 10.3 37.3 14.2C40.4 19.3 42 30 40.1 37.4Q33 42 23.5 38Z"
+          fill="url(#p08-nov01-body)"
+          stroke="#778773"
+          stroke-width="0.6"
+      />
+      <g clip-path="url(#p08-nov01-clip)">
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(23 12) rotate(-8) scale(0.85)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(23.23 15.1) rotate(-5.48) scale(0.97)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(23.34 18.2) rotate(-5.27) scale(0.98)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(23.3 21.3) rotate(-7.58) scale(0.87)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(23.12 24.4) rotate(-10.27) scale(0.74)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(22.88 27.5) rotate(-10.88) scale(0.72)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(22.69 30.6) rotate(-8.84) scale(0.81)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(22.66 33.7) rotate(-6.03) scale(0.94)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(22.78 36.8) rotate(-5.03) scale(0.99)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(26.39 13.4) rotate(-5) scale(0.89)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(26.45 16.5) rotate(-2.48) scale(0.98)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(26.34 19.6) rotate(-2.27) scale(0.95)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(26.11 22.7) rotate(-4.58) scale(0.83)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(25.89 25.8) rotate(-7.27) scale(0.72)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(25.76 28.9) rotate(-7.88) scale(0.73)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(25.79 32) rotate(-5.84) scale(0.85)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(25.97 35.1) rotate(-3.03) scale(0.97)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(26.21 38.2) rotate(-2.03) scale(0.98)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(29.52 12) rotate(-2) scale(0.93)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(29.35 15.1) rotate(0.52) scale(0.99)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(29.11 18.2) rotate(0.73) scale(0.92)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(28.91 21.3) rotate(-1.58) scale(0.79)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(28.85 24.4) rotate(-4.27) scale(0.71)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(28.95 27.5) rotate(-4.88) scale(0.76)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(29.17 30.6) rotate(-2.84) scale(0.89)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(29.4 33.7) rotate(-0.03) scale(0.99)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(29.54 36.8) rotate(0.97) scale(0.95)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(32.35 13.4) rotate(1) scale(0.96)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(32.11 16.5) rotate(3.52) scale(0.98)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(31.97 19.6) rotate(3.73) scale(0.88)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(31.98 22.7) rotate(1.42) scale(0.75)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(32.14 25.8) rotate(-1.27) scale(0.71)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(32.38 28.9) rotate(-1.88) scale(0.8)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(32.58 32) rotate(0.16) scale(0.93)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(32.65 35.1) rotate(2.97) scale(0.99)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(32.56 38.2) rotate(3.97) scale(0.92)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(35.14 12) rotate(4) scale(0.98)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(35.05 15.1) rotate(6.52) scale(0.96)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(35.13 18.2) rotate(6.73) scale(0.84)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(35.34 21.3) rotate(4.42) scale(0.73)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(35.57 24.4) rotate(1.73) scale(0.73)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(35.73 27.5) rotate(1.12) scale(0.84)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(35.73 30.6) rotate(3.16) scale(0.96)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(35.58 33.7) rotate(5.97) scale(0.98)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(35.34 36.8) rotate(6.97) scale(0.88)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(38.16 13.4) rotate(7) scale(0.99)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(38.31 16.5) rotate(9.52) scale(0.93)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(38.54 19.6) rotate(9.73) scale(0.8)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(38.76 22.7) rotate(7.42) scale(0.71)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(38.85 25.8) rotate(4.73) scale(0.75)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(38.78 28.9) rotate(4.12) scale(0.88)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(38.58 32) rotate(6.16) scale(0.98)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(38.34 35.1) rotate(8.97) scale(0.96)"
+          />
+          <use
+              href="#p08-nov01-comb"
+              transform="translate(38.18 38.2) rotate(9.97) scale(0.84)"
+          />
+      </g>
+      <ellipse cx="32" cy="13.4" rx="4.4" ry="2" fill="#e4d9bd" opacity="0.8" />
+      <path
+          d="M28.5 14l-1-2.6m2.7 2.1 0.3-3m1.3 2.6 1-2.5m0.4 2.9 1.6-2.2m-0.2 3 2-1.6"
+          fill="none"
+          stroke="#f4e8cf"
+          stroke-width="0.48"
+      />
+      <path
+          d="M30.6 12.7l0.2-1.8m1.2 1.9 0.7-2m0.5 2.2 1-1.5"
+          fill="none"
+          stroke="#bb8e86"
+          stroke-width="0.5"
+      />
+      <path
+          d="M44.5 42.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#d6c9ac"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M39.5 43.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#a56950"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M34.5 43.6l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#a7b8b1"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M28.5 43.3l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#393f39"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M22.5 42.9l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#d8b894"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M17.5 41.9l1.2-1 1.8 0.5 0.5 1.6-1.6 0.9-1.7-0.6Z"
+          fill="#776655"
+          stroke="#5d594b"
+          stroke-width="0.22"
+      />
+      <path
+          d="M11 40Q15.5 45.5 25 46M39 45.9Q49 44.8 53 40"
+          fill="none"
+          stroke="#8b9d83"
+          stroke-width="0.85"
       />
   </g>
-  <ellipse
-      cx="32"
-      cy="9.5"
-      rx="4"
-      ry="1.15"
-      fill="#e4d2c3"
-      stroke="none"
-      stroke-width="1"
-  />
-  <ellipse
-      cx="32"
-      cy="9.1"
-      rx="1.2"
-      ry="0.55"
-      fill="#b98791"
-      stroke="none"
-      stroke-width="1"
-  />
-  <path
-      d="M16 45h32v7H16z"
-      fill="#f5aa72"
-      stroke="#5f3a2a"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
-  <path
-      d="m18 52 3 9h22l3-9Z"
-      fill="url(#rubi-pot)"
-      stroke="#5f3a2a"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
 </svg>

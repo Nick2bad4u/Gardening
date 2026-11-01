@@ -1,112 +1,326 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="sempervivum-coconut-crystal-title sempervivum-coconut-crystal-description" data-plant-slug="sempervivum-coconut-crystal" focusable="false">
   <title id="sempervivum-coconut-crystal-title">Coconut Crystal hens and chicks plant portrait</title>
-  <desc id="sempervivum-coconut-crystal-description">A tightly layered lime-green rosette with pointed leaves and muted burgundy leaf bases in a yellow planter.</desc>
+  <desc id="sempervivum-coconut-crystal-description">A low lime-green pointed-leaf rosette with open russet-tinted outer leaves and a tightly folded center, above mixed mineral dressing in a yellow faceted pot.</desc>
   <defs>
-      <linearGradient id="semper-pot" x1="0" x2="0.9" y1="0" y2="1">
-          <stop offset="0" stop-color="#f9dd67" />
-          <stop offset="1" stop-color="#dfa12e" />
+      <linearGradient id="p24-nov01-pot" x1="0" y1="0" x2="1" y2="0.4">
+          <stop offset="0" stop-color="#ffcf43" />
+          <stop offset="0.4" stop-color="#e9a913" />
+          <stop offset="1" stop-color="#986713" />
       </linearGradient>
-      <linearGradient id="coconut-color" x1="0" y1="0" x2="0.85" y2="1">
-          <stop offset="0" stop-color="#d2dca6" />
-          <stop offset="0.33" stop-color="#b3c08b" />
-          <stop offset="0.67" stop-color="#909675" />
-          <stop offset="1" stop-color="#8a6875" />
-      </linearGradient>
-      <g id="coconut-leaf" transform="scale(0.78 1)">
+      <clipPath id="p24-nov01-pot-clip">
+          <path d="M10 36H54L50 55Q48 60 32 61Q16 60 14 55Z" fill="#fff" />
+      </clipPath>
+      <radialGradient id="p24-nov01-outer" cx="0.27" cy="0.2" r="0.9">
+          <stop offset="0" stop-color="#c4cf91" />
+          <stop offset="0.5" stop-color="#a6ae78" />
+          <stop offset="1" stop-color="#9c755b" />
+      </radialGradient>
+      <radialGradient id="p24-nov01-inner" cx="0.27" cy="0.2" r="0.9">
+          <stop offset="0" stop-color="#b9d077" />
+          <stop offset="0.5" stop-color="#87b04f" />
+          <stop offset="1" stop-color="#4d793b" />
+      </radialGradient>
+      <g id="p24-nov01-leaf">
           <path
-              d="M0 2C-4 0-7-5-6-11-5-14-2-18 0-20 2-18 5-14 6-11 7-5 4 0 0 2Z"
-              fill="url(#coconut-color)"
-              stroke="#6b825f"
-              stroke-width="0.65"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              d="M0 2C-2-3-7-7-7-12Q-7-17-2-19L0-22 2-19Q7-17 7-12C7-7 2-3 0 2Z"
+              fill="url(#p24-nov01-outer)"
+              stroke="#a68a6c"
+              stroke-width="0.7"
           />
           <path
-              d="M-4.5-13.8Q-1.7-18 0-20q1.7 2 4.5 6.2"
+              d="M-6.8-13Q-6-18-2-19L0-22 2-19Q6-18 6.8-13"
               fill="none"
-              stroke="#dce3b8"
-              stroke-width="0.35"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              stroke="#b88777"
+              stroke-width="0.65"
           />
       </g>
-      <linearGradient id="coconut-inner-color" x1="0" y1="0" x2="0.85" y2="1">
-          <stop offset="0" stop-color="#bac591" />
-          <stop offset="0.5" stop-color="#9d9979" />
-          <stop offset="1" stop-color="#957d78" />
-      </linearGradient>
-      <g id="coconut-inner-leaf" transform="scale(0.78 1)">
+      <g id="p24-nov01-inner-leaf">
           <path
-              d="M0 2C-4 0-7-5-6-11-5-14-2-18 0-20 2-18 5-14 6-11 7-5 4 0 0 2Z"
-              fill="url(#coconut-inner-color)"
-              stroke="#786e66"
-              stroke-width="0.65"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              d="M0 2C-2-2-5-6-5-10L0-19Q1-14 4-11C7-7 3-1 0 2Z"
+              fill="url(#p24-nov01-inner)"
+              stroke="#527b3c"
+              stroke-width="0.75"
+          />
+          <path
+              d="M-4.5-10L0-19Q1-14 4-11"
+              fill="none"
+              stroke="#d0dc98"
+              stroke-width="0.7"
           />
       </g>
   </defs>
-  <ellipse
-      cx="32"
-      cy="60.5"
-      rx="23"
-      ry="1.9"
-      fill="#244b3b"
-      stroke="none"
-      stroke-width="0"
-      opacity="0.12"
-  />
-  <ellipse
-      cx="32"
-      cy="45.5"
-      rx="23"
-      ry="2.1"
-      fill="#745c45"
-      stroke="none"
-      stroke-width="1"
-  />
-  <g transform="translate(32 31) scale(1.12 0.81)">
-      <use href="#coconut-leaf" transform="rotate(0) scale(1)" />
-      <use href="#coconut-leaf" transform="rotate(36) scale(1)" />
-      <use href="#coconut-leaf" transform="rotate(72) scale(1)" />
-      <use href="#coconut-leaf" transform="rotate(108) scale(1)" />
-      <use href="#coconut-leaf" transform="rotate(144) scale(1)" />
-      <use href="#coconut-leaf" transform="rotate(180) scale(1)" />
-      <use href="#coconut-leaf" transform="rotate(216) scale(1)" />
-      <use href="#coconut-leaf" transform="rotate(252) scale(1)" />
-      <use href="#coconut-leaf" transform="rotate(288) scale(1)" />
-      <use href="#coconut-leaf" transform="rotate(324) scale(1)" />
-      <use href="#coconut-leaf" transform="rotate(18) scale(0.73)" />
-      <use href="#coconut-leaf" transform="rotate(63) scale(0.73)" />
-      <use href="#coconut-leaf" transform="rotate(108) scale(0.73)" />
-      <use href="#coconut-leaf" transform="rotate(153) scale(0.73)" />
-      <use href="#coconut-leaf" transform="rotate(198) scale(0.73)" />
-      <use href="#coconut-leaf" transform="rotate(243) scale(0.73)" />
-      <use href="#coconut-leaf" transform="rotate(288) scale(0.73)" />
-      <use href="#coconut-leaf" transform="rotate(333) scale(0.73)" />
-      <use href="#coconut-inner-leaf" transform="rotate(4) scale(0.47)" />
-      <use href="#coconut-inner-leaf" transform="rotate(64) scale(0.47)" />
-      <use href="#coconut-inner-leaf" transform="rotate(124) scale(0.47)" />
-      <use href="#coconut-inner-leaf" transform="rotate(184) scale(0.47)" />
-      <use href="#coconut-inner-leaf" transform="rotate(244) scale(0.47)" />
-      <use href="#coconut-inner-leaf" transform="rotate(304) scale(0.47)" />
-      <use href="#coconut-inner-leaf" transform="rotate(26) scale(0.24)" />
-      <use href="#coconut-inner-leaf" transform="rotate(116) scale(0.24)" />
-      <use href="#coconut-inner-leaf" transform="rotate(206) scale(0.24)" />
-      <use href="#coconut-inner-leaf" transform="rotate(296) scale(0.24)" />
+  <g stroke-linecap="round" stroke-linejoin="round">
+      <ellipse cx="32" cy="61" rx="23" ry="1.7" fill="#284a3c" opacity="0.16" />
+      <path
+          d="M10 36H54L50 55Q48 60 32 61Q16 60 14 55Z"
+          fill="url(#p24-nov01-pot)"
+          stroke="#986713"
+          stroke-width="0.85"
+      />
+      <g clip-path="url(#p24-nov01-pot-clip)">
+          <path
+              d="M10 36 18 41 16 49 11 45Z"
+              fill="#986713"
+              opacity="0.55"
+              stroke="#986713"
+              stroke-width="0.3"
+          />
+          <path
+              d="M18 41 27 43 25 50 16 49Z"
+              fill="#ffcf43"
+              opacity="0.6"
+              stroke="#986713"
+              stroke-width="0.3"
+          />
+          <path
+              d="M27 43 37 43 38 50 25 50Z"
+              fill="#e9a913"
+              opacity="0.3"
+              stroke="#986713"
+              stroke-width="0.3"
+          />
+          <path
+              d="M37 43 46 41 48 48 38 50Z"
+              fill="#ffcf43"
+              opacity="0.35"
+              stroke="#986713"
+              stroke-width="0.3"
+          />
+          <path
+              d="M46 41 54 36 53 44 48 48Z"
+              fill="#986713"
+              opacity="0.6"
+              stroke="#986713"
+              stroke-width="0.3"
+          />
+          <path
+              d="M11 45 16 49 15 55 12 52Z"
+              fill="#ffcf43"
+              opacity="0.35"
+              stroke="#986713"
+              stroke-width="0.3"
+          />
+          <path
+              d="M16 49 25 50 22 57 15 55Z"
+              fill="#986713"
+              opacity="0.35"
+              stroke="#986713"
+              stroke-width="0.3"
+          />
+          <path
+              d="M25 50 38 50 36 58 22 57Z"
+              fill="#ffcf43"
+              opacity="0.5"
+              stroke="#986713"
+              stroke-width="0.3"
+          />
+          <path
+              d="M38 50 48 48 49 54 36 58Z"
+              fill="#986713"
+              opacity="0.42"
+              stroke="#986713"
+              stroke-width="0.3"
+          />
+          <path
+              d="M48 48 53 44 52 52 49 54Z"
+              fill="#ffcf43"
+              opacity="0.3"
+              stroke="#986713"
+              stroke-width="0.3"
+          />
+          <path
+              d="M15 55 22 57 25 61 17 59Z"
+              fill="#ffcf43"
+              opacity="0.45"
+              stroke="#986713"
+              stroke-width="0.3"
+          />
+          <path
+              d="M22 57 36 58 32 62 25 61Z"
+              fill="#986713"
+              opacity="0.32"
+              stroke="#986713"
+              stroke-width="0.3"
+          />
+          <path
+              d="M36 58 49 54 47 59 32 62Z"
+              fill="#e9a913"
+              opacity="0.45"
+              stroke="#986713"
+              stroke-width="0.3"
+          />
+      </g>
+      <ellipse cx="32" cy="36" rx="22" ry="7.5" fill="#e9a913" />
+      <ellipse cx="32" cy="35.8" rx="20.6" ry="6.2" fill="#66503d" />
+      <path
+          d="M14 34l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#e5d9bd"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M18 31l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#ad6b50"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M23 30l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#b8c5ba"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M29 30l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#343c37"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M35 30l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#d8c4a1"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M41 30l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#995c49"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M47 32l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#b8c5ba"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M49 35l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#d8c4a1"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M15 38l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#343c37"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M20 38l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#995c49"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M24 40l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#e5d9bd"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M29 40l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#ad6b50"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M35 40l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#b8c5ba"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M41 40l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#343c37"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M46 38l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#ad6b50"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M51 37l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#995c49"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M18 35l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#d8c4a1"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M24 34l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#343c37"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M42 34l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#e5d9bd"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M36 35l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#ad6b50"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M30 35l1-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#995c49"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <path
+          d="M32 38l1.5-1.5 2.2 0.2 0.7 1.8-1.6 1.1-2.1-0.3Z"
+          fill="#d8c4a1"
+          stroke="#625348"
+          stroke-width="0.35"
+      />
+      <g transform="translate(32 32) scale(1 0.6)">
+          <use href="#p24-nov01-leaf" transform="rotate(-23) scale(1)" />
+          <use href="#p24-nov01-leaf" transform="rotate(25) scale(0.97)" />
+          <use href="#p24-nov01-leaf" transform="rotate(-70) scale(1.02)" />
+          <use href="#p24-nov01-leaf" transform="rotate(75) scale(1)" />
+          <use href="#p24-nov01-leaf" transform="rotate(-119) scale(0.95)" />
+          <use href="#p24-nov01-leaf" transform="rotate(126) scale(0.98)" />
+          <use href="#p24-nov01-leaf" transform="rotate(176) scale(0.95)" />
+          <ellipse rx="11" ry="11" fill="#50733a" />
+          <use href="#p24-nov01-inner-leaf" transform="rotate(0) scale(0.76)" />
+          <use href="#p24-nov01-inner-leaf" transform="rotate(48) scale(0.76)" />
+          <use href="#p24-nov01-inner-leaf" transform="rotate(-50) scale(0.8)" />
+          <use href="#p24-nov01-inner-leaf" transform="rotate(102) scale(0.78)" />
+          <use href="#p24-nov01-inner-leaf" transform="rotate(-105) scale(0.78)" />
+          <use href="#p24-nov01-inner-leaf" transform="rotate(151) scale(0.77)" />
+          <use href="#p24-nov01-inner-leaf" transform="rotate(-157) scale(0.74)" />
+          <use href="#p24-nov01-inner-leaf" transform="rotate(25) scale(0.54)" />
+          <use href="#p24-nov01-inner-leaf" transform="rotate(-30) scale(0.55)" />
+          <use href="#p24-nov01-inner-leaf" transform="rotate(84) scale(0.51)" />
+          <use href="#p24-nov01-inner-leaf" transform="rotate(-88) scale(0.56)" />
+          <use href="#p24-nov01-inner-leaf" transform="rotate(142) scale(0.54)" />
+          <use href="#p24-nov01-inner-leaf" transform="rotate(-145) scale(0.51)" />
+          <use href="#p24-nov01-inner-leaf" transform="rotate(2) scale(0.34)" />
+          <use href="#p24-nov01-inner-leaf" transform="rotate(-65) scale(0.34)" />
+          <use href="#p24-nov01-inner-leaf" transform="rotate(69) scale(0.34)" />
+          <use href="#p24-nov01-inner-leaf" transform="rotate(135) scale(0.35)" />
+          <use href="#p24-nov01-inner-leaf" transform="rotate(-137) scale(0.32)" />
+          <use href="#p24-nov01-inner-leaf" transform="rotate(20) scale(0.17)" />
+          <use href="#p24-nov01-inner-leaf" transform="rotate(-100) scale(0.18)" />
+          <use href="#p24-nov01-inner-leaf" transform="rotate(140) scale(0.18)" />
+      </g>
+      <path
+          d="M11 37Q16 42 24 42M40 42Q48 41 53 37"
+          fill="none"
+          stroke="#ffcf43"
+          stroke-width="0.7"
+          opacity="0.8"
+      />
   </g>
-  <path
-      d="M7 45h50v7H7z"
-      fill="#f8dd69"
-      stroke="#725016"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
-  <path
-      d="m10 52 4 9h36l4-9Z"
-      fill="url(#semper-pot)"
-      stroke="#725016"
-      stroke-linejoin="round"
-      stroke-width="1.7"
-  />
 </svg>
