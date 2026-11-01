@@ -1,15 +1,13 @@
 # Google Sheets observation logger
 
-Production logger **5.40.3 / immutable version 125** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.40.4 / immutable version 126** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Maintained source **5.40.4** prepares the remaining cactus and front-grid portrait
-update described below. Production remains **5.40.3 / immutable version 125**,
-with **AppSheet 1.100140** using portrait revision **23e95f9e4dfdf1fa** until the
-new artwork is deliberately promoted. Source readback and the saved AppSheet
-expression matched that baseline on November 1. P41's appended optional weight
-field remains unchanged; the earlier dated receipts retain their verified versions.
+Production **5.40.4 / immutable version 126** and **AppSheet 1.100141** use portrait
+revision **1010123212eade00**, verified on November 1. The remaining cactus and
+front-grid portraits are described below. P41's appended optional weight field
+remains unchanged; the earlier dated receipts retain their verified versions.
 
 The mobile logger and AppSheet are the observation input surfaces. The unused
 `Quick log` compatibility tab is hidden. Every saved event becomes a new
@@ -42,7 +40,7 @@ under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-
 
 ## November 1 remaining cactus portrait update
 
-Maintained **5.40.4** revises **19 tracked containers**: the remaining 18 older
+Production **5.40.4** revises **19 tracked containers**: the remaining 18 older
 front-grid portraits and P19's shared cactus planter. The latter's three
 component illustrations use the same shared-pot framing, making **22 changed
 public SVG exports**. The
@@ -50,10 +48,55 @@ public SVG exports**. The
 records the photo evidence, observed pot colors, and appearance-only scope.
 
 The logger source changes only its version and portrait revision. The AppSheet
-manifest retains all 39 IDs and slug mappings. No schema, care behavior, runtime
-permissions, or trigger configuration changes are required. Deployment and
-production-preservation verification are pending; the October 31 receipt below
-describes the currently deployed baseline.
+manifest retains all 39 IDs, names, and slug mappings. No schema, care behavior,
+runtime permissions, or trigger configuration changed.
+
+Commit **af1ef02** passed all five push workflows and eight check runs, including
+SonarCloud, Socket, and both hosted secret scans.
+[Pages run 41346693447](https://github.com/Nick2bad4u/Gardening/actions/runs/41346693447)
+published the site; public readback matched all **22** changed SVG exports exactly.
+Local validation passed **495** focused artwork and logger-client tests, source
+lint and types, formatting, and the **223-page** site check. Independent review
+also passed **117** artwork, UI-icon, and watering-map tests. Every revised
+portrait was inspected at 160, 64, and 32 px in both themes; the rebuilt watering
+map retained desktop and 390 px layouts without horizontal page overflow and
+supported keyboard toggling between fitted and enlarged views.
+
+The staged secret scan passed. The broader local-directory scan reported **201**
+findings, matching the prior triaged count from ignored local snapshots; this
+run did not produce a new per-finding comparison. No security rule or exclusion
+was changed, and the committed revision passed both hosted secret scans.
+
+All **39** AppSheet portraits are in the private
+[GardenPlantPortraits-1010123212eade00 folder](https://drive.google.com/drive/folders/1uc49GrFycF5P8-yhPk1VRHjliQ6fbwTa)
+beside the workbook. Exact names, sizes, Drive MD5 checksums, parent membership,
+and owner-only permissions passed verification. AppSheet **1.100141** saved the
+maintained expression, which persisted after editor reload. The synced client
+loaded all **39** images from the new revision at **150 px** natural width.
+Earlier folders remain available to cached clients.
+
+A [native workbook backup](https://docs.google.com/spreadsheets/d/1itIAl1YgElda2MS2eN0FakV5U-uU09X2qGeIV5jaOYE/edit)
+preceded promotion. Source readback matched immutable **126**, preserving the
+existing logger URL, owner-only access, and execution identity. The live logger
+displayed **Connected · Logger 5.40.4**, **Calculations ready**, and **2,175** used
+History slots; all **39** label-picker portraits loaded. Its **15:40:55 EST**
+bootstrap completed in **15.153 seconds**.
+
+The single five-minute `processQueuedAppSheetEntries` trigger was retained. Its
+**15:39:34 EST** execution completed in **6.348 seconds**, reusing Ready analytics.
+The **15:44:34 EST** execution completed in **15.867 seconds** and refreshed
+analytics with a **44,853-byte** payload. Both logs reported **5.40.4**, **Ready**
+analytics, and zero queued, saved, correction, retry, or deferred single/bulk
+requests. These measurements do not establish a latency guarantee. No installer
+or trigger recreation ran.
+
+The **21-range** comparison preserved all **2,175** observations and unique IDs,
+**1,778** request groups, staging and RO refill records, stored formulas, notes,
+and validations. All **69** tabs, **194** charts, and **130** protections were
+preserved, including chart specifications and positions. Protection lists were
+compared by stable protection ID while retaining every field. The
+**67/59/77-column** History/App entries/App bulk contracts remain unchanged.
+No synthetic production observations were submitted.
 
 ## October 31 cactus and succulent portrait update
 

@@ -6,8 +6,8 @@ workbook. It supports daily browsing, individual observations, collection-wide
 care/weight rounds, save receipts, dashboards, and per-plant charts without
 creating a second gardening database.
 
-Production **AppSheet 1.100140**, logger **5.40.3 / immutable version 125**, and
-the **39-container** native workbook were verified on October 31, 2026. The
+Production **AppSheet 1.100141**, logger **5.40.4 / immutable version 126**, and
+the **39-container** native workbook were verified on November 1, 2026. The
 [logger runbook](../scripts/google-sheets/README.md)
 records the verified deployment and preservation checks.
 Earlier dated records retain their verified historical state.
@@ -17,6 +17,27 @@ The owner-only
 contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
+
+## November 1 remaining cactus portrait update
+
+AppSheet **1.100141** uses portrait revision **1010123212eade00** for the remaining
+18 older front-grid portraits and P19's shared cactus planter. The front grid
+now uses consistent faceted pots with photo-informed plant shapes and colors.
+P19 retains its broad dark patterned shared pot; its three component portraits
+use the same container framing without creating extra inventory records.
+
+The saved Plant tracker → Plant portrait expression matches maintained source
+after editor reload. The synced client loaded all **39** images from the new
+revision at **150 px** natural width. Exact file names, byte counts, Drive MD5
+checksums, parent membership, and owner-only permissions passed verification.
+Earlier folders remain available to cached clients.
+
+Only the portrait expression was edited in AppSheet. All 39 ID, name, and slug
+mappings remain unchanged; table write modes, schemas, validators, and observation
+records were not edited. The
+[logger rollout receipt](../scripts/google-sheets/README.md#november-1-remaining-cactus-portrait-update)
+records the folder, native backup, versioned deployment, successful runtime
+executions, and preservation of all observations, charts, and protections.
 
 ## October 31 cactus and succulent portrait update
 
