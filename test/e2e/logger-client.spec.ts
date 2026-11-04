@@ -994,10 +994,10 @@ const expectCalculationDisclosure = async (page: Readonly<Page>) => {
         )
         .toBeVisible();
 
-    await summary.focus();
+    await summary.evaluate((element) => element.closest("summary")?.focus());
     await page.keyboard.press("Enter");
     await expect.soft(capacity).toHaveAttribute("aria-expanded", "false");
-    await summary.press("Space");
+    await page.keyboard.press("Space");
     await expect.soft(status).toBeVisible();
 };
 
@@ -1346,6 +1346,7 @@ const waterAgeNames = {
     P03: /, P03(?:,|$)/v,
     P04: /, P04(?:,|$)/v,
     P05: /, P05(?:,|$)/v,
+    P06: /, P06(?:,|$)/v,
 };
 const waterAgeTile = (
     picker: Readonly<Locator>,
@@ -1446,8 +1447,223 @@ const expectBulkWaterAgeRefresh = async (page: Readonly<Page>) => {
     await expect.soft(bulk).toHaveAttribute(pressedAttribute, "true");
 };
 
+const expectObservationHelpTap = async (
+    page: Readonly<Page>,
+    summary: Readonly<Locator>,
+    hint: Readonly<Locator>
+) => {
+    await page.mouse.move(0, 0);
+    await page.keyboard.press("Escape");
+    await summary.tap();
+    await expect.soft(hint).toBeVisible();
+    await summary.tap();
+    await expect.soft(hint).toBeHidden();
+};
+
+test.describe("observation time help", { tag: "@logger" }, () => {
+    test.use({ hasTouch: true });
+
+    for (const theme of ["dark", "light"] as const) {
+        for (const [
+            mode,
+            prefix,
+            hintText,
+        ] of [
+            [
+                "Single plant",
+                "observedAt",
+                "Uses the current time when you save or queue. Edit for an earlier event.",
+            ],
+            [
+                bulkCareTab,
+                "bulkObservedAt",
+                "Uses the current time when you save. Edit for an earlier event.",
+            ],
+        ] as const) {
+            test(`390px ${theme} ${mode} exposes timestamp guidance by keyboard and pointer`, async ({
+                page,
+            }) => {
+                await openLogger(page, 390, theme);
+                await page
+                    .getByRole("tab", { exact: true, name: mode })
+                    .click();
+                const summary = page
+                    .getByRole("form", { name: `${mode} entry` })
+                    .getByLabel("About observation time", {
+                        exact: true,
+                    });
+                const hint = page.getByText(hintText, { exact: true });
+                await expect.soft(hint).toBeHidden();
+                await summary.focus();
+                await expect.soft(hint).toBeVisible();
+                await expect
+                    .soft(
+                        page
+                            .getByLabel("Observed date", { exact: true })
+                            .filter({ visible: true })
+                    )
+                    .toHaveAttribute("aria-describedby", `${prefix}Hint`);
+                await page.keyboard.press("Escape");
+                await expect.soft(hint).toBeHidden();
+                await summary.hover();
+                await expect
+                    .poll(() =>
+                        hint.evaluate((element) => {
+                            const rect = element.getBoundingClientRect();
+                            return (
+                                rect.width > 0 &&
+                                rect.left >= 0 &&
+                                rect.right <= innerWidth
+                            );
+                        })
+                    )
+                    .toBe(true);
+                await expectObservationHelpTap(page, summary, hint);
+            });
+        }
+
+        test(`390px ${theme} preserves native dropdown selection with arrow clearance`, async ({
+            page,
+        }) => {
+            await openLogger(page, 390, theme);
+            const select = page.getByRole("combobox", {
+                exact: true,
+                name: "Event",
+            });
+            expect
+                .soft(
+                    await select.evaluate((element) => {
+                        const style = getComputedStyle(element);
+                        return {
+                            arrow: style.backgroundImage !== "none",
+                            clearance:
+                                Number(
+                                    style.paddingInlineEnd.replace("px", "")
+                                ) >= 44,
+                            nativeArrowHidden: style.appearance === "none",
+                        };
+                    })
+                )
+                .toStrictEqual({
+                    arrow: true,
+                    clearance: true,
+                    nativeArrowHidden: true,
+                });
+            await select.selectOption("Water");
+            await expect.soft(select).toHaveValue("Water");
+        });
+    }
+});
+
+const opaqueLuminance = (color: string) => {
+    const channels = color.match(/[\d.]+/gv)?.map(Number);
+    if (!channels || channels.length < 3 || (channels[3] ?? 1) !== 1)
+        throw new Error(`Expected an opaque computed color: ${color}`);
+    const [
+        red = 0,
+        green = 0,
+        blue = 0,
+    ] = channels.slice(0, 3).map((channel) => {
+        const normalized = channel / 255;
+        return normalized <= 0.04045
+            ? normalized / 12.92
+            : ((normalized + 0.055) / 1.055) ** 2.4;
+    });
+    return red * 0.2126 + green * 0.7152 + blue * 0.0722;
+};
+
+const expectUnavailableAgeContrast = async (tile: Readonly<Locator>) => {
+    await tile.click();
+    await expect.soft(tile).toHaveAttribute(pressedAttribute, "true");
+    const colors = await tile
+        .getByText("No data", { exact: true })
+        .evaluate((badge) => {
+            const style = getComputedStyle(badge);
+            return {
+                background: style.backgroundColor,
+                foreground: style.color,
+            };
+        });
+    const foreground = opaqueLuminance(colors.foreground);
+    const background = opaqueLuminance(colors.background);
+    const ratio =
+        (Math.max(foreground, background) + 0.05) /
+        (Math.min(foreground, background) + 0.05);
+    expect.soft(ratio).toBeGreaterThanOrEqual(4.5);
+};
+
 test.describe("watering age picker", { tag: "@logger" }, () => {
     for (const theme of ["dark", "light"] as const) {
+        const neutralColor =
+            theme === "dark" ? "rgb(17, 25, 20)" : "rgb(255, 255, 255)";
+
+        test(`390px ${theme} matches workbook color interpolation and clears unconfirmed colors`, async ({
+            page,
+        }) => {
+            const fixture = wateringAgeFixture().replace(
+                '["2026-09-09", "2026-09-08", "", "2026-02-30"]',
+                '["2026-09-09", "2026-09-02", "2026-08-26", "2026-08-19", "2026-08-12", "2026-08-11", "", "2026-02-30"]'
+            );
+            await openLogger(page, 390, theme, fixture);
+            await pickerMode(page, "Labels").click();
+            await pickerMode(page, waterAgeToggleName).click();
+            const badges = tablePicker(page).getByRole("button");
+            const readColors = () =>
+                badges.evaluateAll((elements) =>
+                    elements
+                        .filter((element) =>
+                            /^P0[1-8]$/v.test(element.dataset["plantId"] ?? "")
+                        )
+                        .toSorted((left, right) =>
+                            (left.dataset["plantId"] ?? "").localeCompare(
+                                right.dataset["plantId"] ?? ""
+                            )
+                        )
+                        .map((element) => {
+                            const badge =
+                                element.querySelector<HTMLElement>(
+                                    ":scope .water-age"
+                                );
+                            if (!badge)
+                                throw new Error("Missing watering age badge");
+                            return {
+                                color: getComputedStyle(badge).backgroundColor,
+                                days: badge.dataset["days"] ?? "unknown",
+                            };
+                        })
+                );
+            expect.soft(await readColors()).toStrictEqual([
+                { color: "rgb(87, 187, 138)", days: "0" },
+                { color: "rgb(171, 201, 120)", days: "7" },
+                { color: "rgb(255, 214, 102)", days: "14" },
+                { color: "rgb(243, 169, 109)", days: "21" },
+                { color: "rgb(230, 124, 115)", days: "28" },
+                { color: "rgb(230, 124, 115)", days: "29" },
+                { color: neutralColor, days: "unknown" },
+                { color: neutralColor, days: "unknown" },
+            ]);
+            await refreshLogger(page);
+            expect.soft(await readColors()).toStrictEqual(
+                Array.from({ length: 8 }, () => ({
+                    color: neutralColor,
+                    days: "unknown",
+                }))
+            );
+            await confirmWaterAgeRefresh(page, true);
+            expect.soft(await readColors()).toStrictEqual(
+                Array.from({ length: 8 }, () => ({
+                    color: neutralColor,
+                    days: "unknown",
+                }))
+            );
+            await expectUnavailableAgeContrast(
+                waterAgeTile(tablePicker(page), "P02")
+            );
+            const queued = waterAgeTile(tablePicker(page), "P06");
+            await expect.soft(queued).toHaveAccessibleName(/Queued/v);
+            await expectUnavailableAgeContrast(queued);
+        });
+
         test(`390px ${theme} toggles ages without changing drafts or filters`, async ({
             page,
         }, testInfo) => {
@@ -1465,6 +1681,15 @@ test.describe("watering age picker", { tag: "@logger" }, () => {
                 .getByRole("textbox", { exact: true, name: "Notes" })
                 .fill(waterAgeDraft);
             const toggle = pickerMode(page, waterAgeToggleName);
+            expect
+                .soft(
+                    await toggle.evaluate((element) =>
+                        element
+                            .querySelector(":scope svg use")
+                            ?.getAttribute("href")
+                    )
+                )
+                .toBe("#app-icon-water");
             await toggle.focus();
             await page.keyboard.press("Enter");
             await expect.soft(toggle).toBeFocused();

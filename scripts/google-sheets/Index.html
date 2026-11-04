@@ -33,6 +33,7 @@
                 --help-note: #fff3d5;
                 --help-note-ink: #684812;
                 --button-press-brightness: 0.85;
+                --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='m4 6 4 4 4-4' fill='none' stroke='%23617065' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 
                 &[data-theme="dark"] {
                     color-scheme: dark;
@@ -57,6 +58,7 @@
                     --help-note: #382f1d;
                     --help-note-ink: #f3dca4;
                     --button-press-brightness: 1.25;
+                    --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='m4 6 4 4 4-4' fill='none' stroke='%23a9b8ab' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
                     --shadow: 0 10px 30px rgb(0 0 0 / 0.3);
                 }
             }
@@ -321,6 +323,20 @@
                 }
             }
 
+            select:where(:not([multiple], [size])) {
+                padding-inline-end: 44px;
+                appearance: none;
+                background-image: var(--select-arrow);
+                background-repeat: no-repeat;
+                background-position: right 14px center;
+                background-size: 16px;
+
+                @media (forced-colors: active) {
+                    appearance: auto;
+                    background-image: none;
+                }
+            }
+
             input:focus,
             select:focus,
             textarea:focus,
@@ -458,11 +474,21 @@
 
             .water-age {
                 display: block;
+                inline-size: fit-content;
                 max-inline-size: 100%;
+                padding: 2px 6px;
                 font-size: 0.75rem;
                 font-weight: 700;
+                font-variant-numeric: tabular-nums;
                 color: var(--muted);
                 overflow-wrap: anywhere;
+                background: var(--control);
+                border-radius: 6px;
+
+                &[data-days] {
+                    color: #173123;
+                    background: var(--water-age-color);
+                }
             }
 
             .label-choice.has-water-age {
@@ -472,7 +498,6 @@
                     flex-basis: 100%;
                     font-size: 0.625rem;
                     line-height: 1.25;
-                    color: inherit;
                 }
             }
 
@@ -494,6 +519,9 @@
                     min-inline-size: 0;
                     padding: 3px 1px;
                     font-size: 0.875rem;
+                }
+                & .label-choice .water-age {
+                    flex-basis: auto;
                 }
                 & .label-choice::before,
                 & .label-choice::after {
@@ -702,26 +730,83 @@
             .workflow-status {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 0 12px;
+                gap: 8px 12px;
                 align-items: center;
                 justify-content: space-between;
                 margin-block-end: 8px;
             }
 
             .workbook-calculation-details {
-                & > summary {
-                    align-content: center;
-                    min-block-size: 44px;
-                    color: var(--muted);
-                    cursor: pointer;
+                --calculation-surface: var(--card-soft);
+                --calculation-ink: var(--muted);
+                max-inline-size: 100%;
+                overflow: hidden;
+                font-size: 0.875rem;
+                color: var(--muted);
+                background: var(--card-soft);
+                border: 1px solid var(--line);
+                border-radius: 14px;
+
+                &[data-state="ready"] {
+                    --calculation-surface: var(--leaf-soft);
+                    --calculation-ink: var(--forest-2);
                 }
 
-                &[open] {
+                &[data-state="pending"] {
+                    --calculation-surface: var(--help-surface);
+                    --calculation-ink: var(--info-ink);
+                }
+
+                &[data-state="failed"],
+                &[data-state="offline"] {
+                    --calculation-surface: var(--help-note);
+                    --calculation-ink: var(--help-note-ink);
+                }
+
+                & > summary {
+                    display: flex;
+                    gap: 8px;
+                    align-items: center;
+                    min-block-size: 44px;
+                    padding: 10px 12px;
+                    font-weight: 700;
+                    color: var(--calculation-ink);
+                    cursor: pointer;
+                    list-style-type: "";
+                    background: var(--calculation-surface);
+
+                    &::after {
+                        flex: none;
+                        inline-size: 7px;
+                        block-size: 7px;
+                        margin-inline-start: auto;
+                        content: "";
+                        border-block-end: 2px solid currentcolor;
+                        border-inline-end: 2px solid currentcolor;
+                        transform: rotate(45deg) translateY(-2px);
+                    }
+
+                    &:focus-visible {
+                        outline: 2px solid var(--forest-2);
+                        outline-offset: -3px;
+                    }
+                }
+
+                &:where([open]) {
                     flex-basis: 100%;
+
+                    & > summary {
+                        border-block-end: 1px solid var(--line);
+                    }
+
+                    & > summary::after {
+                        transform: rotate(225deg) translateY(-2px);
+                    }
                 }
 
                 & p {
-                    margin-block: 0 8px;
+                    margin: 10px 12px;
+                    line-height: 1.5;
                     overflow-wrap: anywhere;
                 }
             }
@@ -1196,6 +1281,10 @@
 
                 & textarea {
                     min-block-size: 64px;
+                }
+
+                & select {
+                    padding-inline-end: 44px;
                 }
 
                 & summary {
@@ -2501,8 +2590,9 @@
 
                 & select {
                     inline-size: auto;
-                    min-block-size: 36px;
-                    padding: 6px 28px 6px 9px;
+                    min-block-size: 44px;
+                    padding-block: 6px;
+                    padding-inline-start: 9px;
                     font-size: 1rem;
                     border-radius: 9px;
                 }
@@ -3003,10 +3093,21 @@
             .observation-clock-part {
                 border-inline-start: 1px solid var(--line);
             }
-            .observation-time-hint {
-                display: block;
-                margin-block-start: 8px;
-                line-height: 1.5;
+            .observation-time-label {
+                display: flex;
+                gap: 6px;
+                align-items: center;
+
+                & .field-label {
+                    margin: 0;
+                }
+            }
+
+            .observation-time-help .help-trigger {
+                justify-content: center;
+                inline-size: 44px;
+                padding: 6px;
+                border-radius: 50%;
             }
             .event-guidance {
                 display: grid;
@@ -14423,7 +14524,7 @@
                         ></span>
                         <details
                             id="workbookCalculationDetails"
-                            class="workbook-calculation-details hint"
+                            class="workbook-calculation-details"
                         >
                             <summary id="workbookCalculationSummary"
                                 >Calculation status</summary
@@ -14547,7 +14648,14 @@
                                         class="picker-mode picker-mode--water-age"
                                         type="button"
                                         aria-pressed="false"
-                                        >Days since watered</button
+                                        ><svg
+                                            viewBox="0 0 64 64"
+                                            class="app-icon app-icon--small"
+                                            aria-hidden="true"
+                                        >
+                                            <use href="#app-icon-water"></use>
+                                        </svg>
+                                        <span>Days since watered</span></button
                                     >
                                 </div>
                             </div>
@@ -15824,11 +15932,19 @@
                             >
                             <div class="fields">
                                 <div class="field full">
-                                    <label
-                                        class="field-label"
-                                        for="observedAtDate"
-                                        >Observed at</label
-                                    >
+                                    <div class="observation-time-label">
+                                        <label
+                                            class="field-label"
+                                            for="observedAtDate"
+                                            >Observed at</label
+                                        >
+                                        <div id="observedAtHelp">
+                                            <span
+                                                class="help-paragraph"
+                                                id="observedAtHint"
+                                            ></span>
+                                        </div>
+                                    </div>
                                     <div class="observation-time-control"
                                         ><input
                                             id="observedAt"
@@ -15884,10 +16000,6 @@
                                                     href="#app-icon-clock"
                                                 ></use></svg></button
                                     ></div>
-                                    <span
-                                        class="hint observation-time-hint"
-                                        id="observedAtHint"
-                                    ></span>
                                 </div>
                                 <div class="field full">
                                     <label
@@ -16115,12 +16227,21 @@
                                 ></div
                             >
                             <div class="fields">
-                                <div class="field full"
-                                    ><label
-                                        class="field-label"
-                                        for="bulkObservedAtDate"
-                                        >Observed at</label
-                                    ><div class="observation-time-control"
+                                <div class="field full">
+                                    <div class="observation-time-label">
+                                        <label
+                                            class="field-label"
+                                            for="bulkObservedAtDate"
+                                            >Observed at</label
+                                        >
+                                        <div id="bulkObservedAtHelp">
+                                            <span
+                                                class="help-paragraph"
+                                                id="bulkObservedAtHint"
+                                            ></span>
+                                        </div>
+                                    </div>
+                                    <div class="observation-time-control"
                                         ><input
                                             id="bulkObservedAt"
                                             aria-label="Canonical bulk observation time"
@@ -16175,10 +16296,6 @@
                                                     href="#app-icon-clock"
                                                 ></use></svg></button
                                     ></div>
-                                    <span
-                                        class="hint observation-time-hint"
-                                        id="bulkObservedAtHint"
-                                    ></span>
                                 </div>
                                 <div class="field full"
                                     ><label
@@ -17988,7 +18105,22 @@
                 const hint = isCurrent
                     ? `Uses the current time when you save${id === "observedAt" ? " or queue" : ""}. Edit for an earlier event.`
                     : "Uses the time above. It stays fixed for this entry.";
-                $(`${id}Hint`).textContent = hint;
+                const hintText = $(`${id}Hint`);
+                hintText.textContent = hint;
+                const helpContainer = $(`${id}Help`);
+                if (!helpContainer.querySelector(".help-disclosure")) {
+                    const help = createHelp("Observation time", hintText);
+                    help.classList.add("observation-time-help");
+                    const trigger = help.querySelector("summary");
+                    trigger.setAttribute(
+                        "aria-label",
+                        "About observation time"
+                    );
+                    trigger.replaceChildren(
+                        createIcon("info", "app-icon app-icon--small")
+                    );
+                    helpContainer.replaceChildren(help);
+                }
                 $(`${id}Now`).title = isCurrent
                     ? hint
                     : "Use current time instead of the selected time";
@@ -19037,10 +19169,30 @@
                     (Date.parse(`${today}T00:00:00Z`) - timestamp) / 86400000;
                 return days >= 0 && Number.isInteger(days)
                     ? {
+                          days,
                           short: `${days}d`,
                           text: `${days} ${days === 1 ? "day" : "days"} since watered`,
                       }
                     : unavailable;
+            }
+
+            // Match Plant tracker E2:E40's native 0 / 14 / 28-day color scale.
+            // These colors describe elapsed history, not watering readiness.
+            function wateringAgeColor(days) {
+                if (!Number.isInteger(days) || days < 0) return "";
+                const green = [87, 187, 138];
+                const yellow = [255, 214, 102];
+                const coral = [230, 124, 115];
+                const firstHalf = days <= 14;
+                const start = firstHalf ? green : yellow;
+                const end = firstHalf ? yellow : coral;
+                const fraction = firstHalf
+                    ? days / 14
+                    : (Math.min(days, 28) - 14) / 14;
+                const channels = start.map((channel, index) =>
+                    Math.round(channel + (end[index] - channel) * fraction)
+                );
+                return `rgb(${channels.join(" ")})`;
             }
 
             function renderWaterAgeDisplays() {
@@ -19082,6 +19234,17 @@
                                 : age.text;
                             badge.setAttribute("aria-label", age.text);
                             badge.title = age.text;
+                            const color = wateringAgeColor(age.days);
+                            if (color) {
+                                badge.dataset.days = String(age.days);
+                                badge.style.setProperty(
+                                    "--water-age-color",
+                                    color
+                                );
+                            } else {
+                                delete badge.dataset.days;
+                                badge.style.removeProperty("--water-age-color");
+                            }
                         } else badge?.remove();
                         element.classList.toggle("has-water-age", shown);
                         const previous = element.dataset.waterAgeSuffix || "";
@@ -21629,6 +21792,31 @@
                 help.open = true;
                 helpTrigger(help).setAttribute("aria-expanded", "true");
                 positionHelp(help);
+            }
+
+            function updateHelpOnScroll() {
+                document
+                    .querySelectorAll(".help-disclosure[open]")
+                    .forEach((help) => {
+                        const trigger =
+                            helpTrigger(help).getBoundingClientRect();
+                        const viewport = window.visualViewport;
+                        const top = viewport?.offsetTop || 0;
+                        const left = viewport?.offsetLeft || 0;
+                        const height = viewport?.height || window.innerHeight;
+                        const width = viewport?.width || window.innerWidth;
+                        // Keyboard focus may scroll the trigger into view after
+                        // opening help. Keep its focused explanation available.
+                        if (
+                            helpContains(help, document.activeElement) &&
+                            trigger.bottom > top &&
+                            trigger.top < top + height &&
+                            trigger.right > left &&
+                            trigger.left < left + width
+                        )
+                            positionHelp(help);
+                        else closeHelp(help);
+                    });
             }
 
             function dismissOutsideHelp(event) {
@@ -25840,8 +26028,21 @@
                     offline: "Calculations offline",
                     unconfirmed: "Calculation unconfirmed",
                 };
-                $("workbookCalculationSummary").textContent =
-                    summaries[status] || summaries.unconfirmed;
+                const icons = {
+                    ready: "check",
+                    pending: "refresh",
+                    failed: "caution",
+                    busy: "clock",
+                    offline: "caution",
+                    unconfirmed: "info",
+                };
+                $("workbookCalculationDetails").dataset.state = status;
+                setIconLabel(
+                    $("workbookCalculationSummary"),
+                    icons[status] || icons.unconfirmed,
+                    summaries[status] || summaries.unconfirmed,
+                    "app-icon app-icon--small"
+                );
                 if (status !== "ready")
                     $("workbookCalculationDetails").open = true;
                 const lastSuccess = state.workbookCalculatedAt
@@ -26469,7 +26670,7 @@
                 "scroll",
                 (event) => {
                     if (!event.target.closest?.(".help-text"))
-                        closeHelpPanels();
+                        updateHelpOnScroll();
                 },
                 { capture: true, passive: true }
             );
@@ -26481,7 +26682,7 @@
                 closeHelpPanels()
             );
             window.visualViewport?.addEventListener("scroll", () =>
-                closeHelpPanels()
+                updateHelpOnScroll()
             );
             document.addEventListener("keydown", (event) => {
                 if (event.key !== "Escape") return;

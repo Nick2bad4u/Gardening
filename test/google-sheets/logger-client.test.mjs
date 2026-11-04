@@ -14391,6 +14391,12 @@ describe("manual workbook recalculation", () => {
         const calculationDate = new Date(calculatedAt);
 
         expect(disclosure.open).toBe(false);
+        expect(disclosure.dataset["state"]).toBe("ready");
+        expect(
+            queryElement(disclosure, "summary svg", Element).getAttribute(
+                "aria-hidden"
+            )
+        ).toBe("true");
         expect(icon.querySelector("use")?.getAttribute("href")).toBe(
             "#app-icon-history"
         );
@@ -14521,6 +14527,13 @@ describe("manual workbook recalculation", () => {
                 window.document,
                 "#workbookCalculationDetails",
                 HTMLDetailsElement
+            ).dataset["state"]
+        ).toBe("pending");
+        expect(
+            queryElement(
+                window.document,
+                "#workbookCalculationDetails",
+                HTMLDetailsElement
             ).open
         ).toBe(true);
         expect(
@@ -14534,6 +14547,13 @@ describe("manual workbook recalculation", () => {
 
         expect(button.disabled).toBe(false);
         expect(status.textContent).toContain("Workbook calculations refreshed");
+        expect(
+            queryElement(
+                window.document,
+                "#workbookCalculationDetails",
+                HTMLDetailsElement
+            ).dataset["state"]
+        ).toBe("ready");
         expect(status.textContent).toContain("Last confirmed calculation:");
         expect(notes.value).toBe("Keep my unfinished observation");
         expect(window.document.activeElement).toBe(notes);
@@ -14551,6 +14571,13 @@ describe("manual workbook recalculation", () => {
         button.click();
 
         expect(status.textContent).toContain("Recalculation failed");
+        expect(
+            queryElement(
+                window.document,
+                "#workbookCalculationDetails",
+                HTMLDetailsElement
+            ).dataset["state"]
+        ).toBe("failed");
         expect(
             status.textContent.split("Last confirmed calculation:", 2)[1]
         ).toBe(successText);

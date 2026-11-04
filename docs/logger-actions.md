@@ -35,7 +35,7 @@ records production 5.40.0 / immutable 122 and the enrollment verification.
 
 - **P-ID** identifies the tracked plant/container over time. **Pot label** is the physical label such as A1 or #2. Saved rows retain the label at entry, so an old label can be correct historical evidence.
 - **Observed at / Started at / Date** means when the action or measurement happened. Backdate an observation to its real time when appropriate; **Recorded** separately stores when it was saved.
-- In the phone logger, **Observed at** uses the current time when you save or queue an entry. Edit it to record earlier care, or choose **Use current time** to resume automatic timing. Queued entries and retries keep their original observation time.
+- In the phone logger, **Observed at** uses the current time when you save or queue an entry. Edit it to record earlier care, or choose **Use current time** to resume automatic timing. The information icon beside **Observed at** explains the current timing mode when tapped, hovered, or focused. Queued entries and retries keep their original observation time.
 - **Pot setup** identifies the whole weighed configuration. It is not the pot size in inches.
 - **Notes** hold useful details not covered by structured fields. In a multi-event save, the note is attached to the first generated event rather than copied onto every row.
 - **Plant condition**, **Soil moisture**, and **Medium / substrate** are different fields. New above-ground condition observations use Inspect; soil moisture uses Soil check (stored as Check). Historical condition-only Check records and their supported corrections remain valid. The growing-medium description belongs to Repot.
@@ -65,6 +65,11 @@ in the plant picker. The setting is remembered on this device and also applies t
 **Bulk care**. It keeps the current search, filters, selections, and unfinished
 entries. Labels and Table show compact counts such as `0d`, `1d`, and `12d`;
 List spells out the number of days.
+
+Confirmed counts follow the spreadsheet's continuous color scale: green at
+0 days, yellow at 14 days, and coral at 28 days, with blended colors between
+those points. Counts above 28 retain coral. Missing or unconfirmed ages stay
+neutral; the colors do not indicate when to water.
 
 The count uses the latest active recorded Water event across all pot setups,
 including Partial and Spot waterings. It counts calendar dates in the workbook's
