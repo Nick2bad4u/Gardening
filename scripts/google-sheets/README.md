@@ -1,10 +1,10 @@
 # Google Sheets observation logger
 
-Production logger **5.41.0 / immutable version 127** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.41.1 / immutable version 128** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Production **5.41.0 / immutable version 127** and **AppSheet 1.100141** retain portrait
+Production **5.41.1 / immutable version 128** and **AppSheet 1.100141** retain portrait
 revision **1010123212eade00**, verified on November 1. The remaining cactus and
 front-grid portraits are described below. P41's appended optional weight field
 remains unchanged; the earlier dated receipts retain their verified versions.
@@ -40,13 +40,14 @@ under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-
 
 ## November 4 logger control refinements
 
-Maintained logger **5.41.1** adds a water icon to **Days since watered** and
+Production logger **5.41.1 / immutable version 128** adds a water icon to **Days since watered** and
 matches the live Plant tracker's continuous watering-age color scale:
 **0 days `#57bb8a`**, **14 days `#ffd666`**, and **28 days `#e67c73`**.
 The November 4 native rule read confirmed numeric interpolation points on
 `Plant tracker!E2:E40`. The logger blends between those points and holds the
 endpoint color above 28 days. Missing, invalid, pending, or unconfirmed ages
-remain neutral. The colors describe recorded history, not watering readiness.
+remain neutral, with an opaque theme background that preserves text contrast
+on selected and queued plants. The colors describe recorded history, not watering readiness.
 
 Calculation status now uses an icon, a themed disclosure header, and an inset
 details panel while retaining its existing status, last-success time, and
@@ -56,9 +57,52 @@ interactions in both single and bulk care. The current-time action and fixed
 queued timestamps retain their behavior. Native select controls gain consistent
 chevron clearance; Recent History still starts at 10 and honors a saved limit.
 
-This presentation update changes no workbook schema, formulas, observations,
-AppSheet configuration, runtime permissions, or queue trigger. Production
-promotion and verification are pending.
+The existing deployment was updated on November 4 at **16:26:14 EST**. Exact
+source and immutable-version readback matched reviewed commit **58a0534** from
+[PR #36](https://github.com/Nick2bad4u/Gardening/pull/36), merged as **0caf27f**.
+The existing logger URL, owner-only access, execution identity, and manifest
+were preserved. This presentation update changes no workbook schema, care
+calculation, AppSheet configuration, runtime permissions, or queue trigger.
+
+The final candidate passed **20 hosted checks**, with three expected PR and
+Dependabot skips. Local validation passed **2,008 logger tests**, the existing
+coverage gates, and **84 Chromium/Edge logger browser cases**. These included
+exact color interpolation, freshness clearing, both themes at 390 px, timestamp
+help interactions, select spacing, and at least **4.5:1** text contrast for
+unavailable ages on selected and queued plants. Type, lint, formatting, artwork,
+secret, Pages build, and **223-page** site checks passed. Firefox and WebKit were
+not run locally.
+
+A disposable native script accepted the candidate and returned all **39 plants**
+with confirmed watering ages. The final neutral-background refinement passed a
+separate `doGet()` check; the unchanged server bootstrap was not repeated. Both
+rehearsals restored the scratch script exactly. A verified, owner-only
+[native backup](https://docs.google.com/spreadsheets/d/1gaQyH-jQ86M8nG5NsAS1cj5kSzGHYwizOjIQGQ4pCVc/edit)
+preceded production promotion. No synthetic production observations were submitted.
+
+The production comparison preserved **2,187 observations and unique IDs**,
+**1,790 request groups**, and all captured entered values and formulas in
+History, App entries, App bulk, and RO refills. The **67/59/77-column** contracts
+remain unchanged. Those full table captures omitted notes and validation fields;
+they do not establish preservation of that metadata across the entire workbook.
+The immediate predeployment read captured notes and validations explicitly for
+its sampled ranges, and the corresponding post-deployment structured response
+matched exactly.
+
+A fresh authenticated reload displayed **Connected · Logger 5.41.1**. Live checks
+confirmed the water icon, interpolated and clamped day colors, neutral **No Water**
+badges, calculation disclosure, and single/bulk timestamp help. Click, keyboard
+focus, and Escape worked. Recent History retained 10 with **44 px** end padding
+and a **14 px** chevron inset. Both themes passed at **390 px** and **1280 px**
+outer browser widths without horizontal overflow; the phone help popover stayed
+inside the content viewport. The browser console contained no warnings or errors.
+
+Native execution records show the version 128 `getWebAppBootstrap` run at
+**16:27:42 EST** completing in **13.036 seconds**, and the HEAD
+`processQueuedAppSheetEntries` run at **16:29:34 EST** completing in
+**15.327 seconds**. These are individual successful executions, not latency or
+daily-quota guarantees. Fresh trigger inspection confirmed exactly one
+five-minute queue trigger with daily failure notifications.
 
 ## November 4 post-release runtime check
 
