@@ -77,7 +77,6 @@
     margin: 0;
     font-size: 1.125rem;
     line-height: 1.375;
-    text-wrap: pretty;
     overflow-wrap: anywhere;
 }
 
