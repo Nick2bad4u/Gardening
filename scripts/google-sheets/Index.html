@@ -392,7 +392,7 @@
                         0,
                         1fr
                     )
-                    [filter-end];
+                    [filter-end age-start] auto [age-end];
                 gap: 2px;
                 inline-size: fit-content;
                 max-inline-size: 100%;
@@ -453,6 +453,26 @@
                 & .plant-choice-icon {
                     inline-size: 1.55rem;
                     block-size: 1.55rem;
+                }
+            }
+
+            .water-age {
+                display: block;
+                max-inline-size: 100%;
+                font-size: 0.75rem;
+                font-weight: 700;
+                color: var(--muted);
+                overflow-wrap: anywhere;
+            }
+
+            .label-choice.has-water-age {
+                flex-wrap: wrap;
+
+                & .water-age {
+                    flex-basis: 100%;
+                    font-size: 0.625rem;
+                    line-height: 1.25;
+                    color: inherit;
                 }
             }
 
@@ -2775,7 +2795,8 @@
                         [mode-start] minmax(0, 1fr) [mode-end]
                     );
                     inline-size: 100%;
-                    & .picker-mode--unweighed {
+                    & .picker-mode--unweighed,
+                    & .picker-mode--water-age {
                         grid-column: 1 / -1;
                     }
                     & .picker-mode {
@@ -14521,6 +14542,13 @@
                                         </svg>
                                         <span>Not weighed today</span>
                                     </button>
+                                    <button
+                                        id="daysSinceWatered"
+                                        class="picker-mode picker-mode--water-age"
+                                        type="button"
+                                        aria-pressed="false"
+                                        >Days since watered</button
+                                    >
                                 </div>
                             </div>
                             <div
@@ -17074,6 +17102,9 @@
                 bootstrapReady: false,
                 bootstrapRefreshTimer: null,
                 bootstrapRefreshAttempt: 0,
+                bootstrapReceivedAt: 0,
+                wateringAgesConfirmed: false,
+                waterAgesVisible: false,
                 summaryPlantId: "",
                 recentDataKey: "",
                 workflowDay: "",
@@ -17098,6 +17129,7 @@
             const THEME_KEY = "gardenLoggerThemeV1";
             const PLANT_PICKER_MODE_KEY = "gardenLoggerPlantPickerModeV1";
             const BULK_PICKER_MODE_KEY = "gardenLoggerBulkPickerModeV1";
+            const WATER_AGE_VISIBILITY_KEY = "gardenLoggerWaterAgesVisibleV1";
             const PHOTO_VISIBILITY_KEY = "gardenLoggerPhotosVisibleV1";
             const CHART_VISIBILITY_KEY = "gardenLoggerChartsVisibleV1";
             const RECENT_LIMIT_KEY = "gardenLoggerRecentLimitV1";
@@ -18950,6 +18982,121 @@
                 }
             }
 
+            function wateringCalendarDay() {
+                if (
+                    !state.wateringAgesConfirmed ||
+                    state.bootstrap?.wateringAgesAvailable !== true ||
+                    !state.bootstrap.timeZone
+                )
+                    return "";
+                const serverTime = Date.parse(state.bootstrap.serverTime);
+                if (!Number.isFinite(serverTime)) return "";
+                try {
+                    const now = new Date(
+                        serverTime +
+                            Math.max(0, Date.now() - state.bootstrapReceivedAt)
+                    );
+                    const parts = new Intl.DateTimeFormat("en-US", {
+                        timeZone: state.bootstrap.timeZone,
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                    }).formatToParts(now);
+                    return ["year", "month", "day"]
+                        .map(
+                            (type) =>
+                                parts.find((part) => part.type === type).value
+                        )
+                        .join("-");
+                } catch {
+                    return "";
+                }
+            }
+
+            function wateringAge(plant, today) {
+                const unavailable = {
+                    short: "No data",
+                    text: "Water age unavailable",
+                };
+                if (!today || typeof plant.lastWateredDayKey !== "string")
+                    return unavailable;
+                if (!plant.lastWateredDayKey)
+                    return { short: "No Water", text: "No Water recorded" };
+                if (!/^\d{4}-\d{2}-\d{2}$/.test(plant.lastWateredDayKey))
+                    return unavailable;
+                const timestamp = Date.parse(
+                    `${plant.lastWateredDayKey}T00:00:00Z`
+                );
+                if (
+                    !Number.isFinite(timestamp) ||
+                    new Date(timestamp).toISOString().slice(0, 10) !==
+                        plant.lastWateredDayKey
+                )
+                    return unavailable;
+                const days =
+                    (Date.parse(`${today}T00:00:00Z`) - timestamp) / 86400000;
+                return days >= 0 && Number.isInteger(days)
+                    ? {
+                          short: `${days}d`,
+                          text: `${days} ${days === 1 ? "day" : "days"} since watered`,
+                      }
+                    : unavailable;
+            }
+
+            function renderWaterAgeDisplays() {
+                if (!state.bootstrap) return;
+                const today = wateringCalendarDay();
+                const plants = new Map(
+                    state.bootstrap.plants.map((plant) => [plant.id, plant])
+                );
+                document
+                    .querySelectorAll(
+                        ".label-choice[data-plant-id], .plant-choice-option, #plantChoiceSummary, [data-bulk-plant-id]"
+                    )
+                    .forEach((element) => {
+                        const plant = plants.get(
+                            element.dataset.plantId ||
+                                element.dataset.bulkPlantId
+                        );
+                        if (!plant) return;
+                        const shown = state.waterAgesVisible;
+                        let badge = element.querySelector(".water-age");
+                        if (shown && !badge) {
+                            badge = document.createElement("span");
+                            badge.className = "water-age";
+                            const parent =
+                                element.querySelector(
+                                    ".plant-choice-text, .plant-choice-summary-text"
+                                ) ||
+                                element.querySelector(".bulk-meta")
+                                    ?.parentElement ||
+                                element;
+                            parent.append(badge);
+                        }
+                        const age = wateringAge(plant, today);
+                        if (shown) {
+                            badge.textContent = element.classList.contains(
+                                "label-choice"
+                            )
+                                ? age.short
+                                : age.text;
+                            badge.setAttribute("aria-label", age.text);
+                            badge.title = age.text;
+                        } else badge?.remove();
+                        element.classList.toggle("has-water-age", shown);
+                        const previous = element.dataset.waterAgeSuffix || "";
+                        const suffix = shown ? `, ${age.text}` : "";
+                        ["aria-label", "title"].forEach((attribute) => {
+                            let value = element.getAttribute(attribute);
+                            if (!value) return;
+                            if (previous && value.endsWith(previous))
+                                value = value.slice(0, -previous.length);
+                            element.setAttribute(attribute, value + suffix);
+                        });
+                        element.dataset.waterAgeSuffix = suffix;
+                    });
+            }
+
             function isNotWeighedFilterActive() {
                 return (
                     $("notWeighedToday").getAttribute("aria-pressed") === "true"
@@ -18967,11 +19114,12 @@
 
             function plantProgressText(
                 plantId,
-                queued = queuedWeighedPlantIds()
+                queued = queuedWeighedPlantIds(),
+                saved = savedTodayPlantIds()
             ) {
                 return [
                     queued.has(plantId) ? "Queued" : "",
-                    savedTodayPlantIds()?.has(plantId) ? "Saved today" : "",
+                    saved?.has(plantId) ? "Saved today" : "",
                 ]
                     .filter(Boolean)
                     .join(" · ");
@@ -19092,6 +19240,7 @@
                 }
                 renderFreshness();
                 renderRoundProgress();
+                renderWaterAgeDisplays();
                 state.workflowTimer = window.setTimeout(
                     updateWorkflowClock,
                     60000
@@ -19478,6 +19627,7 @@
             function renderQueuedPlantIndicators(
                 weighedPlantIds = queuedWeighedPlantIds()
             ) {
+                const saved = savedTodayPlantIds();
                 document
                     .querySelectorAll(".label-choice[data-plant-id]")
                     .forEach((button) => {
@@ -19488,18 +19638,10 @@
                         button.dataset.queuedWeighed = String(weighed);
                         button.classList.toggle(
                             "saved-today",
-                            Boolean(
-                                savedTodayPlantIds()?.has(
-                                    button.dataset.plantId
-                                )
-                            )
+                            Boolean(saved?.has(button.dataset.plantId))
                         );
                         button.dataset.savedToday = String(
-                            Boolean(
-                                savedTodayPlantIds()?.has(
-                                    button.dataset.plantId
-                                )
-                            )
+                            Boolean(saved?.has(button.dataset.plantId))
                         );
                         const plant = state.bootstrap.plants.find(
                             (candidate) =>
@@ -19508,7 +19650,8 @@
                         if (!plant) return;
                         const progress = plantProgressText(
                             plant.id,
-                            weighedPlantIds
+                            weighedPlantIds,
+                            saved
                         );
                         const status = progress
                             ? `, ${progress}${weighed ? ", weight safely queued" : ""}`
@@ -19529,7 +19672,8 @@
                         if (!plant) return;
                         const progress = plantProgressText(
                             plant.id,
-                            weighedPlantIds
+                            weighedPlantIds,
+                            saved
                         );
                         option.textContent = `${progress ? `${progress} · ` : ""}${plant.name} · ${plant.id}${plant.label ? ` · label ${plant.label}` : ""}`;
                     });
@@ -19564,6 +19708,7 @@
                         $("plantSearch").value,
                         $("plantSelect").value
                     );
+                renderWaterAgeDisplays();
             }
 
             function addCurrentEntryToQueue() {
@@ -19885,13 +20030,14 @@
                 return image;
             }
 
-            function plantChoiceText(plant, weighed) {
+            function plantChoiceText(plant, weighed, saved) {
                 const text = document.createElement("span");
                 text.className = "plant-choice-text";
                 const name = document.createElement("strong");
                 const progress = plantProgressText(
                     plant.id,
-                    weighed ? new Set([plant.id]) : new Set()
+                    weighed ? new Set([plant.id]) : new Set(),
+                    saved
                 );
                 name.textContent = `${progress ? `${progress} · ` : ""}${plant.name}`;
                 const details = document.createElement("small");
@@ -19901,6 +20047,7 @@
             }
 
             function renderPlantChoiceList(plants, weighedPlantIds) {
+                const saved = savedTodayPlantIds();
                 const selected = plants.find(
                     (plant) => plant.id === $("plantSelect").value
                 );
@@ -19922,7 +20069,8 @@
                 }
                 const summaryText = plantChoiceText(
                     selected,
-                    weighedPlantIds.has(selected.id)
+                    weighedPlantIds.has(selected.id),
+                    saved
                 );
                 summaryText.className = "plant-choice-summary-text";
                 const selectedPortrait = plantIconName(selected);
@@ -19985,7 +20133,8 @@
                             ),
                             plantChoiceText(
                                 plant,
-                                weighedPlantIds.has(plant.id)
+                                weighedPlantIds.has(plant.id),
+                                saved
                             )
                         );
                     } else {
@@ -19994,7 +20143,8 @@
                             .replaceWith(
                                 plantChoiceText(
                                     plant,
-                                    weighedPlantIds.has(plant.id)
+                                    weighedPlantIds.has(plant.id),
+                                    saved
                                 )
                             );
                     }
@@ -20046,7 +20196,8 @@
                     option.value = plant.id;
                     const progress = plantProgressText(
                         plant.id,
-                        weighedPlantIds
+                        weighedPlantIds,
+                        saved
                     );
                     option.textContent = `${progress ? `${progress} · ` : ""}${plant.name} · ${plant.id}${plant.label ? ` · label ${plant.label}` : ""}`;
                     select.append(option);
@@ -20057,6 +20208,7 @@
                 renderPlantChoiceList(plants, weighedPlantIds);
                 renderPlantSummary();
                 renderRoundProgress();
+                renderWaterAgeDisplays();
             }
 
             const LABEL_GROUP_ORDER = Object.freeze([
@@ -20198,6 +20350,7 @@
             }
 
             function renderLabelPicker() {
+                const saved = savedTodayPlantIds();
                 const picker = $("labelPicker");
                 const currentId = $("plantSelect").value;
                 const weighedPlantIds = queuedWeighedPlantIds();
@@ -20248,10 +20401,10 @@
                         button.dataset.queuedWeighed = String(weighed);
                         button.classList.toggle(
                             "saved-today",
-                            Boolean(savedTodayPlantIds()?.has(plant.id))
+                            Boolean(saved?.has(plant.id))
                         );
                         button.dataset.savedToday = String(
-                            Boolean(savedTodayPlantIds()?.has(plant.id))
+                            Boolean(saved?.has(plant.id))
                         );
                         button.hidden =
                             (isNotWeighedFilterActive() ||
@@ -20262,7 +20415,8 @@
                         button.disabled = state.saving;
                         const progress = plantProgressText(
                             plant.id,
-                            weighedPlantIds
+                            weighedPlantIds,
+                            saved
                         );
                         const status = progress
                             ? `, ${progress}${weighed ? ", weight safely queued" : ""}`
@@ -20295,6 +20449,7 @@
                     state.plantPickerMode === "table",
                     "plantId"
                 );
+                renderWaterAgeDisplays();
             }
 
             function setPlantPickerMode(mode, persist = true) {
@@ -23859,6 +24014,7 @@
                 else state.bulkSelected.delete(plantId);
                 $("bulkPickerName").dataset.plantId = plantId;
                 renderBulkCount();
+                renderWaterAgeDisplays();
             }
 
             function previewBulkPickerName(event) {
@@ -24042,6 +24198,7 @@
                     list.append(empty);
                 }
                 renderBulkCount();
+                renderWaterAgeDisplays();
             }
 
             function renderBulkCount() {
@@ -25161,8 +25318,13 @@
             }
 
             function refreshSavedPlantData() {
-                refreshRecent();
-                refreshCachedBootstrap({ updateHistory: false });
+                // The bootstrap already includes the default History window.
+                const defaultHistory =
+                    state.recentLimit === 10 &&
+                    $("recentScope").value === "all" &&
+                    !$("recentEvent").value;
+                if (!defaultHistory) refreshRecent();
+                refreshCachedBootstrap({ updateHistory: defaultHistory });
             }
 
             function setRecentUnavailable(message, offline = false) {
@@ -25602,6 +25764,8 @@
             ) {
                 if (!bootstrapIsUsable(bootstrap)) return false;
                 const selectedPlantId = $("plantSelect").value;
+                state.bootstrapReceivedAt = Date.now();
+                state.wateringAgesConfirmed = true;
                 state.bootstrap = bootstrap;
                 applyWorkbookCalculationMetadata(bootstrap.workbookCalculation);
                 renderEventOptions();
@@ -25770,15 +25934,31 @@
             }
 
             function refreshCachedBootstrap({ updateHistory = true } = {}) {
+                state.wateringAgesConfirmed = false;
+                renderWaterAgeDisplays();
                 if (!browserIsOnline()) {
                     $("connectionStatus").textContent =
                         "Offline · using the saved plant list";
+                    if (updateHistory) setRecentUnavailable("Offline", true);
                     return;
                 }
                 clearBootstrapRefreshTimer();
                 const attemptId = ++state.bootstrapRefreshAttempt;
                 $("refreshDataButton").setAttribute("aria-busy", "true");
-                const recentAttempt = state.recentAttempt;
+                const recentAttempt = updateHistory
+                    ? ++state.recentAttempt
+                    : state.recentAttempt;
+                if (updateHistory) {
+                    clearTimeout(state.recentTimer);
+                    setRecentStatus(
+                        `Loading ${state.recentLimit} recent entries…`,
+                        true
+                    );
+                }
+                const historyUnavailable = () => {
+                    if (updateHistory && recentAttempt === state.recentAttempt)
+                        setRecentUnavailable("History refresh unavailable");
+                };
                 state.bootstrapRefreshTimer = window.setTimeout(() => {
                     if (attemptId !== state.bootstrapRefreshAttempt) return;
                     state.bootstrapRefreshTimer = null;
@@ -25786,6 +25966,7 @@
                     $("refreshDataButton").setAttribute("aria-busy", "false");
                     $("connectionStatus").textContent =
                         "Using saved plant list · Google refresh delayed";
+                    historyUnavailable();
                 }, BOOTSTRAP_TIMEOUT_MS);
                 google.script.run
                     .withSuccessHandler((bootstrap) => {
@@ -25802,9 +25983,11 @@
                                 recentAttempt,
                                 updateHistory
                             )
-                        )
+                        ) {
                             $("connectionStatus").textContent =
                                 "Using saved plant list · Google returned invalid data";
+                            historyUnavailable();
+                        }
                     })
                     .withFailureHandler(() => {
                         if (attemptId !== state.bootstrapRefreshAttempt) return;
@@ -25816,6 +25999,7 @@
                         );
                         $("connectionStatus").textContent =
                             "Using saved plant list · Google refresh unavailable";
+                        historyUnavailable();
                     })
                     .getWebAppBootstrap();
             }
@@ -25916,6 +26100,17 @@
                             "Google returned incomplete garden data."
                         );
                     state.bootstrap = bootstrap;
+                    state.bootstrapReceivedAt = Date.now();
+                    state.wateringAgesConfirmed = !fromCache;
+                    state.waterAgesVisible =
+                        safeStorageGet(
+                            localStorage,
+                            WATER_AGE_VISIBILITY_KEY
+                        ) === "shown";
+                    $("daysSinceWatered").setAttribute(
+                        "aria-pressed",
+                        String(state.waterAgesVisible)
+                    );
                     applyWorkbookCalculationMetadata(
                         bootstrap.workbookCalculation
                     );
@@ -26028,6 +26223,19 @@
             $("plantSearch").addEventListener("input", (event) =>
                 renderPlantOptions(event.target.value)
             );
+            $("daysSinceWatered").addEventListener("click", () => {
+                state.waterAgesVisible = !state.waterAgesVisible;
+                $("daysSinceWatered").setAttribute(
+                    "aria-pressed",
+                    String(state.waterAgesVisible)
+                );
+                safeStorageSet(
+                    localStorage,
+                    WATER_AGE_VISIBILITY_KEY,
+                    state.waterAgesVisible ? "shown" : "hidden"
+                );
+                renderWaterAgeDisplays();
+            });
             $("notWeighedToday").addEventListener("click", () => {
                 $("notWeighedToday").setAttribute(
                     "aria-pressed",

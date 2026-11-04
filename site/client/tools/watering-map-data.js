@@ -88,6 +88,11 @@ export function buildWateringMap(placements, history, now = new Date()) {
     };
 }
 
+/** @param {unknown} value */
+export function isWateringObservationDate(value) {
+    return observationDate(value) !== null;
+}
+
 /** @param {Date} value @returns {GardenDate} */
 function gardenDate(value) {
     const parts = Object.fromEntries(

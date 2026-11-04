@@ -11810,10 +11810,14 @@ describe("garden logger workbook installation and History headers", () => {
         });
 
         vi.spyOn(context, "ensureHistoryAnchors_").mockImplementation(() => {});
+        vi.spyOn(context, "ensureWateringMapFeed_").mockImplementation(
+            () => {}
+        );
         context.installGardenLogger();
         context.installGardenLogger();
 
         expect(context.ensureHistoryAnchors_).toHaveBeenCalledTimes(2);
+        expect(context.ensureWateringMapFeed_).toHaveBeenCalledTimes(2);
 
         expect(required(calls.properties)["gardenLoggerVersion"]).toBe(
             LOGGER_VERSION

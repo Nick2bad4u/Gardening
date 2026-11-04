@@ -169,13 +169,26 @@ The site navigation links directly to `setup/placement/#watering-map`, and the
 placement page includes a jump link above the panel. Summary counts distinguish
 pots with a recorded Water event from pots without one after data loads. These
 counts describe observations and are not watering recommendations.
-The map reads History independently: its maintained placement data already supplies
-pot names and labels, so a slow Plant tracker export cannot block the image.
-The shared reader still keeps a bounded History cache separately from the
-tracker's paired cache. Neither cached History nor the embedded publication
+The map reads the hidden **Watering map** helper independently: its maintained
+placement data already supplies pot names and labels, so a slow Plant tracker
+export cannot block the image. The helper projects only History's Water and Move
+records and the five fields used by the map, retaining ledger order, Removed
+records, and future dates for the browser's existing eligibility checks. The
+versioned eight-column feed has a Ready row, expected record count, and mandatory
+End footer; incomplete, malformed, and formula-error responses cannot replace a
+successful read. The helper formula covers all 50,000 History slots and updates
+without a new trigger. Published data may still lag a recent workbook save.
+
+The compact reader uses its own bounded browser cache; the tracker, pot-history
+pages, and full CSV exports retain their existing complete History contracts.
+Neither the compact cache nor the embedded publication
 snapshot is sufficient to display watering values on this map. A successful
 empty live response displays unknown watering history; a failed response remains
 unavailable rather than implying that no Water events exist.
+
+Unchanged minute checks retain the existing SVG and artwork definitions. Time
+eligibility is still recalculated, so a future record becomes eligible when its
+actual observation time arrives, including later on the same calendar day.
 
 The page retains `docs/layouts/watering-history-snapshot.json` as a dated source
 snapshot. It contains only the latest active Water and Move

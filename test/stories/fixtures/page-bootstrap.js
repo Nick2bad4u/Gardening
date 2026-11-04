@@ -237,6 +237,72 @@
         scenario === "refresh-failure" && attempt >= 3
             ? history.replace("2026-09-02,P01,Water", "2026-09-04,P01,Water")
             : history;
+    /** @param {string} source */
+    const wateringFeedCsv = (source) => {
+        const records = source
+            .split("\n")
+            .slice(1)
+            .map((line) => line.split(","))
+            .filter((row) =>
+                ["move", "water"].includes((row[2] ?? "").trim().toLowerCase())
+            )
+            .map((row) => [
+                row[0] ?? "",
+                row[1] ?? "",
+                row[2] ?? "",
+                row[10] ?? "",
+                row[24] ?? "",
+                "",
+                "",
+                "",
+            ]);
+        const count = String(records.length);
+        const rows = [
+            [
+                "Date",
+                "Plant ID",
+                "Event",
+                "Record status",
+                "New location",
+                "Feed version",
+                "Feed status",
+                "Record count",
+            ],
+            [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "1",
+                "Ready",
+                count,
+            ],
+            ...records,
+            [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "1",
+                "End",
+                count,
+            ],
+        ];
+        return (scenario === "invalid-feed" ? rows.slice(0, -1) : rows)
+            .map((row) =>
+                row.map((value) => `"${value.replaceAll('"', '""')}"`).join(",")
+            )
+            .join("\n");
+    };
+    /** @param {string | null} sourceId @param {number} attempt */
+    const responseCsv = (sourceId, attempt) => {
+        if (sourceId === "0") return plants;
+        const source =
+            scenario === "empty" ? (headers ?? "") : historyForAttempt(attempt);
+        return sourceId === "907202615" ? wateringFeedCsv(source) : source;
+    };
     /** @type {typeof fetch} */
     const fixtureFetch = async (input, init) => {
         const url = new URL(
@@ -288,13 +354,7 @@
                     status: 503,
                 });
             }
-            const csv =
-                url.searchParams.get("gid") === "0"
-                    ? plants
-                    : scenario === "empty"
-                      ? headers
-                      : historyForAttempt(previousFailures);
-            return new Response(csv, {
+            return new Response(responseCsv(sourceId, previousFailures), {
                 headers: { "Content-Type": "text/csv" },
             });
         }

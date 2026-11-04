@@ -313,6 +313,7 @@ export interface AppsScriptTestApi {
         shouldConfigureColumns?: boolean
     ) => boolean;
     ensureSheetRowCapacity_: (sheet: unknown, requiredRows: unknown) => void;
+    ensureWateringMapFeed_: (spreadsheet: object) => void;
     eventDetailsFromPayload_: (
         payload: unknown,
         eventNames: unknown,
@@ -499,10 +500,16 @@ export interface AppsScriptTestApi {
     optionalPositiveInteger_: (value: unknown, label: unknown) => "" | number;
     optionalPositiveNumber_: (value: unknown, label: unknown) => "" | number;
     organizeWorkbookSheets_: (spreadsheet: unknown) => void;
+    plantActivitySummariesFromRows_: (
+        historyRows: CellValue[][],
+        potSetupByPlant: Map<string, CellValue>,
+        plantIds: string[]
+    ) => Map<string, ActivitySummary>;
     plantActivitySummary_: (
         historyRows: CellValue[][],
         plantId: string,
-        potSetup: number
+        potSetup: number,
+        orderByRow?: Map<CellValue[], number | undefined>
     ) => ActivitySummary;
     plantChartHelperFormula_: (plantId: unknown) => string;
     plantNamesById_: (spreadsheet: unknown) => Map<string, string>;
@@ -686,6 +693,7 @@ export interface AppsScriptTestApi {
         height: unknown,
         width: unknown
     ) => void;
+    wateringMapFeedFormula_: () => string;
     wateringReadinessGuidance_: (plantId: unknown) =>
         | "Confirm the root zone is dry and the plant is ready; reduce watering during rest. No fixed extra dry days."
         | "Confirm the shared root zone is dry and inspect every component; no fixed extra dry days."
@@ -705,6 +713,11 @@ export interface AppsScriptTestApi {
         nowMs: number,
         previousDry: unknown
     ) => WebPlantWeightReadModel;
+    webWateringDaysFromRows_: (
+        historyRows: CellValue[][],
+        now: Date,
+        timeZone: string
+    ) => Map<string, string>;
     webWeightReadModelsFromRows_: (
         historyRows: unknown,
         baselineSetups: Map<string, number>,

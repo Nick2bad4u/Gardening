@@ -83,6 +83,7 @@ export const sheetUrls = {
             : `https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit?gid=${gid}#gid=${gid}`;
     },
     trackerCsv: `${publishedSheetBase}?gid=0&single=true&output=csv`,
+    wateringMapCsv: `${publishedSheetBase}?gid=907202615&single=true&output=csv`,
 };
 
 // Documented collection pot sizes. The latest Repot observation supersedes
@@ -157,6 +158,24 @@ export function daysSince(value) {
         0,
         Math.round((todayStart.getTime() - date.getTime()) / DAY_MS)
     );
+}
+
+/**
+ * @param {string} url
+ *
+ * @returns {Promise<string>}
+ */
+export async function fetchCsv(url) {
+    // Redirects, response bodies, and the optional retry share one total budget.
+    const signal = AbortSignal.timeout(60_000);
+    try {
+        return await readSheetCsv(url, signal);
+    } catch (error) {
+        signal.throwIfAborted();
+        if (!isRetryableSheetError(error)) throw error;
+    }
+    await waitForSheetRetry(signal);
+    return readSheetCsv(url, signal);
 }
 
 /**
@@ -310,24 +329,6 @@ async function discardSheetErrorBody(response) {
     } catch {
         // Cleanup must not hide the HTTP status or extend the read budget.
     }
-}
-
-/**
- * @param {string} url
- *
- * @returns {Promise<string>}
- */
-async function fetchCsv(url) {
-    // Redirects, response bodies, and the optional retry share one total budget.
-    const signal = AbortSignal.timeout(60_000);
-    try {
-        return await readSheetCsv(url, signal);
-    } catch (error) {
-        signal.throwIfAborted();
-        if (!isRetryableSheetError(error)) throw error;
-    }
-    await waitForSheetRetry(signal);
-    return readSheetCsv(url, signal);
 }
 
 /**
@@ -931,21 +932,18 @@ export function manualCareNote(plantId) {
 }
 
 /** @typedef {{ plants: string; history: string }} SourceCsv */
+/** @typedef {{ rows: string[][]; headers: Set<string>; isValid: boolean }} SourceTable */
+
+// Validation and conversion share the same parsed table. Retain only the two
+// bounded source strings used by a collection read, never an unbounded archive.
+/** @type {Map<string, SourceTable>} */
+const sourceTables = new Map();
 
 /** @param {string} csv @param {readonly string[]} required */
 function hasSourceHeaders(csv, required) {
-    let hasUnpairedQuote = false;
-    for (const character of csv) {
-        if (character === '"') hasUnpairedQuote = !hasUnpairedQuote;
-    }
-    if (hasUnpairedQuote) return false;
-    const rows = parseCsv(csv);
-    const headers = rows[0] ?? [];
-    const uniqueHeaders = new Set(headers);
+    const table = readSourceTable(csv);
     return (
-        required.every((header) => headers.includes(header)) &&
-        uniqueHeaders.size === headers.length &&
-        rows.every((row) => row.length <= headers.length)
+        table.isValid && required.every((header) => table.headers.has(header))
     );
 }
 
@@ -968,6 +966,35 @@ function isSourceCsv(value) {
             "Event",
         ])
     );
+}
+
+/** @param {string} csv @returns {SourceTable} */
+function readSourceTable(csv) {
+    const existing = sourceTables.get(csv);
+    if (existing) return existing;
+    let hasUnpairedQuote = false;
+    for (const character of csv) {
+        if (character === '"') hasUnpairedQuote = !hasUnpairedQuote;
+    }
+    const rows = parseCsv(csv);
+    const headers = rows[0] ?? [];
+    const uniqueHeaders = new Set(headers);
+    const table = {
+        headers: uniqueHeaders,
+        isValid:
+            !hasUnpairedQuote &&
+            uniqueHeaders.size === headers.length &&
+            rows.every((row) => row.length <= headers.length),
+        rows,
+    };
+    if (csv.length <= 1024 ** 2) {
+        if (sourceTables.size === 2) {
+            const oldest = sourceTables.keys().next().value;
+            if (oldest !== undefined) sourceTables.delete(oldest);
+        }
+        sourceTables.set(csv, table);
+    }
+    return table;
 }
 
 const collectionCache = createSheetSnapshotCache({
@@ -1056,7 +1083,7 @@ export function plantLabel(plant) {
 
 /** @param {SourceCsv} source @returns {CollectionData} */
 function buildCollectionData(source) {
-    const plants = rowsToObjects(parseCsv(source.plants));
+    const plants = rowsToObjects(readSourceTable(source.plants).rows);
     const observations = buildHistoryData(source.history);
     /** @type {Map<string, HistoryEvent[]>} */
     const eventsById = new Map();
@@ -1092,7 +1119,7 @@ function buildCollectionData(source) {
 
 /** @param {string} csv @returns {HistoryEvent[]} */
 function buildHistoryData(csv) {
-    return rowsToObjects(parseCsv(csv)).map((event, index) => ({
+    return rowsToObjects(readSourceTable(csv).rows).map((event, index) => ({
         ...event,
         _index: index,
     }));

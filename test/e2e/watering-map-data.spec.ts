@@ -4,7 +4,7 @@ const mapPath = "/Gardening/setup/placement/#watering-map";
 const refreshName = "Refresh data";
 const sourceStateAttribute = "data-state";
 const historyHeader =
-    "Date,Plant ID,Event,Weight state,Weight (g),Height (cm),Width (cm),Plant condition,Notes,Pot setup,Record status,Request ID";
+    "Date,Plant ID,Event,Record status,New location,Feed version,Feed status,Record count";
 
 interface HistoryResponse {
     blocked: boolean;
@@ -131,26 +131,85 @@ async function mockHistory(
     response: Readonly<HistoryResponse>,
     gate: Readonly<ReturnType<typeof createNetworkGate>>
 ) {
+    const sourceIds: string[] = [];
     await page.clock.setFixedTime("2026-11-03T20:00:00Z");
     await page.route("**://*.googletagmanager.com/**", (route) =>
         route.abort()
     );
     await page.route("https://docs.google.com/**", async (route) => {
+        const sourceUrl = new URL(route.request().url());
+        const sourceId = sourceUrl.searchParams.get("gid");
+        sourceIds.push(sourceId ?? "missing");
+        if (sourceId !== "907202615") {
+            await route.abort();
+            return;
+        }
         if (response.blocked) await gate.wait();
         await route.fulfill({
             body: response.failed
                 ? "Temporarily unavailable"
-                : `${historyHeader}\n${response.waterDate},P01,Water,,,,,Healthy,Synthetic watering,1,Active,map-fixture`,
+                : `${historyHeader}\n,,,,,1,Ready,1\n${response.waterDate},P01,Water,Active,,,,\n,,,,,1,End,1`,
             contentType: "text/csv",
             status: response.failed ? 503 : 200,
         });
     });
+    return sourceIds;
 }
 
 test.describe(
     "watering map unavailable observations",
     { tag: "@watering-map" },
     () => {
+        test("preserves the rendered image during an unchanged minute check", async ({
+            page,
+        }) => {
+            const response: HistoryResponse = {
+                blocked: false,
+                failed: false,
+                waterDate: "2026-11-01",
+            };
+            const sourceIds = await mockHistory(
+                page,
+                response,
+                createNetworkGate()
+            );
+            await page.goto(mapPath);
+            await expectFreshCount(page, "2", response.waterDate);
+            await mapImage(page).evaluate((svg) => {
+                svg.dataset["renderPreserved"] = "true";
+            });
+            await page.clock.setFixedTime("2026-11-03T20:01:00Z");
+            await page.evaluate(() => dispatchEvent(new Event("focus")));
+            await expect
+                .soft(mapImage(page))
+                .toHaveAttribute("data-render-preserved", "true");
+            await expectFreshCount(page, "2", response.waterDate);
+            expect.soft(sourceIds).toStrictEqual(["907202615"]);
+        });
+
+        test("activates a future same-day observation without waiting for another feed read", async ({
+            page,
+        }) => {
+            const response: HistoryResponse = {
+                blocked: false,
+                failed: false,
+                waterDate: "2026-11-03T15:00:05.000",
+            };
+            const sourceIds = await mockHistory(
+                page,
+                response,
+                createNetworkGate()
+            );
+            await page.goto(mapPath);
+            await expectFreshCount(page, "?", "Not recorded");
+            const originalSource = await freshness(page).textContent();
+            await page.clock.setFixedTime("2026-11-03T20:00:10Z");
+            await page.evaluate(() => dispatchEvent(new Event("focus")));
+            await expectFreshCount(page, "0", "2026-11-03");
+            await expect.soft(freshness(page)).toHaveText(originalSource ?? "");
+            expect.soft(sourceIds).toStrictEqual(["907202615"]);
+        });
+
         test("hides cached counts throughout reload and failure, then restores changed live data", async ({
             page,
         }) => {
@@ -167,7 +226,7 @@ test.describe(
                 .soft(
                     await page.evaluate(() =>
                         document.defaultView?.localStorage.getItem(
-                            "gardening-public-history-snapshot-v1"
+                            "gardening-public-watering-map-snapshot-v1"
                         )
                     )
                 )

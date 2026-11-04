@@ -16,11 +16,14 @@ const emptyArtwork = { definitions: "", portraits: {} };
  * @param {WateringMap} model
  * @param {{ readAt: number | null; status: string; available?: boolean }} source
  * @param {WateringArtwork} [artwork] Trusted build-time artwork only.
+ * @param {boolean} [includeDefinitions] Standalone exports include every
+ *   definition.
  */
 export function renderWateringMapSvg(
     model,
     { available: isAvailable = true, readAt, status },
-    artwork = emptyArtwork
+    artwork = emptyArtwork,
+    includeDefinitions = true
 ) {
     const otherCount = model.markers.filter(
         (marker) => marker.zone === "other"
@@ -93,7 +96,7 @@ export function renderWateringMapSvg(
     return `<svg xmlns="http://www.w3.org/2000/svg" class="wm-svg" data-watering-map="" width="1000" height="${height}" viewBox="0 0 1000 ${height}" role="img" aria-labelledby="watering-map-svg-title watering-map-svg-description" data-color-scheme="dark">
         <title id="watering-map-svg-title">Days since watering — ${escapeXml(dateText)}</title>
         <desc id="watering-map-svg-description">Recorded table positions, viewed from the room. North window at top, Mylar left, white wall right. ${escapeXml(countDescription)} Off-grid pots are listed separately. ${escapeXml(status)}. ${escapeXml(sourceText)}.</desc>
-        <defs>${artwork.definitions}</defs>
+        <defs>${includeDefinitions ? artwork.definitions : ""}</defs>
         <style>
             .wm-svg text { font-family: Arial, Helvetica, sans-serif; fill: #e2efe6; }
             .wm-svg .heading { font-size: 34px; font-weight: 700; }

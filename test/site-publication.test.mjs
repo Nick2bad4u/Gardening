@@ -173,8 +173,14 @@ describe("modular site publication invariants", () => {
             { slug: "second", title: "Second" },
         ];
         const pages = new Map([
-            ["first", '<article id="first">First</article>'],
-            ["second", '<article id="second">Second</article>'],
+            [
+                "first",
+                '<article id="first">First<section data-plant-care="first" id="first-care-reference"><a href="/Gardening/guides/light-moisture/">Care reference</a></section></article>',
+            ],
+            [
+                "second",
+                '<article id="second">Second<section data-plant-care="second" id="second-care-reference"><a href="/Gardening/guides/light-moisture/">Care reference</a></section></article>',
+            ],
         ]);
 
         expect(() => {
@@ -195,7 +201,7 @@ describe("modular site publication invariants", () => {
 
         pages.set(
             "first",
-            '<article id="first">First<article id="second">Second</article></article>'
+            '<article id="first">First<section data-plant-care="first" id="first-care-reference"><a href="/Gardening/guides/light-moisture/">Care reference</a></section><article id="second">Second</article></article>'
         );
 
         expect(() => {
