@@ -3,6 +3,7 @@ import { getRequiredElement } from "../../../docs/layouts/plant-tracker-data.js"
 import { buildWateringMap } from "./watering-map-data.js";
 import {
     getSavedWateringMapData,
+    isWateringFeedError,
     loadWateringMapSnapshot,
 } from "./watering-map-feed.js";
 import { decodeWateringSnapshot } from "./watering-map-snapshot.js";
@@ -47,6 +48,7 @@ const enlargeButton = getRequiredElement(
     HTMLButtonElement
 );
 const refreshInterval = 5 * 60 * 1000;
+const slowRefreshDelay = 10_000;
 const maximumAge = 24 * 60 * 60 * 1000;
 /** @type {unknown} */
 const placementData = JSON.parse(panel.dataset["placements"] ?? "[]");
@@ -96,6 +98,7 @@ const useSavedSnapshot =
  *     snapshot: HistorySnapshot | null;
  *     lastAttempt: number;
  *     isExportBusy: boolean;
+ *     reconnectRetryUsed: boolean;
  *     sourceState: string;
  *     sourceMessage: string;
  *     sourceKind: "published" | "saved" | "live";
@@ -104,6 +107,7 @@ const useSavedSnapshot =
 const state = {
     isExportBusy: false,
     lastAttempt: 0,
+    reconnectRetryUsed: false,
     snapshot: useSavedSnapshot ? savedSnapshot : publishedSnapshot,
     sourceKind: useSavedSnapshot ? "saved" : "published",
     sourceMessage:
@@ -253,10 +257,10 @@ function isPlacement(value) {
     );
 }
 
-function markRefreshFailed() {
+/** @param {unknown} error */
+function markRefreshFailed(error) {
     state.sourceState = "error";
-    state.sourceMessage =
-        "Watering data unavailable. Counts hidden. Use Refresh data to retry.";
+    state.sourceMessage = `Watering data unavailable. ${refreshFailureReason(error)} Counts hidden. Use Refresh data to retry.`;
 }
 
 /** @param {Blob} svg @returns {Promise<Blob>} */
@@ -300,23 +304,64 @@ function readEmbeddedSnapshot() {
     }
 }
 
-async function refresh() {
+/** @param {boolean} [isReconnect] */
+async function refresh(isReconnect = false) {
     if (refreshButton.disabled) return;
+    if (!isReconnect) state.reconnectRetryUsed = false;
     state.lastAttempt = Date.now();
     setRefreshBusy(true);
     state.sourceState = "saved";
     state.sourceMessage =
         "Refreshing watering observations. Counts hidden until data loads.";
     render();
+    const slowRefreshTimer = setTimeout(() => {
+        state.sourceMessage =
+            "Still waiting for the published Sheet. Counts stay hidden until data loads.";
+        render();
+    }, slowRefreshDelay);
     try {
         const freshSnapshot = await loadWateringMapSnapshot();
         applySnapshot(freshSnapshot);
-    } catch {
-        markRefreshFailed();
+    } catch (error) {
+        markRefreshFailed(error);
     } finally {
+        clearTimeout(slowRefreshTimer);
         setRefreshBusy(false);
         render();
     }
+}
+
+/** Permit one reconnect attempt after each ordinary failed refresh. */
+function refreshAfterReconnect() {
+    if (
+        document.visibilityState !== "visible" ||
+        state.sourceState !== "error" ||
+        refreshButton.disabled ||
+        state.reconnectRetryUsed
+    )
+        return;
+    state.reconnectRetryUsed = true;
+    void refresh(true);
+}
+
+/** @param {unknown} error */
+function refreshFailureReason(error) {
+    if (isWateringFeedError(error)) {
+        return "The published watering data is incomplete or invalid.";
+    }
+    if (
+        error instanceof Error &&
+        ["AbortError", "TimeoutError"].includes(error.name)
+    ) {
+        return "The published Sheet took too long to respond.";
+    }
+    if (
+        error instanceof TypeError ||
+        (error instanceof Error && typeof error.cause === "number")
+    ) {
+        return "Could not reach the published Sheet.";
+    }
+    return "The refresh could not complete.";
 }
 
 function refreshIfDue() {
@@ -425,6 +470,7 @@ enlargeButton.addEventListener("click", () => {
     enlargeLabel.textContent = isEnlarged ? "Fit image" : "Enlarge image";
 });
 window.addEventListener("focus", refreshIfDue);
+addEventListener("online", refreshAfterReconnect);
 document.addEventListener("visibilitychange", refreshIfDue);
 setInterval(refreshIfDue, 60_000);
 void refresh();

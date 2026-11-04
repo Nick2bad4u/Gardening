@@ -2,6 +2,7 @@ import { expect, type Locator, type Page, test } from "@playwright/test";
 
 const mapPath = "/Gardening/setup/placement/#watering-map";
 const refreshName = "Refresh data";
+const initialWaterDate = "2026-11-01";
 const sourceStateAttribute = "data-state";
 const historyHeader =
     "Date,Plant ID,Event,Record status,New location,Feed version,Feed status,Record count";
@@ -9,6 +10,7 @@ const historyHeader =
 interface HistoryResponse {
     blocked: boolean;
     failed: boolean;
+    invalid?: boolean;
     waterDate: string;
 }
 
@@ -56,25 +58,50 @@ async function expectDownloads(page: Readonly<Page>, isAvailable: boolean) {
     expect.soft(enabled).toStrictEqual([isAvailable, isAvailable]);
 }
 
+async function expectFailedRead(page: Readonly<Page>) {
+    await expect
+        .soft(freshness(page))
+        .toHaveAttribute(sourceStateAttribute, "error");
+    await expectUnavailable(page);
+}
+
 async function expectFreshCount(
     page: Readonly<Page>,
     count: string,
     date: string
 ) {
     await expect
-        .soft(freshness(page))
-        .toHaveAttribute(sourceStateAttribute, "live");
-    expect
-        .soft(
-            await mapImage(page).evaluate(
-                (svg) =>
-                    svg.querySelector(':scope [data-pot-id="P01"] text.count')
-                        ?.textContent
-            )
-        )
-        .toBe(count);
-    await expect.soft(details(page)).toContainText(`Last Water: ${date}`);
+        .configure({ soft: true })
+        .poll(async () => {
+            const detailsText = await details(page).textContent();
+            return {
+                count: await mapImage(page).evaluate(
+                    (svg) =>
+                        svg.querySelector(
+                            ':scope [data-pot-id="P01"] text.count'
+                        )?.textContent
+                ),
+                hasWaterDate: detailsText?.includes(`Last Water: ${date}`),
+                state: await freshness(page).getAttribute(sourceStateAttribute),
+            };
+        })
+        .toStrictEqual({ count, hasWaterDate: true, state: "live" });
     await expectDownloads(page, true);
+}
+
+async function expectIdleRequests(
+    page: Readonly<Page>,
+    sourceIds: readonly string[],
+    count: number
+) {
+    expect
+        .soft({
+            isEnabled: await page
+                .getByRole("button", { name: refreshName })
+                .isEnabled(),
+            requests: sourceIds.length,
+        })
+        .toStrictEqual({ isEnabled: true, requests: count });
 }
 
 async function expectUnavailable(page: Readonly<Page>) {
@@ -118,7 +145,7 @@ async function expectUnavailable(page: Readonly<Page>) {
 function freshness(page: Readonly<Page>): Locator {
     return page.getByRole("status").filter({
         hasText:
-            /^(?:Refreshing watering observations|Published observations loaded\.|Watering data (?:expired|unavailable)\.)/v,
+            /^(?:Refreshing watering observations|Still waiting for the published Sheet\.|Published observations loaded\.|Watering data (?:expired|unavailable)\.)/v,
     });
 }
 
@@ -148,7 +175,9 @@ async function mockHistory(
         await route.fulfill({
             body: response.failed
                 ? "Temporarily unavailable"
-                : `${historyHeader}\n,,,,,1,Ready,1\n${response.waterDate},P01,Water,Active,,,,\n,,,,,1,End,1`,
+                : response.invalid === true
+                  ? "#REF!"
+                  : `${historyHeader}\n,,,,,1,Ready,1\n${response.waterDate},P01,Water,Active,,,,\n,,,,,1,End,1`,
             contentType: "text/csv",
             status: response.failed ? 503 : 200,
         });
@@ -160,13 +189,208 @@ test.describe(
     "watering map unavailable observations",
     { tag: "@watering-map" },
     () => {
+        test("explains a slow read while keeping counts hidden and clears its delayed notice after success", async ({
+            page,
+        }) => {
+            await page.clock.install({
+                time: "2026-11-03T20:00:00Z",
+            });
+            const gate = createNetworkGate();
+            const response: HistoryResponse = {
+                blocked: true,
+                failed: false,
+                waterDate: initialWaterDate,
+            };
+            await mockHistory(page, response, gate);
+            try {
+                await page.goto(mapPath);
+                await expect
+                    .soft(freshness(page))
+                    .toContainText("Refreshing watering observations");
+                await page.clock.fastForward(10_000);
+                await expect
+                    .soft(freshness(page))
+                    .toContainText("Still waiting for the published Sheet.");
+                await expectUnavailable(page);
+                gate.release();
+                await expectFreshCount(page, "2", response.waterDate);
+                response.blocked = false;
+                await page.getByRole("button", { name: refreshName }).click();
+                await expectFreshCount(page, "2", response.waterDate);
+                await page.clock.fastForward(10_000);
+                await expect
+                    .soft(freshness(page))
+                    .toContainText("Published observations loaded.");
+            } finally {
+                gate.release();
+            }
+        });
+
+        test("reconnects once after failure, ignores hidden or repeated reconnects, and leaves manual retry available", async ({
+            page,
+        }) => {
+            const gate = createNetworkGate();
+            const response: HistoryResponse = {
+                blocked: false,
+                failed: true,
+                waterDate: initialWaterDate,
+            };
+            const sourceIds = await mockHistory(page, response, gate);
+            await page.goto(mapPath);
+            await expectFailedRead(page);
+            await expect
+                .soft(freshness(page))
+                .toContainText("Could not reach the published Sheet.");
+            await expectIdleRequests(page, sourceIds, 2);
+            await page.evaluate(() => {
+                Object.defineProperty(document, "visibilityState", {
+                    configurable: true,
+                    value: "hidden",
+                });
+                dispatchEvent(new Event("online"));
+            });
+            await expectIdleRequests(page, sourceIds, 2);
+            response.blocked = true;
+            try {
+                await page.evaluate(() => {
+                    Object.defineProperty(document, "visibilityState", {
+                        configurable: true,
+                        value: "visible",
+                    });
+                    dispatchEvent(new Event("online"));
+                    dispatchEvent(new Event("online"));
+                    dispatchEvent(new Event("online"));
+                });
+                await expect
+                    .soft(page.getByRole("button", { name: "Refreshing…" }))
+                    .toBeDisabled();
+                await expect.poll(() => sourceIds.length).toBe(3);
+                await expectUnavailable(page);
+                gate.release();
+                await expectFailedRead(page);
+                await expectIdleRequests(page, sourceIds, 4);
+                await page.evaluate(() => dispatchEvent(new Event("online")));
+                await expectIdleRequests(page, sourceIds, 4);
+                response.failed = false;
+                response.blocked = false;
+                await page.getByRole("button", { name: refreshName }).click();
+                await expectFreshCount(page, "2", response.waterDate);
+                await expectIdleRequests(page, sourceIds, 5);
+                await page.evaluate(() => dispatchEvent(new Event("online")));
+                await expectIdleRequests(page, sourceIds, 5);
+            } finally {
+                gate.release();
+            }
+        });
+
+        test("restores fresh counts on reconnect without changing the saved timestamp during failure", async ({
+            page,
+        }) => {
+            const response: HistoryResponse = {
+                blocked: false,
+                failed: false,
+                waterDate: initialWaterDate,
+            };
+            await mockHistory(page, response, createNetworkGate());
+            await page.goto(mapPath);
+            await expectFreshCount(page, "2", response.waterDate);
+            const saved = await page.evaluate(() =>
+                document.defaultView?.localStorage.getItem(
+                    "gardening-public-watering-map-snapshot-v1"
+                )
+            );
+            await page.clock.setFixedTime("2026-11-03T20:01:00Z");
+            response.failed = true;
+            await page.getByRole("button", { name: refreshName }).click();
+            await expect
+                .soft(freshness(page))
+                .toHaveAttribute(sourceStateAttribute, "error");
+            await expectUnavailable(page);
+            expect
+                .soft(
+                    await page.evaluate(() =>
+                        document.defaultView?.localStorage.getItem(
+                            "gardening-public-watering-map-snapshot-v1"
+                        )
+                    )
+                )
+                .toBe(saved);
+            response.failed = false;
+            response.waterDate = "2026-11-02";
+            await page.evaluate(() => dispatchEvent(new Event("online")));
+            await expectFreshCount(page, "1", response.waterDate);
+        });
+
+        test("identifies an invalid published feed without exposing its response", async ({
+            page,
+        }) => {
+            await mockHistory(
+                page,
+                {
+                    blocked: false,
+                    failed: false,
+                    invalid: true,
+                    waterDate: initialWaterDate,
+                },
+                createNetworkGate()
+            );
+            await page.goto(mapPath);
+            await expect
+                .soft(freshness(page))
+                .toContainText(
+                    "The published watering data is incomplete or invalid."
+                );
+            await expect.soft(freshness(page)).not.toContainText("#REF!");
+            await expectUnavailable(page);
+        });
+
+        test("identifies a timed-out read without exposing the browser exception", async ({
+            page,
+        }) => {
+            await page.clock.install({
+                time: "2026-11-03T20:00:00Z",
+            });
+            await page.addInitScript(() => {
+                const nativeFetch = fetch.bind(globalThis);
+                const syntheticFetch: typeof fetch = (input, init) => {
+                    const url = new URL(
+                        input instanceof Request ? input.url : String(input),
+                        location.href
+                    );
+                    return url.hostname === "docs.google.com"
+                        ? Promise.reject(
+                              new DOMException(
+                                  "Synthetic private timeout detail",
+                                  "TimeoutError"
+                              )
+                          )
+                        : nativeFetch(input, init);
+                };
+                Object.defineProperty(globalThis, "fetch", {
+                    value: syntheticFetch,
+                });
+            });
+            await page.goto(mapPath);
+            await expect
+                .soft(freshness(page))
+                .toContainText("The published Sheet took too long to respond.");
+            await expect
+                .soft(freshness(page))
+                .not.toContainText("Synthetic private timeout detail");
+            await expectUnavailable(page);
+            await page.clock.fastForward(10_000);
+            await expect
+                .soft(freshness(page))
+                .toContainText("The published Sheet took too long to respond.");
+        });
+
         test("preserves the rendered image during an unchanged minute check", async ({
             page,
         }) => {
             const response: HistoryResponse = {
                 blocked: false,
                 failed: false,
-                waterDate: "2026-11-01",
+                waterDate: initialWaterDate,
             };
             const sourceIds = await mockHistory(
                 page,
@@ -217,7 +441,7 @@ test.describe(
             const response: HistoryResponse = {
                 blocked: false,
                 failed: false,
-                waterDate: "2026-11-01",
+                waterDate: initialWaterDate,
             };
             await mockHistory(page, response, gate);
             await page.goto(mapPath);
@@ -283,7 +507,7 @@ test.describe(
             const response: HistoryResponse = {
                 blocked: false,
                 failed: false,
-                waterDate: "2026-11-01",
+                waterDate: initialWaterDate,
             };
             await mockHistory(page, response, createNetworkGate());
             let downloads = 0;
@@ -334,7 +558,7 @@ test.describe(
             const response: HistoryResponse = {
                 blocked: false,
                 failed: false,
-                waterDate: "2026-11-01",
+                waterDate: initialWaterDate,
             };
             await mockHistory(page, response, gate);
             await page.goto(mapPath);

@@ -28,12 +28,12 @@ qualitative guidance. The removed plant's card stays historical.
 
 **PPFD** measures photosynthetic photons reaching a leaf area each second, in
 µmol·m⁻²·s⁻¹. **DLI** adds that exposure over a day, in mol·m⁻²·day⁻¹.
-The cards convert their DLI ranges into **12 hours of constant light** so plants
+The cards convert their DLI ranges into **13.5 hours of constant light** so plants
 can be compared on the same basis. This does not change a timer or describe an
 existing installation.
 
 For constant light, **DLI = PPFD × hours × 0.0036**. For example, 100 PPFD for
-12 hours is 4.32 DLI; the same intensity for 16 hours is 5.76 DLI. A ramped lamp or
+13.5 hours is 4.86 DLI; the same intensity for 16 hours is 5.76 DLI. A ramped lamp or
 changing window light needs readings through the day rather than multiplying one
 peak reading by the whole day. The maintained cactus schedule remains in the
 [current light setup](./setup.md).
