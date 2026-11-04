@@ -52,10 +52,13 @@ async function inspectGuideNavigation(page: Readonly<Page>) {
     await care.getByRole("link", { name: /Compare every plant/v }).click();
     await expect.soft(page).toHaveURL(guidePath);
     const comparison = page.locator("[data-care-comparison]");
-    await expect.soft(comparison).toBeVisible();
     await expect
-        .soft(comparison)
-        .toContainText("13.5 constant-light hours for comparison");
+        .soft(
+            comparison.filter({
+                hasText: "13.5 constant-light hours for comparison",
+            })
+        )
+        .toBeVisible();
     await comparison
         .getByText(/^Browse all \d+ active plant references$/v)
         .click();
