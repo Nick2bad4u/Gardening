@@ -327,6 +327,28 @@ describe("care coverage", () => {
         );
     });
 
+    it("keeps the feather cactus trial distinct from a published optimum or maximum", async () => {
+        expect.hasAssertions();
+
+        const feather = await getPlantCareReference("mammillaria-plumosa");
+
+        expect(feather.light).toMatchObject({
+            basis: "collection-trial",
+            dli: [10, 17],
+            startingDli: null,
+        });
+        expect(feather.light.caution).toContain("17 DLI is not a ceiling");
+        expect(feather.light.caution).toMatch(
+            /not a published optimum or maximum/v
+        );
+        expect(feather.sources.map((source) => source.url)).toStrictEqual(
+            expect.arrayContaining([
+                "https://www.desertmuseum.org/visit/sheets/Mamplu.pdf",
+                "https://www.rhs.org.uk/plants/10832/mammillaria-plumosa/details",
+            ])
+        );
+    });
+
     it("compares the conservative terrarium trial while retaining unidentified member cautions", async () => {
         expect.hasAssertions();
 

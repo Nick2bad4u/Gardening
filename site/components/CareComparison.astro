@@ -6,7 +6,8 @@ import {
     LIGHT_COMPARISON_HOURS,
     lightComparison,
 } from "../lib/plant-care.mjs";
-import { profileUrl } from "../lib/routes.mjs";
+import { profileUrl, siteUrl } from "../lib/routes.mjs";
+import SiteIcon from "./SiteIcon.astro";
 import "../styles/care-comparison.css";
 
 const [profiles, records] = await Promise.all([getProfiles(), getPlantCareReferences()]);
@@ -37,46 +38,82 @@ const range = (values: readonly [number, number] | null) =>
                 const care = bySlug.get(profile.slug);
                 if (!care) throw new Error(`Missing care comparison: ${profile.slug}`);
                 const light = lightComparison(care.light);
+                const careUrl = `${profileUrl(profile.slug)}#${profile.slug}-care-reference`;
                 return (
                     <li class="care-comparison-row" data-care-row={profile.slug}>
                         <div class="care-comparison-identity">
-                            <span>
-                                {profile.trackerId} · {profile.inventoryId}
-                            </span>
-                            <h3>
-                                <a
-                                    href={`${profileUrl(profile.slug)}#${profile.slug}-care-reference`}
-                                >
-                                    {profile.title}
-                                </a>
-                            </h3>
+                            <img
+                                class="care-comparison-portrait"
+                                src={siteUrl(`assets/plant-icons/${profile.slug}.svg`)}
+                                width="72"
+                                height="72"
+                                loading="lazy"
+                                decoding="async"
+                                alt=""
+                            />
+                            <div class="care-comparison-title">
+                                <p class="care-comparison-identifiers">
+                                    <span>{profile.trackerId}</span>
+                                    <span>{profile.inventoryId}</span>
+                                </p>
+                                <h3>
+                                    <a href={careUrl}>{profile.title}</a>
+                                </h3>
+                            </div>
                         </div>
+                        <p class="care-comparison-basis">
+                            <SiteIcon name="info" size={18} />
+                            {care.light.basis === "collection-trial"
+                                ? "Provisional trial · not a limit"
+                                : "Qualitative reference"}
+                        </p>
                         <dl class="care-comparison-values">
                             <div>
-                                <dt>PPFD</dt>
+                                <dt>
+                                    <SiteIcon name="light" size={20} />
+                                    PPFD
+                                </dt>
                                 <dd>
-                                    {range(light.ppfd)}
+                                    <span class="care-comparison-range">{range(light.ppfd)}</span>
                                     <small>µmol·m⁻²·s⁻¹</small>
                                 </dd>
                             </div>
                             <div>
-                                <dt>Approx. lux</dt>
+                                <dt>
+                                    <SiteIcon name="light" size={20} />
+                                    Approx. lux
+                                </dt>
                                 <dd>
-                                    {range(light.lux)}
+                                    <span class="care-comparison-range">{range(light.lux)}</span>
                                     <small>white-LED estimate</small>
                                 </dd>
                             </div>
                             <div>
-                                <dt>DLI</dt>
+                                <dt>
+                                    <SiteIcon name="clock" size={20} />
+                                    Trial DLI
+                                </dt>
                                 <dd>
-                                    {range(care.light.dli)}
+                                    <span class="care-comparison-range">
+                                        {range(care.light.dli)}
+                                    </span>
                                     <small>mol·m⁻²·day⁻¹</small>
                                 </dd>
                             </div>
                         </dl>
-                        <p class="care-comparison-moisture">
-                            <strong>Drying stage:</strong> {care.moisture.regime}
-                        </p>
+                        <div class="care-comparison-footer">
+                            <p class="care-comparison-moisture">
+                                <SiteIcon name="moisture" size={22} />
+                                <span>
+                                    <strong>Drying stage</strong>
+                                    {care.moisture.regime}
+                                </span>
+                            </p>
+                            <a class="care-comparison-source-link" href={careUrl}>
+                                Care &amp; sources
+                                <SiteIcon name="arrow-right" size={20} />
+                            </a>
+                        </div>
                     </li>
                 );
             })}

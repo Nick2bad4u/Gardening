@@ -48,7 +48,7 @@ const basis = historical
             {!historical && comparison.ppfd && care.light.dli ? (
                 <>
                     <div class="plant-care-light-range">
-                        <span class="plant-care-label">Working range</span>
+                        <span class="plant-care-label">Provisional trial band</span>
                         <strong>{range(comparison.ppfd)}</strong>
                         <span class="plant-care-unit">µmol·m⁻²·s⁻¹ PPFD</span>
                     </div>
@@ -57,7 +57,7 @@ const basis = historical
                     </p>
                     <dl class="plant-care-measures">
                         <div>
-                            <dt>Daily light total</dt>
+                            <dt>Trial daily light total</dt>
                             <dd>{range(care.light.dli)} mol·m⁻²·day⁻¹ DLI</dd>
                         </div>
                         <div>
@@ -76,19 +76,21 @@ const basis = historical
                             </div>
                         )}
                     </dl>
-                    <div class="plant-care-edges" aria-label="Working-range comparison edges">
+                    <div class="plant-care-edges" aria-label="Trial comparison edges">
                         <div>
-                            <span>Below working range</span>
+                            <span>Below trial band</span>
                             <strong>&lt; {number.format(comparison.ppfd[0])} PPFD</strong>
                         </div>
                         <div>
-                            <span>Above working range</span>
+                            <span>Above trial band</span>
                             <strong>&gt; {number.format(comparison.ppfd[1])} PPFD</strong>
                         </div>
                     </div>
                     <p class="plant-care-limit">
-                        Review exposure at either edge. A proven optimum and hard minimum or maximum
-                        are not established.
+                        These edges describe the provisional trial, not the plant's limits. The
+                        upper value is not a ceiling; higher exposure may suit an acclimated plant,
+                        but needs its own assessment of growth, heat, and stress. A species optimum
+                        is not established here.
                     </p>
                 </>
             ) : (
