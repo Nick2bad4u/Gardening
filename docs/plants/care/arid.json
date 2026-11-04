@@ -966,11 +966,14 @@
     },
     {
         "light": {
-            "acclimation": "Increase exposure gradually from the currently tolerated position; inspect for stretching, bleaching and heat.",
-            "basis": "qualitative-only",
-            "caution": "Faucaria tigrina guidance is a genus comparison, not proof of F. tuberculosa requirements.",
-            "description": "Bright exposure, increased gradually; no numeric trial assigned for the probable identification.",
-            "dli": null,
+            "acclimation": "Move toward the lower part of the trial gradually after checking present exposure. Watch for bleaching, heat stress, and changes in firmness; a numerical range does not justify an abrupt move.",
+            "basis": "collection-trial",
+            "caution": "The identity remains probable. This broad succulent-category trial is not a Faucaria-specific threshold, and the lux comparison is not calibrated to the installed grow-light spectrum.",
+            "description": "A general high-light succulent trial for probable Faucaria tuberculosa, informed by its full-light cultivation guidance. Measure at the leaf tops and judge new growth before increasing exposure.",
+            "dli": [
+                12,
+                16
+            ],
             "startingDli": null
         },
         "moisture": {
@@ -979,7 +982,7 @@
             "waitWhen": "The base is translucent or spreading softness appears, roots remain wet, or only old leaves are drying. Investigate instead of adding water.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "faucaria-tuberculosa",
         "sources": [
             {
@@ -991,6 +994,16 @@
                 "scope": "Related-species cultivation context only; not confirmation of F. tuberculosa identity or numeric light requirements.",
                 "title": "SANBI: Faucaria tigrina",
                 "url": "https://pza.sanbi.org/faucaria-tigrina"
+            },
+            {
+                "scope": "Full light, draining medium, restrained feeding, and frost protection for the proposed species; no numeric light threshold.",
+                "title": "RHS: Faucaria tuberculosa",
+                "url": "https://www.rhs.org.uk/plants/176659/faucaria-tuberculosa/details"
+            },
+            {
+                "scope": "Generic succulent category, 12–16 DLI; applying it here is collection inference.",
+                "title": "Iowa State Extension: supplemental-light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
             }
         ]
     },
@@ -1072,11 +1085,14 @@
     },
     {
         "light": {
-            "acclimation": "Increase exposure gradually from the currently tolerated position; inspect for stretching, bleaching and heat.",
-            "basis": "qualitative-only",
-            "caution": "No numeric range is established for these heads; verify leaf-level exposure and preserve species uncertainty.",
-            "description": "Bright light with gradual acclimation for the probable tan/brown group in P35.",
-            "dli": null,
+            "acclimation": "Measure at each head, including shading from neighboring plants. Increase exposure gradually and retain bright light during leaf replacement; avoid heat stress without moving a resting plant into deep shade.",
+            "basis": "collection-trial",
+            "caution": "The species identities remain probable. This broad-category trial does not establish a species threshold, synchronize leaf cycles, authorize watering, or calibrate the lux estimate to the installed lamps.",
+            "description": "A general high-light succulent trial for the probable tan/brown Lithops lesliei group in P35. All component profiles use one comparison band while every head is checked for actual exposure and response.",
+            "dli": [
+                12,
+                16
+            ],
             "startingDli": null
         },
         "moisture": {
@@ -1085,7 +1101,7 @@
             "waitWhen": "Old leaves are being absorbed, heads remain firm or stages conflict. Do not water to plump old leaves or satisfy a weight forecast.",
             "waterWhen": "Dry roots, genuine current-leaf need and compatible stages across all heads support one shared watering decision."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "lithops-lesliei",
         "sources": [
             {
@@ -1097,16 +1113,29 @@
                 "scope": "Bright light, gradual acclimation and leaf-replacement watering restrictions; no species-specific DLI range.",
                 "title": "Wisconsin Extension: Living stones, Lithops",
                 "url": "https://hort.extension.wisc.edu/articles/living-stones-lithops/"
+            },
+            {
+                "scope": "Generic succulent category, 12–16 DLI; applying it here is collection inference.",
+                "title": "Iowa State Extension: supplemental-light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
+            },
+            {
+                "scope": "Continued bright light during rest, ordinary indoor conditions, airflow, and sparse feeding; no species-specific numeric light range.",
+                "title": "New York Botanical Garden: Living stones",
+                "url": "https://libguides.nybg.org/livingstones"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "Increase exposure gradually from the currently tolerated position; inspect for stretching, bleaching and heat.",
-            "basis": "qualitative-only",
-            "caution": "No numeric range is established for these heads; sharing P35 does not synchronize leaf cycles.",
-            "description": "Bright light with gradual acclimation for the probable grey/green group in P35.",
-            "dli": null,
+            "acclimation": "Measure at each head, including shading from neighboring plants. Increase exposure gradually and retain bright light during leaf replacement; avoid heat stress without moving a resting plant into deep shade.",
+            "basis": "collection-trial",
+            "caution": "The species identities remain probable. This broad-category trial does not establish a species threshold, synchronize leaf cycles, authorize watering, or calibrate the lux estimate to the installed lamps.",
+            "description": "A general high-light succulent trial for the probable grey/green Lithops salicola group in P35. All component profiles use one comparison band while every head is checked for actual exposure and response.",
+            "dli": [
+                12,
+                16
+            ],
             "startingDli": null
         },
         "moisture": {
@@ -1115,7 +1144,7 @@
             "waitWhen": "Old leaves are being absorbed, heads remain firm or stages conflict. Do not water to plump old leaves or satisfy a weight forecast.",
             "waterWhen": "Dry roots, genuine current-leaf need and compatible stages across all heads support one shared watering decision."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "lithops-salicola",
         "sources": [
             {
@@ -1127,16 +1156,29 @@
                 "scope": "Bright light, gradual acclimation and leaf-replacement watering restrictions; no species-specific DLI range.",
                 "title": "Wisconsin Extension: Living stones, Lithops",
                 "url": "https://hort.extension.wisc.edu/articles/living-stones-lithops/"
+            },
+            {
+                "scope": "Generic succulent category, 12–16 DLI; applying it here is collection inference.",
+                "title": "Iowa State Extension: supplemental-light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
+            },
+            {
+                "scope": "Continued bright light during rest, ordinary indoor conditions, airflow, and sparse feeding; no species-specific numeric light range.",
+                "title": "New York Botanical Garden: Living stones",
+                "url": "https://libguides.nybg.org/livingstones"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "Increase exposure gradually from the currently tolerated position; inspect for stretching, bleaching and heat.",
-            "basis": "qualitative-only",
-            "caution": "Inspect each head for stretch or bleaching; no defensible numeric target is established for this mixed pot.",
-            "description": "Bright light, gradually introduced across all four heads.",
-            "dli": null,
+            "acclimation": "Measure at each head, including shading from neighboring plants. Increase exposure gradually and retain bright light during leaf replacement; avoid heat stress without moving a resting plant into deep shade.",
+            "basis": "collection-trial",
+            "caution": "The species identities remain probable. This broad-category trial does not establish a species threshold, synchronize leaf cycles, authorize watering, or calibrate the lux estimate to the installed lamps.",
+            "description": "A general high-light succulent trial for the shared Lithops planting in P35. All component profiles use one comparison band while every head is checked for actual exposure and response.",
+            "dli": [
+                12,
+                16
+            ],
             "startingDli": null
         },
         "moisture": {
@@ -1145,7 +1187,7 @@
             "waitWhen": "Old leaves are being absorbed, heads remain firm or stages conflict. Do not water to plump old leaves or satisfy a weight forecast.",
             "waterWhen": "Dry roots, genuine current-leaf need and compatible stages across all heads support one shared watering decision."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "lithops-shared-planter",
         "sources": [
             {
@@ -1157,6 +1199,16 @@
                 "scope": "Bright light, gradual acclimation and leaf-replacement watering restrictions; no species-specific DLI range.",
                 "title": "Wisconsin Extension: Living stones, Lithops",
                 "url": "https://hort.extension.wisc.edu/articles/living-stones-lithops/"
+            },
+            {
+                "scope": "Generic succulent category, 12–16 DLI; applying it here is collection inference.",
+                "title": "Iowa State Extension: supplemental-light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
+            },
+            {
+                "scope": "Continued bright light during rest, ordinary indoor conditions, airflow, and sparse feeding; no species-specific numeric light range.",
+                "title": "New York Botanical Garden: Living stones",
+                "url": "https://libguides.nybg.org/livingstones"
             }
         ]
     },
@@ -1314,11 +1366,14 @@
     },
     {
         "light": {
-            "acclimation": "Increase exposure gradually from the currently tolerated position; inspect for stretching, bleaching and heat.",
-            "basis": "qualitative-only",
-            "caution": "Identities and exposure remain uncertain; no one numeric optimum is assigned to this mixed bowl.",
-            "description": "Bright light at both low rosettes and taller paddle leaves in P30.",
-            "dli": null,
+            "acclimation": "Measure at both the low rosettes and taller leaves. Approach the lower end gradually from the currently tolerated exposure; inspect all components for bleaching, scorch, heat, stretching, and mutual shading.",
+            "basis": "collection-trial",
+            "caution": "Component identities remain qualified and their leaf heights differ. This broad-category trial is not a proven shared optimum; check every member before changing the whole bowl’s exposure.",
+            "description": "A provisional high-light succulent trial shared by P30’s low Echeveria rosettes, probable coppertone sedum, and taller paddle kalanchoe.",
+            "dli": [
+                12,
+                16
+            ],
             "startingDli": null
         },
         "moisture": {
@@ -1327,7 +1382,7 @@
             "waitWhen": "Drainage is unresolved, deeper mix remains damp or only one component appears thirsty. Reassess conflicting needs before watering.",
             "waterWhen": "Drainage is confirmed, the shared mix is dry through and the planting is ready; water and drain as one pot."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "tiny-mixed-succulent-planter",
         "sources": [
             {
@@ -1339,16 +1394,24 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Generic succulent category, 12–16 DLI; applying it here is collection inference.",
+                "title": "Iowa State Extension: supplemental-light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "Increase exposure gradually from the currently tolerated position; inspect for stretching, bleaching and heat.",
-            "basis": "qualitative-only",
-            "caution": "Check compact growth and shading; orange color alone does not prove adequate or excessive light.",
-            "description": "Bright light for the probable Sedum adolphi/nussbaumerianum group in P30.",
-            "dli": null,
+            "acclimation": "Measure at both the low rosettes and taller leaves. Approach the lower end gradually from the currently tolerated exposure; inspect all components for bleaching, scorch, heat, stretching, and mutual shading.",
+            "basis": "collection-trial",
+            "caution": "The identity remains probable. Check compact growth and shading; orange color alone does not prove suitable exposure. This category-based trial is not a measured species threshold.",
+            "description": "A provisional high-light succulent trial for the probable Sedum adolphi/nussbaumerianum group, using the same comparison as its P30 companions.",
+            "dli": [
+                12,
+                16
+            ],
             "startingDli": null
         },
         "moisture": {
@@ -1357,7 +1420,7 @@
             "waitWhen": "Drainage is unresolved, deeper mix remains damp or only one component appears thirsty. Reassess conflicting needs before watering.",
             "waterWhen": "Drainage is confirmed, the shared mix is dry through and the planting is ready; water and drain as one pot."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "tiny-planter-coppertone-sedum",
         "sources": [
             {
@@ -1369,16 +1432,29 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Generic succulent category, 12–16 DLI; applying it here is collection inference.",
+                "title": "Iowa State Extension: supplemental-light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
+            },
+            {
+                "scope": "Bright exposure, airflow, and stem-rot care for the probable Sedum group; no numerical light threshold.",
+                "title": "NParks: Sedum adolphi",
+                "url": "https://www.nparks.gov.sg/florafaunaweb/flora/6/1/6141"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "Increase exposure gradually from the currently tolerated position; inspect for stretching, bleaching and heat.",
-            "basis": "qualitative-only",
-            "caution": "Species and cultivar are unknown; preserve farina and check for shading by taller companions.",
-            "description": "Bright light reaching the low Echeveria rosettes in P30.",
-            "dli": null,
+            "acclimation": "Measure at both the low rosettes and taller leaves. Approach the lower end gradually from the currently tolerated exposure; inspect all components for bleaching, scorch, heat, stretching, and mutual shading.",
+            "basis": "collection-trial",
+            "caution": "Species and cultivar remain unknown. Preserve farina and check for shading by taller companions; this category-based trial is not a cultivar threshold.",
+            "description": "A provisional high-light succulent trial for the low Echeveria rosettes, using the same comparison as the other P30 components.",
+            "dli": [
+                12,
+                16
+            ],
             "startingDli": null
         },
         "moisture": {
@@ -1387,7 +1463,7 @@
             "waitWhen": "Drainage is unresolved, deeper mix remains damp or only one component appears thirsty. Reassess conflicting needs before watering.",
             "waterWhen": "Drainage is confirmed, the shared mix is dry through and the planting is ready; water and drain as one pot."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "tiny-planter-echeveria",
         "sources": [
             {
@@ -1404,16 +1480,24 @@
                 "scope": "Genus-level sunlight and low-water guidance; no cultivar-specific DLI trial.",
                 "title": "NC State Extension: Echeveria",
                 "url": "https://plants.ces.ncsu.edu/plants/echeveria/"
+            },
+            {
+                "scope": "Generic succulent category, 12–16 DLI; applying it here is collection inference.",
+                "title": "Iowa State Extension: supplemental-light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "Increase exposure gradually from the currently tolerated position; inspect for stretching, bleaching and heat.",
-            "basis": "qualitative-only",
-            "caution": "Check upper leaves separately from low rosettes; red margins alone do not establish a light threshold.",
-            "description": "Bright light for the probable Kalanchoe luciae/thyrsiflora group in P30.",
-            "dli": null,
+            "acclimation": "Measure at both the low rosettes and taller leaves. Approach the lower end gradually from the currently tolerated exposure; inspect all components for bleaching, scorch, heat, stretching, and mutual shading.",
+            "basis": "collection-trial",
+            "caution": "The species remains unresolved. Check upper leaves separately from low rosettes; red margins alone do not establish suitable exposure or a species threshold.",
+            "description": "A provisional high-light succulent trial for the Kalanchoe luciae/thyrsiflora group, using the shared P30 comparison.",
+            "dli": [
+                12,
+                16
+            ],
             "startingDli": null
         },
         "moisture": {
@@ -1422,7 +1506,7 @@
             "waitWhen": "Drainage is unresolved, deeper mix remains damp or only one component appears thirsty. Reassess conflicting needs before watering.",
             "waterWhen": "Drainage is confirmed, the shared mix is dry through and the planting is ready; water and drain as one pot."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "tiny-planter-paddle-kalanchoe",
         "sources": [
             {
@@ -1439,6 +1523,11 @@
                 "scope": "Paddle-plant light and identity comparison; no confirmed species identification or numeric light threshold.",
                 "title": "Wisconsin Extension: Flapjacks, Kalanchoe spp.",
                 "url": "https://hort.extension.wisc.edu/articles/flapjacks-kalanchoe-spp/"
+            },
+            {
+                "scope": "Generic succulent category, 12–16 DLI; applying it here is collection inference.",
+                "title": "Iowa State Extension: supplemental-light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
             }
         ]
     },

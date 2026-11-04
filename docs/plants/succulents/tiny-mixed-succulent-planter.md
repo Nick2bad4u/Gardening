@@ -64,14 +64,24 @@ explain those comparisons alongside each group's growth habit.
 
 ## Care in this collection
 
-| Topic               | Practical starting approach                                                                                                                                                                                                                                                                                                                                                           |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Arrival             | Use the September 2 views as the visual baseline. Watch each component for collapse, translucence, pests, or poor rooting even though observations are saved against one planter.                                                                                                                                                                                                     |
-| Grow-light position | **Photo-matched front of rear zone, between #1 and #5 · Bright.** Rear wooden tables, facing the window; position retained in photographs supplied October 22 (capture date unrecorded). Compare the low rosettes and paddle leaves for shadows from the large pots. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
-| Water               | Judge the shared root volume by full dry-down and whole-pot weight. Water thoroughly and drain, but do not repeatedly wet the pot for one component while the others remain firm.                                                                                                                                                                                                     |
-| Pot and mix         | Current setup 3 is logged October 8 as “7 inch shallow” with “Molly's Mix only.” The October 22 view shows the green glazed bowl; usable internal depth and drainage remain unverified. The five-inch nursery-soil setup 2 is historical.                                                                                                                                             |
-| Mixed growth        | Prune or separate only if one component begins shading, crowding, or demanding a materially different watering rhythm.                                                                                                                                                                                                                                                                |
-| Feeding             | Use the collection's dilute succulent product only during an ordinary active-growth watering. Avoid feeding stressed or poorly rooted components.                                                                                                                                                                                                                                     |
+| Topic                | Practical starting approach                                                                                                                                                                                                                                                                                                                                                           |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Arrival              | Use the September 2 views as the visual baseline. Watch each component for collapse, translucence, pests, or poor rooting even though observations are saved against one planter.                                                                                                                                                                                                     |
+| Grow-light position  | **Photo-matched front of rear zone, between #1 and #5 · Bright.** Rear wooden tables, facing the window; position retained in photographs supplied October 22 (capture date unrecorded). Compare the low rosettes and paddle leaves for shadows from the large pots. See the [current placement guide](../../layouts/table-placement-research.md); exact exposure remains unmeasured. |
+| Water                | Judge the shared root volume by full dry-down and whole-pot weight. Water thoroughly and drain, but do not repeatedly wet the pot for one component while the others remain firm.                                                                                                                                                                                                     |
+| Pot and mix          | Current setup 3 is logged October 8 as “7 inch shallow” with “Molly's Mix only.” The October 22 view shows the green glazed bowl; usable internal depth and drainage remain unverified. The five-inch nursery-soil setup 2 is historical.                                                                                                                                             |
+| Mixed growth         | Prune or separate only if one component begins shading, crowding, or demanding a materially different watering rhythm.                                                                                                                                                                                                                                                                |
+| Feeding              | Use the collection's dilute succulent product only during an ordinary active-growth watering. Avoid feeding stressed or poorly rooted components.                                                                                                                                                                                                                                     |
+| Temperature          | Keep the mixed bowl frost-free. The Echeveria genus guide's above-10 °C / 50 °F precaution is a conservative cold-exposure check for the shared planting, not a measured lower limit or an optimum for every member.                                                                                                                                                                  |
+| Humidity and airflow | Ordinary indoor air is a starting condition; no extra humidity target or routine misting is assigned. Maintain air movement through the different foliage heights and inspect sheltered stem and leaf bases.                                                                                                                                                                          |
+| Drainage check       | Verify the current bowl's outlet and the escape of runoff before relying on a thorough-watering routine. “7 inch shallow” and “Molly's Mix only” do not establish usable depth, a functioning outlet, or current root-zone moisture.                                                                                                                                                  |
+| Pets                 | Treat the whole shared planter as inaccessible to cats and dogs because the paddle component is a probable Kalanchoe, a genus listed as toxic by ASPCA. Pick up fallen leaves.                                                                                                                                                                                                        |
+
+The **Light & moisture** card uses a cautious succulent-category trial for this
+unresolved mixture. It is not a measured optimum for the bowl. Check light at
+both the low rosettes and the taller paddles; changing one lamp setting does not
+give every member the same exposure. The [light reference](../../light-moisture.md)
+explains the duration and spectrum assumptions behind the displayed lux comparison.
 
 ## Rotation and watch points
 
@@ -83,6 +93,9 @@ explain those comparisons alongside each group's growth habit.
   shift together with texture and growth, not color alone, as evidence.
 - If one plant rots, isolate the affected component and inspect adjoining roots;
   do not assume the whole planter needs more water.
+- Check sheltered growth for mealybugs and scale. Inspect each foliage group
+  before choosing a treatment; do not mistake Echeveria farina or the
+  kalanchoe's natural surface bloom for an infestation.
 
 ## Sources
 
@@ -92,6 +105,9 @@ explain those comparisons alongside each group's growth habit.
 
 - [GBIF Backbone Taxonomy: _Echeveria_](https://www.gbif.org/species/5362052)
 - [NC State Extension Plant Toolbox: _Echeveria_](https://plants.ces.ncsu.edu/plants/echeveria/)
+- [RHS: Echeveria genus guide](https://www.rhs.org.uk/plants/echeveria), reviewed November 4, 2026 — the conservative cold precaution used for the shared bowl, plus drainage and cold-wet root risks.
+- [University of Minnesota Extension: Cacti and succulents](https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents), reviewed November 4, 2026 — indoor humidity, drainage, dish-garden compatibility, and pest checks; no exact target for this mixture.
+- [ASPCA: Kalanchoe](https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/kalanchoe), reviewed November 4, 2026 — genus-level pet-ingestion risk applied cautiously to the provisional paddle component.
 - [GBIF Backbone Taxonomy: _Sedum adolphi_](https://www.gbif.org/species/5688173)
 - [GBIF Backbone Taxonomy: _Kalanchoe luciae_](https://www.gbif.org/species/7334254)
 - [GBIF Backbone Taxonomy: _Kalanchoe thyrsiflora_](https://www.gbif.org/species/4198362)

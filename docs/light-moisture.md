@@ -21,8 +21,9 @@ history and one watering decision.
 
 Numeric entries are labeled **collection trial ranges**. Sources often establish
 qualitative light preferences or broad plant categories; the card's source notes
-state where the numeric choice is an inference. Uncertain mixed plantings retain
-qualitative guidance. The removed plant's card stays historical.
+state where the numeric choice is an inference. Mixed plantings use provisional
+comparison bands with checks for each member; one shared band does not establish
+identical needs or synchronized watering. The removed plant's card stays historical.
 
 ## Reading PPFD, DLI, and lux
 
@@ -50,6 +51,10 @@ daylight and LED exposure without a suitable spectrum-specific conversion. A
 fixture's exact spectral data or a quantum sensor is preferable. PPFD displays
 are rounded to about 5 units and lux to about 100; those rounded numbers do not
 imply measurement precision.
+
+The collection's [AW200 and AL240](./equipment/aw200-and-aerolight-240w.md) use
+selectable grow-light spectra. The lux column does not calibrate that installed
+pair or prescribe a dimmer setting; keep the source and meter mode with each reading.
 
 ## Measure where the plant receives light
 
@@ -102,11 +107,14 @@ an instruction to water that component independently.
   demonstrates source-dependent factors; its CMH values are not white-LED
   calibrations.
 - [Iowa State Extension: supplemental-light considerations](https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants)
-  gives broad foliage DLI categories and explains intensity, duration, and
+  gives broad foliage and succulent DLI categories and explains intensity, duration, and
   spectrum. Those categories do not prove cultivar-specific limits.
 - Each plant card includes its horticultural sources and the scope of their
   support. Existing collection trial ranges also remain documented in the
   [earlier fixture research](./equipment/vivosun-aw200se.md#working-light-targets-for-this-collection).
 
-Care records reviewed October 29, 2026. Revisit them when measurements, pot setup,
-plant condition, or identification provide better evidence.
+The nine formerly qualitative active records were reviewed November 4, 2026.
+They now include provisional category-based comparisons supported by their
+linked horticultural guidance. Other records retain their individual review dates.
+Revisit ranges when measurements, pot setup, plant condition, or identification
+provide better evidence.

@@ -279,7 +279,7 @@ describe("care coverage", () => {
         expect(lightComparison(historical.light).ppfd).toBeNull();
     });
 
-    it("loads complete maintained catalogs and preserves terrarium unknowns", async () => {
+    it("loads numeric comparisons for every active profile and keeps the removed profile historical", async () => {
         expect.hasAssertions();
 
         const records = await getPlantCareReferences();
@@ -290,19 +290,135 @@ describe("care coverage", () => {
         }).not.toThrow();
         expect(records).toHaveLength(profiles.length);
 
-        const terrarium = await getPlantCareReference("terrarium");
+        const activeSlugs = new Set(
+            profiles
+                .filter((profile) => !profile.historical)
+                .map((profile) => profile.slug)
+        );
+        const active = records.filter((record) => activeSlugs.has(record.slug));
 
-        expect(terrarium.light).toMatchObject({
-            basis: "qualitative-only",
-            dli: null,
-            startingDli: null,
-        });
+        expect(active).toHaveLength(49);
+        expect(
+            active.every(
+                (record) =>
+                    record.light.basis === "collection-trial" &&
+                    lightComparison(record.light).lux !== null &&
+                    lightComparison(record.light).ppfd !== null
+            )
+        ).toBe(true);
+
+        const historical = records.filter(
+            (record) => !activeSlugs.has(record.slug)
+        );
+
+        expect(historical.map((record) => record.slug)).toStrictEqual([
+            "mammillaria-bombycina",
+        ]);
+        expect(
+            historical.map((record) => lightComparison(record.light))
+        ).toStrictEqual([
+            { hours: 13.5, lux: null, ppfd: null, startingPpfd: null },
+        ]);
+
         await expect(
             getPlantCareReference("missing-synthetic-plant")
         ).rejects.toThrow(
             "Missing plant care reference: missing-synthetic-plant"
         );
     });
+
+    it("compares the conservative terrarium trial while retaining unidentified member cautions", async () => {
+        expect.hasAssertions();
+
+        const terrarium = await getPlantCareReference("terrarium");
+
+        expect(terrarium.light).toMatchObject({
+            basis: "collection-trial",
+            dli: [3, 6],
+            startingDli: null,
+        });
+        expect(lightComparison(terrarium.light)).toStrictEqual({
+            hours: 13.5,
+            lux: [3400, 8600],
+            ppfd: [60, 125],
+            startingPpfd: null,
+        });
+        expect(terrarium.light.caution).toMatch(/provisional|unidentified/iv);
+        expect(terrarium.moisture.waitWhen).toMatch(
+            /persistently wet|pooling/iv
+        );
+        expect(terrarium.moisture.waterWhen).toMatch(
+            /does not establish.*drainage/iv
+        );
+    });
+
+    it.each([
+        "faucaria-tuberculosa",
+        "lithops-lesliei",
+        "lithops-salicola",
+        "lithops-shared-planter",
+        "tiny-mixed-succulent-planter",
+        "tiny-planter-coppertone-sedum",
+        "tiny-planter-echeveria",
+        "tiny-planter-paddle-kalanchoe",
+    ])(
+        "assigns %s an explicit conservative trial without inventing a starting exposure",
+        async (slug) => {
+            expect.hasAssertions();
+
+            const record = await getPlantCareReference(slug);
+
+            expect(record.light).toMatchObject({
+                basis: "collection-trial",
+                dli: [12, 16],
+                startingDli: null,
+            });
+            expect(lightComparison(record.light)).toStrictEqual({
+                hours: 13.5,
+                lux: [13_600, 23_000],
+                ppfd: [245, 330],
+                startingPpfd: null,
+            });
+        }
+    );
+
+    it.each([
+        [
+            "tiny-mixed-succulent-planter",
+            "tiny-planter-coppertone-sedum",
+            "tiny-planter-echeveria",
+            "tiny-planter-paddle-kalanchoe",
+        ],
+        [
+            "lithops-shared-planter",
+            "lithops-lesliei",
+            "lithops-salicola",
+        ],
+    ])(
+        "keeps %s and its component profiles on one shared moisture decision",
+        async (...slugs) => {
+            expect.hasAssertions();
+
+            const records = await Promise.all(
+                slugs.map((slug) => getPlantCareReference(slug))
+            );
+            const moistureDecisions = new Set(
+                records.map((record) => JSON.stringify(record.moisture))
+            );
+
+            expect(moistureDecisions.size).toBe(1);
+            expect(
+                records.every((record) =>
+                    /one pot|shared/v.test(record.moisture.waterWhen)
+                )
+            ).toBe(true);
+            expect(
+                records.every((record) =>
+                    record.moisture.waitWhen.includes("conflict")
+                )
+            ).toBe(true);
+        }
+    );
 });
 
 describe("light comparisons", () => {

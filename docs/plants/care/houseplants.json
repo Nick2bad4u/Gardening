@@ -151,11 +151,11 @@
     },
     {
         "light": {
-            "acclimation": "Measure inside the glass at representative leaves before changing the light. Watch the different members separately and avoid heating the enclosure.",
-            "basis": "qualitative-only",
-            "caution": "The reported 6,000–7,000 lux is an observation with an unrecorded sensor position, not a requirement. Several member identifications remain provisional.",
-            "description": "Bright indirect light for this mixed terrarium. No shared numeric band is assigned until member needs and light reaching the foliage are better established.",
-            "dli": null,
+            "acclimation": "Measure at representative leaves inside the glass before changing exposure. Begin toward the lower end of this trial, make gradual changes, and check each member for new growth, drying, scorch, or enclosure warming.",
+            "basis": "collection-trial",
+            "caution": "This is a general foliage trial for provisionally identified plants, not a tested shared requirement. The fern-like growth and moss remain unidentified. The reported 6,000–7,000 lux is a dated observation with unknown sensor position, not a target.",
+            "description": "A cautious low-light foliage comparison for this mixed terrarium under indirect light. Watch the probable Hypoestes for fading markings or stretched growth; the lower end may not provide enough light for every member.",
+            "dli": [3, 6],
             "startingDli": null
         },
         "moisture": {
@@ -164,13 +164,28 @@
             "waitWhen": "The upper planting medium is moist, water is pooling, or heavy condensation accompanies persistently wet conditions. Investigate ventilation and moisture before adding water.",
             "waterWhen": "The planting medium is actually beginning to dry and the plants need moisture. Add a small amount and reassess; the LECA/rock base does not establish an outlet for drainage."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "terrarium",
         "sources": [
             {
-                "scope": "Bright indirect placement, heat avoidance, sparing watering, and condensation checks; withholding a mixed-plant numeric target is a collection decision.",
+                "scope": "Bright indirect placement, compatible terrarium plant groups, heat avoidance, sparing watering, and condensation checks; no numerical shared requirement.",
                 "title": "RHS: Terrariums and bottle gardens",
                 "url": "https://www.rhs.org.uk/plants/types/houseplants/bottle-gardens-and-terrariums"
+            },
+            {
+                "scope": "Generic low-light foliage category, 3–6 DLI; its use here is collection inference.",
+                "title": "Iowa State Extension: supplemental-light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
+            },
+            {
+                "scope": "Filtered light and fading or stretching when exposure is insufficient; monitor this probable member separately, without assuming a numeric requirement.",
+                "title": "NC State Extension: Hypoestes phyllostachya",
+                "url": "https://plants.ces.ncsu.edu/plants/hypoestes-phyllostachya/"
+            },
+            {
+                "scope": "Compatible shared conditions, indirect light, enclosure heat, and restrained feeding; no tested numeric target for this mixture.",
+                "title": "Iowa State Extension: Terrarium care",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/how-create-and-care-terrarium"
             }
         ]
     },

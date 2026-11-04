@@ -75,6 +75,13 @@ for water. Check the root zone and current leaves together. Introduce stronger
 light gradually. Track firmness, scars and basal condition alongside the
 normal color differences between the two groups.
 
+The **Light & moisture** card gives the same general succulent light trial as
+the shared P35 overview, not a separate _L. salicola_ requirement. Check exposure
+at these grey heads and compare their response with the tan group. Use the
+[shared care table](./lithops-shared-planter.md#care-in-this-collection)
+for temperature, airflow, feeding, and the old-leaf drying stage; all four heads
+still receive one whole-pot watering decision.
+
 ## Sources
 
 - [Kew Plants of the World Online: _Lithops salicola_](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:362486-1) — accepted name, 1936 publication, family, and native range; checked September 23, 2026.
@@ -82,4 +89,5 @@ normal color differences between the two groups.
 - [Keith Green: Lithops species descriptions](https://scrapbooklithops.com/species.html) — surface-pattern and flower comparisons, with _L. olivacea_ and _L. lesliei_ as alternatives.
 - [University of Wisconsin–Madison Extension: Living Stones, Lithops](https://hort.extension.wisc.edu/articles/living-stones-lithops/) — light acclimation and leaf-cycle care; seasonal examples are not a fixed indoor calendar.
 - [Shared-planter evidence](./lithops-shared-planter.md#nursery-and-repot-evidence) — owner photographs, nursery labels, and dated P35 observations.
+- [Iowa State Extension: supplemental-light considerations](https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants), reviewed November 4, 2026: broad succulent light category used as a collection trial, not a published _L. salicola_ threshold.
 - Owner acquisition record, documented September 23, 2026: both Lithops nursery pots purchased at Home Depot, Howell, Michigan, on September 21.

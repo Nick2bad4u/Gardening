@@ -41,6 +41,8 @@ NParks describes _Sedum adolphi_ from Mexico as a low succulent subshrub with po
 | Water               | Follow the [shared-pot watering strategy](../../watering-strategy.md): assess dryness throughout the pot, the weight trend, and all three foliage groups before watering and draining the container.                    |
 | Weighing            | Weigh the complete P30 planter using the [adaptive weighing strategy](../../weighing-strategy.md).                                                                                                                      |
 | Feeding             | Use the shared planter's [fertilizer schedule](../../equipment/msu-fertilizer-schedule.md) during a normal watering; the dose applies to the whole pot.                                                                 |
+| Temperature         | Keep P30 frost-free and away from cold wet conditions. RHS treats the proposed coppertone taxon as tender; its outdoor hardiness category is not an indoor growing target for this unresolved component.                |
+| Airflow and roots   | Leave room for air to move between stems. Confirm the bowl's drainage path and let the shared root zone dry; avoid humidifying or repeatedly wetting this component separately.                                         |
 
 ## Growth and watch points
 
@@ -48,8 +50,14 @@ Do not give this component separate small top-ups while the rest of P30 remains 
 
 Watch for extending stems shading the pale rosettes or leaning through their leaves. Pruning or separation may become useful if those stems crowd or shade the neighboring rosettes.
 
+Inspect stem junctions and leaf undersides for mealybugs. A softer, darker stem
+with damp mix calls for a rot inspection, while longer gaps between healthy
+leaves call for a light and shading check. Orange color alone is not a meter
+reading or a reason to push the whole planter into a hotter position.
+
 ## Sources
 
 - [NParks Flora & Fauna Web: _Sedum adolphi_](https://www.nparks.gov.sg/florafaunaweb/flora/6/1/6141) — synonym treatment, native range, morphology, and drainage guidance.
+- [RHS: _Sedum nussbaumerianum_](https://www.rhs.org.uk/plants/60015/sedum-nussbaumerianum/details), reviewed November 4, 2026 — full light with protection from hot sun under glass, tender status, and mealybug susceptibility; comparison guidance for the qualified working identity.
 - [Owner's September 2 top view](https://gyazo.com/52ca4a6bae0a377ae39bac78665e32f9) and [September 16 close view](https://gyazo.com/83d1ae73a807f1826755282af1fde4ce) — original collection appearance; copyright Nick, all rights reserved.
 - [Shared-planter acquisition and nursery-label evidence](./tiny-mixed-succulent-planter.md#acquisition-and-photo-evidence) — source of acquisition, seller, and repot context.
