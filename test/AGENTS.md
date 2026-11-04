@@ -15,6 +15,9 @@
   or add coverage exclusions to conceal a real regression.
 - Logger/default coverage cleans `coverage/`; browser coverage writes below it
   at `coverage/storybook`. Run logger coverage first when retaining both outputs.
+- Logger commands select files but may still initialize Storybook configuration.
+  Use `-- --project=unit` for Node-only logger runs, or serialize them with Pages
+  and Storybook builds so shared `.cache/storybook-pages` preparation cannot race.
 
 ## Browser previews and publication tests
 

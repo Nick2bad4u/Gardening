@@ -38,6 +38,29 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## November 4 post-release runtime check
+
+A read-only check confirmed production **5.41.0 / immutable version 127**, with
+the live HEAD source matching that immutable version. The deployment was updated
+on November 3 at **20:57:07 EST**. Through November 4 at **12:15 EST**, all **184**
+queue executions completed, with no missing five-minute intervals. Their total
+displayed runtime was **42.826 minutes**, median **13.272 seconds**, 95th percentile
+**28.175 seconds**, and maximum **86.181 seconds**.
+
+This approximately 15-hour window does not establish a daily runtime total or
+quota margin. The first complete post-deployment day ends November 4 at
+**20:57:07 EST**; a read after **21:05 EST** allows time for execution reporting.
+Compare a complete window with the earlier baseline before choosing further
+optimizations. The audit covers this queue, not account-wide trigger use.
+
+The longest sampled run spent **45.558 seconds** opening the workbook and
+**16.156 seconds** in single intake. Analytics took **11.200 seconds**, including
+only **0.557 seconds** of calculation. The latest run completed in **7.035 seconds**
+and reused fresh Ready analytics. Both had zero queue counters. These samples
+support measuring service reads before further calculation changes; they do not
+prove that every slow run has the same cause. No production data, deployment,
+trigger, or five-minute intake setting changed during this check.
+
 ## November 3 refresh optimization and watering ages
 
 Production logger **5.41.0** adds the optional **Days since watered** display
