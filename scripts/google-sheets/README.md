@@ -1,10 +1,10 @@
 # Google Sheets observation logger
 
-Production logger **5.40.4 / immutable version 126** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.41.0 / immutable version 127** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Production **5.40.4 / immutable version 126** and **AppSheet 1.100141** use portrait
+Production **5.41.0 / immutable version 127** and **AppSheet 1.100141** retain portrait
 revision **1010123212eade00**, verified on November 1. The remaining cactus and
 front-grid portraits are described below. P41's appended optional weight field
 remains unchanged; the earlier dated receipts retain their verified versions.
@@ -40,7 +40,7 @@ under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-
 
 ## November 3 refresh optimization and watering ages
 
-Maintained logger **5.41.0** adds the optional **Days since watered** display
+Production logger **5.41.0** adds the optional **Days since watered** display
 beside **Not weighed today**. The preference applies to single and bulk pickers,
 including Labels, Table, and List views. It counts workbook-timezone calendar
 days from the latest active, non-future Water event across the permanent pot's
@@ -88,6 +88,57 @@ can dominate. The optimized candidate's private-copy bootstrap completed in
 **65.720 seconds** reading History. These observations explain why removing
 duplicate work improves the path without promising that Google's intermittent
 delays disappear.
+
+The rollout preserved the existing logger URL, owner-only access, execution
+identity, and single five-minute `processQueuedAppSheetEntries` trigger. Exact
+source readback matched immutable **127** and reviewed commit **51dd58b** from
+[PR #34](https://github.com/Nick2bad4u/Gardening/pull/34), merged as **602509c**.
+The PR passed **19 checks** with three expected PR/Dependabot skips. Local
+validation passed **2,558 unit tests**, logger coverage, Storybook coverage,
+responsive browser checks, source/type/lint checks, and the **223-page** build.
+The pre-existing development audit retains **142 package entries**, including
+13 high entries; production dependencies have zero findings. Reviewed release
+paths exposed no demonstrated production/artifact exploit path. Staged Gitleaks
+and Secretlint passed; no dependency versions or security policy changed.
+
+A [native backup](https://docs.google.com/spreadsheets/d/10l_q-RFIVSqNA6DwgLUkflphvl6Oqqu09g9RYuU0HsM/edit)
+preceded the guarded, eight-request helper installation. Production comparison
+preserved **2,187 observations and unique IDs**, **1,790 request groups**, and
+all **292,646 captured cells across 21 ranges**, including staging/RO records,
+formulas, notes, and validations. All **69 existing tabs**, **194 charts**, and
+**130 protections** matched, including chart specifications and positions.
+Only the new helper and its warning protection were added, leaving **70 tabs**
+and **131 protections**. The **67/59/77-column** History/App entries/App bulk
+contracts remain unchanged. No synthetic production observations were submitted.
+
+Native-copy checks passed empty input, date/order/Removed/future handling,
+date/event error propagation, all **50,000 records**, blocked spill, and spill
+recovery. The copy's full analytics refresh completed in **7.397 seconds** with
+a **44,263-byte** payload. Its original canonical feed was restored and all
+temporary fixture sheets were removed; the reused test script was also restored.
+
+The published compact CSV contained **220 records / 10,241 bytes**, compared
+with **2,187 records / 868,839 bytes** for full History: **98.82% fewer decoded
+UTF-8 bytes**. Both produced identical map results for all **39 pots**. Four
+anonymous command-line compact reads ranged from **0.596 to 45.770 seconds**,
+so this payload reduction does not establish faster Google response times.
+The live logger displayed **Connected · Logger 5.41.0** and **Calculations ready**.
+Its initial and manual bootstraps completed in **13.604** and **15.472 seconds**.
+The manual browser refresh used exactly **one bootstrap RPC and no separate
+recent-History RPC**, taking **16.236 seconds** including the browser request.
+Watering ages returned after the pending state; single/bulk views, phone width,
+both themes, keyboard focus, and horizontal overflow passed live checks.
+
+The pre-rollout queue audit covered **288 completed runs** from November 2 at
+20:50 through November 3 at 20:50 EST. Their **71.50 minutes** of total runtime
+used **79.44%** of the published consumer-account daily trigger allowance. This
+rolling window is not an account quota counter and excludes other projects or
+trigger types. Google applies its [trigger runtime quotas](https://developers.google.com/apps-script/guides/services/quotas)
+per user; the roughly **18.50-minute** arithmetic margin is not reserved capacity.
+The helper adds no trigger. Post-deployment queue runs at **20:59:34** and
+**21:04:34 EST** completed in **17.808** and **7.240 seconds**; the latter retained
+Ready analytics and reported zero queued, saved, correction, retry, or deferred
+single/bulk requests. These samples do not establish a new daily runtime average.
 
 ## November 1 remaining cactus portrait update
 
