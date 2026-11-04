@@ -182,8 +182,12 @@ same phone, orientation, and app are used every time.
 
 These are starting hypotheses, not published species thresholds. They combine
 native exposure, growth form, variegation, broad succulent research, and the
-need to avoid stretching under indoor light. Most exact taxa have never been
-tested in controlled DLI trials.
+need to avoid stretching under indoor light. Species-specific numeric trials
+were not identified for most rows in the sources reviewed. The endpoints were
+selected as collection estimates; they are not established optima or ceilings.
+For example, feather cactus's 17 DLI upper trial edge does not mean that more
+light is excessive. See the [current range provenance and feather-cactus
+explanation](../light-moisture.md#where-the-numbers-come-from).
 
 | Inventory ID  | Label ID | Plant                                              | Working DLI | 12 h average PPFD | Placement cue                                                                |
 | ------------- | -------- | -------------------------------------------------- | ----------: | ----------------: | ---------------------------------------------------------------------------- |

@@ -55,6 +55,21 @@ Water the soil, not the wool. If the feathers get wet, airflow and warmth should
 let them dry quickly. Persistent mineral spotting is cosmetic; persistent damp
 at the hidden body can become structural.
 
+### Light evidence and the trial band
+
+The card's **10–17 DLI** is an inherited indoor collection trial, not a published
+optimum or maximum for _Mammillaria plumosa_. **17 DLI is not a ceiling**; a
+healthy, acclimated plant may use more light. The current sources do not
+establish a numerical upper target for this specimen.
+
+Arizona-Sonora Desert Museum describes full-sun tolerance with light afternoon
+shade preferred, and warns that excessive shade reduces the spines and white
+appearance of new growth. RHS lists full sun but specifies bright filtered light
+under glass. Use these as context for gradual changes while checking new growth
+and heat; the recommendations do not convert directly into one universal DLI.
+The [light reference](../../light-moisture.md#feather-cactus-17-dli-is-not-a-maximum)
+explains the original band and how PPFD and approximate lux are calculated.
+
 ## Propagation and watch points
 
 - Offsets can be separated once they have enough size to root; seed is also
@@ -69,9 +84,9 @@ at the hidden body can become structural.
 
 ## Sources
 
-- [Arizona-Sonora Desert Museum: feather cactus structure and care](https://www.desertmuseum.org/visit/sheets/Mamplu.pdf)
+- [Arizona-Sonora Desert Museum: feather cactus structure and care](https://www.desertmuseum.org/visit/sheets/Mamplu.pdf) — full-sun tolerance, afternoon shade, and the effect of excessive shade on new growth; no numeric DLI limit.
 - [Altman Plants: feather cactus seller listing](https://shopaltmanplants.com/products/mammillaria-plumosa-feather-cactus-1)
 - [Kew Plants of the World Online: _Mammillaria plumosa_](https://powo.science.kew.org/taxon/urn%3Alsid%3Aipni.org%3Anames%3A151448-2)
 - [LLIFLE cactus encyclopedia: _Mammillaria plumosa_](https://www.llifle.com/Encyclopedia/CACTI/Family/Cactaceae/9350/Mammillaria_plumosa)
-- [Royal Horticultural Society: _Mammillaria plumosa_](https://www.rhs.org.uk/plants/10832/mammillaria-plumosa/details)
+- [Royal Horticultural Society: _Mammillaria plumosa_](https://www.rhs.org.uk/plants/10832/mammillaria-plumosa/details) — full-sun position and bright filtered light under glass; no numeric DLI optimum or maximum.
 - [International Plant Names Index record](https://www.ipni.org/n/151448-2)

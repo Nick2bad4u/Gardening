@@ -269,8 +269,8 @@
         "light": {
             "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
             "basis": "collection-trial",
-            "caution": "Inspect beneath the feathery spines where possible; keep the crown from staying wet.",
-            "description": "Bright light with a gradual transition.",
+            "caution": "The inherited 10–17 DLI is a provisional indoor trial, not a published optimum or maximum. 17 DLI is not a ceiling. Inspect new growth beneath the feathery spines where possible; keep the crown from staying wet.",
+            "description": "Bright exposure with gradual acclimation. Species guidance describes full-sun tolerance with light afternoon shade, or bright filtered light under glass; neither establishes a numeric DLI limit.",
             "dli": [
                 10,
                 17
@@ -283,7 +283,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "mammillaria-plumosa",
         "sources": [
             {
@@ -300,6 +300,16 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Full-sun tolerance, light afternoon shade, and less spiny or white new growth in excessive shade. No numerical DLI optimum or maximum.",
+                "title": "Arizona-Sonora Desert Museum: Feather cactus",
+                "url": "https://www.desertmuseum.org/visit/sheets/Mamplu.pdf"
+            },
+            {
+                "scope": "Full-sun position with bright filtered light advised under glass; no numerical DLI optimum or maximum.",
+                "title": "RHS: Mammillaria plumosa",
+                "url": "https://www.rhs.org.uk/plants/10832/mammillaria-plumosa/details"
             }
         ]
     },

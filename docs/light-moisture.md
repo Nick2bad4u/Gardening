@@ -1,6 +1,6 @@
 # Light and moisture reference
 
-Use each plant's **Light & moisture** card for a working light comparison and a
+Use each plant's **Light & moisture** card for a provisional light comparison and a
 physical watering check. These are collection trials and observation triggers,
 not measured conditions, fixed watering dates, or proven species limits.
 
@@ -10,20 +10,62 @@ history and one watering decision.
 
 ## Minimum, good, optimal, and maximum
 
-- **Below the working range:** inspect placement and new growth. This is not a
+- **Below the trial band:** inspect placement and new growth. This is not a
   proven survival minimum; a shaded or recovering plant may need gradual changes.
-- **Working range:** a practical trial for an established plant, adjusted through
+- **Provisional trial band:** a collection starting estimate, adjusted through
   observations. Some profiles also show a gentler starting comparison.
 - **Optimal:** not established for these individual plants, pots, and conditions.
   A productive range is not proof of a precise optimum.
-- **Above the working range:** inspect heat, bleaching, scorch, and water stress.
-  The upper edge is not a guaranteed safe maximum or a damage threshold.
+- **Above the trial band:** inspect growth, heat, bleaching, scorch, and water
+  stress. The upper edge is not a ceiling or a damage threshold. An acclimated
+  plant may perform well above it; the number alone is not a reason to reduce light.
 
 Numeric entries are labeled **collection trial ranges**. Sources often establish
 qualitative light preferences or broad plant categories; the card's source notes
 state where the numeric choice is an inference. Mixed plantings use provisional
 comparison bands with checks for each member; one shared band does not establish
 identical needs or synchronized watering. The removed plant's card stays historical.
+
+## Where the numbers come from
+
+The DLI bands are **collection estimates, not published optimal ranges**. The
+November 4, 2026 source audit found two main starting points:
+
+- Earlier collection trials, recorded in the
+  [AW200SE research table](./equipment/vivosun-aw200se.md#working-light-targets-for-this-collection),
+  combine qualitative cultivation guidance with broad succulent research.
+  Individual endpoints were selected for the collection; the cited studies do
+  not establish each row's species-specific numbers.
+- Broad foliage and succulent categories from
+  [Iowa State Extension](https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants)
+  inform other trials. Applying a category to a particular cultivar, recovering
+  plant, or mixed pot remains an inference.
+
+PPFD is calculated from each DLI band using the comparison duration. Lux is then
+estimated from that PPFD with a white-LED conversion. They are three ways of
+expressing the same provisional band, **not three independent recommendations**.
+The care card's sources explain which claims they support. No cited numeric
+experiment establishes an optimum or upper limit for each actual collection plant.
+
+### Feather cactus: 17 DLI is not a maximum
+
+The [feather cactus](./plants/starter/mammillaria-plumosa.md) band's **10–17 DLI**
+was inherited from the earlier indoor collection trial. It is not a measured
+optimum, a published maximum, or evidence that more than 17 DLI is excessive.
+
+The [Arizona-Sonora Desert Museum care sheet](https://www.desertmuseum.org/visit/sheets/Mamplu.pdf)
+describes full-sun tolerance, a preference for light afternoon shade, and less
+spiny, less white new growth in excessive shade. The
+[RHS species profile](https://www.rhs.org.uk/plants/10832/mammillaria-plumosa/details)
+lists full sun while recommending bright filtered light under glass. Neither
+source provides a numerical DLI optimum or maximum. These context-dependent
+descriptions do not establish a replacement upper number.
+
+For scale, **350 PPFD for 13.5 hours is about 17 DLI; 500 PPFD is 24.3 DLI;
+700 PPFD is 34.0 DLI**. Those are conversion examples, not new feather-cactus
+targets. A higher exposure may be suitable after acclimation, but judge current
+leaf-level light, new growth, heat, roots, and water stress together. Do not turn
+up the installed lamps solely to reach one of these examples.
 
 ## Reading PPFD, DLI, and lux
 
