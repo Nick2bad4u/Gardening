@@ -39,6 +39,7 @@ export interface Bootstrap {
     serverTime: string;
     timeZone?: string;
     version: string;
+    wateringAgesAvailable?: boolean;
     weighedTodayPlantIds?: string[];
     workbookCalculation?: { calculatedAt?: string; status: string };
 }
@@ -149,6 +150,7 @@ export interface PlantSummary {
     id: string;
     label: string;
     lastWatered: string;
+    lastWateredDayKey?: string;
     latestAirTemperature?: "" | number;
     latestAirTemperatureAt?: string;
     latestLightAt?: string;

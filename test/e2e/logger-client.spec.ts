@@ -7,6 +7,37 @@ import { loggerBrowserFixture } from "../helpers/logger-browser-fixture.mjs";
 const pressedAttribute = "aria-pressed";
 const bulkCareTab = "Bulk care";
 const recalculateWorkbookName = "Recalculate workbook";
+const fixtureClockTime = "2026-09-09T14:00:00Z";
+
+const wateringAgeFixture = (isAvailable = true) =>
+    loggerBrowserFixture()
+        .replace(
+            "window.google =",
+            () => `fixtureBootstrap.wateringAgesAvailable = ${String(isAvailable)};
+            fixtureBootstrap.plants.forEach((plant, index) => {
+                plant.lastWateredDayKey = ["2026-09-09", "2026-09-08", "", "2026-02-30"][index] ?? "2026-09-05";
+            });
+            window.google =`
+        )
+        .replace(
+            "getWebAppBootstrap() { success(fixtureBootstrap); }",
+            `getWebAppBootstrap() {
+                const count = Number(document.documentElement.dataset.fixtureBootstrapCalls || "0") + 1;
+                document.documentElement.dataset.fixtureBootstrapCalls = String(count);
+                if (count === 1) { success(fixtureBootstrap); return; }
+                window.addEventListener("fixture-bootstrap-result", (event) => {
+                    if (event.detail === "failure") failure({ message: "Fixture connection failed" });
+                    else success(fixtureBootstrap);
+                }, { once: true });
+            }`
+        )
+        .replace(
+            "getRecentWebObservations() { success(fixtureBootstrap.recent); }",
+            `getRecentWebObservations() {
+                document.documentElement.dataset.fixtureRecentCalls = String(Number(document.documentElement.dataset.fixtureRecentCalls || "0") + 1);
+                success(fixtureBootstrap.recent);
+            }`
+        );
 
 const cactusArtwork = await readFile(
     ".pages-site/assets/plant-icons/parodia-leninghausii.svg"
@@ -260,7 +291,7 @@ const openLogger = async (
     theme: "dark" | "light",
     fixtureHtml = loggerBrowserFixture()
 ) => {
-    await page.clock.setFixedTime("2026-09-09T14:00:00Z");
+    await page.clock.setFixedTime(fixtureClockTime);
     await page.setViewportSize({ height: 900, width });
     await page.emulateMedia({ colorScheme: theme, reducedMotion: "reduce" });
     await page.route("**/*", async (route) => {
@@ -976,7 +1007,7 @@ test.describe("button press feedback", { tag: "@logger" }, () => {
     test("normal motion moves enabled controls while disabled controls ignore taps", async ({
         page,
     }) => {
-        await page.clock.install({ time: "2026-09-09T14:00:00Z" });
+        await page.clock.install({ time: fixtureClockTime });
         await openLogger(page, 390, "dark");
         await page.emulateMedia({ reducedMotion: "no-preference" });
         await page.clock.pauseAt("2026-09-09T14:00:01Z");
@@ -1017,7 +1048,7 @@ test.describe("button press feedback", { tag: "@logger" }, () => {
             page,
         }) => {
             await page.clock.install({
-                time: "2026-09-09T14:00:00Z",
+                time: fixtureClockTime,
             });
             await openLogger(page, 390, theme);
             await page.clock.pauseAt("2026-09-09T14:00:01Z");
@@ -1304,3 +1335,229 @@ for (const theme of ["dark", "light"] as const) {
         );
     }
 }
+
+const waterAgeToggleName = "Days since watered";
+const waterAgeFixtureResult = "fixture-bootstrap-result";
+
+const waterAgeDraft = "Watering-age unfinished draft";
+const waterAgeNames = {
+    P01: /, P01(?:,|$)/v,
+    P02: /, P02(?:,|$)/v,
+    P03: /, P03(?:,|$)/v,
+    P04: /, P04(?:,|$)/v,
+    P05: /, P05(?:,|$)/v,
+};
+const waterAgeTile = (
+    picker: Readonly<Locator>,
+    id: keyof typeof waterAgeNames
+) =>
+    picker.getByRole("button", {
+        includeHidden: true,
+        name: waterAgeNames[id],
+    });
+const refreshLogger = (page: Readonly<Page>) =>
+    page
+        .getByRole("button", {
+            exact: true,
+            name: "Refresh plant summaries and History",
+        })
+        .click();
+const confirmWaterAgeRefresh = (page: Readonly<Page>, hasFailed = false) =>
+    page.evaluate(
+        ({ eventName, isFailure }) =>
+            dispatchEvent(
+                new CustomEvent(eventName, {
+                    detail: isFailure ? "failure" : "success",
+                })
+            ),
+        { eventName: waterAgeFixtureResult, isFailure: hasFailed }
+    );
+const expectWaterAgeCalls = async (
+    page: Readonly<Page>,
+    bootstrap: string,
+    recent: string | undefined
+) => {
+    expect
+        .soft(
+            await page.evaluate(() => ({
+                bootstrap:
+                    document.documentElement.dataset["fixtureBootstrapCalls"],
+                recent: document.documentElement.dataset["fixtureRecentCalls"],
+            }))
+        )
+        .toStrictEqual({ bootstrap, recent });
+};
+const expectWaterAgeBadges = async (picker: Readonly<Locator>) => {
+    await Promise.all(
+        (
+            [
+                ["P01", "0d"],
+                ["P02", "1d"],
+                ["P03", "No Water"],
+                ["P04", "No data"],
+                ["P05", "4d"],
+            ] as const
+        ).map(async ([id, text]) =>
+            expect.soft(waterAgeTile(picker, id)).toContainText(text)
+        )
+    );
+};
+const expectWaterAgeDraft = async (page: Readonly<Page>) => {
+    expect
+        .soft(
+            await page.evaluate(() => {
+                const notes = document.querySelector("#notes");
+                const plant = document.querySelector("#plantSelect");
+                const weight = document.querySelector("#weight");
+                if (
+                    !(notes instanceof HTMLTextAreaElement) ||
+                    !(plant instanceof HTMLSelectElement) ||
+                    !(weight instanceof HTMLInputElement)
+                )
+                    throw new Error("Missing logger fields");
+                return {
+                    filtered: document
+                        .querySelector("#notWeighedToday")
+                        ?.getAttribute("aria-pressed"),
+                    fits: document.documentElement.scrollWidth <= innerWidth,
+                    notes: notes.value,
+                    plant: plant.value,
+                    weight: weight.value,
+                };
+            })
+        )
+        .toStrictEqual({
+            filtered: "true",
+            fits: true,
+            notes: waterAgeDraft,
+            plant: "P02",
+            weight: "444",
+        });
+};
+const expectBulkWaterAgeRefresh = async (page: Readonly<Page>) => {
+    await page.getByRole("tab", { exact: true, name: bulkCareTab }).click();
+    await pickerMode(page, "Table").click();
+    const bulk = waterAgeTile(tablePicker(page, true), "P02");
+    await bulk.click();
+    await refreshLogger(page);
+    await expect.soft(bulk).toContainText("No data");
+    await confirmWaterAgeRefresh(page);
+    await expect.soft(bulk).toContainText("1d");
+    await expect.soft(bulk).toHaveAttribute(pressedAttribute, "true");
+};
+
+test.describe("watering age picker", { tag: "@logger" }, () => {
+    for (const theme of ["dark", "light"] as const) {
+        test(`390px ${theme} toggles ages without changing drafts or filters`, async ({
+            page,
+        }, testInfo) => {
+            await openLogger(page, 390, theme, wateringAgeFixture());
+            await pickerMode(page, "Table").click();
+            const picker = tablePicker(page);
+            await waterAgeTile(picker, "P02").click();
+            await page
+                .getByRole("button", { exact: true, name: "Weigh" })
+                .click();
+            await page
+                .getByRole("spinbutton", { exact: true, name: "Weight (g)" })
+                .fill("444");
+            await page
+                .getByRole("textbox", { exact: true, name: "Notes" })
+                .fill(waterAgeDraft);
+            const toggle = pickerMode(page, waterAgeToggleName);
+            await toggle.focus();
+            await page.keyboard.press("Enter");
+            await expect.soft(toggle).toBeFocused();
+            await expectWaterAgeBadges(picker);
+            await pickerMode(page, "Not weighed today").click();
+            await expect.soft(waterAgeTile(picker, "P05")).toBeHidden();
+            await page
+                .getByRole("searchbox", { name: "Find by name, ID, or label" })
+                .fill("P02");
+            await toggle.click();
+            await expect
+                .soft(
+                    waterAgeTile(picker, "P02").getByText("1d", { exact: true })
+                )
+                .toBeHidden();
+            await toggle.click();
+            await expectWaterAgeDraft(page);
+            await page
+                .getByRole("searchbox", { name: "Find by name, ID, or label" })
+                .fill("");
+            await picker.screenshot({
+                path: testInfo.outputPath("watering-ages.png"),
+            });
+            await expectBulkWaterAgeRefresh(page);
+        });
+    }
+
+    test("default refresh uses one RPC and withholds unconfirmed watering ages", async ({
+        page,
+    }) => {
+        await openLogger(page, 390, "light", wateringAgeFixture());
+        await pickerMode(page, "Labels").click();
+        await pickerMode(page, waterAgeToggleName).click();
+        const plant = waterAgeTile(tablePicker(page), "P02");
+        await refreshLogger(page);
+        await expect.soft(plant).toContainText("No data");
+        await expectWaterAgeCalls(page, "2", undefined);
+        await confirmWaterAgeRefresh(page, true);
+        await expect.soft(plant).toContainText("No data");
+        await expect
+            .soft(
+                page
+                    .getByRole("status")
+                    .filter({ hasText: "History refresh unavailable" })
+            )
+            .toBeVisible();
+        await refreshLogger(page);
+        await confirmWaterAgeRefresh(page);
+        await expect.soft(plant).toContainText("1d");
+        await page
+            .getByRole("combobox", { exact: true, name: "Event" })
+            .selectOption("Water");
+        await expectWaterAgeCalls(page, "3", "1");
+        await refreshLogger(page);
+        await expectWaterAgeCalls(page, "4", "2");
+        await confirmWaterAgeRefresh(page);
+        await expect
+            .soft(page.getByRole("combobox", { exact: true, name: "Event" }))
+            .toHaveValue("Water");
+    });
+
+    test("older roster data stays unavailable and display preference survives reload", async ({
+        page,
+    }) => {
+        await openLogger(page, 390, "dark", wateringAgeFixture(false));
+        await pickerMode(page, "Labels").click();
+        await pickerMode(page, waterAgeToggleName).click();
+        await expect
+            .soft(waterAgeTile(tablePicker(page), "P03"))
+            .toContainText("No data");
+        await page.reload();
+        await expect
+            .soft(pickerMode(page, waterAgeToggleName))
+            .toHaveAttribute(pressedAttribute, "true");
+        await expect
+            .soft(waterAgeTile(tablePicker(page), "P02"))
+            .toContainText("No data");
+    });
+
+    test("watering age crosses New York midnight before the four-hour care day", async ({
+        page,
+    }) => {
+        const fixture = wateringAgeFixture()
+            .replaceAll(fixtureClockTime, "2026-11-01T03:59:30Z")
+            .replace('"2026-09-08"', '"2026-10-31"');
+        await openLogger(page, 390, "light", fixture);
+        await pickerMode(page, "Labels").click();
+        await pickerMode(page, waterAgeToggleName).click();
+        const plant = waterAgeTile(tablePicker(page), "P02");
+        await expect.soft(plant).toContainText("0d");
+        await page.clock.setFixedTime("2026-09-09T14:01:00Z");
+        await pickerMode(page, waterAgeToggleName).click();
+        await pickerMode(page, waterAgeToggleName).click();
+        await expect.soft(plant).toContainText("1d");
+    });
+});

@@ -60,6 +60,24 @@ Numbered pots (`#1`, `#2`, and so on) remain below the table in their usual labe
 order. Search and **Not weighed today** leave gaps where pots are hidden, so
 visible labels retain their actual table positions.
 
+Turn on **Days since watered** beside **Not weighed today** to show watering ages
+in the plant picker. The setting is remembered on this device and also applies to
+**Bulk care**. It keeps the current search, filters, selections, and unfinished
+entries. Labels and Table show compact counts such as `0d`, `1d`, and `12d`;
+List spells out the number of days.
+
+The count uses the latest active recorded Water event across all pot setups,
+including Partial and Spot waterings. It counts calendar dates in the workbook's
+timezone, currently America/New_York: the number advances at midnight, including
+across daylight-saving changes. **Not weighed today** continues to use its
+separate 4 a.m. care-day boundary. A watering age is history, not a watering
+schedule or evidence that the soil is dry.
+
+**No Water** means no eligible Water event is recorded. **No data** means the age
+cannot currently be confirmed, including while refreshing, after a failed
+refresh, or when using an older saved plant list. Removed and future-dated Water
+events do not contribute to the count.
+
 The grid describes the maintained arrangement. Recording a Move does not assign
 a new grid slot; update the placement guide when the table arrangement changes.
 
@@ -327,6 +345,7 @@ Shared bulk details must really be shared. In particular, a common water-volume 
 | Queued                                | A pending local observation exists; this is not yet proof of a canonical saved weight.                                                 |
 | Saved today                           | History confirms an eligible weight in the current local care day.                                                                     |
 | Not weighed today                     | A progress filter using the 4 a.m. care-day boundary. It neither logs a skipped action nor requires every remaining pot to be weighed. |
+| Days since watered                    | Shows calendar days since the latest recorded Water without changing the selected pots or progress filters.                            |
 | Refresh / Updated                     | Refreshes data from Google and reports fetch time. It is not a new observation timestamp.                                              |
 | Recalculate                           | Refreshes workbook calculations. Open the calculation status below the toolbar for the last confirmed calculation time and details.    |
 | History icon and percentage           | Shows used History capacity. Calculation details include exact used and remaining row counts; capacity warnings remain visible.        |

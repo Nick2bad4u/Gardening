@@ -307,6 +307,9 @@ export const LoadedAndExportable: Story = {
         await expect(coverage.recorded).toBeGreaterThan(0);
         await expect(coverage.unknown).toBeGreaterThan(0);
         await expectDarkMap(document);
+        const renderedImage = document.querySelector(`${imageSelector} > svg`);
+        const artworkDefinitions =
+            renderedImage?.querySelector(":scope > defs");
         const jumpLink = document.querySelector('main a[href="#watering-map"]');
         await expect(jumpLink).toHaveAccessibleName("Jump to watering map");
         await userEvent.click(canvas.getByRole("button", { name: svgLabel }));
@@ -326,6 +329,9 @@ export const LoadedAndExportable: Story = {
         await expect(
             canvas.getByRole("button", { name: pngLabel })
         ).toBeEnabled();
+        await expect(document.querySelector(`${imageSelector} > svg`)).toBe(
+            renderedImage
+        );
         await userEvent.click(
             canvas.getByRole("button", { name: refreshName })
         );
@@ -334,6 +340,23 @@ export const LoadedAndExportable: Story = {
                 loadedMessage
             )
         );
+        await expect(
+            document.querySelector(`${imageSelector} > svg > defs`)
+        ).toBe(artworkDefinitions);
+    },
+};
+
+export const IncompleteCompactFeed: Story = {
+    args: { scenario: "invalid-feed" },
+    play: async ({ canvasElement }) => {
+        const { document } = await websiteCanvas(canvasElement);
+        await waitFor(() =>
+            expect(document.querySelector(sourceSelector)).toHaveAttribute(
+                sourceStateAttribute,
+                "error"
+            )
+        );
+        await expectUnavailableMap(document);
     },
 };
 

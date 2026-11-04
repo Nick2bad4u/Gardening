@@ -38,6 +38,57 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## November 3 refresh optimization and watering ages
+
+Maintained logger **5.41.0** adds the optional **Days since watered** display
+beside **Not weighed today**. The preference applies to single and bulk pickers,
+including Labels, Table, and List views. It counts workbook-timezone calendar
+days from the latest active, non-future Water event across the permanent pot's
+setups; it is independent of the 4 a.m. weighing-day boundary. **No Water** means
+the confirmed history has no eligible Water event. **No data** means a refresh,
+failure, or older cached roster has not supplied confirmed watering dates. These
+labels describe recorded events, not a watering recommendation.
+
+Ordinary manual and post-save refreshes reuse the bootstrap's recent History
+payload, removing the redundant default History request. Explicit History
+filters retain their own requests. Save confirmation, retry IDs, queued entries,
+drafts, selections, and the existing freshness safeguards retain their contracts.
+Server activity summaries share one correction-order calculation and grouping
+pass, and Baselines headers are read once. A local comparison over 5,000 rows
+and 39 pots produced identical activity summaries, with five CPU timings falling
+from **349–411 ms** to **26–39 ms**. Those are local measurements, not Google
+latency guarantees.
+
+The placement map uses a separate, hidden **Watering map** projection at sheet ID
+**907202615**, with **50,003 rows × 8 columns**. It contains only the five
+Water/Move fields needed by the map, plus a versioned Ready/count envelope and
+terminal End/count marker. The formula retains original ledger order and
+Removed/future records for browser filtering, covers the full 50,000-slot
+History capacity, and propagates source errors. The decoder rejects incomplete
+or malformed feeds. A genuine empty feed contains both markers with count zero.
+This helper remains outside AppSheet intake and needs no trigger; it does not
+replace canonical History, full CSV exports, or the tracker's paired cache.
+Published feeds can still lag a new workbook save.
+
+The migration planner in [watering-map-feed.mjs](./watering-map-feed.mjs) adds
+only that helper and its warning protection. It rejects occupied destinations,
+schema/capacity/timezone drift, and workbook cell-budget overflow. Capture full
+native metadata and History's entire A1:BO1 header, build the plan, then repeat
+the capture and check its preconditions immediately before the write. Protection
+lists compare by stable IDs because Google may reorder their API representation;
+every protection field and other array ordering remains significant. Rehearse
+the formula and preservation checks on a native copy first.
+
+New bootstrap diagnostics separate spreadsheet opening, History reads, roster
+reads, model work, and response assembly without logging record contents. A
+pre-change production queue execution spent **84.501 seconds** opening the
+spreadsheet within a **106.968-second** run, confirming that Google service waits
+can dominate. The optimized candidate's private-copy bootstrap completed in
+**14.220 seconds** with a **79,149-byte** response; another copy run spent
+**65.720 seconds** reading History. These observations explain why removing
+duplicate work improves the path without promising that Google's intermittent
+delays disappear.
+
 ## November 1 remaining cactus portrait update
 
 Production **5.40.4** revises **19 tracked containers**: the remaining 18 older

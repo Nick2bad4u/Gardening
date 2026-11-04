@@ -78,6 +78,14 @@ function row(at, event = "Weigh", cells = {}) {
 /** @param {import("../logger-fixtures.d.ts").CellValue[][]} [historyRows] */
 function runtime(historyRows = []) {
     const historyReads = vi.fn();
+    const baselineReads = vi.fn();
+    const readObservers = new Map([
+        ["Baselines", baselineReads],
+        ["History", historyReads],
+    ]);
+    const logInfo = vi.fn();
+    const logError = vi.fn();
+    const uuid = vi.fn(() => "fixture-bootstrap-run");
     /**
      * @param {string} name @param
      *   {import("../logger-fixtures.d.ts").CellValue[][]} values
@@ -92,8 +100,7 @@ function runtime(historyRows = []) {
          *   rowCount @param {number} columnCount
          */
         getRange(rowNumber, column, rowCount, columnCount) {
-            if (name === "History")
-                historyReads(rowNumber, column, rowCount, columnCount);
+            readObservers.get(name)?.(rowNumber, column, rowCount, columnCount);
             const selected = selectSheetValues(values, {
                 column,
                 columnCount,
@@ -154,18 +161,243 @@ function runtime(historyRows = []) {
         getSpreadsheetTimeZone: () => zone,
     };
     const context = vm.createContext({
-        console,
+        console: { error: logError, info: logInfo },
         Date,
         encodeURIComponent,
         Map,
         Object,
         Set,
         SpreadsheetApp: { openById: () => spreadsheet },
-        Utilities: { formatDate },
+        Utilities: { formatDate, getUuid: uuid },
     });
     vm.runInContext(source, context, { filename: fileURLToPath(sourceUrl) });
-    return { api: appsScriptApi(context), historyReads };
+    return {
+        api: appsScriptApi(context),
+        baselineReads,
+        historyReads,
+        logError,
+        logInfo,
+        uuid,
+    };
 }
+
+describe("logger refresh performance and watering age", () => {
+    it("groups activity calculations while preserving full-ledger correction ordering", () => {
+        expect.hasAssertions();
+
+        const rows = [
+            row("2026-09-01T12:00:00Z", "Water", {
+                26: "water-original",
+                35: "Removed",
+            }),
+            row("2026-09-01T12:00:00Z", "Weigh", { 4: 500 }),
+            row("2026-09-02T12:00:00Z", "Weigh", { 4: 490 }),
+            row("2026-09-03T12:00:00Z", "Weigh", { 4: 480 }),
+            row("2026-09-01T12:00:00Z", "Water", {
+                26: "water-correction",
+                30: "water-original",
+            }),
+            row("2026-09-01T12:00:00Z", "Water", {
+                1: "P02",
+                26: "other-plant-water",
+            }),
+            row("2026-09-02T12:00:00Z", "Weigh", { 1: "P02", 4: 700 }),
+            row("2026-09-03T12:00:00Z", "Weigh", { 1: "P02", 4: 690 }),
+        ];
+        const original = structuredClone(rows);
+        const { api } = runtime();
+        const ids = [
+            "P01",
+            "P02",
+            "P03",
+        ];
+        const setups = new Map([
+            ["P01", 1],
+            ["P02", 1],
+        ]);
+        const expected = ids.map((id) =>
+            api.plantActivitySummary_(rows, id, 1)
+        );
+        const calls = vi.spyOn(api, "plantActivitySummary_");
+        const actual = api.plantActivitySummariesFromRows_(rows, setups, ids);
+
+        expect(ids.map((id) => actual.get(id))).toStrictEqual(expected);
+        expect(
+            calls.mock.calls.map(([plantRows]) => plantRows.length)
+        ).toStrictEqual([
+            5,
+            3,
+            0,
+        ]);
+        expect(calls.mock.calls[0]?.[3]).toBe(calls.mock.calls[1]?.[3]);
+        expect(rows).toStrictEqual(original);
+    });
+
+    it("returns available empty watering history and reads Baselines headers once", () => {
+        expect.hasAssertions();
+
+        const { api, baselineReads } = runtime();
+        const result = api.getWebAppBootstrap();
+
+        expect(result.wateringAgesAvailable).toBe(true);
+        expect(
+            result.plants.map((plant) => plant.lastWateredDayKey)
+        ).toStrictEqual([
+            "",
+            "",
+            "",
+        ]);
+        expect(
+            baselineReads.mock.calls.filter(([rowNumber]) => rowNumber === 1)
+        ).toHaveLength(1);
+    });
+
+    it("follows the latest active Water across repots without using stale tracker values", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        try {
+            vi.setSystemTime(now);
+            const observations = [
+                row("2026-09-04T12:00:00Z", "Water", {
+                    26: "old-water",
+                    35: "Removed",
+                }),
+                row("2026-09-05T12:00:00Z", "Water", {
+                    26: "corrected-water",
+                    30: "old-water",
+                }),
+                row("2026-09-06T12:00:00Z", "Repot", { 10: 2 }),
+                row("2026-09-06T13:00:00Z", "Water", { 35: " removed " }),
+                row("2026-09-07T12:00:00Z", "Water"),
+                row("invalid", "Water"),
+                row("2026-09-06T04:00:00Z", " Water ", { 1: "P02" }),
+                row("2026-09-06T13:00:00Z", "Mist", { 1: "P02" }),
+            ];
+            const { api, historyReads } = runtime(observations);
+            const result = api.getWebAppBootstrap();
+
+            expect(
+                result.plants.map((plant) => plant.lastWateredDayKey)
+            ).toStrictEqual([
+                "2026-09-05",
+                "2026-09-06",
+                "",
+            ]);
+            expect(historyReads).toHaveBeenCalledExactlyOnceWith(
+                2,
+                1,
+                observations.length,
+                60
+            );
+            expect(result.plants[0]?.lastWatered).toBe("");
+            expect(result.plants[0]?.daysSinceWater).toBe("");
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it.each([
+        [
+            "2026-03-08T04:30:00Z",
+            "2026-03-08T07:30:00Z",
+            "2026-03-07",
+        ],
+        [
+            "2026-11-01T04:30:00Z",
+            "2026-11-01T06:30:00Z",
+            "2026-11-01",
+        ],
+    ])(
+        "uses garden calendar dates across DST for %s",
+        (waterAt, asOf, dayKey) => {
+            expect.hasAssertions();
+
+            const { api } = runtime();
+            const result = api.webWateringDaysFromRows_(
+                [row(waterAt, "Water")],
+                new Date(asOf),
+                zone
+            );
+
+            expect(result.get("P01")).toBe(dayKey);
+        }
+    );
+
+    it("keeps bootstrap results unchanged when UUID and diagnostic output fail", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        try {
+            vi.setSystemTime(now);
+            const test = runtime([row("2026-09-05T12:00:00Z", "Water")]);
+            const expected = test.api.getWebAppBootstrap();
+            const diagnostics = test.logInfo.mock.calls.map(
+                ([message]) =>
+                    /** @type {unknown} */ (JSON.parse(String(message)))
+            );
+
+            expect(diagnostics).toContainEqual(
+                expect.objectContaining({ stage: "history.read" })
+            );
+            expect(diagnostics).toContainEqual(
+                expect.objectContaining({ stage: "models.compute" })
+            );
+            expect(
+                diagnostics.every(
+                    (entry) =>
+                        typeof entry === "object" &&
+                        entry !== null &&
+                        "operation" in entry &&
+                        entry.operation === "getWebAppBootstrap"
+                )
+            ).toBe(true);
+            expect(
+                test.logInfo.mock.calls
+                    .map(([message]) => String(message))
+                    .join("\n")
+            ).not.toContain("P01");
+
+            const fail = () => {
+                throw new Error("private diagnostic failure");
+            };
+
+            test.uuid.mockImplementation(fail);
+
+            test.logInfo.mockImplementation(fail);
+
+            test.logError.mockImplementation(fail);
+
+            expect(test.api.getWebAppBootstrap()).toStrictEqual(expected);
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+
+    it("preserves a failed native read without logging its private error message", () => {
+        expect.hasAssertions();
+
+        const test = runtime([row("2026-09-05T12:00:00Z", "Water")]);
+        const original = new Error("private workbook failure");
+
+        test.historyReads.mockImplementation(() => {
+            throw original;
+        });
+
+        expect(() => test.api.getWebAppBootstrap()).toThrow(original);
+        expect(test.logError).toHaveBeenCalledWith(
+            expect.stringContaining('"stage":"history.read"')
+        );
+        expect(
+            test.logError.mock.calls
+                .map(([message]) => String(message))
+                .join("\n")
+        ).toContain('"history.read"');
+        expect(JSON.stringify(test.logError.mock.calls)).not.toContain(
+            original.message
+        );
+    });
+});
 
 describe("logger History-backed read models", () => {
     it.each([

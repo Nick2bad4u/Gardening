@@ -17,7 +17,7 @@
    dryDownModelFormula_, installDailyCareDashboard, GARDEN_CYCLE_COMPARISON, GARDEN_ENVIRONMENT_READINGS, GARDEN_RECORDED_LOCATIONS */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.40.4",
+    version: "5.41.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -72,6 +72,8 @@ const GARDEN_LOGGER = Object.freeze({
     historyAnchorsSheet: "History anchors",
     historyAnchorsSheetId: 907202613,
     historyAnchorsMarker: "Garden History anchor index v1",
+    wateringMapSheet: "Watering map",
+    wateringMapSheetId: 907202615,
     analyticsMinimumScheduledAgeMs: 480000,
     lockTimeoutMs: 5000,
     spreadsheetUrl:
@@ -1040,175 +1042,245 @@ function doGet() {
 }
 
 function getWebAppBootstrap() {
+    const diagnostics = gardenDiagnosticContext_("getWebAppBootstrap");
+    return gardenDiagnosticPhase_(diagnostics, "run", () =>
+        webAppBootstrap_(diagnostics)
+    );
+}
+
+/** @param {GardenDiagnosticContext} diagnostics */
+function webAppBootstrap_(diagnostics) {
     const refreshedAt = new Date();
-    const spreadsheet = getGardenSpreadsheet_();
-    const tracker = requireSheet_(spreadsheet, GARDEN_LOGGER.plantTrackerSheet);
-    const baselines = requireSheet_(spreadsheet, GARDEN_LOGGER.baselinesSheet);
-    const historyRows = readHistorySnapshot_(spreadsheet);
-    const trackerRowCount = Math.max(0, tracker.getLastRow() - 1);
-    const currentPotSizeColumn = optionalColumnForHeader_(
-        tracker,
-        GARDEN_LOGGER.currentPotSizeHeader
+    const spreadsheet = gardenDiagnosticPhase_(
+        diagnostics,
+        "spreadsheet.open",
+        getGardenSpreadsheet_
     );
-    const trackerColumnCount = Math.max(
-        GARDEN_LOGGER.currentLabelColumn,
-        currentPotSizeColumn
+    const historyRows = gardenDiagnosticPhase_(
+        diagnostics,
+        "history.read",
+        () => readHistorySnapshot_(spreadsheet)
     );
-    const trackerRange = trackerRowCount
-        ? tracker.getRange(2, 1, trackerRowCount, trackerColumnCount)
-        : null;
-    /** @type {GardenHistoryRow[]} */
-    const trackerValues = trackerRange ? trackerRange.getValues() : [];
-    const trackerFormulas = trackerRange ? trackerRange.getFormulas() : [];
-    const baselineValues = baselinePotSetupData_(baselines).rows;
-    const potSetupByPlant = new Map(
-        baselineValues.map(([plantId, potSetup]) => [
-            cleanText_(plantId),
-            potSetup || 1,
-        ])
-    );
-    const potSizeByPlant = latestPotSizesFromRows_(
-        historyRows,
-        potSetupByPlant
-    );
-    const locations = new Map(
-        recordedLocationRows_(historyRows, refreshedAt, {
-            corrections: historyCorrectionContext_,
-            active: activeHistoryRow_,
-            timestamp: webHistoryTimestamp_,
-        })
-            .slice(1)
-            .map((row) => [cleanText_(row[1]), cleanText_(row[3])])
-    );
+    const {
+        trackerValues,
+        trackerFormulas,
+        currentPotSizeColumn,
+        baselineValues,
+    } = gardenDiagnosticPhase_(diagnostics, "roster.read", () => {
+        const tracker = requireSheet_(
+            spreadsheet,
+            GARDEN_LOGGER.plantTrackerSheet
+        );
+        const baselines = requireSheet_(
+            spreadsheet,
+            GARDEN_LOGGER.baselinesSheet
+        );
+        const trackerRowCount = Math.max(0, tracker.getLastRow() - 1);
+        const currentPotSizeColumn = optionalColumnForHeader_(
+            tracker,
+            GARDEN_LOGGER.currentPotSizeHeader
+        );
+        const trackerColumnCount = Math.max(
+            GARDEN_LOGGER.currentLabelColumn,
+            currentPotSizeColumn
+        );
+        const trackerRange = trackerRowCount
+            ? tracker.getRange(2, 1, trackerRowCount, trackerColumnCount)
+            : null;
+        /** @type {GardenHistoryRow[]} */
+        const trackerValues = trackerRange ? trackerRange.getValues() : [];
+        const trackerFormulas = trackerRange ? trackerRange.getFormulas() : [];
+        const baselineValues = baselinePotSetupData_(baselines).rows;
+        return {
+            trackerValues,
+            trackerFormulas,
+            currentPotSizeColumn,
+            baselineValues,
+        };
+    });
     const timeZone = spreadsheet.getSpreadsheetTimeZone();
-    const weightReads = webWeightReadModelsFromRows_(
-        historyRows,
-        potSetupByPlant,
-        refreshedAt,
-        timeZone
-    );
-    const environmentReads = webEnvironmentReadModelsFromRows_(
-        historyRows,
-        refreshedAt
-    );
-    const forecasts = dryDownModelsFromHistory_(
-        historyRows,
-        trackerValues.map(([id]) => [id]),
-        timeZone
-    );
-
-    const plants = trackerValues
-        .filter(([plantId]) => cleanText_(plantId))
-        .map((row, index) => {
-            const [
-                plantId,
-                commonName,
-                scientificName,
-                lastWatered,
-                daysSinceWater,
-            ] = row;
-            const label = row[GARDEN_LOGGER.currentLabelColumn - 1];
-            const fieldGuideUrl = fieldGuideUrlForRow_(trackerFormulas[index]);
-            const imageUrls = WEB_PLANT_IMAGE_URLS[cleanText_(plantId)];
-            const weightRead =
-                weightReads.byPlant.get(cleanText_(plantId)) ||
-                webPlantWeightReadModel_([], 1, refreshedAt.getTime(), null);
-            const dryOrLowestWeight = weightRead.weightSeries.previousDry;
-            return {
-                id: cleanText_(plantId),
-                name: cleanText_(commonName),
-                scientificName: cleanText_(scientificName),
-                label: cleanText_(label),
-                currentImageUrl: imageUrls?.currentImageUrl || "",
-                nurseryLabelImageUrl: imageUrls?.nurseryLabelImageUrl || "",
-                potSetup: weightRead.weightSeries.potSetup,
-                currentPotSize:
-                    potSizeByPlant.get(cleanText_(plantId)) ||
-                    cleanText_(row[currentPotSizeColumn - 1]) ||
-                    (weightRead.weightSeries.potSetup === 1
-                        ? INITIAL_POT_SIZE_BY_PLANT[cleanText_(plantId)]
-                        : "") ||
-                    "Not logged",
-                lastWatered: formatClientDate_(
-                    lastWatered,
-                    timeZone,
-                    "MMM d, yyyy"
-                ),
-                daysSinceWater:
-                    daysSinceWater === "" || daysSinceWater === null
-                        ? ""
-                        : Number(daysSinceWater),
-                latestWeight: weightRead.latestWeight,
-                latestWeightAt: weightRead.latestWeightAt,
-                ...environmentReads.get(cleanText_(plantId)),
-                weightSeries: weightRead.weightSeries,
-                dryOrLowestWeight: dryOrLowestWeight
-                    ? dryOrLowestWeight.weight
-                    : "",
-                dryOrLowestWeightBasis: dryOrLowestWeight
-                    ? "Completed cycle"
-                    : "",
-                dryOrLowestWeightDate: dryOrLowestWeight
-                    ? formatClientDate_(
-                          new Date(dryOrLowestWeight.observedAt),
-                          timeZone,
-                          "MMM d, yyyy"
-                      )
-                    : "",
-                dryForecastWindow:
-                    forecasts.get(cleanText_(plantId))?.window || "",
-                dryForecastBasis:
-                    forecasts.get(cleanText_(plantId))?.basis || "",
-                recommendedWaterDate:
-                    forecasts.get(cleanText_(plantId))?.waterDate || "",
-                wateringGuidance:
-                    forecasts.get(cleanText_(plantId))?.waterGuidance || "",
-                activitySummary: plantActivitySummary_(
-                    historyRows,
-                    cleanText_(plantId),
-                    positiveInteger_(
-                        potSetupByPlant.get(cleanText_(plantId)) || 1,
-                        "Pot setup"
-                    )
-                ),
-                currentLocation: locations.get(cleanText_(plantId)) || "",
-                fieldGuideUrl,
-                historyUrl: `${GARDEN_LOGGER.historyUrl}?id=${encodeURIComponent(cleanText_(plantId))}`,
-            };
-        })
-        .filter((plant) => !ARCHIVED_PLANT_IDS.includes(plant.id));
-    assertUniquePlantIds_(plants);
-    const plantNames = new Map(plants.map((plant) => [plant.id, plant.name]));
-
-    return {
-        version: GARDEN_LOGGER.version,
-        historyCapacity: historyCapacityStatus_(historyRows),
-        workbookCalculation: workbookCalculationStatus_(spreadsheet),
-        timeZone,
-        serverTime: refreshedAt.toISOString(),
-        dayKey: weightReads.dayKey,
-        dayStartHour: GARDEN_LOGGER.dayStartHour,
-        weighedTodayPlantIds: weightReads.weighedTodayPlantIds.filter((id) =>
-            plantNames.has(id)
-        ),
-        events: [...WEB_EVENT_OPTIONS],
-        links: {
-            spreadsheet: GARDEN_LOGGER.spreadsheetUrl,
-            quickLog: GARDEN_LOGGER.quickLogUrl,
-            fieldGuide: GARDEN_LOGGER.fieldGuideUrl,
-            tracker: GARDEN_LOGGER.trackerUrl,
-            layout: GARDEN_LOGGER.layoutUrl,
-            calendar: GARDEN_LOGGER.calendarUrl,
-            photos: GARDEN_LOGGER.photosUrl,
-        },
-        plants,
-        recent: recentObservationsFromRows_(
+    const {
+        potSizeByPlant,
+        locations,
+        wateringDays,
+        activitySummaries,
+        weightReads,
+        environmentReads,
+        forecasts,
+    } = gardenDiagnosticPhase_(diagnostics, "models.compute", () => {
+        const potSetupByPlant = new Map(
+            baselineValues.map(([plantId, potSetup]) => [
+                cleanText_(plantId),
+                potSetup || 1,
+            ])
+        );
+        const potSizeByPlant = latestPotSizesFromRows_(
             historyRows,
+            potSetupByPlant
+        );
+        const locations = new Map(
+            recordedLocationRows_(historyRows, refreshedAt, {
+                corrections: historyCorrectionContext_,
+                active: activeHistoryRow_,
+                timestamp: webHistoryTimestamp_,
+            })
+                .slice(1)
+                .map((row) => [cleanText_(row[1]), cleanText_(row[3])])
+        );
+        const wateringDays = webWateringDaysFromRows_(
+            historyRows,
+            refreshedAt,
+            timeZone
+        );
+        const activitySummaries = plantActivitySummariesFromRows_(
+            historyRows,
+            potSetupByPlant,
+            trackerValues.map(([id]) => cleanText_(id))
+        );
+        const weightReads = webWeightReadModelsFromRows_(
+            historyRows,
+            potSetupByPlant,
+            refreshedAt,
+            timeZone
+        );
+        const environmentReads = webEnvironmentReadModelsFromRows_(
+            historyRows,
+            refreshedAt
+        );
+        const forecasts = dryDownModelsFromHistory_(
+            historyRows,
+            trackerValues.map(([id]) => [id]),
+            timeZone
+        );
+        return {
+            potSizeByPlant,
+            locations,
+            wateringDays,
+            activitySummaries,
+            weightReads,
+            environmentReads,
+            forecasts,
+        };
+    });
+    return gardenDiagnosticPhase_(diagnostics, "response.assemble", () => {
+        const plants = trackerValues
+            .filter(([plantId]) => cleanText_(plantId))
+            .map((row, index) => {
+                const [
+                    plantId,
+                    commonName,
+                    scientificName,
+                    lastWatered,
+                    daysSinceWater,
+                ] = row;
+                const label = row[GARDEN_LOGGER.currentLabelColumn - 1];
+                const fieldGuideUrl = fieldGuideUrlForRow_(
+                    trackerFormulas[index]
+                );
+                const imageUrls = WEB_PLANT_IMAGE_URLS[cleanText_(plantId)];
+                const weightRead =
+                    weightReads.byPlant.get(cleanText_(plantId)) ||
+                    webPlantWeightReadModel_(
+                        [],
+                        1,
+                        refreshedAt.getTime(),
+                        null
+                    );
+                const dryOrLowestWeight = weightRead.weightSeries.previousDry;
+                return {
+                    id: cleanText_(plantId),
+                    name: cleanText_(commonName),
+                    scientificName: cleanText_(scientificName),
+                    label: cleanText_(label),
+                    currentImageUrl: imageUrls?.currentImageUrl || "",
+                    nurseryLabelImageUrl: imageUrls?.nurseryLabelImageUrl || "",
+                    potSetup: weightRead.weightSeries.potSetup,
+                    currentPotSize:
+                        potSizeByPlant.get(cleanText_(plantId)) ||
+                        cleanText_(row[currentPotSizeColumn - 1]) ||
+                        (weightRead.weightSeries.potSetup === 1
+                            ? INITIAL_POT_SIZE_BY_PLANT[cleanText_(plantId)]
+                            : "") ||
+                        "Not logged",
+                    lastWatered: formatClientDate_(
+                        lastWatered,
+                        timeZone,
+                        "MMM d, yyyy"
+                    ),
+                    daysSinceWater:
+                        daysSinceWater === "" || daysSinceWater === null
+                            ? ""
+                            : Number(daysSinceWater),
+                    lastWateredDayKey:
+                        wateringDays.get(cleanText_(plantId)) || "",
+                    latestWeight: weightRead.latestWeight,
+                    latestWeightAt: weightRead.latestWeightAt,
+                    ...environmentReads.get(cleanText_(plantId)),
+                    weightSeries: weightRead.weightSeries,
+                    dryOrLowestWeight: dryOrLowestWeight
+                        ? dryOrLowestWeight.weight
+                        : "",
+                    dryOrLowestWeightBasis: dryOrLowestWeight
+                        ? "Completed cycle"
+                        : "",
+                    dryOrLowestWeightDate: dryOrLowestWeight
+                        ? formatClientDate_(
+                              new Date(dryOrLowestWeight.observedAt),
+                              timeZone,
+                              "MMM d, yyyy"
+                          )
+                        : "",
+                    dryForecastWindow:
+                        forecasts.get(cleanText_(plantId))?.window || "",
+                    dryForecastBasis:
+                        forecasts.get(cleanText_(plantId))?.basis || "",
+                    recommendedWaterDate:
+                        forecasts.get(cleanText_(plantId))?.waterDate || "",
+                    wateringGuidance:
+                        forecasts.get(cleanText_(plantId))?.waterGuidance || "",
+                    activitySummary: activitySummaries.get(cleanText_(plantId)),
+                    currentLocation: locations.get(cleanText_(plantId)) || "",
+                    fieldGuideUrl,
+                    historyUrl: `${GARDEN_LOGGER.historyUrl}?id=${encodeURIComponent(cleanText_(plantId))}`,
+                };
+            })
+            .filter((plant) => !ARCHIVED_PLANT_IDS.includes(plant.id));
+        assertUniquePlantIds_(plants);
+        const plantNames = new Map(
+            plants.map((plant) => [plant.id, plant.name])
+        );
+
+        return {
+            version: GARDEN_LOGGER.version,
+            historyCapacity: historyCapacityStatus_(historyRows),
+            workbookCalculation: workbookCalculationStatus_(spreadsheet),
             timeZone,
-            10,
-            plantNames
-        ),
-    };
+            serverTime: refreshedAt.toISOString(),
+            wateringAgesAvailable: true,
+            dayKey: weightReads.dayKey,
+            dayStartHour: GARDEN_LOGGER.dayStartHour,
+            weighedTodayPlantIds: weightReads.weighedTodayPlantIds.filter(
+                (id) => plantNames.has(id)
+            ),
+            events: [...WEB_EVENT_OPTIONS],
+            links: {
+                spreadsheet: GARDEN_LOGGER.spreadsheetUrl,
+                quickLog: GARDEN_LOGGER.quickLogUrl,
+                fieldGuide: GARDEN_LOGGER.fieldGuideUrl,
+                tracker: GARDEN_LOGGER.trackerUrl,
+                layout: GARDEN_LOGGER.layoutUrl,
+                calendar: GARDEN_LOGGER.calendarUrl,
+                photos: GARDEN_LOGGER.photosUrl,
+            },
+            plants,
+            recent: recentObservationsFromRows_(
+                historyRows,
+                timeZone,
+                10,
+                plantNames
+            ),
+        };
+    });
 }
 
 /** @param {unknown} value @param {GardenOptionalNumber} weight @returns {string} */
@@ -1716,7 +1788,13 @@ function appSheetQueueSummary_(
 
 /** @param {string} operation @returns {GardenDiagnosticContext} */
 function gardenDiagnosticContext_(operation) {
-    return { operation, runId: Utilities.getUuid(), startedAt: Date.now() };
+    let runId = "unavailable";
+    try {
+        runId = Utilities.getUuid();
+    } catch {
+        // Diagnostics must not prevent a read or save when UUID generation fails.
+    }
+    return { operation, runId, startedAt: Date.now() };
 }
 
 /**
@@ -3657,6 +3735,7 @@ function installGardenLogger() {
     ensureHistoryLightColumns_(history, true);
     ensureHistoryCareColumns_(history, true);
     ensureHistoryAnchors_(spreadsheet);
+    ensureWateringMapFeed_(spreadsheet);
     ensureHistoryView_(spreadsheet);
     const appEntries = requireSheet_(
         spreadsheet,
@@ -10970,6 +11049,137 @@ function ensureHistoryAnchors_(spreadsheet) {
 }
 
 /**
+ * One spill publishes the contract, count, records and terminal marker together.
+ * Preserve canonical row order and all Water/Move records: consumers still apply
+ * removed/future/date rules. Source errors must never become a Ready empty feed.
+ * @returns {string}
+ */
+function wateringMapFeedFormula_() {
+    const end = GARDEN_LOGGER.historyCapacityRows;
+    const source = `{History!A2:C${end},History!AJ2:AJ${end},History!AX2:AX${end}}`;
+    const headers =
+        '{"Date","Plant ID","Event","Record status","New location","Feed version","Feed status","Record count"}';
+    const ready = '{"","","","","",1,"Ready",recordCount}';
+    const footer = '{"","","","","",1,"End",recordCount}';
+    return `=LET(wanted,ARRAYFORMULA(REGEXMATCH(LOWER(TRIM(History!C2:C${end})),"^(water|move)$")),recordCount,SUM(ARRAYFORMULA(N(wanted))),records,IF(recordCount>0,FILTER(${source},wanted),{"","","","",""}),invalid,SUM(ARRAYFORMULA(N(ISERROR(records)))),IF(invalid>0,NA(),IF(recordCount>0,{${headers};${ready};records,ARRAYFORMULA(IF(SEQUENCE(MAX(1,recordCount),3)>0,"",""));${footer}},{${headers};${ready};${footer}})))`;
+}
+
+/**
+ * Maintain only the dedicated derived projection. Never clear canonical data or
+ * unknown cells in an occupied helper, and never expand an existing wider grid.
+ * @param {GardenSpreadsheet} spreadsheet
+ * @returns {void}
+ */
+function ensureWateringMapFeed_(spreadsheet) {
+    const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
+    const headers = firstDisplayRow_(history.getRange(1, 1, 1, 50));
+    const expected = new Map([
+        [0, "Date"],
+        [1, "Plant ID"],
+        [2, "Event"],
+        [35, "Record status"],
+        [49, "New location"],
+    ]);
+    expected.forEach((header, column) => {
+        if (headers[column] !== header)
+            throw new Error(
+                "Watering map source headers do not match History."
+            );
+    });
+    const title = GARDEN_LOGGER.wateringMapSheet;
+    const sheetId = GARDEN_LOGGER.wateringMapSheetId;
+    const existing = spreadsheet.getSheetByName(title);
+    const formula = wateringMapFeedFormula_();
+    const rowCount = GARDEN_LOGGER.historyCapacityRows + 2;
+    if (
+        existing &&
+        (existing.getSheetId() !== sheetId ||
+            existing.getRange("A1").getFormula() !== formula)
+    )
+        throw new Error(
+            "Watering map has an unexpected ownership formula or sheet ID."
+        );
+    if (
+        existing &&
+        (existing.getMaxColumns() !== 8 || existing.getMaxRows() > rowCount)
+    )
+        throw new Error("Watering map has unexpected grid dimensions.");
+    const sheets = spreadsheet.getSheets();
+    if (!existing && sheets.some((sheet) => sheet.getSheetId() === sheetId))
+        throw new Error("Watering map sheet ID is already in use.");
+    const allocated = sheets.reduce(
+        (sum, sheet) => sum + sheet.getMaxRows() * sheet.getMaxColumns(),
+        0
+    );
+    if (allocated + (rowCount - (existing?.getMaxRows() ?? 0)) * 8 > 20000000)
+        throw new Error("Watering map would exceed the workbook cell limit.");
+    const properties = {
+        sheetId,
+        title,
+        hidden: true,
+        gridProperties: { rowCount, columnCount: 8 },
+    };
+    /** @type {GardenCorrectionSheetsRequest[]} */
+    const requests = existing
+        ? [
+              {
+                  updateSheetProperties: {
+                      properties,
+                      fields: "hidden,gridProperties.rowCount",
+                  },
+              },
+          ]
+        : [
+              { addSheet: { properties } },
+              {
+                  addProtectedRange: {
+                      protectedRange: {
+                          range: { sheetId },
+                          description: "Read-only watering map projection",
+                          warningOnly: true,
+                      },
+                  },
+              },
+          ];
+    requests.push(
+        {
+            updateCells: {
+                start: { sheetId, rowIndex: 0, columnIndex: 0 },
+                rows: [
+                    {
+                        values: [
+                            { userEnteredValue: { formulaValue: formula } },
+                        ],
+                    },
+                ],
+                fields: "userEnteredValue",
+            },
+        },
+        {
+            repeatCell: {
+                range: {
+                    sheetId,
+                    startRowIndex: 2,
+                    endRowIndex: rowCount,
+                    startColumnIndex: 0,
+                    endColumnIndex: 1,
+                },
+                cell: {
+                    userEnteredFormat: {
+                        numberFormat: {
+                            type: "DATE_TIME",
+                            pattern: 'yyyy-mm-dd"T"hh:mm:ss.000',
+                        },
+                    },
+                },
+                fields: "userEnteredFormat.numberFormat",
+            },
+        }
+    );
+    correctionBatchUpdate_(spreadsheet, requests);
+}
+
+/**
  * @param {GardenStoredObservationInput} input
  * @param {string} requestId
  * @param {string} eventName
@@ -11525,12 +11735,14 @@ function measuredHistoryWeight_(row) {
  * @param {GardenHistoryRow[]} historyRows
  * @param {string} plantId
  * @param {number} potSetup
+ * @param {Map<GardenHistoryRow, number | undefined>} [orderByRow]
  */
-function plantActivitySummary_(historyRows, plantId, potSetup) {
-    const correctionOrder = historyCorrectionContext_(historyRows).order;
-    const orderByRow = new Map(
-        historyRows.map((row, index) => [row, correctionOrder[index]])
-    );
+function plantActivitySummary_(
+    historyRows,
+    plantId,
+    potSetup,
+    orderByRow = historyOrderByRow_(historyRows)
+) {
     const rows = historyRows.filter(
         (row) => activeHistoryRow_(row) && cleanText_(row[1]) === plantId
     );
@@ -11616,6 +11828,52 @@ function plantActivitySummary_(historyRows, plantId, potSetup) {
         )
         .sort((a, b) => a.date - b.date || a.index - b.index);
     return { ...summary, ...observedDryDownSummary_(points) };
+}
+
+/**
+ * Keep one global correction order while grouping activity work by plant.
+ * Recomputing the complete lineage for every picker item scales with both the
+ * ledger and the roster, even though each activity summary consumes one plant.
+ * @param {GardenHistoryRow[]} historyRows
+ * @param {Map<string, GardenCell>} potSetupByPlant
+ * @param {string[]} plantIds
+ */
+function plantActivitySummariesFromRows_(
+    historyRows,
+    potSetupByPlant,
+    plantIds
+) {
+    const orderByRow = historyOrderByRow_(historyRows);
+    /** @type {Map<string, GardenHistoryRow[]>} */
+    const rowsByPlant = new Map();
+    historyRows.forEach((row) => {
+        const plantId = cleanText_(row[1]);
+        const rows = rowsByPlant.get(plantId) || [];
+        rows.push(row);
+        rowsByPlant.set(plantId, rows);
+    });
+    return new Map(
+        plantIds.map((plantId) => [
+            plantId,
+            plantActivitySummary_(
+                rowsByPlant.get(plantId) || [],
+                plantId,
+                positiveInteger_(
+                    potSetupByPlant.get(plantId) || 1,
+                    "Pot setup"
+                ),
+                orderByRow
+            ),
+        ])
+    );
+}
+
+/** @param {GardenHistoryRow[]} historyRows */
+function historyOrderByRow_(historyRows) {
+    const correctionOrder = historyCorrectionContext_(historyRows).order;
+    return new Map(
+        historyRows.map((row, index) => [row, correctionOrder[index]])
+    );
 }
 
 /**
@@ -11986,8 +12244,19 @@ function baselinePotSetupData_(baselines) {
     const rowCount = Math.max(0, baselines.getLastRow() - 1);
     if (!rowCount) return { potSetupColumn: 0, rows: [] };
 
-    const plantIdColumn = requiredColumnForHeader_(baselines, "Plant ID");
-    const potSetupColumn = requiredColumnForHeader_(baselines, "Pot setup");
+    const headers = firstDisplayRow_(
+        baselines.getRange(1, 1, 1, baselines.getLastColumn())
+    ).map(cleanText_);
+    const plantIdColumn = requiredColumnForHeader_(
+        baselines,
+        "Plant ID",
+        headers
+    );
+    const potSetupColumn = requiredColumnForHeader_(
+        baselines,
+        "Pot setup",
+        headers
+    );
     const width = Math.max(plantIdColumn, potSetupColumn);
     const sourceRows = baselines.getRange(2, 1, rowCount, width).getValues();
     const rows = sourceRows.map((row) => [
@@ -12008,13 +12277,15 @@ function firstDisplayRow_(range) {
     return row;
 }
 
-/** @param {GardenSheet} sheet @param {string} expectedHeader */
-function optionalColumnForHeader_(sheet, expectedHeader) {
-    const columnCount = sheet.getLastColumn();
+/** @param {GardenSheet} sheet @param {string} expectedHeader @param {string[]} [readHeaders] */
+function optionalColumnForHeader_(sheet, expectedHeader, readHeaders) {
+    const columnCount = readHeaders
+        ? readHeaders.length
+        : sheet.getLastColumn();
     if (!columnCount) return 0;
-    const headers = firstDisplayRow_(sheet.getRange(1, 1, 1, columnCount)).map(
-        cleanText_
-    );
+    const headers =
+        readHeaders ||
+        firstDisplayRow_(sheet.getRange(1, 1, 1, columnCount)).map(cleanText_);
     const matches = headers.flatMap((header, index) =>
         header === expectedHeader ? [index + 1] : []
     );
@@ -12029,9 +12300,10 @@ function optionalColumnForHeader_(sheet, expectedHeader) {
 /**
  * @param {GardenSheet} sheet
  * @param {string} expectedHeader
+ * @param {string[]} [readHeaders]
  */
-function requiredColumnForHeader_(sheet, expectedHeader) {
-    const column = optionalColumnForHeader_(sheet, expectedHeader);
+function requiredColumnForHeader_(sheet, expectedHeader, readHeaders) {
+    const column = optionalColumnForHeader_(sheet, expectedHeader, readHeaders);
     if (!column) {
         throw new Error(
             `${sheet.getName()} is missing the "${expectedHeader}" header.`
@@ -12076,6 +12348,42 @@ function webHistoryTimestamp_(value) {
         return 0;
     const timestamp = dateSortValue_(value);
     return Math.max(timestamp, 0);
+}
+
+/**
+ * Watering age follows the permanent pot across setups and uses calendar
+ * midnight in the workbook timezone, independently of the 4 a.m. weighing day.
+ * @param {GardenHistoryRow[]} historyRows
+ * @param {Date} now
+ * @param {string} timeZone
+ * @returns {Map<string, string>}
+ */
+function webWateringDaysFromRows_(historyRows, now, timeZone) {
+    /** @type {Map<string, number>} */
+    const latest = new Map();
+    const nowMs = now.getTime();
+    historyRows.forEach((row) => {
+        if (
+            cleanText_(row[2]).toLowerCase() !== "water" ||
+            cleanText_(row[35]).toLowerCase() === "removed"
+        )
+            return;
+        const plantId = cleanText_(row[1]);
+        const timestamp = webHistoryTimestamp_(row[0]);
+        if (
+            plantId &&
+            timestamp &&
+            timestamp <= nowMs &&
+            timestamp > (latest.get(plantId) || 0)
+        )
+            latest.set(plantId, timestamp);
+    });
+    return new Map(
+        [...latest].map(([plantId, timestamp]) => [
+            plantId,
+            Utilities.formatDate(new Date(timestamp), timeZone, "yyyy-MM-dd"),
+        ])
+    );
 }
 
 /**

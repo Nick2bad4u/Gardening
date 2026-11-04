@@ -1580,7 +1580,7 @@ describe("garden logger History details and current-cycle charts", () => {
         refreshWorkflow(window);
 
         expect(summaries).toHaveLength(1);
-        expect(history).toHaveLength(1);
+        expect(history).toHaveLength(0);
         expect(refresh.getAttribute("aria-busy")).toBe("true");
         expect(list.getAttribute("aria-busy")).toBe("true");
 
@@ -1593,7 +1593,6 @@ describe("garden logger History details and current-cycle charts", () => {
             ...workflowBootstrap(),
             version: "expired",
         });
-        required(history[0]).success([]);
 
         expect(window.localStorage.getItem("gardenLoggerBootstrapV5")).toBe(
             cache
@@ -1617,7 +1616,7 @@ describe("garden logger History details and current-cycle charts", () => {
         refreshWorkflow(window);
 
         expect(summaries).toHaveLength(2);
-        expect(history).toHaveLength(2);
+        expect(history).toHaveLength(0);
     });
 
     it("ignores stale summary and History refreshes and timed-out callbacks without advancing freshness", () => {
@@ -1630,25 +1629,22 @@ describe("garden logger History details and current-cycle charts", () => {
         });
         /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebAppBootstrap">[]} */
         const summaries = [];
-        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getRecentWebObservations">[]} */
-        const history = [];
         behaviors.getWebAppBootstrap = (handlers) => {
             summaries.push(handlers);
-        };
-        behaviors.getRecentWebObservations = (handlers) => {
-            history.push(handlers);
         };
         refreshWorkflow(window);
         vi.advanceTimersByTime(120_000);
         refreshWorkflow(window);
         required(summaries[1]).success({
             ...workflowBootstrap(),
+            recent: [{ ...recentExample, weight: 418 }],
             serverTime: "2026-09-06T16:07:00Z",
             weighedTodayPlantIds: ["P01", "P02"],
         });
-        required(history[1]).success([{ ...recentExample, weight: 418 }]);
-        required(summaries[0]).success(workflowBootstrap());
-        required(history[0]).success([{ ...recentExample, weight: 999 }]);
+        required(summaries[0]).success({
+            ...workflowBootstrap(),
+            recent: [{ ...recentExample, weight: 999 }],
+        });
         required(summaries[1]).failure(new Error("Duplicate old callback"));
 
         expect(
@@ -1671,7 +1667,6 @@ describe("garden logger History details and current-cycle charts", () => {
         refreshWorkflow(window);
         vi.advanceTimersByTime(120_000);
         required(summaries[2]).success(workflowBootstrap());
-        required(history[2]).success([]);
 
         expect(
             queryElement(window.document, "#roundProgress", HTMLElement)
@@ -9846,9 +9841,6 @@ describe("garden logger activity metrics and guidance", () => {
             behaviors.getWebAppBootstrap = (handlers) => {
                 pending.push(handlers);
             };
-            behaviors.getRecentWebObservations = ({ success }) => {
-                success([recentExample]);
-            };
             behaviors.saveWebObservation = ({ success }) => {
                 success({ message: "Saved" });
             };
@@ -9890,6 +9882,7 @@ describe("garden logger activity metrics and guidance", () => {
                         },
                     },
                 ],
+                recent: [recentExample],
             });
 
             expect(
@@ -9920,7 +9913,7 @@ describe("garden logger activity metrics and guidance", () => {
                 calls.filter(
                     ({ method }) => method === "getRecentWebObservations"
                 )
-            ).toHaveLength(1);
+            ).toHaveLength(0);
         }
     );
 

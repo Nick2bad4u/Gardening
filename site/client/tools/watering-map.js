@@ -1,15 +1,15 @@
 import { sourceReadLabel } from "../../../docs/layouts/plant-sheet-cache.js";
-import {
-    getRequiredElement,
-    getSavedHistoryData,
-    loadHistorySnapshot,
-} from "../../../docs/layouts/plant-tracker-data.js";
+import { getRequiredElement } from "../../../docs/layouts/plant-tracker-data.js";
 import { buildWateringMap } from "./watering-map-data.js";
+import {
+    getSavedWateringMapData,
+    loadWateringMapSnapshot,
+} from "./watering-map-feed.js";
 import { decodeWateringSnapshot } from "./watering-map-snapshot.js";
 import { renderWateringMapSvg } from "./watering-map-svg.js";
 
 /** @typedef {import("./watering-map-data.js").PotPlacement} PotPlacement */
-/** @typedef {Awaited<ReturnType<typeof loadHistorySnapshot>>} HistorySnapshot */
+/** @typedef {Awaited<ReturnType<typeof loadWateringMapSnapshot>>} HistorySnapshot */
 
 const panel = getRequiredElement("#watering-map", HTMLElement);
 const sourceStatus = getRequiredElement("#watering-map-source", HTMLElement);
@@ -86,7 +86,7 @@ function isWateringArtwork(value) {
     );
 }
 const publishedSnapshot = readEmbeddedSnapshot();
-const savedSnapshot = getSavedHistoryData();
+const savedSnapshot = getSavedWateringMapData();
 const useSavedSnapshot =
     savedSnapshot !== null &&
     (publishedSnapshot === null ||
@@ -110,6 +110,7 @@ const state = {
         "Loading watering observations. Counts hidden until data loads.",
     sourceState: "saved",
 };
+const renderCache = { signature: "" };
 
 /** @param {HistorySnapshot} next */
 function applySnapshot(next) {
@@ -308,7 +309,7 @@ async function refresh() {
         "Refreshing watering observations. Counts hidden until data loads.";
     render();
     try {
-        const freshSnapshot = await loadHistorySnapshot();
+        const freshSnapshot = await loadWateringMapSnapshot();
         applySnapshot(freshSnapshot);
     } catch {
         markRefreshFailed();
@@ -336,6 +337,16 @@ function render() {
     pngButton.disabled = !isAvailable || state.isExportBusy;
     svgButton.disabled = !isAvailable || state.isExportBusy;
     const model = createMapModel();
+    // Re-evaluate dates so future same-day observations can become eligible, but
+    // preserve the existing SVG and details when their visible inputs are equal.
+    const signature = JSON.stringify({
+        available: isAvailable,
+        model,
+        readAt: isAvailable ? state.snapshot?.readAt : null,
+        status: state.sourceMessage,
+    });
+    if (signature === renderCache.signature) return;
+    const definitions = preview.querySelector(":scope > svg > defs");
     const recorded = model.markers.filter(
         (marker) => marker.days !== null
     ).length;
@@ -351,11 +362,15 @@ function render() {
             readAt: state.snapshot?.readAt ?? null,
             status: state.sourceMessage,
         },
-        artwork
+        artwork,
+        definitions === null
     );
     const parser = new DOMParser();
     const parsed = parser.parseFromString(svg, "image/svg+xml");
-    preview.replaceChildren(document.importNode(parsed.documentElement, true));
+    const nextSvg = document.importNode(parsed.documentElement, true);
+    if (definitions)
+        nextSvg.querySelector(":scope > defs")?.replaceWith(definitions);
+    preview.replaceChildren(nextSvg);
     preview.hidden = false;
     potList.replaceChildren(
         ...model.markers.map((marker) => {
@@ -380,6 +395,7 @@ function render() {
             return item;
         })
     );
+    renderCache.signature = signature;
 }
 
 /** @param {boolean} busy */
