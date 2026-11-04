@@ -158,30 +158,33 @@ the owner's browser profile; this does not reproduce Android package installatio
 
 The placement page's **Days since watering** panel generates an SVG from the
 maintained pot placements and the published observation log. It refreshes on
-opening and every five minutes while visible, keeps a separate bounded
-24-hour History snapshot, and recalculates elapsed calendar days in the collection's
-time zone. Saved previews and failed refreshes remain labeled in the page and
-downloads. PNG downloads render the same SVG at twice its native dimensions;
+opening and every five minutes while visible, and recalculates elapsed calendar
+days in the collection's time zone after a successful live read. Counts are
+hidden while refreshing, after a failed refresh, and when the read expires after
+24 hours. The layout and plant identities remain visible with dashes. Watering
+dates, logged locations, and record-coverage totals show unavailable states;
+downloads stay disabled until a live read succeeds. PNG downloads render the same SVG at twice its native dimensions;
 both formats use the map's dark background independent of the site theme.
 The site navigation links directly to `setup/placement/#watering-map`, and the
 placement page includes a jump link above the panel. Summary counts distinguish
-pots with a recorded Water event from pots without one; they follow the same
-live, saved, or dated source as the diagram and are not watering recommendations.
+pots with a recorded Water event from pots without one after data loads. These
+counts describe observations and are not watering recommendations.
 The map reads History independently: its maintained placement data already supplies
-pot names and labels, so a slow Plant tracker export cannot block the image. It can
-also display History from a newer validated tracker/history snapshot, preserving
-that snapshot's original read time. Its separate storage key does not replace the
-tracker's paired cache.
+pot names and labels, so a slow Plant tracker export cannot block the image.
+The shared reader still keeps a bounded History cache separately from the
+tracker's paired cache. Neither cached History nor the embedded publication
+snapshot is sufficient to display watering values on this map. A successful
+empty live response displays unknown watering history; a failed response remains
+unavailable rather than implying that no Water events exist.
 
-The page also embeds `docs/layouts/watering-history-snapshot.json` so a first
-visit can display and download the map when Google's export service is unavailable.
-This small publication fallback contains only the latest active Water and Move
+The page retains `docs/layouts/watering-history-snapshot.json` as a dated source
+snapshot. It contains only the latest active Water and Move
 observations from a reviewed canonical History read, its actual `sourceReadAt`,
 and the inventory IDs covered. It contains no observation IDs, request IDs, or
-notes. Its counts stay fixed to the source-read date, and both the page and
-download identify it as a published snapshot. A newer browser snapshot or a
-successful live response replaces it; an empty successful response also replaces
-it. The published fallback is never relabeled or stored as a fresh network read.
+notes. Its values are never shown while a live read is pending or unavailable,
+and the snapshot is never relabeled or stored as a fresh network read. SVG and
+PNG downloads require a successful live read; an export still being prepared is
+canceled if a refresh invalidates its source before download.
 
 To refresh the fallback, read the complete current canonical History and inventory,
 exclude removed and future observations, retain the latest Water and Move per pot,

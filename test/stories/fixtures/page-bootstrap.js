@@ -232,6 +232,11 @@
     const nativeFetch = fetch.bind(globalThis);
     /** @type {Map<string | null, number>} */
     const failedSources = new Map();
+    /** @param {number} attempt */
+    const historyForAttempt = (attempt) =>
+        scenario === "refresh-failure" && attempt >= 3
+            ? history.replace("2026-09-02,P01,Water", "2026-09-04,P01,Water")
+            : history;
     /** @type {typeof fetch} */
     const fixtureFetch = async (input, init) => {
         const url = new URL(
@@ -255,12 +260,27 @@
             const sourceId = url.searchParams.get("gid");
             const previousFailures = failedSources.get(sourceId) ?? 0;
             failedSources.set(sourceId, previousFailures + 1);
+            if (scenario === "refresh-failure" && previousFailures === 1) {
+                document.documentElement.dataset["refreshWaiting"] = "true";
+                await new Promise((resolve) => {
+                    document.addEventListener(
+                        "storybook-release-refresh",
+                        () => {
+                            resolve(undefined);
+                        },
+                        { once: true }
+                    );
+                });
+            }
             if (
                 [
                     "dated-error",
                     "error",
                     "invalid-snapshot",
                 ].includes(scenario) ||
+                (scenario === "refresh-failure" &&
+                    previousFailures >= 1 &&
+                    previousFailures <= 2) ||
                 (scenario === "retry" && previousFailures < 2) ||
                 (scenario === "auto-retry" && previousFailures < 1)
             ) {
@@ -273,7 +293,7 @@
                     ? plants
                     : scenario === "empty"
                       ? headers
-                      : history;
+                      : historyForAttempt(previousFailures);
             return new Response(csv, {
                 headers: { "Content-Type": "text/csv" },
             });

@@ -154,9 +154,9 @@ const artwork = await getWateringArtwork();
         <summary>Map context and data freshness</summary>
         <div>
             <p>
-                A dated snapshot appears while the live log refreshes. If the live log is
-                unavailable, snapshot counts stay fixed at its source-read date. Live data refreshes
-                every five minutes while this page is visible.
+                Watering counts appear after a successful live read. While data is loading, after a
+                failed refresh, or when it expires, the map shows dashes and downloads are
+                unavailable. Live data refreshes every five minutes while this page is visible.
             </p>
             <p>
                 The layout follows the photos supplied October 22, with front and rear tables shown
@@ -166,9 +166,10 @@ const artwork = await getWateringArtwork();
                 coordinates.
             </p>
             <p>
-                “Unknown” means no active Water event was recorded. Use your browser’s Find command
-                to locate IDs in the SVG map, or open the pot details to search full names.
-                Portraits are collection artwork, not evidence of the current pot or identification.
+                After data loads, “Unknown” means no active Water event was recorded. A dash means
+                watering data is unavailable. Use your browser’s Find command to locate IDs in the
+                SVG map, or open the pot details to search full names. Portraits are collection
+                artwork, not evidence of the current pot or identification.
             </p>
             <p>
                 P31 / #7 and P32 / #8 are on the kitchen window shelf under the reported 54 W

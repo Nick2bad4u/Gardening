@@ -277,6 +277,72 @@ describe("watering placement dates", () => {
 });
 
 describe("standalone watering image", () => {
+    it("withholds stale counts, dates, locations, and coverage when observations are unavailable", () => {
+        expect.hasAssertions();
+
+        const model = buildWateringMap(
+            placements,
+            history([
+                { Date: "2026-09-21", Event: "Water", "Plant ID": "P01" },
+                {
+                    Date: "2026-09-22",
+                    Event: "Move",
+                    "New location": "Outdated shelf location",
+                    "Plant ID": "P01",
+                },
+            ]),
+            new Date("2026-10-22T16:00:00Z")
+        );
+        const svg = renderWateringMapSvg(model, {
+            available: false,
+            readAt: Date.parse("2026-10-22T16:00:00Z"),
+            status: "Watering data unavailable. Refresh data to retry.",
+        });
+        const window = new Window();
+        onTestFinished(async () => window.happyDOM.close());
+        const parser = new window.DOMParser();
+        const document = parser.parseFromString(svg, "image/svg+xml");
+
+        expect(document.querySelector("parsererror")).toBeNull();
+        expect(document.querySelectorAll("[data-pot-id]")).toHaveLength(
+            placements.length
+        );
+        expect(
+            Array.from(
+                document.querySelectorAll("text.count"),
+                (count) => count.textContent
+            )
+        ).toStrictEqual(placements.map(() => "—"));
+        expect(
+            document.querySelectorAll(
+                "[data-pot-id].recorded, [data-pot-id].unrecorded"
+            )
+        ).toHaveLength(0);
+
+        for (const [index, marker] of document
+            .querySelectorAll("[data-pot-id]")
+            .entries()) {
+            const placement = required(placements[index]);
+
+            expect(marker.querySelector("title")?.textContent).toContain(
+                "Watering data unavailable"
+            );
+            expect(marker.querySelector("text.identity")?.textContent).toBe(
+                `${placement.label} · ${placement.id}`
+            );
+        }
+
+        expect(document.querySelector("desc")?.textContent).toContain(
+            "unavailable"
+        );
+        expect(document.documentElement.textContent).not.toMatch(
+            /\d with Water records|2026-09-21|2026-10-22|31 calendar days|No recorded Water event|Outdated shelf location/v
+        );
+        expect(document.querySelector("title")?.textContent).not.toContain(
+            "2026-10-22"
+        );
+    });
+
     it("renders each pot once with readable counts, unknowns, dates, and source freshness", () => {
         expect.hasAssertions();
 

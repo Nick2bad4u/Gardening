@@ -26,6 +26,7 @@ type NetworkScenario =
     | "error"
     | "loading"
     | "ready"
+    | "refresh-failure"
     | "retry"
     | "tracker-unavailable";
 
@@ -57,6 +58,7 @@ export const websiteArgTypes = {
             "invalid-snapshot",
             "care-events",
             "ready",
+            "refresh-failure",
             "humidity",
             "houseplants",
             "light",
@@ -70,7 +72,7 @@ export const websiteArgTypes = {
         table: {
             type: {
                 summary:
-                    "ready | humidity | houseplants | light | care-events | loading | empty | error | retry | auto-retry | tracker-unavailable | dated-error | dated-loading | invalid-snapshot",
+                    "ready | refresh-failure | humidity | houseplants | light | care-events | loading | empty | error | retry | auto-retry | tracker-unavailable | dated-error | dated-loading | invalid-snapshot",
             },
         },
     },

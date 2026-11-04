@@ -54,9 +54,12 @@
 - `watering-history-snapshot.json` is a minimal publication fallback, not a fresh
   workbook read. Refresh it only from a complete reviewed canonical read; retain
   its actual timestamp and only latest active Water/Move fields. Never include
-  observation/request IDs or notes. Keep fallback counts fixed to that read date,
-  label them in the page and exports, and replace them with synthetic data in
-  Storybook. See `../development.md` for the refresh and verification procedure.
+  observation/request IDs or notes. The watering map hides counts, watering dates,
+  logged locations, and coverage totals until a live read succeeds; loading,
+  failures, and expired data must never expose cached or published-snapshot values.
+  Keep downloads disabled in those states and distinguish unavailable data from
+  fresh history with no Water records. Replace embedded records with synthetic
+  data in Storybook. See `../development.md` for snapshot verification.
 
 ## Validation
 

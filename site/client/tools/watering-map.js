@@ -106,7 +106,8 @@ const state = {
     lastAttempt: 0,
     snapshot: useSavedSnapshot ? savedSnapshot : publishedSnapshot,
     sourceKind: useSavedSnapshot ? "saved" : "published",
-    sourceMessage: "Saved preview · refreshing published observations.",
+    sourceMessage:
+        "Loading watering observations. Counts hidden until data loads.",
     sourceState: "saved",
 };
 
@@ -119,12 +120,22 @@ function applySnapshot(next) {
 }
 
 /** @param {HistorySnapshot} snapshot */
-function createMapModel(snapshot) {
-    const asOf =
-        state.sourceKind === "published"
-            ? new Date(snapshot.readAt)
-            : new Date();
-    return buildWateringMap(placements, snapshot.history, asOf);
+function canDownloadSnapshot(snapshot) {
+    expireSnapshot();
+    return canShowCounts() && state.snapshot === snapshot;
+}
+
+function canShowCounts() {
+    return (
+        state.snapshot !== null &&
+        state.sourceKind === "live" &&
+        state.sourceState === "live"
+    );
+}
+
+function createMapModel() {
+    const history = canShowCounts() ? (state.snapshot?.history ?? []) : [];
+    return buildWateringMap(placements, history);
 }
 
 /** @param {string} text @param {"strong" | "span"} [tag] */
@@ -161,29 +172,29 @@ function expireSnapshot() {
 
     state.snapshot = publishedSnapshot;
     state.sourceKind = "published";
-    state.sourceState = publishedSnapshot ? "saved" : "error";
-    state.sourceMessage = publishedSnapshot
-        ? "Saved data expired · showing published snapshot. Counts fixed at its source-read date."
-        : "Saved data expired after 24 hours. Refresh data to generate a current image.";
+    state.sourceState = "error";
+    state.sourceMessage =
+        "Watering data expired. Counts hidden. Use Refresh data to reload.";
 }
 
 /** @param {"png" | "svg"} format */
 async function exportImage(format) {
     expireSnapshot();
-    if (!state.snapshot || state.isExportBusy) {
+    if (!canShowCounts() || !state.snapshot || state.isExportBusy) {
         render();
         return;
     }
     setExportBusy(true);
     exportStatus.textContent = `Preparing ${format.toUpperCase()}…`;
     render();
-    const model = createMapModel(state.snapshot);
+    const snapshot = state.snapshot;
+    const model = createMapModel();
     const svg = new Blob(
         [
             renderWateringMapSvg(
                 model,
                 {
-                    readAt: state.snapshot.readAt,
+                    readAt: snapshot.readAt,
                     status: state.sourceMessage,
                 },
                 artwork
@@ -193,6 +204,11 @@ async function exportImage(format) {
     );
     try {
         const blob = format === "png" ? await pngFromSvg(svg) : svg;
+        if (!canDownloadSnapshot(snapshot)) {
+            exportStatus.textContent =
+                "Watering data changed while preparing the image. Refresh data before downloading.";
+            return;
+        }
         download(blob, `watering-placement-${model.date}.${format}`);
         exportStatus.textContent = `${format.toUpperCase()} download prepared. The image includes the source-read time and freshness status.`;
     } catch (error) {
@@ -238,14 +254,8 @@ function isPlacement(value) {
 
 function markRefreshFailed() {
     state.sourceState = "error";
-    if (state.snapshot && state.sourceKind === "published") {
-        state.sourceMessage =
-            "Live refresh failed · showing published snapshot. Counts fixed at its source-read date.";
-        return;
-    }
-    state.sourceMessage = state.snapshot
-        ? "Refresh failed · showing saved observations. Use Refresh data to retry."
-        : "Watering log unavailable; no saved preview is available. Use Refresh data to retry.";
+    state.sourceMessage =
+        "Watering data unavailable. Counts hidden. Use Refresh data to retry.";
 }
 
 /** @param {Blob} svg @returns {Promise<Blob>} */
@@ -294,7 +304,8 @@ async function refresh() {
     state.lastAttempt = Date.now();
     setRefreshBusy(true);
     state.sourceState = "saved";
-    state.sourceMessage = refreshingMessage();
+    state.sourceMessage =
+        "Refreshing watering observations. Counts hidden until data loads.";
     render();
     try {
         const freshSnapshot = await loadHistorySnapshot();
@@ -313,81 +324,62 @@ function refreshIfDue() {
     if (Date.now() - state.lastAttempt >= refreshInterval) void refresh();
 }
 
-function refreshingMessage() {
-    if (!state.snapshot) return "Loading published watering observations…";
-    if (state.sourceKind === "published") {
-        return "Published snapshot · refreshing live observations. Counts fixed at its source-read date.";
-    }
-    return "Saved preview · refreshing published observations.";
-}
-
 function render() {
     expireSnapshot();
+    const isAvailable = canShowCounts();
     sourceStatus.dataset["state"] = state.sourceState;
     sourceStatus.dataset["source"] = state.sourceKind;
-    const sourceNote =
-        state.sourceKind === "published"
-            ? "Newer care may be missing from this dated snapshot."
-            : "Published Sheets data may lag recent saves.";
-    sourceStatus.textContent = state.snapshot
-        ? `${state.sourceMessage} Source read ${sourceReadLabel(state.snapshot.readAt)}. ${sourceNote}`
-        : state.sourceMessage;
-    pngButton.disabled = state.snapshot === null || state.isExportBusy;
-    svgButton.disabled = state.snapshot === null || state.isExportBusy;
-    if (state.snapshot) {
-        const model = createMapModel(state.snapshot);
-        const recorded = model.markers.filter(
-            (marker) => marker.days !== null
-        ).length;
-        totalCount.textContent = String(model.markers.length);
-        recordedCount.textContent = String(recorded);
-        unknownCount.textContent = String(model.markers.length - recorded);
-        const svg = renderWateringMapSvg(
-            model,
-            {
-                readAt: state.snapshot.readAt,
-                status: state.sourceMessage,
-            },
-            artwork
-        );
-        const parser = new DOMParser();
-        const parsed = parser.parseFromString(svg, "image/svg+xml");
-        preview.replaceChildren(
-            document.importNode(parsed.documentElement, true)
-        );
-        preview.hidden = false;
-        potList.replaceChildren(
-            ...model.markers.map((marker) => {
-                const item = document.createElement("li");
-                item.append(
-                    detailText(
-                        `${marker.label} · ${marker.id} · ${marker.name}`,
-                        "strong"
-                    ),
-                    detailText(
-                        marker.days === null
-                            ? "Days since watering: Unknown"
-                            : `Days since watering: ${marker.days}`
-                    ),
-                    detailText(
-                        `Last Water: ${marker.lastWater ?? "Not recorded"}`
-                    ),
-                    detailText(`Recorded position: ${marker.position}`),
-                    detailText(
-                        `Latest logged location: ${marker.currentLocation || "Not recorded"}`
-                    )
-                );
-                return item;
-            })
-        );
-    } else {
-        totalCount.textContent = String(placements.length);
-        recordedCount.textContent = "—";
-        unknownCount.textContent = "—";
-        preview.hidden = true;
-        preview.replaceChildren();
-        potList.replaceChildren();
-    }
+    sourceStatus.textContent =
+        isAvailable && state.snapshot
+            ? `${state.sourceMessage} Source read ${sourceReadLabel(state.snapshot.readAt)}. Published Sheets data may lag recent saves.`
+            : state.sourceMessage;
+    pngButton.disabled = !isAvailable || state.isExportBusy;
+    svgButton.disabled = !isAvailable || state.isExportBusy;
+    const model = createMapModel();
+    const recorded = model.markers.filter(
+        (marker) => marker.days !== null
+    ).length;
+    totalCount.textContent = String(model.markers.length);
+    recordedCount.textContent = isAvailable ? String(recorded) : "—";
+    unknownCount.textContent = isAvailable
+        ? String(model.markers.length - recorded)
+        : "—";
+    const svg = renderWateringMapSvg(
+        model,
+        {
+            available: isAvailable,
+            readAt: state.snapshot?.readAt ?? null,
+            status: state.sourceMessage,
+        },
+        artwork
+    );
+    const parser = new DOMParser();
+    const parsed = parser.parseFromString(svg, "image/svg+xml");
+    preview.replaceChildren(document.importNode(parsed.documentElement, true));
+    preview.hidden = false;
+    potList.replaceChildren(
+        ...model.markers.map((marker) => {
+            const item = document.createElement("li");
+            const days = marker.days === null ? "Unknown" : String(marker.days);
+            item.append(
+                detailText(
+                    `${marker.label} · ${marker.id} · ${marker.name}`,
+                    "strong"
+                ),
+                detailText(
+                    `Days since watering: ${isAvailable ? days : "Unavailable"}`
+                ),
+                detailText(
+                    `Last Water: ${isAvailable ? (marker.lastWater ?? "Not recorded") : "Unavailable"}`
+                ),
+                detailText(`Recorded position: ${marker.position}`),
+                detailText(
+                    `Latest logged location: ${isAvailable ? marker.currentLocation || "Not recorded" : "Unavailable"}`
+                )
+            );
+            return item;
+        })
+    );
 }
 
 /** @param {boolean} busy */

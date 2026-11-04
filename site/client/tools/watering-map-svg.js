@@ -14,12 +14,12 @@ const emptyArtwork = { definitions: "", portraits: {} };
  * stylesheets, page theme, or network requests are needed to export a PNG.
  *
  * @param {WateringMap} model
- * @param {{ readAt: number | null; status: string }} source
+ * @param {{ readAt: number | null; status: string; available?: boolean }} source
  * @param {WateringArtwork} [artwork] Trusted build-time artwork only.
  */
 export function renderWateringMapSvg(
     model,
-    { readAt, status },
+    { available: isAvailable = true, readAt, status },
     artwork = emptyArtwork
 ) {
     const otherCount = model.markers.filter(
@@ -50,16 +50,8 @@ export function renderWateringMapSvg(
         .map((marker) => {
             const { x, y } = marker;
             const isOutside = marker.zone === "other";
-            const count = marker.days === null ? "?" : String(marker.days);
-            const watering =
-                marker.days === null
-                    ? "No recorded Water event"
-                    : `${marker.days} calendar days since Water on ${marker.lastWater ?? "unknown date"}`;
-            const location =
-                marker.currentLocation === ""
-                    ? ""
-                    : ` Latest logged location: ${marker.currentLocation}.`;
-            const description = `${marker.label} / ${marker.id}: ${marker.name}. ${marker.position}. ${watering}.${location}`;
+            const watering = markerWatering(marker, isAvailable);
+            const description = `${marker.label} / ${marker.id}: ${marker.name}. ${marker.position}. ${watering.description}.${watering.location}`;
             const shape = isOutside
                 ? `<rect x="${x - 100}" y="${y - 40}" width="200" height="125" rx="14" class="pot outside"/>`
                 : marker.id === "P20"
@@ -82,8 +74,8 @@ export function renderWateringMapSvg(
                 marker.zone === "front"
                     ? ""
                     : `<text x="${x}" y="${y + (isOutside ? 42 : 78)}" class="name" text-anchor="middle">${nameLines}</text>`;
-            return `<g data-pot-id="${escapeXml(marker.id)}" class="${marker.days === null ? "unrecorded" : "recorded"}"><title>${escapeXml(description)}</title>${shape}${portrait}
-            ${text(portrait ? x + 20 : x, y, count, marker.days === null ? "count unknown" : "count", "middle")}
+            return `<g data-pot-id="${escapeXml(marker.id)}" class="${watering.className}"><title>${escapeXml(description)}</title>${shape}${portrait}
+            ${text(portrait ? x + 20 : x, y, watering.count, watering.countClass, "middle")}
             ${text(x, y + 21, `${marker.label} · ${marker.id}`, "identity", "middle")}
             ${name}
             ${isOutside ? text(x, y + 74, marker.position, "location", "middle") : ""}
@@ -91,12 +83,16 @@ export function renderWateringMapSvg(
         })
         .join("");
     const sourceText =
-        readAt === null
+        !isAvailable || readAt === null
             ? "Waiting for published watering history"
             : `Source read: ${sourceReadLabel(readAt)}`;
+    const dateText = isAvailable ? model.date : "data unavailable";
+    const countDescription = isAvailable
+        ? "Numbers are calendar days since each pot's latest active Water record. Question mark means no recorded watering."
+        : "Watering counts are hidden until a live read succeeds. A dash means watering data is unavailable.";
     return `<svg xmlns="http://www.w3.org/2000/svg" class="wm-svg" data-watering-map="" width="1000" height="${height}" viewBox="0 0 1000 ${height}" role="img" aria-labelledby="watering-map-svg-title watering-map-svg-description" data-color-scheme="dark">
-        <title id="watering-map-svg-title">Days since watering — ${escapeXml(model.date)}</title>
-        <desc id="watering-map-svg-description">Recorded table positions, viewed from the room. North window at top, Mylar left, white wall right. Numbers are calendar days since each pot's latest active Water record. Question mark means no recorded watering. Off-grid pots are listed separately. ${escapeXml(status)}. ${escapeXml(sourceText)}.</desc>
+        <title id="watering-map-svg-title">Days since watering — ${escapeXml(dateText)}</title>
+        <desc id="watering-map-svg-description">Recorded table positions, viewed from the room. North window at top, Mylar left, white wall right. ${escapeXml(countDescription)} Off-grid pots are listed separately. ${escapeXml(status)}. ${escapeXml(sourceText)}.</desc>
         <defs>${artwork.definitions}</defs>
         <style>
             .wm-svg text { font-family: Arial, Helvetica, sans-serif; fill: #e2efe6; }
@@ -111,6 +107,7 @@ export function renderWateringMapSvg(
             .wm-svg .pot { fill: #172c25; stroke: #79ad8d; stroke-width: 2; }
             .wm-svg .outside { fill: #13271f; }
             .wm-svg .unrecorded .pot { fill: #1b2523; stroke: #82988c; stroke-dasharray: 5 5; }
+            .wm-svg .unavailable .pot { fill: #1b2523; stroke: #82988c; }
             .wm-svg .count { font-size: 36px; font-weight: 700; fill: #d1f7df; }
             .wm-svg .unknown { fill: #adbbb3; }
             .wm-svg .identity { font-size: 15px; font-weight: 700; fill: #c8d9ce; }
@@ -124,7 +121,7 @@ export function renderWateringMapSvg(
         ${icon("plant", 827, 30, 30)}
         ${text(952, 55, `${model.markers.length} POTS`, "total", "end")}
         ${icon("calendar", 48, 70, 22)}
-        ${text(78, 88, `${model.date} · Calendar days in America/New_York`, "subtitle")}
+        ${text(78, 88, isAvailable ? `${model.date} · Calendar days in America/New_York` : "Watering counts unavailable", "subtitle")}
         ${icon("clock", 48, 99, 22)}
         ${text(78, 116, sourceText, "meta")}
         ${text(48, 140, shortText(status, 112), "meta")}
@@ -163,9 +160,9 @@ export function renderWateringMapSvg(
         ${icon("pin", 42, 1231, 26)}
         ${text(78, 1253, "OTHER LOCATIONS / PLACEMENT UNCONFIRMED", "zone")}
         ${markers}
-        ${text(48, height - 105, `${recordedCount} with Water records · ${model.markers.length - recordedCount} without · dashed outline = no recorded Water`, "meta")}
+        ${text(48, height - 105, isAvailable ? `${recordedCount} with Water records · ${model.markers.length - recordedCount} without · dashed outline = no recorded Water` : "Watering record coverage unavailable until data loads.", "meta")}
         ${icon("info", 48, height - 98, 22)}
-        ${text(78, height - 81, "? = no recorded Water event. Counts describe history, not when to water.", "meta")}
+        ${text(78, height - 81, isAvailable ? "? = no recorded Water event. Counts describe history, not when to water." : "— = watering data unavailable. Refresh data to load current observations.", "meta")}
         ${text(48, height - 56, "Recorded arrangement; schematic spacing. A logged Move does not assign a new grid slot.", "note")}
         ${text(48, height - 31, "Published Sheet data can lag workbook edits. Check the source time before using a saved image.", "note")}
     </svg>`;
@@ -179,6 +176,35 @@ function escapeXml(value) {
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&apos;");
+}
+
+/**
+ * @param {WateringMap["markers"][number]} marker
+ * @param {boolean} isAvailable
+ */
+function markerWatering(marker, isAvailable) {
+    if (!isAvailable) {
+        return {
+            className: "unavailable",
+            count: "—",
+            countClass: "count unknown",
+            description: "Watering data unavailable",
+            location: "",
+        };
+    }
+    return {
+        className: marker.days === null ? "unrecorded" : "recorded",
+        count: marker.days === null ? "?" : String(marker.days),
+        countClass: marker.days === null ? "count unknown" : "count",
+        description:
+            marker.days === null
+                ? "No recorded Water event"
+                : `${marker.days} calendar days since Water on ${marker.lastWater ?? "unknown date"}`,
+        location:
+            marker.currentLocation === ""
+                ? ""
+                : ` Latest logged location: ${marker.currentLocation}.`,
+    };
 }
 
 /** @param {string} value @param {number} maximum */
