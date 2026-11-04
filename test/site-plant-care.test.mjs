@@ -57,7 +57,7 @@ describe("plant care evidence validation", () => {
 
         expect(isPlantCareReference(record)).toBe(true);
         expect(lightComparison(record.light)).toStrictEqual({
-            hours: 12,
+            hours: 13.5,
             lux: null,
             ppfd: null,
             startingPpfd: null,
@@ -306,16 +306,16 @@ describe("care coverage", () => {
 });
 
 describe("light comparisons", () => {
-    it("uses a 12-hour example and raw DLI for the approximate white-LED lux envelope", () => {
+    it("uses a 13.5-hour example and raw DLI for the approximate white-LED lux envelope", () => {
         expect.hasAssertions();
 
         const record = reference();
 
         expect(lightComparison(record.light)).toStrictEqual({
-            hours: 12,
-            lux: [7600, 16_200],
-            ppfd: [140, 230],
-            startingPpfd: [95, 140],
+            hours: 13.5,
+            lux: [6800, 14_400],
+            ppfd: [125, 205],
+            startingPpfd: [80, 125],
         });
         expect(record.light.dli).toStrictEqual([6, 10]);
     });

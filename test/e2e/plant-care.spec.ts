@@ -53,6 +53,9 @@ async function inspectGuideNavigation(page: Readonly<Page>) {
     await expect.soft(page).toHaveURL(guidePath);
     const comparison = page.locator("[data-care-comparison]");
     await expect.soft(comparison).toBeVisible();
+    await expect
+        .soft(comparison)
+        .toContainText("13.5 constant-light hours for comparison");
     await comparison
         .getByText(/^Browse all \d+ active plant references$/v)
         .click();
@@ -167,7 +170,7 @@ test.describe("per-plant care references", { tag: "@care" }, () => {
                 expect
                     .soft(content)
                     .toMatch(/Working range[\s\S]*Approx\. white-LED lux/v);
-                expect.soft(content).toContain("12 constant-light hours");
+                expect.soft(content).toContain("13.5 constant-light hours");
                 expect
                     .soft({
                         boundaries: content.includes(

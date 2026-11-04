@@ -61,7 +61,7 @@ The shared CSV reader allows 60 seconds per feed, including redirects, response
 body download, and at most one retry after a one-second pause for a network
 failure or HTTP 408/500/502/503/504. Both attempts share the same deadline;
 timeouts and other HTTP errors do not trigger another attempt. Concurrent
-consumers share the pending read. The placement map uses this reader for History;
+consumers share the pending read. The placement map uses this reader for its compact Watering map feed;
 tracker and pot-history pages validate both feeds before replacing their saved
 pair. Failed refreshes keep the saved source-read time and display a failure.
 
@@ -185,6 +185,15 @@ Neither the compact cache nor the embedded publication
 snapshot is sufficient to display watering values on this map. A successful
 empty live response displays unknown watering history; a failed response remains
 unavailable rather than implying that no Water events exist.
+
+After ten seconds, a pending map refresh explains that it is still waiting for
+the published Sheet. Failed reads distinguish a timeout, a connection/service
+failure, and an incomplete or invalid feed without exposing response details.
+When connectivity returns, a visible failed map can make one additional refresh
+attempt; repeated reconnect events cannot create a retry loop. Manual refresh
+and the ordinary five-minute cadence remain available. Every loading or failed
+state keeps counts hidden and downloads disabled, and failures preserve the
+last successful source-read timestamp.
 
 Unchanged minute checks retain the existing SVG and artwork definitions. Time
 eligibility is still recalculated, so a future record becomes eligible when its

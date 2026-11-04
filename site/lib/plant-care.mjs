@@ -1,5 +1,7 @@
 import { isRecord, readJson } from "../../scripts/build-data.mjs";
 
+export const LIGHT_COMPARISON_HOURS = 13.5;
+
 /** @typedef {[number, number]} LightRange */
 /**
  * @typedef {{
@@ -112,7 +114,7 @@ export function isPlantCareReference(value) {
  * @param {PlantCareReference["light"]} light
  * @param {number} [hours]
  */
-export function lightComparison(light, hours = 12) {
+export function lightComparison(light, hours = LIGHT_COMPARISON_HOURS) {
     if (!Number.isFinite(hours) || hours <= 0 || hours > 24)
         throw new Error(
             "Comparison hours must be greater than zero and at most 24"

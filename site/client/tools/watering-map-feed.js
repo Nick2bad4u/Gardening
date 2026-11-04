@@ -20,6 +20,14 @@ const feedHeaders = [
     "Record count",
 ];
 const historyFields = feedHeaders.slice(0, 5);
+
+const invalidFeedCause = "invalid-watering-feed";
+
+/** @param {unknown} error */
+export function isWateringFeedError(error) {
+    return error instanceof Error && error.cause === invalidFeedCause;
+}
+
 const feedCache = createSheetSnapshotCache({
     load: async () =>
         decodeWateringFeed(await fetchCsv(sheetUrls.wateringMapCsv)),
@@ -60,7 +68,8 @@ export function decodeWateringFeed(csv) {
         Number(metadata[7]) !== rows.length - 3
     ) {
         throw new Error(
-            "The published watering map feed is incomplete or invalid."
+            "The published watering map feed is incomplete or invalid.",
+            { cause: invalidFeedCause }
         );
     }
     const records = rows.slice(2, -1);
@@ -76,7 +85,8 @@ export function decodeWateringFeed(csv) {
         !isWateringFeed(feed)
     ) {
         throw new Error(
-            "The published watering map feed contains invalid observations."
+            "The published watering map feed contains invalid observations.",
+            { cause: invalidFeedCause }
         );
     }
     return feed;

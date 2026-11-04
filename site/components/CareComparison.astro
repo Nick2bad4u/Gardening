@@ -1,6 +1,11 @@
 ---
 import { getProfiles } from "../lib/content.mjs";
-import { assertCareCoverage, getPlantCareReferences, lightComparison } from "../lib/plant-care.mjs";
+import {
+    assertCareCoverage,
+    getPlantCareReferences,
+    LIGHT_COMPARISON_HOURS,
+    lightComparison,
+} from "../lib/plant-care.mjs";
 import { profileUrl } from "../lib/routes.mjs";
 import "../styles/care-comparison.css";
 
@@ -16,8 +21,9 @@ const range = (values: readonly [number, number] | null) =>
 <section class="care-comparison" aria-labelledby="collection-care-comparison" data-care-comparison>
     <h2 id="collection-care-comparison">Compare the collection</h2>
     <p>
-        {active.length} active profiles · 12 constant-light hours for comparison · trial ranges, not
-        established minimums, optima, or maximums. Each link opens the plant's full care card.
+        {active.length} active profiles · {LIGHT_COMPARISON_HOURS} constant-light hours for
+        comparison · trial ranges, not established minimums, optima, or maximums. Each link opens
+        the plant's full care card.
     </p>
     <p>
         Lux is an approximate white-LED envelope, not a fixture calibration. Shared P-IDs have one
