@@ -1346,6 +1346,7 @@ const waterAgeNames = {
     P03: /, P03(?:,|$)/v,
     P04: /, P04(?:,|$)/v,
     P05: /, P05(?:,|$)/v,
+    P06: /, P06(?:,|$)/v,
 };
 const waterAgeTile = (
     picker: Readonly<Locator>,
@@ -1554,8 +1555,48 @@ test.describe("observation time help", { tag: "@logger" }, () => {
     }
 });
 
+const opaqueLuminance = (color: string) => {
+    const channels = color.match(/[\d.]+/gv)?.map(Number);
+    if (!channels || channels.length < 3 || (channels[3] ?? 1) !== 1)
+        throw new Error(`Expected an opaque computed color: ${color}`);
+    const [
+        red = 0,
+        green = 0,
+        blue = 0,
+    ] = channels.slice(0, 3).map((channel) => {
+        const normalized = channel / 255;
+        return normalized <= 0.04045
+            ? normalized / 12.92
+            : ((normalized + 0.055) / 1.055) ** 2.4;
+    });
+    return red * 0.2126 + green * 0.7152 + blue * 0.0722;
+};
+
+const expectUnavailableAgeContrast = async (tile: Readonly<Locator>) => {
+    await tile.click();
+    await expect.soft(tile).toHaveAttribute(pressedAttribute, "true");
+    const colors = await tile
+        .getByText("No data", { exact: true })
+        .evaluate((badge) => {
+            const style = getComputedStyle(badge);
+            return {
+                background: style.backgroundColor,
+                foreground: style.color,
+            };
+        });
+    const foreground = opaqueLuminance(colors.foreground);
+    const background = opaqueLuminance(colors.background);
+    const ratio =
+        (Math.max(foreground, background) + 0.05) /
+        (Math.min(foreground, background) + 0.05);
+    expect.soft(ratio).toBeGreaterThanOrEqual(4.5);
+};
+
 test.describe("watering age picker", { tag: "@logger" }, () => {
     for (const theme of ["dark", "light"] as const) {
+        const neutralColor =
+            theme === "dark" ? "rgb(17, 25, 20)" : "rgb(255, 255, 255)";
+
         test(`390px ${theme} matches workbook color interpolation and clears unconfirmed colors`, async ({
             page,
         }) => {
@@ -1586,13 +1627,7 @@ test.describe("watering age picker", { tag: "@logger" }, () => {
                             if (!badge)
                                 throw new Error("Missing watering age badge");
                             return {
-                                color:
-                                    badge.dataset["days"] === undefined
-                                        ? badge.style.getPropertyValue(
-                                              "--water-age-color"
-                                          )
-                                        : getComputedStyle(badge)
-                                              .backgroundColor,
+                                color: getComputedStyle(badge).backgroundColor,
                                 days: badge.dataset["days"] ?? "unknown",
                             };
                         })
@@ -1604,23 +1639,29 @@ test.describe("watering age picker", { tag: "@logger" }, () => {
                 { color: "rgb(243, 169, 109)", days: "21" },
                 { color: "rgb(230, 124, 115)", days: "28" },
                 { color: "rgb(230, 124, 115)", days: "29" },
-                { color: "", days: "unknown" },
-                { color: "", days: "unknown" },
+                { color: neutralColor, days: "unknown" },
+                { color: neutralColor, days: "unknown" },
             ]);
             await refreshLogger(page);
             expect.soft(await readColors()).toStrictEqual(
                 Array.from({ length: 8 }, () => ({
-                    color: "",
+                    color: neutralColor,
                     days: "unknown",
                 }))
             );
             await confirmWaterAgeRefresh(page, true);
             expect.soft(await readColors()).toStrictEqual(
                 Array.from({ length: 8 }, () => ({
-                    color: "",
+                    color: neutralColor,
                     days: "unknown",
                 }))
             );
+            await expectUnavailableAgeContrast(
+                waterAgeTile(tablePicker(page), "P02")
+            );
+            const queued = waterAgeTile(tablePicker(page), "P06");
+            await expect.soft(queued).toHaveAccessibleName(/Queued/v);
+            await expectUnavailableAgeContrast(queued);
         });
 
         test(`390px ${theme} toggles ages without changing drafts or filters`, async ({
