@@ -120,6 +120,27 @@ async function prepare(
     await page.route("**://*.gyazo.com/**", (route) => route.abort());
 }
 
+const inspectTerrariumCautions = async (page: Readonly<Page>) => {
+    const care = page.getByRole("region", { exact: true, name: careTitle });
+    await care
+        .getByText("Acclimation, range assumptions & sources", { exact: true })
+        .click();
+    const content = await care.innerText();
+    expect.soft(content).toMatch(/provisional|unidentified/iv);
+    expect.soft(content).toContain("spectrum-dependent white-LED comparison");
+    expect.soft(content).toMatch(/does not establish.*drainage/v);
+    await expect
+        .soft(care.getByText("Starting comparison", { exact: true }))
+        .toHaveCount(0);
+    await expect
+        .soft(
+            page
+                .getByRole("region", { name: /container and members/v })
+                .getByText("One care record:")
+        )
+        .toBeVisible();
+};
+
 test.describe("per-plant care references", { tag: "@care" }, () => {
     test("printing opens the full comparison and restores the disclosure state", async ({
         page,
@@ -154,6 +175,7 @@ test.describe("per-plant care references", { tag: "@care" }, () => {
             .soft(comparison.locator("[data-care-row]:visible"))
             .toHaveCount(49);
     });
+
     for (const theme of ["dark", "light"] as const) {
         for (const width of [390, 1280]) {
             test(`light and moisture reference at ${width}px in ${theme}`, async ({
@@ -194,33 +216,45 @@ test.describe("per-plant care references", { tag: "@care" }, () => {
         }
     }
 
-    for (const reference of [
-        {
-            basis: "Qualitative guidance",
-            message:
-                "Numeric light range, optimum, and hard limits are not established.",
-            slug: "terrarium",
-        },
-        {
-            basis: "Historical reference",
-            message: "No active numeric light target.",
-            slug: "mammillaria-bombycina",
-        },
-    ]) {
-        test(`${reference.slug} does not acquire an unsupported numeric target`, async ({
+    for (const theme of ["dark", "light"] as const) {
+        test(`terrarium shows a cautious numeric trial at 390px in ${theme}`, async ({
             page,
         }) => {
-            await prepare(page, "light", 390);
-            await page.goto(`/Gardening/plants/${reference.slug}/`);
+            await prepare(page, theme, 390);
+            await page.goto("/Gardening/plants/terrarium/");
+            const care = page.getByRole("region", {
+                exact: true,
+                name: careTitle,
+            });
+            const content = await care.innerText();
+            expect.soft(content).toContain("Collection trial ranges");
+            expect.soft(content).toMatch(/Working range\s*60–125/v);
+            expect.soft(content).toMatch(/Daily light total\s*3–6/v);
+            expect
+                .soft(content)
+                .toMatch(/Approx\. white-LED lux\s*3,400–8,600 lx/v);
+            await inspectTerrariumCautions(page);
+            await expectNoOverflow(page);
+        });
+
+        test(`historical plant retains no active numeric target at 390px in ${theme}`, async ({
+            page,
+        }) => {
+            await prepare(page, theme, 390);
+            await page.goto("/Gardening/plants/mammillaria-bombycina/");
             const care = page.getByRole("region", {
                 exact: true,
                 name: careTitle,
             });
             await expect
-                .soft(care.getByText(reference.basis, { exact: true }))
+                .soft(care.getByText("Historical reference", { exact: true }))
                 .toBeVisible();
             await expect
-                .soft(care.getByText(reference.message, { exact: true }))
+                .soft(
+                    care.getByText("No active numeric light target.", {
+                        exact: true,
+                    })
+                )
                 .toBeVisible();
             await expect
                 .soft(care.getByText("Working range", { exact: true }))

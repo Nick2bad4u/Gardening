@@ -74,11 +74,23 @@ on October 10. Model, reading time, and temperature are unknown. The seller's
 
 | Area                 | Starting practice                                                                                                                                                                                                                                                                                             |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Light                | Bright indirect light; keep the glass out of direct sun and away from heat. Check leaf-level exposure and warming before changing the nearby light arrangement.                                                                                                                                               |
+| Light                | Bright indirect light. Use the Light & moisture card's cautious foliage trial as a starting comparison, then check each member's response. Measure at representative leaves inside the glass; an outside-glass reading cannot establish the exposure reaching every plant. Keep the jar out of direct sun.    |
 | Water                | Inspect the medium and any standing water first. Do not add water solely for shipping wilt, brown moss, or an RH reading; avoid a fixed watering schedule or cactus dry-down rule.                                                                                                                            |
 | Lid and condensation | Seller care says keep the lid closed. If condensation stays heavy or dripping, briefly vent or wipe the glass and reassess, following RHS guidance. Owner routine, reported October 24: lid off for a couple of hours when heavy fog persists all day; adjust to observations rather than a fixed daily task. |
+| Temperature          | Use a stable room position away from cold drafts, hot windows, and radiators. Check temperature inside the enclosure if it warms under a lamp; room temperature alone does not describe heat trapped in the jar. No common temperature limit is established for its unidentified fern-like growth and moss.   |
+| Feeding              | Skip routine feeding while the planting is growing normally. Extra fertilizer can accelerate crowding. If growth weakens or leaves yellow, first check light, moisture, and roots; those signs alone do not prove a nutrient shortage. The existing substrate's fertilizer charge is unknown.                 |
+| Crowding             | Trim encroaching stems conservatively when they shade another member or press against the glass, and remove the cut material. Do not use fertilizer to force faster recovery or enlarge this small planting.                                                                                                  |
 | Recovery             | Remove clearly dead loose debris carefully, preserve living stems, and compare new photographs for posture and new growth. Recovery time is unknown.                                                                                                                                                          |
 | Records              | Record humidity in % RH for P38, with time and sensor position. Weigh the same complete assembly consistently; components do not get separate weigh-ins.                                                                                                                                                      |
+
+The card's numeric light band is a **collection trial inferred from a broad
+foliage category**, not a tested requirement for this mixed jar. RHS supports
+terrarium culture for the probable plant groups, but the fern-like foliage and
+moss remain unidentified. Watch the probable Hypoestes for fading markings and
+stretching before concluding that its exposure is adequate; also check the
+other members for scorch, drying, and heat. The card's approximate white-LED lux
+comparison is not a calibration of the nearby grow lights. See the
+[light-measurement reference](../../light-moisture.md).
 
 The seller also says to mist only when needed. No water volume, fertilizer dose,
 daily venting task, or fixed humidity target has been established for this jar.
@@ -91,6 +103,9 @@ water pooling below the substrate.
   its arrival posture alone.
 - Keep new decay, lasting heavy condensation, warming, and actual standing water
   distinct observations; each calls for checking the enclosure.
+- Inspect leaf undersides and stem junctions for mealybugs, fine webbing, or
+  new leaf spots. Confirm the problem before choosing a treatment; the probable
+  Fittonia and Hypoestes are not immune to pests or moisture-related disease.
 - Obtain clearer leaves and nodes for the trailing plant, a whole frond and its
   underside for the fern-like growth, and close moss shoots before refining IDs.
 - Record actual setup changes when they occur. Recording the seller's jar size
@@ -107,7 +122,9 @@ water pooling below the substrate.
   (16 × 10 cm), cork lid, variable planting and hardscape, and care advice.
   Seller identity and listing URL were not supplied; no independent product
   verification or species confirmation is claimed.
-- [NC State Extension: _Fittonia albivenis_](https://plants.ces.ncsu.edu/plants/fittonia-albivenis/) — foliage and stem features supporting the probable comparison.
-- [NC State Extension: _Hypoestes phyllostachya_](https://plants.ces.ncsu.edu/plants/hypoestes-phyllostachya/) — spotted foliage supporting the probable comparison.
-- [RHS: How to grow pilea](https://www.rhs.org.uk/plants/pilea/how-to-grow-pilea) — rounded leaves and cascading habit of _Pilea depressa_, used only as a tentative comparison.
-- [RHS: Terrariums and bottle gardens](https://www.rhs.org.uk/plants/types/houseplants/bottle-gardens-and-terrariums) — indirect light, moisture retention, sparing watering, condensation management, and dead-material removal.
+- [NC State Extension: _Fittonia albivenis_](https://plants.ces.ncsu.edu/plants/fittonia-albivenis/) — foliage and stem comparison, indirect-light culture, and pest/root-rot watch points; the identification remains probable.
+- [NC State Extension: _Hypoestes phyllostachya_](https://plants.ces.ncsu.edu/plants/hypoestes-phyllostachya/) — spotted-foliage comparison, bright filtered light, fading/stretching in inadequate light, and pest/disease watch points.
+- [RHS: How to grow pilea](https://www.rhs.org.uk/plants/pilea/how-to-grow-pilea) — tentative _Pilea depressa_ appearance comparison, indirect light, protection from cold drafts, and trimming trailing growth.
+- [RHS: Terrariums and bottle gardens](https://www.rhs.org.uk/plants/types/houseplants/bottle-gardens-and-terrariums) — compatible tropical plant groups, indirect light, heat avoidance, condensation management, and debris removal.
+- [Iowa State Extension: How to create and care for a terrarium](https://yardandgarden.extension.iastate.edu/how-to/how-create-and-care-terrarium) — shared growing-condition needs, heat risk, sparing water, and avoiding routine fertilizer to limit crowding. Its calendar watering examples are not adopted for P38.
+- [Iowa State Extension: supplemental-light considerations](https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants) — broad foliage DLI categories and leaf-level measurement. Applying the low-light category to this uncertain mixture is a cautious collection inference, not a species-specific prescription.

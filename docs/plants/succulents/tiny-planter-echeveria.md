@@ -41,6 +41,9 @@ NC State Extension describes _Echeveria_ as a diverse American genus in Crassula
 | Water               | Follow the [shared-pot watering strategy](../../watering-strategy.md): assess dryness throughout the pot, the weight trend, and all three foliage groups before watering and draining the container.                    |
 | Weighing            | Weigh the complete P30 planter using the [adaptive weighing strategy](../../weighing-strategy.md).                                                                                                                      |
 | Feeding             | Use the shared planter's [fertilizer schedule](../../equipment/msu-fertilizer-schedule.md) during a normal watering; the dose applies to the whole pot.                                                                 |
+| Temperature         | Keep this unresolved nursery plant frost-free. RHS uses above 10 °C / 50 °F as general indoor Echeveria guidance; treat that as a cold-exposure precaution, not an optimum or a measured limit for this plant.          |
+| Roots and drainage  | Verify that the shared bowl has a working outlet and that runoff can escape. Use a sharply draining root zone; a shallow-looking bowl or dry top dressing does not establish that the roots are dry.                    |
+| Air and humidity    | Ordinary indoor air is suitable as a starting point; extra humidification or routine misting is not part of this planter's care. Keep air moving around the close-set rosettes and avoid prolonged wet foliage.         |
 
 ## Growth and watch points
 
@@ -48,8 +51,15 @@ The September 16 owner photo shows patchy loss of the pale surface coating and s
 
 Follow new offsets as they fill the gaps between older rosettes. If crowding develops, compare individual crowns and their access to light before planning a division.
 
+Inspect leaf bases and the sheltered spaces between rosettes for mealybugs or
+scale. Check suspicious growth before treating it; the natural pale coating is
+not a pest. Cold, persistently wet roots are a more useful warning than a fixed
+watering interval.
+
 ## Sources
 
 - [NC State Extension Plant Toolbox: _Echeveria_](https://plants.ces.ncsu.edu/plants/echeveria/) — genus diversity, morphology, and general culture.
+- [RHS: Echeveria genus guide](https://www.rhs.org.uk/plants/echeveria), reviewed November 4, 2026 — drainage, cold sensitivity, and its above-10 °C indoor precaution; no species-specific lux optimum.
+- [University of Minnesota Extension: Cacti and succulents](https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents), reviewed November 4, 2026 — ordinary indoor humidity, drainage, and mealybug/scale watch points; the shared planter still needs member-level checks.
 - [Owner's September 2 top view](https://gyazo.com/52ca4a6bae0a377ae39bac78665e32f9) and [September 16 close view](https://gyazo.com/83d1ae73a807f1826755282af1fde4ce) — original collection appearance; copyright Nick, all rights reserved.
 - [Shared-planter acquisition and nursery-label evidence](./tiny-mixed-succulent-planter.md#acquisition-and-photo-evidence) — source of acquisition, seller, and repot context.

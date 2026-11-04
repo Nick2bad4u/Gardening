@@ -52,8 +52,23 @@ SANBI describes _F. tuberculosa_ with 4–8 thick leaves per rosette and variabl
 | Grow-light position | **Photo-matched rear right, in front of the square box · Bright.** September 15 rear wooden tables, facing the window. Compare light at leaf height. See the [current placement guide](../../layouts/table-placement-research.md). |
 | Water               | Soak only after the mix has dried through and the pot-weight trend supports it, then drain completely. Do not use a fixed calendar or misting routine.                                                                             |
 | Pot and mix         | Setup 2 records “4.25 round, 4.25 deep” and 80% Molly's Succulent Mix / 20% perlite with top dressing. Keep the paired-leaf crown above wet top dressing.                                                                          |
-| Temperature         | Favor warm active-growth conditions, airflow, and protection from cold wet roots. Let visible growth and drying rate guide seasonal adjustments.                                                                                   |
+| Temperature         | Keep frost-free and protect from cold, wet roots. The nursery's 35 °F claim is seller guidance, not a growing target for this specimen. Let observed growth, light, and drying rate guide seasonal adjustments.                    |
+| Airflow             | Keep air moving around the plant and avoid persistently damp leaf bases. No specimen-specific humidity percentage is established; increasing humidity is not a substitute for watering a dry root zone.                            |
 | Feeding             | If established growth is visible, use only the collection's dilute succulent feeding approach during a normal watering; do not feed a stressed or still-wet plant.                                                                 |
+
+The **Light & moisture** card uses a general high-light succulent trial,
+informed by Iowa State Extension's category guidance and the RHS recommendation
+for full light for _F. tuberculosa_. It is not a measured requirement for this
+probable identification. Measure at the leaf tops, acclimate gradually, and
+watch for bleaching or heat stress before increasing exposure. The card's lux
+number is a white-LED comparison, not a calibration of the installed grow lights.
+
+Faucaria's growing shoots retain several leaf pairs; do not copy a Lithops
+leaf-replacement watering prohibition onto this plant. Reduce watering when
+growth and drying slow, while checking the actual root zone rather than assigning
+a calendar dormancy period. RHS guidance supports modest feeding during active
+growth and little water during winter rest; the current plant's response decides
+when those conditions apply.
 
 ## Rotation, propagation, and watch points
 
@@ -66,13 +81,17 @@ SANBI describes _F. tuberculosa_ with 4–8 thick leaves per rosette and variabl
   material only when it is fully detached or when a documented health problem
   requires intervention.
 - Offsets can gradually form a cluster; separate them only when they have an established root system and the plant is healthy.
+- Inspect leaf bases and roots for mealybugs, and new growth for aphids. Do not
+  apply a preventive pesticide schedule merely because a reference lists pests.
 
 ## Sources
 
+- [RHS: _Faucaria tuberculosa_](https://www.rhs.org.uk/plants/176659/faucaria-tuberculosa/details), reviewed November 4, 2026: species-level full-light, drainage, active-growth watering, restrained feeding, frost protection, and pest guidance. Its UK hardiness category is not this pot's growing-temperature target.
+- [Iowa State Extension: supplemental-light considerations](https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants), reviewed November 4, 2026: general high-light succulent category behind the proposed collection trial; no Faucaria-specific DLI or lux threshold is supplied.
 - [SANBI: Faucaria tuberculosa morphological description](https://biodiversityadvisor.sanbi.org/search/detail/9555e14f-4916-4afa-9d2a-7c8eb0e09de9)
 
 - [Kew Plants of the World Online: _Faucaria tuberculosa_](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:361856-1)
 - [Kew Plants of the World Online: _Faucaria tigrina_](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:361855-1)
-- [South African National Biodiversity Institute: _Faucaria tigrina_](https://pza.sanbi.org/faucaria-tigrina)
+- [South African National Biodiversity Institute: _Faucaria tigrina_](https://pza.sanbi.org/faucaria-tigrina) — related-species comparison for avoiding prolonged dampness and maintaining air circulation; its misting and preventive-pesticide suggestions are not adopted for P29.
 - [Altman Plants: Tiger Jaws — _Faucaria tigrina_](https://shopaltmanplants.com/products/faucaria-tigrina-tiger-jaws)
 - [Gardenia: _Faucaria tigrina_ grow and care guide supplied by the owner](https://www.gardenia.net/plant/faucaria-igrina-tiger-jaws-grow-care-guide)

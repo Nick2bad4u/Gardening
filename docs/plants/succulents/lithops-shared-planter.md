@@ -114,13 +114,31 @@ hands-on report above. This photograph does not show either split rock.
 
 ## Care in this collection
 
-| Topic           | Practical starting approach                                                                                                                                                                                                                                  |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Light           | Photographs supplied October 22 show the mauve pot at the back left behind Kiwi; capture date and leaf-height exposure remain unrecorded. Acclimate gradually to a bright position; do not assume the cactus display's exposure suits newly acquired plants. |
-| Water           | Let the fresh repot settle and assess root disturbance before considering water. Use leaf-cycle inspection and actual root-zone dryness together. Firm heads and the absence of a recorded watering are not a reason for an automatic post-repot drink.      |
-| Shared planting | Inspect all four heads separately. Sharing a pot does not guarantee matching replacement cycles. If their needs diverge, reassess the shared arrangement rather than watering one firm or replacing head to satisfy another.                                 |
-| Pot and medium  | The recorded recipe is 80% Molly's Succulent Mix plus 20% added perlite, not a measured 80% mineral fraction. Drainage and usable internal depth still need confirmation. Wisconsin Extension suggests roughly 3–5 inches of depth for Lithops roots.        |
-| Tracking        | Weigh the complete P35 assembly consistently. Keep setup-2 readings separate from nursery weights and establish its own references from subsequent observations.                                                                                             |
+| Topic               | Practical starting approach                                                                                                                                                                                                                                                   |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Light               | Photographs supplied October 22 show the mauve pot at the back left behind Kiwi; capture date and leaf-height exposure remain unrecorded. Acclimate gradually to a bright position; do not assume the cactus display's exposure suits newly acquired plants.                  |
+| Water               | Let the fresh repot settle and assess root disturbance before considering water. Use leaf-cycle inspection and actual root-zone dryness together. Firm heads and the absence of a recorded watering are not a reason for an automatic post-repot drink.                       |
+| Shared planting     | Inspect all four heads separately. Sharing a pot does not guarantee matching replacement cycles. If their needs diverge, reassess the shared arrangement rather than watering one firm or replacing head to satisfy another.                                                  |
+| Pot and medium      | The recorded recipe is 80% Molly's Succulent Mix plus 20% added perlite, not a measured 80% mineral fraction. Drainage and usable internal depth still need confirmation. Wisconsin Extension suggests roughly 3–5 inches of depth for Lithops roots.                         |
+| Temperature and air | Normal room temperatures are a practical starting condition. NYBG recommends keeping Lithops above 10 °C / 50 °F; this is a conservative indoor-care reference, not a measured cold limit. Maintain air circulation and avoid extra misting or humidity enclosure.            |
+| Feeding             | Do not add fertilizer simply because the other succulents are being fed. Published guidance ranges from no supplementary feed to sparse feeding; reassess the medium's existing nutrients and active growth before any weak feed during a watering that is already justified. |
+| Tracking            | Weigh the complete P35 assembly consistently. Keep setup-2 readings separate from nursery weights and establish its own references from subsequent observations.                                                                                                              |
+
+The **Light & moisture** card now supplies a general high-light succulent trial
+as a comparison for all three P35 profiles. Iowa State's category range and
+Wisconsin Extension's strong-light guidance inform that trial; neither source
+establishes a species-specific lux optimum. Compare exposure at each head,
+including any shading by Kiwi, and increase light gradually. Continue providing
+bright light during leaf replacement; withholding water does not mean moving
+the pot into shade. The white-LED lux estimate is not a calibration of the
+installed lamps or a reason to change their timer automatically.
+
+During replacement, wait for the old pair to become a dry sheath before using
+current-leaf condition and root-zone dryness to consider normal watering again.
+An old pair shrinking while replacements are firm is part of renewal. Because
+the two probable species share a pot, inspect every head before that decision;
+one head's stage cannot justify watering all four. Regional spring/summer/winter
+examples in references remain examples rather than a fixed schedule indoors.
 
 ## Watch points
 
@@ -139,5 +157,7 @@ hands-on report above. This photograph does not show either split rock.
 - [Equipment inventory](../../equipment/inventory.md) — exact ordered pot identity and seller variant, kept separate from the logged dimensions.
 - [Kew Plants of the World Online: _Lithops_](https://powo.science.kew.org/taxon/16237-1) — accepted genus, publication year, and genus-level range.
 - [University of Wisconsin–Madison Extension: Living Stones, Lithops](https://hort.extension.wisc.edu/articles/living-stones-lithops/) — paired-leaf replacement, light acclimation, drainage, and root-depth guidance; regional seasonal examples are not an indoor watering calendar.
+- [New York Botanical Garden: living stones](https://libguides.nybg.org/livingstones), reviewed November 4, 2026: continued bright light during rest, household humidity, air circulation, room-temperature care above 10 °C / 50 °F, and limited feeding needs. Its pot-bottom gravel and calendar watering examples are not adopted here.
+- [Iowa State Extension: supplemental-light considerations](https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants), reviewed November 4, 2026: general high-light succulent category for the shared collection trial, not tested requirements for either probable species.
 - [Keith Green: Lithops species descriptions](https://scrapbooklithops.com/species.html) — species patterns, colors and flowers.
 - [International Cultivar Registration Authority: Lithops cultivar register](https://www.scrapbooklithops.com/cultivars.pdf) — registered cultivar names and descriptions.

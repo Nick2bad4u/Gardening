@@ -41,6 +41,9 @@ University of Wisconsin Extension explains that these two South African species 
 | Water               | Follow the [shared-pot watering strategy](../../watering-strategy.md): assess dryness throughout the pot, the weight trend, and all three foliage groups before watering and draining the container.                               |
 | Weighing            | Weigh the complete P30 planter using the [adaptive weighing strategy](../../weighing-strategy.md).                                                                                                                                 |
 | Feeding             | Use the shared planter's [fertilizer schedule](../../equipment/msu-fertilizer-schedule.md) during a normal watering; the dose applies to the whole pot.                                                                            |
+| Temperature         | Keep the shared planter protected from frost and cold window exposure. Published survival temperatures for flapjacks are not safe indoor targets: foliage can be damaged before the whole plant dies.                              |
+| Seasonal adjustment | If growth slows with cooler conditions or reduced light, reassess drying before each watering and pause feeding until active growth resumes. Do not impose an outdoor winter calendar on a plant growing under lamps.              |
+| Handling and pets   | ASPCA lists Kalanchoe species as toxic to cats and dogs. Keep this planter and fallen leaves away from pets; the unresolved species name is not evidence that the plant is safe to chew.                                           |
 
 ## Growth and watch points
 
@@ -48,8 +51,13 @@ The broad leaves can shade their neighbors and make the shared container crowded
 
 Watch around the leaf bases for small offsets as the plant develops. If it flowers, photograph the color and shape of the individual blooms to distinguish the two species.
 
+Keep the pale surface bloom intact rather than polishing the leaves. Monitor
+the lower rosettes as well as the upper paddles when increasing light; a brighter
+upper canopy does not prove that the shaded components receive enough light.
+
 ## Sources
 
 - [University of Wisconsin Extension: Flapjacks, _Kalanchoe_ spp.](https://hort.extension.wisc.edu/articles/flapjacks-kalanchoe-spp/) — species confusion, flowering distinctions, shared culture, and life cycle.
+- [ASPCA: Kalanchoe](https://www.aspca.org/pet-care/aspca-poison-control/toxic-and-non-toxic-plants/kalanchoe), reviewed November 4, 2026 — genus-level toxicity to cats and dogs; this does not resolve the component's species.
 - [Owner's September 2 top view](https://gyazo.com/52ca4a6bae0a377ae39bac78665e32f9) and [September 16 close view](https://gyazo.com/83d1ae73a807f1826755282af1fde4ce) — original collection appearance; copyright Nick, all rights reserved.
 - [Shared-planter acquisition and nursery-label evidence](./tiny-mixed-succulent-planter.md#acquisition-and-photo-evidence) — source of acquisition, seller, and repot context.

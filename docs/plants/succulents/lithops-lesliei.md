@@ -75,10 +75,18 @@ Use actual root-zone dryness, current-leaf condition, and growth stage together.
 Acclimate to stronger light gradually, and compare photographs under similar
 lighting to follow changes in color and new growth.
 
+The **Light & moisture** card gives the same general succulent light trial as
+the shared P35 overview, not a separate _L. lesliei_ requirement. Check exposure
+at these tan heads rather than assuming the grey heads receive the same light.
+For temperature, airflow, feeding, and the old-leaf drying stage, use the
+[shared care table](./lithops-shared-planter.md#care-in-this-collection). A
+component's light comparison never creates an independent watering schedule.
+
 ## Sources
 
 - [Kew Plants of the World Online: _Lithops lesliei_](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:362458-1) — accepted name, publication history, family, and native range; checked September 23, 2026.
 - [Keith Green: Lithops species descriptions](https://scrapbooklithops.com/species.html) — surface-pattern and flower comparisons.
 - [University of Wisconsin–Madison Extension: Living Stones, Lithops](https://hort.extension.wisc.edu/articles/living-stones-lithops/) — paired leaves, windows, multiple heads, leaf replacement, and light acclimation; seasonal examples are not a fixed indoor calendar.
 - [Shared-planter evidence](./lithops-shared-planter.md#nursery-and-repot-evidence) — owner photographs, nursery labels, and dated P35 observations.
+- [Iowa State Extension: supplemental-light considerations](https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants), reviewed November 4, 2026: broad succulent light category used as a collection trial, not a published _L. lesliei_ threshold.
 - Owner acquisition record, documented September 23, 2026: both Lithops nursery pots purchased at Home Depot, Howell, Michigan, on September 21.
