@@ -38,6 +38,28 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## November 4 logger control refinements
+
+Maintained logger **5.41.1** adds a water icon to **Days since watered** and
+matches the live Plant tracker's continuous watering-age color scale:
+**0 days `#57bb8a`**, **14 days `#ffd666`**, and **28 days `#e67c73`**.
+The November 4 native rule read confirmed numeric interpolation points on
+`Plant tracker!E2:E40`. The logger blends between those points and holds the
+endpoint color above 28 days. Missing, invalid, pending, or unconfirmed ages
+remain neutral. The colors describe recorded history, not watering readiness.
+
+Calculation status now uses an icon, a themed disclosure header, and an inset
+details panel while retaining its existing status, last-success time, and
+open-state behavior. Observation-time explanations move into the information
+popover beside **Observed at**, using the existing hover, focus, tap, and Escape
+interactions in both single and bulk care. The current-time action and fixed
+queued timestamps retain their behavior. Native select controls gain consistent
+chevron clearance; Recent History still starts at 10 and honors a saved limit.
+
+This presentation update changes no workbook schema, formulas, observations,
+AppSheet configuration, runtime permissions, or queue trigger. Production
+promotion and verification are pending.
+
 ## November 4 post-release runtime check
 
 A read-only check confirmed production **5.41.0 / immutable version 127**, with
