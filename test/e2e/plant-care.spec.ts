@@ -109,6 +109,16 @@ const inspectTerrariumCautions = async (page: Readonly<Page>) => {
         .toBeVisible();
 };
 
+const expectPublishedEvidence = async (page: Readonly<Page>) => {
+    const care = page.getByRole("region", { exact: true, name: careTitle });
+    const evidence = care
+        .getByRole("paragraph")
+        .filter({ hasText: /^Published evidence:/v });
+    await expect.soft(evidence).toBeVisible();
+    await expect.soft(evidence).toContainClass("plant-care-research");
+    await expect.soft(evidence).not.toHaveText("Published evidence:");
+};
+
 const inspectComparisonGeometry = async (page: Readonly<Page>) => {
     await page.evaluate(async () => document.fonts.ready);
     const problems = await page
@@ -332,6 +342,7 @@ test.describe("per-plant care references", { tag: "@care" }, () => {
                     .soft(care.getByRole("heading", { name: careTitle }))
                     .toBeVisible();
                 const content = await care.innerText();
+                await expectPublishedEvidence(page);
                 expect.soft(content).toContain("Collection trial ranges");
                 expect
                     .soft(content)
@@ -373,6 +384,7 @@ test.describe("per-plant care references", { tag: "@care" }, () => {
                 name: careTitle,
             });
             const content = await care.innerText();
+            await expectPublishedEvidence(page);
             expect.soft(content).toMatch(/Trial daily light total\s*10–17/v);
             expect.soft(content).toContain("upper value is not a ceiling");
             expect
@@ -407,6 +419,7 @@ test.describe("per-plant care references", { tag: "@care" }, () => {
                 name: careTitle,
             });
             const content = await care.innerText();
+            await expectPublishedEvidence(page);
             expect.soft(content).toContain("Collection trial ranges");
             expect.soft(content).toMatch(/Provisional trial band\s*60–125/v);
             expect.soft(content).toMatch(/Trial daily light total\s*3–6/v);
@@ -439,6 +452,7 @@ test.describe("per-plant care references", { tag: "@care" }, () => {
             await expect
                 .soft(care.getByText("Provisional trial band", { exact: true }))
                 .toHaveCount(0);
+            await expectPublishedEvidence(page);
             await expectNoOverflow(page);
         });
     }

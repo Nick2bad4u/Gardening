@@ -45,6 +45,9 @@ const basis = historical
                 Light
             </h3>
             <p class="plant-care-description">{care.light.description}</p>
+            <p class="plant-care-description plant-care-research">
+                <strong>Published evidence:</strong> {care.light.research}
+            </p>
             {!historical && comparison.ppfd && care.light.dli ? (
                 <>
                     <div class="plant-care-light-range">

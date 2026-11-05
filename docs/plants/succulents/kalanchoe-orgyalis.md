@@ -45,9 +45,10 @@ The square wooden planter has a plastic liner and an approximately one-inch drai
 | Pruning             | Head back tall stems above a node to create branches and keep the mixed planting balanced.                                                                                                                                                                     |
 | Feeding             | Dilute balanced fertilizer in active growth; avoid forcing weak winter stems.                                                                                                                                                                                  |
 
-More light often deepens copper color and keeps internodes short. Color alone is
-not a meter, however: genetics, leaf age, temperature, and water status all
-contribute. Use stem spacing and the health of the newest leaves too.
+Copper color is not a reliable light meter. The scientific cultivation monograph
+describes coppery leaves in dappled shade and paler, whitish-green leaves in direct
+sun, linking the brown color to leaf hairs. Do not increase exposure just to chase
+a deeper copper tone; assess stem spacing, healthy new leaves, and measured light.
 
 ## Propagation, pests, and toxicity
 
@@ -62,6 +63,8 @@ contribute. Use stem spacing and the health of the newest leaves too.
   headroom; periodic pruning is part of the shared-planter design.
 
 ## Sources
+
+- [Smith, Figueiredo, and van Wyk (2019): Physiology and Anatomy](https://doi.org/10.1016/B978-0-12-814007-9.00008-6), in _Kalanchoe (Crassulaceae) in Southern Africa_, page 100: species-specific leaf-color response and brown hair covering; it does not establish a numerical light optimum.
 
 - Owner observations, September 20, 2026: P20 / #2 wooden planter with a plastic liner and an approximately one-inch drainage hole through both layers.
 

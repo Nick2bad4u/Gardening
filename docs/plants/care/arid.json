@@ -9,6 +9,7 @@
                 12,
                 22
             ],
+            "research": "RHS distinguishes bright filtered light under glass from full sun outdoors in warmer climates. Exact-species searches found population ecology and germination research, but a controlled mature-plant DLI/PPFD optimum was not identified in the sources reviewed. Habitat-associated shade is not itself a quantified indoor target.",
             "startingDli": null
         },
         "moisture": {
@@ -17,7 +18,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "astrophytum-ornatum",
         "sources": [
             {
@@ -34,6 +35,11 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Species cultivation: bright filtered light under glass; full sun in warmer outdoor climates. No quantitative light optimum.",
+                "title": "RHS: Astrophytum ornatum",
+                "url": "https://www.rhs.org.uk/plants/1880/astrophytum-ornatum/details"
             }
         ]
     },
@@ -47,6 +53,7 @@
                 10,
                 18
             ],
+            "research": "NC State provides cultivar-specific qualitative guidance: bright indirect light, protection from harsh afternoon sun, and greater tolerance of lower lighting than many cacti. A quantitative optimum for the monstrose form was not identified in the sources reviewed. Seed/germination studies under Cereus hankeanus concern ordinary plants, not Ming Thing.",
             "startingDli": null
         },
         "moisture": {
@@ -55,7 +62,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "cereus-forbesii-ming-thing",
         "sources": [
             {
@@ -72,6 +79,11 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Exact cultivar: bright indirect light, afternoon-sun protection and partial/filtered shade outdoors; no DLI/PPFD recommendation.",
+                "title": "NC State Extension: Cereus forbesii Ming Thing",
+                "url": "https://plants.ces.ncsu.edu/plants/cereus-forbesii-ming-thing/"
             }
         ]
     },
@@ -85,6 +97,7 @@
                 14,
                 24
             ],
+            "research": "RHS recommends full sun under glass for Echinocereus rigidissimus. This is species-level qualitative evidence; the collection subspecies rubispinus was not assigned a tested DLI optimum in the sources found. Dense spines do not numerically calibrate the exposure beneath them.",
             "startingDli": null
         },
         "moisture": {
@@ -93,7 +106,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "echinocereus-rigidissimus-rubispinus",
         "sources": [
             {
@@ -110,6 +123,11 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Species-level full-sun cultivation under glass; not a numerical trial of subsp. rubispinus.",
+                "title": "RHS: Echinocereus rigidissimus",
+                "url": "https://www.rhs.org.uk/plants/115504/echinocereus-rigidissimus/details"
             }
         ]
     },
@@ -123,6 +141,7 @@
                 10,
                 18
             ],
+            "research": "NParks explicitly lists semi-shade and notes stem yellowing under full sun in its Singapore cultivation context. This supports avoiding an unqualified hottest/full-sun recommendation. An adult numerical optimum was not identified in the sources reviewed under subdenudata or the accepted-name comparison Echinopsis ancistrophora.",
             "startingDli": null
         },
         "moisture": {
@@ -131,7 +150,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "echinopsis-subdenudata",
         "sources": [
             {
@@ -148,6 +167,11 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Semi-shade preference and stem yellowing in full sun in Singapore; qualitative, no DLI/PPFD limits.",
+                "title": "NParks: Echinopsis subdenudata",
+                "url": "https://www.nparks.gov.sg/florafaunaweb/flora/5/9/5908"
             }
         ]
     },
@@ -161,6 +185,7 @@
                 8,
                 15
             ],
+            "research": "Parentage remains unknown: Dragon's Egg is a probable obesa-type hybrid or selection. RHS recommends full light for E. obesa with protection from hot afternoon sun. That is a related-species comparison, not proof of the hybrid's optimum or scorch threshold.",
             "startingDli": null
         },
         "moisture": {
@@ -169,7 +194,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "euphorbia-obesa-hybrid",
         "sources": [
             {
@@ -186,6 +211,11 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Reference species: full light under glass but protection from scorching hot afternoon sun. Does not identify or quantify the Dragon's Egg hybrid.",
+                "title": "RHS: Euphorbia obesa",
+                "url": "https://www.rhs.org.uk/plants/7075/euphorbia-obesa/details"
             }
         ]
     },
@@ -199,6 +229,7 @@
                 6,
                 12
             ],
+            "research": "NC State advises bright indirect light and warns of direct-sun scorch, particularly in grafted forms. A 2012 study tested grafted red/yellow G. mihanovichii var. friedrichii in mixed pots, finding poorer survival in very dim indoor conditions and improved survival with blue/red LEDs. It does not establish this chlorophyll-bearing own-root plant's optimum; its approximately 17 PPFD indoor observation is not a recommended target.",
             "startingDli": null
         },
         "moisture": {
@@ -207,7 +238,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "gymnocalycium-mihanovichii-variegated",
         "sources": [
             {
@@ -224,6 +255,16 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Bright indirect light and direct-sun scorch caution; much text concerns grafted forms, not the exact own-root collection selection.",
+                "title": "NC State Extension: Gymnocalycium mihanovichii",
+                "url": "https://plants.ces.ncsu.edu/plants/gymnocalycium-mihanovichii/"
+            },
+            {
+                "scope": "Original English/Korean abstract read: six-month placement/blue-red LED experiment on grafted friedrichii. Survival findings do not establish an own-root variegated optimum.",
+                "title": "Song and Song 2012: Effects of Indoor Position and LED on Growth of Two Grafted Cacti and One Succulent Planted in a Pot",
+                "url": "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART001676400"
             }
         ]
     },
@@ -237,6 +278,7 @@
                 10,
                 18
             ],
+            "research": "RHS gives bright filtered light under glass with ventilation, despite its broad full-sun position badge. An adult intensity-response optimum was not identified in the sources reviewed. Seed light/temperature studies do not establish adult DLI.",
             "startingDli": null
         },
         "moisture": {
@@ -245,7 +287,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "gymnocalycium-saglionis",
         "sources": [
             {
@@ -262,6 +304,11 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Species-specific bright filtered light under glass; broad full-sun position badge does not supply DLI or a ceiling.",
+                "title": "RHS: Gymnocalycium saglionis",
+                "url": "https://www.rhs.org.uk/plants/8153/gymnocalycium-saglionis/details"
             }
         ]
     },
@@ -275,6 +322,7 @@
                 10,
                 17
             ],
+            "research": "Desert Museum reports full-sun tolerance, better performance with light afternoon shade, and reduced spine/white appearance of new growth in excessive shade. RHS recommends bright filtered light under glass. Neither establishes 17 DLI as an optimum or maximum. Species micropropagation research is not adult light-response evidence.",
             "startingDli": null
         },
         "moisture": {
@@ -302,12 +350,12 @@
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
             },
             {
-                "scope": "Full-sun tolerance, light afternoon shade, and less spiny or white new growth in excessive shade. No numerical DLI optimum or maximum.",
+                "scope": "Full-sun tolerance, light afternoon shade, and less spiny or white new growth in excessive shade. No numerical DLI optimum or maximum. Light research: Exact species care sheet; full-sun tolerance, afternoon shade and excessive-shade effects; no numerical optimum.",
                 "title": "Arizona-Sonora Desert Museum: Feather cactus",
                 "url": "https://www.desertmuseum.org/visit/sheets/Mamplu.pdf"
             },
             {
-                "scope": "Full-sun position with bright filtered light advised under glass; no numerical DLI optimum or maximum.",
+                "scope": "Full-sun position with bright filtered light advised under glass; no numerical DLI optimum or maximum. Light research: Bright filtered light under glass; no DLI optimum or maximum.",
                 "title": "RHS: Mammillaria plumosa",
                 "url": "https://www.rhs.org.uk/plants/10832/mammillaria-plumosa/details"
             }
@@ -323,6 +371,7 @@
                 12,
                 22
             ],
+            "research": "Research exists on normal M. geometrizans: a field study links greater rib-level daily PAR and nocturnal acid accumulation to fruit production; a seedling field experiment found higher relative growth under mesquite nurses than in open sun. Neither studied Indigo Wave, nor found its optimal DLI. Architecture and age make direct transfer inappropriate.",
             "startingDli": null
         },
         "moisture": {
@@ -331,7 +380,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "myrtillocactus-geometrizans-indigo-wave",
         "sources": [
             {
@@ -348,6 +397,16 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Institutional abstract and accepted full manuscript read, doi:10.1111/plb.12530. Normal field plants; hourly rib-surface readings integrated across the day. Association with fruit production, not Indigo Wave optimum.",
+                "title": "Ponce-Bautista et al. 2017: PAR, carbon gain and Myrtillocactus fruit orientation",
+                "url": "https://repositorio.ipicyt.edu.mx/handle/11627/4089"
+            },
+            {
+                "scope": "Full article read: normal Myrtillocactus seedlings had higher relative growth under nurses; shade and other microclimate factors covary. No mature monstrose DLI recommendation.",
+                "title": "Perez-Sanchez et al. 2015: Growth and ecophysiology of succulent seedlings under nurse plants",
+                "url": "https://esajournals.onlinelibrary.wiley.com/doi/10.1890/ES14-00408.1"
             }
         ]
     },
@@ -361,6 +420,7 @@
                 10,
                 18
             ],
+            "research": "A SANBI-authored field paper records Peniocereus serpentinus growing quickly across a range of light conditions in South Africa. This provides species field context, not a controlled optimum or a quantitative indoor prescription. Searches under Nyctocereus and Peniocereus did not establish an adult DLI target.",
             "startingDli": null
         },
         "moisture": {
@@ -369,7 +429,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "nyctocereus-serpentinus",
         "sources": [
             {
@@ -386,6 +446,11 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "SANBI authors' field observation of rapid P. serpentinus growth under varied light; not a controlled dose-response experiment. doi:10.4102/abc.v45i1.1953.",
+                "title": "Cheek and Crouch 2015: Assessment of invasive cactus status in the Tugela River basin",
+                "url": "https://www.scielo.org.za/scielo.php?pid=S0006-82412015000100008&script=sci_arttext"
             }
         ]
     },
@@ -399,6 +464,7 @@
                 12,
                 20
             ],
+            "research": "NParks lists full sun for O. trollii and describes its dry mountain habitat. A controlled mature-plant DLI optimum was not identified in the sources reviewed under the current name, Cereus trollii, or the listed crassiniveus/irigoyenii synonyms. Montane origin and wool do not quantify an indoor optimum or remove acclimation needs.",
             "startingDli": null
         },
         "moisture": {
@@ -407,7 +473,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "oreocereus-trollii",
         "sources": [
             {
@@ -424,6 +490,11 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Species-level full-sun preference and dry mountain habitat; no measured PPFD/DLI optimum.",
+                "title": "NParks: Oreocereus trollii",
+                "url": "https://www.nparks.gov.sg/florafaunaweb/flora/6/1/6142"
             }
         ]
     },
@@ -437,6 +508,7 @@
                 10,
                 18
             ],
+            "research": "Exact-species quantitative light evidence was not identified in the sources reviewed. A field seedling experiment includes the different species S. coptonogonus, and RHS recommends full light for S. multicostatus; both are limited genus comparisons. Neither validates the phyllacanthus 10–18 band or an optimum.",
             "startingDli": null
         },
         "moisture": {
@@ -445,7 +517,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "stenocactus-phyllacanthus",
         "sources": [
             {
@@ -462,6 +534,16 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Related S. coptonogonus seedlings, not S. phyllacanthus. Shelter/open-ground comparison has multiple environmental differences and does not set a species optimum.",
+                "title": "Perez-Sanchez et al. 2015: Growth and ecophysiology of succulent seedlings under nurse plants",
+                "url": "https://esajournals.onlinelibrary.wiley.com/doi/10.1890/ES14-00408.1"
+            },
+            {
+                "scope": "Related-species full-light cultivation only; no phyllacanthus-specific numerical target.",
+                "title": "RHS: Stenocactus multicostatus",
+                "url": "https://www.rhs.org.uk/plants/327544/stenocactus-multicostatus/details"
             }
         ]
     },
@@ -475,6 +557,7 @@
                 12,
                 22
             ],
+            "research": "Exact-species physiology exists: Nobel and Hartsock (1986) measured leaf and stem CO2 exchange and instantaneous leaf PAR responses under well-watered conditions. Leaf photosynthesis was predominantly daytime, unlike the exclusively nocturnal uptake of the leafless cacti tested. This is a photosynthesis-response experiment, not a mature whole-plant growth or flowering DLI optimization trial. NC State recommends full sun or bright indoor light and warns that intense sun can scorch the cactus.",
             "startingDli": null
         },
         "moisture": {
@@ -483,7 +566,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "austrocylindropuntia-subulata",
         "sources": [
             {
@@ -500,6 +583,16 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Exact-species leaf/stem gas exchange; instantaneous light response, not measured growth optimum. DOI 10.1104/pp.80.4.913.",
+                "title": "Nobel and Hartsock (1986): Leaf and Stem CO2 Uptake in the Three Subfamilies of the Cactaceae",
+                "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1075229/"
+            },
+            {
+                "scope": "Species cultivation: full sun or bright indoor light and scorch caution; no PPFD/DLI limits.",
+                "title": "NC State Extension: Austrocylindropuntia subulata",
+                "url": "https://plants.ces.ncsu.edu/plants/austrocylindropuntia-subulata/"
             }
         ]
     },
@@ -513,6 +606,7 @@
                 10,
                 18
             ],
+            "research": "Erwin, O'Connell and Altman (2016) studied the related Echinopsis 'Rose Quartz' hybrid, not this unknown cultivar. Their best combined flower-count/production-time treatment included eight weeks at 5°C followed by six weeks at 22/18°C and a measured DLI of 10.9–12.8 mol·m⁻²·day⁻¹. Added lamp PPFD was 45–75 µmol·m⁻²·s⁻¹ on top of natural daylight. This is a flower-forcing result with interacting temperature and photoperiod treatments, not a year-round vegetative optimum for all Chamaelobivia.",
             "startingDli": null
         },
         "moisture": {
@@ -521,7 +615,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "chamaelobivia-hybrid",
         "sources": [
             {
@@ -538,6 +632,16 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "University-hosted primary article abstract; related hybrid cultivar and flower-forcing treatment. DOI 10.21273/HORTSCI10387-16.",
+                "title": "Erwin, O'Connell and Altman (2016): Photoperiod, irradiance, and temperature affect Echinopsis 'Rose Quartz' flowering",
+                "url": "https://experts.umn.edu/en/publications/photoperiod-irradiance-and-temperature-affect-echinopsis-rose-qua/"
+            },
+            {
+                "scope": "Publisher-indexed methods identify three-year-old plants, natural daylight plus HPS supplementation, and the 18-hour clock schedule; direct PDF open returned 403.",
+                "title": "HortScience 51(12):1494-1497, publisher PDF",
+                "url": "https://journals.ashs.org/downloadpdf/view/journals/hortsci/51/12/article-p1494.pdf"
             }
         ]
     },
@@ -551,6 +655,7 @@
                 12,
                 20
             ],
+            "research": "RHS recommends a sunny position/full sun for Espostoa melanostele, without quantitative light thresholds. The collection identification is probable E. melanostele subsp. nana with E. lanata still an alternative. No exact subspecies or alternative-species mature-growth PPFD/DLI optimization study was located in the focused search.",
             "startingDli": null
         },
         "moisture": {
@@ -559,7 +664,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "espostoa-melanostele-nana",
         "sources": [
             {
@@ -576,6 +681,16 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Species-level sunny-position cultivation guidance, not nana-specific quantitative research.",
+                "title": "RHS: Espostoa melanostele",
+                "url": "https://www.rhs.org.uk/plants/6869/espostoa-melanostele/details"
+            },
+            {
+                "scope": "Accepted subspecies and Espostoa nana/Pseudoespostoa nana synonyms; taxonomy and habitat do not establish light limits.",
+                "title": "Kew POWO: Espostoa melanostele subsp. nana",
+                "url": "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:1133534-2"
             }
         ]
     },
@@ -589,6 +704,7 @@
                 6,
                 12
             ],
+            "research": "No 'Black Widow' own-root light-optimization study was located. Studies found concern grafted G. mihanovichii color forms: a 2007 mixed-container indoor-position experiment reported poor outcomes at very low indoor PPFD, and a 2023 'I-Hong' production study compared soil and hydroponic bench systems with different shading. These differ in cultivar, grafted rootstock and production system and do not establish this variegated plant's optimum.",
             "startingDli": null
         },
         "moisture": {
@@ -597,7 +713,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "gymnocalycium-mihanovichii-black-widow",
         "sources": [
             {
@@ -614,6 +730,16 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Primary abstract: G. mihanovichii var. friedrichii in mixed pots, not Black Widow; low-light failure evidence rather than an optimum.",
+                "title": "Song et al. (2007): Effect of Indoor Position on Growth of Cacti and Succulents Planted in a Pot",
+                "url": "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART001219653"
+            },
+            {
+                "scope": "Primary production-system study in a different grafted cultivar; bench shading and color response, not a controlled DLI optimization trial. DOI 10.12791/KSBEC.2023.32.2.132.",
+                "title": "Park and Lee (2023): Effects of Ebb-and-flow System with Double-tier Bench on Growth and Yield of Hydroponically Grown Gymnocalycium mihanovichii 'I-Hong'",
+                "url": "https://www.ksbec.org/articles/xml/LwkB/"
             }
         ]
     },
@@ -627,6 +753,7 @@
                 10,
                 18
             ],
+            "research": "The collection identity remains probable from photographs. No exact-species PPFD/DLI optimization trial was located. NC State's genus-level guidance recommends sun or bright direct light with afternoon shade in hot weather; Huntington's exact-species introduction supplies provenance and cultivation context but no quantitative light target.",
             "startingDli": null
         },
         "moisture": {
@@ -635,7 +762,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "mammillaria-mammillaris",
         "sources": [
             {
@@ -652,6 +779,16 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Genus-level qualitative light advice only; not an exact-species PPFD/DLI source.",
+                "title": "NC State Extension: Mammillaria",
+                "url": "https://plants.ces.ncsu.edu/plants/mammillaria/"
+            },
+            {
+                "scope": "Exact-species accession and tropical cultivation context; no measured light requirement.",
+                "title": "Huntington ISI 2005-4: Mammillaria mammillaris",
+                "url": "https://media.huntington.org/ISI/ISI2005/2005-04.html"
             }
         ]
     },
@@ -665,6 +802,7 @@
                 10,
                 18
             ],
+            "research": "The collection is probable M. rekoi; M. zeilmanniana/M. crinita and a hybrid remain alternatives. A 2017 UNAM soil-plant field thesis includes M. rekoi and interprets steep/open microsites in relation to light competition, but is not an experimental light optimum study. NC State genus guidance supports bright direct light with heat-aware shade; neither source supplies a species DLI optimum.",
             "startingDli": null
         },
         "moisture": {
@@ -673,7 +811,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "mammillaria-rekoi",
         "sources": [
             {
@@ -690,6 +828,16 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Primary field thesis, printed p.78 / PDF p.87: M. rekoi microsite discussion; no PPFD-response or DLI experiment.",
+                "title": "Gamez Barajas (2017), UNAM: Relacion suelo-planta de cuatro especies del genero Mammillaria",
+                "url": "https://tesiunamdocumentos.dgb.unam.mx/ptd2017/marzo/0756597/0756597.pdf"
+            },
+            {
+                "scope": "Genus-level qualitative light guidance, not evidence for a particular provisional species.",
+                "title": "NC State Extension: Mammillaria",
+                "url": "https://plants.ces.ncsu.edu/plants/mammillaria/"
             }
         ]
     },
@@ -703,6 +851,7 @@
                 10,
                 18
             ],
+            "research": "No quantitative trial for cultivar 'Fukurokuryuzinboku' was located. In normal-species seedlings, Perez-Sanchez et al. (2015) found greater relative growth under nurse plants than in open sun, showing that life stage and microenvironment matter. A 2007 indoor-position study found elongation of normal M. geometrizans at very low indoor light. RHS recommends full light under glass for the normal species. These cannot establish a mature monstrose cultivar optimum.",
             "startingDli": null
         },
         "moisture": {
@@ -711,7 +860,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "myrtillocactus-geometrizans-fukurokuryuzinboku",
         "sources": [
             {
@@ -728,6 +877,21 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Primary normal-species seedling field comparison; higher M. geometrizans relative growth under nurse plants, not adult cultivar DLI optimization.",
+                "title": "Perez-Sanchez et al. (2015): Growth and ecophysiology of succulent seedlings under the protection of nurse plants in the Southern Chihuahuan Desert",
+                "url": "https://esajournals.onlinelibrary.wiley.com/doi/10.1890/ES14-00408.1"
+            },
+            {
+                "scope": "Normal M. geometrizans elongation at very low indoor light, not cultivar-specific optimal intensity.",
+                "title": "Song et al. (2007): Effect of Indoor Position on Growth of Cacti and Succulents Planted in a Pot",
+                "url": "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART001219653"
+            },
+            {
+                "scope": "Normal-species full-light cultivation advice; no quantitative cultivar target.",
+                "title": "RHS: Myrtillocactus geometrizans",
+                "url": "https://www.rhs.org.uk/plants/11310/myrtillocactus-geometrizans/details"
             }
         ]
     },
@@ -741,6 +905,7 @@
                 12,
                 22
             ],
+            "research": "Exact taxon appears as Eriocactus leninghausii in Song et al. (2007): a four-month mixed-pot indoor-position study reported increased mortality in very dim positions (the study's overall low-light range was 2.8–13.4 µmol·m⁻²·s⁻¹). This demonstrates poor low-light conditions, not a minimum or optimum. RHS explicitly allows full or bright filtered light under cultivation.",
             "startingDli": null
         },
         "moisture": {
@@ -749,7 +914,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "parodia-leninghausii",
         "sources": [
             {
@@ -766,6 +931,16 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Exact species under Eriocactus leninghausii synonym; low-light mortality study in mixed pots, not optimization.",
+                "title": "Song et al. (2007): Effect of Indoor Position on Growth of Cacti and Succulents Planted in a Pot",
+                "url": "https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART001219653"
+            },
+            {
+                "scope": "Lists Eriocactus/Notocactus synonyms and recommends full or bright filtered light; no PPFD/DLI figures.",
+                "title": "RHS: Parodia leninghausii",
+                "url": "https://www.rhs.org.uk/plants/117769/parodia-leninghausii/details"
             }
         ]
     },
@@ -779,6 +954,7 @@
                 10,
                 18
             ],
+            "research": "No exact-form mature-growth PPFD/DLI trial was located. University of Arizona's accession profile specifically identifies variety papyracanthus and recommends direct sun to prevent thin stems; Denver Botanic Gardens lists sun for T. articulatus. These are qualitative cultivation recommendations. The Arizona page also gives daily direct-light hours without irradiance; that does not define a DLI.",
             "startingDli": null
         },
         "moisture": {
@@ -787,7 +963,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "tephrocactus-articulatus-papyracanthus",
         "sources": [
             {
@@ -804,6 +980,16 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Accession-based profile and qualitative direct-sun cultivation guidance; no measured DLI/PPFD trial.",
+                "title": "University of Arizona Campus Arboretum: Tephrocactus articulatus var. papyracanthus",
+                "url": "https://apps.cals.arizona.edu/arboretum/taxon.aspx?id=1205"
+            },
+            {
+                "scope": "Living-collection entry specifies sun; species-level, no quantitative light optimum.",
+                "title": "Denver Botanic Gardens: Tephrocactus articulatus",
+                "url": "https://navigate.botanicgardens.org/weboi/oecgi2.exe/INET_ECM_DispPl?NAMENUM=36945&startpage=1"
             }
         ]
     },
@@ -817,6 +1003,7 @@
                 8,
                 15
             ],
+            "research": "RHS recommends bright filtered light under glass for Dream Color. A 2026 study including unselected A. haworthii reports 85–360 PPFD across its plants during 12-hour days, but investigates drought, temperature, and CAM physiology. It does not identify Dream Color’s best light dose. The study-wide exposure span must not become cultivar target boundaries; the displayed band remains a collection trial.",
             "startingDli": null
         },
         "moisture": {
@@ -825,7 +1012,7 @@
             "waitWhen": "The rosette is resting, roots remain damp or growth has slowed with heat. Reduce watering during observed rest.",
             "waterWhen": "During active growth, the mix has dried substantially and roots are healthy; water thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "aeonium-haworthii-dream-color",
         "sources": [
             {
@@ -839,9 +1026,19 @@
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
-                "scope": "Bright-light acclimation and environment-dependent growth/rest watering; no cultivar-specific DLI thresholds.",
+                "scope": "Bright-light acclimation and environment-dependent growth/rest watering; no cultivar-specific DLI thresholds. Light research: Genus bright-light and gradual-acclimation guidance; no cultivar-specific numeric optimum.",
                 "title": "Wisconsin Extension: Aeonium",
                 "url": "https://hort.extension.wisc.edu/articles/aeonium/"
+            },
+            {
+                "scope": "Exact cultivar guidance recommends bright filtered light under glass; position field says full sun. No DLI or PPFD.",
+                "title": "RHS: Aeonium haworthii 'Dream Color'",
+                "url": "https://www.rhs.org.uk/plants/387570/aeonium-haworthii-dream-color-v/details"
+            },
+            {
+                "scope": "A. haworthii included in drought/temperature experiment. Across study rosettes received 85–360 PPFD for 12 h (3.67–15.55 DLI); not a tested light-response range or Dream Color-specific optimum.",
+                "title": "Messerschmid et al. (2026): Stronger expression of CAM requires effective cuticular transpiration barriers",
+                "url": "https://nph.onlinelibrary.wiley.com/doi/10.1111/nph.70909"
             }
         ]
     },
@@ -855,6 +1052,7 @@
                 10,
                 18
             ],
+            "research": "The exact 'Arctic Ice' patent describes greenhouse plants photographed under natural light of approximately 2,500–3,500 foot-candles (about 26,900–37,700 lux). These are recorded production conditions, not a comparison establishing an optimum, and the patent provides no daily light integral. Altman's cultivar guidance supports bright light to full sun. No controlled light-dose optimization trial for this cultivar was located; its current DLI band remains a practical trial, not a published optimum.",
             "startingDli": null
         },
         "moisture": {
@@ -863,7 +1061,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "echeveria-arctic-ice",
         "sources": [
             {
@@ -885,6 +1083,16 @@
                 "scope": "Genus-level sunlight and low-water guidance; no cultivar-specific DLI trial.",
                 "title": "NC State Extension: Echeveria",
                 "url": "https://plants.ces.ncsu.edu/plants/echeveria/"
+            },
+            {
+                "scope": "Exact cultivar patent; Figure 1 caption natural greenhouse conditions, not experimental optimum.",
+                "title": "USPP29584P2: Echeveria Arctic Ice",
+                "url": "https://patents.google.com/patent/USPP29584P2/en"
+            },
+            {
+                "scope": "Breeder commercial care guidance, exact cultivar.",
+                "title": "Altman Specialty Plants: Echeveria Arctic Ice",
+                "url": "https://shopaltmanonline.com/products/echeveria-arctic-ice-ppaf-2-5"
             }
         ]
     },
@@ -898,6 +1106,7 @@
                 10,
                 18
             ],
+            "research": "RHS recommends full sun for Echeveria pulidonis but supplies no numerical light optimum. A 2026 greenhouse experiment compared 4.8 and 12.8 mol m−2 d−1 in five other Echeveria cultivars; some were more compact at the higher treatment. That supports checking light when growth stretches, but neither treatment identifies an optimum for probable E. pulidonis. The displayed range remains a collection trial, and the shared P20 canopy must be measured at this low rosette.",
             "startingDli": null
         },
         "moisture": {
@@ -906,7 +1115,7 @@
             "waitWhen": "Mix remains wet or one component is compromised. Do not repeatedly water the pot for one plant while others remain hydrated.",
             "waterWhen": "The shared root volume is dry and the whole planting is ready; water thoroughly with working drainage."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "echeveria-pulidonis",
         "sources": [
             {
@@ -928,6 +1137,16 @@
                 "scope": "Genus-level sunlight and low-water guidance; no cultivar-specific DLI trial.",
                 "title": "NC State Extension: Echeveria",
                 "url": "https://plants.ces.ncsu.edu/plants/echeveria/"
+            },
+            {
+                "scope": "Exact species cultivation guidance, full sun; collection identity remains probable.",
+                "title": "RHS: Echeveria pulidonis",
+                "url": "https://www.rhs.org.uk/plants/6239/echeveria-pulidonis/details"
+            },
+            {
+                "scope": "Related cultivars only: Apus, Canadian, Elegans Blue, Jade Point, Topsy Turvy; 4.8 and 12.8 mol m−2 d−1, with photoperiod treatments. Indexed original abstract and methods verified; direct fetch returned 429.",
+                "title": "Soster et al. (2026): Short Day Lengths Can Mitigate Excessive Stem Elongation and Promote Flowering of Echeveria Cultivars Under Low and Moderate Daily Light Integrals",
+                "url": "https://doi.org/10.3390/horticulturae12050551"
             }
         ]
     },
@@ -941,6 +1160,7 @@
                 10,
                 18
             ],
+            "research": "No controlled light-dose study for 'Raindrops' was located. Its seller recommends bright indoor light or filtered/partial sun. A 2017 trial in E. agavoides and E. marcus compared 35, 75 and 150 µmol m−2 s−1; the highest tested intensity improved compactness and red pigmentation. Those are different plants, and the best tested treatment is not a proven maximum or an exact-cultivar optimum. Keep the current range labelled as a trial and assess newly formed leaves.",
             "startingDli": null
         },
         "moisture": {
@@ -949,7 +1169,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "echeveria-raindrops",
         "sources": [
             {
@@ -971,6 +1191,21 @@
                 "scope": "Genus-level sunlight and low-water guidance; no cultivar-specific DLI trial.",
                 "title": "NC State Extension: Echeveria",
                 "url": "https://plants.ces.ncsu.edu/plants/echeveria/"
+            },
+            {
+                "scope": "Related species controlled intensity study; original abstract indexed; direct page timed out.",
+                "title": "Cabahug et al. (2017): Effects of Light Intensity on the Growth and Anthocyanin Content of Echeveria agavoides and E. marcus",
+                "url": "https://ijfs.org/journal/article.php?code=58278"
+            },
+            {
+                "scope": "Original article uploaded by author; methods specify 14 h light/10 h dark, 65% RH.",
+                "title": "Cabahug et al.: author-uploaded full article",
+                "url": "https://www.researchgate.net/publication/323124065_Effects_of_Light_Intensity_on_the_Growth_and_Anthocyanin_Content_of_Echeveria_agavoides_and_E_marcus"
+            },
+            {
+                "scope": "Exact seller cultivar care; qualitative light guidance.",
+                "title": "Mountain Crest Gardens: Echeveria Raindrops",
+                "url": "https://mountaincrestgardens.com/echeveria-raindrops/"
             }
         ]
     },
@@ -984,6 +1219,7 @@
                 12,
                 16
             ],
+            "research": "RHS recommends full light for F. tuberculosa. A 2006 experiment measured carbon assimilation in related F. tigrina at 300 PPFD for 16 hours (17.28 DLI). That was one study condition; the paper’s separate intensity comparison concerned Crassula, not Faucaria. No light-dose growth optimum for F. tuberculosa was identified in the reviewed evidence, and this specimen’s identification remains probable.",
             "startingDli": null
         },
         "moisture": {
@@ -1006,7 +1242,7 @@
                 "url": "https://pza.sanbi.org/faucaria-tigrina"
             },
             {
-                "scope": "Full light, draining medium, restrained feeding, and frost protection for the proposed species; no numeric light threshold.",
+                "scope": "Full light, draining medium, restrained feeding, and frost protection for the proposed species; no numeric light threshold. Light research: Exact proposed species: full light cultivation; no DLI or PPFD optimum.",
                 "title": "RHS: Faucaria tuberculosa",
                 "url": "https://www.rhs.org.uk/plants/176659/faucaria-tuberculosa/details"
             },
@@ -1014,6 +1250,11 @@
                 "scope": "Generic succulent category, 12–16 DLI; applying it here is collection inference.",
                 "title": "Iowa State Extension: supplemental-light considerations",
                 "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
+            },
+            {
+                "scope": "Related F. tigrina measured at 300 PPFD for 16 h (17.28 DLI). The 50/100/300 response experiment was Crassula 'Himaturi' only, not Faucaria.",
+                "title": "Lee et al. (2006): Diurnal CO2 Assimilation Patterns in Nine Species of CAM-Type Succulent Plants",
+                "url": "https://journals.ashs.org/downloadpdf/view/journals/hortsci/41/6/article-p1373.pdf"
             }
         ]
     },
@@ -1027,6 +1268,7 @@
                 8,
                 16
             ],
+            "research": "NC State recommends bright indirect light for Kalanchoe bracteata, allowing some direct sun while avoiding hot afternoon exposure. A 2011 experiment tested six other Kalanchoe species at 4.3, 8.6 and 17.2 mol m−2 d−1 under eight-hour days; growth and flowering responses varied. Neither K. bracteata nor its lookalike K. hildebrandtii was included. No exact-species optimum was located, so this probable identification still uses a cautious trial range rather than a measured requirement.",
             "startingDli": null
         },
         "moisture": {
@@ -1035,7 +1277,7 @@
             "waitWhen": "Mix remains wet or one component is compromised. Do not repeatedly water the pot for one plant while others remain hydrated.",
             "waterWhen": "The shared root volume is dry and the whole planting is ready; water thoroughly with working drainage."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "kalanchoe-bracteata",
         "sources": [
             {
@@ -1052,6 +1294,16 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Exact species qualitative cultivation guidance.",
+                "title": "NC State Extension: Kalanchoe bracteata",
+                "url": "https://plants.ces.ncsu.edu/plants/kalanchoe-bracteata/"
+            },
+            {
+                "scope": "Author institution abstract: K. glaucescens, laciniata, manginii, nyikae, rotundifolia, velutina; 4.3, 8.6, 17.2 mol m−2 d−1 under 8 h. None is an owned taxon.",
+                "title": "Currey and Erwin (2011): Photosynthetic daily light integral impacts growth and flowering of several kalanchoe species",
+                "url": "https://experts.umn.edu/en/publications/photosynthetic-daily-light-integral-impacts-growth-and-flowering-/"
             }
         ]
     },
@@ -1065,6 +1317,7 @@
                 8,
                 17
             ],
+            "research": "Botanical-garden guidance places Kalanchoe orgyalis in full sun to partial shade and warns that strong sun can burn leaf tips. No controlled numerical optimum for this species was located. The frequently cited 2011 Kalanchoe DLI experiment used six different species, so its 4.3–17.2 mol m−2 d−1 treatments do not establish this plant's target. The cultivation monograph describes coppery leaves in dappled shade and paler leaves in direct sun; deeper copper is not a reason to increase exposure. The current band remains a practical trial.",
             "startingDli": null
         },
         "moisture": {
@@ -1073,7 +1326,7 @@
             "waitWhen": "Mix remains wet or one component is compromised. Do not repeatedly water the pot for one plant while others remain hydrated.",
             "waterWhen": "The shared root volume is dry and the whole planting is ready; water thoroughly with working drainage."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "kalanchoe-orgyalis",
         "sources": [
             {
@@ -1090,6 +1343,21 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Exact species full sun to partial shade and leaf-tip burn caution.",
+                "title": "Port St. Lucie Botanical Gardens: Copper Spoon",
+                "url": "https://www.pslbg.org/copper-spoon/"
+            },
+            {
+                "scope": "Author institution abstract: K. glaucescens, laciniata, manginii, nyikae, rotundifolia, velutina; 4.3, 8.6, 17.2 mol m−2 d−1 under 8 h. None is an owned taxon.",
+                "title": "Currey and Erwin (2011): Photosynthetic daily light integral impacts growth and flowering of several kalanchoe species",
+                "url": "https://experts.umn.edu/en/publications/photosynthetic-daily-light-integral-impacts-growth-and-flowering-/"
+            },
+            {
+                "scope": "Chapter 8, page 100: K. orgyalis leaf color differs from the common redder-in-sun pattern, with brownish hair covering; no numerical light optimum.",
+                "title": "Smith, Figueiredo and van Wyk (2019): Physiology and Anatomy",
+                "url": "https://doi.org/10.1016/B978-0-12-814007-9.00008-6"
             }
         ]
     },
@@ -1103,6 +1371,7 @@
                 12,
                 16
             ],
+            "research": "An exact-species field paper studies plant and soil temperatures, not optimal light. A related L. aucampiae photoprotection study grew plants at 550 PPFD for 12 hours (23.76 DLI), but did not compare light doses to establish a growth optimum. That condition is not a prescription for probable L. lesliei in this shared pot. Wisconsin Extension supplies genus-level bright-light and acclimation guidance.",
             "startingDli": null
         },
         "moisture": {
@@ -1120,7 +1389,7 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/lithops-lesliei/"
             },
             {
-                "scope": "Bright light, gradual acclimation and leaf-replacement watering restrictions; no species-specific DLI range.",
+                "scope": "Bright light, gradual acclimation and leaf-replacement watering restrictions; no species-specific DLI range. Light research: Genus cultivation advice: bright light and gradual acclimation; no species numerical optimum.",
                 "title": "Wisconsin Extension: Living stones, Lithops",
                 "url": "https://hort.extension.wisc.edu/articles/living-stones-lithops/"
             },
@@ -1133,6 +1402,16 @@
                 "scope": "Continued bright light during rest, ordinary indoor conditions, airflow, and sparse feeding; no species-specific numeric light range.",
                 "title": "New York Botanical Garden: Living stones",
                 "url": "https://libguides.nybg.org/livingstones"
+            },
+            {
+                "scope": "Related L. aucampiae tissue photoprotection study: 550 PPFD, 12 h (23.76 DLI), 20/15 C. Authors selected habitat-like growth conditions, not an optimized light-dose experiment.",
+                "title": "Field et al. (2013): Best of Both Worlds",
+                "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0075671"
+            },
+            {
+                "scope": "Exact-species natural-habitat temperature study; no tested optimal light dose.",
+                "title": "Eller and Grobbelaar (1986): Diurnal temperature variation in and around a Lithops lesliei plant",
+                "url": "https://www.sciencedirect.com/science/article/pii/S0254629916315034"
             }
         ]
     },
@@ -1146,6 +1425,7 @@
                 12,
                 16
             ],
+            "research": "A 2016 government study included L. salicola in a 60-day assessment of ornamental quality indoors. Its 4.0–8.7 PPFD figures are average noon spot readings, not constant exposure. Short-term appearance at those positions establishes neither optimal growth nor a daily light integral. This collection identification remains probable; retain genus-level bright-light and gradual-acclimation guidance rather than treating dim-room persistence as a target.",
             "startingDli": null
         },
         "moisture": {
@@ -1163,7 +1443,7 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/lithops-salicola/"
             },
             {
-                "scope": "Bright light, gradual acclimation and leaf-replacement watering restrictions; no species-specific DLI range.",
+                "scope": "Bright light, gradual acclimation and leaf-replacement watering restrictions; no species-specific DLI range. Light research: Genus cultivation advice: bright light and gradual acclimation; no species numerical optimum.",
                 "title": "Wisconsin Extension: Living stones, Lithops",
                 "url": "https://hort.extension.wisc.edu/articles/living-stones-lithops/"
             },
@@ -1176,6 +1456,11 @@
                 "scope": "Continued bright light during rest, ordinary indoor conditions, airflow, and sparse feeding; no species-specific numeric light range.",
                 "title": "New York Botanical Garden: Living stones",
                 "url": "https://libguides.nybg.org/livingstones"
+            },
+            {
+                "scope": "Exact L. salicola included in 60-day ornamental-retention assessment. 4.0–8.7 PPFD are average NOON spot measurements, not constant light, DLI, or optimum growth. Full PDF extracted and methods checked.",
+                "title": "Gyeonggi Agricultural Research (2016): Indoor gardening succulent selection",
+                "url": "https://nongup.gg.go.kr/wp-content/uploads/sites/2/2017/06/2016_R_699.pdf"
             }
         ]
     },
@@ -1189,6 +1474,7 @@
                 12,
                 16
             ],
+            "research": "The reviewed research does not establish one optimum for this aggregate of probable L. lesliei and L. salicola. A related L. aucampiae study used 550 PPFD for 12 hours for tissue research, while an L. salicola report examined short-term indoor appearance. Neither optimizes this mixed pot. Botanical-garden and extension guidance supports ample light with gradual acclimation; check exposure at each head.",
             "startingDli": null
         },
         "moisture": {
@@ -1206,7 +1492,7 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/lithops-shared-planter/"
             },
             {
-                "scope": "Bright light, gradual acclimation and leaf-replacement watering restrictions; no species-specific DLI range.",
+                "scope": "Bright light, gradual acclimation and leaf-replacement watering restrictions; no species-specific DLI range. Light research: Genus cultivation advice: bright light and gradual acclimation; no species numerical optimum.",
                 "title": "Wisconsin Extension: Living stones, Lithops",
                 "url": "https://hort.extension.wisc.edu/articles/living-stones-lithops/"
             },
@@ -1216,9 +1502,19 @@
                 "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
             },
             {
-                "scope": "Continued bright light during rest, ordinary indoor conditions, airflow, and sparse feeding; no species-specific numeric light range.",
+                "scope": "Continued bright light during rest, ordinary indoor conditions, airflow, and sparse feeding; no species-specific numeric light range. Light research: Genus guidance: ample sunlight and bright light during rest; hours are not measured PPFD/DLI.",
                 "title": "New York Botanical Garden: Living stones",
                 "url": "https://libguides.nybg.org/livingstones"
+            },
+            {
+                "scope": "Related L. aucampiae tissue photoprotection study: 550 PPFD, 12 h (23.76 DLI), 20/15 C. Authors selected habitat-like growth conditions, not an optimized light-dose experiment.",
+                "title": "Field et al. (2013): Best of Both Worlds",
+                "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0075671"
+            },
+            {
+                "scope": "Exact L. salicola included in 60-day ornamental-retention assessment. 4.0–8.7 PPFD are average NOON spot measurements, not constant light, DLI, or optimum growth. Full PDF extracted and methods checked.",
+                "title": "Gyeonggi Agricultural Research (2016): Indoor gardening succulent selection",
+                "url": "https://nongup.gg.go.kr/wp-content/uploads/sites/2/2017/06/2016_R_699.pdf"
             }
         ]
     },
@@ -1232,6 +1528,7 @@
                 10,
                 18
             ],
+            "research": "Species sunny-position guidance exists but no Royal Flush controlled light-dose optimization was found. Purple coloration does not establish a quantified optimum or different light requirement.",
             "startingDli": null
         },
         "moisture": {
@@ -1240,7 +1537,7 @@
             "waitWhen": "Only the old outer pair is shrinking, new leaves remain firm, or the base is soft/translucent. A light pot is not enough.",
             "waterWhen": "Established roots are dry and the current pair shows need compatible with its leaf stage; water the mix and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "pleiospilos-nelii-royal-flush",
         "sources": [
             {
@@ -1254,7 +1551,7 @@
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
-                "scope": "Sunny exposure, drainage and old-leaf moisture transfer; local season and calendar are not imported as indoor watering dates.",
+                "scope": "Sunny exposure, drainage and old-leaf moisture transfer; local season and calendar are not imported as indoor watering dates. Light research: Species cultivation lists full sun; no numeric optimum or Royal Flush-specific experiment.",
                 "title": "SANBI: Pleiospilos nelii",
                 "url": "https://pza.sanbi.org/pleiospilos-nelii"
             }
@@ -1270,6 +1567,7 @@
                 10,
                 18
             ],
+            "research": "SANBI provides species cultivation advice, not numerical light thresholds. Existing 10–18 DLI is borrowed from the collection's Royal Flush trial and remains an inference for this separate non-cultivar-labelled plant.",
             "startingDli": null
         },
         "moisture": {
@@ -1278,7 +1576,7 @@
             "waitWhen": "Only the old outer pair is shrinking, new leaves remain firm, or the base is soft/translucent. A light pot is not enough.",
             "waterWhen": "Established roots are dry and the current pair shows need compatible with its leaf stage; water the mix and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "pleiospilos-nelii",
         "sources": [
             {
@@ -1292,7 +1590,7 @@
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
-                "scope": "Sunny exposure, drainage and old-leaf moisture transfer; local season and calendar are not imported as indoor watering dates.",
+                "scope": "Sunny exposure, drainage and old-leaf moisture transfer; local season and calendar are not imported as indoor watering dates. Light research: Species cultivation lists full sun; no numeric optimum or Royal Flush-specific experiment.",
                 "title": "SANBI: Pleiospilos nelii",
                 "url": "https://pza.sanbi.org/pleiospilos-nelii"
             }
@@ -1308,6 +1606,7 @@
                 8,
                 17
             ],
+            "research": "A 2020 Portulacaria afra experiment measured rapid fluorescence responses across 125–1,500 µmol m−2 s−1 while investigating prolonged water stress. These short measurements describe photoprotection, not a long-term growth-light optimum; plants were grown under natural greenhouse sunlight. Wisconsin Extension supports bright light and gradual acclimation. No validated DLI optimum for the collection's plant or possible golden cultivar was located, so its displayed numerical range remains a practical trial.",
             "startingDli": null
         },
         "moisture": {
@@ -1316,7 +1615,7 @@
             "waitWhen": "Mix remains wet or one component is compromised. Do not repeatedly water the pot for one plant while others remain hydrated.",
             "waterWhen": "The shared root volume is dry and the whole planting is ready; water thoroughly with working drainage."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "portulacaria-afra",
         "sources": [
             {
@@ -1333,6 +1632,16 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Exact species drought physiology; methods specify natural greenhouse light and rapid light curves, not controlled long-term light optimization.",
+                "title": "Vitale et al. (2020): Photo-Protective Mechanisms and the Role of Poly (ADP-Ribose) Polymerase Activity in a Facultative CAM Plant Exposed to Long-Term Water Deprivation",
+                "url": "https://www.mdpi.com/2223-7747/9/9/1192"
+            },
+            {
+                "scope": "Species-specific cultivation and acclimation; cultivar differences.",
+                "title": "Wisconsin Extension: Elephant Bush, Portulacaria afra",
+                "url": "https://hort.extension.wisc.edu/articles/elephant-bush-portulacaria-afra/"
             }
         ]
     },
@@ -1346,6 +1655,7 @@
                 10,
                 20
             ],
+            "research": "The breeder links Coconut Crystal to 'belsemmag1', and RHS recommends full sun for that named plant. No controlled DLI optimum for the cultivar was located. A 1981 study of the different species Sempervivum montanum reported CO2-uptake light saturation at 60–80 W m−2; physiological saturation in an alpine species is not a daily growth target for this hybrid. The displayed DLI band remains an indoor trial, with compact new growth and gradual acclimation guiding adjustments.",
             "startingDli": null
         },
         "moisture": {
@@ -1354,7 +1664,7 @@
             "waitWhen": "Roots remain damp, the crown holds water or the plant is resting. Keep indoors with cooler nights and avoid hot, wet conditions.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "sempervivum-coconut-crystal",
         "sources": [
             {
@@ -1371,6 +1681,21 @@
                 "scope": "Sunlight, drainage, cool nights and cold-season rest at genus level; the indoor DLI range remains a collection trial.",
                 "title": "NC State Extension: Sempervivum",
                 "url": "https://plants.ces.ncsu.edu/plants/sempervivum/"
+            },
+            {
+                "scope": "Breeder verifies Coconut Crystal belsemmag1; calls range hybrids.",
+                "title": "Belgicactus: Colorockz Sempervivums",
+                "url": "https://www.belgicactus.be/colorockz/"
+            },
+            {
+                "scope": "Named horticultural entry recommends full sun; retain collection's existing genus/hybrid name rather than silently applying disputed species assignment.",
+                "title": "RHS: Sempervivum arachnoideum Belsemmag1 / Coconut Crystal",
+                "url": "https://www.rhs.org.uk/plants/520492/sempervivum-arachnoideum-belsemmag1/details"
+            },
+            {
+                "scope": "Original article abstract, DOI 10.1007/BF00378798; related-species gas-exchange saturation, not growth optimum.",
+                "title": "Wagner and Larcher (1981): Dependence of CO2 gas exchange and acid metabolism of the alpine CAM plant Sempervivum montanum on temperature and light",
+                "url": "https://pubmed.ncbi.nlm.nih.gov/28310066/"
             }
         ]
     },
@@ -1384,6 +1709,7 @@
                 12,
                 16
             ],
+            "research": "No controlled study matches this unresolved mixture of probable coppertone sedum, echeveria and paddle kalanchoe. RHS recommends strong light with protection from hot sun for coppertone sedum, while Wisconsin Extension recommends full sun for the two commonly confused paddle species. These qualitative categories cannot establish one optimum DLI for the bowl. The numerical range is a shared-container trial, and exposure must be checked at both the low rosettes and taller paddles.",
             "startingDli": null
         },
         "moisture": {
@@ -1409,6 +1735,16 @@
                 "scope": "Generic succulent category, 12–16 DLI; applying it here is collection inference.",
                 "title": "Iowa State Extension: supplemental-light considerations",
                 "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
+            },
+            {
+                "scope": "Comparison guidance for provisional coppertone component.",
+                "title": "RHS: Sedum nussbaumerianum",
+                "url": "https://www.rhs.org.uk/plants/60015/sedum-nussbaumerianum/details"
+            },
+            {
+                "scope": "Comparison guidance for unresolved paddle species pair.",
+                "title": "Wisconsin Extension: Flapjacks, Kalanchoe spp.",
+                "url": "https://hort.extension.wisc.edu/articles/flapjacks-kalanchoe-spp/"
             }
         ]
     },
@@ -1422,6 +1758,7 @@
                 12,
                 16
             ],
+            "research": "The coppertone sedum identification remains provisional. RHS guidance for Sedum nussbaumerianum calls for full light under glass with protection from hot sun, without a numerical optimum. Searches also found a Sedum adolphii leaf-propagation experiment comparing contrasting temperature/light environments; that does not establish the best DLI for an established plant. The current P30 light band remains a bowl-level trial, and orange coloration alone should not be treated as a light-dose measurement.",
             "startingDli": null
         },
         "moisture": {
@@ -1452,6 +1789,16 @@
                 "scope": "Bright exposure, airflow, and stem-rot care for the probable Sedum group; no numerical light threshold.",
                 "title": "NParks: Sedum adolphi",
                 "url": "https://www.nparks.gov.sg/florafaunaweb/flora/6/1/6141"
+            },
+            {
+                "scope": "Provisional taxon comparison; full light with hot-sun shading under glass.",
+                "title": "RHS: Sedum nussbaumerianum",
+                "url": "https://www.rhs.org.uk/plants/60015/sedum-nussbaumerianum/details"
+            },
+            {
+                "scope": "Original propagation study includes Sedum adolphii; rooting fertilizer/temperature/light confounded environments, not mature-plant light optimum.",
+                "title": "Nativa: Emergencia de brotacoes e raizes de especies suculentas em funcao da aplicacao de fertilizante enraizador, em ambientes contrastantes",
+                "url": "https://periodicoscientificos.ufmt.br/ojs/index.php/nativa/article/view/13184"
             }
         ]
     },
@@ -1465,6 +1812,7 @@
                 12,
                 16
             ],
+            "research": "These rosettes are identified only provisionally to Echeveria, so an exact cultivar optimum cannot be assigned. A 2026 study tested 4.8 and 12.8 mol m−2 d−1 in five named cultivars and found responses dependent on cultivar and day length. This provides useful comparison evidence, but the P30 rosettes were not identified as any tested cultivar. Their displayed range remains a cautious trial, with measurements taken at the low crowns rather than above the taller neighbors.",
             "startingDli": null
         },
         "moisture": {
@@ -1495,6 +1843,11 @@
                 "scope": "Generic succulent category, 12–16 DLI; applying it here is collection inference.",
                 "title": "Iowa State Extension: supplemental-light considerations",
                 "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
+            },
+            {
+                "scope": "Related cultivars only: Apus, Canadian, Elegans Blue, Jade Point, Topsy Turvy; 4.8 and 12.8 mol m−2 d−1, with photoperiod treatments. Indexed original abstract and methods verified; direct fetch returned 429.",
+                "title": "Soster et al. (2026): Short Day Lengths Can Mitigate Excessive Stem Elongation and Promote Flowering of Echeveria Cultivars Under Low and Moderate Daily Light Integrals",
+                "url": "https://doi.org/10.3390/horticulturae12050551"
             }
         ]
     },
@@ -1508,6 +1861,7 @@
                 12,
                 16
             ],
+            "research": "Wisconsin Extension recommends full sun for Kalanchoe luciae and K. thyrsiflora, while emphasizing their frequent confusion. The P30 paddle plant remains unresolved between those working comparisons. A K. luciae fertilizer experiment used 50% greenhouse shade, but did not compare light treatments to establish an optimum. Neither species was included in the 2011 six-species Kalanchoe DLI trial. The displayed range therefore remains a shared-bowl trial, not a verified requirement for this component.",
             "startingDli": null
         },
         "moisture": {
@@ -1530,7 +1884,7 @@
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
             },
             {
-                "scope": "Paddle-plant light and identity comparison; no confirmed species identification or numeric light threshold.",
+                "scope": "Paddle-plant light and identity comparison; no confirmed species identification or numeric light threshold. Light research: Both comparison species, qualitative full-sun culture and identification uncertainty.",
                 "title": "Wisconsin Extension: Flapjacks, Kalanchoe spp.",
                 "url": "https://hort.extension.wisc.edu/articles/flapjacks-kalanchoe-spp/"
             },
@@ -1538,6 +1892,16 @@
                 "scope": "Generic succulent category, 12–16 DLI; applying it here is collection inference.",
                 "title": "Iowa State Extension: supplemental-light considerations",
                 "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
+            },
+            {
+                "scope": "Original fertilizer experiment: 50% greenhouse shade was growing context, not optimized light treatment.",
+                "title": "Application of different fertilizers in substrate for Kalanchoe luciae Raym.-Hamet cultivation",
+                "url": "https://www.scielo.br/scielo.php?pid=S1413-70542009000400002&script=sci_arttext"
+            },
+            {
+                "scope": "Author institution abstract: K. glaucescens, laciniata, manginii, nyikae, rotundifolia, velutina; 4.3, 8.6, 17.2 mol m−2 d−1 under 8 h. None is an owned taxon.",
+                "title": "Currey and Erwin (2011): Photosynthetic daily light integral impacts growth and flowering of several kalanchoe species",
+                "url": "https://experts.umn.edu/en/publications/photosynthetic-daily-light-integral-impacts-growth-and-flowering-/"
             }
         ]
     },
@@ -1551,6 +1915,7 @@
                 10,
                 18
             ],
+            "research": "RHS recommends full light under glass for this exact species. The Huntington introduction records its lithophytic discovery and nomenclature but no measured light target. No quantitative growth-light experiment was located under Cleistocactus colademononis or Hildewintera colademononis. The collection plant shares P19 and its trailing surfaces receive different exposures.",
             "startingDli": null
         },
         "moisture": {
@@ -1559,7 +1924,7 @@
             "waitWhen": "Any roots remain wet or compromised. One shrinking stem does not justify wetting the shared pot; reassess incompatible needs.",
             "waterWhen": "The whole root volume is dry and all three plants can tolerate watering; water the container and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "cleistocactus-colademononis",
         "sources": [
             {
@@ -1576,6 +1941,16 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Exact species full-light cultivation advice; lists historical Hildewintera/C. winteri subsp. colademono synonyms; no quantitative thresholds.",
+                "title": "RHS: Cleistocactus colademononis",
+                "url": "https://www.rhs.org.uk/plants/327556/cleistocactus-colademononis/details"
+            },
+            {
+                "scope": "Primary introduction and habitat/nomenclature context, not a light experiment.",
+                "title": "Huntington ISI 2007-3: Hildewintera colademononis",
+                "url": "https://media.huntington.org/ISI/ISI2007/2007-03.html"
             }
         ]
     },
@@ -1589,6 +1964,7 @@
                 12,
                 22
             ],
+            "research": "RHS recommends full light under glass for Echinopsis spachiana. Searches using the Echinopsis and Trichocereus spachianus names did not locate an exact mature-growth intensity trial. The collection identification remains probable and this column shares P19 with plants of different morphology and variegation.",
             "startingDli": null
         },
         "moisture": {
@@ -1597,7 +1973,7 @@
             "waitWhen": "Any roots remain wet or compromised. One shrinking stem does not justify wetting the shared pot; reassess incompatible needs.",
             "waterWhen": "The whole root volume is dry and all three plants can tolerate watering; water the container and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "echinopsis-spachiana",
         "sources": [
             {
@@ -1614,6 +1990,16 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Exact-species qualitative full-light cultivation advice; no PPFD/DLI experiment.",
+                "title": "RHS: Echinopsis spachiana",
+                "url": "https://www.rhs.org.uk/plants/161594/echinopsis-spachiana/details"
+            },
+            {
+                "scope": "Living-collection species profile; morphology/cultivation context rather than quantitative growth-light evidence.",
+                "title": "University of Arizona Campus Arboretum: Echinopsis spachiana",
+                "url": "https://apps.cals.arizona.edu/arboretum/taxon.aspx?id=1267"
             }
         ]
     },
@@ -1624,6 +2010,7 @@
             "caution": "No current light target or pot allocation applies.",
             "description": "Historical record only: removed July 24, 2026, with no viable salvage retained.",
             "dli": null,
+            "research": "This removed specimen remains a historical reference. Its retained cultivation sources do not establish a measured optimum, and no active light target is assigned.",
             "startingDli": null
         },
         "moisture": {
@@ -1652,6 +2039,7 @@
                 12,
                 22
             ],
+            "research": "RHS and Singapore NParks recommend sun for normal P. pachycladus, not a variegated selection. A primary 2010 study tests germination under 12-hour light versus darkness and different temperatures; it does not test mature vegetative light optima. The collection's P. pachycladus identification is probable and the degree/physiology of variegation is uncharacterized.",
             "startingDli": null
         },
         "moisture": {
@@ -1660,7 +2048,7 @@
             "waitWhen": "Any roots remain wet or compromised. One shrinking stem does not justify wetting the shared pot; reassess incompatible needs.",
             "waterWhen": "The whole root volume is dry and all three plants can tolerate watering; water the container and drain."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "pilosocereus-pachycladus-variegated",
         "sources": [
             {
@@ -1677,6 +2065,21 @@
                 "scope": "General bright-light, drainage, dry-between-waterings and shared-container care evidence; no taxon-specific DLI thresholds.",
                 "title": "University of Minnesota Extension: Cacti and succulents",
                 "url": "https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/cacti-and-succulents"
+            },
+            {
+                "scope": "Normal-species sunny-position cultivation guidance, not variegated-form numeric evidence.",
+                "title": "RHS: Pilosocereus pachycladus",
+                "url": "https://www.rhs.org.uk/plants/250738/pilosocereus-pachycladus/details"
+            },
+            {
+                "scope": "Normal-species full-sun preference; no quantified light limits.",
+                "title": "Singapore NParks: Pilosocereus pachycladus",
+                "url": "https://www.nparks.gov.sg/florafaunaweb/flora/6/2/6252"
+            },
+            {
+                "scope": "Primary germination experiment with 12-hour photoperiod versus darkness, not mature-plant PPFD/DLI optimization. DOI 10.1590/S1806-66902010000300021.",
+                "title": "Abud et al. (2010): Germination and morphological expression of Pilosocereus pachycladus Ritter fruits, seeds and seedlings",
+                "url": "https://scielo.br/j/rca/a/t7kvGwtsSkLzTTdHY5zcDhj/abstract/?ilang=en&lang=en"
             }
         ]
     }

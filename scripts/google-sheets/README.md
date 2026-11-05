@@ -38,6 +38,37 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## November 4 houseplant location records
+
+The owner confirmed P39 / #13 Nightly, P40 / #14 Spice is Nice, and P41 / #15
+Alpine Spires on the **shelf next to the cacti table, room side**, and reported
+moving them five days earlier. The existing production logger **5.41.1 /
+immutable version 128** recorded one Move per pot for **approximately October
+30, 2026**. All three notes explicitly state that the exact time was not supplied
+and **00:00 is a date-only placeholder**, not the actual move time. Previous
+location remains blank.
+
+A [native backup](https://docs.google.com/spreadsheets/d/1UjydNusUXLfL49L_jWETfIuiWT04M3MBRPauj5wsXQA/edit)
+preceded the normal bulk-care save. Verification completed November 4 at
+19:23 EST: History increased from **2,187 to 2,190 events**, with **2,190 unique
+observation IDs**. Rows **2189–2191** contain exactly the three Move entries and
+their per-pot request IDs. Existing History source cells, formulas, validations,
+and notes, both staging tables, and the captured Baselines ranges matched the
+before snapshot. No Water, Weight, Repot, or setup changes were added.
+
+The recorded-location projection in **Environment data W2:AA4** refreshed to the
+same shelf destination, with analytics **Ready**. The logger displayed all three
+entries and their date-uncertainty notes; one post-save bootstrap refresh was
+delayed, so canonical rows and the location projection were verified separately.
+Exactly one existing five-minute queue trigger remained installed. No logger
+code, deployment, or AppSheet configuration changed.
+
+The prewrite inspection also confirmed that P41 already had **setup 2** from its
+October 29 Repot at History row **2064**. Its recorded glass-jar dimensions,
+drainage-hole description, and substrate now replace stale pending-setup text
+in the maintained profile. That existing Repot is separate from this location
+recording; P39/P40 remain in setup 1.
+
 ## November 4 logger control refinements
 
 Production logger **5.41.1 / immutable version 128** adds a water icon to **Days since watered** and

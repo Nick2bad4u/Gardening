@@ -63,9 +63,9 @@ const otherPositions = new Map([
     ["P31", "Kitchen window shelf"],
     ["P32", "Kitchen window shelf"],
     ["P38", "Desk to right of tables"],
-    ["P39", "Quarantine in another room"],
-    ["P40", "Quarantine in another room"],
-    ["P41", "Position unrecorded"],
+    ["P39", "Shelf next to cacti table, room side"],
+    ["P40", "Shelf next to cacti table, room side"],
+    ["P41", "Shelf next to cacti table, room side"],
 ]);
 
 /**

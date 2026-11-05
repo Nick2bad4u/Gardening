@@ -1,6 +1,6 @@
 # Pot labels
 
-Last updated: 2026-10-29
+Last updated: 2026-11-04
 
 This is the print reference for 49 active profile records across 39 tracked pot allocations. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
 
@@ -499,7 +499,7 @@ One container · one care history
 ## October 21 houseplant labels
 
 The photographed Proven Winners leafjoy littles labels support these separate
-nursery identities. The owner confirmed October 22 that both were purchased October 21 at Home Depot in Howell, Michigan, and are quarantined in another room pending repotting. The October 24 plan is to repot them October 25 and place them on the shelf beside P38; current pot measurements and exact quarantine positions remain unrecorded. Use the
+nursery identities. The owner confirmed October 22 that both were purchased October 21 at Home Depot in Howell, Michigan, and were then quarantined in another room pending repotting. The October 24 plan called for October 25 repots and a later shelf position beside P38. On November 4 the owner reported both on the **shelf next to the cacti table on the room side**, with P41 / #15. The owner reported on November 4 that the move was five days earlier, approximately October 30; the time was not supplied. Pot measurements, completed repots, and the quarantine end date remain unrecorded. Use the
 profile sources for care; the printed prompts are inspection reminders.
 
 | Label | Tracker | Inventory     | Profile                                                                                                                                   |
@@ -521,12 +521,14 @@ PARTIAL DRYING; CHECK BELOW THE SURFACE
 
 ## October 28 Alpine Spires label
 
-**#15 / P41 / Houseplant-08** is [Alpine Spires Chinese evergreen](./houseplants/aglaonema-commutatum-alpine-spires.md), nursery-labelled _Aglaonema commutatum_, Igneous™ Alpine Spires™. The owner reported the October 28 Home Depot purchase for $19.99. The front-tag photograph shows “I'm New”. The barcode photograph supplied October 29 documents “PW Leafjoy Trial 12cm”, $19.98, UPC `810160692423`, and “Grown by TPC- Stuarts Draft, VA”. The sticker price does not replace the owner-reported $19.99 paid on October 28; retail 12cm is not a measured pot dimension, and the grower location is not the purchase store. “Trial” is label evidence, not proof of rarity or a release date. Repot and specimen photos remain pending.
+**#15 / P41 / Houseplant-08** is [Alpine Spires Chinese evergreen](./houseplants/aglaonema-commutatum-alpine-spires.md), nursery-labelled _Aglaonema commutatum_, Igneous™ Alpine Spires™. The owner reported the October 28 Home Depot purchase for $19.99. The front-tag photograph shows “I'm New”. The barcode photograph supplied October 29 documents “PW Leafjoy Trial 12cm”, $19.98, UPC `810160692423`, and “Grown by TPC- Stuarts Draft, VA”. The sticker price does not replace the owner-reported $19.99 paid on October 28; retail 12cm is not a measured pot dimension, and the grower location is not the purchase store. “Trial” is label evidence, not proof of rarity or a release date. The October 29 canonical Repot establishes setup 2; the [profile](./houseplants/aglaonema-commutatum-alpine-spires.md#care-in-this-collection) records the glass jar, one-inch drainage hole, and exact substrate wording. Specimen photographs remain pending.
 
 ```text
 #15 | ALPINE SPIRES CHINESE EVERGREEN
 P41 | Aglaonema commutatum | NURSERY LABEL
 CHECK UPPER MIX AND DRAINAGE; IRRITATING IF CHEWED
 ```
+
+The owner reports P41 on the **shelf next to the cacti table on the room side**, with P39 / #13 and P40 / #14, on November 4, 2026. Shelf geometry and leaf-level light remain unmeasured; this placement report does not confirm a repot or watering. The owner reported on November 4 that the move was five days earlier, approximately October 30; the time was not supplied.
 
 Use the profile's sourced care guidance; keep this permanent ID when repotting. No fixed watering interval is assigned.
