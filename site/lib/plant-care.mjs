@@ -129,15 +129,21 @@ export function lightComparison(light, hours = LIGHT_COMPARISON_HOURS) {
                   Math.round(dli[1] / (hours * 0.0036) / 5) * 5,
               ]
             : null;
-    const ppfd = toPpfd(light.dli);
-    /** @type {LightRange | null} */
-    const lux = light.dli
-        ? [
-              Math.round(((light.dli[0] / (hours * 0.0036)) * 55) / 100) * 100,
-              Math.round(((light.dli[1] / (hours * 0.0036)) * 70) / 100) * 100,
-          ]
-        : null;
-    return { hours, lux, ppfd, startingPpfd: toPpfd(light.startingDli) };
+    /** @param {LightRange | null} dli @returns {LightRange | null} */
+    const toLux = (dli) =>
+        dli
+            ? [
+                  Math.round(((dli[0] / (hours * 0.0036)) * 55) / 100) * 100,
+                  Math.round(((dli[1] / (hours * 0.0036)) * 70) / 100) * 100,
+              ]
+            : null;
+    return {
+        hours,
+        lux: toLux(light.dli),
+        ppfd: toPpfd(light.dli),
+        startingLux: toLux(light.startingDli),
+        startingPpfd: toPpfd(light.startingDli),
+    };
 }
 
 /** @param {unknown} value @returns {value is string} */

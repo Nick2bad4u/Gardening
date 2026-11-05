@@ -169,8 +169,9 @@ For a fixed light:
 Apogee shows why no universal lux conversion exists: its factors range from
 about 54 lux per µmol/m²/s for sunlight to 74 for white fluorescent light.
 Published broad-white horticultural sources cluster around 59–65. VIVOSUN does
-not publish an AW200SE-specific conversion. Using **55–70 lux per PPFD** is a
-deliberately wide estimate for this mixed white/red/far-red fixture:
+not publish an AW200SE-specific conversion. **55–70 lux per PPFD** provides a
+broad white-LED comparison; it is not a calibrated or guaranteed conversion
+bound for this mixed white/red/far-red fixture:
 
 `rough PPFD range = lux ÷ 70 to lux ÷ 55`
 
@@ -180,7 +181,12 @@ same phone, orientation, and app are used every time.
 
 ## Working light targets for this collection
 
-These are starting hypotheses, not published species thresholds. They combine
+**Historical planning table:** the November 5, 2026
+[recommended light comparison](../light-moisture.md) and plant care cards
+supersede these numerical recommendations. This table retains its original
+12-hour calculation basis as context for the earlier fixture research.
+
+These earlier starting hypotheses are not published species thresholds. They combine
 native exposure, growth form, variegation, broad succulent research, and the
 need to avoid stretching under indoor light. Species-specific numeric trials
 were not identified for most rows in the sources reviewed. The endpoints were

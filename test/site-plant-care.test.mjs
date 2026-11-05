@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 
+import { required } from "../scripts/build-data.mjs";
+import { getContainers } from "../site/lib/containers.mjs";
 import { getProfiles } from "../site/lib/content.mjs";
 import {
     assertCareCoverage,
@@ -107,6 +109,7 @@ describe("plant care evidence validation", () => {
             hours: 13.5,
             lux: null,
             ppfd: null,
+            startingLux: null,
             startingPpfd: null,
         });
     });
@@ -345,14 +348,29 @@ describe("care coverage", () => {
         const active = records.filter((record) => activeSlugs.has(record.slug));
 
         expect(active).toHaveLength(49);
-        expect(
-            active.every(
-                (record) =>
-                    record.light.basis === "collection-trial" &&
-                    lightComparison(record.light).lux !== null &&
-                    lightComparison(record.light).ppfd !== null
-            )
-        ).toBe(true);
+
+        const incomplete = active.filter((record) => {
+            const comparison = lightComparison(record.light);
+            return (
+                record.light.basis !== "collection-trial" ||
+                record.light.startingDli === null ||
+                [
+                    comparison.lux,
+                    comparison.ppfd,
+                    comparison.startingLux,
+                    comparison.startingPpfd,
+                ].some(
+                    (range) =>
+                        range === null ||
+                        range.some(
+                            (value) => !Number.isFinite(value) || value <= 0
+                        ) ||
+                        range[0] > range[1]
+                )
+            );
+        });
+
+        expect(incomplete.map((record) => record.slug)).toStrictEqual([]);
 
         const historical = records.filter(
             (record) => !activeSlugs.has(record.slug)
@@ -364,7 +382,13 @@ describe("care coverage", () => {
         expect(
             historical.map((record) => lightComparison(record.light))
         ).toStrictEqual([
-            { hours: 13.5, lux: null, ppfd: null, startingPpfd: null },
+            {
+                hours: 13.5,
+                lux: null,
+                ppfd: null,
+                startingLux: null,
+                startingPpfd: null,
+            },
         ]);
 
         await expect(
@@ -398,17 +422,26 @@ describe("care coverage", () => {
         expect(incomplete.map((record) => record.slug)).toStrictEqual([]);
     });
 
-    it("keeps the feather cactus trial distinct from a published optimum or maximum", async () => {
+    it("keeps the feather cactus recommendation distinct from a published optimum or maximum", async () => {
         expect.hasAssertions();
 
         const feather = await getPlantCareReference("mammillaria-plumosa");
 
         expect(feather.light).toMatchObject({
             basis: "collection-trial",
-            dli: [10, 17],
-            startingDli: null,
+            dli: [12, 20],
+            startingDli: [8, 12],
         });
-        expect(feather.light.caution).toContain("17 DLI is not a ceiling");
+        expect(lightComparison(feather.light)).toStrictEqual({
+            hours: 13.5,
+            lux: [13_600, 28_800],
+            ppfd: [245, 410],
+            startingLux: [9100, 17_300],
+            startingPpfd: [165, 245],
+        });
+        expect(feather.light.caution).toContain(
+            "Neither 17 nor 20 DLI is a ceiling"
+        );
         expect(feather.light.caution).toMatch(
             /not a published optimum or maximum/v
         );
@@ -420,21 +453,22 @@ describe("care coverage", () => {
         );
     });
 
-    it("compares the conservative terrarium trial while retaining unidentified member cautions", async () => {
+    it("compares the terrarium recommendation and gentler start while retaining unidentified member cautions", async () => {
         expect.hasAssertions();
 
         const terrarium = await getPlantCareReference("terrarium");
 
         expect(terrarium.light).toMatchObject({
             basis: "collection-trial",
-            dli: [3, 6],
-            startingDli: null,
+            dli: [3, 5],
+            startingDli: [2, 3],
         });
         expect(lightComparison(terrarium.light)).toStrictEqual({
             hours: 13.5,
-            lux: [3400, 8600],
-            ppfd: [60, 125],
-            startingPpfd: null,
+            lux: [3400, 7200],
+            ppfd: [60, 105],
+            startingLux: [2300, 4300],
+            startingPpfd: [40, 60],
         });
         expect(terrarium.light.caution).toMatch(/provisional|unidentified/iv);
         expect(terrarium.moisture.waitWhen).toMatch(
@@ -445,35 +479,102 @@ describe("care coverage", () => {
         );
     });
 
-    it.each([
-        "faucaria-tuberculosa",
-        "lithops-lesliei",
-        "lithops-salicola",
-        "lithops-shared-planter",
-        "tiny-mixed-succulent-planter",
-        "tiny-planter-coppertone-sedum",
-        "tiny-planter-echeveria",
-        "tiny-planter-paddle-kalanchoe",
-    ])(
-        "assigns %s an explicit conservative trial without inventing a starting exposure",
-        async (slug) => {
+    it.each(["P30", "P35"])(
+        "keeps %s overview overlapping its member recommendations and starting ranges",
+        async (id) => {
             expect.hasAssertions();
 
-            const record = await getPlantCareReference(slug);
+            const container = required(
+                (await getContainers()).find((entry) => entry.id === id),
+                `shared container ${id}`
+            );
+            const overview = await getPlantCareReference(
+                required(container.overview, `shared overview ${id}`).slug
+            );
+            const members = await Promise.all(
+                container.members.map((member) =>
+                    getPlantCareReference(member.slug)
+                )
+            );
+            for (const key of ["dli", "startingDli"]) {
+                const ranges = [...members, overview].map(
+                    (member) =>
+                        member.light[/** @type {"dli" | "startingDli"} */ (key)]
+                );
+                const complete = ranges.filter((range) => range !== null);
 
-            expect(record.light).toMatchObject({
-                basis: "collection-trial",
-                dli: [12, 16],
-                startingDli: null,
-            });
-            expect(lightComparison(record.light)).toStrictEqual({
-                hours: 13.5,
-                lux: [13_600, 23_000],
-                ppfd: [245, 330],
-                startingPpfd: null,
-            });
+                expect(complete).toHaveLength(container.members.length + 1);
+                expect(
+                    Math.max(...complete.map((range) => range[0]))
+                ).toBeLessThanOrEqual(
+                    Math.min(...complete.map((range) => range[1]))
+                );
+            }
         }
     );
+
+    it("retains differentiated P30 members and the common P35 recommendation", async () => {
+        expect.hasAssertions();
+
+        const tiny = await getPlantCareReference(
+            "tiny-mixed-succulent-planter"
+        );
+        const lithops = await getPlantCareReference("lithops-shared-planter");
+        const echeveria = await getPlantCareReference("tiny-planter-echeveria");
+        const sedum = await getPlantCareReference(
+            "tiny-planter-coppertone-sedum"
+        );
+
+        expect([
+            tiny.light.dli,
+            echeveria.light.dli,
+            sedum.light.dli,
+        ]).toStrictEqual([
+            [14, 18],
+            [12, 18],
+            [14, 20],
+        ]);
+        expect(lithops.light).toMatchObject({
+            dli: [16, 22],
+            startingDli: [12, 16],
+        });
+    });
+
+    it("keeps a nonempty recommendation overlap for every shared container", async () => {
+        expect.hasAssertions();
+
+        const records = new Map(
+            (await getPlantCareReferences()).map((record) => [
+                record.slug,
+                record,
+            ])
+        );
+        const shared = (await getContainers()).filter(
+            (container) => container.shared
+        );
+        const conflicts = shared.filter((container) => {
+            const ranges = container.profiles.map(
+                (profile) => records.get(profile.slug)?.light.dli
+            );
+            const complete = ranges.filter(
+                (range) => range !== null && range !== undefined
+            );
+            return (
+                complete.length !== ranges.length ||
+                Math.max(...complete.map((range) => range[0])) >
+                    Math.min(...complete.map((range) => range[1]))
+            );
+        });
+
+        expect(shared.map((container) => container.id)).toStrictEqual([
+            "P19",
+            "P20",
+            "P30",
+            "P35",
+            "P38",
+        ]);
+        expect(conflicts.map((container) => container.id)).toStrictEqual([]);
+    });
 
     it.each([
         [
@@ -524,6 +625,7 @@ describe("light comparisons", () => {
             hours: 13.5,
             lux: [6800, 14_400],
             ppfd: [125, 205],
+            startingLux: [4500, 8600],
             startingPpfd: [80, 125],
         });
         expect(record.light.dli).toStrictEqual([6, 10]);
@@ -535,6 +637,7 @@ describe("light comparisons", () => {
             hours: 16,
             lux: [5700, 12_200],
             ppfd: [105, 175],
+            startingLux: [3800, 7300],
             startingPpfd: [70, 105],
         });
         expect(lightComparison(reference().light, 24).ppfd).toStrictEqual([

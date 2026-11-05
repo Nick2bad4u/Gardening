@@ -1,16 +1,19 @@
 [
     {
         "light": {
-            "acclimation": "The owner reports this pot on the shelf next to the cacti table, on the room side, on November 4, 2026, after a move five days earlier (approximately October 30; time not supplied). Measure at its leaves before changing exposure; the shelf location does not establish its light dose. Acclimate gradually and assess new growth.",
+            "acclimation": "The owner reports this pot on the shelf next to the cacti table, on the room side, on November 4, 2026, after a move five days earlier (approximately October 30; time not supplied). Measure at its leaves before changing exposure; the shelf location does not establish its light dose. Acclimate gradually and assess new growth. Approach the 2–3 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "The nursery label names Aglaonema commutatum; the exact Alpine Spires cultivar is unverified. This trial is not a cultivar minimum, optimum, or scorch limit.",
-            "description": "A cautious low-light foliage trial for the newly acquired plant. Bright indirect light is a useful starting placement; avoid an abrupt move into strong sun.",
+            "description": "Recommend 3–6 DLI for sustained indoor foliage growth, aiming near the middle initially. This supplies substantially more light than indoor survival figures while avoiding transfer of nursery-production intensity to a recently repotted houseplant. The selected interval is a practical synthesis of shade tolerance, bright-diffused-light guidance, and cultivar-dependent responses. The nursery trade label does not establish a tested cultivar-specific requirement. Use 2–3 only while acclimating from demonstrably dimmer conditions; a plant already growing well within the working band need not be dimmed.",
             "dli": [
                 3,
                 6
             ],
             "research": "A 30-day Aglaonema commutatum study compared four other cultivars at reported greenhouse exposures of 581 and 1,083 µmol·m⁻²·s⁻¹; pigment and photosynthetic responses differed by cultivar. Those exposures and brief leaf-response measurements do not establish Alpine Spires’ growth optimum. UF/IFAS separately recommends 1,250–3,000 foot-candles for shaded nursery production (about 13,500–32,300 lux), while describing 25 foot-candles as indoor tolerance. Production, tolerance, and an optimum are different endpoints; neither source supplies an Alpine Spires DLI target.",
-            "startingDli": null
+            "startingDli": [
+                2,
+                3
+            ]
         },
         "moisture": {
             "check": "Inspect below the upper mix in the recorded tall glass jar: approximately 10 in tall by 5 in wide, with a 1 in drainage hole. Surface drying alone does not establish moisture through its depth. Use the October 29 setup-2 record rather than the old retail 12 cm label.",
@@ -18,7 +21,7 @@
             "waitWhen": "The mix remains wet below the surface or runoff is standing around the pot. Confirm drainage before adding more water.",
             "waterWhen": "The upper mix has begun drying and a check below it supports watering. Drain excess water; do not require whole-pot cactus-style drought."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "aglaonema-commutatum-alpine-spires",
         "sources": [
             {
@@ -45,21 +48,29 @@
                 "scope": "October 29, 2026 Repot record, setup 2: square glass jar approximately 10 in tall by 5 in wide with a 1 in drainage hole; recorded medium is 85% Molly's Aroid Mix / 15% Molly's Orchid Mix (bottom layer). This predates the reported shelf move.",
                 "title": "Canonical History: Alpine Spires setup 2",
                 "url": "https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit#gid=1465181080&range=A2064:BO2064"
+            },
+            {
+                "scope": "Species cultivation favors bright diffused light and tolerates shade; no Alpine Spires numerical light requirement is supplied. The recommended interval is an inference.",
+                "title": "NParks: Aglaonema commutatum",
+                "url": "https://www.nparks.gov.sg/florafaunaweb/flora/1/6/1611"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "The owner reports this pot on the shelf next to the cacti table, on the room side, on November 4, 2026, after a move five days earlier (approximately October 30; time not supplied). Measure at its leaves before changing exposure; the shelf location does not establish its light dose. Acclimate gradually and assess new growth.",
+            "acclimation": "The owner reports this pot on the shelf next to the cacti table, on the room side, on November 4, 2026, after a move five days earlier (approximately October 30; time not supplied). Measure at its leaves before changing exposure; the shelf location does not establish its light dose. Acclimate gradually and assess new growth. Approach the 3–4 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Direct sun can scorch foliage. The proposed range is a general foliage trial, not a Nightly-specific threshold.",
-            "description": "A low-light foliage trial for nursery-labelled Fittonia albivenis Nightly; use an indirect-light position rather than the strongest cactus exposure.",
+            "description": "Recommend 4–6 DLI, centered near 5, for healthy leafy growth. The eight-week Fittonia trial's measured treatments correspond to 4.46–6.47 DLI, providing a useful numerical anchor. A rounded 4–6 working band stays close to that evidence without claiming Nightly was tested or that intensity was isolated from spectrum. Use 3–4 during an increase from a dimmer position. Maintain root-zone moisture and inspect new foliage; a brief wilt alone is not proof of excessive light.",
             "dli": [
-                3,
+                4,
                 6
             ],
             "research": "An eight-week trial published as Fittonia verschaffeltii used 77.37, 101.22, and 112.38 µmol·m⁻²·s⁻¹ PAR for 16 hours daily: calculated DLIs of 4.46, 5.83, and 6.47 mol·m⁻²·day⁻¹. The lowest-light fluorescent-plus-LED treatment produced less total dry mass than the fluorescent treatments. Spectrum changed alongside intensity, so this was not a clean DLI optimization experiment. It supports a moderate-light trial but establishes neither a minimum nor an optimum for nursery-labelled Nightly.",
-            "startingDli": null
+            "startingDli": [
+                3,
+                4
+            ]
         },
         "moisture": {
             "check": "Check the surface and accessible root zone as the upper mix begins drying; pot depth and the current medium remain unconfirmed.",
@@ -67,7 +78,7 @@
             "waitWhen": "The root zone is still wet, water is trapped around the roots, or wilting occurs despite wet mix. Inspect the cause before watering again.",
             "waterWhen": "The upper mix is starting to dry and the root-zone check supports a drink. Keep drainage clear; do not wait for a cactus-style dry plateau."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "fittonia-albivenis-nightly",
         "sources": [
             {
@@ -76,7 +87,7 @@
                 "url": "https://plants.ces.ncsu.edu/plants/fittonia-albivenis/"
             },
             {
-                "scope": "The low-light foliage category supplies a cautious 3–6 DLI collection trial, not a tested Nightly threshold.",
+                "scope": "The general foliage DLI categories provide context for the collection recommendation; they do not establish a Nightly-specific range or threshold.",
                 "title": "Iowa State Extension: supplemental light considerations",
                 "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
             },
@@ -89,16 +100,19 @@
     },
     {
         "light": {
-            "acclimation": "Keep the current room-side position as context, then measure at the leaves before changing it. Increase exposure gradually.",
+            "acclimation": "Keep the current room-side position as context, then measure at the leaves before changing it. Increase exposure gradually. Approach the 3–4 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Working identity remains Pachira cf. glabra. Pachira aquatica care is comparison guidance; neither source establishes a glabra-specific numeric threshold.",
-            "description": "Retains the collection's broad 5–12 DLI trial for the money tree. Favor bright indirect light and evaluate growth before approaching the upper end.",
+            "description": "Recommend 4–8 DLI, aiming around 5–6 before increasing further, for the indoor money tree's vegetative growth. This is a moderate bright-indirect range consistent with the nursery tag and the working species' semi-shade guidance. Related P. aquatica research demonstrates low-light accommodation, so a routine 12-DLI upper target is unnecessary without evidence of benefit in this individual. The 4–8 choice is an inference for Pachira cf. glabra, not a conversion of that study's maintenance treatments.",
             "dli": [
-                5,
-                12
+                4,
+                8
             ],
             "research": "NParks lists Pachira glabra for semi-shade without a numeric optimum. A 191-day study of the related P. aquatica tested 0.22, 0.43, and 1.30 DLI using white LEDs at approximately 6.7–20.1 µmol·m⁻²·s⁻¹. Surviving plants sustained growth, but P. aquatica total dry weight and relative growth rate did not differ significantly among treatments. This demonstrates low-light accommodation under those conditions, not an optimal range for the collection’s provisionally identified Pachira cf. glabra.",
-            "startingDli": null
+            "startingDli": [
+                3,
+                4
+            ]
         },
         "moisture": {
             "check": "Check the upper mix and the retained nursery core if still present. The current pot size, repot history, and mix are unconfirmed.",
@@ -106,7 +120,7 @@
             "waitWhen": "The nursery core or lower mix is still wet, or runoff is standing beneath the pot. Drooping alone does not establish thirst.",
             "waterWhen": "The upper mix has dried and the deeper root-zone check agrees. The nursery tag's upper-2-inch cue needs scaling to the actual pot; drain excess."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "pachira-glabra",
         "sources": [
             {
@@ -115,7 +129,7 @@
                 "url": "https://plants.ces.ncsu.edu/plants/pachira-aquatica/"
             },
             {
-                "scope": "General foliage DLI context; the retained 5–12 collection range is an inference, not this source's Pachira recommendation.",
+                "scope": "General foliage DLI context for the collection recommendation; the selected endpoints are inference, not this source's Pachira recommendation.",
                 "title": "Iowa State Extension: supplemental light considerations",
                 "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
             },
@@ -133,18 +147,18 @@
     },
     {
         "light": {
-            "acclimation": "Begin with the existing 4–6 DLI trial; consider 6–10 only after stable growth and moisture response. Kitchen-shelf light and runtime still need measurement.",
+            "acclimation": "Measure the kitchen shelf's combined window and fixture exposure; runtime and current leaf-level light remain unrecorded. Approach the 3–4 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "These are collection trials, not measured Obtipan Bicolor limits. Reassess pale patches, scorch, or weak stretching before another increase.",
-            "description": "Retains the profile's initial and settled comparison bands for bright indirect light under the kitchen fixtures plus window light.",
+            "description": "Recommend 4–7 DLI, aiming around 5–6, for compact growth of this variegated peperomia. The five-week P. obtusifolia experiment demonstrates growth near a roughly 100 photon-flux treatment, supporting a moderate exposure. Its 350–800 nm measurement is not directly standard PAR DLI. The slightly brighter allowance than the green peperomia is a practical variegation adjustment, not a tested cultivar difference. There is no need to adopt the 6–10 DLI cutting-rooting recommendation as this mature plant's routine band.",
             "dli": [
-                6,
-                10
+                4,
+                7
             ],
             "research": "A five-week Peperomia obtusifolia experiment compared white-LED spectra at 100 µmol·m⁻²·s⁻¹ for 14 hours, with greatest biomass under 4,100 K among the tested lamps. Its photon measurement explicitly spans 350–800 nm, so the daily total is not standard 400–700 nm DLI. Separate research on Emerald Isle cuttings recommends 6–10 DLI during rooting. Neither experiment tested mature Obtipan Bicolor or establishes its optimal daily exposure; the existing bands remain collection trials.",
             "startingDli": [
-                4,
-                6
+                3,
+                4
             ]
         },
         "moisture": {
@@ -153,7 +167,7 @@
             "waitWhen": "The mix below the surface remains wet or runoff is retained. A dry-looking surface alone does not establish that this larger pot needs water.",
             "waterWhen": "The mix has partly dried and the root-zone check agrees. Empty runoff; avoid both persistent wetness and prolonged whole-pot drought."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "peperomia-obtipan-bicolor",
         "sources": [
             {
@@ -162,7 +176,7 @@
                 "url": "https://www.rhs.org.uk/plants/peperomia/how-to-grow-peperomia"
             },
             {
-                "scope": "Foliage DLI categories inform the existing 4–6 initial and 6–10 settled collection trials.",
+                "scope": "General foliage DLI categories inform the collection synthesis; they do not establish mature Bicolor-specific endpoints.",
                 "title": "Iowa State Extension: supplemental light considerations",
                 "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
             },
@@ -175,23 +189,28 @@
                 "scope": "Primary researchers' report of Emerald Isle baby-rubberplant cutting propagation at 2.9–16.4 DLI; recommend 6–10 DLI for rooting foliage cuttings, not mature Bicolor plants.",
                 "title": "Kang and Lopez (2023): A Focus on DLI",
                 "url": "https://www.growertalks.com/Article/?articleid=26302"
+            },
+            {
+                "scope": "Species guidance favors bright indirect light, notes lower-light tolerance especially in non-variegated plants, and warns about strong direct-light burn; it does not establish the selected numerical endpoints.",
+                "title": "NC State Extension: Peperomia obtusifolia",
+                "url": "https://plants.ces.ncsu.edu/plants/peperomia-obtusifolia/"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "The owner reports this pot on the shelf next to the cacti table, on the room side, on November 4, 2026, after a move five days earlier (approximately October 30; time not supplied). Measure at its leaves before changing exposure; the shelf location does not establish its light dose. Acclimate gradually and assess new growth.",
+            "acclimation": "The owner reports this pot on the shelf next to the cacti table, on the room side, on November 4, 2026, after a move five days earlier (approximately October 30; time not supplied). Measure at its leaves before changing exposure; the shelf location does not establish its light dose. Acclimate gradually and assess new growth. Approach the 2–3 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Spice Is Nice is nursery trade branding, not proof of a registered cultivar. The proposed comparison with P31 is unvalidated for this individual plant.",
-            "description": "A proposed bright-indirect-light trial using the collection's other Peperomia obtusifolia as a cautious starting comparison.",
+            "description": "Recommend 3–6 DLI, aiming around 4–5, for the glossy green peperomia's indoor growth. Manufacturer guidance favors medium-to-bright indirect light; the P. obtusifolia spectral trial gives a useful moderate-light growth anchor. Its broad-band photon reading is not treated as exact PAR DLI. This green plant need not automatically share the brighter variegated Bicolor range or a cutting-propagation target. Use 2–3 only during a move from substantially dimmer conditions; retain healthy established exposure within the working range.",
             "dli": [
-                6,
-                10
+                3,
+                6
             ],
             "research": "Proven Winners recommends medium-to-bright indirect light for Spice is Nice but gives no DLI or PPFD optimum. In a five-week study of other Peperomia obtusifolia plants, 4,100 K white LEDs produced the greatest biomass among three spectra at a fixed reported 100 µmol·m⁻²·s⁻¹ for 14 hours. The measurement covered 350–800 nm rather than standard PAR. This is useful species-level context, but neither the study nor the trade name verifies this individual’s cultivar-specific optimal light.",
             "startingDli": [
-                4,
-                6
+                2,
+                3
             ]
         },
         "moisture": {
@@ -200,7 +219,7 @@
             "waitWhen": "The root zone remains wet or water is retained beneath it. Avoid fixed-depth triggers until the actual container is documented.",
             "waterWhen": "The medium has partly dried and the root-zone check supports watering. Allow excess water to escape; do not impose a prolonged cactus-style dry period."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "peperomia-obtusifolia-spice-is-nice",
         "sources": [
             {
@@ -209,7 +228,7 @@
                 "url": "https://www.rhs.org.uk/plants/peperomia/how-to-grow-peperomia"
             },
             {
-                "scope": "General foliage categories inform proposed 4–6 and 6–10 trials; applying P31's bands to P40 is collection inference.",
+                "scope": "General foliage DLI categories inform the collection synthesis; the selected Spice is Nice range is inference rather than a cultivar-specific recommendation from this source.",
                 "title": "Iowa State Extension: supplemental light considerations",
                 "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
             },
@@ -222,21 +241,29 @@
                 "scope": "Species-level P. obtusifolia spectral experiment; 100 over 350–800 nm for 14 hours, no intensity optimization and no Spice is Nice provenance.",
                 "title": "Shin, Lee and Nam (2023): Growth, visual qualities and photosynthetic parameters in Peperomia under white lighting",
                 "url": "https://www.jales.org/articles/xml/5jgK/"
+            },
+            {
+                "scope": "Species guidance favors bright indirect light, notes lower-light tolerance especially in non-variegated plants, and warns about strong direct-light burn; it does not establish the selected numerical endpoints.",
+                "title": "NC State Extension: Peperomia obtusifolia",
+                "url": "https://plants.ces.ncsu.edu/plants/peperomia-obtusifolia/"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "Measure at representative leaves inside the glass before changing exposure. Begin toward the lower end of this trial, make gradual changes, and check each member for new growth, drying, scorch, or enclosure warming.",
+            "acclimation": "Measure at representative leaves inside the glass before changing exposure. Begin toward the lower end of this trial, make gradual changes, and check each member for new growth, drying, scorch, or enclosure warming. Approach the 2–3 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "This is a general foliage trial for provisionally identified plants, not a tested shared requirement. The fern-like growth and moss remain unidentified. The reported 6,000–7,000 lux is a dated observation with unknown sensor position, not a target.",
-            "description": "A cautious low-light foliage comparison for this mixed terrarium under indirect light. Watch the probable Hypoestes for fading markings or stretched growth; the lower end may not provide enough light for every member.",
+            "description": "Recommend 3–5 DLI at representative foliage inside the jar, aiming near 4. This balances the probable Fittonia's moderate-light growth evidence with Hypoestes leaf-quality tradeoffs and the unidentified shade-associated planting. It is a practical mixed-container compromise, not a claimed fern or moss requirement. Avoid pursuing maximum growth or pigmentation in one member at the expense of the rest. The reported 6,000–7,000 lux could already be broadly compatible; verify sensor position, spectrum and duration before changing it.",
             "dli": [
                 3,
-                6
+                5
             ],
             "research": "No study establishing a shared optimum for this provisionally identified mixture was identified in the sources reviewed. A nine-week Hypoestes phyllostachya study used 2.7–135 µmol·m⁻²·s⁻¹ for 16 hours daily. Very low exposure reduced red-purple variegation, while 67.5–135 produced smaller, narrower new leaves: different quality goals favored different exposures. The jar’s probable Hypoestes appears white-speckled, so that pigmentation result transfers imperfectly. Fittonia research supplies separate context, but unidentified fern-like growth and moss prevent a species-based common DLI prescription.",
-            "startingDli": null
+            "startingDli": [
+                2,
+                3
+            ]
         },
         "moisture": {
             "check": "Inspect the coir layer, accessible root zone, trapped water, and plant condition. Condensation and air humidity do not measure root-zone moisture.",
@@ -244,7 +271,7 @@
             "waitWhen": "The upper planting medium is moist, water is pooling, or heavy condensation accompanies persistently wet conditions. Investigate ventilation and moisture before adding water.",
             "waterWhen": "The planting medium is actually beginning to dry and the plants need moisture. Add a small amount and reassess; the LECA/rock base does not establish an outlet for drainage."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "terrarium",
         "sources": [
             {
@@ -286,18 +313,18 @@
     },
     {
         "light": {
-            "acclimation": "Retain the initial 6–8 DLI trial and consider 8–12 only after stable growth. Measure the kitchen shelf's combined window and fixture exposure first.",
+            "acclimation": "Measure the kitchen shelf's combined window and fixture exposure before changing the position or lamps. Approach the 4–6 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "These are collection comparison bands, not proven Tricolor minimum, optimum, or damage limits. Recheck pale or scorched leaves before increasing exposure.",
-            "description": "Retains the profile's brighter indirect-light trial; weak stretching or fading color warrants a light and root-zone review.",
+            "description": "Recommend 6–10 DLI, aiming around 7–8, to support compact, colored indoor foliage without treating outdoor sun tolerance as a requirement. This remains the brightest houseplant recommendation in this group. NC State's bright-indirect guidance and the shade-acclimation study support providing useful light without chasing maximum irradiance. The study's 800 PPFD assay setting is not used as a target. Increase from 4–6 when moving from dimmer conditions, judging new leaf form and color alongside root-zone health.",
             "dli": [
-                8,
-                12
+                6,
+                10
             ],
             "research": "A species-level Tradescantia spathacea study compared full natural sunlight with 30% sunlight after two years of acclimatization, with measurements in summer. Shaded plants had higher measured net photosynthesis; full-sun plants showed stronger protective responses and more upright leaves. The reported 800 µmol·m⁻²·s⁻¹ was a gas-exchange measurement setting, not a recommended growing intensity. Neither daily integrated exposure nor a Tricolor-specific optimum was established. NParks also lists Dwarf Tricolor for sun or semi-shade, providing qualitative outdoor guidance rather than an indoor DLI target.",
             "startingDli": [
-                6,
-                8
+                4,
+                6
             ]
         },
         "moisture": {
@@ -306,7 +333,7 @@
             "waitWhen": "The deeper mix remains wet or runoff has collected around the pot. Do not water from a surface reading alone.",
             "waterWhen": "The upper mix has dried and the root-zone check supports watering. Drain fully; avoid prolonged whole-pot drought."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "tradescantia-spathacea-tricolor",
         "sources": [
             {
@@ -315,7 +342,7 @@
                 "url": "https://plants.ces.ncsu.edu/plants/tradescantia-spathacea/"
             },
             {
-                "scope": "General DLI context for retained 6–8 and 8–12 collection trials; those bands are not species recommendations from this source.",
+                "scope": "General DLI context for the collection synthesis; the selected Tricolor endpoints are not species or cultivar recommendations from this source.",
                 "title": "Iowa State Extension: supplemental light considerations",
                 "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
             },

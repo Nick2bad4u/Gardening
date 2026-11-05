@@ -23,13 +23,13 @@ const range = (values: readonly [number, number] | null) =>
     <h2 id="collection-care-comparison">Compare the collection</h2>
     <p>
         {active.length} active profiles · {LIGHT_COMPARISON_HOURS} constant-light hours for
-        comparison · trial ranges, not established minimums, optima, or maximums. Each link opens
-        the plant's full care card.
+        comparison. Recommended lux ranges support healthy, acclimated indoor growth. Start near the
+        lower end when changing exposure. Each link opens the plant's full care card.
     </p>
     <p>
-        Lux is an approximate white-LED envelope, not a fixture calibration. Shared P-IDs have one
-        watering decision. Read the measurement assumptions and exceptions below before changing
-        care.
+        Lux is a white-LED estimate, not a fixture calibration. The bounds are not established
+        minimums, safe maximums, or proven optima. Shared P-IDs have one watering decision. Read the
+        measurement assumptions and exceptions below before changing care.
     </p>
     <details class="care-comparison-browser" data-print-care>
         <summary>Browse all {active.length} active plant references</summary>
@@ -64,10 +64,20 @@ const range = (values: readonly [number, number] | null) =>
                         <p class="care-comparison-basis">
                             <SiteIcon name="info" size={18} />
                             {care.light.basis === "collection-trial"
-                                ? "Provisional trial · not a limit"
+                                ? "Recommended estimate"
                                 : "Qualitative reference"}
                         </p>
                         <dl class="care-comparison-values">
+                            <div>
+                                <dt>
+                                    <SiteIcon name="light" size={20} />
+                                    Recommended lux
+                                </dt>
+                                <dd>
+                                    <span class="care-comparison-range">{range(light.lux)}</span>
+                                    <small>white-LED estimate</small>
+                                </dd>
+                            </div>
                             <div>
                                 <dt>
                                     <SiteIcon name="light" size={20} />
@@ -80,18 +90,8 @@ const range = (values: readonly [number, number] | null) =>
                             </div>
                             <div>
                                 <dt>
-                                    <SiteIcon name="light" size={20} />
-                                    Approx. lux
-                                </dt>
-                                <dd>
-                                    <span class="care-comparison-range">{range(light.lux)}</span>
-                                    <small>white-LED estimate</small>
-                                </dd>
-                            </div>
-                            <div>
-                                <dt>
                                     <SiteIcon name="clock" size={20} />
-                                    Trial DLI
+                                    Daily light estimate
                                 </dt>
                                 <dd>
                                     <span class="care-comparison-range">

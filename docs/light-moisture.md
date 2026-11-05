@@ -1,35 +1,47 @@
 # Light and moisture reference
 
-Use each plant's **Light & moisture** card for a provisional light comparison and a
-physical watering check. These are collection trials and observation triggers,
-not measured conditions, fixed watering dates, or proven species limits.
+Use each plant's **Light & moisture** card for a recommended light range and a
+physical watering check. The November 5, 2026 recommendations are best-supported
+working estimates for healthy indoor growth, with approximate white-LED lux
+shown first. They are not measured conditions, fixed watering dates, or proven
+species limits.
 
 The website's comparison list uses the same maintained records as the plant
 cards. Shared-pot profiles remain separate botanical references with one pot
 history and one watering decision.
 
-## Minimum, good, optimal, and maximum
+## Using the recommended ranges
 
-- **Below the trial band:** inspect placement and new growth. This is not a
+- **Below the working range:** inspect placement and new growth. This is not a
   proven survival minimum; a shaded or recovering plant may need gradual changes.
-- **Provisional trial band:** a collection starting estimate, adjusted through
-  observations. Some profiles also show a gentler starting comparison.
+- **Recommended working range:** the exposure we would aim to provide for
+  healthy, acclimated indoor growth, then adjust through observations. Start
+  toward its lower end when increasing light and check new growth before
+  approaching the upper end.
+- **Gentler starting range:** an optional transition from a demonstrably dimmer
+  position, not a second settled target. Retain a healthy plant's already-tolerated
+  exposure; do not dim it just to restart acclimation.
 - **Optimal:** not established for these individual plants, pots, and conditions.
   A productive range is not proof of a precise optimum.
-- **Above the trial band:** inspect growth, heat, bleaching, scorch, and water
+- **Above the working range:** inspect growth, heat, bleaching, scorch, and water
   stress. The upper edge is not a ceiling or a damage threshold. An acclimated
   plant may perform well above it; the number alone is not a reason to reduce light.
 
-Numeric entries are labeled **collection trial ranges**. Sources often establish
-qualitative light preferences or broad plant categories; the card's source notes
-state where the numeric choice is an inference. Mixed plantings use provisional
-comparison bands with checks for each member; one shared band does not establish
-identical needs or synchronized watering. The removed plant's card stays historical.
+Numeric entries are labeled **recommended estimates**. Each card explains why
+its range was selected, separately from the published evidence. The ranges aim
+for sustained foliage, compact growth, and appropriate form; they are not a
+flowering recipe, a maximum-growth experiment, or a survival minimum.
+
+Mixed plantings need readings at each member's leaves. The P30 bowl's overview
+uses the overlap between its component recommendations, while those components
+retain their own ranges. P35's probable Lithops groups share a genus-informed
+recommendation. Neither arrangement establishes identical needs or synchronized
+watering. The removed plant's card stays historical.
 
 ## Reading the published research
 
 Each active plant's care card now separates **Published evidence** from its
-**provisional trial band**. The November 4, 2026 review covers all 49 active
+**recommended working range**. The November 4, 2026 research review covers all 49 active
 profiles, including shared-container overviews. It searches the recorded taxa,
 trade names, and relevant synonyms, and identifies related-species evidence
 instead of treating it as a study of the collection plant.
@@ -52,13 +64,14 @@ The evidence needs several distinctions:
 
 Where the review did not identify a defensible numerical optimum, the card says
 so. This describes the evidence found, not a claim that no relevant research can
-exist. Existing trial endpoints remain provisional; a new citation does not turn
-them into measured requirements.
+exist. The November 5 synthesis uses that evidence to recommend practical
+endpoints even when they require judgment. Those endpoints remain estimates;
+a new citation does not turn them into measured requirements.
 
 ### Useful numbers found, with their limits
 
 These published quantities describe different experiments or production settings.
-Use the linked care cards for the collection trial and the cited papers for the
+Use the linked care cards for the current recommendation and the cited papers for the
 original conditions; this research summary does not replace the installed lamp schedule.
 
 - **[Fittonia Nightly](./plants/houseplants/fittonia-albivenis-nightly.md):**
@@ -98,38 +111,51 @@ original conditions; this research summary does not replace the installed lamp s
 
 ## Where the numbers come from
 
-The DLI bands are **collection estimates, not published optimal ranges**. The
-November 4, 2026 source audit found two main starting points:
+The DLI bands are **collection recommendations, not published optimal ranges**.
+The November 5, 2026 synthesis selected a working and gentler starting band for
+each of the 49 active profiles using these priorities:
 
-- Earlier collection trials, recorded in the
-  [AW200SE research table](./equipment/vivosun-aw200se.md#working-light-targets-for-this-collection),
-  combine qualitative cultivation guidance with broad succulent research.
-  Individual endpoints were selected for the collection; the cited studies do
-  not establish each row's species-specific numbers.
-- Broad foliage and succulent categories from
+- Use relevant species or cultivar growth studies as numerical context, while
+  retaining their day length, spectrum, growth stage, and measured outcome.
+  Fittonia's growth experiment is more relevant to its working range than a
+  low-light survival figure; Peperomia cutting propagation is not an automatic
+  prescription for an established houseplant.
+- Start with broad foliage and succulent categories from
   [Iowa State Extension](https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants)
-  inform other trials. Applying a category to a particular cultivar, recovering
-  plant, or mixed pot remains an inference.
+  where direct experiments are absent, then weigh species-level cultivation
+  guidance. Sun-demanding cacti and rosettes receive brighter recommendations
+  than filtered-light or shade foliage plants. A qualitative full-sun label is
+  not converted mechanically into a fixed DLI.
+- Account for variegation, uncertain identity, mixed-pot membership, and indoor
+  growing conditions. Keep broad, rounded endpoints and use the card's
+  acclimation and stress cues to refine them. The exact intervals are our
+  inference from those sources, not values directly published for every plant.
+
+The [earlier AW200SE research table](./equipment/vivosun-aw200se.md#working-light-targets-for-this-collection)
+remains a dated planning reference. The current comparison and care cards use
+one maintained catalog and supersede that table's old recommendations.
 
 PPFD is calculated from each DLI band using the comparison duration. Lux is then
 estimated from that PPFD with a white-LED conversion. They are three ways of
-expressing the same provisional band, **not three independent recommendations**.
+expressing the same recommended band, **not three independent recommendations**.
 The care card's sources explain which claims they support. No cited numeric
 experiment establishes an optimum or upper limit for each actual collection plant.
 
 ### Feather cactus: 17 DLI is not a maximum
 
-The [feather cactus](./plants/starter/mammillaria-plumosa.md) band's **10–17 DLI**
-was inherited from the earlier indoor collection trial. It is not a measured
-optimum, a published maximum, or evidence that more than 17 DLI is excessive.
+The [feather cactus](./plants/starter/mammillaria-plumosa.md) now has a recommended
+**12–20 DLI** working band, approximately **13,600–28,800 lux** on the 13.5-hour
+white-LED comparison. Use **8–12 DLI** only as a gentler transition from a dimmer
+position. This replaces the inherited 10–17 trial; neither 17 nor 20 is a ceiling.
 
 The [Arizona-Sonora Desert Museum care sheet](https://www.desertmuseum.org/visit/sheets/Mamplu.pdf)
 describes full-sun tolerance, a preference for light afternoon shade, and less
 spiny, less white new growth in excessive shade. The
 [RHS species profile](https://www.rhs.org.uk/plants/10832/mammillaria-plumosa/details)
 lists full sun while recommending bright filtered light under glass. Neither
-source provides a numerical DLI optimum or maximum. These context-dependent
-descriptions do not establish a replacement upper number.
+source provides a numerical DLI optimum or maximum. We selected 12–20 as a
+practical indoor recommendation from that combination of strong-light benefit
+and shade protection, rather than treating 20 as a published threshold.
 
 For scale, **350 PPFD for 13.5 hours is about 17 DLI; 500 PPFD is 24.3 DLI;
 700 PPFD is 34.0 DLI**. Those are conversion examples, not new feather-cactus
@@ -225,8 +251,8 @@ an instruction to water that component independently.
   support. Existing collection trial ranges also remain documented in the
   [earlier fixture research](./equipment/vivosun-aw200se.md#working-light-targets-for-this-collection).
 
-All 49 active profiles received a published-evidence review on November 4, 2026.
-The nine formerly qualitative records retain their provisional category-based
-comparisons; the other active records retain their existing collection trials.
+All 49 active profiles received a published-evidence review on November 4, 2026,
+followed by the practical recommendation review on November 5. The current care
+cards explain the selected working ranges and optional acclimation ranges.
 Revisit ranges when measurements, pot setup, plant condition, or identification
 provide better evidence.

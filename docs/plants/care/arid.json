@@ -1,16 +1,19 @@
 [
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 8–12 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Inspect exposed ribs and the growing tip for bleaching or excessive heat.",
-            "description": "Bright to high light after acclimation.",
+            "description": "Recommend 12–20 DLI for healthy, acclimated indoor growth. Choose a bright moderate-to-high band for compact ribs, retaining the old lower end but trimming the upper end because RHS specifically recommends filtered light under glass. Full outdoor sun tolerance does not require the strongest indoor hotspot.",
             "dli": [
                 12,
-                22
+                20
             ],
             "research": "RHS distinguishes bright filtered light under glass from full sun outdoors in warmer climates. Exact-species searches found population ecology and germination research, but a controlled mature-plant DLI/PPFD optimum was not identified in the sources reviewed. Habitat-associated shade is not itself a quantified indoor target.",
-            "startingDli": null
+            "startingDli": [
+                8,
+                12
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -18,7 +21,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "astrophytum-ornatum",
         "sources": [
             {
@@ -27,8 +30,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/astrophytum-ornatum/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -45,16 +48,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 6–8 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Raised growth can receive more light than shaded folds; check both surfaces.",
-            "description": "Bright middle zone for the uneven sculptured body.",
+            "description": "Recommend 8–14 DLI for healthy, acclimated indoor growth. Lower the established band to reflect cultivar-specific bright indirect/filtered-light guidance and tolerance of less light than many cacti. This still supplies useful sustained light; examine raised lobes and shaded folds separately.",
             "dli": [
-                10,
-                18
+                8,
+                14
             ],
             "research": "NC State provides cultivar-specific qualitative guidance: bright indirect light, protection from harsh afternoon sun, and greater tolerance of lower lighting than many cacti. A quantitative optimum for the monstrose form was not identified in the sources reviewed. Seed/germination studies under Cereus hankeanus concern ordinary plants, not Ming Thing.",
-            "startingDli": null
+            "startingDli": [
+                6,
+                8
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -62,7 +68,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "cereus-forbesii-ming-thing",
         "sources": [
             {
@@ -71,8 +77,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/cereus-forbesii-ming-thing/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -89,16 +95,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 10–14 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Measure at the crown; dense spines do not establish protection against sudden heat or light.",
-            "description": "High light after a gradual transition.",
+            "description": "Recommend 16–24 DLI for healthy, acclimated indoor growth. Raise the lower end modestly to prioritize compact, densely spined growth in this full-sun species. Keep 24 as a practical review point, not a measured ceiling; assess the actual crown and increase only after acclimation.",
             "dli": [
-                14,
+                16,
                 24
             ],
             "research": "RHS recommends full sun under glass for Echinocereus rigidissimus. This is species-level qualitative evidence; the collection subspecies rubispinus was not assigned a tested DLI optimum in the sources found. Dense spines do not numerically calibrate the exposure beneath them.",
-            "startingDli": null
+            "startingDli": [
+                10,
+                14
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -106,7 +115,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "echinocereus-rigidissimus-rubispinus",
         "sources": [
             {
@@ -115,8 +124,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/echinocereus-rigidissimus-rubispinus/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -133,16 +142,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 8–10 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Flower buds do not justify an abrupt jump in light or watering.",
-            "description": "Bright middle zone; judge compact new growth.",
+            "description": "Recommend 10–16 DLI for healthy, acclimated indoor growth. Keep useful bright light but lower the upper end to reflect NParks semi-shade guidance and full-sun yellowing in its cultivation context. The numeric band is an indoor compromise, not a conversion of Singapore sunshine.",
             "dli": [
                 10,
-                18
+                16
             ],
             "research": "NParks explicitly lists semi-shade and notes stem yellowing under full sun in its Singapore cultivation context. This supports avoiding an unqualified hottest/full-sun recommendation. An adult numerical optimum was not identified in the sources reviewed under subdenudata or the accepted-name comparison Echinopsis ancistrophora.",
-            "startingDli": null
+            "startingDli": [
+                8,
+                10
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -150,7 +162,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "echinopsis-subdenudata",
         "sources": [
             {
@@ -159,8 +171,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/echinopsis-subdenudata/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -177,16 +189,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 6–10 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Hybrid identity and individual tolerance remain uncertain; avoid abrupt exposure changes.",
-            "description": "Bright middle or edge zone for this probable obesa-type hybrid.",
+            "description": "Recommend 10–18 DLI for healthy, acclimated indoor growth. Move the established band moderately upward because the obesa reference supports full light with protection from hot afternoon sun. Keep a gentler starting band because Dragon's Egg parentage and tolerance remain unresolved; these are chosen hybrid-care estimates.",
             "dli": [
-                8,
-                15
+                10,
+                18
             ],
             "research": "Parentage remains unknown: Dragon's Egg is a probable obesa-type hybrid or selection. RHS recommends full light for E. obesa with protection from hot afternoon sun. That is a related-species comparison, not proof of the hybrid's optimum or scorch threshold.",
-            "startingDli": null
+            "startingDli": [
+                6,
+                10
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -194,7 +209,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "euphorbia-obesa-hybrid",
         "sources": [
             {
@@ -203,8 +218,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/euphorbia-obesa-hybrid/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -221,16 +236,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 6–8 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Inspect the palest tissue first; the trial range does not establish its scorch threshold.",
-            "description": "Gentler bright edge for the variegated body.",
+            "description": "Recommend 8–14 DLI for healthy, acclimated indoor growth. Give this chlorophyll-bearing own-root plant a moderately bright sustained dose while protecting pale sectors. Raise the previous established band modestly so a cautious transition is not mistaken for a permanent low-light target. Grafted red/yellow-scion experiments do not supply these endpoints.",
             "dli": [
-                6,
-                12
+                8,
+                14
             ],
             "research": "NC State advises bright indirect light and warns of direct-sun scorch, particularly in grafted forms. A 2012 study tested grafted red/yellow G. mihanovichii var. friedrichii in mixed pots, finding poorer survival in very dim indoor conditions and improved survival with blue/red LEDs. It does not establish this chlorophyll-bearing own-root plant's optimum; its approximately 17 PPFD indoor observation is not a recommended target.",
-            "startingDli": null
+            "startingDli": [
+                6,
+                8
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -238,7 +256,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "gymnocalycium-mihanovichii-variegated",
         "sources": [
             {
@@ -247,8 +265,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/gymnocalycium-mihanovichii-variegated/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -270,16 +288,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 8–10 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Compare the exposed crown with shaded ribs before increasing light.",
-            "description": "Bright middle zone with even exposure.",
+            "description": "Recommend 10–18 DLI for healthy, acclimated indoor growth. Retain the existing bright-middle range: it is a reasonable practical translation of RHS bright filtered light under glass. Even exposure and compact new growth matter more than seeking the top of the range; retained endpoints are still selected estimates.",
             "dli": [
                 10,
                 18
             ],
             "research": "RHS gives bright filtered light under glass with ventilation, despite its broad full-sun position badge. An adult intensity-response optimum was not identified in the sources reviewed. Seed light/temperature studies do not establish adult DLI.",
-            "startingDli": null
+            "startingDli": [
+                8,
+                10
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -287,7 +308,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "gymnocalycium-saglionis",
         "sources": [
             {
@@ -296,8 +317,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/gymnocalycium-saglionis/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -314,16 +335,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 8–12 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
-            "caution": "The inherited 10–17 DLI is a provisional indoor trial, not a published optimum or maximum. 17 DLI is not a ceiling. Inspect new growth beneath the feathery spines where possible; keep the crown from staying wet.",
-            "description": "Bright exposure with gradual acclimation. Species guidance describes full-sun tolerance with light afternoon shade, or bright filtered light under glass; neither establishes a numeric DLI limit.",
+            "caution": "The recommended 12–20 DLI is an inferred indoor working range, not a published optimum or maximum. Neither 17 nor 20 DLI is a ceiling. Inspect new growth beneath the feathery spines where possible; keep the crown from staying wet.",
+            "description": "Recommend 12–20 DLI for healthy, acclimated indoor growth. Raise and broaden the old 10–17 band for compact, well-spined new growth: Desert Museum describes full-sun tolerance, afternoon-shade benefit and poorer spine coverage in excessive shade; RHS allows bright filtered light under glass. Choose 12–20 as a working indoor band, with neither 17 nor 20 a demonstrated ceiling.",
             "dli": [
-                10,
-                17
+                12,
+                20
             ],
             "research": "Desert Museum reports full-sun tolerance, better performance with light afternoon shade, and reduced spine/white appearance of new growth in excessive shade. RHS recommends bright filtered light under glass. Neither establishes 17 DLI as an optimum or maximum. Species micropropagation research is not adult light-response evidence.",
-            "startingDli": null
+            "startingDli": [
+                8,
+                12
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -331,7 +355,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "mammillaria-plumosa",
         "sources": [
             {
@@ -340,8 +364,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/mammillaria-plumosa/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -363,16 +387,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 10–14 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Raised ridges may meet a hotspot before recessed tissue; preserve the waxy surface.",
-            "description": "Bright middle to high zone.",
+            "description": "Recommend 14–22 DLI for healthy, acclimated indoor growth. Choose the same established range as Fukurokuryuzinboku because the reviewed evidence does not justify distinct cultivar limits. Full-light species guidance supports bright exposure for compact growth; seedling shelter and field fruiting studies provide context, not these endpoints. Measure projecting ridges.",
             "dli": [
-                12,
+                14,
                 22
             ],
             "research": "Research exists on normal M. geometrizans: a field study links greater rib-level daily PAR and nocturnal acid accumulation to fruit production; a seedling field experiment found higher relative growth under mesquite nurses than in open sun. Neither studied Indigo Wave, nor found its optimal DLI. Architecture and age make direct transfer inappropriate.",
-            "startingDli": null
+            "startingDli": [
+                10,
+                14
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -380,7 +407,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "myrtillocactus-geometrizans-indigo-wave",
         "sources": [
             {
@@ -389,8 +416,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/myrtillocactus-geometrizans-indigo-wave/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -407,21 +434,29 @@
                 "scope": "Full article read: normal Myrtillocactus seedlings had higher relative growth under nurses; shade and other microclimate factors covary. No mature monstrose DLI recommendation.",
                 "title": "Perez-Sanchez et al. 2015: Growth and ecophysiology of succulent seedlings under nurse plants",
                 "url": "https://esajournals.onlinelibrary.wiley.com/doi/10.1890/ES14-00408.1"
+            },
+            {
+                "scope": "Normal-species full-light cultivation advice; no quantitative cultivar target.",
+                "title": "RHS: Myrtillocactus geometrizans",
+                "url": "https://www.rhs.org.uk/plants/11310/myrtillocactus-geometrizans/details"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 8–10 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Measure at the tallest active tip as well as lower stems.",
-            "description": "Bright middle zone, with support for extending stems.",
+            "description": "Recommend 10–18 DLI for healthy, acclimated indoor growth. Retain a moderate bright band for supported, compact new stems. The species field observation of growth across varied light supports flexibility, not a reason to force the tallest tip into the strongest hotspot. These retained endpoints are practical estimates.",
             "dli": [
                 10,
                 18
             ],
             "research": "A SANBI-authored field paper records Peniocereus serpentinus growing quickly across a range of light conditions in South Africa. This provides species field context, not a controlled optimum or a quantitative indoor prescription. Searches under Nyctocereus and Peniocereus did not establish an adult DLI target.",
-            "startingDli": null
+            "startingDli": [
+                8,
+                10
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -429,7 +464,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "nyctocereus-serpentinus",
         "sources": [
             {
@@ -438,8 +473,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/nyctocereus-serpentinus/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -456,16 +491,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 10–14 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Dense hair does not make a sudden move into the hottest spot safe.",
-            "description": "High light after acclimation.",
+            "description": "Recommend 16–24 DLI for healthy, acclimated indoor growth. Raise the old band into the stronger-light group to reflect its full-sun cultivation preference and the compact-growth goal. Use crown readings and new stem shape as feedback; hair and montane origin do not establish a scorch threshold.",
             "dli": [
-                12,
-                20
+                16,
+                24
             ],
             "research": "NParks lists full sun for O. trollii and describes its dry mountain habitat. A controlled mature-plant DLI optimum was not identified in the sources reviewed under the current name, Cereus trollii, or the listed crassiniveus/irigoyenii synonyms. Montane origin and wool do not quantify an indoor optimum or remove acclimation needs.",
-            "startingDli": null
+            "startingDli": [
+                10,
+                14
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -473,7 +511,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "oreocereus-trollii",
         "sources": [
             {
@@ -482,8 +520,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/oreocereus-trollii/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -500,16 +538,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 8–12 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Check the crown and exposed rib edges for persistent stress.",
-            "description": "Bright middle to high zone.",
+            "description": "Recommend 12–20 DLI for healthy, acclimated indoor growth. Choose a modestly brighter middle band for compact rib and spine growth, using full-light guidance for related Stenocactus only as a genus comparison. Confidence in this placement is weaker than for exact-species guidance, so begin near the lower end and revise from actual new growth.",
             "dli": [
-                10,
-                18
+                12,
+                20
             ],
-            "research": "Exact-species quantitative light evidence was not identified in the sources reviewed. A field seedling experiment includes the different species S. coptonogonus, and RHS recommends full light for S. multicostatus; both are limited genus comparisons. Neither validates the phyllacanthus 10–18 band or an optimum.",
-            "startingDli": null
+            "research": "Exact-species quantitative light evidence was not identified in the sources reviewed. A field seedling experiment includes the different species S. coptonogonus, and RHS recommends full light for S. multicostatus; both are limited genus comparisons. Neither establishes a numeric species requirement or optimum; the recommended endpoints require genus-level inference.",
+            "startingDli": [
+                8,
+                12
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -517,7 +558,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "stenocactus-phyllacanthus",
         "sources": [
             {
@@ -526,8 +567,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/stenocactus-phyllacanthus/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -549,16 +590,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 10–14 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "A taller tip receives more light and heat without any lamp-setting change.",
-            "description": "Bright middle to high zone; allow for increasing height.",
+            "description": "Recommend 14–24 DLI for healthy, acclimated indoor growth. Raise the band modestly for compact active stems and leaves, consistent with the species full-sun/bright-indoor guidance. The exact-species gas-exchange work supports the importance of light but does not set this daily dose; do not convert its instantaneous leaf response into an all-day saturation prescription.",
             "dli": [
-                12,
-                22
+                14,
+                24
             ],
             "research": "Exact-species physiology exists: Nobel and Hartsock (1986) measured leaf and stem CO2 exchange and instantaneous leaf PAR responses under well-watered conditions. Leaf photosynthesis was predominantly daytime, unlike the exclusively nocturnal uptake of the leafless cacti tested. This is a photosynthesis-response experiment, not a mature whole-plant growth or flowering DLI optimization trial. NC State recommends full sun or bright indoor light and warns that intense sun can scorch the cactus.",
-            "startingDli": null
+            "startingDli": [
+                10,
+                14
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -566,7 +610,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "austrocylindropuntia-subulata",
         "sources": [
             {
@@ -575,8 +619,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/austrocylindropuntia-subulata/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -598,16 +642,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 8–10 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Check both exposed tips and shaded interior stems; hybrid-specific tolerance is unmeasured.",
-            "description": "Bright middle zone for this hybrid clump.",
+            "description": "Recommend 10–16 DLI for healthy, acclimated indoor growth. Use a moderate bright range rather than pushing the unknown hybrid toward maximal intensity. The related Rose Quartz experiment succeeded at 10.9–12.8 DLI with particular cooling and forcing treatments, which supports the plausibility of this neighborhood but does not prove our 10–16 vegetative range or apply its flowering regimen to this plant.",
             "dli": [
                 10,
-                18
+                16
             ],
             "research": "Erwin, O'Connell and Altman (2016) studied the related Echinopsis 'Rose Quartz' hybrid, not this unknown cultivar. Their best combined flower-count/production-time treatment included eight weeks at 5°C followed by six weeks at 22/18°C and a measured DLI of 10.9–12.8 mol·m⁻²·day⁻¹. Added lamp PPFD was 45–75 µmol·m⁻²·s⁻¹ on top of natural daylight. This is a flower-forcing result with interacting temperature and photoperiod treatments, not a year-round vegetative optimum for all Chamaelobivia.",
-            "startingDli": null
+            "startingDli": [
+                8,
+                10
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -615,7 +662,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "chamaelobivia-hybrid",
         "sources": [
             {
@@ -624,8 +671,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/chamaelobivia-hybrid/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -647,16 +694,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 10–14 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Probable identification; hair and height can conceal uneven exposure.",
-            "description": "Bright middle to high light after edge acclimation.",
+            "description": "Recommend 14–22 DLI for healthy, acclimated indoor growth. Move modestly into the brighter group for compact column growth, guided by sunny cultivation advice for the probable species. The nana identification and E. lanata alternative remain unresolved; hair does not make a large exposure jump safe.",
             "dli": [
-                12,
-                20
+                14,
+                22
             ],
             "research": "RHS recommends a sunny position/full sun for Espostoa melanostele, without quantitative light thresholds. The collection identification is probable E. melanostele subsp. nana with E. lanata still an alternative. No exact subspecies or alternative-species mature-growth PPFD/DLI optimization study was located in the focused search.",
-            "startingDli": null
+            "startingDli": [
+                10,
+                14
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -664,7 +714,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "espostoa-melanostele-nana",
         "sources": [
             {
@@ -673,8 +723,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/espostoa-melanostele-nana/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -696,16 +746,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 6–8 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Compare pale and dark faces before rotating; dark color alone is not evidence of high-light tolerance.",
-            "description": "Gentler bright edge for this variegated plant.",
+            "description": "Recommend 8–14 DLI for healthy, acclimated indoor growth. Use the same moderate established band as the other own-root variegated moon cactus. Dark color does not prove either a need for deep shade or high-light protection; preserve light for green tissue while using the palest face to judge acclimation. Related grafted studies do not set these endpoints.",
             "dli": [
-                6,
-                12
+                8,
+                14
             ],
             "research": "No 'Black Widow' own-root light-optimization study was located. Studies found concern grafted G. mihanovichii color forms: a 2007 mixed-container indoor-position experiment reported poor outcomes at very low indoor PPFD, and a 2023 'I-Hong' production study compared soil and hydroponic bench systems with different shading. These differ in cultivar, grafted rootstock and production system and do not establish this variegated plant's optimum.",
-            "startingDli": null
+            "startingDli": [
+                6,
+                8
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -713,7 +766,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "gymnocalycium-mihanovichii-black-widow",
         "sources": [
             {
@@ -722,8 +775,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/gymnocalycium-mihanovichii-black-widow/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -740,21 +793,29 @@
                 "scope": "Primary production-system study in a different grafted cultivar; bench shading and color response, not a controlled DLI optimization trial. DOI 10.12791/KSBEC.2023.32.2.132.",
                 "title": "Park and Lee (2023): Effects of Ebb-and-flow System with Double-tier Bench on Growth and Yield of Hydroponically Grown Gymnocalycium mihanovichii 'I-Hong'",
                 "url": "https://www.ksbec.org/articles/xml/LwkB/"
+            },
+            {
+                "scope": "Bright indirect light and direct-sun scorch caution; much text concerns grafted forms, not the exact own-root collection selection.",
+                "title": "NC State Extension: Gymnocalycium mihanovichii",
+                "url": "https://plants.ces.ncsu.edu/plants/gymnocalycium-mihanovichii/"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 8–12 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Persistent new red stress color with texture changes warrants a gentler position.",
-            "description": "Bright middle zone for the probable identification.",
+            "description": "Recommend 12–20 DLI for healthy, acclimated indoor growth. Choose a bright middle band for compact new growth, consistent with Mammillaria sun/bright-direct-light advice while leaving room for heat-aware shade. Probable identification and the exact-species tropical context argue against treating it as a maximum-sun desert benchmark.",
             "dli": [
-                10,
-                18
+                12,
+                20
             ],
             "research": "The collection identity remains probable from photographs. No exact-species PPFD/DLI optimization trial was located. NC State's genus-level guidance recommends sun or bright direct light with afternoon shade in hot weather; Huntington's exact-species introduction supplies provenance and cultivation context but no quantitative light target.",
-            "startingDli": null
+            "startingDli": [
+                8,
+                12
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -762,7 +823,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "mammillaria-mammillaris",
         "sources": [
             {
@@ -771,8 +832,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/mammillaria-mammillaris/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -794,16 +855,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 8–12 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "The cf. identification remains provisional; no exact-species optimum is established.",
-            "description": "Bright middle zone; use compact new growth as feedback.",
+            "description": "Recommend 12–20 DLI for healthy, acclimated indoor growth. Choose a bright middle band for compact spine spacing and new growth. Genus cultivation guidance and the probable species open-microsite field context support that direction; neither calibrates the endpoints. Keep cf. rekoi and its alternatives qualified.",
             "dli": [
-                10,
-                18
+                12,
+                20
             ],
             "research": "The collection is probable M. rekoi; M. zeilmanniana/M. crinita and a hybrid remain alternatives. A 2017 UNAM soil-plant field thesis includes M. rekoi and interprets steep/open microsites in relation to light competition, but is not an experimental light optimum study. NC State genus guidance supports bright direct light with heat-aware shade; neither source supplies a species DLI optimum.",
-            "startingDli": null
+            "startingDli": [
+                8,
+                12
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -811,7 +875,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "mammillaria-rekoi",
         "sources": [
             {
@@ -820,8 +884,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/mammillaria-rekoi/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -843,16 +907,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 10–14 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Keep raised waxy folds away from a concentrated hotspot.",
-            "description": "Bright middle light for the sculptured stems.",
+            "description": "Recommend 14–22 DLI for healthy, acclimated indoor growth. Raise the old range to match Indigo Wave: both retain green photosynthetic tissue, and reviewed evidence does not establish different light requirements for their sculptured forms. Full-light species guidance and low-light elongation evidence favor bright exposure; use a lower transition dose for raised folds.",
             "dli": [
-                10,
-                18
+                14,
+                22
             ],
             "research": "No quantitative trial for cultivar 'Fukurokuryuzinboku' was located. In normal-species seedlings, Perez-Sanchez et al. (2015) found greater relative growth under nurse plants than in open sun, showing that life stage and microenvironment matter. A 2007 indoor-position study found elongation of normal M. geometrizans at very low indoor light. RHS recommends full light under glass for the normal species. These cannot establish a mature monstrose cultivar optimum.",
-            "startingDli": null
+            "startingDli": [
+                10,
+                14
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -860,7 +927,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "myrtillocactus-geometrizans-fukurokuryuzinboku",
         "sources": [
             {
@@ -869,8 +936,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/myrtillocactus-geometrizans-fukurokuryuzinboku/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -897,16 +964,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 8–12 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Recheck the crown as the column grows toward the lamp.",
-            "description": "High light after acclimation.",
+            "description": "Recommend 12–20 DLI for healthy, acclimated indoor growth. Keep the lower end and trim the upper end for a bright, compact-growth recommendation that accommodates RHS full or bright filtered light. The low-light mortality study excludes very dim room positions but does not locate a minimum or justify seeking the strongest display position.",
             "dli": [
                 12,
-                22
+                20
             ],
             "research": "Exact taxon appears as Eriocactus leninghausii in Song et al. (2007): a four-month mixed-pot indoor-position study reported increased mortality in very dim positions (the study's overall low-light range was 2.8–13.4 µmol·m⁻²·s⁻¹). This demonstrates poor low-light conditions, not a minimum or optimum. RHS explicitly allows full or bright filtered light under cultivation.",
-            "startingDli": null
+            "startingDli": [
+                8,
+                12
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -914,7 +984,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "parodia-leninghausii",
         "sources": [
             {
@@ -923,8 +993,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/parodia-leninghausii/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -946,16 +1016,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 10–14 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Keep detachable segments stable while checking their exposed surfaces.",
-            "description": "Bright middle zone after arrival or move acclimation.",
+            "description": "Recommend 16–24 DLI for healthy, acclimated indoor growth. Raise the old middle-zone range into the stronger-light group: the university accession profile specifically links direct sun with avoiding thin stems, and Denver lists sun. This is an inferred indoor dose, not a mathematical conversion of its outdoor hours; keep detachable segments stable and assess new segment shape.",
             "dli": [
-                10,
-                18
+                16,
+                24
             ],
             "research": "No exact-form mature-growth PPFD/DLI trial was located. University of Arizona's accession profile specifically identifies variety papyracanthus and recommends direct sun to prevent thin stems; Denver Botanic Gardens lists sun for T. articulatus. These are qualitative cultivation recommendations. The Arizona page also gives daily direct-light hours without irradiance; that does not define a DLI.",
-            "startingDli": null
+            "startingDli": [
+                10,
+                14
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -963,7 +1036,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "tephrocactus-articulatus-papyracanthus",
         "sources": [
             {
@@ -972,8 +1045,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/tephrocactus-articulatus-papyracanthus/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -995,16 +1068,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 6–8 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
-            "caution": "Observed growth and rest matter; stronger light and heat are not interchangeable.",
-            "description": "Bright outer zone, protecting variegated rosettes.",
+            "caution": "Observed growth and rest matter; stronger light and heat are not interchangeable. Approach from tolerated exposure and watch pale sectors. If the rosette rests during warm conditions, do not force the upper target or add water to drive growth.",
+            "description": "Recommend 8–14 DLI during active growth. We keep a gentler band than the full-sun rosettes because RHS specifically recommends bright filtered light under glass for Dream Color. Eight permits a useful lower indoor exposure while 14 overlaps the generic succulent band without favoring maximum coloration or heat. Both endpoints are inference; the related species' physiology experiment does not define a cultivar optimum.",
             "dli": [
                 8,
-                15
+                14
             ],
             "research": "RHS recommends bright filtered light under glass for Dream Color. A 2026 study including unselected A. haworthii reports 85–360 PPFD across its plants during 12-hour days, but investigates drought, temperature, and CAM physiology. It does not identify Dream Color’s best light dose. The study-wide exposure span must not become cultivar target boundaries; the displayed band remains a collection trial.",
-            "startingDli": null
+            "startingDli": [
+                6,
+                8
+            ]
         },
         "moisture": {
             "check": "Inspect rosette growth, root-zone moisture and weight trend; identify actual rest rather than assuming a season.",
@@ -1012,7 +1088,7 @@
             "waitWhen": "The rosette is resting, roots remain damp or growth has slowed with heat. Reduce watering during observed rest.",
             "waterWhen": "During active growth, the mix has dried substantially and roots are healthy; water thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "aeonium-haworthii-dream-color",
         "sources": [
             {
@@ -1021,8 +1097,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/aeonium-haworthii-dream-color/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -1039,21 +1115,29 @@
                 "scope": "A. haworthii included in drought/temperature experiment. Across study rosettes received 85–360 PPFD for 12 h (3.67–15.55 DLI); not a tested light-response range or Dream Color-specific optimum.",
                 "title": "Messerschmid et al. (2026): Stronger expression of CAM requires effective cuticular transpiration barriers",
                 "url": "https://nph.onlinelibrary.wiley.com/doi/10.1111/nph.70909"
+            },
+            {
+                "scope": "Broad indoor foliage and succulent DLI categories supply starting context. This card's adjusted endpoints are practical inference from the plant-specific evidence, not values directly published in this table.",
+                "title": "Iowa State Extension: supplemental light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 12–14 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
-            "caution": "Cultivar-specific DLI is unverified; preserve farina and avoid bleaching the pale rosette.",
-            "description": "New collection trial borrowed from the existing Echeveria working range.",
+            "caution": "Cultivar-specific DLI is unverified; preserve farina and avoid bleaching the pale rosette. Do not convert the patent's natural-light lux into constant lamp PPFD or DLI. Measure the actual crown, which is low among taller rear pots.",
+            "description": "Recommend 14–22 DLI for an established, acclimated rosette. We select a higher band than the generic indoor-succulent baseline because the exact cultivar's patent documents fairly bright greenhouse production and its breeder permits full sun. The lower end stays close to the 12.8-DLI related-cultivar trial; the upper end allows stronger compact-growth exposure without trying to reproduce an unknown greenhouse day. Both endpoints are horticultural inference, not a patent-derived optimum.",
             "dli": [
-                10,
-                18
+                14,
+                22
             ],
             "research": "The exact 'Arctic Ice' patent describes greenhouse plants photographed under natural light of approximately 2,500–3,500 foot-candles (about 26,900–37,700 lux). These are recorded production conditions, not a comparison establishing an optimum, and the patent provides no daily light integral. Altman's cultivar guidance supports bright light to full sun. No controlled light-dose optimization trial for this cultivar was located; its current DLI band remains a practical trial, not a published optimum.",
-            "startingDli": null
+            "startingDli": [
+                12,
+                14
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -1061,7 +1145,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "echeveria-arctic-ice",
         "sources": [
             {
@@ -1070,8 +1154,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/echeveria-arctic-ice/"
             },
             {
-                "scope": "Comparison range from an existing related collection entry, adopted here as a new collection trial; not a published threshold for this plant.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -1093,21 +1177,29 @@
                 "scope": "Breeder commercial care guidance, exact cultivar.",
                 "title": "Altman Specialty Plants: Echeveria Arctic Ice",
                 "url": "https://shopaltmanonline.com/products/echeveria-arctic-ice-ppaf-2-5"
+            },
+            {
+                "scope": "Broad indoor foliage and succulent DLI categories supply starting context. This card's adjusted endpoints are practical inference from the plant-specific evidence, not values directly published in this table.",
+                "title": "Iowa State Extension: supplemental light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 10–12 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
-            "caution": "Check low-rosette shadows; its light preference does not create a separate watering schedule.",
-            "description": "Brightest practical side of shared P20 for the probable rosette.",
+            "caution": "Check low-rosette shadows; its light preference does not create a separate watering schedule. Measure at the rosette and each taller P20 member. Resolve overhead shading before increasing a whole fixture; species identity remains probable.",
+            "description": "Recommend 12–20 DLI at this low rosette. We select 12 near the generic succulent baseline and the related Echeveria trial's moderate treatment; We extend to 20 because RHS recommends full sun for the probable species and the goal is compact new growth. These selected endpoints are inference. This member can need a clearer view of the lamps than the taller kalanchoes without increasing their exposure equally.",
             "dli": [
-                10,
-                18
+                12,
+                20
             ],
             "research": "RHS recommends full sun for Echeveria pulidonis but supplies no numerical light optimum. A 2026 greenhouse experiment compared 4.8 and 12.8 mol m−2 d−1 in five other Echeveria cultivars; some were more compact at the higher treatment. That supports checking light when growth stretches, but neither treatment identifies an optimum for probable E. pulidonis. The displayed range remains a collection trial, and the shared P20 canopy must be measured at this low rosette.",
-            "startingDli": null
+            "startingDli": [
+                10,
+                12
+            ]
         },
         "moisture": {
             "check": "Check all four plants, dryness below the surface and the complete pot-weight trend.",
@@ -1115,7 +1207,7 @@
             "waitWhen": "Mix remains wet or one component is compromised. Do not repeatedly water the pot for one plant while others remain hydrated.",
             "waterWhen": "The shared root volume is dry and the whole planting is ready; water thoroughly with working drainage."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "echeveria-pulidonis",
         "sources": [
             {
@@ -1124,8 +1216,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/echeveria-pulidonis/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -1147,21 +1239,29 @@
                 "scope": "Related cultivars only: Apus, Canadian, Elegans Blue, Jade Point, Topsy Turvy; 4.8 and 12.8 mol m−2 d−1, with photoperiod treatments. Indexed original abstract and methods verified; direct fetch returned 429.",
                 "title": "Soster et al. (2026): Short Day Lengths Can Mitigate Excessive Stem Elongation and Promote Flowering of Echeveria Cultivars Under Low and Moderate Daily Light Integrals",
                 "url": "https://doi.org/10.3390/horticulturae12050551"
+            },
+            {
+                "scope": "Broad indoor foliage and succulent DLI categories supply starting context. This card's adjusted endpoints are practical inference from the plant-specific evidence, not values directly published in this table.",
+                "title": "Iowa State Extension: supplemental light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 10–12 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
-            "caution": "Preserve farina and reduce exposure if the center bleaches or overheats.",
-            "description": "Bright succulent zone; watch the compact center.",
+            "caution": "Preserve farina and reduce exposure if the center bleaches or overheats. Assess new central growth and bleaching rather than trying to intensify every bump or pink margin.",
+            "description": "Recommend 12–18 DLI for compact indoor growth. We use the generic succulent category as the lower anchor and allow a modest extension above it, rather than assigning this seller-labelled cultivar the strongest Echeveria band. Its seller specifies bright indoor or filtered/partial sun, while related Echeveria studies support compactness under adequate light. The 12 and 18 endpoints are selected inference, not results of a Raindrops optimization trial.",
             "dli": [
-                10,
+                12,
                 18
             ],
             "research": "No controlled light-dose study for 'Raindrops' was located. Its seller recommends bright indoor light or filtered/partial sun. A 2017 trial in E. agavoides and E. marcus compared 35, 75 and 150 µmol m−2 s−1; the highest tested intensity improved compactness and red pigmentation. Those are different plants, and the best tested treatment is not a proven maximum or an exact-cultivar optimum. Keep the current range labelled as a trial and assess newly formed leaves.",
-            "startingDli": null
+            "startingDli": [
+                10,
+                12
+            ]
         },
         "moisture": {
             "check": "Check below the surface, whole-pot weight trend, roots and body firmness.",
@@ -1169,7 +1269,7 @@
             "waitWhen": "Roots remain damp, the plant is resting or recovering, or softness suggests damage. A date or dry weight alone is insufficient.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "echeveria-raindrops",
         "sources": [
             {
@@ -1178,8 +1278,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/echeveria-raindrops/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -1206,21 +1306,29 @@
                 "scope": "Exact seller cultivar care; qualitative light guidance.",
                 "title": "Mountain Crest Gardens: Echeveria Raindrops",
                 "url": "https://mountaincrestgardens.com/echeveria-raindrops/"
+            },
+            {
+                "scope": "Broad indoor foliage and succulent DLI categories supply starting context. This card's adjusted endpoints are practical inference from the plant-specific evidence, not values directly published in this table.",
+                "title": "Iowa State Extension: supplemental light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "Move toward the lower part of the trial gradually after checking present exposure. Watch for bleaching, heat stress, and changes in firmness; a numerical range does not justify an abrupt move.",
+            "acclimation": "Move toward the lower part of the trial gradually after checking present exposure. Watch for bleaching, heat stress, and changes in firmness; a numerical range does not justify an abrupt move. Approach the 10–12 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
-            "caution": "The identity remains probable. This broad succulent-category trial is not a Faucaria-specific threshold, and the lux comparison is not calibrated to the installed grow-light spectrum.",
-            "description": "A general high-light succulent trial for probable Faucaria tuberculosa, informed by its full-light cultivation guidance. Measure at the leaf tops and judge new growth before increasing exposure.",
+            "caution": "The identity remains probable. This broad succulent-category trial is not a Faucaria-specific threshold, and the lux comparison is not calibrated to the installed grow-light spectrum. Inspect new paired leaves, heat and bleaching. Do not increase water automatically when increasing light or transfer a growth target to damaged roots.",
+            "description": "Recommend 12–18 DLI for established active growth. We keep the generic indoor-succulent lower anchor and expand the upper end modestly because RHS recommends full light and related F. tigrina was grown at about 17.3 DLI in a physiological experiment. Eighteen is therefore a reasonable comparison point, not a measured optimum or tolerance limit. The endpoints are inferred and the tuberculosa identification remains probable.",
             "dli": [
                 12,
-                16
+                18
             ],
             "research": "RHS recommends full light for F. tuberculosa. A 2006 experiment measured carbon assimilation in related F. tigrina at 300 PPFD for 16 hours (17.28 DLI). That was one study condition; the paper’s separate intensity comparison concerned Crassula, not Faucaria. No light-dose growth optimum for F. tuberculosa was identified in the reviewed evidence, and this specimen’s identification remains probable.",
-            "startingDli": null
+            "startingDli": [
+                10,
+                12
+            ]
         },
         "moisture": {
             "check": "Check mix dryness through the pot, weight trend, paired-leaf firmness and crown condition.",
@@ -1228,7 +1336,7 @@
             "waitWhen": "The base is translucent or spreading softness appears, roots remain wet, or only old leaves are drying. Investigate instead of adding water.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "faucaria-tuberculosa",
         "sources": [
             {
@@ -1260,16 +1368,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 8–10 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
-            "caution": "Compare its leaf height with neighboring rosettes; avoid shading the low Echeveria.",
-            "description": "Bright middle zone for the probable plant in shared P20.",
+            "caution": "Compare its leaf height with neighboring rosettes; avoid shading the low Echeveria. Keep the lower echeveria unshaded; a felted leaf is not evidence of immunity to a sudden light increase.",
+            "description": "Recommend 10–16 DLI for sturdy growth. We retain 16 as a moderate indoor-succulent upper working point, but move the lower end from 8 to 10 to favor compact growth. NC State's bright-indirect guidance and hot-afternoon-sun caution argue against automatically using the strongest rosette exposure. The endpoints are inferred from that qualitative evidence and a general succulent baseline; related Kalanchoe trials do not establish this probable species' optimum.",
             "dli": [
-                8,
+                10,
                 16
             ],
             "research": "NC State recommends bright indirect light for Kalanchoe bracteata, allowing some direct sun while avoiding hot afternoon exposure. A 2011 experiment tested six other Kalanchoe species at 4.3, 8.6 and 17.2 mol m−2 d−1 under eight-hour days; growth and flowering responses varied. Neither K. bracteata nor its lookalike K. hildebrandtii was included. No exact-species optimum was located, so this probable identification still uses a cautious trial range rather than a measured requirement.",
-            "startingDli": null
+            "startingDli": [
+                8,
+                10
+            ]
         },
         "moisture": {
             "check": "Check all four plants, dryness below the surface and the complete pot-weight trend.",
@@ -1277,7 +1388,7 @@
             "waitWhen": "Mix remains wet or one component is compromised. Do not repeatedly water the pot for one plant while others remain hydrated.",
             "waterWhen": "The shared root volume is dry and the whole planting is ready; water thoroughly with working drainage."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "kalanchoe-bracteata",
         "sources": [
             {
@@ -1286,8 +1397,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/kalanchoe-bracteata/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -1304,21 +1415,29 @@
                 "scope": "Author institution abstract: K. glaucescens, laciniata, manginii, nyikae, rotundifolia, velutina; 4.3, 8.6, 17.2 mol m−2 d−1 under 8 h. None is an owned taxon.",
                 "title": "Currey and Erwin (2011): Photosynthetic daily light integral impacts growth and flowering of several kalanchoe species",
                 "url": "https://experts.umn.edu/en/publications/photosynthetic-daily-light-integral-impacts-growth-and-flowering-/"
+            },
+            {
+                "scope": "Broad indoor foliage and succulent DLI categories supply starting context. This card's adjusted endpoints are practical inference from the plant-specific evidence, not values directly published in this table.",
+                "title": "Iowa State Extension: supplemental light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 8–10 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
-            "caution": "Measure at the upper leaves; taller growth can shade the other members.",
-            "description": "Bright middle zone in shared P20.",
+            "caution": "Measure at the upper leaves; taller growth can shade the other members. Judge new growth and leaf-tip condition, not copper intensity; measure this taller member separately from the low echeveria.",
+            "description": "Recommend 10–16 DLI. We choose a bright but moderate band within the same shared-pot overlap as silver teaspoons: botanical gardens allow sun to partial shade and warn of tip burn. Raising the lower working point favors shorter healthy internodes; rounding the upper point down from 17 avoids treating that inherited number as meaningful precision. Both endpoints are inference. Copper color does not justify pushing exposure upward.",
             "dli": [
-                8,
-                17
+                10,
+                16
             ],
             "research": "Botanical-garden guidance places Kalanchoe orgyalis in full sun to partial shade and warns that strong sun can burn leaf tips. No controlled numerical optimum for this species was located. The frequently cited 2011 Kalanchoe DLI experiment used six different species, so its 4.3–17.2 mol m−2 d−1 treatments do not establish this plant's target. The cultivation monograph describes coppery leaves in dappled shade and paler leaves in direct sun; deeper copper is not a reason to increase exposure. The current band remains a practical trial.",
-            "startingDli": null
+            "startingDli": [
+                8,
+                10
+            ]
         },
         "moisture": {
             "check": "Check all four plants, dryness below the surface and the complete pot-weight trend.",
@@ -1326,7 +1445,7 @@
             "waitWhen": "Mix remains wet or one component is compromised. Do not repeatedly water the pot for one plant while others remain hydrated.",
             "waterWhen": "The shared root volume is dry and the whole planting is ready; water thoroughly with working drainage."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "kalanchoe-orgyalis",
         "sources": [
             {
@@ -1335,8 +1454,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/kalanchoe-orgyalis/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -1358,21 +1477,29 @@
                 "scope": "Chapter 8, page 100: K. orgyalis leaf color differs from the common redder-in-sun pattern, with brownish hair covering; no numerical light optimum.",
                 "title": "Smith, Figueiredo and van Wyk (2019): Physiology and Anatomy",
                 "url": "https://doi.org/10.1016/B978-0-12-814007-9.00008-6"
+            },
+            {
+                "scope": "Broad indoor foliage and succulent DLI categories supply starting context. This card's adjusted endpoints are practical inference from the plant-specific evidence, not values directly published in this table.",
+                "title": "Iowa State Extension: supplemental light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "Measure at each head, including shading from neighboring plants. Increase exposure gradually and retain bright light during leaf replacement; avoid heat stress without moving a resting plant into deep shade.",
+            "acclimation": "Measure at each head, including shading from neighboring plants. Increase exposure gradually and retain bright light during leaf replacement; avoid heat stress without moving a resting plant into deep shade. Approach the 12–16 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
-            "caution": "The species identities remain probable. This broad-category trial does not establish a species threshold, synchronize leaf cycles, authorize watering, or calibrate the lux estimate to the installed lamps.",
-            "description": "A general high-light succulent trial for the probable tan/brown Lithops lesliei group in P35. All component profiles use one comparison band while every head is checked for actual exposure and response.",
+            "caution": "The species identities remain probable. This broad-category trial does not establish a species threshold, synchronize leaf cycles, authorize watering, or calibrate the lux estimate to the installed lamps. Use the same target for both probable species, but inspect each head for bleaching, heat and elongation. Leaf replacement and shriveling do not automatically mean more light or water is needed.",
+            "description": "Recommend 16–22 DLI at the head tops, matching the whole P35 planting. We move above the generic 12–16 baseline because Lithops cultivation emphasizes strong light and compact bodies; a related L. aucampiae study maintained plants near 23.8 DLI. We select a lower 16–22 working band rather than importing that single research exposure. These endpoints are inference for a probable identification, with each head checked during acclimation.",
             "dli": [
-                12,
-                16
+                16,
+                22
             ],
             "research": "An exact-species field paper studies plant and soil temperatures, not optimal light. A related L. aucampiae photoprotection study grew plants at 550 PPFD for 12 hours (23.76 DLI), but did not compare light doses to establish a growth optimum. That condition is not a prescription for probable L. lesliei in this shared pot. Wisconsin Extension supplies genus-level bright-light and acclimation guidance.",
-            "startingDli": null
+            "startingDli": [
+                12,
+                16
+            ]
         },
         "moisture": {
             "check": "Inspect all four heads separately, including replacement stage, current-leaf firmness and root-zone dryness; confirm drainage.",
@@ -1380,7 +1507,7 @@
             "waitWhen": "Old leaves are being absorbed, heads remain firm or stages conflict. Do not water to plump old leaves or satisfy a weight forecast.",
             "waterWhen": "Dry roots, genuine current-leaf need and compatible stages across all heads support one shared watering decision."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "lithops-lesliei",
         "sources": [
             {
@@ -1417,16 +1544,19 @@
     },
     {
         "light": {
-            "acclimation": "Measure at each head, including shading from neighboring plants. Increase exposure gradually and retain bright light during leaf replacement; avoid heat stress without moving a resting plant into deep shade.",
+            "acclimation": "Measure at each head, including shading from neighboring plants. Increase exposure gradually and retain bright light during leaf replacement; avoid heat stress without moving a resting plant into deep shade. Approach the 12–16 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
-            "caution": "The species identities remain probable. This broad-category trial does not establish a species threshold, synchronize leaf cycles, authorize watering, or calibrate the lux estimate to the installed lamps.",
-            "description": "A general high-light succulent trial for the probable grey/green Lithops salicola group in P35. All component profiles use one comparison band while every head is checked for actual exposure and response.",
+            "caution": "The species identities remain probable. This broad-category trial does not establish a species threshold, synchronize leaf cycles, authorize watering, or calibrate the lux estimate to the installed lamps. Inspect these heads separately during the shared pot's gradual transition. Low-light survival findings are not a reason to retain a low-growth-light target.",
+            "description": "Recommend 16–22 DLI at the head tops, identical to the other probable Lithops group in P35. We select the same stronger-light working band because the low-light salicola study measured short-term ornamental retention, not compact long-term growth. Genus cultivation and related Lithops growth conditions provide the practical basis. The 16 and 22 endpoints are inference; there is no evidence here for giving the greener heads a separate numeric requirement.",
             "dli": [
-                12,
-                16
+                16,
+                22
             ],
             "research": "A 2016 government study included L. salicola in a 60-day assessment of ornamental quality indoors. Its 4.0–8.7 PPFD figures are average noon spot readings, not constant exposure. Short-term appearance at those positions establishes neither optimal growth nor a daily light integral. This collection identification remains probable; retain genus-level bright-light and gradual-acclimation guidance rather than treating dim-room persistence as a target.",
-            "startingDli": null
+            "startingDli": [
+                12,
+                16
+            ]
         },
         "moisture": {
             "check": "Inspect all four heads separately, including replacement stage, current-leaf firmness and root-zone dryness; confirm drainage.",
@@ -1434,7 +1564,7 @@
             "waitWhen": "Old leaves are being absorbed, heads remain firm or stages conflict. Do not water to plump old leaves or satisfy a weight forecast.",
             "waterWhen": "Dry roots, genuine current-leaf need and compatible stages across all heads support one shared watering decision."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "lithops-salicola",
         "sources": [
             {
@@ -1461,21 +1591,29 @@
                 "scope": "Exact L. salicola included in 60-day ornamental-retention assessment. 4.0–8.7 PPFD are average NOON spot measurements, not constant light, DLI, or optimum growth. Full PDF extracted and methods checked.",
                 "title": "Gyeonggi Agricultural Research (2016): Indoor gardening succulent selection",
                 "url": "https://nongup.gg.go.kr/wp-content/uploads/sites/2/2017/06/2016_R_699.pdf"
+            },
+            {
+                "scope": "Related Lithops aucampiae photoprotection research used 550 PPFD for 12 hours; this is growing-condition context, not a light-dose optimization or a trial of L. salicola.",
+                "title": "Field et al. (2013): Best of Both Worlds",
+                "url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0075671"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "Measure at each head, including shading from neighboring plants. Increase exposure gradually and retain bright light during leaf replacement; avoid heat stress without moving a resting plant into deep shade.",
+            "acclimation": "Measure at each head, including shading from neighboring plants. Increase exposure gradually and retain bright light during leaf replacement; avoid heat stress without moving a resting plant into deep shade. Approach the 12–16 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
-            "caution": "The species identities remain probable. This broad-category trial does not establish a species threshold, synchronize leaf cycles, authorize watering, or calibrate the lux estimate to the installed lamps.",
-            "description": "A general high-light succulent trial for the shared Lithops planting in P35. All component profiles use one comparison band while every head is checked for actual exposure and response.",
+            "caution": "The species identities remain probable. This broad-category trial does not establish a species threshold, synchronize leaf cycles, authorize watering, or calibrate the lux estimate to the installed lamps. One pot, one moisture decision, several light measurements. Start at 12–16 only when a transition is needed; do not lower a healthy, already acclimated plant solely to restart.",
+            "description": "Recommend 16–22 DLI for the shared planter, measured at each of its four head tops. We select this stronger working range from bright-light Lithops cultivation and the related-species experimental context, rather than treating the old generic 12–16 band as the final growth target. Both probable component groups use the same inferred endpoints. Sixteen is a gradual entry point; 22 is an assessment point, not a demonstrated maximum.",
             "dli": [
-                12,
-                16
+                16,
+                22
             ],
             "research": "The reviewed research does not establish one optimum for this aggregate of probable L. lesliei and L. salicola. A related L. aucampiae study used 550 PPFD for 12 hours for tissue research, while an L. salicola report examined short-term indoor appearance. Neither optimizes this mixed pot. Botanical-garden and extension guidance supports ample light with gradual acclimation; check exposure at each head.",
-            "startingDli": null
+            "startingDli": [
+                12,
+                16
+            ]
         },
         "moisture": {
             "check": "Inspect all four heads separately, including replacement stage, current-leaf firmness and root-zone dryness; confirm drainage.",
@@ -1483,7 +1621,7 @@
             "waitWhen": "Old leaves are being absorbed, heads remain firm or stages conflict. Do not water to plump old leaves or satisfy a weight forecast.",
             "waterWhen": "Dry roots, genuine current-leaf need and compatible stages across all heads support one shared watering decision."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "lithops-shared-planter",
         "sources": [
             {
@@ -1520,16 +1658,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 10–12 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
-            "caution": "This is a collection trial, not a measured cultivar optimum; color alone is not a watering signal.",
-            "description": "Bright succulent zone with gradual acclimation.",
+            "caution": "This is a collection trial, not a measured cultivar optimum; color alone is not a watering signal. Acclimate while inspecting the active leaves; do not use purple intensity or persistence of old leaves as a light meter.",
+            "description": "Recommend 12–20 DLI for established compact growth. We raise the old lower edge to the generic succulent baseline and allow an upper working point of 20 because SANBI recommends a sunny position for P. nelii. The cultivar's purple color supplies no evidence that it needs a separate numerical band, so Royal Flush and the ordinary labelled plant share this inferred recommendation. The endpoints are selected practical estimates, not a tested cultivar optimum.",
             "dli": [
-                10,
-                18
+                12,
+                20
             ],
             "research": "Species sunny-position guidance exists but no Royal Flush controlled light-dose optimization was found. Purple coloration does not establish a quantified optimum or different light requirement.",
-            "startingDli": null
+            "startingDli": [
+                10,
+                12
+            ]
         },
         "moisture": {
             "check": "Check the inner/current pair, outer-leaf absorption, base condition and actual root-zone dryness.",
@@ -1537,7 +1678,7 @@
             "waitWhen": "Only the old outer pair is shrinking, new leaves remain firm, or the base is soft/translucent. A light pot is not enough.",
             "waterWhen": "Established roots are dry and the current pair shows need compatible with its leaf stage; water the mix and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "pleiospilos-nelii-royal-flush",
         "sources": [
             {
@@ -1546,29 +1687,37 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/pleiospilos-nelii-royal-flush/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
                 "scope": "Sunny exposure, drainage and old-leaf moisture transfer; local season and calendar are not imported as indoor watering dates. Light research: Species cultivation lists full sun; no numeric optimum or Royal Flush-specific experiment.",
                 "title": "SANBI: Pleiospilos nelii",
                 "url": "https://pza.sanbi.org/pleiospilos-nelii"
+            },
+            {
+                "scope": "Broad indoor foliage and succulent DLI categories supply starting context. This card's adjusted endpoints are practical inference from the plant-specific evidence, not values directly published in this table.",
+                "title": "Iowa State Extension: supplemental light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 10–12 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
-            "caution": "This plain nursery-labelled plant has no supplied cultivar; the borrowed range is not measured species evidence.",
-            "description": "New collection trial using the existing P. nelii Royal Flush range as a comparison.",
+            "caution": "This plain nursery-labelled plant has no supplied cultivar; the borrowed range is not measured species evidence. Check the active pair and heat gradually. The light recommendation does not alter the leaf-cycle and root-zone checks before water.",
+            "description": "Recommend 12–20 DLI for established compact growth. We choose 12 as the indoor-succulent baseline and extend to 20 for SANBI's sunny-position cultivation, rather than retaining a borrowed Royal Flush range without reconsideration. This is a species-based practical inference also used for Royal Flush; 20 is an assessment point, not a published maximum. The current plant's leaf-level exposure remains unmeasured.",
             "dli": [
-                10,
-                18
+                12,
+                20
             ],
-            "research": "SANBI provides species cultivation advice, not numerical light thresholds. Existing 10–18 DLI is borrowed from the collection's Royal Flush trial and remains an inference for this separate non-cultivar-labelled plant.",
-            "startingDli": null
+            "research": "SANBI provides species cultivation advice for a sunny position, not numerical light thresholds. The recommended range is a practical species-based inference also used for Royal Flush; neither the ordinary nursery label nor the purple cultivar establishes a separate measured optimum.",
+            "startingDli": [
+                10,
+                12
+            ]
         },
         "moisture": {
             "check": "Check the inner/current pair, outer-leaf absorption, base condition and actual root-zone dryness.",
@@ -1576,7 +1725,7 @@
             "waitWhen": "Only the old outer pair is shrinking, new leaves remain firm, or the base is soft/translucent. A light pot is not enough.",
             "waterWhen": "Established roots are dry and the current pair shows need compatible with its leaf stage; water the mix and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "pleiospilos-nelii",
         "sources": [
             {
@@ -1585,29 +1734,37 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/pleiospilos-nelii/"
             },
             {
-                "scope": "Comparison range from an existing related collection entry, adopted here as a new collection trial; not a published threshold for this plant.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
                 "scope": "Sunny exposure, drainage and old-leaf moisture transfer; local season and calendar are not imported as indoor watering dates. Light research: Species cultivation lists full sun; no numeric optimum or Royal Flush-specific experiment.",
                 "title": "SANBI: Pleiospilos nelii",
                 "url": "https://pza.sanbi.org/pleiospilos-nelii"
+            },
+            {
+                "scope": "Broad indoor foliage and succulent DLI categories supply starting context. This card's adjusted endpoints are practical inference from the plant-specific evidence, not values directly published in this table.",
+                "title": "Iowa State Extension: supplemental light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 10–14 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
-            "caution": "Use a gentler position if foliage is golden or bleaches; check upper and lower leaves.",
-            "description": "Bright middle light in shared P20.",
+            "caution": "Use a gentler position if foliage is golden or bleaches; check upper and lower leaves. Allow this taller canopy stronger exposure while checking neighboring kalanchoes; do not use water stress or forced drying to chase CAM or red color.",
+            "description": "Recommend 14–22 DLI for established compact growth. We select a higher band than the old 8–17 trial because bright-light cultivation and acclimated sunny exposure fit this woody succulent better than a low maintenance-light target. Fourteen overlaps the generic succulent baseline; 22 provides a reasonable stronger-light trial without borrowing the extreme intensities used in brief fluorescence tests. These endpoints are horticultural inference, with extra caution if the possible golden form proves more sensitive.",
             "dli": [
-                8,
-                17
+                14,
+                22
             ],
             "research": "A 2020 Portulacaria afra experiment measured rapid fluorescence responses across 125–1,500 µmol m−2 s−1 while investigating prolonged water stress. These short measurements describe photoprotection, not a long-term growth-light optimum; plants were grown under natural greenhouse sunlight. Wisconsin Extension supports bright light and gradual acclimation. No validated DLI optimum for the collection's plant or possible golden cultivar was located, so its displayed numerical range remains a practical trial.",
-            "startingDli": null
+            "startingDli": [
+                10,
+                14
+            ]
         },
         "moisture": {
             "check": "Check all four plants, dryness below the surface and the complete pot-weight trend.",
@@ -1615,7 +1772,7 @@
             "waitWhen": "Mix remains wet or one component is compromised. Do not repeatedly water the pot for one plant while others remain hydrated.",
             "waterWhen": "The shared root volume is dry and the whole planting is ready; water thoroughly with working drainage."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "portulacaria-afra",
         "sources": [
             {
@@ -1624,8 +1781,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/portulacaria-afra/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -1642,21 +1799,29 @@
                 "scope": "Species-specific cultivation and acclimation; cultivar differences.",
                 "title": "Wisconsin Extension: Elephant Bush, Portulacaria afra",
                 "url": "https://hort.extension.wisc.edu/articles/elephant-bush-portulacaria-afra/"
+            },
+            {
+                "scope": "Broad indoor foliage and succulent DLI categories supply starting context. This card's adjusted endpoints are practical inference from the plant-specific evidence, not values directly published in this table.",
+                "title": "Iowa State Extension: supplemental light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 12–16 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
-            "caution": "Sempervivum benefits from cool nights and seasonal cold rest; more lamp heat does not replace these conditions.",
-            "description": "Use the brightest, coolest practical indoor succulent position.",
+            "caution": "Sempervivum benefits from cool nights and seasonal cold rest; more lamp heat does not replace these conditions. Keep heat moderate and inspect low-rosette shading. Stronger light does not replace seasonal temperature cues or establish a guarantee of long-term indoor performance.",
+            "description": "Recommend 16–24 DLI for compact growth in the owner's chosen indoor setting. We place this hardy, full-sun rosette above the generic succulent band rather than carrying forward a 10-DLI maintenance-oriented lower edge. Sixteen is a cautious entry to that stronger range; 24 is a practical next assessment point, not a proven ceiling. Both endpoints are inference from named-plant sun guidance, not a numerical cultivar trial.",
             "dli": [
-                10,
-                20
+                16,
+                24
             ],
             "research": "The breeder links Coconut Crystal to 'belsemmag1', and RHS recommends full sun for that named plant. No controlled DLI optimum for the cultivar was located. A 1981 study of the different species Sempervivum montanum reported CO2-uptake light saturation at 60–80 W m−2; physiological saturation in an alpine species is not a daily growth target for this hybrid. The displayed DLI band remains an indoor trial, with compact new growth and gradual acclimation guiding adjustments.",
-            "startingDli": null
+            "startingDli": [
+                12,
+                16
+            ]
         },
         "moisture": {
             "check": "Check root-zone dryness, rosette firmness and whole-pot weight; inspect the crown and saucer.",
@@ -1664,7 +1829,7 @@
             "waitWhen": "Roots remain damp, the crown holds water or the plant is resting. Keep indoors with cooler nights and avoid hot, wet conditions.",
             "waterWhen": "The root zone is dry, roots are established and the plant is ready; wet the mix thoroughly and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "sempervivum-coconut-crystal",
         "sources": [
             {
@@ -1673,8 +1838,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/sempervivum-coconut-crystal/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -1696,21 +1861,29 @@
                 "scope": "Original article abstract, DOI 10.1007/BF00378798; related-species gas-exchange saturation, not growth optimum.",
                 "title": "Wagner and Larcher (1981): Dependence of CO2 gas exchange and acid metabolism of the alpine CAM plant Sempervivum montanum on temperature and light",
                 "url": "https://pubmed.ncbi.nlm.nih.gov/28310066/"
+            },
+            {
+                "scope": "Broad indoor foliage and succulent DLI categories supply starting context. This card's adjusted endpoints are practical inference from the plant-specific evidence, not values directly published in this table.",
+                "title": "Iowa State Extension: supplemental light considerations",
+                "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "Measure at both the low rosettes and taller leaves. Approach the lower end gradually from the currently tolerated exposure; inspect all components for bleaching, scorch, heat, stretching, and mutual shading.",
+            "acclimation": "Measure at both the low rosettes and taller leaves. Approach the lower end gradually from the currently tolerated exposure; inspect all components for bleaching, scorch, heat, stretching, and mutual shading. Approach the 10–12 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
-            "caution": "Component identities remain qualified and their leaf heights differ. This broad-category trial is not a proven shared optimum; check every member before changing the whole bowl’s exposure.",
-            "description": "A provisional high-light succulent trial shared by P30’s low Echeveria rosettes, probable coppertone sedum, and taller paddle kalanchoe.",
+            "caution": "Component identities remain qualified and their leaf heights differ. This broad-category trial is not a proven shared optimum; check every member before changing the whole bowl’s exposure. Check low crowns and upper paddles separately. The bowl has one watering history; its light readings must be member-specific.",
+            "description": "Recommend 14–18 DLI as the shared bowl's working overlap: the echeveria recommendation is 12–18 and the probable sedum/paddles 14–20. We select their common interval to support compact growth across the mixture without pushing every member to the highest individual endpoint. These endpoints are inference, not a tested aggregate optimum. Measurements are required at the low crowns and higher leaves; one reading above the bowl cannot establish that all members receive the overlap.",
             "dli": [
-                12,
-                16
+                14,
+                18
             ],
             "research": "No controlled study matches this unresolved mixture of probable coppertone sedum, echeveria and paddle kalanchoe. RHS recommends strong light with protection from hot sun for coppertone sedum, while Wisconsin Extension recommends full sun for the two commonly confused paddle species. These qualitative categories cannot establish one optimum DLI for the bowl. The numerical range is a shared-container trial, and exposure must be checked at both the low rosettes and taller paddles.",
-            "startingDli": null
+            "startingDli": [
+                10,
+                12
+            ]
         },
         "moisture": {
             "check": "Inspect all three foliage groups and the full root volume; verify drainage in the current shallow glazed bowl.",
@@ -1718,7 +1891,7 @@
             "waitWhen": "Drainage is unresolved, deeper mix remains damp or only one component appears thirsty. Reassess conflicting needs before watering.",
             "waterWhen": "Drainage is confirmed, the shared mix is dry through and the planting is ready; water and drain as one pot."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "tiny-mixed-succulent-planter",
         "sources": [
             {
@@ -1750,16 +1923,19 @@
     },
     {
         "light": {
-            "acclimation": "Measure at both the low rosettes and taller leaves. Approach the lower end gradually from the currently tolerated exposure; inspect all components for bleaching, scorch, heat, stretching, and mutual shading.",
+            "acclimation": "Measure at both the low rosettes and taller leaves. Approach the lower end gradually from the currently tolerated exposure; inspect all components for bleaching, scorch, heat, stretching, and mutual shading. Approach the 10–12 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
-            "caution": "The identity remains probable. Check compact growth and shading; orange color alone does not prove suitable exposure. This category-based trial is not a measured species threshold.",
-            "description": "A provisional high-light succulent trial for the probable Sedum adolphi/nussbaumerianum group, using the same comparison as its P30 companions.",
+            "caution": "The identity remains probable. Check compact growth and shading; orange color alone does not prove suitable exposure. This category-based trial is not a measured species threshold. Do not raise the whole bowl until its pale echeveria and taller paddles have also been measured. If its canopy already receives 14–18, start assessment there.",
+            "description": "Recommend 14–20 DLI at the sedum leaves, using 14–18 as the overlap with the shared bowl. We choose the upper half of the generic succulent band and modestly higher exposure because RHS calls for full light while protecting from hot sun. The endpoints are inference for a provisional coppertone identity. Orange color alone is not the target; compact new shoots are the useful check.",
             "dli": [
-                12,
-                16
+                14,
+                20
             ],
             "research": "The coppertone sedum identification remains provisional. RHS guidance for Sedum nussbaumerianum calls for full light under glass with protection from hot sun, without a numerical optimum. Searches also found a Sedum adolphii leaf-propagation experiment comparing contrasting temperature/light environments; that does not establish the best DLI for an established plant. The current P30 light band remains a bowl-level trial, and orange coloration alone should not be treated as a light-dose measurement.",
-            "startingDli": null
+            "startingDli": [
+                10,
+                12
+            ]
         },
         "moisture": {
             "check": "Inspect all three foliage groups and the full root volume; verify drainage in the current shallow glazed bowl.",
@@ -1767,7 +1943,7 @@
             "waitWhen": "Drainage is unresolved, deeper mix remains damp or only one component appears thirsty. Reassess conflicting needs before watering.",
             "waterWhen": "Drainage is confirmed, the shared mix is dry through and the planting is ready; water and drain as one pot."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "tiny-planter-coppertone-sedum",
         "sources": [
             {
@@ -1804,16 +1980,19 @@
     },
     {
         "light": {
-            "acclimation": "Measure at both the low rosettes and taller leaves. Approach the lower end gradually from the currently tolerated exposure; inspect all components for bleaching, scorch, heat, stretching, and mutual shading.",
+            "acclimation": "Measure at both the low rosettes and taller leaves. Approach the lower end gradually from the currently tolerated exposure; inspect all components for bleaching, scorch, heat, stretching, and mutual shading. Approach the 10–12 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
-            "caution": "Species and cultivar remain unknown. Preserve farina and check for shading by taller companions; this category-based trial is not a cultivar threshold.",
-            "description": "A provisional high-light succulent trial for the low Echeveria rosettes, using the same comparison as the other P30 components.",
+            "caution": "Species and cultivar remain unknown. Preserve farina and check for shading by taller companions; this category-based trial is not a cultivar threshold. Fix shade from upper leaves before increasing the whole bowl's exposure. Assess new central leaves and existing farina for bleaching.",
+            "description": "Recommend 12–18 DLI at the low crowns. We anchor the lower edge near the generic succulent band and related Echeveria moderate-light trial, then allow a small upward extension for compact growth. The identity is unresolved, so 18 is an assessment point rather than a cultivar-specific ceiling. These endpoints are inference; 14–18 is the useful common overlap with this bowl's sedum and paddles.",
             "dli": [
                 12,
-                16
+                18
             ],
             "research": "These rosettes are identified only provisionally to Echeveria, so an exact cultivar optimum cannot be assigned. A 2026 study tested 4.8 and 12.8 mol m−2 d−1 in five named cultivars and found responses dependent on cultivar and day length. This provides useful comparison evidence, but the P30 rosettes were not identified as any tested cultivar. Their displayed range remains a cautious trial, with measurements taken at the low crowns rather than above the taller neighbors.",
-            "startingDli": null
+            "startingDli": [
+                10,
+                12
+            ]
         },
         "moisture": {
             "check": "Inspect all three foliage groups and the full root volume; verify drainage in the current shallow glazed bowl.",
@@ -1821,7 +2000,7 @@
             "waitWhen": "Drainage is unresolved, deeper mix remains damp or only one component appears thirsty. Reassess conflicting needs before watering.",
             "waterWhen": "Drainage is confirmed, the shared mix is dry through and the planting is ready; water and drain as one pot."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "tiny-planter-echeveria",
         "sources": [
             {
@@ -1853,16 +2032,19 @@
     },
     {
         "light": {
-            "acclimation": "Measure at both the low rosettes and taller leaves. Approach the lower end gradually from the currently tolerated exposure; inspect all components for bleaching, scorch, heat, stretching, and mutual shading.",
+            "acclimation": "Measure at both the low rosettes and taller leaves. Approach the lower end gradually from the currently tolerated exposure; inspect all components for bleaching, scorch, heat, stretching, and mutual shading. Approach the 12–14 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
-            "caution": "The species remains unresolved. Check upper leaves separately from low rosettes; red margins alone do not establish suitable exposure or a species threshold.",
-            "description": "A provisional high-light succulent trial for the Kalanchoe luciae/thyrsiflora group, using the shared P30 comparison.",
+            "caution": "The species remains unresolved. Check upper leaves separately from low rosettes; red margins alone do not establish suitable exposure or a species threshold. The upper paddles can receive substantially more light than low rosettes. Their red edges do not prove either adequate light below or a safe upper dose.",
+            "description": "Recommend 14–20 DLI at the paddle leaves, sharing a 14–18 overlap with the other P30 members. We select a moderately higher band than the generic succulent baseline because Wisconsin recommends full sun for both proposed paddle species. The upper bound remains a practical assessment point and the species pair remains unresolved. Both endpoints are inference, not a light optimum from the unrelated Kalanchoe trials.",
             "dli": [
-                12,
-                16
+                14,
+                20
             ],
             "research": "Wisconsin Extension recommends full sun for Kalanchoe luciae and K. thyrsiflora, while emphasizing their frequent confusion. The P30 paddle plant remains unresolved between those working comparisons. A K. luciae fertilizer experiment used 50% greenhouse shade, but did not compare light treatments to establish an optimum. Neither species was included in the 2011 six-species Kalanchoe DLI trial. The displayed range therefore remains a shared-bowl trial, not a verified requirement for this component.",
-            "startingDli": null
+            "startingDli": [
+                12,
+                14
+            ]
         },
         "moisture": {
             "check": "Inspect all three foliage groups and the full root volume; verify drainage in the current shallow glazed bowl.",
@@ -1870,7 +2052,7 @@
             "waitWhen": "Drainage is unresolved, deeper mix remains damp or only one component appears thirsty. Reassess conflicting needs before watering.",
             "waterWhen": "Drainage is confirmed, the shared mix is dry through and the planting is ready; water and drain as one pot."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "tiny-planter-paddle-kalanchoe",
         "sources": [
             {
@@ -1907,16 +2089,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 8–12 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Inspect trailing tips and shared-pot shading; quicker water use does not override the other cacti.",
-            "description": "Bright middle exposure for this component of shared P19.",
+            "description": "Recommend 12–20 DLI for healthy, acclimated indoor growth. Choose a bright band for compact, thicker new trailing tips, consistent with RHS full-light guidance and the recorded improvement after earlier outdoor bright shade. Shared P19 and hanging-stem geometry require readings at the tips, not just the pot rim; use the lower starting band during a transition.",
             "dli": [
-                10,
-                18
+                12,
+                20
             ],
             "research": "RHS recommends full light under glass for this exact species. The Huntington introduction records its lithophytic discovery and nomenclature but no measured light target. No quantitative growth-light experiment was located under Cleistocactus colademononis or Hildewintera colademononis. The collection plant shares P19 and its trailing surfaces receive different exposures.",
-            "startingDli": null
+            "startingDli": [
+                8,
+                12
+            ]
         },
         "moisture": {
             "check": "Inspect all three cacti, shared root-zone dryness and whole-pot weight; confirm healthy established roots.",
@@ -1924,7 +2109,7 @@
             "waitWhen": "Any roots remain wet or compromised. One shrinking stem does not justify wetting the shared pot; reassess incompatible needs.",
             "waterWhen": "The whole root volume is dry and all three plants can tolerate watering; water the container and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "cleistocactus-colademononis",
         "sources": [
             {
@@ -1933,8 +2118,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/cleistocactus-colademononis/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -1956,16 +2141,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 8–12 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Measure at the growing tip; its exposure and water needs are constrained by the shared planting.",
-            "description": "High light after acclimation for the probable column in P19.",
+            "description": "Recommend 14–22 DLI for healthy, acclimated indoor growth. Raise the lower established endpoint modestly for thicker, more compact new column growth in this probable full-light species. Preserve a substantially gentler transition because old narrow growth and shared P19 complicate exposure; the high end is optional and not a target for its pale neighbor.",
             "dli": [
-                12,
+                14,
                 22
             ],
             "research": "RHS recommends full light under glass for Echinopsis spachiana. Searches using the Echinopsis and Trichocereus spachianus names did not locate an exact mature-growth intensity trial. The collection identification remains probable and this column shares P19 with plants of different morphology and variegation.",
-            "startingDli": null
+            "startingDli": [
+                8,
+                12
+            ]
         },
         "moisture": {
             "check": "Inspect all three cacti, shared root-zone dryness and whole-pot weight; confirm healthy established roots.",
@@ -1973,7 +2161,7 @@
             "waitWhen": "Any roots remain wet or compromised. One shrinking stem does not justify wetting the shared pot; reassess incompatible needs.",
             "waterWhen": "The whole root volume is dry and all three plants can tolerate watering; water the container and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "echinopsis-spachiana",
         "sources": [
             {
@@ -1982,8 +2170,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/echinopsis-spachiana/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
@@ -2031,16 +2219,19 @@
     },
     {
         "light": {
-            "acclimation": "Begin toward the gentle end only if already tolerated; increase gradually while watching new growth and heat.",
+            "acclimation": "Approach the 6–10 DLI gentler range gradually from currently tolerated exposure when moving from a dimmer position. Advance toward the working range only as new growth and stress checks support it. Do not dim an already healthy, acclimated plant just to restart this transition.",
             "basis": "collection-trial",
             "caution": "Keep pale variegated areas away from hotspots; the retained trial range is not a safe maximum for every sector.",
-            "description": "Bright to high light for established green tissue in shared P19.",
+            "description": "Recommend 10–18 DLI for healthy, acclimated indoor growth. Lower the established band relative to the normal full-sun species to balance useful light on green ribs with the broad pale sectors and recovery context. This is a cautious practical inference for the actual variegated plant, not a measured chlorophyll or scorch limit; inspect the palest exposed side first.",
             "dli": [
-                12,
-                22
+                10,
+                18
             ],
             "research": "RHS and Singapore NParks recommend sun for normal P. pachycladus, not a variegated selection. A primary 2010 study tests germination under 12-hour light versus darkness and different temperatures; it does not test mature vegetative light optima. The collection's P. pachycladus identification is probable and the degree/physiology of variegation is uncharacterized.",
-            "startingDli": null
+            "startingDli": [
+                6,
+                10
+            ]
         },
         "moisture": {
             "check": "Inspect all three cacti, shared root-zone dryness and whole-pot weight; confirm healthy established roots.",
@@ -2048,7 +2239,7 @@
             "waitWhen": "Any roots remain wet or compromised. One shrinking stem does not justify wetting the shared pot; reassess incompatible needs.",
             "waterWhen": "The whole root volume is dry and all three plants can tolerate watering; water the container and drain."
         },
-        "reviewedOn": "2026-11-04",
+        "reviewedOn": "2026-11-05",
         "slug": "pilosocereus-pachycladus-variegated",
         "sources": [
             {
@@ -2057,8 +2248,8 @@
                 "url": "https://nick2bad4u.github.io/Gardening/plants/pilosocereus-pachycladus-variegated/"
             },
             {
-                "scope": "Maintained collection DLI trial, not a measured species minimum, optimum, or maximum.",
-                "title": "Collection working light targets",
+                "scope": "Earlier collection estimates retained as historical planning context. The November 5 recommendation on this card supersedes those values; neither table establishes measured species limits.",
+                "title": "Historical collection light-planning table",
                 "url": "https://nick2bad4u.github.io/Gardening/setup/equipment/vivosun-aw200se/#working-light-targets-for-this-collection"
             },
             {
