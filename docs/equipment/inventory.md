@@ -1,6 +1,6 @@
 # Equipment and Supplies
 
-Equipment and supplies documented through October 24, 2026, grouped by use. Entries distinguish the installed setup from planned additions and stored equipment.
+Equipment and supplies documented through November 4, 2026, grouped by use. Entries distinguish the installed setup from planned additions and stored equipment.
 
 ## Display and Support
 
@@ -10,7 +10,8 @@ Equipment and supplies documented through October 24, 2026, grouped by use. Entr
 - **[VIVOSUN diamond Mylar roll](https://www.amazon.com/dp/B01MZ72PAH) · 6 mil, 4 × 25 feet.** Used on the divider and as a loose floor-protection sheet. The two-foot room-end return panel was removed.
 - **Four heavy-duty screw eyelets and the fixtures' included adjustable ropes.** The eyelets were bought at a local hardware store; two support each independently hung fixture. Exact eyelet brand/load ratings are unrecorded. Each fixture hangs independently.
 - **Money-tree support.** Photographs supplied October 22 show #3 / P21 Money Tree on a stool on the room side of the display; capture date, stool model, dimensions, and leaf exposure remain unrecorded. Do not infer that this is one of the planned Bamworld stools. The September 16 north-windowsill placement is historical.
-- **Terrarium desk and planned adjacent shelf.** P38 / #12 sits on the desk to the right of the table display in photographs supplied October 22. The owner reports about 6,000–7,000 lux October 24, with meter position and leaf-level exposure unrecorded. P39/P40 are planned for the shelf beside it after their October 25 repots; that move is not complete.
+- **Terrarium desk.** P38 / #12 sits on the desk to the right of the table display in photographs supplied October 22. The owner reports about 6,000–7,000 lux October 24, with meter position and leaf-level exposure unrecorded.
+- **Room-side houseplant shelf.** The owner reports P39 / #13 Nightly nerve plant, P40 / #14 Spice is Nice peperomia, and P41 / #15 Alpine Spires Chinese evergreen on the shelf next to the cacti table on the room side, November 4, 2026. Shelf model, dimensions, exact within-shelf positions, and leaf-level exposure are unrecorded. This replaces the earlier future-placement wording without confirming the P39/P40 planned repots or identifying the shelf as a particular product. P41 already has its October 29 setup-2 Repot recorded in [the profile](../plants/houseplants/aglaonema-commutatum-alpine-spires.md#care-in-this-collection). The owner reported on November 4 that the move was five days earlier, approximately October 30; the time was not supplied.
 
 - **[Bamworld three-pack plant stools, Nature](https://www.amazon.com/dp/B0GTHQRZSL).** Ordered September 20; receipt, assembly, and current use remain unrecorded. Seller diagram heights: 7.8, 8.6, and 11.5 inches. The smallest stool was proposed for P31 at the living-room sliding door September 22; the October 24 owner report instead confirms P31/P32 on a kitchen window shelf. Do not infer stool use from that move.
 

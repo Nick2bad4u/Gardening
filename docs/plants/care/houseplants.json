@@ -1,20 +1,24 @@
 [
     {
         "light": {
-            "acclimation": "Begin with gentle indirect light; assess new leaves before increasing exposure. Placement and leaf-level readings are still unrecorded.",
+            "acclimation": "The owner reports this pot on the shelf next to the cacti table, on the room side, on November 4, 2026, after a move five days earlier (approximately October 30; time not supplied). Measure at its leaves before changing exposure; the shelf location does not establish its light dose. Acclimate gradually and assess new growth.",
             "basis": "collection-trial",
             "caution": "The nursery label names Aglaonema commutatum; the exact Alpine Spires cultivar is unverified. This trial is not a cultivar minimum, optimum, or scorch limit.",
             "description": "A cautious low-light foliage trial for the newly acquired plant. Bright indirect light is a useful starting placement; avoid an abrupt move into strong sun.",
-            "dli": [3, 6],
+            "dli": [
+                3,
+                6
+            ],
+            "research": "A 30-day Aglaonema commutatum study compared four other cultivars at reported greenhouse exposures of 581 and 1,083 µmol·m⁻²·s⁻¹; pigment and photosynthetic responses differed by cultivar. Those exposures and brief leaf-response measurements do not establish Alpine Spires’ growth optimum. UF/IFAS separately recommends 1,250–3,000 foot-candles for shaded nursery production (about 13,500–32,300 lux), while describing 25 foot-candles as indoor tolerance. Production, tolerance, and an optimum are different endpoints; neither source supplies an Alpine Spires DLI target.",
             "startingDli": null
         },
         "moisture": {
-            "check": "Inspect the upper mix and accessible root zone. The retail 12 cm label does not establish the actual pot depth, medium, or drainage.",
+            "check": "Inspect below the upper mix in the recorded tall glass jar: approximately 10 in tall by 5 in wide, with a 1 in drainage hole. Surface drying alone does not establish moisture through its depth. Use the October 29 setup-2 record rather than the old retail 12 cm label.",
             "regime": "Partial upper-mix drying with an aerated root zone.",
             "waitWhen": "The mix remains wet below the surface or runoff is standing around the pot. Confirm drainage before adding more water.",
             "waterWhen": "The upper mix has begun drying and a check below it supports watering. Drain excess water; do not require whole-pot cactus-style drought."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "aglaonema-commutatum-alpine-spires",
         "sources": [
             {
@@ -26,16 +30,35 @@
                 "scope": "General low-light foliage DLI category informs the proposed 3–6 collection trial, not a cultivar requirement.",
                 "title": "Iowa State Extension: supplemental light considerations",
                 "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
+            },
+            {
+                "scope": "Feicui, Redder valentine, Tianshi, and Big apple; 30-day greenhouse acclimation and leaf light-response curves, not Alpine Spires or growth-optimum DLI.",
+                "title": "Hui et al. (2023): Light availability and photosynthetic responses of four Aglaonema commutatum cultivars",
+                "url": "https://www.mdpi.com/2076-3417/13/5/3021"
+            },
+            {
+                "scope": "Nursery production 1,250–3,000 foot-candles; many growers use 80–90% shade because higher exposures reduce foliage quality. Interior 25-foot-candle tolerance is not optimum.",
+                "title": "UF/IFAS: Cultural Guidelines for Commercial Production of Interiorscape Aglaonema",
+                "url": "https://edis.ifas.ufl.edu/publication/EP160/pdf"
+            },
+            {
+                "scope": "October 29, 2026 Repot record, setup 2: square glass jar approximately 10 in tall by 5 in wide with a 1 in drainage hole; recorded medium is 85% Molly's Aroid Mix / 15% Molly's Orchid Mix (bottom layer). This predates the reported shelf move.",
+                "title": "Canonical History: Alpine Spires setup 2",
+                "url": "https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit#gid=1465181080&range=A2064:BO2064"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "Start with soft indirect exposure and change it gradually after checking leaf response and moisture. Current leaf-level light is unmeasured.",
+            "acclimation": "The owner reports this pot on the shelf next to the cacti table, on the room side, on November 4, 2026, after a move five days earlier (approximately October 30; time not supplied). Measure at its leaves before changing exposure; the shelf location does not establish its light dose. Acclimate gradually and assess new growth.",
             "basis": "collection-trial",
             "caution": "Direct sun can scorch foliage. The proposed range is a general foliage trial, not a Nightly-specific threshold.",
             "description": "A low-light foliage trial for nursery-labelled Fittonia albivenis Nightly; use an indirect-light position rather than the strongest cactus exposure.",
-            "dli": [3, 6],
+            "dli": [
+                3,
+                6
+            ],
+            "research": "An eight-week trial published as Fittonia verschaffeltii used 77.37, 101.22, and 112.38 µmol·m⁻²·s⁻¹ PAR for 16 hours daily: calculated DLIs of 4.46, 5.83, and 6.47 mol·m⁻²·day⁻¹. The lowest-light fluorescent-plus-LED treatment produced less total dry mass than the fluorescent treatments. Spectrum changed alongside intensity, so this was not a clean DLI optimization experiment. It supports a moderate-light trial but establishes neither a minimum nor an optimum for nursery-labelled Nightly.",
             "startingDli": null
         },
         "moisture": {
@@ -44,7 +67,7 @@
             "waitWhen": "The root zone is still wet, water is trapped around the roots, or wilting occurs despite wet mix. Inspect the cause before watering again.",
             "waterWhen": "The upper mix is starting to dry and the root-zone check supports a drink. Keep drainage clear; do not wait for a cactus-style dry plateau."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "fittonia-albivenis-nightly",
         "sources": [
             {
@@ -56,6 +79,11 @@
                 "scope": "The low-light foliage category supplies a cautious 3–6 DLI collection trial, not a tested Nightly threshold.",
                 "title": "Iowa State Extension: supplemental light considerations",
                 "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
+            },
+            {
+                "scope": "Eight-week rooted-cutting trial, 25°C, 55% RH, 16-hour photoperiod; Table 1 PAR 77.37/101.22/112.38. Intensity and spectra co-varied; Nightly not studied.",
+                "title": "García-Caparrós et al. (2020): Fittonia verschaffeltii Response to Artificial Light Treatments",
+                "url": "https://www.mdpi.com/2073-4395/10/1/126"
             }
         ]
     },
@@ -65,7 +93,11 @@
             "basis": "collection-trial",
             "caution": "Working identity remains Pachira cf. glabra. Pachira aquatica care is comparison guidance; neither source establishes a glabra-specific numeric threshold.",
             "description": "Retains the collection's broad 5–12 DLI trial for the money tree. Favor bright indirect light and evaluate growth before approaching the upper end.",
-            "dli": [5, 12],
+            "dli": [
+                5,
+                12
+            ],
+            "research": "NParks lists Pachira glabra for semi-shade without a numeric optimum. A 191-day study of the related P. aquatica tested 0.22, 0.43, and 1.30 DLI using white LEDs at approximately 6.7–20.1 µmol·m⁻²·s⁻¹. Surviving plants sustained growth, but P. aquatica total dry weight and relative growth rate did not differ significantly among treatments. This demonstrates low-light accommodation under those conditions, not an optimal range for the collection’s provisionally identified Pachira cf. glabra.",
             "startingDli": null
         },
         "moisture": {
@@ -74,7 +106,7 @@
             "waitWhen": "The nursery core or lower mix is still wet, or runoff is standing beneath the pot. Drooping alone does not establish thirst.",
             "waterWhen": "The upper mix has dried and the deeper root-zone check agrees. The nursery tag's upper-2-inch cue needs scaling to the actual pot; drain excess."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "pachira-glabra",
         "sources": [
             {
@@ -86,6 +118,16 @@
                 "scope": "General foliage DLI context; the retained 5–12 collection range is an inference, not this source's Pachira recommendation.",
                 "title": "Iowa State Extension: supplemental light considerations",
                 "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
+            },
+            {
+                "scope": "Exact-species qualitative semi-shade cultivation guidance, no PPFD/DLI.",
+                "title": "NParks Flora & Fauna Web: Pachira glabra",
+                "url": "https://www.nparks.gov.sg/florafaunaweb/flora/9/0/9095"
+            },
+            {
+                "scope": "Related P. aquatica, 191 days; 0.22/0.43/1.30 DLI. Table 1 gives photoperiod and measured PPFD; results report no significant dry-weight/RGR differences for P. aquatica.",
+                "title": "Adaptation of indoor ornamental plants to various lighting levels in growth chambers simulating workplace environments (2024)",
+                "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11286858/"
             }
         ]
     },
@@ -95,8 +137,15 @@
             "basis": "collection-trial",
             "caution": "These are collection trials, not measured Obtipan Bicolor limits. Reassess pale patches, scorch, or weak stretching before another increase.",
             "description": "Retains the profile's initial and settled comparison bands for bright indirect light under the kitchen fixtures plus window light.",
-            "dli": [6, 10],
-            "startingDli": [4, 6]
+            "dli": [
+                6,
+                10
+            ],
+            "research": "A five-week Peperomia obtusifolia experiment compared white-LED spectra at 100 µmol·m⁻²·s⁻¹ for 14 hours, with greatest biomass under 4,100 K among the tested lamps. Its photon measurement explicitly spans 350–800 nm, so the daily total is not standard 400–700 nm DLI. Separate research on Emerald Isle cuttings recommends 6–10 DLI during rooting. Neither experiment tested mature Obtipan Bicolor or establishes its optimal daily exposure; the existing bands remain collection trials.",
+            "startingDli": [
+                4,
+                6
+            ]
         },
         "moisture": {
             "check": "Check the upper mix and accessible root zone in the confirmed 8-inch draining pot; the reported mix is about 70% houseplant soil and 30% perlite.",
@@ -104,7 +153,7 @@
             "waitWhen": "The mix below the surface remains wet or runoff is retained. A dry-looking surface alone does not establish that this larger pot needs water.",
             "waterWhen": "The mix has partly dried and the root-zone check agrees. Empty runoff; avoid both persistent wetness and prolonged whole-pot drought."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "peperomia-obtipan-bicolor",
         "sources": [
             {
@@ -116,17 +165,34 @@
                 "scope": "Foliage DLI categories inform the existing 4–6 initial and 6–10 settled collection trials.",
                 "title": "Iowa State Extension: supplemental light considerations",
                 "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
+            },
+            {
+                "scope": "Five-week non-cultivar-specific P. obtusifolia study of color temperature at fixed 100 photon flux over 350–800 nm, 14-hour day; not an intensity/DLI optimum trial.",
+                "title": "Shin, Lee and Nam (2023): Growth, visual qualities and photosynthetic parameters in Peperomia under white lighting",
+                "url": "https://www.jales.org/articles/xml/5jgK/"
+            },
+            {
+                "scope": "Primary researchers' report of Emerald Isle baby-rubberplant cutting propagation at 2.9–16.4 DLI; recommend 6–10 DLI for rooting foliage cuttings, not mature Bicolor plants.",
+                "title": "Kang and Lopez (2023): A Focus on DLI",
+                "url": "https://www.growertalks.com/Article/?articleid=26302"
             }
         ]
     },
     {
         "light": {
-            "acclimation": "Try the lower 4–6 band first, then consider 6–10 only with healthy new growth. Actual placement and leaf-level light are not recorded.",
+            "acclimation": "The owner reports this pot on the shelf next to the cacti table, on the room side, on November 4, 2026, after a move five days earlier (approximately October 30; time not supplied). Measure at its leaves before changing exposure; the shelf location does not establish its light dose. Acclimate gradually and assess new growth.",
             "basis": "collection-trial",
             "caution": "Spice Is Nice is nursery trade branding, not proof of a registered cultivar. The proposed comparison with P31 is unvalidated for this individual plant.",
             "description": "A proposed bright-indirect-light trial using the collection's other Peperomia obtusifolia as a cautious starting comparison.",
-            "dli": [6, 10],
-            "startingDli": [4, 6]
+            "dli": [
+                6,
+                10
+            ],
+            "research": "Proven Winners recommends medium-to-bright indirect light for Spice is Nice but gives no DLI or PPFD optimum. In a five-week study of other Peperomia obtusifolia plants, 4,100 K white LEDs produced the greatest biomass among three spectra at a fixed reported 100 µmol·m⁻²·s⁻¹ for 14 hours. The measurement covered 350–800 nm rather than standard PAR. This is useful species-level context, but neither the study nor the trade name verifies this individual’s cultivar-specific optimal light.",
+            "startingDli": [
+                4,
+                6
+            ]
         },
         "moisture": {
             "check": "Inspect below the surface as well as the upper mix. Actual nursery-pot depth, medium, and drainage must be confirmed; the glass-pot plan is not a completed repot.",
@@ -134,7 +200,7 @@
             "waitWhen": "The root zone remains wet or water is retained beneath it. Avoid fixed-depth triggers until the actual container is documented.",
             "waterWhen": "The medium has partly dried and the root-zone check supports watering. Allow excess water to escape; do not impose a prolonged cactus-style dry period."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "peperomia-obtusifolia-spice-is-nice",
         "sources": [
             {
@@ -146,6 +212,16 @@
                 "scope": "General foliage categories inform proposed 4–6 and 6–10 trials; applying P31's bands to P40 is collection inference.",
                 "title": "Iowa State Extension: supplemental light considerations",
                 "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
+            },
+            {
+                "scope": "Manufacturer/trade-brand guidance: medium-to-bright indirect light and leaf-scorch warning; current page does not resolve the collection specimen's cultivar identity.",
+                "title": "Proven Winners: Savory Delights Spice is Nice",
+                "url": "https://www.provenwinners.com/plants/peperomia/savory-delights-spice-nice-baby-rubber-plant-peperomia-obtusifolia"
+            },
+            {
+                "scope": "Species-level P. obtusifolia spectral experiment; 100 over 350–800 nm for 14 hours, no intensity optimization and no Spice is Nice provenance.",
+                "title": "Shin, Lee and Nam (2023): Growth, visual qualities and photosynthetic parameters in Peperomia under white lighting",
+                "url": "https://www.jales.org/articles/xml/5jgK/"
             }
         ]
     },
@@ -155,7 +231,11 @@
             "basis": "collection-trial",
             "caution": "This is a general foliage trial for provisionally identified plants, not a tested shared requirement. The fern-like growth and moss remain unidentified. The reported 6,000–7,000 lux is a dated observation with unknown sensor position, not a target.",
             "description": "A cautious low-light foliage comparison for this mixed terrarium under indirect light. Watch the probable Hypoestes for fading markings or stretched growth; the lower end may not provide enough light for every member.",
-            "dli": [3, 6],
+            "dli": [
+                3,
+                6
+            ],
+            "research": "No study establishing a shared optimum for this provisionally identified mixture was identified in the sources reviewed. A nine-week Hypoestes phyllostachya study used 2.7–135 µmol·m⁻²·s⁻¹ for 16 hours daily. Very low exposure reduced red-purple variegation, while 67.5–135 produced smaller, narrower new leaves: different quality goals favored different exposures. The jar’s probable Hypoestes appears white-speckled, so that pigmentation result transfers imperfectly. Fittonia research supplies separate context, but unidentified fern-like growth and moss prevent a species-based common DLI prescription.",
             "startingDli": null
         },
         "moisture": {
@@ -186,6 +266,21 @@
                 "scope": "Compatible shared conditions, indirect light, enclosure heat, and restrained feeding; no tested numeric target for this mixture.",
                 "title": "Iowa State Extension: Terrarium care",
                 "url": "https://yardandgarden.extension.iastate.edu/how-to/how-create-and-care-terrarium"
+            },
+            {
+                "scope": "Nine-week Hypoestes experiment at five PPFD levels and 16-hour days; red-purple pigmentation and leaf-shape outcomes, not white-speckled collection identity or mixed-terrarium optimum.",
+                "title": "Kim et al. (2012): Changes in Leaf Variegation and Coloration of English Ivy and Polka Dot Plant under Various Indoor Light Intensities",
+                "url": "https://journals.ashs.org/downloadpdf/view/journals/horttech/22/1/article-p49.pdf"
+            },
+            {
+                "scope": "Separate Fittonia experiment supplies probable-member context only; no mixed-container trial.",
+                "title": "García-Caparrós et al. (2020): Fittonia verschaffeltii Response to Artificial Light Treatments",
+                "url": "https://www.mdpi.com/2073-4395/10/1/126"
+            },
+            {
+                "scope": "Bright indirect light and partial-shade guidance for the tentative Pilea comparison; no numeric optimum and does not verify identity.",
+                "title": "RHS: Pilea depressa",
+                "url": "https://www.rhs.org.uk/plants/59546/pilea-depressa/details"
             }
         ]
     },
@@ -195,8 +290,15 @@
             "basis": "collection-trial",
             "caution": "These are collection comparison bands, not proven Tricolor minimum, optimum, or damage limits. Recheck pale or scorched leaves before increasing exposure.",
             "description": "Retains the profile's brighter indirect-light trial; weak stretching or fading color warrants a light and root-zone review.",
-            "dli": [8, 12],
-            "startingDli": [6, 8]
+            "dli": [
+                8,
+                12
+            ],
+            "research": "A species-level Tradescantia spathacea study compared full natural sunlight with 30% sunlight after two years of acclimatization, with measurements in summer. Shaded plants had higher measured net photosynthesis; full-sun plants showed stronger protective responses and more upright leaves. The reported 800 µmol·m⁻²·s⁻¹ was a gas-exchange measurement setting, not a recommended growing intensity. Neither daily integrated exposure nor a Tricolor-specific optimum was established. NParks also lists Dwarf Tricolor for sun or semi-shade, providing qualitative outdoor guidance rather than an indoor DLI target.",
+            "startingDli": [
+                6,
+                8
+            ]
         },
         "moisture": {
             "check": "Check the upper 1–2 inches, scaled to the actual root ball, and verify that the mix beneath is not still soggy in the 8-inch draining pot.",
@@ -204,7 +306,7 @@
             "waitWhen": "The deeper mix remains wet or runoff has collected around the pot. Do not water from a surface reading alone.",
             "waterWhen": "The upper mix has dried and the root-zone check supports watering. Drain fully; avoid prolonged whole-pot drought."
         },
-        "reviewedOn": "2026-10-29",
+        "reviewedOn": "2026-11-04",
         "slug": "tradescantia-spathacea-tricolor",
         "sources": [
             {
@@ -216,6 +318,16 @@
                 "scope": "General DLI context for retained 6–8 and 8–12 collection trials; those bands are not species recommendations from this source.",
                 "title": "Iowa State Extension: supplemental light considerations",
                 "url": "https://yardandgarden.extension.iastate.edu/how-to/growing-indoor-plants-under-supplemental-lights/important-considerations-providing-supplemental-light-indoor-plants"
+            },
+            {
+                "scope": "Species-level natural-sunlight vs 30%-sunlight study; higher photosynthetic performance in shade; 800 PPFD gas-exchange setting is a measurement condition.",
+                "title": "Survival Wisdom of Tradescantia spathacea: Photoprotection and Photosynthetic Capacity under High-Light Stress (2026)",
+                "url": "https://www.mdpi.com/1422-0067/27/14/6492"
+            },
+            {
+                "scope": "Qualitative full-sun/semi-shade cultivation guidance for Dwarf Tricolor in Singapore; no numeric indoor optimum.",
+                "title": "NParks: Tradescantia spathacea Dwarf Tricolor",
+                "url": "https://www.nparks.gov.sg/florafaunaweb/flora/2/5/2526"
             }
         ]
     }

@@ -1,6 +1,6 @@
 # Plant collection
 
-Last updated: 2026-10-29
+Last updated: 2026-11-04
 
 This is the current working inventory plus historical records for plants
 removed from the collection. Photo-based identifications are marked as probable, with nursery names retained alongside them.
@@ -30,11 +30,20 @@ aggregate overviews. Open the
 [container directory](https://nick2bad4u.github.io/Gardening/containers/) for
 each container's member list, care context, and existing history.
 
+## November 4 houseplant placement
+
+The owner reports **P39 / #13 Nightly nerve plant**, **P40 / #14 Spice is Nice
+peperomia**, and **P41 / #15 Alpine Spires Chinese evergreen** on the **shelf
+next to the cacti table on the room side**. This is their current recorded
+placement. Shelf dimensions, exact positions within it, and leaf-level light
+are unmeasured; no completed repot, watering, or quarantine end date is supplied.
+The October quarantine and future shelf plans below remain dated history. The owner reported on November 4 that the move was five days earlier, approximately October 30; the time was not supplied.
+
 ## October 28 Alpine Spires acquisition
 
 **Houseplant-08 / #15 / P41** is [Alpine Spires Chinese evergreen](./plants/houseplants/aglaonema-commutatum-alpine-spires.md), nursery-labelled _Aglaonema commutatum_, Igneous™ Alpine Spires™. The owner bought it **October 28, 2026, at Home Depot for $19.99**; store location and receipt are unrecorded. The supplied photograph documents the leafjoy tag and its “I'm New” badge. The owner reported barcode wording “trial” and seeing only one in the store. The barcode photograph supplied October 29 now documents “PW Leafjoy Trial 12cm”, a **$19.98 sticker price**, UPC `810160692423`, and grower wording “TPC- Stuarts Draft, VA”. Keep the sticker price separate from the owner-reported **$19.99 paid**; no receipt or payment correction was supplied. “Trial” does not establish rarity or a release date; retail 12cm is not an actual pot measurement, and the grower location is not the store or owner location.
 
-Repotting and photographs of the actual plant are planned. Current pot, medium, drainage, placement, light, and initial measurements remain unrecorded. Use manual moisture checks and indirect-light acclimation; no care event or dry-weight baseline is created by enrollment. The [profile](./plants/houseplants/aglaonema-commutatum-alpine-spires.md) separates label evidence from general Aglaonema care and includes the ingestion/sap warning.
+At October 28 enrollment, repotting and specimen photographs were planned. P41 has **setup 2** from the October 29, 2026 Repot in [canonical History](https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit#gid=1465181080&range=A2064:BO2064): pot **“Square glass jar approx. 10 in tall x 5 inch wide. 1 in drainage hole”** and medium **“85% Molly's Aroid Mix / 15% Molly's Orchid Mix (bottom layer)”**. Preserve the bottom-layer wording; it does not establish a homogeneous blend, internal volume, or a match to a photograph. The later shelf move does not change this setup. Specimen photographs and leaf-level light remain unrecorded; the November 4 owner report supplies its shelf placement above. Use manual moisture checks and indirect-light acclimation; no care event or dry-weight baseline is created by enrollment. The [profile](./plants/houseplants/aglaonema-commutatum-alpine-spires.md) separates label evidence from general Aglaonema care and includes the ingestion/sap warning.
 
 ## October 21 houseplant additions
 
@@ -48,7 +57,7 @@ and Proven Winners leafjoy littles labels received October 21, 2026:
 
 The labels support the nursery identities; photographs are consistent with them. In an **October 22 owner clarification**, both purchases were confirmed as **October 21, 2026, at Home Depot in Howell, Michigan**. The owner reports watering both with **RO water on the evening of October 21** because they were “super bone dry.” That is an owner-described condition, not a measured dry weight or baseline. Exact watering times, volumes, fertilizer use, and earlier nursery care are unreported. This documentation records the report; it does not confirm that corresponding Water events have been entered in the live History ledger.
 
-**October 24 repot plan:** P39 / #13 and P40 / #14 remain in quarantine in another room. The owner plans to repot both into the irregular glass drainage containers on **October 25**, using **75% Molly's Aroid Mix + 25% Molly's Orchid Mix**, then place them **on the shelf beside P38 Terrarium**. Pot photographs, usable internal dimensions, paint product, and completed curing remain pending. The October 22 clarification specifies acrylic paint **only on the exterior below the soil line**. P39 is to sit below the glass rim so the walls rise above its foliage for humidity; preserve its existing planting depth rather than burying stems. This is a planned arrangement, with moisture, airflow, shading, and actual drainage still to check after planting. No completed repot or new setup is recorded.
+**October 24 repot plan (historical):** P39 / #13 and P40 / #14 were in quarantine in another room. The owner planned to repot both into the irregular glass drainage containers on **October 25**, using **75% Molly's Aroid Mix + 25% Molly's Orchid Mix**, then place them **on the shelf beside P38 Terrarium**. Pot photographs, usable internal dimensions, paint product, and completed curing remain pending. The October 22 clarification specifies acrylic paint **only on the exterior below the soil line**. P39 is to sit below the glass rim so the walls rise above its foliage for humidity; preserve its existing planting depth rather than burying stems. This is a planned arrangement, with moisture, airflow, shading, and actual drainage still to check after planting. No completed repot or new setup is recorded.
 
 The owner has ordered **8 oz of seller-described “tropical pink” springtails** for planned addition to these pots after arrival. Species, arrival, and actual introduction are unconfirmed; the order does not establish a care benefit or replace drainage and moisture checks.
 
@@ -149,7 +158,7 @@ Both repots record **80% Molly's Succulent Mix + 20% perlite**. Neither batch co
 
 On **2026-09-15**, the owner added two 16 × 13-inch tables and rearranged the collection onto four wooden tables. The working 26 × 32-inch footprint is inferred before gaps; exact table height and fixture centers remain unmeasured. The September illustrations are historical and predate the later position changes.
 
-Photographs supplied **October 22, 2026** (capture date unrecorded) update the [current placement guide](./layouts/table-placement-research.md). The 24-pot front grid retains six columns and four rows, with **B3 / P06 at R1C4, D1 / P10 at R1C5, C1 / P07 at R2C6, and D2 / P11 at R3C6**; the other front cells retain their recorded positions, including A3/F1. **P35 Lithops sits behind Kiwi at the back left**, and **P36 split rock sits between the shared cactus and square box at the back center-right**. **P21 Money Tree is on a room-side stool**, superseding its historical September 16 north-windowsill location; **P38 Terrarium is on the desk to the right**. P30 is visible in a green glazed round bowl. The owner confirmed October 23 that the pale rosette in the grey/blue pot at the back center-left is P37 / #11 Arctic Ice, between P35 Lithops and P19 shared cactus. P31/P32 are absent from these views; the later October 24 owner report places both on a kitchen window shelf after completed repots about two weeks earlier. P39/P40 are not pictured here and remain in quarantine in another room, with a future shelf position beside the terrarium planned after their October 25 repots. The photographs establish no new watering, medium, repot/setup boundary, dimensions, light reading, or controller setting.
+Photographs supplied **October 22, 2026** (capture date unrecorded) update the [current placement guide](./layouts/table-placement-research.md). The 24-pot front grid retains six columns and four rows, with **B3 / P06 at R1C4, D1 / P10 at R1C5, C1 / P07 at R2C6, and D2 / P11 at R3C6**; the other front cells retain their recorded positions, including A3/F1. **P35 Lithops sits behind Kiwi at the back left**, and **P36 split rock sits between the shared cactus and square box at the back center-right**. **P21 Money Tree is on a room-side stool**, superseding its historical September 16 north-windowsill location; **P38 Terrarium is on the desk to the right**. P30 is visible in a green glazed round bowl. The owner confirmed October 23 that the pale rosette in the grey/blue pot at the back center-left is P37 / #11 Arctic Ice, between P35 Lithops and P19 shared cactus. P31/P32 are absent from these views; the later October 24 owner report places both on a kitchen window shelf after completed repots about two weeks earlier. P39/P40 are not pictured here; the October report placed them in another-room quarantine with a future shelf position planned after repotting. The later November 4 report places P39/P40/P41 on the shelf next to the cacti table on the room side, without confirming those repots. The photographs establish no new watering, medium, repot/setup boundary, dimensions, light reading, or controller setting.
 
 The plant inventory and the care configuration are separate records. On
 2026-08-14 the owner reported three changes to the cactus setup:

@@ -18,6 +18,8 @@ function reference() {
             caution: "This is an inferred trial, not a measured optimum.",
             description: "Bright indirect light.",
             dli: [6, 10],
+            research:
+                "Published guidance describes filtered light; this source does not establish a numeric optimum.",
             startingDli: [4, 6],
         },
         moisture: {
@@ -43,6 +45,51 @@ describe("plant care evidence validation", () => {
         expect.hasAssertions();
         expect(isPlantCareReference(reference())).toBe(true);
     });
+
+    it.each([
+        undefined,
+        null,
+        "",
+        " \n\t",
+        17,
+    ])(
+        "rejects missing or non-substantive published evidence %j",
+        (research) => {
+            expect.hasAssertions();
+
+            const record = reference();
+
+            expect(
+                isPlantCareReference({
+                    ...record,
+                    light: { ...record.light, research },
+                })
+            ).toBe(false);
+        }
+    );
+
+    it.each([
+        "collection-trial",
+        "qualitative-only",
+        "historical",
+    ])(
+        "requires published evidence independently of %s numeric status",
+        (basis) => {
+            expect.hasAssertions();
+
+            const record = reference();
+            const light =
+                basis === "collection-trial"
+                    ? record.light
+                    : { ...record.light, basis, dli: null, startingDli: null };
+
+            expect(isPlantCareReference({ ...record, light })).toBe(true);
+
+            Reflect.deleteProperty(light, "research");
+
+            expect(isPlantCareReference({ ...record, light })).toBe(false);
+        }
+    );
 
     it("preserves explicit unknown qualitative light", () => {
         expect.hasAssertions();
@@ -327,6 +374,30 @@ describe("care coverage", () => {
         );
     });
 
+    it("gives every active profile separate published evidence and an external source scope", async () => {
+        expect.hasAssertions();
+
+        const records = await getPlantCareReferences();
+        const active = records.filter(
+            (record) => record.light.basis !== "historical"
+        );
+        const incomplete = active.filter(
+            (record) =>
+                !record.light.research.trim() ||
+                record.light.research === record.light.description ||
+                !record.sources.some((source) => {
+                    const url = new URL(source.url);
+                    return (
+                        url.hostname !== "nick2bad4u.github.io" &&
+                        source.scope.trim().length > 0
+                    );
+                })
+        );
+
+        expect(active).toHaveLength(49);
+        expect(incomplete.map((record) => record.slug)).toStrictEqual([]);
+    });
+
     it("keeps the feather cactus trial distinct from a published optimum or maximum", async () => {
         expect.hasAssertions();
 
@@ -494,6 +565,17 @@ describe("light comparisons", () => {
             /Invalid plant care light reference/v
         );
         expect(() => lightComparison({ ...light, dli: null })).toThrow(
+            /Invalid plant care light reference/v
+        );
+    });
+
+    it("rejects missing published evidence at the conversion boundary", () => {
+        expect.hasAssertions();
+
+        const light = reference().light;
+        Reflect.deleteProperty(light, "research");
+
+        expect(() => lightComparison(light)).toThrow(
             /Invalid plant care light reference/v
         );
     });

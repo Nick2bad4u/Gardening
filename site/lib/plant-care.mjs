@@ -12,6 +12,7 @@ export const LIGHT_COMPARISON_HOURS = 13.5;
  *         startingDli: LightRange | null;
  *         basis: "collection-trial" | "qualitative-only" | "historical";
  *         description: string;
+ *         research: string;
  *         acclimation: string;
  *         caution: string;
  *     };
@@ -170,6 +171,7 @@ function isLight(value) {
         !isRecord(value) ||
         [
             "description",
+            "research",
             "acclimation",
             "caution",
         ].some((key) => !hasText(value[key]))

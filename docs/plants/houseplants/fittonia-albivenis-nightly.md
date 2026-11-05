@@ -47,7 +47,12 @@ root-zone moisture, a completed watering, or the cause of wilting.
 
 ## Care in this collection
 
-**Owner clarification, October 22:** P39 and P40 are quarantined in another
+**Owner placement report, November 4, 2026:** P39 / #13 is on the **shelf next
+to the cacti table on the room side**, with P40 / #14 and P41 / #15. Shelf
+geometry and leaf-level light remain unmeasured. This placement report does
+not confirm the earlier repot plan or when quarantine ended. The owner reported on November 4 that the move was five days earlier, approximately October 30; the time was not supplied.
+
+**Owner clarification, October 22:** P39 and P40 were quarantined in another
 room for roughly a week or until the planned repots. The exact position,
 leaf-level light, and room conditions are unmeasured. The owner watered both
 with **RO water on the evening of October 21**, their purchase day, because the medium was
@@ -55,7 +60,7 @@ described as extremely dry. Exact time, water volume, fertilizer use, and
 weights were not supplied. This is owner-reported care, not an inference from
 the photographs or proof that a live tracker entry has been saved.
 
-**October 24 repot plan:** P39 / #13 and P40 / #14 remain in quarantine in another room. The owner plans to repot both into the irregular glass drainage containers on **October 25**, using **75% Molly's Aroid Mix + 25% Molly's Orchid Mix**, then place them **on the shelf beside P38 Terrarium**. Pot photographs, usable internal dimensions, paint product, and completed curing remain pending. The October 22 clarification specifies acrylic paint **only on the exterior below the soil line**. P39 is to sit below the glass rim so the walls rise above its foliage for humidity; preserve its existing planting depth rather than burying stems. This is a planned arrangement, with moisture, airflow, shading, and actual drainage still to check after planting. No completed repot or new setup is recorded.
+**October 24 repot plan (historical):** P39 / #13 and P40 / #14 were in quarantine in another room. The owner planned to repot both into the irregular glass drainage containers on **October 25**, using **75% Molly's Aroid Mix + 25% Molly's Orchid Mix**, then place them **on the shelf beside P38 Terrarium**. Pot photographs, usable internal dimensions, paint product, and completed curing remain pending. The October 22 clarification specifies acrylic paint **only on the exterior below the soil line**. P39 is to sit below the glass rim so the walls rise above its foliage for humidity; preserve its existing planting depth rather than burying stems. This is a planned arrangement, with moisture, airflow, shading, and actual drainage still to check after planting. No completed repot or new setup is recorded.
 
 The owner has ordered **8 oz of seller-described “tropical pink” springtails** for planned addition to these pots after arrival. Species, arrival, and actual introduction are unconfirmed; the order does not establish a care benefit or replace drainage and moisture checks.
 
@@ -70,7 +75,7 @@ tested recipe for P39; the planned 75:25 aroid/orchid blend remains an untested 
 
 | Topic                | Practical approach                                                                                                                                                                                                                                                                                                                                         |
 | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Light                | Start with bright indirect light and gradual acclimation. Keep it out of an abrupt move into the strongest cactus exposure; record its actual position before assigning lamp settings.                                                                                                                                                                     |
+| Light                | Start with bright indirect light and gradual acclimation. Measure leaf-level exposure on the room-side shelf before assigning lamp settings; its position beside the cacti table does not establish the same exposure as the cactus pots.                                                                                                                  |
 | Water                | Maintain lightly moist, aerated medium. Check the upper mix and accessible root zone as the surface begins to dry; do not wait for whole-pot drought or a cactus dry-weight plateau. The brand's top-inch check must be scaled to the still-unmeasured pot depth. Drain excess water when watering is needed.                                              |
 | Humidity and airflow | Avoid drying drafts and a direct fan blast. The brand prefers high humidity, while extension guidance describes medium humidity; actual room conditions and leaf response should guide any adjustment. The planned glass walls will rise above the foliage; inspect airflow and moisture rather than assuming a fixed humidity target or sealed enclosure. |
 | Pot and medium       | Current nursery setup remains unmeasured. Planned October 25: irregular glass pot with owner-confirmed drainage, using 75% Molly's Aroid Mix + 25% Molly's Orchid Mix. Photograph and measure before recording a completed setup; check actual moisture retention and drainage.                                                                            |
@@ -86,6 +91,8 @@ leaves hang down. Soft dark stems, persistent decline in wet medium, or new
 scorched edges warrant reassessing roots, drainage, or exposure.
 
 ## Sources
+
+- Owner placement report, November 4, 2026: P39, P40, and P41 are on the shelf next to the cacti table on the room side. No shelf dimensions, light reading, completed repot, or quarantine end date was supplied.
 
 - Owner plan, October 24, 2026: October 25 glass-pot repots in 75% Molly's Aroid Mix + 25% Molly's Orchid Mix; future shelf position beside P38, P39 recessed below the rim, measurements/photos pending, and an 8 oz tropical pink springtail order. These are plans, not completed care events.
 

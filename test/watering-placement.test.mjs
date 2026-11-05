@@ -134,23 +134,29 @@ describe("watering placement source", () => {
             { id: "P31", position: "Kitchen window shelf" },
             { id: "P32", position: "Kitchen window shelf" },
             { id: "P38", position: "Desk to right of tables" },
-            { id: "P39", position: "Quarantine in another room" },
-            { id: "P40", position: "Quarantine in another room" },
-            { id: "P41", position: "Position unrecorded" },
+            { id: "P39", position: "Shelf next to cacti table, room side" },
+            { id: "P40", position: "Shelf next to cacti table, room side" },
+            { id: "P41", position: "Shelf next to cacti table, room side" },
         ]);
         expect(others[0]).toMatchObject({ x: 170, y: 1305 });
         expect(others[5]).toMatchObject({ x: 390, y: 1435 });
     });
 
-    it("keeps planned terrarium-shelf moves separate from the current positions and watering history", () => {
+    it("records the owner-reported room-side shelf without inventing shelf coordinates or watering history", () => {
         expect.hasAssertions();
 
         const placements = buildWateringPlacements(source, containers);
-        for (const id of ["P39", "P40"]) {
+        for (const [id, x] of [
+            ["P39", 170],
+            ["P40", 390],
+            ["P41", 610],
+        ]) {
             expect(
                 placements.find((placement) => placement.id === id)
             ).toMatchObject({
-                position: "Quarantine in another room",
+                position: "Shelf next to cacti table, room side",
+                x,
+                y: 1435,
                 zone: "other",
             });
         }

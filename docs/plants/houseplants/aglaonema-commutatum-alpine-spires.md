@@ -9,7 +9,7 @@
 - Acquired from: Home Depot; owner report, store location unrecorded; Proven Winners leafjoy nursery branding
 - Acquired on: 2026-10-28
 - Purchase price: $19.99 paid, owner report October 28; the barcode sticker supplied October 29 shows $19.98. Receipt and tax breakdown not supplied
-- Current pot: Unrecorded; repot planned. Retail sticker says 12cm, not a measured pot dimension. Actual dimensions, drainage, growing medium, and final placement remain pending
+- Current pot: Setup 2, October 29, 2026 Repot; “Square glass jar approx. 10 in tall x 5 inch wide. 1 in drainage hole”. Medium: “85% Molly's Aroid Mix / 15% Molly's Orchid Mix (bottom layer)”. These are the canonical History descriptions; internal dimensions and volume remain unmeasured
 
 ## Names and identity
 
@@ -73,30 +73,32 @@ retail **12cm** designation is not a measurement of the current pot's diameter,
 depth, or usable root volume and establishes no drainage or completed repot.
 Capture date and time remain unrecorded.
 
-**Repotting and specimen photographs are pending.** The owner plans to take
-plant photographs after repotting. No completed repot, new pot, medium recipe,
-watering, pest finding, placement, or starting measurement is established by
-this enrollment. P41 keeps its permanent ID when its pot setup changes.
+**October 28 enrollment history:** repotting and specimen photographs were planned; the label evidence alone established no completed repot or physical setup. The later October 29 canonical Repot establishes setup 2 below. Specimen photographs remain pending. P41 keeps its permanent ID when its pot setup changes.
 
 ## Care in this collection
 
-Begin with manual moisture and plant-condition checks. The current root ball,
-pot depth, drainage, room, and light are still unrecorded, so no lamp position,
-water quantity, feeding routine, or dry-weight threshold is assigned.
+P41 has **setup 2** from the October 29, 2026 Repot in [canonical History](https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit#gid=1465181080&range=A2064:BO2064): pot **“Square glass jar approx. 10 in tall x 5 inch wide. 1 in drainage hole”** and medium **“85% Molly's Aroid Mix / 15% Molly's Orchid Mix (bottom layer)”**. Preserve the bottom-layer wording; it does not establish a homogeneous blend, internal volume, or a match to a photograph. The later shelf move does not change this setup.
 
-| Topic                | Practical approach                                                                                                                                                                                                                                             |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Light                | Begin with indirect light and gradual acclimation. Keep it out of an abrupt move into the strongest cactus-table exposure. Record the actual position and leaf-height light before choosing settings.                                                          |
-| Water                | Let the upper mix begin to dry, then inspect moisture below the surface before watering. Keep the root zone aerated and drain excess water. Do not wait for a cactus-style whole-pot dry plateau or water by a fixed interval.                                 |
-| Pot and medium       | Inspect roots and current drainage before the planned repot. Use a draining container and an aerated houseplant medium; preserve the existing planting depth and avoid an unnecessarily large increase in pot volume. Record the actual pot and mix afterward. |
-| Temperature          | Use a warm indoor position away from cold drafts and vents. No minimum-temperature experiment is planned for this new plant.                                                                                                                                   |
-| Humidity and airflow | Ordinary room conditions may be workable; observe new growth and leaf edges before adjusting humidity. The SpaScene badge does not establish a need for a sealed enclosure or routine misting. Avoid a direct fan blast.                                       |
-| Feeding              | Nursery feeding history is unknown. Check for an existing fertilizer charge and active growth before adding fertilizer; enrollment does not start a feeding calendar.                                                                                          |
-| Tracker              | Record real observations under P41 / #15. Initial weights and moisture checks can establish a trend after the weighed assembly is consistent; they do not by themselves prove watering readiness.                                                              |
+**Owner placement report, November 4, 2026:** P41 / #15 is on the **shelf next
+to the cacti table on the room side**, with P39 / #13 and P40 / #14. Shelf
+geometry and leaf-level light remain unmeasured. This placement report does
+not establish a completed repot, watering, or other setup change. The owner reported on November 4 that the move was five days earlier, approximately October 30; the time was not supplied.
+
+Use manual moisture and plant-condition checks in the recorded glass jar. Usable internal depth, root-ball condition, drainage performance, room conditions, and leaf-level light remain unverified; the recorded one-inch hole does not establish how quickly the root zone drains. No lamp setting, water quantity, feeding routine, or dry-weight threshold is assigned.
+
+| Topic                | Practical approach                                                                                                                                                                                                                        |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Light                | Begin with indirect light and gradual acclimation. Measure leaf-height light on the room-side shelf before choosing settings; being beside the cacti table does not establish the same exposure as the cactus pots.                       |
+| Water                | Let the upper mix begin to dry, then inspect moisture below the surface before watering. Keep the root zone aerated and drain excess water. Do not wait for a cactus-style whole-pot dry plateau or water by a fixed interval.            |
+| Pot and medium       | Use the recorded setup-2 glass jar and substrate description above. Check moisture below the surface and confirm water exits the recorded hole; retain the bottom-layer qualification instead of treating the substrate as a uniform mix. |
+| Temperature          | Use a warm indoor position away from cold drafts and vents. No minimum-temperature experiment is planned for this new plant.                                                                                                              |
+| Humidity and airflow | Ordinary room conditions may be workable; observe new growth and leaf edges before adjusting humidity. The SpaScene badge does not establish a need for a sealed enclosure or routine misting. Avoid a direct fan blast.                  |
+| Feeding              | Nursery feeding history is unknown. Check for an existing fertilizer charge and active growth before adding fertilizer; enrollment does not start a feeding calendar.                                                                     |
+| Tracker              | Record real observations under P41 / #15. Initial weights and moisture checks can establish a trend after the weighed assembly is consistent; they do not by themselves prove watering readiness.                                         |
 
 The watering approach combines UF/IFAS guidance to allow slight drying with
 NParks' warning about excessive moisture. It is a starting approach for an
-unmeasured pot, not a tested Alpine Spires recipe. The manufacturer's general
+pot with unmeasured internal volume, not a tested Alpine Spires recipe. The manufacturer's general
 Aglaonema guidance supports drainage, indirect light, and retaining planting
 depth; its calendar watering suggestions are not adopted here. The matching
 store listing recommends low-to-medium light and upper-couple-inches drying,
@@ -117,6 +119,10 @@ may irritate skin. Use gloves when cutting or handling sap, and wash afterward.
 This is an ornamental plant, not an edible one.
 
 ## Sources
+
+- [Canonical History, row 2064](https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit#gid=1465181080&range=A2064:BO2064): active P41 Repot dated October 29, 2026; setup 2, exact pot and substrate descriptions above. Verified in the live workbook November 4; this is an existing event, not a new repot inferred from the shelf move.
+
+- Owner placement report, November 4, 2026: P39, P40, and P41 are on the shelf next to the cacti table on the room side. No shelf dimensions, light reading, completed repot, or watering was supplied.
 
 - Owner report and supplied label photograph, October 28, 2026: same-day Home Depot purchase for $19.99; only one seen in the store; owner-reported barcode “trial” wording; planned repot and later specimen photos. The October 28 front image directly supports the nursery wording and “I'm New” badge; the barcode was supplied separately October 29. Owner photograph copyright Nick, all rights reserved.
 - Owner-supplied barcode photograph, October 29, 2026, linked above: “PW Leafjoy Trial 12cm”, $19.98 sticker price, UPC `810160692423`, and “Grown by TPC- Stuarts Draft, VA”. The blurred SKU is not transcribed. Retail size, sticker price, and grower text are distinct from measured setup, the owner-reported payment, and the store location. Capture date unrecorded; copyright Nick, all rights reserved.

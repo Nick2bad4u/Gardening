@@ -1,10 +1,12 @@
 # Plant profiles
 
-Last updated: 2026-10-28
+Last updated: 2026-11-04
 
 These **50 pages cover 49 active profile records and one historical record, across 39 tracker allocations**. Each profile combines identification, botanical background, collection photographs, and practical care for its current pot. Use the guides with plant-condition and moisture checks rather than a fixed watering calendar.
 
-**October 28 acquisition:** [Alpine Spires Chinese evergreen](./houseplants/aglaonema-commutatum-alpine-spires.md) is **Houseplant-08 / #15 / P41**, nursery-labelled _Aglaonema commutatum_, Igneous™ Alpine Spires™. Home Depot purchase for $19.99; the tag is documented, while repotting, specimen photographs, physical setup, and placement remain pending.
+**November 4 placement:** P39 / #13 Nightly nerve plant, P40 / #14 Spice is Nice peperomia, and P41 / #15 Alpine Spires Chinese evergreen are on the **shelf next to the cacti table on the room side**, reported by the owner. Shelf geometry and leaf-level light remain unmeasured; this does not confirm completed repots or a quarantine end date. The owner reported on November 4 that the move was five days earlier, approximately October 30; the time was not supplied.
+
+**October 28 acquisition:** [Alpine Spires Chinese evergreen](./houseplants/aglaonema-commutatum-alpine-spires.md) is **Houseplant-08 / #15 / P41**, nursery-labelled _Aglaonema commutatum_, Igneous™ Alpine Spires™. Home Depot purchase for $19.99; the tag is documented. The October 29 canonical Repot establishes setup 2 in the glass jar with its recorded one-inch drainage hole and substrate description; see the [current setup record](./houseplants/aglaonema-commutatum-alpine-spires.md#care-in-this-collection). Specimen photographs remain pending. The November 4 report supplies its shelf placement above.
 
 **New acquisition:** [Arctic Ice echeveria](./succulents/echeveria-arctic-ice.md)
 is enrolled as **Succulent-17 / #11 / P37**, acquired October 6, 2026 at Home
@@ -134,7 +136,7 @@ The owner bought both Lithops nursery pots and the split rock at Home Depot, How
 | Houseplant-07 | `#14`    | [Spice is Nice peperomia](./houseplants/peperomia-obtusifolia-spice-is-nice.md)                                 | Nursery-labelled Peperomia obtusifolia, Savory Delights™ Spice is Nice™; P40; purchased 2026-10-21 at Home Depot, Howell                    |
 | Houseplant-08 | `#15`    | [Alpine Spires Chinese evergreen](./houseplants/aglaonema-commutatum-alpine-spires.md)                          | Nursery-labelled Aglaonema commutatum, Igneous™ Alpine Spires™; P41; purchased 2026-10-28 at Home Depot for $19.99; specimen photos pending |
 
-Nightly nerve plant and Spice is Nice peperomia remain quarantined in another room. The owner plans October 25 glass-pot repots in 75% Molly's Aroid Mix + 25% Molly's Orchid Mix and a later position on the shelf beside P38. Irregular pot dimensions and photographs remain pending; no completed repot is reported. The October 21 owner-reported RO watering remains dated evidence; see the [setup record](../setup.md).
+Nightly nerve plant and Spice is Nice peperomia were reported in quarantine in another room in October. The October 24 plan called for October 25 glass-pot repots in 75% Molly's Aroid Mix + 25% Molly's Orchid Mix and a later position on the shelf beside P38. The November 4 owner report now places both on the room-side shelf next to the cacti table with P41. Irregular pot dimensions and photographs remain pending; no completed repot or quarantine end date is reported. The October 21 owner-reported RO watering remains dated evidence; see the [setup record](../setup.md).
 
 P31 / #7 Peperomia Bicolor and P32 / #8 Tricolor oyster plant are on a **kitchen window shelf**, under the owned **FECiDA 54 W six-tube LED fixture and one Juhefa 10 W three-head fixture**. The owner reports completing the repots and kitchen move about two weeks before October 24; exact dates and times are unrecorded. Their current mix is estimated at **30% perlite + 70% greenhouse houseplant mix**. The previously selected Amazon Basics eight-inch drainage pots are now reported in use; internal dimensions and actual leaf-height exposure remain unmeasured. The earlier floor position and proposed living-room sliding-door arrangement are historical.
 

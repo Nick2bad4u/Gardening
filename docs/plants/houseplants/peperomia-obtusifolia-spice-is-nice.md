@@ -50,7 +50,12 @@ establish when or whether the root ball was watered.
 
 ## Care in this collection
 
-**Owner clarification, October 22:** P40 and P39 are quarantined in another
+**Owner placement report, November 4, 2026:** P40 / #14 is on the **shelf next
+to the cacti table on the room side**, with P39 / #13 and P41 / #15. Shelf
+geometry and leaf-level light remain unmeasured. This placement report does
+not confirm the earlier repot plan or when quarantine ended. The owner reported on November 4 that the move was five days earlier, approximately October 30; the time was not supplied.
+
+**Owner clarification, October 22:** P40 and P39 were quarantined in another
 room for roughly a week or until the planned repots. Exact placement,
 leaf-level light, and room conditions are unmeasured. Both received **RO water
 on the evening of October 21**, their purchase day, because the owner described the medium as
@@ -58,7 +63,7 @@ extremely dry. Exact time, water volume, fertilizer use, and weights were not
 supplied. This is owner-reported care; it does not verify a saved live tracker
 entry or establish their present moisture.
 
-**October 24 repot plan:** P39 / #13 and P40 / #14 remain in quarantine in another room. The owner plans to repot both into the irregular glass drainage containers on **October 25**, using **75% Molly's Aroid Mix + 25% Molly's Orchid Mix**, then place them **on the shelf beside P38 Terrarium**. Pot photographs, usable internal dimensions, paint product, and completed curing remain pending. The October 22 clarification specifies acrylic paint **only on the exterior below the soil line**. P39 is to sit below the glass rim so the walls rise above its foliage for humidity; preserve its existing planting depth rather than burying stems. This is a planned arrangement, with moisture, airflow, shading, and actual drainage still to check after planting. No completed repot or new setup is recorded.
+**October 24 repot plan (historical):** P39 / #13 and P40 / #14 were in quarantine in another room. The owner planned to repot both into the irregular glass drainage containers on **October 25**, using **75% Molly's Aroid Mix + 25% Molly's Orchid Mix**, then place them **on the shelf beside P38 Terrarium**. Pot photographs, usable internal dimensions, paint product, and completed curing remain pending. The October 22 clarification specifies acrylic paint **only on the exterior below the soil line**. P39 is to sit below the glass rim so the walls rise above its foliage for humidity; preserve its existing planting depth rather than burying stems. This is a planned arrangement, with moisture, airflow, shading, and actual drainage still to check after planting. No completed repot or new setup is recorded.
 
 The owner has ordered **8 oz of seller-described “tropical pink” springtails** for planned addition to these pots after arrival. Species, arrival, and actual introduction are unconfirmed; the order does not establish a care benefit or replace drainage and moisture checks.
 
@@ -70,7 +75,7 @@ implementing the planned 75:25 aroid/orchid trial; the recipe is not a verified 
 
 | Topic                | Practical approach                                                                                                                                                                                                                                                                                                       |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Light                | Bright indirect light, introduced gradually. Confirm the intended position before choosing a grow-light setting; this is not automatically assigned to the cactus tables or P31's planned living-room setup.                                                                                                             |
+| Light                | Bright indirect light, introduced gradually. Measure leaf-level exposure on the room-side shelf before choosing a grow-light setting; the neighboring cactus-table readings and P31's separate kitchen setup do not establish P40's exposure.                                                                            |
 | Water                | Let the medium partially dry, then check below the surface before watering. The brand suggests checking the top 1–2 inches, but scale that depth to the actual nursery pot. Avoid both a persistently wet root ball and prolonged whole-pot drought. Water through only with working drainage and empty retained runoff. |
 | Humidity and airflow | Ordinary room conditions may be suitable; record them rather than importing the terrarium's readings. The tag's humid-room category does not require high humidity: the official product page lists low humidity preference, and extension guidance gives medium to low humidity. Avoid cold drafts.                     |
 | Pot and medium       | Current nursery setup remains unmeasured. Planned October 25: irregular glass pot with owner-confirmed drainage, using 75% Molly's Aroid Mix + 25% Molly's Orchid Mix. Photograph and measure before recording a completed setup; check actual moisture retention and drainage.                                          |
@@ -86,6 +91,8 @@ does not identify thirst. Reassess exposure if new pale or scorched patches
 appear after a move. Establish the purchased plant before taking cuttings.
 
 ## Sources
+
+- Owner placement report, November 4, 2026: P39, P40, and P41 are on the shelf next to the cacti table on the room side. No shelf dimensions, light reading, completed repot, or quarantine end date was supplied.
 
 - Owner plan, October 24, 2026: October 25 glass-pot repots in 75% Molly's Aroid Mix + 25% Molly's Orchid Mix; future shelf position beside P38, P39 recessed below the rim, measurements/photos pending, and an 8 oz tropical pink springtail order. These are plans, not completed care events.
 

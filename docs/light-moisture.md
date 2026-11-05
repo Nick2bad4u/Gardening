@@ -26,6 +26,76 @@ state where the numeric choice is an inference. Mixed plantings use provisional
 comparison bands with checks for each member; one shared band does not establish
 identical needs or synchronized watering. The removed plant's card stays historical.
 
+## Reading the published research
+
+Each active plant's care card now separates **Published evidence** from its
+**provisional trial band**. The November 4, 2026 review covers all 49 active
+profiles, including shared-container overviews. It searches the recorded taxa,
+trade names, and relevant synonyms, and identifies related-species evidence
+instead of treating it as a study of the collection plant.
+
+The evidence needs several distinctions:
+
+- **A light treatment is not an optimum.** A plant grown at one intensity has
+  not been compared across enough intensities to find its best exposure. The
+  better of two treatments does not establish a maximum.
+- **The outcome matters.** Seed germination, rooting, short-term carbon uptake,
+  flowering, compact shape, and survival in a dim room answer different questions.
+  A result for one does not automatically prescribe the light for another.
+- **Keep the original units and conditions.** Greenhouse foot-candles, noon
+  readings, shade percentages, and variable daylight do not establish a daily
+  photon integral. Convert PPFD to DLI only when its spectral definition and
+  exposure duration support that calculation.
+- **Keep identity uncertainty.** An experiment on another cultivar, a grafted
+  cactus, a seedling, or a mixed planting cannot establish an exact optimum for
+  an unidentified member or an own-root adult.
+
+Where the review did not identify a defensible numerical optimum, the card says
+so. This describes the evidence found, not a claim that no relevant research can
+exist. Existing trial endpoints remain provisional; a new citation does not turn
+them into measured requirements.
+
+### Useful numbers found, with their limits
+
+These published quantities describe different experiments or production settings.
+Use the linked care cards for the collection trial and the cited papers for the
+original conditions; this research summary does not replace the installed lamp schedule.
+
+- **[Fittonia Nightly](./plants/houseplants/fittonia-albivenis-nightly.md):**
+  **77.37, 101.22, and 112.38 PPFD for 16 hours**, calculated **4.46, 5.83, and
+  6.47 DLI**. An eight-week Fittonia trial, with spectrum and intensity changing
+  together. Nightly was not identified as the tested selection; this is no clean
+  optimum experiment. [Original study](https://www.mdpi.com/2073-4395/10/1/126)
+- **[Peperomia Bicolor](./plants/houseplants/peperomia-obtipan-bicolor.md) and
+  [Spice is Nice](./plants/houseplants/peperomia-obtusifolia-spice-is-nice.md):**
+  **6–10 DLI** recommended for rooting related Emerald Isle cuttings. This is a
+  propagation recommendation, not a mature-plant optimum. A separate species
+  spectral study's reported **100 µmol·m⁻²·s⁻¹** spans **350–800 nm**, so it must
+  not be presented as ordinary PAR DLI.
+  [Propagation research](https://www.growertalks.com/Article/?articleid=26302),
+  [spectral study](https://www.jales.org/articles/xml/5jgK/)
+- **[Echeveria Arctic Ice](./plants/succulents/echeveria-arctic-ice.md):** Patent
+  Figure 1 reports **2,500–3,500 foot-candles**, approximately **26,900–37,700 lux**.
+  These are exact-cultivar natural greenhouse conditions, without a daily integral
+  or a comparison proving an optimum. They use direct illuminance units, not the
+  cards' white-LED conversion.
+  [Cultivar patent](https://patents.google.com/patent/USPP29584P2/en)
+- **Other Echeveria cultivars, compared with our rosettes:** **4.8 versus
+  12.8 DLI**. Five different cultivars, with responses depending on cultivar and
+  day length. The better of two treatments cannot locate an upper optimum for
+  our plants. [2026 experiment](https://doi.org/10.3390/horticulturae12050551)
+- **[Probable Lithops lesliei](./plants/succulents/lithops-lesliei.md), compared
+  with L. aucampiae:** **550 PPFD for 12 hours**, calculated **23.76 DLI**. This is
+  a related-species tissue photoprotection study's growing condition, not a
+  light-dose optimization experiment.
+  [Original study](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0075671)
+- **[Alpine Spires Chinese evergreen](./plants/houseplants/aglaonema-commutatum-alpine-spires.md),
+  compared with commercial Aglaonema:** Nursery guidance **1,250–3,000
+  foot-candles**, approximately **13,500–32,300 lux**, for shaded nursery production.
+  The same guide's much lower indoor-tolerance figure answers a different
+  question; neither sets an Alpine Spires DLI optimum.
+  [UF/IFAS production guide](https://edis.ifas.ufl.edu/publication/EP160/pdf)
+
 ## Where the numbers come from
 
 The DLI bands are **collection estimates, not published optimal ranges**. The
@@ -155,8 +225,8 @@ an instruction to water that component independently.
   support. Existing collection trial ranges also remain documented in the
   [earlier fixture research](./equipment/vivosun-aw200se.md#working-light-targets-for-this-collection).
 
-The nine formerly qualitative active records were reviewed November 4, 2026.
-They now include provisional category-based comparisons supported by their
-linked horticultural guidance. Other records retain their individual review dates.
+All 49 active profiles received a published-evidence review on November 4, 2026.
+The nine formerly qualitative records retain their provisional category-based
+comparisons; the other active records retain their existing collection trials.
 Revisit ranges when measurements, pot setup, plant condition, or identification
 provide better evidence.
