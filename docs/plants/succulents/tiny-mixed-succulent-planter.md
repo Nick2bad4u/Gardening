@@ -77,11 +77,16 @@ explain those comparisons alongside each group's growth habit.
 | Drainage check       | Verify the current bowl's outlet and the escape of runoff before relying on a thorough-watering routine. “7 inch shallow” and “Molly's Mix only” do not establish usable depth, a functioning outlet, or current root-zone moisture.                                                                                                                                                  |
 | Pets                 | Treat the whole shared planter as inaccessible to cats and dogs because the paddle component is a probable Kalanchoe, a genus listed as toxic by ASPCA. Pick up fallen leaves.                                                                                                                                                                                                        |
 
-The **Light & moisture** card uses a cautious succulent-category trial for this
-unresolved mixture. It is not a measured optimum for the bowl. Check light at
-both the low rosettes and the taller paddles; changing one lamp setting does not
-give every member the same exposure. The [light reference](../../light-moisture.md)
-explains the duration and spectrum assumptions behind the displayed lux comparison.
+The **Light & moisture** card recommends a **14–18 DLI** shared working range,
+approximately **15,800–25,900 lux** at the 13.5-hour white-LED comparison. This is
+the overlap between the low Echeveria crowns' **12–18 DLI** recommendation and
+the probable sedum and paddles' **14–20 DLI** recommendations. These are practical
+estimates, not measured optima. Check light at each height; changing one lamp
+setting does not give every member the same exposure. During an increase from
+dimmer conditions, the overview's gentler **10–12 DLI** band describes the low
+crowns, while the taller paddles have a **12–14 DLI** transition comparison.
+Keep one shared watering decision. The [light reference](../../light-moisture.md)
+explains the duration and spectrum assumptions.
 
 ## Rotation and watch points
 

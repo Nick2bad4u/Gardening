@@ -124,10 +124,12 @@ hands-on report above. This photograph does not show either split rock.
 | Feeding             | Do not add fertilizer simply because the other succulents are being fed. Published guidance ranges from no supplementary feed to sparse feeding; reassess the medium's existing nutrients and active growth before any weak feed during a watering that is already justified. |
 | Tracking            | Weigh the complete P35 assembly consistently. Keep setup-2 readings separate from nursery weights and establish its own references from subsequent observations.                                                                                                              |
 
-The **Light & moisture** card now supplies a general high-light succulent trial
-as a comparison for all three P35 profiles. Iowa State's category range and
-Wisconsin Extension's strong-light guidance inform that trial; neither source
-establishes a species-specific lux optimum. Compare exposure at each head,
+The **Light & moisture** card recommends **16–22 DLI**, approximately
+**18,100–31,700 lux** at the 13.5-hour white-LED comparison, for all three P35
+profiles. Use **12–16 DLI** as an optional transition from dimmer conditions.
+Strong-light Lithops cultivation guidance and related-species research inform
+this practical estimate; neither establishes these endpoints as a measured
+species optimum. Compare exposure at each head,
 including any shading by Kiwi, and increase light gradually. Continue providing
 bright light during leaf replacement; withholding water does not mean moving
 the pot into shade. The white-LED lux estimate is not a calibration of the

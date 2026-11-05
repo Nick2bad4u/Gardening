@@ -57,10 +57,11 @@ at the hidden body can become structural.
 
 ### Light evidence and the trial band
 
-The card's **10–17 DLI** is an inherited indoor collection trial, not a published
-optimum or maximum for _Mammillaria plumosa_. **17 DLI is not a ceiling**; a
-healthy, acclimated plant may use more light. The current sources do not
-establish a numerical upper target for this specimen.
+The card recommends **12–20 DLI**, approximately **13,600–28,800 lux** at the
+13.5-hour white-LED comparison, for healthy acclimated indoor growth. A gentler
+**8–12 DLI** transition can help when increasing light from a dimmer position.
+These are practical estimates selected from the cultivation evidence, replacing
+the older 10–17 trial. **Neither 17 nor 20 DLI is a ceiling** or a published optimum.
 
 Arizona-Sonora Desert Museum describes full-sun tolerance with light afternoon
 shade preferred, and warns that excessive shade reduces the spines and white
@@ -68,7 +69,7 @@ appearance of new growth. RHS lists full sun but specifies bright filtered light
 under glass. Use these as context for gradual changes while checking new growth
 and heat; the recommendations do not convert directly into one universal DLI.
 The [light reference](../../light-moisture.md#feather-cactus-17-dli-is-not-a-maximum)
-explains the original band and how PPFD and approximate lux are calculated.
+explains the recommendation and how PPFD and approximate lux are calculated.
 
 ## Propagation and watch points
 

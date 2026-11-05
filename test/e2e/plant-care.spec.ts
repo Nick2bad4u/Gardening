@@ -1,11 +1,18 @@
 import { expect, type Locator, type Page, test } from "@playwright/test";
 
+import {
+    getPlantCareReferences,
+    lightComparison,
+    // eslint-disable-next-line import-x/extensions -- The maintained Node ESM adapter requires its explicit .mjs extension.
+} from "../../site/lib/plant-care.mjs";
+
 const alpineSlug = "aglaonema-commutatum-alpine-spires";
 const alpinePath = `/Gardening/plants/${alpineSlug}/`;
 const guidePath = "/Gardening/guides/light-moisture/";
 const careTitle = "Light & moisture";
+const comparisonTitle = "Compare the collection";
 
-async function expectNoOverflow(page: Readonly<Page>) {
+const expectNoOverflow = async (page: Readonly<Page>) => {
     expect
         .soft(
             await page.evaluate(
@@ -13,9 +20,9 @@ async function expectNoOverflow(page: Readonly<Page>) {
             )
         )
         .toBe(true);
-}
+};
 
-async function inspectDisclosure(page: Readonly<Page>) {
+const inspectDisclosure = async (page: Readonly<Page>) => {
     const care = page.getByRole("region", {
         exact: true,
         name: careTitle,
@@ -42,16 +49,19 @@ async function inspectDisclosure(page: Readonly<Page>) {
         .toBeVisible();
     await page.keyboard.press("Enter");
     await expect.soft(source).toBeHidden();
-}
+};
 
-async function inspectPrint(page: Readonly<Page>) {
+const inspectPrint = async (page: Readonly<Page>) => {
     const care = page.getByRole("region", {
         exact: true,
         name: careTitle,
     });
     await page.emulateMedia({ media: "print" });
     await expect
-        .soft(care.getByText("Provisional trial band", { exact: true }))
+        .soft(care.getByText("Recommended working range", { exact: true }))
+        .toBeVisible();
+    await expect
+        .soft(care.getByText("Gentler starting range", { exact: true }))
         .toBeVisible();
     await expect
         .soft(care.getByText("Water when", { exact: true }))
@@ -73,7 +83,7 @@ async function inspectPrint(page: Readonly<Page>) {
             })
         )
         .toBeHidden();
-}
+};
 
 async function prepare(
     page: Readonly<Page>,
@@ -98,8 +108,8 @@ const inspectTerrariumCautions = async (page: Readonly<Page>) => {
     expect.soft(content).toContain("spectrum-dependent white-LED comparison");
     expect.soft(content).toMatch(/does not establish.*drainage/v);
     await expect
-        .soft(care.getByText("Starting comparison", { exact: true }))
-        .toHaveCount(0);
+        .soft(care.getByText("Gentler starting range", { exact: true }))
+        .toBeVisible();
     await expect
         .soft(
             page
@@ -122,7 +132,7 @@ const expectPublishedEvidence = async (page: Readonly<Page>) => {
 const inspectComparisonGeometry = async (page: Readonly<Page>) => {
     await page.evaluate(async () => document.fonts.ready);
     const problems = await page
-        .getByRole("region", { exact: true, name: "Compare the collection" })
+        .getByRole("region", { exact: true, name: comparisonTitle })
         .getByRole("listitem")
         .evaluateAll((rows) =>
             rows.flatMap((row) => {
@@ -193,7 +203,7 @@ const captureComparison = async (
     if (!viewport) throw new Error("Missing comparison viewport");
     const comparison = page.getByRole("region", {
         exact: true,
-        name: "Compare the collection",
+        name: comparisonTitle,
     });
     const target =
         viewport.width === 390
@@ -219,9 +229,58 @@ const captureComparison = async (
     await page.setViewportSize(viewport);
 };
 
+const inspectComparisonValues = async (rows: Readonly<Locator>) => {
+    const number = new Intl.NumberFormat("en-US");
+    const range = (values: null | readonly number[]) => {
+        if (!values)
+            throw new Error("Active recommendation is missing a numeric range");
+        return values.map((value) => number.format(value)).join("–");
+    };
+    const records = await getPlantCareReferences();
+    const expected = records
+        .filter((record) => record.light.basis !== "historical")
+        .map((record) => {
+            const comparison = lightComparison(record.light);
+            return {
+                slug: record.slug,
+                values: [
+                    { label: "Recommended lux", value: range(comparison.lux) },
+                    { label: "PPFD", value: range(comparison.ppfd) },
+                    {
+                        label: "Daily light estimate",
+                        value: range(record.light.dli),
+                    },
+                ],
+            };
+        })
+        .toSorted((left, right) => left.slug.localeCompare(right.slug));
+    const actual = await rows.evaluateAll((elements) =>
+        elements.map((element) => ({
+            slug: element.dataset["careRow"],
+            values: [
+                ...element.querySelectorAll(
+                    ":scope .care-comparison-values > div"
+                ),
+            ].map((metric) => ({
+                label: metric.querySelector("dt")?.textContent.trim(),
+                value: metric
+                    .querySelector(".care-comparison-range")
+                    ?.textContent.trim(),
+            })),
+        }))
+    );
+    expect
+        .soft(
+            actual.toSorted((left, right) =>
+                (left.slug ?? "").localeCompare(right.slug ?? "")
+            )
+        )
+        .toStrictEqual(expected);
+};
+
 const inspectComparisonRows = async (page: Readonly<Page>) => {
     const rows = page
-        .getByRole("region", { exact: true, name: "Compare the collection" })
+        .getByRole("region", { exact: true, name: comparisonTitle })
         .getByRole("listitem");
     await expect.soft(rows).toHaveCount(49);
     await loadComparisonPortraits(await rows.all());
@@ -252,6 +311,7 @@ const inspectComparisonRows = async (page: Readonly<Page>) => {
         .soft(rows.filter({ has: page.getByText("P35", { exact: true }) }))
         .toHaveCount(3);
     await inspectComparisonGeometry(page);
+    await inspectComparisonValues(rows);
 };
 
 const inspectGuideNavigation = async (
@@ -264,7 +324,10 @@ const inspectGuideNavigation = async (
     });
     await care.getByRole("link", { name: /Compare every plant/v }).click();
     await expect.soft(page).toHaveURL(guidePath);
-    const comparison = page.locator("[data-care-comparison]");
+    const comparison = page.getByRole("region", {
+        exact: true,
+        name: comparisonTitle,
+    });
     await expect
         .soft(
             comparison.filter({
@@ -297,34 +360,29 @@ test.describe("per-plant care references", { tag: "@care" }, () => {
     }) => {
         await prepare(page, "light", 1280);
         await page.goto(guidePath);
-        const comparison = page.locator("[data-care-comparison]");
-        const rows = comparison.locator("[data-care-row]");
+        const comparison = page.getByRole("region", {
+            exact: true,
+            name: comparisonTitle,
+        });
+        const rows = comparison.getByRole("listitem", { includeHidden: true });
         await expect.soft(rows).toHaveCount(49);
         await page.emulateMedia({ media: "print" });
         await inspectComparisonGeometry(page);
-        await expect
-            .soft(comparison.locator("[data-care-row]:visible"))
-            .toHaveCount(49);
+        await expect.soft(comparison.getByRole("listitem")).toHaveCount(49);
         await page.evaluate(() => {
             dispatchEvent(new Event("beforeprint"));
             dispatchEvent(new Event("beforeprint"));
             dispatchEvent(new Event("afterprint"));
         });
-        await expect
-            .soft(comparison.locator("[data-care-row]:visible"))
-            .toHaveCount(49);
+        await expect.soft(comparison.getByRole("listitem")).toHaveCount(49);
         await page.emulateMedia({ media: "screen" });
-        await expect
-            .soft(comparison.locator("[data-care-row]:visible"))
-            .toHaveCount(0);
+        await expect.soft(comparison.getByRole("listitem")).toHaveCount(0);
         await comparison
             .getByText(/^Browse all \d+ active plant references$/v)
             .click();
         await page.emulateMedia({ media: "print" });
         await page.emulateMedia({ media: "screen" });
-        await expect
-            .soft(comparison.locator("[data-care-row]:visible"))
-            .toHaveCount(49);
+        await expect.soft(comparison.getByRole("listitem")).toHaveCount(49);
     });
 
     for (const theme of ["dark", "light"] as const) {
@@ -343,17 +401,17 @@ test.describe("per-plant care references", { tag: "@care" }, () => {
                     .toBeVisible();
                 const content = await care.innerText();
                 await expectPublishedEvidence(page);
-                expect.soft(content).toContain("Collection trial ranges");
+                expect.soft(content).toContain("Recommended estimate");
                 expect
                     .soft(content)
                     .toMatch(
-                        /Provisional trial band[\s\S]*Approx\. white-LED lux/v
+                        /Recommended working range[\s\S]*lux · white-LED estimate[\s\S]*Equivalent PPFD[\s\S]*Daily light estimate[\s\S]*Gentler starting range[\s\S]*Published evidence:/v
                     );
                 expect.soft(content).toContain("13.5 constant-light hours");
                 expect
                     .soft({
                         boundaries: content.includes(
-                            "upper value is not a ceiling"
+                            "not established minimums, safe maximums, or proven optima"
                         ),
                         moisture: [
                             "Water when",
@@ -374,7 +432,7 @@ test.describe("per-plant care references", { tag: "@care" }, () => {
     }
 
     for (const theme of ["dark", "light"] as const) {
-        test(`feather cactus explains its trial upper edge at 390px in ${theme}`, async ({
+        test(`feather cactus gives a recommendation without a hard ceiling at 390px in ${theme}`, async ({
             page,
         }) => {
             await prepare(page, theme, 390);
@@ -385,11 +443,19 @@ test.describe("per-plant care references", { tag: "@care" }, () => {
             });
             const content = await care.innerText();
             await expectPublishedEvidence(page);
-            expect.soft(content).toMatch(/Trial daily light total\s*10–17/v);
-            expect.soft(content).toContain("upper value is not a ceiling");
             expect
                 .soft(content)
-                .toContain("higher exposure may suit an acclimated plant");
+                .toMatch(/Recommended working range\s*13,600–28,800/v);
+            expect
+                .soft(content)
+                .toMatch(
+                    /Daily light estimate\s*12–20[\s\S]*Gentler starting range\s*9,100–17,300 lux ·\s*165–245 PPFD ·\s*8–12 DLI/v
+                );
+            expect
+                .soft(content)
+                .toContain(
+                    "not established minimums, safe maximums, or proven optima"
+                );
             await care
                 .getByText("Acclimation, range assumptions & sources", {
                     exact: true,
@@ -397,7 +463,7 @@ test.describe("per-plant care references", { tag: "@care" }, () => {
                 .click();
             expect
                 .soft(await care.innerText())
-                .toContain("17 DLI is not a ceiling");
+                .toContain("Neither 17 nor 20 DLI is a ceiling");
             await expect
                 .soft(
                     care.getByRole("link", {
@@ -409,7 +475,7 @@ test.describe("per-plant care references", { tag: "@care" }, () => {
             await expectNoOverflow(page);
         });
 
-        test(`terrarium shows a cautious numeric trial at 390px in ${theme}`, async ({
+        test(`terrarium shows a cautious recommendation and gentler start at 390px in ${theme}`, async ({
             page,
         }) => {
             await prepare(page, theme, 390);
@@ -420,12 +486,17 @@ test.describe("per-plant care references", { tag: "@care" }, () => {
             });
             const content = await care.innerText();
             await expectPublishedEvidence(page);
-            expect.soft(content).toContain("Collection trial ranges");
-            expect.soft(content).toMatch(/Provisional trial band\s*60–125/v);
-            expect.soft(content).toMatch(/Trial daily light total\s*3–6/v);
+            expect.soft(content).toContain("Recommended estimate");
             expect
                 .soft(content)
-                .toMatch(/Approx\. white-LED lux\s*3,400–8,600 lx/v);
+                .toMatch(/Recommended working range\s*3,400–7,200/v);
+            expect.soft(content).toMatch(/Daily light estimate\s*3–5/v);
+            expect.soft(content).toMatch(/Equivalent PPFD\s*60–105/v);
+            expect
+                .soft(content)
+                .toMatch(
+                    /Gentler starting range\s*2,300–4,300 lux ·\s*40–60 PPFD ·\s*2–3 DLI/v
+                );
             await inspectTerrariumCautions(page);
             await expectNoOverflow(page);
         });
@@ -450,7 +521,12 @@ test.describe("per-plant care references", { tag: "@care" }, () => {
                 )
                 .toBeVisible();
             await expect
-                .soft(care.getByText("Provisional trial band", { exact: true }))
+                .soft(
+                    care.getByText("Recommended working range", { exact: true })
+                )
+                .toHaveCount(0);
+            await expect
+                .soft(care.getByText("Gentler starting range", { exact: true }))
                 .toHaveCount(0);
             await expectPublishedEvidence(page);
             await expectNoOverflow(page);

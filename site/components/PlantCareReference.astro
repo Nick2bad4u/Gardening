@@ -20,7 +20,7 @@ const moistureId = `${headingId}-moisture`;
 const basis = historical
     ? "Historical reference"
     : care.light.basis === "collection-trial"
-      ? "Collection trial ranges"
+      ? "Recommended estimate"
       : "Qualitative guidance";
 ---
 
@@ -45,55 +45,52 @@ const basis = historical
                 Light
             </h3>
             <p class="plant-care-description">{care.light.description}</p>
-            <p class="plant-care-description plant-care-research">
-                <strong>Published evidence:</strong> {care.light.research}
-            </p>
-            {!historical && comparison.ppfd && care.light.dli ? (
+            {!historical && comparison.lux && comparison.ppfd && care.light.dli ? (
                 <>
                     <div class="plant-care-light-range">
-                        <span class="plant-care-label">Provisional trial band</span>
-                        <strong>{range(comparison.ppfd)}</strong>
-                        <span class="plant-care-unit">µmol·m⁻²·s⁻¹ PPFD</span>
+                        <span class="plant-care-label">Recommended working range</span>
+                        <strong>{range(comparison.lux)}</strong>
+                        <span class="plant-care-unit">lux · white-LED estimate</span>
                     </div>
                     <p class="plant-care-assumption">
                         At {comparison.hours} constant-light hours per day · comparison only
                     </p>
                     <dl class="plant-care-measures">
                         <div>
-                            <dt>Trial daily light total</dt>
+                            <dt>Equivalent PPFD</dt>
+                            <dd>{range(comparison.ppfd)} µmol·m⁻²·s⁻¹</dd>
+                        </div>
+                        <div>
+                            <dt>Daily light estimate</dt>
                             <dd>{range(care.light.dli)} mol·m⁻²·day⁻¹ DLI</dd>
                         </div>
-                        <div>
-                            <dt>Approx. white-LED lux</dt>
-                            <dd>
-                                {comparison.lux ? `${range(comparison.lux)} lx` : "Not established"}
-                            </dd>
-                        </div>
-                        {comparison.startingPpfd && care.light.startingDli && (
-                            <div>
-                                <dt>Starting comparison</dt>
-                                <dd>
-                                    {range(comparison.startingPpfd)} PPFD ·{" "}
-                                    {range(care.light.startingDli)} DLI
-                                </dd>
-                            </div>
-                        )}
+                        {comparison.startingLux &&
+                            comparison.startingPpfd &&
+                            care.light.startingDli && (
+                                <div>
+                                    <dt>Gentler starting range</dt>
+                                    <dd>
+                                        {range(comparison.startingLux)} lux ·{" "}
+                                        {range(comparison.startingPpfd)} PPFD ·{" "}
+                                        {range(care.light.startingDli)} DLI
+                                    </dd>
+                                </div>
+                            )}
                     </dl>
-                    <div class="plant-care-edges" aria-label="Trial comparison edges">
+                    <div class="plant-care-edges" aria-label="Working range edges">
                         <div>
-                            <span>Below trial band</span>
-                            <strong>&lt; {number.format(comparison.ppfd[0])} PPFD</strong>
+                            <span>Below working range</span>
+                            <strong>&lt; {number.format(comparison.lux[0])} lux</strong>
                         </div>
                         <div>
-                            <span>Above trial band</span>
-                            <strong>&gt; {number.format(comparison.ppfd[1])} PPFD</strong>
+                            <span>Above working range</span>
+                            <strong>&gt; {number.format(comparison.lux[1])} lux</strong>
                         </div>
                     </div>
                     <p class="plant-care-limit">
-                        These edges describe the provisional trial, not the plant's limits. The
-                        upper value is not a ceiling; higher exposure may suit an acclimated plant,
-                        but needs its own assessment of growth, heat, and stress. A species optimum
-                        is not established here.
+                        A working recommendation for healthy, acclimated indoor growth. Start near
+                        the lower end when changing exposure and watch growth, heat, and stress. The
+                        bounds are not established minimums, safe maximums, or proven optima.
                     </p>
                 </>
             ) : (
@@ -103,6 +100,9 @@ const basis = historical
                         : "Numeric light range, optimum, and hard limits are not established."}
                 </p>
             )}
+            <p class="plant-care-description plant-care-research">
+                <strong>Published evidence:</strong> {care.light.research}
+            </p>
         </section>
         <section class="plant-care-panel plant-care-moisture" aria-labelledby={moistureId}>
             <h3 id={moistureId}>
