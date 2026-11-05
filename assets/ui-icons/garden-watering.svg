@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-garden-watering-title" aria-describedby="ui-garden-watering-description" data-ui-icon="garden-watering" focusable="false">
+  <title id="ui-garden-watering-title">Garden watering</title>
+<desc id="ui-garden-watering-description">A luminous teal water droplet shelters a cream and mint sprout on a deep forest-green square, with a quiet grid suggesting the plant map.</desc>
+<defs>
+  <linearGradient id="ui-garden-watering-background" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#246f5d" />
+    <stop offset="0.55" stop-color="#145b50" />
+    <stop offset="1" stop-color="#092f31" />
+  </linearGradient>
+  <linearGradient id="ui-garden-watering-drop" x1="0.12" y1="0" x2="0.85" y2="1">
+    <stop offset="0" stop-color="#b4efce" />
+    <stop offset="0.42" stop-color="#5bceb7" />
+    <stop offset="1" stop-color="#248f91" />
+  </linearGradient>
+  <linearGradient id="ui-garden-watering-leaf" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#fff4d4" />
+    <stop offset="1" stop-color="#d5e9ab" />
+  </linearGradient>
+</defs>
+<rect width="64" height="64" fill="url(#ui-garden-watering-background)" data-app-icon-background="true" />
+<path d="M16 8v48M32 8v48M48 8v48M8 16h48M8 32h48M8 48h48" fill="none" stroke="#b4efce" stroke-width="0.6" opacity="0.09" />
+<ellipse cx="32" cy="51" rx="14" ry="4" fill="#062e2d" opacity="0.45" />
+<g stroke-linecap="round" stroke-linejoin="round">
+  <path d="M32 10c-4 7-17 17-17 27a17 17 0 0 0 34 0c0-10-13-20-17-27Z" fill="url(#ui-garden-watering-drop)" stroke="#d0f4df" stroke-width="1.2" />
+  <path d="M29 17c-4 5-9 10-11 16" fill="none" stroke="#e0ffe9" stroke-width="2.1" opacity="0.66" />
+  <path d="M22 45c5 6 15 7 21 0" fill="none" stroke="#166969" stroke-width="1.4" opacity="0.65" />
+  <path d="M32 44V30m0 9-7-7m7 3 7-7" fill="none" stroke="#176455" stroke-width="2.3" />
+  <path d="M31 36c-8 1-12-4-11-11 8 0 12 4 11 11Z" fill="url(#ui-garden-watering-leaf)" stroke="#387e60" stroke-width="1.2" />
+  <path d="M33 32c-1-8 4-12 12-11 0 8-4 13-12 11Z" fill="url(#ui-garden-watering-leaf)" stroke="#387e60" stroke-width="1.2" />
+  <path d="m24 29 5 5m7-5 5-5" fill="none" stroke="#81ab71" stroke-width="1.1" />
+  <circle cx="25" cy="46" r="1.2" fill="#d9f8dd" opacity="0.9" />
+  <circle cx="32" cy="48" r="1.2" fill="#d9f8dd" opacity="0.9" />
+  <circle cx="39" cy="46" r="1.2" fill="#d9f8dd" opacity="0.9" />
+</g>
+</svg>

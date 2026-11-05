@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { expect, waitFor } from "storybook/test";
 
+// eslint-disable-next-line import-x/extensions -- The maintained browser ESM module requires its explicit .js extension under NodeNext.
+import { wateringAgeColor } from "../../site/client/tools/watering-map-data.js";
 import {
     expectNoOverflow,
     releaseWebsiteFocus,
@@ -63,7 +65,7 @@ async function expectDarkMap(document: Readonly<Document>): Promise<void> {
     );
     await Promise.all(
         Array.from(
-            preview.querySelectorAll("[data-pot-id]"),
+            preview.querySelectorAll<SVGGElement>("[data-pot-id]"),
             async (marker) => {
                 await expect(
                     marker.querySelector("[data-plant-slug]")
@@ -104,6 +106,83 @@ async function expectDarkMap(document: Readonly<Document>): Promise<void> {
     } finally {
         sentinel.remove();
     }
+}
+
+async function expectMapColorsAndSpacing(
+    document: Readonly<Document>
+): Promise<void> {
+    const preview = document.querySelector<SVGSVGElement>(
+        `${imageSelector} > svg`
+    );
+    const legend = preview?.querySelector("[data-watering-legend]");
+    const shelf = preview?.querySelector('[data-placement-section="shelf"]');
+    const other = preview?.querySelector('[data-placement-section="other"]');
+    const window = document.defaultView;
+    if (!preview || !legend || !shelf || !other || !window)
+        throw new Error("Watering map sections did not load.");
+    const cards = [...preview.querySelectorAll<SVGGElement>("[data-pot-id]")];
+    const ids = cards.map((card) => card.dataset["potId"]);
+    await expect(ids).toHaveLength(39);
+    const uniqueIds = new Set(ids);
+    await expect(uniqueIds.size).toBe(39);
+    await expect(
+        [
+            ...preview.querySelectorAll<SVGGElement>(
+                '[data-placement-zone="shelf"]'
+            ),
+        ].map((card) => card.dataset["potId"])
+    ).toEqual([
+        "P39",
+        "P40",
+        "P41",
+    ]);
+    const list = [...document.querySelectorAll("#watering-map-pot-list > li")];
+    const problems = cards.flatMap((card) => {
+        const count = card.querySelector("text.count");
+        const id = card.dataset["potId"] ?? "Missing pot ID";
+        const age = list
+            .find(
+                (item) =>
+                    item
+                        .querySelector("strong")
+                        ?.textContent.includes(` · ${id} · `) === true
+            )
+            ?.querySelector<HTMLElement>(".watering-map-age");
+        if (!count || !age) return [id];
+        const days = /^\d+$/v.test(count.textContent)
+            ? Number(count.textContent)
+            : null;
+        const color = wateringAgeColor(days).replaceAll(" ", "");
+        const actualCount = window
+            .getComputedStyle(count)
+            .fill.replaceAll(" ", "");
+        return actualCount === (color || "rgb(173,187,179)") &&
+            age.style.color.replaceAll(" ", "") === color
+            ? []
+            : [id];
+    });
+    await expect(problems).toEqual([]);
+    const shelfBounds = shelf.getBoundingClientRect();
+    const otherBounds = other.getBoundingClientRect();
+    const legendBounds = legend.getBoundingClientRect();
+    await expect(otherBounds.top).toBeGreaterThan(shelfBounds.bottom);
+    await expect(legendBounds.top).toBeGreaterThan(otherBounds.bottom);
+    await expect(legendBounds.bottom).toBeLessThan(
+        preview.getBoundingClientRect().bottom
+    );
+    const overflow = cards.filter((card) => {
+        const zone = card.dataset["placementZone"];
+        if (zone !== "shelf" && zone !== "other") return false;
+        const bounds = card.getBoundingClientRect();
+        const section = zone === "shelf" ? shelfBounds : otherBounds;
+        return (
+            bounds.top < section.top ||
+            bounds.bottom > section.bottom ||
+            bounds.left < section.left ||
+            bounds.right > section.right
+        );
+    });
+    await expect(overflow.map((card) => card.dataset["potId"])).toEqual([]);
 }
 
 async function expectMapCoverage(document: Readonly<Document>): Promise<{
@@ -177,6 +256,10 @@ async function expectUnavailableMap(
             await expect(item).not.toHaveTextContent(
                 /Days since watering: \d|Last Water: 2026-/v
             );
+            await expect(
+                item.querySelector<HTMLElement>(".watering-map-age")?.style
+                    .color
+            ).toBe("");
         })
     );
     await expect(preview).not.toHaveTextContent(
@@ -226,6 +309,7 @@ export const DatedSnapshotWhileLoading: Story = {
         await userEvent.click(canvas.getByText(detailsLabel));
         await expectUnavailableMap(document);
         await expectDarkMap(document);
+        await expectMapColorsAndSpacing(document);
     },
 };
 
@@ -255,6 +339,7 @@ export const DatedSnapshotOffline: Story = {
         await userEvent.click(canvas.getByText(detailsLabel));
         await expectUnavailableMap(document);
         await expectDarkMap(document);
+        await expectMapColorsAndSpacing(document);
         await expect(
             canvas.getByRole("button", { name: refreshName })
         ).toBeEnabled();
@@ -386,31 +471,23 @@ export const MobileDark: Story = {
         const menuButton = canvas.getByRole("button", { name: "Menu" });
         const navigation = document.querySelector("#site-nav");
         const mapShortcut = document.querySelector<HTMLAnchorElement>(
-            '#site-nav a[href$="#watering-map"]'
+            '#site-nav a[href$="/watering/"]'
         );
         if (!mapShortcut) throw new Error("Watering map shortcut is missing.");
-        // Fixture query parameters have already loaded the data and theme.
-        // Remove them so this production shortcut stays within the document.
-        document.defaultView?.history.replaceState(
-            null,
-            "",
-            `${document.location.pathname}${document.location.hash}`
-        );
         await userEvent.click(menuButton);
         await expect(menuButton).toHaveAttribute("aria-expanded", "true");
         await expect(navigation).toBeVisible();
-        await userEvent.click(mapShortcut);
+        await expect(mapShortcut.pathname).toMatch(/\/watering\/$/v);
+        await userEvent.click(menuButton);
         await expect(menuButton).toHaveAttribute("aria-expanded", "false");
         await expect(navigation).not.toBeVisible();
-        await expect(document.location.hash).toBe("#watering-map");
         await userEvent.click(menuButton);
         await expect(menuButton).toHaveAttribute("aria-expanded", "true");
         mapShortcut.focus();
         await expect(mapShortcut).toHaveFocus();
-        await userEvent.keyboard("{Enter}");
+        await userEvent.keyboard("{Escape}");
         await expect(menuButton).toHaveAttribute("aria-expanded", "false");
         await expect(navigation).not.toBeVisible();
-        await expect(document.location.hash).toBe("#watering-map");
         const viewport = canvas.getByRole("region", {
             name: "Watering placement image; enlarge to scroll horizontally",
         });

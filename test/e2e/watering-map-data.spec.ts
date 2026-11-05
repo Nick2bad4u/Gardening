@@ -150,7 +150,7 @@ function freshness(page: Readonly<Page>): Locator {
 }
 
 function mapImage(page: Readonly<Page>): Locator {
-    return page.getByRole("img", { name: /^Days since watering/v });
+    return page.getByRole("img", { name: /^Days since watering —/v });
 }
 
 async function mockHistory(

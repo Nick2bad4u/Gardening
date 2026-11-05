@@ -1,0 +1,42 @@
+---
+import SiteIcon from "../../components/SiteIcon.astro";
+import SiteLayout from "../../components/SiteLayout.astro";
+import WateringMap from "../../components/tools/WateringMap.astro";
+import { siteUrl } from "../../lib/routes.mjs";
+---
+
+<SiteLayout
+    title="Watering Map"
+    description="The collection's watering map: live recorded watering history, pot locations, and a view to keep on your home screen."
+    section="watering"
+>
+    <header class="page-heading">
+        <p class="eyebrow">
+            <SiteIcon name="garden-watering" size={30} /> YOUR COLLECTION
+        </p>
+        <h1>Watering Map</h1>
+        <p class="lede">
+            A quick view of the collection, with each pot’s recorded watering history.
+        </p>
+    </header>
+    <WateringMap />
+    <div class="watering-app-notes">
+        <p>
+            On Android, use your browser’s <strong>Install app</strong> or{" "}
+            <strong>Add to home screen</strong> menu. On iPhone, use Safari’s{" "}
+            <strong>Share → Add to Home Screen</strong>. Watering records need a live connection.
+        </p>
+        <p>
+            For the room layout and light diagrams, open{" "}
+            <a href={siteUrl("setup/placement/")}>Current Plant Placement</a>.
+        </p>
+    </div>
+</SiteLayout>
+<style>
+    @media print {
+        .page-heading,
+        .watering-app-notes {
+            display: none;
+        }
+    }
+</style>

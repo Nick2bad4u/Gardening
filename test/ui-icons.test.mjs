@@ -28,6 +28,7 @@ const launcherIconNames = [
     "garden-search",
     "garden-setup",
     "garden-tracker",
+    "garden-watering",
     "pocket-report",
 ];
 
@@ -52,7 +53,7 @@ function countPixels(data, info) {
 describe("shared multicolor interface artwork", () => {
     it("exports every interface/category symbol as a self-contained accessible SVG", () => {
         expect.hasAssertions();
-        expect(icons).toHaveLength(103);
+        expect(icons).toHaveLength(104);
 
         const files = fs
             .readdirSync(new URL("../assets/ui-icons/", import.meta.url))

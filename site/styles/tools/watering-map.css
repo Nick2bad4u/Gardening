@@ -190,6 +190,70 @@
         margin: 1.25rem 0;
     }
 
+    & .watering-map-legend {
+        display: grid;
+        gap: 0.8rem;
+        padding: 1rem;
+        margin-block: 1.25rem;
+        background: var(--surface-soft);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+    }
+
+    & .watering-map-legend h3,
+    & .watering-map-legend p {
+        margin: 0;
+    }
+
+    & .watering-map-legend h3 {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    & .watering-map-legend p {
+        font-size: 0.875rem;
+        line-height: 1.5;
+        color: var(--muted);
+    }
+
+    & .watering-map-legend-heading p {
+        margin-block-start: 0.3rem;
+    }
+
+    & .watering-map-color-bar {
+        block-size: 0.65rem;
+        border-radius: 100px;
+    }
+
+    & .watering-map-color-labels {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: space-between;
+        margin-block-start: 0.4rem;
+        font-size: 0.875rem;
+        font-weight: 650;
+        font-variant-numeric: tabular-nums;
+    }
+
+    & .watering-map-legend-key {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem 1.25rem;
+    }
+
+    & .watering-map-legend-key strong {
+        display: inline-block;
+        min-inline-size: 1.25rem;
+        font-size: 1rem;
+        color: var(--ink);
+        text-align: center;
+    }
+
+    & .watering-map-legend-caution {
+        padding-block-start: 0.65rem;
+        border-block-start: 1px solid var(--line);
+    }
+
     & .watering-map-viewport {
         inline-size: 100%;
         min-inline-size: 0;
@@ -269,6 +333,11 @@
 
     & .watering-map-details a {
         color: var(--accent);
+    }
+
+    & .watering-map-details .watering-map-age {
+        font-weight: 750;
+        font-variant-numeric: tabular-nums;
     }
 
     & .watering-map-details summary {
@@ -379,7 +448,7 @@
         background: var(--surface);
         border: 0;
         box-shadow: none;
-        break-inside: avoid;
+        break-inside: auto;
 
         --surface: #ffffff;
         --surface-soft: #f3f3f3;
@@ -394,6 +463,7 @@
         & .watering-map-notes,
         & .watering-map-export-status,
         & .watering-map-emblem,
+        & .watering-map-legend,
         & .watering-map-mode {
             display: none;
         }
@@ -405,8 +475,19 @@
         }
 
         & .watering-map-image > svg {
+            inline-size: auto;
             min-inline-size: 0;
             max-inline-size: 100%;
+            max-block-size: 230mm;
+            margin-inline: auto;
+            break-inside: avoid;
+        }
+
+        & .watering-map-heading,
+        & .watering-map-stats,
+        & .watering-map-source,
+        & figcaption {
+            display: none;
         }
     }
 }

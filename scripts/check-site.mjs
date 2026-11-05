@@ -116,7 +116,7 @@ function assertProfileCoverage(profiles, profilePages) {
 
 async function assertSiteApps() {
     const identities = await Promise.all(
-        siteApps.map(async ({ fragment, icon, name, route }) => {
+        siteApps.map(async ({ fragment, icon, name, route, shortName }) => {
             const manifestPath = path.join(
                 output,
                 route,
@@ -130,7 +130,7 @@ async function assertSiteApps() {
             assert.equal(manifest["scope"], launchPath);
             assert.equal(manifest["start_url"], `${launchPath}${fragment}`);
             assert.equal(manifest["name"], name);
-            assert.equal(manifest["short_name"], name);
+            assert.equal(manifest["short_name"], shortName ?? name);
             assert.equal(manifest["display"], "standalone");
             assert.ok(
                 Array.isArray(manifest["icons"]),
@@ -289,6 +289,7 @@ async function main() {
         ...pots.values().map((id) => `containers/${id}/index.html`),
         "photos/index.html",
         "tracker/index.html",
+        "watering/index.html",
         "report/index.html",
         "pocket-report/index.html",
         "reports/index.html",

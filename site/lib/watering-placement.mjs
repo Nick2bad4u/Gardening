@@ -63,9 +63,11 @@ const otherPositions = new Map([
     ["P31", "Kitchen window shelf"],
     ["P32", "Kitchen window shelf"],
     ["P38", "Desk to right of tables"],
-    ["P39", "Shelf next to cacti table, room side"],
-    ["P40", "Shelf next to cacti table, room side"],
-    ["P41", "Shelf next to cacti table, room side"],
+]);
+const shelfIds = new Set([
+    "P39",
+    "P40",
+    "P41",
 ]);
 
 /**
@@ -102,15 +104,30 @@ export function buildWateringPlacements(markdown, containers) {
         placed.add(container.id);
         placements.push({ ...container, ...placement });
     }
-    const others = records
+    const unplaced = records
         .filter((container) => !placed.has(container.id))
         .toSorted((left, right) => left.id.localeCompare(right.id));
+    const shelf = unplaced.filter((container) => shelfIds.has(container.id));
+    for (const [index, container] of shelf.entries()) {
+        placements.push({
+            ...container,
+            position: "Shelf next to cacti table, room side",
+            // These are diagram slots, not measured positions or shelf order.
+            x: 220 + 280 * (index % 3),
+            y: 1366 + 160 * Math.floor(index / 3),
+            zone: "shelf",
+        });
+    }
+    const others = unplaced.filter((container) => !shelfIds.has(container.id));
     for (const [index, container] of others.entries()) {
         placements.push({
             ...container,
             position: otherPositions.get(container.id) ?? "Position unrecorded",
             x: 170 + 220 * (index % 4),
-            y: 1305 + 130 * Math.floor(index / 4),
+            y:
+                1366 +
+                Math.ceil(shelf.length / 3) * 250 +
+                170 * Math.floor(index / 4),
             zone: "other",
         });
     }

@@ -31,6 +31,14 @@ export const GET: APIRoute = async () => {
         )
     );
     const entries = [
+        {
+            category: "Tool",
+            description:
+                "Live watering history and pot locations, with an installable map.",
+            href: siteUrl("watering/"),
+            text: "watering map days since water elapsed color legend shelf placement home screen install app",
+            title: "Watering Map",
+        },
         ...containers.map((container) => {
             const membership = container.aggregate
                 ? "Terrarium with provisional plant identifications"

@@ -134,30 +134,38 @@ describe("watering placement source", () => {
             { id: "P31", position: "Kitchen window shelf" },
             { id: "P32", position: "Kitchen window shelf" },
             { id: "P38", position: "Desk to right of tables" },
-            { id: "P39", position: "Shelf next to cacti table, room side" },
-            { id: "P40", position: "Shelf next to cacti table, room side" },
-            { id: "P41", position: "Shelf next to cacti table, room side" },
         ]);
-        expect(others[0]).toMatchObject({ x: 170, y: 1305 });
-        expect(others[5]).toMatchObject({ x: 390, y: 1435 });
+        expect(others[0]).toMatchObject({ x: 170, y: 1616 });
+        expect(others[3]).toMatchObject({ x: 830, y: 1616 });
     });
 
-    it("records the owner-reported room-side shelf without inventing shelf coordinates or watering history", () => {
+    it("groups the owner-reported room-side shelf separately without inventing watering history", () => {
         expect.hasAssertions();
 
         const placements = buildWateringPlacements(source, containers);
+
+        expect(
+            placements
+                .filter(({ zone }) => zone === "shelf")
+                .map(({ id }) => id)
+        ).toStrictEqual([
+            "P39",
+            "P40",
+            "P41",
+        ]);
+
         for (const [id, x] of [
-            ["P39", 170],
-            ["P40", 390],
-            ["P41", 610],
+            ["P39", 220],
+            ["P40", 500],
+            ["P41", 780],
         ]) {
             expect(
                 placements.find((placement) => placement.id === id)
             ).toMatchObject({
                 position: "Shelf next to cacti table, room side",
                 x,
-                y: 1435,
-                zone: "other",
+                y: 1366,
+                zone: "shelf",
             });
         }
         for (const placement of placements) {

@@ -14,6 +14,11 @@ const landings = [
     { icon: "garden-search", name: "Garden Search", route: "search/" },
     { icon: "garden-setup", name: "Garden Setup", route: "setup/" },
     { icon: "garden-tracker", name: "Plant Tracker", route: "tracker/" },
+    {
+        icon: "garden-watering",
+        name: "Garden Watering Map",
+        route: "watering/",
+    },
     { icon: "pocket-report", name: "Pocket Report", route: "pocket-report/" },
 ] as const;
 
@@ -24,6 +29,7 @@ test.describe("garden landing app identities", { tag: "@apps" }, () => {
         "plants/",
         "containers/",
         "guides/",
+        "watering/",
     ]) {
         for (const theme of ["dark", "light"] as const) {
             test(`${route || "home"} ${theme} keeps its phone layout with app metadata`, async ({
@@ -87,7 +93,10 @@ test.describe("garden landing app identities", { tag: "@apps" }, () => {
                     }))
                 )
                 .toStrictEqual({
-                    appleName: landing.name,
+                    appleName:
+                        landing.route === "watering/"
+                            ? "Watering Map"
+                            : landing.name,
                     appName: landing.name,
                     icon: `/Gardening/assets/ui-icons/${landing.icon}.svg`,
                     manifest: `${route}manifest.webmanifest`,
@@ -106,7 +115,10 @@ test.describe("garden landing app identities", { tag: "@apps" }, () => {
                         id: route,
                         name: landing.name,
                         scope: route,
-                        short_name: landing.name,
+                        short_name:
+                            landing.route === "watering/"
+                                ? "Watering Map"
+                                : landing.name,
                         start_url: `${route}${landing.route === "pocket-report/" ? "#pocket-list" : ""}`,
                     },
                     ok: true,
@@ -182,7 +194,11 @@ test.describe("garden landing app identities", { tag: "@apps" }, () => {
             .toBe(true);
     });
 
-    for (const route of ["", "containers/"]) {
+    for (const route of [
+        "",
+        "containers/",
+        "watering/",
+    ]) {
         test(`edge reports no ${route || "home"} installability errors`, async ({
             browserName,
             context,

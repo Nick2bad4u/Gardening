@@ -3,6 +3,7 @@ import { getWateringPlacements } from "../../lib/watering-placement.mjs";
 import { getWateringArtwork } from "../../lib/watering-artwork.mjs";
 import historySnapshot from "../../../docs/layouts/watering-history-snapshot.json";
 import { siteUrl } from "../../lib/routes.mjs";
+import { wateringAgeColor } from "../../client/tools/watering-map-data.js";
 import "../../styles/tools/watering-map.css";
 
 const placements = await getWateringPlacements();
@@ -136,6 +137,38 @@ const artwork = await getWateringArtwork();
         role="status"
         aria-live="polite"
     ></p>
+    <div class="watering-map-legend" aria-labelledby="watering-map-legend-title">
+        <div class="watering-map-legend-heading">
+            <h3 id="watering-map-legend-title">Read the day colors</h3>
+            <p>The same elapsed-day scale as the Plant tracker spreadsheet.</p>
+        </div>
+        <div
+            class="watering-map-color-scale"
+            role="img"
+            aria-label="Days since watering: green at zero, yellow at fourteen, coral at twenty-eight or more, with a gradual change between."
+        >
+            <div
+                class="watering-map-color-bar"
+                style={`background: linear-gradient(90deg, ${wateringAgeColor(0)}, ${wateringAgeColor(14)} 50%, ${wateringAgeColor(28)})`}
+            ></div>
+            <div class="watering-map-color-labels" aria-hidden="true">
+                <span>0 days</span>
+                <span>14 days</span>
+                <span>28+ days</span>
+            </div>
+        </div>
+        <p class="watering-map-legend-key">
+            <span>
+                <strong>?</strong> No Water record
+            </span>
+            <span>
+                <strong>—</strong> Data unavailable
+            </span>
+        </p>
+        <p class="watering-map-legend-caution">
+            Color describes time since a recorded watering. Check the pot and plant before watering.
+        </p>
+    </div>
     <figure class="watering-map-figure">
         <div
             class="watering-map-viewport"
@@ -161,8 +194,8 @@ const artwork = await getWateringArtwork();
             <p>
                 The layout follows the photos supplied October 22, with front and rear tables shown
                 separately. The owner confirmed the pale rear rosette as Arctic Ice (#11 / P37) on
-                October 23. Other locations and unconfirmed placements appear in their own group. A
-                logged move is listed in the details; free-text locations cannot update diagram
+                October 23. The room-side shelf and other locations have separate schematic groups.
+                A logged move is listed in the details; free-text locations cannot update diagram
                 coordinates.
             </p>
             <p>
@@ -175,8 +208,8 @@ const artwork = await getWateringArtwork();
                 P31 / #7 and P32 / #8 are on the kitchen window shelf under the reported 54 W
                 six-head LED bars and 10 W three-head LED. The owner reported November 4 that P39 /
                 #13, P40 / #14, and P41 / #15 are on the shelf next to the cacti table on the room
-                side. Their exact shelf arrangement and exposure are unmeasured, so they remain in
-                the schematic other-locations group. This placement report does not establish
+                side. They appear together in the shelf section; their left-to-right order, shelf
+                dimensions, and exposure are unmeasured. This placement report does not establish
                 completed repots or a quarantine end date.
             </p>
         </div>
