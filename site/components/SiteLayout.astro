@@ -51,7 +51,7 @@ const canonical = new URL(Astro.url.pathname, siteOrigin).href;
         {app && (
             <>
                 <meta name="application-name" content={app.name} />
-                <meta name="apple-mobile-web-app-title" content={app.name} />
+                <meta name="apple-mobile-web-app-title" content={app.shortName ?? app.name} />
                 <link rel="manifest" href={siteUrl(`${app.route}manifest.webmanifest`)} />
                 <link
                     rel="icon"

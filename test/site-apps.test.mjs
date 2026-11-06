@@ -16,6 +16,8 @@ describe("installed garden app routing", () => {
         ["/Gardening/setup/equipment/", "Equipment"],
         ["/Gardening/setup/equipment/msu-fertilizer/", "Equipment"],
         ["/Gardening/setup/placement/", "Placement"],
+        ["/Gardening/watering", "Garden Watering Map"],
+        ["/Gardening/watering/", "Garden Watering Map"],
         ["/Gardening/plants/peperomia-obtipan-bicolor/", "Plant Library"],
         ["/Gardening/reports/2026-09-22/", "Report Archive"],
     ])(
@@ -31,6 +33,7 @@ describe("installed garden app routing", () => {
         "/Gardening/unknown/",
         "/Gardening/plants-extra/",
         "/Gardening/containers-extra/",
+        "/Gardening/watering-extra/",
         "/Garden/plants/",
     ])("does not offer an unrelated install for %s", (pathname) => {
         expect.hasAssertions();
@@ -43,8 +46,8 @@ describe("installed garden app routing", () => {
         const manifests = siteApps.map((app) => siteManifest(app));
         const identities = new Set(manifests.map((manifest) => manifest.id));
 
-        expect(identities.size).toBe(14);
-        expect(manifests).toHaveLength(14);
+        expect(identities.size).toBe(15);
+        expect(manifests).toHaveLength(15);
         expect([...identities].filter((id) => id.includes("#"))).toStrictEqual(
             []
         );
@@ -53,6 +56,17 @@ describe("installed garden app routing", () => {
         ).toMatchObject({
             id: "/Gardening/pocket-report/",
             start_url: "/Gardening/pocket-report/#pocket-list",
+        });
+        expect(
+            manifests.find(
+                (manifest) => manifest.name === "Garden Watering Map"
+            )
+        ).toMatchObject({
+            display: "standalone",
+            id: "/Gardening/watering/",
+            scope: "/Gardening/watering/",
+            short_name: "Watering Map",
+            start_url: "/Gardening/watering/",
         });
     });
 });

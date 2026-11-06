@@ -3,6 +3,7 @@ import { siteUrl } from "./routes.mjs";
 /**
  * @typedef {{
  *     name: string;
+ *     shortName?: string;
  *     route: string;
  *     icon: string;
  *     themeColor: string;
@@ -78,6 +79,16 @@ export const siteApps = [
         name: "Plant Tracker",
         route: "tracker/",
         themeColor: "#154b70",
+    },
+    {
+        description:
+            "The collection's watering map with live recorded watering history and pot locations.",
+        fragment: "",
+        icon: "garden-watering",
+        name: "Garden Watering Map",
+        route: "watering/",
+        shortName: "Watering Map",
+        themeColor: "#145b50",
     },
     {
         description: "Dated collection photographs and plant observations.",
@@ -180,7 +191,7 @@ export function siteManifest(app) {
         lang: "en",
         name: app.name,
         scope: siteUrl(app.route),
-        short_name: app.name,
+        short_name: app.shortName ?? app.name,
         start_url: `${siteUrl(app.route)}${app.fragment}`,
         theme_color: app.themeColor,
     };

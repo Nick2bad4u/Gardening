@@ -1,7 +1,10 @@
 import { Window } from "happy-dom";
 import { describe, expect, it, onTestFinished } from "vitest";
 
-import { buildWateringMap } from "../../site/client/tools/watering-map-data.js";
+import {
+    buildWateringMap,
+    wateringAgeColor,
+} from "../../site/client/tools/watering-map-data.js";
 import { renderWateringMapSvg } from "../../site/client/tools/watering-map-svg.js";
 import { getContainers } from "../../site/lib/containers.mjs";
 import {
@@ -49,6 +52,33 @@ const placements = [
 function history(records) {
     return records.map((record, _index) => ({ ...record, _index }));
 }
+
+describe("spreadsheet watering age colors", () => {
+    it.each([
+        [0, "rgb(87, 187, 138)"],
+        [7, "rgb(171, 201, 120)"],
+        [14, "rgb(255, 214, 102)"],
+        [21, "rgb(243, 169, 109)"],
+        [28, "rgb(230, 124, 115)"],
+        [29, "rgb(230, 124, 115)"],
+        [365, "rgb(230, 124, 115)"],
+    ])("uses the published-sheet scale for day %i", (days, color) => {
+        expect.hasAssertions();
+        expect(wateringAgeColor(/** @type {number} */ (days))).toBe(color);
+    });
+
+    it.each([
+        null,
+        -1,
+        0.5,
+        NaN,
+        Infinity,
+        -Infinity,
+    ])("does not assign an age color to %s", (days) => {
+        expect.hasAssertions();
+        expect(wateringAgeColor(days)).toBe("");
+    });
+});
 
 describe("watering placement dates", () => {
     it.each([
@@ -277,6 +307,174 @@ describe("watering placement dates", () => {
 });
 
 describe("standalone watering image", () => {
+    it("embeds elapsed-day colors and the matching scale in a standalone SVG", () => {
+        expect.hasAssertions();
+
+        const ages = [
+            0,
+            7,
+            14,
+            21,
+            28,
+            29,
+        ];
+        const pots = ages.map((days, index) => ({
+            ...required(placements[0]),
+            id: `P${index + 50}`,
+            name: `Synthetic ${days}-day pot`,
+        }));
+        const records = history(
+            pots.map((pot, index) => ({
+                Date: Temporal.PlainDate.from("2026-11-05")
+                    .subtract({ days: required(ages[index]) })
+                    .toString(),
+                Event: "Water",
+                "Plant ID": pot.id,
+            }))
+        );
+        const model = buildWateringMap(
+            pots,
+            records,
+            new Date("2026-11-05T16:00:00Z")
+        );
+        const svg = renderWateringMapSvg(model, {
+            readAt: Date.parse("2026-11-05T16:00:00Z"),
+            status: "Synthetic source",
+        });
+        const window = new Window();
+        onTestFinished(async () => window.happyDOM.close());
+        const parser = new window.DOMParser();
+        const document = parser.parseFromString(svg, "image/svg+xml");
+
+        expect(
+            Array.from(
+                document.querySelectorAll("[data-pot-id] text.count"),
+                (count) => ({
+                    color: count.getAttribute("fill"),
+                    days: count.textContent,
+                })
+            )
+        ).toStrictEqual([
+            { color: "rgb(87, 187, 138)", days: "0" },
+            { color: "rgb(171, 201, 120)", days: "7" },
+            { color: "rgb(255, 214, 102)", days: "14" },
+            { color: "rgb(243, 169, 109)", days: "21" },
+            { color: "rgb(230, 124, 115)", days: "28" },
+            { color: "rgb(230, 124, 115)", days: "29" },
+        ]);
+        expect(
+            Array.from(
+                document.querySelectorAll("#wm-age-gradient stop"),
+                (stop) => stop.getAttribute("stop-color")
+            )
+        ).toStrictEqual([
+            "rgb(87, 187, 138)",
+            "rgb(255, 214, 102)",
+            "rgb(230, 124, 115)",
+        ]);
+        expect(
+            document
+                .querySelector("[data-watering-age-scale]")
+                ?.getAttribute("fill")
+        ).toBe("url(#wm-age-gradient)");
+        expect(
+            document.querySelector("[data-watering-legend]")?.textContent
+        ).toContain("not a watering instruction");
+    });
+
+    it("keeps dedicated shelf cards and growing lower rows above the legend", async () => {
+        expect.hasAssertions();
+
+        const current = await getWateringPlacements();
+        const model = buildWateringMap(
+            [
+                ...current,
+                {
+                    ...required(
+                        current.find((placement) => placement.id === "P38")
+                    ),
+                    id: "P99",
+                    name: "Long synthetic plant name with several individually identified members and uncertain cultivar",
+                    position:
+                        "Additional synthetic location with descriptive text that wraps across multiple lines",
+                },
+            ],
+            [],
+            new Date("2026-11-05T16:00:00Z")
+        );
+        const svg = renderWateringMapSvg(model, {
+            readAt: null,
+            status: "Synthetic layout",
+        });
+        const window = new Window();
+        onTestFinished(async () => window.happyDOM.close());
+        const parser = new window.DOMParser();
+        const document = parser.parseFromString(svg, "image/svg+xml");
+        const shelf = required(
+            document.querySelector('[data-placement-section="shelf"]')
+        );
+        const other = required(
+            document.querySelector('[data-placement-section="other"]')
+        );
+        const legend = required(
+            document.querySelector("[data-watering-legend] > rect")
+        );
+        const shelfRect = required(shelf.querySelector("rect"));
+        const otherRect = required(other.querySelector("rect"));
+        const shelfBottom =
+            Number(shelfRect.getAttribute("y")) +
+            Number(shelfRect.getAttribute("height"));
+        const otherBottom =
+            Number(otherRect.getAttribute("y")) +
+            Number(otherRect.getAttribute("height"));
+
+        expect(shelf.textContent).toContain(
+            "Shelf next to cacti tables · room side"
+        );
+        expect(shelf.textContent).toContain("left-to-right order unrecorded");
+        expect(
+            Array.from(
+                document.querySelectorAll('[data-placement-zone="shelf"]'),
+                (marker) => marker.getAttribute("data-pot-id")
+            )
+        ).toStrictEqual([
+            "P39",
+            "P40",
+            "P41",
+        ]);
+        expect(document.querySelectorAll("[data-pot-id]")).toHaveLength(40);
+        expect(Number(otherRect.getAttribute("y"))).toBeGreaterThan(
+            shelfBottom
+        );
+        expect(Number(legend.getAttribute("y"))).toBeGreaterThan(otherBottom);
+
+        for (const marker of document.querySelectorAll(
+            '[data-placement-zone="shelf"], [data-placement-zone="other"]'
+        )) {
+            const card = required(marker.querySelector("rect.pot"));
+            const bottom =
+                Number(card.getAttribute("y")) +
+                Number(card.getAttribute("height"));
+            const sectionBottom =
+                marker.getAttribute("data-placement-zone") === "shelf"
+                    ? shelfBottom
+                    : otherBottom;
+
+            expect(bottom).toBeLessThan(sectionBottom);
+
+            for (const location of marker.querySelectorAll("text.location")) {
+                expect(Number(location.getAttribute("y"))).toBeLessThan(bottom);
+            }
+        }
+
+        expect(
+            Number(document.documentElement.getAttribute("height"))
+        ).toBeGreaterThan(
+            Number(legend.getAttribute("y")) +
+                Number(legend.getAttribute("height"))
+        );
+    });
+
     it("withholds stale counts, dates, locations, and coverage when observations are unavailable", () => {
         expect.hasAssertions();
 
@@ -330,6 +528,9 @@ describe("standalone watering image", () => {
             expect(marker.querySelector("text.identity")?.textContent).toBe(
                 `${placement.label} · ${placement.id}`
             );
+            expect(
+                marker.querySelector("text.count")?.getAttribute("fill")
+            ).toBe("#adbbb3");
         }
 
         expect(document.querySelector("desc")?.textContent).toContain(
@@ -384,6 +585,11 @@ describe("standalone watering image", () => {
         expect(
             document.querySelector('[data-pot-id="P20"] .count')?.textContent
         ).toBe("?");
+        expect(
+            document
+                .querySelector('[data-pot-id="P20"] .count')
+                ?.getAttribute("fill")
+        ).toBe("#adbbb3");
 
         for (const placement of placements) {
             const marker = Array.from(
@@ -418,7 +624,7 @@ describe("standalone watering image", () => {
                 "image, script, foreignObject, link, [href], [src]"
             )
         ).toHaveLength(0);
-        expect(svg).not.toMatch(/@import|url\(/v);
+        expect(svg).not.toMatch(/@import|url\((?!#)/v);
     });
 
     it("escapes imported plant names, labels, placement notes, and status as text", () => {

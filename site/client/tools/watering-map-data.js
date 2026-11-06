@@ -1,4 +1,5 @@
 import {
+    dayColor,
     isActiveHistoryEvent,
     parseDate,
 } from "../../../docs/layouts/plant-tracker-data.js";
@@ -8,7 +9,7 @@ import {
  *     id: string;
  *     label: string;
  *     name: string;
- *     zone: "front" | "rear" | "sill" | "other";
+ *     zone: "front" | "rear" | "sill" | "shelf" | "other";
  *     position: string;
  *     x: number;
  *     y: number;
@@ -91,6 +92,20 @@ export function buildWateringMap(placements, history, now = new Date()) {
 /** @param {unknown} value */
 export function isWateringObservationDate(value) {
     return observationDate(value) !== null;
+}
+
+/**
+ * Match the Plant tracker sheet's native 0 / 14 / 28-day gradient and the
+ * logger's watering-age badges. This describes elapsed history, not readiness
+ * for another watering. Missing or invalid values have no age color.
+ *
+ * @param {number | null} days
+ *
+ * @returns {string}
+ */
+export function wateringAgeColor(days) {
+    if (days === null || !Number.isSafeInteger(days) || days < 0) return "";
+    return dayColor(days);
 }
 
 /** @param {Date} value @returns {GardenDate} */

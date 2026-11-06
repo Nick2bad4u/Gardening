@@ -118,21 +118,23 @@ rather than Garden Setup, and individual plant pages retain their own document
 titles while sharing the Plant Library app metadata. Unknown routes do not
 inherit the homepage's app identity.
 
-| Launch route        | App name       |
-| ------------------- | -------------- |
-| `/`                 | The Garden     |
-| `/plants/`          | Plant Library  |
-| `/pots/`            | Pot History    |
-| `/tracker/`         | Plant Tracker  |
-| `/photos/`          | Garden Photos  |
-| `/guides/`          | Care Guides    |
-| `/setup/`           | Garden Setup   |
-| `/setup/equipment/` | Equipment      |
-| `/setup/placement/` | Placement      |
-| `/reports/`         | Report Archive |
-| `/search/`          | Garden Search  |
-| `/report/`          | Full Report    |
-| `/pocket-report/`   | Pocket Report  |
+| Launch route        | App name            |
+| ------------------- | ------------------- |
+| `/`                 | The Garden          |
+| `/plants/`          | Plant Library       |
+| `/containers/`      | Containers          |
+| `/pots/`            | Pot History         |
+| `/tracker/`         | Plant Tracker       |
+| `/watering/`        | Garden Watering Map |
+| `/photos/`          | Garden Photos       |
+| `/guides/`          | Care Guides         |
+| `/setup/`           | Garden Setup        |
+| `/setup/equipment/` | Equipment           |
+| `/setup/placement/` | Placement           |
+| `/reports/`         | Report Archive      |
+| `/search/`          | Garden Search       |
+| `/report/`          | Full Report         |
+| `/pocket-report/`   | Pocket Report       |
 
 Routes above are relative to the configured `/Gardening/` site base. The static
 `[...app]/manifest.webmanifest.ts` endpoint generates each route's manifest from
@@ -141,6 +143,18 @@ stays within its declared scope. Keep the existing report IDs, manifest paths,
 and icon URLs stable when adding entries. Generated PNGs retain the public
 `assets/report-apps/` directory for compatibility; their source is the explicit
 app registry and canonical SVG exports, not a broad asset-directory scan.
+
+`/watering/` launches **Garden Watering Map**, with **Watering Map** as its
+short home-screen name and the dedicated `garden-watering` icon. It renders the
+same `WateringMap.astro` component as the placement page, so refresh, unavailable
+states, and downloads share one implementation. The existing
+`/setup/placement/#watering-map` bookmark remains valid. The registry's optional
+`shortName` supplies the manifest's `short_name`; entries without it retain their
+existing names. No service worker or offline watering-data display is added:
+installation uses the existing manifest and icon pipeline, while watering values
+still require a successful live read. See
+[Edge's optional service-worker guidance](https://learn.microsoft.com/en-us/microsoft-edge/progressive-web-apps/how-to/#a-service-worker-is-optional)
+for the distinction between installation and offline support.
 
 The latest full and pocket reports share `LatestReportPage.astro` and the same reviewed JSON. `/report/` supplies the **Full Report** name and blue document icon. `/pocket-report/` supplies **Pocket Report** and an amber pocket icon, opening the existing pocket list by default. Explicit pot fragments take precedence; `/report/#pocket-list` remains a working bookmark.
 
@@ -156,7 +170,7 @@ the owner's browser profile; this does not reproduce Android package installatio
 
 ## Watering placement image
 
-The placement page's **Days since watering** panel generates an SVG from the
+The dedicated watering page and the placement page share the **Days since watering** panel, which generates an SVG from the
 maintained pot placements and the published observation log. It refreshes on
 opening and every five minutes while visible, and recalculates elapsed calendar
 days in the collection's time zone after a successful live read. Counts are
@@ -165,10 +179,17 @@ hidden while refreshing, after a failed refresh, and when the read expires after
 dates, logged locations, and record-coverage totals show unavailable states;
 downloads stay disabled until a live read succeeds. PNG downloads render the same SVG at twice its native dimensions;
 both formats use the map's dark background independent of the site theme.
-The site navigation links directly to `setup/placement/#watering-map`, and the
+The site navigation links directly to `watering/`, and the
 placement page includes a jump link above the panel. Summary counts distinguish
 pots with a recorded Water event from pots without one after data loads. These
 counts describe observations and are not watering recommendations.
+
+Day-count colors reuse the tracker's continuous 0 / 14 / 28-day scale: green,
+yellow, and coral, with older values capped at coral. Unknown and unavailable
+values remain neutral. The visible legend and exported image describe elapsed
+history, not a watering threshold. P39, P40, and P41 have a separate room-side
+shelf group; its order remains schematic. Lower card rows, following sections,
+and the image legend flow from their text heights to preserve spacing.
 The map reads the hidden **Watering map** helper independently: its maintained
 placement data already supplies pot names and labels, so a slow Plant tracker
 export cannot block the image. The helper projects only History's Water and Move

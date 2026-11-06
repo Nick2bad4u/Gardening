@@ -38,6 +38,7 @@ export const GET: APIRoute = async () => {
             "plants/",
             "containers/",
             "tracker/",
+            "watering/",
             "report/",
             "reports/",
             "photos/",
