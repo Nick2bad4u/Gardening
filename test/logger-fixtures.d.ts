@@ -151,6 +151,10 @@ export interface PlantSummary {
     label: string;
     lastWatered: string;
     lastWateredDayKey?: string;
+    lastWateredNutrientsUsed?:
+        | ""
+        | "No"
+        | "Yes";
     latestAirTemperature?: "" | number;
     latestAirTemperatureAt?: string;
     latestLightAt?: string;

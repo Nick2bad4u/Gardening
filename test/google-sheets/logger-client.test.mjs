@@ -5109,6 +5109,231 @@ describe("garden logger humidity observations", () => {
     });
 });
 
+describe("garden logger latest-water fertilizer badge", () => {
+    afterEach(restoreLoggerMocks);
+
+    const fertilizedBootstrap = () => ({
+        ...workflowBootstrap(),
+        plants: workflowBootstrap().plants.map((plant, index) => ({
+            ...plant,
+            lastWateredDayKey: "2026-09-05",
+            lastWateredNutrientsUsed: /** @type {"No" | "Yes"} */ (
+                index === 0 ? "Yes" : "No"
+            ),
+        })),
+        wateringAgesAvailable: true,
+    });
+    const badgeSelector = ".last-water-fertilizer";
+    const badgeLabel = "Last watering included fertilizer";
+    const badgeCount = (/** @type {Window} */ window) =>
+        window.document.querySelectorAll(badgeSelector).length;
+    const click = (
+        /** @type {Window} */ window,
+        /** @type {string} */ selector
+    ) => {
+        queryElement(window.document, selector, HTMLButtonElement).click();
+    };
+
+    it("shows confirmed fertilizer in every picker independently of the age preference", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            bootstrapData: fertilizedBootstrap(),
+            storage: { gardenPlantId: "P01" },
+        });
+
+        expect(window.document.querySelectorAll(".water-age")).toHaveLength(0);
+
+        for (const mode of [
+            "#labelPickerMode",
+            "#tablePickerMode",
+            "#listPickerMode",
+        ]) {
+            click(window, mode);
+            for (const selector of [
+                '#labelPicker [data-plant-id="P01"]',
+                '#plantChoiceList [data-plant-id="P01"]',
+                "#plantChoiceSummary",
+            ]) {
+                const parent = queryElement(
+                    window.document,
+                    selector,
+                    HTMLElement
+                );
+
+                expect(
+                    parent
+                        .querySelector(badgeSelector)
+                        ?.getAttribute("aria-label")
+                ).toBe(badgeLabel);
+                expect(
+                    parent
+                        .querySelector(`${badgeSelector} use`)
+                        ?.getAttribute("href")
+                ).toBe("#app-icon-feeding");
+            }
+
+            expect(
+                window.document.querySelector(
+                    '#labelPicker [data-plant-id="P02"] .last-water-fertilizer'
+                )
+            ).toBeNull();
+        }
+        for (let count = 0; count < 4; count += 1)
+            click(window, "#daysSinceWatered");
+        const tile = queryElement(
+            window.document,
+            '#labelPicker [data-plant-id="P01"]',
+            HTMLButtonElement
+        );
+
+        expect(tile.getAttribute("aria-label")?.split(badgeLabel)).toHaveLength(
+            2
+        );
+        expect(tile.querySelectorAll(badgeSelector)).toHaveLength(1);
+
+        click(window, "#bulkModeTab");
+        for (const mode of [
+            "#bulkLabelPickerMode",
+            "#bulkTablePickerMode",
+            "#bulkListPickerMode",
+        ]) {
+            click(window, mode);
+
+            expect(
+                window.document
+                    .querySelector(
+                        '#bulkPlantList [data-bulk-plant-id="P01"] .last-water-fertilizer'
+                    )
+                    ?.getAttribute("aria-label")
+            ).toBe(badgeLabel);
+            expect(
+                window.document.querySelector(
+                    '#bulkPlantList [data-bulk-plant-id="P02"] .last-water-fertilizer'
+                )
+            ).toBeNull();
+        }
+    });
+
+    it("removes badges during pending and failed refreshes and reflects the new last Water", () => {
+        expect.hasAssertions();
+
+        const data = fertilizedBootstrap();
+        const { behaviors, window } = createLoggerWindow({
+            bootstrapData: data,
+        });
+
+        expect(badgeCount(window)).toBeGreaterThan(0);
+
+        /**
+         * @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebAppBootstrap">
+         *     | undefined}
+         */
+        let handlers;
+        behaviors.getWebAppBootstrap = (next) => {
+            handlers = next;
+        };
+        refreshWorkflow(window);
+
+        expect(badgeCount(window)).toBe(0);
+
+        required(handlers).failure({ message: "Fixture unavailable" });
+
+        expect(badgeCount(window)).toBe(0);
+
+        refreshWorkflow(window);
+        required(handlers).success(data);
+
+        expect(badgeCount(window)).toBeGreaterThan(0);
+
+        refreshWorkflow(window);
+        required(handlers).success({
+            ...data,
+            plants: data.plants.map((plant) => ({
+                ...plant,
+                lastWateredNutrientsUsed: "No",
+            })),
+        });
+
+        expect(badgeCount(window)).toBe(0);
+        expect(
+            queryElement(
+                window.document,
+                "#plantChoiceSummary",
+                HTMLElement
+            ).getAttribute("aria-label")
+        ).not.toContain(badgeLabel);
+    });
+
+    it("withholds cached fertilizer until a fresh bootstrap confirms it", () => {
+        expect.hasAssertions();
+
+        const data = fertilizedBootstrap();
+        /**
+         * @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebAppBootstrap">
+         *     | undefined}
+         */
+        let handlers;
+        const { window } = createLoggerWindow({
+            bootstrapBehavior: (next) => {
+                handlers = next;
+            },
+            storage: {
+                gardenLoggerBootstrapV5: JSON.stringify({
+                    bootstrap: data,
+                    savedAt: Date.now(),
+                }),
+            },
+        });
+
+        expect(badgeCount(window)).toBe(0);
+
+        required(handlers).success(data);
+
+        expect(badgeCount(window)).toBeGreaterThan(0);
+    });
+
+    it("withholds fertilizer from an older roster without nutrient metadata", () => {
+        expect.hasAssertions();
+
+        const data = fertilizedBootstrap();
+        const first = required(data.plants[0]);
+        Reflect.deleteProperty(first, "lastWateredNutrientsUsed");
+
+        expect(
+            badgeCount(createLoggerWindow({ bootstrapData: data }).window)
+        ).toBe(0);
+    });
+
+    it("withholds fertilizer when watering metadata is unavailable", () => {
+        expect.hasAssertions();
+
+        const data = { ...fertilizedBootstrap(), wateringAgesAvailable: false };
+
+        expect(
+            badgeCount(createLoggerWindow({ bootstrapData: data }).window)
+        ).toBe(0);
+    });
+
+    it.each([
+        "",
+        "2026-02-30",
+        "2027-09-05",
+    ])(
+        "withholds fertilizer without a valid nonfuture Water date: %j",
+        (dayKey) => {
+            expect.hasAssertions();
+
+            const data = fertilizedBootstrap();
+            required(data.plants[0]).lastWateredDayKey = dayKey;
+
+            expect(
+                badgeCount(createLoggerWindow({ bootstrapData: data }).window)
+            ).toBe(0);
+        }
+    );
+});
+
 describe("garden logger bootstrap cache and connection recovery", () => {
     afterEach(restoreLoggerMocks);
 

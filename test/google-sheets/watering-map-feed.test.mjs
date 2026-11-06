@@ -5,12 +5,14 @@ import { describe, expect, it } from "vitest";
 import {
     assertWateringMapFeedPreconditions,
     buildWateringMapFeedRequests,
+    buildWateringMapFeedUpgradeRequests,
     wateringMapFeedColumnCount,
     wateringMapFeedDateFormat,
     wateringMapFeedFormula,
     wateringMapFeedRowCount,
     wateringMapFeedSheetId,
     wateringMapFeedTitle,
+    wateringMapFeedV1Formula,
 } from "../../scripts/google-sheets/watering-map-feed.mjs";
 import { required } from "../helpers/required.mjs";
 
@@ -151,6 +153,305 @@ function serverContext() {
     return context;
 }
 
+/** @returns {import("../../types/watering-map-feed.d.ts").WateringMapFeedSnapshot} */
+function upgradeFixture() {
+    const snapshot = fixture();
+    snapshot.metadata.sheets.push({
+        properties: {
+            gridProperties: {
+                columnCount: 8,
+                rowCount: wateringMapFeedRowCount,
+            },
+            hidden: true,
+            index: snapshot.metadata.sheets.length,
+            sheetId: wateringMapFeedSheetId,
+            title: wateringMapFeedTitle,
+        },
+        protectedRanges: [
+            {
+                protectedRangeId: 300,
+                range: { sheetId: wateringMapFeedSheetId },
+                warningOnly: true,
+            },
+        ],
+    });
+    snapshot.cells.push({
+        column: 0,
+        row: 0,
+        sheet: wateringMapFeedTitle,
+        value: { formulaValue: wateringMapFeedV1Formula() },
+    });
+    snapshot.readRanges.push({
+        endColumn: 8,
+        endRow: wateringMapFeedRowCount,
+        sheet: wateringMapFeedTitle,
+        startColumn: 0,
+        startRow: 0,
+    });
+    return snapshot;
+}
+
+describe("watering map version-1 upgrade", () => {
+    it("writes only A1 and new I:L columns, retaining all existing metadata and records", () => {
+        expect.hasAssertions();
+
+        const snapshot = upgradeFixture();
+        const before = structuredClone(snapshot);
+        const plan = buildWateringMapFeedUpgradeRequests(
+            snapshot,
+            maintainedHeaders()
+        );
+
+        expect(snapshot).toStrictEqual(before);
+        expect(plan.allocatedCellsAfter - plan.allocatedCellsBefore).toBe(
+            200_012
+        );
+        expect(plan.requests).toHaveLength(5);
+        expect(plan.requests[0]).toStrictEqual({
+            appendDimension: {
+                dimension: "COLUMNS",
+                length: 4,
+                sheetId: wateringMapFeedSheetId,
+            },
+        });
+        expect(plan.requests[1]).toMatchObject({
+            updateCells: {
+                fields: "userEnteredValue,note",
+                rows: [
+                    {
+                        values: [
+                            {
+                                userEnteredValue: {
+                                    formulaValue: wateringMapFeedFormula(),
+                                },
+                            },
+                        ],
+                    },
+                ],
+                start: {
+                    columnIndex: 0,
+                    rowIndex: 0,
+                    sheetId: wateringMapFeedSheetId,
+                },
+            },
+        });
+
+        const formattingRequests = plan.requests.slice(2, 4);
+        for (const request of formattingRequests)
+            expect(request).toMatchObject({
+                repeatCell: {
+                    range: {
+                        endColumnIndex: 12,
+                        sheetId: wateringMapFeedSheetId,
+                        startColumnIndex: 8,
+                    },
+                },
+            });
+
+        expect(plan.requests[4]).toMatchObject({
+            updateDimensionProperties: {
+                fields: "pixelSize",
+                range: {
+                    endIndex: 12,
+                    sheetId: wateringMapFeedSheetId,
+                    startIndex: 8,
+                },
+            },
+        });
+
+        const serialized = JSON.stringify(plan.requests);
+        for (const forbidden of [
+            "addSheet",
+            "delete",
+            "sort",
+            "ProtectedRange",
+            "basicFilter",
+        ])
+            expect(serialized).not.toContain(forbidden);
+        const existingSheets = snapshot.metadata.sheets.slice(0, -1);
+        for (const sheet of existingSheets)
+            expect(serialized).not.toContain(
+                `"sheetId":${sheet.properties.sheetId},`
+            );
+
+        expect(() => {
+            assertWateringMapFeedPreconditions(plan, structuredClone(snapshot));
+        }).not.toThrow();
+    });
+
+    it("does not mistake computed spill cells for occupied user input", () => {
+        expect.hasAssertions();
+
+        const snapshot = upgradeFixture();
+        snapshot.cells.push({
+            column: 7,
+            effectiveValue: { numberValue: 50_000 },
+            row: 50_002,
+            sheet: wateringMapFeedTitle,
+            value: {},
+        });
+
+        expect(() =>
+            buildWateringMapFeedUpgradeRequests(snapshot, maintainedHeaders())
+        ).not.toThrow();
+    });
+
+    it.each([
+        "missing helper",
+        "wrong title",
+        "visible",
+        "rows",
+        "columns",
+        "no protection",
+        "bounded protection",
+        "unprotected range",
+        "not warning",
+        "partial capture",
+        "missing anchor",
+        "formula drift",
+        "replay",
+        "occupied",
+        "duplicate cell",
+    ])("rejects unsafe upgrade state: %s", (scenario) => {
+        expect.hasAssertions();
+
+        const snapshot = upgradeFixture();
+        const helper = required(snapshot.metadata.sheets.at(-1));
+        const anchor = required(snapshot.cells.at(-1));
+        const protection = required(helper.protectedRanges?.[0]);
+        switch (scenario) {
+            case "bounded protection": {
+                protection.range.endColumnIndex = 8;
+                break;
+            }
+            case "columns": {
+                helper.properties.gridProperties.columnCount = 12;
+                break;
+            }
+            case "duplicate cell": {
+                snapshot.cells.push(structuredClone(anchor));
+                break;
+            }
+            case "formula drift": {
+                anchor.value = { formulaValue: "=42" };
+                break;
+            }
+            case "missing anchor": {
+                snapshot.cells.pop();
+                break;
+            }
+            case "missing helper": {
+                snapshot.metadata.sheets.pop();
+                break;
+            }
+            case "no protection": {
+                helper.protectedRanges = [];
+                break;
+            }
+            case "not warning": {
+                protection.warningOnly = false;
+                break;
+            }
+            case "occupied": {
+                snapshot.cells.push({
+                    column: 7,
+                    row: 50_002,
+                    sheet: wateringMapFeedTitle,
+                    value: { stringValue: "retain" },
+                });
+                break;
+            }
+            case "partial capture": {
+                required(snapshot.readRanges.at(-1)).endRow -= 1;
+                break;
+            }
+            case "replay": {
+                anchor.value = { formulaValue: wateringMapFeedFormula() };
+                break;
+            }
+            case "rows": {
+                helper.properties.gridProperties.rowCount -= 1;
+                break;
+            }
+            case "unprotected range": {
+                protection.unprotectedRanges = [
+                    { sheetId: wateringMapFeedSheetId },
+                ];
+                break;
+            }
+            case "visible": {
+                helper.properties.hidden = false;
+                break;
+            }
+            case "wrong title": {
+                helper.properties.title = "Other helper";
+                break;
+            }
+            default: {
+                throw new Error("Unknown test scenario");
+            }
+        }
+
+        expect(() =>
+            buildWateringMapFeedUpgradeRequests(snapshot, maintainedHeaders())
+        ).toThrow(/Watering map/v);
+    });
+
+    it("detects an occupied cell added after the plan was built", () => {
+        expect.hasAssertions();
+
+        const snapshot = upgradeFixture();
+        const plan = buildWateringMapFeedUpgradeRequests(
+            snapshot,
+            maintainedHeaders()
+        );
+        snapshot.cells.push({
+            column: 7,
+            row: 50_002,
+            sheet: wateringMapFeedTitle,
+            value: { numberValue: 0 },
+        });
+
+        expect(() => {
+            assertWateringMapFeedPreconditions(plan, snapshot);
+        }).toThrow("Workbook drift");
+    });
+
+    it("uses the additional four columns in its workbook cell budget", () => {
+        expect.hasAssertions();
+
+        const snapshot = upgradeFixture();
+        const plan = buildWateringMapFeedUpgradeRequests(
+            snapshot,
+            maintainedHeaders()
+        );
+        snapshot.metadata.sheets.push({
+            properties: {
+                gridProperties: {
+                    columnCount: 1,
+                    rowCount: 20_000_000 - plan.allocatedCellsAfter,
+                },
+                index: snapshot.metadata.sheets.length,
+                sheetId: 999,
+                title: "Large helper",
+            },
+        });
+
+        expect(
+            buildWateringMapFeedUpgradeRequests(snapshot, maintainedHeaders())
+                .allocatedCellsAfter
+        ).toBe(20_000_000);
+
+        required(
+            snapshot.metadata.sheets.at(-1)
+        ).properties.gridProperties.rowCount += 1;
+
+        expect(() =>
+            buildWateringMapFeedUpgradeRequests(snapshot, maintainedHeaders())
+        ).toThrow("cell budget");
+    });
+});
+
 describe("watering map feed migration", () => {
     it("adds only the complete hidden helper, preserving every existing sheet and record", () => {
         expect.hasAssertions();
@@ -164,14 +465,14 @@ describe("watering map feed migration", () => {
 
         expect(snapshot).toStrictEqual(before);
         expect(plan.allocatedCellsAfter - plan.allocatedCellsBefore).toBe(
-            400_024
+            600_036
         );
         expect(plan.sheetId).toBe(wateringMapFeedSheetId);
         expect(plan.requests[0]).toStrictEqual({
             addSheet: {
                 properties: {
                     gridProperties: {
-                        columnCount: 8,
+                        columnCount: 12,
                         frozenRowCount: 2,
                         hideGridlines: true,
                         rowCount: 50_003,
@@ -252,7 +553,7 @@ describe("watering map feed migration", () => {
         expect(
             vm.runInContext("GARDEN_LOGGER.historyCapacityRows + 2", context)
         ).toBe(wateringMapFeedRowCount);
-        expect(wateringMapFeedColumnCount).toBe(8);
+        expect(wateringMapFeedColumnCount).toBe(12);
         expect(
             buildWateringMapFeedRequests(fixture(), maintainedHeaders())
                 .requests[1]

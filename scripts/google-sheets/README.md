@@ -38,6 +38,64 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## Latest-watering fertilizer indicator
+
+The maintained **5.42.0** candidate adds the existing fertilizer-bottle icon
+beside pots whose latest active, valid, nonfuture Water explicitly records
+**Nutrients used: Yes**. The logger shows it in Labels, Table, List, Bulk care,
+and the selected-plant summary, independently of **Days since watered**. The
+watering map shows a bottle/F badge, with the same meaning in its details,
+legend, and SVG/PNG downloads. Both surfaces withhold badges for unconfirmed,
+pending, failed, or cached data.
+
+The date and nutrient flag come from one Water observation across the permanent
+pot's setups. Newer plain-water or unknown entries clear an older fertilizer
+badge. Equal timestamps follow correction-root order, then physical ledger
+order. Historical blanks remain unknown; no product text or older feeding is
+used to infer Yes.
+
+The compact feed's v2 contract contains **12 columns**: Date, Plant ID, Event,
+Record status, New location, Nutrients used, Pot setup, Observation ID, Corrects
+observation ID, Feed version, Feed status, and Record count. Ready/End markers
+both carry version 2 and the same record count. Full History capacity, ledger
+order, Removed/future evidence, and source-error propagation remain unchanged.
+The reader temporarily accepts exact v1 responses with nutrient use unknown;
+its new cache namespace prevents old cache shapes from masquerading as v2.
+
+For an existing helper, use `buildWateringMapFeedUpgradeRequests()` in
+[watering-map-feed.mjs](./watering-map-feed.mjs), after native backup and copy
+rehearsal. Capture complete metadata, History A1:BO1, and user-entered values
+through Watering map A1:H50003. The planner requires the exact v1 formula,
+hidden 50,003 × 8 grid, whole-sheet warning protection, and no other entered
+cells. Re-read and assert preconditions immediately before applying its five
+requests. They append I:L, replace A1's formula/note, and format only the new
+columns. The ordinary installer accepts v2 and must not perform this upgrade.
+The canonical **67-column History**, **59-column App entries**, **77-column
+App bulk**, and AppSheet configuration need no migration.
+
+Publish the compatible website reader before upgrading the live helper, then
+promote the logger through an immutable version at its existing deployment.
+Source validation and the November 6 native rehearsal are complete; production
+promotion and final verification are recorded after the rollout.
+
+The disposable native rehearsal verified v2 with empty history, retained ledger
+order, corrections, explicit Yes/No/unknown nutrient values, future exclusions,
+source errors, blocked spills, and all 50,000 History slots. The combined feed
+harness reached the six-minute Apps Script limit; bounded native checks then
+completed and independently verified each remaining case. The final candidate
+returned 39 plants, including 20 with explicit Yes on their latest Water.
+Its bootstrap payload was 77,199 bytes. A copied analytics refresh completed in
+36.1 seconds; the final bootstrap took 65.5 seconds, including 54.5 seconds
+opening the workbook. These are rehearsal measurements, not latency guarantees.
+
+Captured source values, formulas, notes, and validations matched exactly across
+History, staging, RO refills, Baselines, and Plant tracker. All 194 chart
+definitions, 131 protections, and 70 tabs matched after refreshing the copy's
+analytics; the only structural difference was the helper's four appended
+columns. Stale model calculations temporarily omitted chart-series metadata
+until that refresh. The temporary test sheet was removed, the canonical feed
+restored, and the scratch script restored exactly.
+
 ## November 4 houseplant location records
 
 The owner confirmed P39 / #13 Nightly, P40 / #14 Spice is Nice, and P41 / #15

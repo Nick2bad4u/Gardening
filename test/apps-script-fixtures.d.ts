@@ -713,11 +713,20 @@ export interface AppsScriptTestApi {
         nowMs: number,
         previousDry: unknown
     ) => WebPlantWeightReadModel;
-    webWateringDaysFromRows_: (
+    webWateringReadModelsFromRows_: (
         historyRows: CellValue[][],
         now: Date,
         timeZone: string
-    ) => Map<string, string>;
+    ) => Map<
+        string,
+        {
+            dayKey: string;
+            nutrientsUsed:
+                | ""
+                | "No"
+                | "Yes";
+        }
+    >;
     webWeightReadModelsFromRows_: (
         historyRows: unknown,
         baselineSetups: Map<string, number>,

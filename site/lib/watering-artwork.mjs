@@ -62,6 +62,7 @@ const allowedAttributes = new Set([
 const uiNames = new Set([
     "calendar",
     "clock",
+    "feeding",
     "info",
     "light",
     "pin",

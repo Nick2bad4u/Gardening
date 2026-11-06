@@ -34,6 +34,10 @@ function fixture(options = {}) {
     headers[0] = "Date";
     headers[1] = "Plant ID";
     headers[2] = "Event";
+    headers[10] = "Pot setup";
+    headers[16] = "Nutrients used";
+    headers[26] = "Observation ID";
+    headers[30] = "Corrects observation ID";
     headers[35] = "Record status";
     headers[49] = options.wrongHeader === true ? "Location" : "New location";
     const history = {
@@ -43,7 +47,7 @@ function fixture(options = {}) {
         getSheetId: () => 1,
     };
     const helper = {
-        getMaxColumns: () => options.columns ?? 8,
+        getMaxColumns: () => options.columns ?? 12,
         getMaxRows: () => options.rows ?? 50_003,
         getRange: vi.fn(() => ({
             getFormula: () =>
@@ -91,7 +95,7 @@ describe("watering-map projection installation", () => {
                         addSheet: {
                             properties: {
                                 gridProperties: {
-                                    columnCount: 8,
+                                    columnCount: 12,
                                     rowCount: 50_003,
                                 },
                                 hidden: true,

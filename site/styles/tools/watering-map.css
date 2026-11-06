@@ -254,6 +254,25 @@
         border-block-start: 1px solid var(--line);
     }
 
+    & .watering-map-fertilizer-key {
+        display: flex;
+        gap: 0.65rem;
+        align-items: center;
+    }
+
+    & .watering-map-fertilizer-symbol {
+        display: inline-flex;
+        flex: none;
+        gap: 0.15rem;
+        align-items: center;
+        padding: 0.1rem 0.3rem;
+        font-weight: 750;
+        color: #edf4ca;
+        background: #263b2a;
+        border: 1px solid #d7dfad;
+        border-radius: 7px;
+    }
+
     & .watering-map-viewport {
         inline-size: 100%;
         min-inline-size: 0;
@@ -338,6 +357,11 @@
     & .watering-map-details .watering-map-age {
         font-weight: 750;
         font-variant-numeric: tabular-nums;
+    }
+
+    & .watering-map-details .watering-map-nutrients[data-nutrients-used="Yes"] {
+        font-weight: 700;
+        color: #edf4ca;
     }
 
     & .watering-map-details summary {

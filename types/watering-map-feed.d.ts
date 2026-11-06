@@ -13,12 +13,20 @@ export interface WateringMapFeedSnapshot {
     cells: LeafVpdSnapshot["cells"];
     metadata: {
         properties: { locale?: string; timeZone: string };
-        sheets: (LeafVpdSnapshot["metadata"]["sheets"][number] & {
+        sheets: (Omit<
+            LeafVpdSnapshot["metadata"]["sheets"][number],
+            "protectedRanges"
+        > & {
             properties: LeafVpdSnapshot["metadata"]["sheets"][number]["properties"] & {
                 hidden?: boolean;
                 index: number;
                 sheetType?: string;
             };
+            protectedRanges?: (NonNullable<
+                LeafVpdSnapshot["metadata"]["sheets"][number]["protectedRanges"]
+            >[number] & {
+                unprotectedRanges?: { sheetId: number }[];
+            })[];
         })[];
         spreadsheetId: string;
     };

@@ -1592,6 +1592,129 @@ const expectUnavailableAgeContrast = async (tile: Readonly<Locator>) => {
     expect.soft(ratio).toBeGreaterThanOrEqual(4.5);
 };
 
+test.describe("latest-water fertilizer badge", { tag: "@logger" }, () => {
+    const badgeLabel = "Last watering included fertilizer";
+    const expectSingleFertilizer = async (page: Readonly<Page>) => {
+        await pickerMode(page, "Table").click();
+        const fertilized = waterAgeTile(tablePicker(page), "P02");
+        await expect
+            .soft(fertilized.getByRole("img", { name: badgeLabel }))
+            .toBeVisible();
+        await expect
+            .soft(
+                waterAgeTile(tablePicker(page), "P01").getByRole("img", {
+                    name: badgeLabel,
+                })
+            )
+            .toHaveCount(0);
+        await expect
+            .soft(fertilized)
+            .toHaveAccessibleName(/Last watering included fertilizer/v);
+        await expect
+            .soft(fertilized.getByText("1d", { exact: true }))
+            .toHaveCount(0);
+        await fertilized.focus();
+        await page.keyboard.press("Enter");
+        await pickerMode(page, "Labels").click();
+        await expect
+            .soft(fertilized.getByRole("img", { name: badgeLabel }))
+            .toBeVisible();
+    };
+    const expectFertilizerAgePreference = async (page: Readonly<Page>) => {
+        const fertilized = waterAgeTile(tablePicker(page), "P02");
+        await pickerMode(page, waterAgeToggleName).click();
+        await expect.soft(fertilized).toContainText("1d");
+        await pickerMode(page, waterAgeToggleName).click();
+        await expect
+            .soft(fertilized.getByRole("img", { name: badgeLabel }))
+            .toBeVisible();
+        await pickerMode(page, "List").click();
+        const summary = page.getByLabel(/^Choose plant\. Current selection:/v);
+        await expect
+            .soft(summary.getByRole("img", { name: badgeLabel }))
+            .toBeVisible();
+        await summary.click();
+        await expect
+            .soft(
+                page
+                    .getByRole("option", { name: /\bP02\b/v })
+                    .getByRole("img", { name: badgeLabel })
+            )
+            .toBeVisible();
+        await page.keyboard.press("Escape");
+    };
+    const expectBulkFertilizer = async (
+        page: Readonly<Page>,
+        mode:
+            | "Labels"
+            | "List"
+            | "Table"
+    ) => {
+        await pickerMode(page, mode).click();
+        await expect
+            .soft(
+                tablePicker(page, true).getByRole("img", { name: badgeLabel })
+            )
+            .toBeVisible();
+        expect
+            .soft(
+                await page.evaluate(
+                    () => document.documentElement.scrollWidth <= innerWidth
+                )
+            )
+            .toBe(true);
+    };
+    for (const theme of ["dark", "light"] as const) {
+        for (const width of [390, 1280]) {
+            test(`${width}px ${theme} identifies fertilizer across pickers and withholds unconfirmed refreshes`, async ({
+                page,
+            }, testInfo) => {
+                const fixture = wateringAgeFixture().replace(
+                    "plant.lastWateredDayKey =",
+                    'plant.lastWateredNutrientsUsed = index === 1 ? "Yes" : "No"; plant.lastWateredDayKey ='
+                );
+                await openLogger(page, width, theme, fixture);
+                await expectSingleFertilizer(page);
+                await expectFertilizerAgePreference(page);
+                const picker = tablePicker(page);
+                await pickerMode(page, "Table").click();
+                await picker.screenshot({
+                    path: testInfo.outputPath("fertilizer-single-table.png"),
+                });
+
+                await page
+                    .getByRole("tab", { exact: true, name: bulkCareTab })
+                    .click();
+                await expectBulkFertilizer(page, "Table");
+                await expectBulkFertilizer(page, "Labels");
+                await expectBulkFertilizer(page, "List");
+                await pickerMode(page, "Table").click();
+                await tablePicker(page, true).screenshot({
+                    path: testInfo.outputPath("fertilizer-bulk-table.png"),
+                });
+                await refreshLogger(page);
+                await expect
+                    .soft(page.getByRole("img", { name: badgeLabel }))
+                    .toHaveCount(0);
+                await confirmWaterAgeRefresh(page, true);
+                await expect
+                    .soft(page.getByRole("img", { name: badgeLabel }))
+                    .toHaveCount(0);
+                await refreshLogger(page);
+                await confirmWaterAgeRefresh(page);
+                await expect
+                    .soft(
+                        waterAgeTile(tablePicker(page, true), "P02").getByRole(
+                            "img",
+                            { name: badgeLabel }
+                        )
+                    )
+                    .toBeVisible();
+            });
+        }
+    }
+});
+
 test.describe("watering age picker", { tag: "@logger" }, () => {
     for (const theme of ["dark", "light"] as const) {
         const neutralColor =

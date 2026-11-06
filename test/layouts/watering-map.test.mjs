@@ -4,6 +4,7 @@ import { describe, expect, it, onTestFinished } from "vitest";
 import {
     buildWateringMap,
     wateringAgeColor,
+    wateringNutrientLabel,
 } from "../../site/client/tools/watering-map-data.js";
 import { renderWateringMapSvg } from "../../site/client/tools/watering-map-svg.js";
 import { getContainers } from "../../site/lib/containers.mjs";
@@ -52,6 +53,395 @@ const placements = [
 function history(records) {
     return records.map((record, _index) => ({ ...record, _index }));
 }
+
+/** @param {HistoryEvent[]} events */
+function nutrientMarker(events) {
+    return required(
+        buildWateringMap(placements, events, new Date("2026-11-06T17:00:00Z"))
+            .markers[0]
+    );
+}
+
+describe("nutrients at the last watering", () => {
+    it.each([true, false])(
+        "renders nutrient badges only for confirmed latest Yes when available is %s",
+        (isAvailable) => {
+            expect.hasAssertions();
+
+            const model = buildWateringMap(
+                placements,
+                history([
+                    {
+                        Date: "2026-11-04",
+                        Event: "Water",
+                        "Nutrients used": "Yes",
+                        "Plant ID": "P01",
+                    },
+                    {
+                        Date: "2026-11-03",
+                        Event: "Water",
+                        "Nutrients used": "Yes",
+                        "Plant ID": "P20",
+                    },
+                    {
+                        Date: "2026-11-04",
+                        Event: "Water",
+                        "Nutrients used": "No",
+                        "Plant ID": "P20",
+                    },
+                    { Date: "2026-11-04", Event: "Water", "Plant ID": "P38" },
+                ]),
+                new Date("2026-11-06T17:00:00Z")
+            );
+            const svg = renderWateringMapSvg(model, {
+                available: isAvailable,
+                readAt: null,
+                status: "Synthetic nutrient evidence",
+            });
+            const window = new Window();
+            onTestFinished(async () => window.happyDOM.close());
+            const parser = new window.DOMParser();
+            const document = parser.parseFromString(svg, "image/svg+xml");
+
+            expect(document.querySelector("parsererror")).toBeNull();
+            expect(
+                document.querySelectorAll(
+                    "[data-pot-id] [data-fertilizer-badge]"
+                )
+            ).toHaveLength(isAvailable ? 1 : 0);
+            expect(
+                document.querySelector(
+                    '[data-pot-id="P01"] [data-fertilizer-badge]'
+                )?.textContent ?? ""
+            ).toBe(isAvailable ? "F" : "");
+            expect(
+                document.querySelector('[data-pot-id="P01"] title')?.textContent
+            ).toContain(
+                `Nutrients at last Water: ${isAvailable ? "Yes — fertilizer / supplement" : "Unavailable"}`
+            );
+            expect(
+                document.querySelector('[data-pot-id="P20"] title')?.textContent
+            ).toContain(
+                `Nutrients at last Water: ${isAvailable ? "No — plain water" : "Unavailable"}`
+            );
+            expect(
+                document.querySelector('[data-pot-id="P38"] title')?.textContent
+            ).toContain(
+                `Nutrients at last Water: ${isAvailable ? "Not recorded" : "Unavailable"}`
+            );
+            expect(
+                document.querySelector("[data-fertilizer-legend]")?.textContent
+            ).toContain("No badge can mean plain water or not recorded");
+        }
+    );
+
+    it.each([
+        { expected: "Yes", value: "Yes" },
+        { expected: "Yes", value: " yes " },
+        { expected: "No", value: "No" },
+        { expected: "No", value: " no " },
+        { expected: null, value: "" },
+        { expected: null, value: "unknown" },
+    ])(
+        "keeps explicit nutrient state $value on the selected Water row",
+        ({ expected, value }) => {
+            expect.hasAssertions();
+
+            const marker = nutrientMarker(
+                history([
+                    {
+                        Date: "2026-11-01",
+                        Event: "Water",
+                        "Nutrients used": "Yes",
+                        "Plant ID": "P01",
+                    },
+                    {
+                        Date: "2026-11-05",
+                        Event: "Water",
+                        "Nutrient product": "Product text cannot establish use",
+                        "Nutrients used": value,
+                        "Plant ID": "P01",
+                    },
+                ])
+            );
+
+            expect(marker).toMatchObject({
+                days: 1,
+                lastWater: "2026-11-05",
+                lastWaterNutrientsUsed: expected,
+            });
+        }
+    );
+
+    it("does not borrow nutrients from removed, future, invalid, or non-Water rows", () => {
+        expect.hasAssertions();
+
+        const marker = nutrientMarker(
+            history([
+                {
+                    Date: "2026-11-04",
+                    Event: "Water",
+                    "Nutrients used": "No",
+                    "Plant ID": "P01",
+                },
+                {
+                    Date: "2026-11-05",
+                    Event: "Water",
+                    "Nutrients used": "Yes",
+                    "Plant ID": "P01",
+                    "Record status": "Removed",
+                },
+                {
+                    Date: "2026-11-06T18:00:00Z",
+                    Event: "Water",
+                    "Nutrients used": "Yes",
+                    "Plant ID": "P01",
+                },
+                {
+                    Date: "invalid",
+                    Event: "Water",
+                    "Nutrients used": "Yes",
+                    "Plant ID": "P01",
+                },
+                {
+                    Date: "2026-11-06",
+                    Event: "Nutrients",
+                    "Nutrients used": "Yes",
+                    "Plant ID": "P01",
+                },
+            ])
+        );
+
+        expect(marker).toMatchObject({
+            lastWater: "2026-11-04",
+            lastWaterNutrientsUsed: "No",
+        });
+    });
+
+    it("does not infer nutrients from other fields or from a missing Water event", () => {
+        expect.hasAssertions();
+
+        const marker = nutrientMarker(
+            history([
+                {
+                    Date: "2026-11-05",
+                    Event: "Water",
+                    "Nutrient product": "Synthetic fertilizer",
+                    "Plant ID": "P01",
+                },
+            ])
+        );
+
+        expect(marker.lastWaterNutrientsUsed).toBeNull();
+        expect(nutrientMarker([])).toMatchObject({
+            lastWater: null,
+            lastWaterNutrientsUsed: null,
+        });
+    });
+
+    it("keeps an appended correction at its root's equal-time position", () => {
+        expect.hasAssertions();
+
+        const events = history([
+            {
+                Date: "2026-11-05",
+                Event: " Water ",
+                "Nutrients used": "Yes",
+                "Observation ID": "water-original",
+                "Plant ID": " P01 ",
+                "Pot setup": "",
+                "Record status": "Removed",
+            },
+            {
+                Date: "2026-11-05",
+                Event: "Water",
+                "Nutrients used": "No",
+                "Observation ID": "water-later",
+                "Plant ID": "P01",
+                "Pot setup": 1,
+            },
+            {
+                "Corrects observation ID": "water-original",
+                Date: "2026-11-05",
+                Event: "Water",
+                "Nutrients used": "Yes",
+                "Observation ID": "water-correction",
+                "Plant ID": "P01",
+                "Pot setup": 1,
+            },
+        ]);
+
+        expect(nutrientMarker(events).lastWaterNutrientsUsed).toBe("No");
+        expect(nutrientMarker(events.toReversed()).lastWaterNutrientsUsed).toBe(
+            "No"
+        );
+        expect(events.map((event) => event._index)).toStrictEqual([
+            0,
+            1,
+            2,
+        ]);
+    });
+
+    it("uses physical order after equal dates and equal correction roots", () => {
+        expect.hasAssertions();
+
+        const events = history([
+            {
+                Date: "2026-11-05",
+                Event: "Water",
+                "Observation ID": "water-original",
+                "Plant ID": "P01",
+                "Record status": "Removed",
+            },
+            {
+                "Corrects observation ID": "water-original",
+                Date: "2026-11-05",
+                Event: "Water",
+                "Nutrients used": "Yes",
+                "Plant ID": "P01",
+            },
+            {
+                "Corrects observation ID": "water-original",
+                Date: "2026-11-05",
+                Event: "Water",
+                "Nutrients used": "No",
+                "Plant ID": "P01",
+            },
+        ]);
+
+        expect(nutrientMarker(events).lastWaterNutrientsUsed).toBe("No");
+        expect(nutrientMarker(events.toReversed()).lastWaterNutrientsUsed).toBe(
+            "No"
+        );
+    });
+
+    it("keeps chronological priority over correction order and follows correction chains", () => {
+        expect.hasAssertions();
+
+        const events = history([
+            {
+                Date: "2026-11-04",
+                Event: "Water",
+                "Observation ID": "water-original",
+                "Plant ID": "P01",
+                "Record status": "Removed",
+            },
+            {
+                Date: "2026-11-05",
+                Event: "Water",
+                "Nutrients used": "No",
+                "Plant ID": "P01",
+            },
+            {
+                "Corrects observation ID": "water-original",
+                Date: "2026-11-04",
+                Event: "Water",
+                "Observation ID": "water-middle",
+                "Plant ID": "P01",
+                "Record status": "Removed",
+            },
+            {
+                "Corrects observation ID": "water-middle",
+                Date: "2026-11-06",
+                Event: "Water",
+                "Nutrients used": "Yes",
+                "Plant ID": "P01",
+            },
+        ]);
+
+        expect(nutrientMarker(events)).toMatchObject({
+            lastWater: "2026-11-06",
+            lastWaterNutrientsUsed: "Yes",
+        });
+    });
+
+    it.each([
+        { "Plant ID": "P20" },
+        { Event: "Move" },
+        { "Pot setup": 2 },
+        { "Record status": "Active" },
+        { "Observation ID": "missing-parent" },
+    ])(
+        "falls back to physical order when correction identity is incompatible: %j",
+        (override) => {
+            expect.hasAssertions();
+
+            const events = history([
+                {
+                    Date: "2026-11-05",
+                    Event: "Water",
+                    "Observation ID": "water-original",
+                    "Plant ID": "P01",
+                    "Record status": "Removed",
+                    ...override,
+                },
+                {
+                    Date: "2026-11-05",
+                    Event: "Water",
+                    "Nutrients used": "No",
+                    "Plant ID": "P01",
+                },
+                {
+                    "Corrects observation ID": "water-original",
+                    Date: "2026-11-05",
+                    Event: "Water",
+                    "Nutrients used": "Yes",
+                    "Plant ID": "P01",
+                },
+            ]);
+
+            expect(nutrientMarker(events).lastWaterNutrientsUsed).toBe("Yes");
+        }
+    );
+
+    it.each([
+        {
+            isAvailable: false,
+            lastWater: "2026-11-05",
+            nutrients: "Yes",
+            text: "Unavailable",
+        },
+        {
+            isAvailable: true,
+            lastWater: null,
+            nutrients: null,
+            text: "No Water record",
+        },
+        {
+            isAvailable: true,
+            lastWater: "2026-11-05",
+            nutrients: "Yes",
+            text: "Yes — fertilizer / supplement",
+        },
+        {
+            isAvailable: true,
+            lastWater: "2026-11-05",
+            nutrients: "No",
+            text: "No — plain water",
+        },
+        {
+            isAvailable: true,
+            lastWater: "2026-11-05",
+            nutrients: null,
+            text: "Not recorded",
+        },
+    ])(
+        "labels nutrient evidence as $text",
+        ({ isAvailable, lastWater, nutrients, text }) => {
+            expect.hasAssertions();
+            expect(
+                wateringNutrientLabel(
+                    {
+                        lastWater,
+                        lastWaterNutrientsUsed:
+                            /** @type {"Yes" | "No" | null} */ (nutrients),
+                    },
+                    isAvailable
+                )
+            ).toBe(text);
+        }
+    );
+});
 
 describe("spreadsheet watering age colors", () => {
     it.each([

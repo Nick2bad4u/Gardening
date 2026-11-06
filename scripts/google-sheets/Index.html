@@ -491,7 +491,39 @@
                 }
             }
 
-            .label-choice.has-water-age {
+            .last-water-fertilizer {
+                display: inline-flex;
+                gap: 4px;
+                align-items: center;
+                inline-size: fit-content;
+                max-inline-size: 100%;
+                padding: 2px 6px;
+                font-size: 0.75rem;
+                font-weight: 700;
+                color: var(--ink);
+                background: var(--control);
+                border-radius: 6px;
+
+                & .app-icon {
+                    flex: 0 0 auto;
+                    inline-size: 1.25rem;
+                    block-size: 1.25rem;
+                }
+
+                .label-choice & {
+                    flex-basis: 100%;
+                    justify-content: center;
+                    padding: 0;
+                    background: transparent;
+
+                    & .last-water-fertilizer-text {
+                        display: none;
+                    }
+                }
+            }
+
+            .label-choice.has-water-age,
+            .label-choice.has-last-water-fertilizer {
                 flex-wrap: wrap;
 
                 & .water-age {
@@ -520,7 +552,8 @@
                     padding: 3px 1px;
                     font-size: 0.875rem;
                 }
-                & .label-choice .water-age {
+                & .label-choice .water-age,
+                & .label-choice .last-water-fertilizer {
                     flex-basis: auto;
                 }
                 & .label-choice::before,
@@ -19212,17 +19245,17 @@
                         );
                         if (!plant) return;
                         const shown = state.waterAgesVisible;
+                        const parent =
+                            element.querySelector(
+                                ".plant-choice-text, .plant-choice-summary-text"
+                            ) ||
+                            element.querySelector(".bulk-meta")
+                                ?.parentElement ||
+                            element;
                         let badge = element.querySelector(".water-age");
                         if (shown && !badge) {
                             badge = document.createElement("span");
                             badge.className = "water-age";
-                            const parent =
-                                element.querySelector(
-                                    ".plant-choice-text, .plant-choice-summary-text"
-                                ) ||
-                                element.querySelector(".bulk-meta")
-                                    ?.parentElement ||
-                                element;
                             parent.append(badge);
                         }
                         const age = wateringAge(plant, today);
@@ -19247,8 +19280,44 @@
                             }
                         } else badge?.remove();
                         element.classList.toggle("has-water-age", shown);
+                        const fertilized =
+                            Number.isInteger(age.days) &&
+                            plant.lastWateredNutrientsUsed === "Yes";
+                        const fertilizerText =
+                            "Last watering included fertilizer";
+                        let fertilizerBadge = element.querySelector(
+                            ".last-water-fertilizer"
+                        );
+                        if (fertilized && !fertilizerBadge) {
+                            fertilizerBadge = document.createElement("span");
+                            fertilizerBadge.className = "last-water-fertilizer";
+                            fertilizerBadge.setAttribute("role", "img");
+                            fertilizerBadge.setAttribute(
+                                "aria-label",
+                                fertilizerText
+                            );
+                            fertilizerBadge.title = fertilizerText;
+                            const label = document.createElement("span");
+                            label.className = "last-water-fertilizer-text";
+                            label.textContent = "Fertilizer";
+                            fertilizerBadge.append(
+                                createIcon("feeding"),
+                                label
+                            );
+                            parent.append(fertilizerBadge);
+                        } else if (!fertilized) fertilizerBadge?.remove();
+                        element.classList.toggle(
+                            "has-last-water-fertilizer",
+                            fertilized
+                        );
                         const previous = element.dataset.waterAgeSuffix || "";
-                        const suffix = shown ? `, ${age.text}` : "";
+                        const details = [
+                            shown ? age.text : "",
+                            fertilized ? fertilizerText : "",
+                        ].filter(Boolean);
+                        const suffix = details.length
+                            ? `, ${details.join(", ")}`
+                            : "";
                         ["aria-label", "title"].forEach((attribute) => {
                             let value = element.getAttribute(attribute);
                             if (!value) return;

@@ -5,12 +5,17 @@ const refreshName = "Refresh data";
 const initialWaterDate = "2026-11-01";
 const sourceStateAttribute = "data-state";
 const historyHeader =
-    "Date,Plant ID,Event,Record status,New location,Feed version,Feed status,Record count";
+    "Date,Plant ID,Event,Record status,New location,Nutrients used,Pot setup,Observation ID,Corrects observation ID,Feed version,Feed status,Record count";
 
 interface HistoryResponse {
     blocked: boolean;
     failed: boolean;
     invalid?: boolean;
+    nutrientsUsed?:
+        | ""
+        | "No"
+        | "Yes";
+    priorFertilizer?: boolean;
     waterDate: string;
 }
 
@@ -112,6 +117,11 @@ async function expectUnavailable(page: Readonly<Page>) {
         )
     );
     const detailsText = (await details(page).textContent()) ?? "";
+    const fertilizerBadges = await mapImage(page).evaluate(
+        (svg) =>
+            svg.querySelectorAll(":scope [data-pot-id] [data-fertilizer-badge]")
+                .length
+    );
     const coverage = await page
         .getByRole("region", { exact: true, name: "Days since watering" })
         .getByRole("definition")
@@ -120,12 +130,16 @@ async function expectUnavailable(page: Readonly<Page>) {
         .soft({
             counts,
             coverage: coverage.map((value) => value.trim()),
+            fertilizerBadges,
             hasPots: counts.length > 0,
             hasStaleDetails: /Days since watering: \d|Last Water: 2026-/v.test(
                 detailsText
             ),
             hasUnavailableDetails: detailsText.includes(
                 "Last Water: Unavailable"
+            ),
+            hasUnavailableNutrients: detailsText.includes(
+                "Nutrients at last Water: Unavailable"
             ),
         })
         .toStrictEqual({
@@ -135,9 +149,11 @@ async function expectUnavailable(page: Readonly<Page>) {
                 "—",
                 "—",
             ],
+            fertilizerBadges: 0,
             hasPots: true,
             hasStaleDetails: false,
             hasUnavailableDetails: true,
+            hasUnavailableNutrients: true,
         });
     await expectDownloads(page, false);
 }
@@ -172,12 +188,18 @@ async function mockHistory(
             return;
         }
         if (response.blocked) await gate.wait();
+        const records = [
+            ...(response.priorFertilizer === true
+                ? ["2026-10-01,P01,Water,Active,,Yes,1,older-water,,,,"]
+                : []),
+            `${response.waterDate},P01,Water,Active,,${response.nutrientsUsed ?? "Yes"},1,latest-water,,,,`,
+        ];
         await route.fulfill({
             body: response.failed
                 ? "Temporarily unavailable"
                 : response.invalid === true
                   ? "#REF!"
-                  : `${historyHeader}\n,,,,,1,Ready,1\n${response.waterDate},P01,Water,Active,,,,\n,,,,,1,End,1`,
+                  : `${historyHeader}\n,,,,,,,,,2,Ready,${records.length}\n${records.join("\n")}\n,,,,,,,,,2,End,${records.length}`,
             contentType: "text/csv",
             status: response.failed ? 503 : 200,
         });
@@ -189,6 +211,45 @@ test.describe(
     "watering map unavailable observations",
     { tag: "@watering-map" },
     () => {
+        for (const nutrientsUsed of ["", "No"] as const) {
+            test(`clears older fertilizer when latest Water nutrients are ${nutrientsUsed || "unknown"}`, async ({
+                page,
+            }) => {
+                const response: HistoryResponse = {
+                    blocked: false,
+                    failed: false,
+                    nutrientsUsed: "Yes",
+                    priorFertilizer: true,
+                    waterDate: initialWaterDate,
+                };
+                await mockHistory(page, response, createNetworkGate());
+                await page.goto(mapPath);
+                await expectFreshCount(page, "2", response.waterDate);
+                const badgeCount = async () =>
+                    mapImage(page).evaluate(
+                        (svg) =>
+                            svg.querySelectorAll(
+                                ':scope [data-pot-id="P01"] [data-fertilizer-badge]'
+                            ).length
+                    );
+                await expect.poll(badgeCount).toBe(1);
+                await expect
+                    .soft(details(page))
+                    .toContainText(
+                        "Nutrients at last Water: Yes — fertilizer / supplement"
+                    );
+                response.nutrientsUsed = nutrientsUsed;
+                await page.getByRole("button", { name: refreshName }).click();
+                await expectFreshCount(page, "2", response.waterDate);
+                await expect.poll(badgeCount).toBe(0);
+                await expect
+                    .soft(details(page))
+                    .toContainText(
+                        `Nutrients at last Water: ${nutrientsUsed === "No" ? "No — plain water" : "Not recorded"}`
+                    );
+            });
+        }
+
         test("explains a slow read while keeping counts hidden and clears its delayed notice after success", async ({
             page,
         }) => {
@@ -296,7 +357,7 @@ test.describe(
             await expectFreshCount(page, "2", response.waterDate);
             const saved = await page.evaluate(() =>
                 document.defaultView?.localStorage.getItem(
-                    "gardening-public-watering-map-snapshot-v1"
+                    "gardening-public-watering-map-snapshot-v2"
                 )
             );
             await page.clock.setFixedTime("2026-11-03T20:01:00Z");
@@ -310,7 +371,7 @@ test.describe(
                 .soft(
                     await page.evaluate(() =>
                         document.defaultView?.localStorage.getItem(
-                            "gardening-public-watering-map-snapshot-v1"
+                            "gardening-public-watering-map-snapshot-v2"
                         )
                     )
                 )
@@ -450,7 +511,7 @@ test.describe(
                 .soft(
                     await page.evaluate(() =>
                         document.defaultView?.localStorage.getItem(
-                            "gardening-public-watering-map-snapshot-v1"
+                            "gardening-public-watering-map-snapshot-v2"
                         )
                     )
                 )

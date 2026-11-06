@@ -104,10 +104,11 @@
   shared clock E2, calendar date F2. Reuse for age formulas; expose
   Calculated as of. Calculation time is not observation/API-read time;
   display absolute observations and verify freshness.
-- `Watering map` is a hidden, warning-protected projection outside AppSheet
-  intake. Preserve its eight-column Ready/count and End/count envelope, ledger
-  order, full History capacity, and source-error propagation. Consumers apply
-  Removed/future filtering. Its formula is not an observation or refresh clock.
+- `Watering map`: hidden, warning-protected, outside AppSheet intake. Preserve
+  v2's 12-column Ready/End/count envelope, ledger order, full capacity, and source
+  errors. Filter Removed/future rows; retain correction order. Upgrade v1 only
+  through guarded migration. Fertilizer: explicit Yes on latest Water.
+  The formula is neither an observation nor a refresh clock.
 - Logger picker watering ages follow the permanent pot across setups, using
   workbook-timezone calendar midnight independently of the 4 a.m. weighing day.
   Cached, pending, or failed bootstrap data must not expose unconfirmed ages.

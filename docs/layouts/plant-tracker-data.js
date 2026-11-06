@@ -1049,6 +1049,51 @@ export function getSavedHistoryData() {
         : null;
 }
 
+/**
+ * Keep an appended correction in its original observation's order when dates
+ * tie. Removed originals remain in the feed as lineage evidence. Broken,
+ * duplicated, or cyclic identities retain their physical feed order.
+ *
+ * @param {readonly HistoryEvent[]} events
+ *
+ * @returns {HistoryEvent[]}
+ */
+export function historyCorrectionOrder(events) {
+    /** @type {Map<string, HistoryEvent | null>} */
+    const byId = new Map();
+    for (const event of events) {
+        const id = String(event["Observation ID"] ?? "").trim();
+        if (id) byId.set(id, byId.has(id) ? null : event);
+    }
+    return events.map((event) => {
+        let original = event;
+        const visited = new Set([event]);
+        for (;;) {
+            const id = String(original["Corrects observation ID"] ?? "").trim();
+            const { _index: originalIndex } = original;
+            if (!id)
+                return original === event
+                    ? event
+                    : { ...event, _index: originalIndex };
+            const previous = byId.get(id);
+            if (
+                !previous ||
+                isActiveHistoryEvent(previous) ||
+                visited.has(previous) ||
+                ["Plant ID", "Event"].some(
+                    (key) =>
+                        String(previous[key] ?? "").trim() !==
+                        String(event[key] ?? "").trim()
+                ) ||
+                historyPotSetup(previous) !== historyPotSetup(event)
+            )
+                return event;
+            visited.add(previous);
+            original = previous;
+        }
+    });
+}
+
 /** @returns {Promise<CollectionData>} */
 export async function loadCollectionData() {
     const snapshot = await loadCollectionSnapshot();
@@ -1125,51 +1170,10 @@ function buildHistoryData(csv) {
     }));
 }
 
-/**
- * Keep an appended correction in its original observation's order when dates
- * tie. Removed originals remain in the feed as lineage evidence. Broken,
- * duplicated, or cyclic identities retain their physical feed order.
- *
- * @param {HistoryEvent[]} events
- *
- * @returns {HistoryEvent[]}
- */
-function historyCorrectionOrder(events) {
-    /** @type {Map<string, HistoryEvent | null>} */
-    const byId = new Map();
-    for (const event of events) {
-        const id = String(event["Observation ID"] ?? "").trim();
-        if (id) byId.set(id, byId.has(id) ? null : event);
-    }
-    return events.map((event) => {
-        let original = event;
-        const visited = new Set([event]);
-        for (;;) {
-            const id = String(original["Corrects observation ID"] ?? "").trim();
-            const { _index: originalIndex } = original;
-            if (!id)
-                return original === event
-                    ? event
-                    : { ...event, _index: originalIndex };
-            const previous = byId.get(id);
-            if (
-                !previous ||
-                isActiveHistoryEvent(previous) ||
-                visited.has(previous) ||
-                [
-                    "Plant ID",
-                    "Event",
-                    "Pot setup",
-                ].some(
-                    (key) =>
-                        String(previous[key] ?? "") !== String(event[key] ?? "")
-                )
-            )
-                return event;
-            visited.add(previous);
-            original = previous;
-        }
-    });
+/** @param {HistoryEvent} event */
+function historyPotSetup(event) {
+    const value = Number(event["Pot setup"]);
+    return Number.isSafeInteger(value) && value > 0 ? value : 1;
 }
 
 /** @param {unknown} value @returns {value is string} */

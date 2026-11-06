@@ -236,7 +236,7 @@ export function appsScriptApi(context) {
         webHistoryDetailValue_: null,
         webHistoryTimestamp_: null,
         webPlantWeightReadModel_: null,
-        webWateringDaysFromRows_: null,
+        webWateringReadModelsFromRows_: null,
         webWeightReadModelsFromRows_: null,
         workbookPlantRecords_: null,
         writeStoredObservationRows_: null,

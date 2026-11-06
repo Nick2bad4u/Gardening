@@ -194,6 +194,14 @@ type GardenWebHistoryDetails = Record<
     | string
 >;
 
+interface GardenWebWateringReadModel {
+    dayKey: string;
+    nutrientsUsed:
+        | ""
+        | "No"
+        | "Yes";
+}
+
 interface GardenWebWeightRecord
     extends GardenHistoryOrder, GardenHistorySaveIdentity {
     active: boolean;

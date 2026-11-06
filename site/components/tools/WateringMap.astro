@@ -165,6 +165,15 @@ const artwork = await getWateringArtwork();
                 <strong>—</strong> Data unavailable
             </span>
         </p>
+        <p class="watering-map-fertilizer-key">
+            <span class="watering-map-fertilizer-symbol" aria-hidden="true">
+                <img src={siteUrl("assets/ui-icons/feeding.svg")} alt="" width="24" height="24" />F
+            </span>
+            <span>
+                Fertilizer / supplement recorded at last Water. No badge can mean plain water or not
+                recorded; check the pot details.
+            </span>
+        </p>
         <p class="watering-map-legend-caution">
             Color describes time since a recorded watering. Check the pot and plant before watering.
         </p>
@@ -187,9 +196,10 @@ const artwork = await getWateringArtwork();
         <summary>Map context and data freshness</summary>
         <div>
             <p>
-                Watering counts appear after a successful live read. While data is loading, after a
-                failed refresh, or when it expires, the map shows dashes and downloads are
-                unavailable. Live data refreshes every five minutes while this page is visible.
+                Watering counts and nutrient indicators appear after a successful live read. While
+                data is loading, after a failed refresh, or when it expires, the map shows dashes,
+                hides nutrient indicators, and disables downloads. Live data refreshes every five
+                minutes while this page is visible.
             </p>
             <p>
                 The layout follows the photos supplied October 22, with front and rear tables shown
