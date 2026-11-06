@@ -11,6 +11,7 @@ import {
 } from "./website-frame.js";
 
 const EVENT_TYPE_LABEL = "Event type";
+const PAGE_STATUS_SELECTOR = "#page-status";
 
 const meta = {
     afterEach: releaseWebsiteFocus,
@@ -38,13 +39,14 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const MeasurementsAndFilters: Story = {
+    args: { scenario: "plain-water" },
     play: async ({ canvasElement }) => {
         const { canvas, document, userEvent } =
             await websiteCanvas(canvasElement);
         await waitFor(() =>
-            expect(document.querySelector("#page-status")).toHaveTextContent(
-                "Showing 4"
-            )
+            expect(
+                document.querySelector(PAGE_STATUS_SELECTOR)
+            ).toHaveTextContent("Showing 4")
         );
         await expect(
             document.querySelector("#latest-weight")
@@ -79,6 +81,9 @@ export const MeasurementsAndFilters: Story = {
         await expect(document.querySelector("tbody")).toHaveTextContent(
             "Plain water"
         );
+        await expect(document.querySelector("tbody")).not.toHaveTextContent(
+            "Nutrients:"
+        );
         await userEvent.type(
             canvas.getByRole("searchbox", { name: "Search this history" }),
             "no such note"
@@ -97,14 +102,40 @@ export const MeasurementsAndFilters: Story = {
     },
 };
 
+export const NutrientWatering: Story = {
+    play: async ({ canvasElement }) => {
+        const { canvas, document, userEvent } =
+            await websiteCanvas(canvasElement);
+        await waitFor(() =>
+            expect(
+                document.querySelector(PAGE_STATUS_SELECTOR)
+            ).toHaveTextContent("Showing 4")
+        );
+        await userEvent.selectOptions(
+            canvas.getByRole("combobox", { name: EVENT_TYPE_LABEL }),
+            "Water"
+        );
+        await expect(document.querySelectorAll("tbody tr")).toHaveLength(1);
+        await expect(document.querySelector("tbody")).toHaveTextContent(
+            "Nutrients: product not logged"
+        );
+        await expect(document.querySelector("tbody")).toHaveTextContent(
+            "Synthetic nutrient watering"
+        );
+        await expect(document.querySelector("tbody")).not.toHaveTextContent(
+            "Plain water"
+        );
+    },
+};
+
 export const MobileDark: Story = {
     args: { theme: "dark", width: 390 },
     play: async ({ canvasElement }) => {
         const { document } = await websiteCanvas(canvasElement);
         await waitFor(() =>
-            expect(document.querySelector("#page-status")).toHaveTextContent(
-                "Showing 4"
-            )
+            expect(
+                document.querySelector(PAGE_STATUS_SELECTOR)
+            ).toHaveTextContent("Showing 4")
         );
         await expect(document.documentElement).toHaveAttribute(
             "data-theme",
@@ -137,9 +168,9 @@ export const UnknownPlant: Story = {
     play: async ({ canvasElement }) => {
         const { document } = await websiteCanvas(canvasElement);
         await waitFor(() =>
-            expect(document.querySelector("#page-status")).toHaveTextContent(
-                "No collection label matches"
-            )
+            expect(
+                document.querySelector(PAGE_STATUS_SELECTOR)
+            ).toHaveTextContent("No collection label matches")
         );
         await expect(document.querySelector("#plant-label")).toHaveTextContent(
             "Plant not found"
@@ -154,7 +185,7 @@ export const Unavailable: Story = {
         await waitFor(
             () =>
                 expect(
-                    document.querySelector("#page-status")
+                    document.querySelector(PAGE_STATUS_SELECTOR)
                 ).toHaveTextContent("503"),
             { timeout: 5000 }
         );

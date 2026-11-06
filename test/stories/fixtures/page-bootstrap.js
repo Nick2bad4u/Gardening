@@ -186,8 +186,11 @@
         historyRecord({
             Date: "2026-09-02",
             Event: "Water",
-            Notes: "Synthetic nutrient watering",
-            "Nutrients used": "Yes",
+            Notes:
+                scenario === "plain-water"
+                    ? "Plain water"
+                    : "Synthetic nutrient watering",
+            "Nutrients used": scenario === "plain-water" ? "No" : "Yes",
             "Observation ID": "storybook-water",
             "Plant condition": "Healthy",
             "Plant ID": "P01",
