@@ -1,10 +1,10 @@
 # Google Sheets observation logger
 
-Production logger **5.42.0 / immutable version 129** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.42.1 / immutable version 130** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Production **5.42.0 / immutable version 129** and **AppSheet 1.100141** retain portrait
+Production **5.42.1 / immutable version 130** and **AppSheet 1.100141** retain portrait
 revision **1010123212eade00**, verified on November 1. The remaining cactus and
 front-grid portraits are described below. P41's appended optional weight field
 remains unchanged; the earlier dated receipts retain their verified versions.
@@ -40,7 +40,7 @@ under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-
 
 ## Latest-watering fertilizer indicator
 
-Production **5.42.0** adds the existing fertilizer-bottle icon
+The **5.42.0** release introduced the existing fertilizer-bottle icon
 beside pots whose latest active, valid, nonfuture Water explicitly records
 **Nutrients used: Yes**. The logger shows it in Labels, Table, List, Bulk care,
 and the selected-plant summary, independently of **Days since watered**. The
@@ -94,6 +94,51 @@ analytics; the only structural difference was the helper's four appended
 columns. Stale model calculations temporarily omitted chart-series metadata
 until that refresh. The temporary test sheet was removed, the canonical feed
 restored, and the scratch script restored exactly.
+
+## November 6 logger picker alignment
+
+Production **5.42.1 / immutable version 130** was promoted on November 6 at
+**21:28:09 EST**, preserving the existing logger URL, access, execution identity,
+and manifest. Head and immutable source matched **583e04c**. A fresh authenticated
+session confirmed **Connected · Logger 5.42.1**.
+
+Labels and Table tiles now stack their portrait, pot label, and watering age
+from the top. Fertilizer, Saved today, and Queued indicators follow below, so
+optional badges cannot shift neighboring labels or day counts. Explicit
+fertilizer ordering also preserves alignment when watering ages are enabled
+after the fertilizer badge has already rendered. Client markup and JavaScript
+are unchanged; the only server change is the patch-version string.
+
+A verified owner-only
+[native backup](https://docs.google.com/spreadsheets/d/154CtdqV6aiDvZdK_IPNOh0MKmkrFAb_bvVhM341QdQ0/edit?usp=drivesdk)
+preceded the source update. Before/after reads matched all **2,236 observation
+IDs**, **1,819 request groups**, and **5,548 captured source cells**, including
+History and staging headers, recent History rows, IDs, notes, validations, and
+formula anchors. Formula-error and structural integrity checks passed. This
+patch made no workbook, schema, AppSheet, or trigger changes and submitted no
+synthetic observations.
+
+Four focused Chromium cases passed **32 rendered-alignment states**: single/bulk,
+Labels/Table, watering ages off/on, 390/1280 px, and dark/light themes. They
+measure label and day-badge positions within each visual row, cover mixed
+fertilizer/saved/queued states, and check horizontal overflow. The focused client
+suite passed **425 tests**. The successful
+[main workflow](https://github.com/Nick2bad4u/Gardening/actions/runs/42327918660)
+passed **302 Chromium cases**, **63 Storybook cases**, and **224-page** publication
+checks. Hosted logger validation passed **2,042 tests** with its coverage gates;
+type, lint, formatting, SonarCloud, Codecov, and hosted secret checks passed.
+
+A fresh production session also passed all **32 alignment states** across its
+39 pots, including the current fertilizer and Saved today states. Label and
+watering-age tops aligned within one pixel in each visual row, with no
+horizontal document overflow. Phone screenshots in both themes confirmed the
+indicators remained below the identifying numbers. Sixteen additional live List
+states retained all 39 accessible plant choices, the expected fertilizer
+indicators, and no overflow; keyboard operation and console checks passed.
+Exactly one existing five-minute queue trigger remained installed. Its
+**21:29:34 EST** post-promotion run completed in **8.019 seconds**. Version 130
+`doGet` and bootstrap executions also completed successfully; inspection
+preferences were restored and the existing user session was left untouched.
 
 ## November 6 fertilizer-indicator rollout
 
