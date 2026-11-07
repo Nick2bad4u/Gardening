@@ -35,7 +35,8 @@ type ObservationScenario =
     | "care-events"
     | "houseplants"
     | "humidity"
-    | "light";
+    | "light"
+    | "plain-water";
 
 type SnapshotScenario =
     | "dated-error"
@@ -64,6 +65,7 @@ export const websiteArgTypes = {
             "humidity",
             "houseplants",
             "light",
+            "plain-water",
             "loading",
             "empty",
             "error",
@@ -74,7 +76,7 @@ export const websiteArgTypes = {
         table: {
             type: {
                 summary:
-                    "ready | refresh-failure | humidity | houseplants | light | care-events | loading | empty | error | retry | auto-retry | tracker-unavailable | dated-error | dated-loading | invalid-snapshot | invalid-feed",
+                    "ready | refresh-failure | humidity | houseplants | light | plain-water | care-events | loading | empty | error | retry | auto-retry | tracker-unavailable | dated-error | dated-loading | invalid-snapshot | invalid-feed",
             },
         },
     },

@@ -1,6 +1,10 @@
 import { sourceReadLabel } from "../../../docs/layouts/plant-sheet-cache.js";
 import { getRequiredElement } from "../../../docs/layouts/plant-tracker-data.js";
-import { buildWateringMap, wateringAgeColor } from "./watering-map-data.js";
+import {
+    buildWateringMap,
+    wateringAgeColor,
+    wateringNutrientLabel,
+} from "./watering-map-data.js";
 import {
     getSavedWateringMapData,
     isWateringFeedError,
@@ -428,6 +432,13 @@ function render() {
             age.className = "watering-map-age";
             if (isAvailable && marker.days !== null)
                 age.style.color = wateringAgeColor(marker.days);
+            const nutrients = detailText(
+                `Nutrients at last Water: ${wateringNutrientLabel(marker, isAvailable)}`
+            );
+            nutrients.className = "watering-map-nutrients";
+            if (isAvailable && marker.lastWaterNutrientsUsed !== null)
+                nutrients.dataset["nutrientsUsed"] =
+                    marker.lastWaterNutrientsUsed;
             item.append(
                 detailText(
                     `${marker.label} · ${marker.id} · ${marker.name}`,
@@ -437,6 +448,7 @@ function render() {
                 detailText(
                     `Last Water: ${isAvailable ? (marker.lastWater ?? "Not recorded") : "Unavailable"}`
                 ),
+                nutrients,
                 detailText(`Recorded position: ${marker.position}`),
                 detailText(
                     `Latest logged location: ${isAvailable ? marker.currentLocation || "Not recorded" : "Unavailable"}`

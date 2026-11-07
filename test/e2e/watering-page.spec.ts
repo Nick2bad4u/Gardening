@@ -25,15 +25,15 @@ const prepare = async (page: Readonly<Page>) => {
     );
     const rows = ages.map(
         ({ days, id }) =>
-            `${Temporal.PlainDate.from("2026-11-05").subtract({ days }).toString()},${id},Water,Active,,,,`
+            `${Temporal.PlainDate.from("2026-11-05").subtract({ days }).toString()},${id},Water,Active,,${id === "P01" ? "Yes" : id === "P02" ? "No" : ""},1,water-${id},,,,`
     );
     await page.route("https://docs.google.com/**", (route) =>
         route.fulfill({
             body: [
-                "Date,Plant ID,Event,Record status,New location,Feed version,Feed status,Record count",
-                `,,,,,1,Ready,${rows.length}`,
+                "Date,Plant ID,Event,Record status,New location,Nutrients used,Pot setup,Observation ID,Corrects observation ID,Feed version,Feed status,Record count",
+                `,,,,,,,,,2,Ready,${rows.length}`,
                 ...rows,
-                `,,,,,1,End,${rows.length}`,
+                `,,,,,,,,,2,End,${rows.length}`,
             ].join("\n"),
             contentType: "text/csv",
         })
@@ -51,6 +51,25 @@ const waitForLive = async (page: Readonly<Page>) => {
 };
 
 const inspectMap = async (page: Readonly<Page>) => {
+    const nutrientDetails =
+        (await page
+            .getByRole("list", {
+                includeHidden: true,
+                name: "Watering details by pot",
+            })
+            .textContent()) ?? "";
+    expect
+        .soft(
+            [
+                "Yes — fertilizer / supplement",
+                "No — plain water",
+                "Not recorded",
+                "No Water record",
+            ].every((value) =>
+                nutrientDetails.includes(`Nutrients at last Water: ${value}`)
+            )
+        )
+        .toBe(true);
     const actual = await page
         .getByRole("img", { name: imageName })
         .evaluate((svg) => {
@@ -101,6 +120,21 @@ const inspectMap = async (page: Readonly<Page>) => {
                         id: marker.dataset["potId"],
                     })),
                 count: markers.length,
+                fertilizerLegend: svg.querySelectorAll(
+                    "[data-fertilizer-legend]"
+                ).length,
+                fertilizerPots: markers
+                    .filter(
+                        (marker) =>
+                            marker.querySelector("[data-fertilizer-badge]") !==
+                            null
+                    )
+                    .map((marker) => marker.dataset["potId"]),
+                fertilizerTitle: svg
+                    .querySelector('[data-pot-id="P01"]')
+                    ?.textContent.includes(
+                        "Nutrients at last Water: Yes — fertilizer / supplement"
+                    ),
                 legendFits:
                     legend !== undefined &&
                     legend.bottom < svg.getBoundingClientRect().bottom &&
@@ -139,6 +173,9 @@ const inspectMap = async (page: Readonly<Page>) => {
         .toStrictEqual({
             colors: ages,
             count: 39,
+            fertilizerLegend: 1,
+            fertilizerPots: ["P01"],
+            fertilizerTitle: true,
             legendFits: true,
             overflow: [],
             shelf: [
@@ -257,6 +294,17 @@ test.describe(
                     externalAssets: document.querySelectorAll(
                         "image, script, foreignObject, link, [src]"
                     ).length,
+                    fertilizerLegend: document.querySelectorAll(
+                        "[data-fertilizer-legend]"
+                    ).length,
+                    fertilizerPots: markers
+                        .filter(
+                            (marker) =>
+                                marker.querySelector(
+                                    "[data-fertilizer-badge]"
+                                ) !== null
+                        )
+                        .map((marker) => marker.dataset["potId"]),
                     gradient:
                         document.querySelector("#wm-age-gradient") !== null,
                     shelf: markers
@@ -278,6 +326,8 @@ test.describe(
                     colors: ages,
                     count: 39,
                     externalAssets: 0,
+                    fertilizerLegend: 1,
+                    fertilizerPots: ["P01"],
                     gradient: true,
                     shelf: [
                         "P39",

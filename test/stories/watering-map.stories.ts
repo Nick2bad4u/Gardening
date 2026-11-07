@@ -108,6 +108,26 @@ async function expectDarkMap(document: Readonly<Document>): Promise<void> {
     }
 }
 
+async function expectFertilizerMap(
+    document: Readonly<Document>
+): Promise<void> {
+    const image = document.querySelector(imageSelector);
+    await expect(
+        image?.querySelectorAll(":scope [data-pot-id] [data-fertilizer-badge]")
+    ).toHaveLength(1);
+    await expect(image?.querySelector('[data-pot-id="P01"]')).toHaveTextContent(
+        "Nutrients at last Water: Yes — fertilizer / supplement"
+    );
+    await expect(
+        image?.querySelector("[data-fertilizer-legend]")
+    ).toBeVisible();
+    await expect(
+        document.querySelector("#watering-map-pot-list")
+    ).toHaveTextContent(
+        "Nutrients at last Water: Yes — fertilizer / supplement"
+    );
+}
+
 async function expectMapColorsAndSpacing(
     document: Readonly<Document>
 ): Promise<void> {
@@ -218,6 +238,14 @@ async function expectUnavailableMap(
     document: Readonly<Document>
 ): Promise<void> {
     const preview = document.querySelector(`${imageSelector} > svg`);
+    await expect(
+        preview?.querySelectorAll(
+            ":scope [data-pot-id] [data-fertilizer-badge]"
+        )
+    ).toHaveLength(0);
+    await expect(
+        document.querySelector("#watering-map-pot-list")
+    ).toHaveTextContent("Nutrients at last Water: Unavailable");
     const items = [...document.querySelectorAll("#watering-map-pot-list > li")];
     await expect(preview).toBeVisible();
     await expect(items.length).toBeGreaterThan(0);
@@ -381,6 +409,7 @@ export const LoadedAndExportable: Story = {
             "Source read"
         );
         await expect(document.querySelector(imageSelector)).toBeVisible();
+        await expectFertilizerMap(document);
         await userEvent.click(canvas.getByText(detailsLabel));
         const list = canvas.getByRole("list", {
             name: listName,
@@ -460,6 +489,7 @@ export const MobileDark: Story = {
             "dark"
         );
         await expectMapCoverage(document);
+        await expectFertilizerMap(document);
         await expectDarkMap(document);
         const valueTops = Array.from(
             document.querySelectorAll(".watering-map-stats dd"),
@@ -653,6 +683,7 @@ export const FailedRefreshHidesPreviousCounts: Story = {
             document.querySelector('[data-pot-id="P01"] text.count')
                 ?.textContent
         );
+        await expectFertilizerMap(document);
         await expect(firstCount).toBeGreaterThan(2);
         await userEvent.click(canvas.getByText(detailsLabel));
         await expect(
@@ -729,6 +760,14 @@ export const NoWateringHistory: Story = {
         });
         await expect(list).toHaveTextContent("Days since watering: Unknown");
         await expect(list).not.toHaveTextContent("Last Water: 2026-");
+        await expect(list).toHaveTextContent(
+            "Nutrients at last Water: No Water record"
+        );
+        await expect(
+            document.querySelectorAll(
+                ":scope [data-pot-id] [data-fertilizer-badge]"
+            )
+        ).toHaveLength(0);
         const coverage = await expectMapCoverage(document);
         await expect(coverage.recorded).toBe(0);
         await expect(coverage.unknown).toBe(coverage.total);

@@ -98,7 +98,261 @@ async function loaderFixture() {
     return { fetch, loader, response };
 }
 
+/** @param {string[][]} [records] */
+function versionTwoRows(
+    records = [
+        [
+            "2026-11-01",
+            "P01",
+            "Water",
+            "Active",
+            "",
+            "Yes",
+            "1",
+            "water-1",
+            "",
+        ],
+    ]
+) {
+    const count = String(records.length);
+    const blankFields = Array.from({ length: 9 }, () => "");
+    return [
+        [
+            ...headers.slice(0, 5),
+            "Nutrients used",
+            "Pot setup",
+            "Observation ID",
+            "Corrects observation ID",
+            ...headers.slice(5),
+        ],
+        [
+            ...blankFields,
+            "2",
+            "Ready",
+            count,
+        ],
+        ...records.map((record) => [
+            ...record,
+            "",
+            "",
+            "",
+        ]),
+        [
+            ...blankFields,
+            "2",
+            "End",
+            count,
+        ],
+    ];
+}
+
 describe("compact watering map projection", () => {
+    it("retains version 2 nutrient evidence and correction lineage in physical ledger order", () => {
+        expect.hasAssertions();
+
+        const records = [
+            [
+                "2026-11-01",
+                "P01",
+                "Water",
+                "Removed",
+                "",
+                "Yes",
+                "1",
+                "original",
+                "",
+            ],
+            [
+                "2026-11-01",
+                "P01",
+                "Water",
+                "Active",
+                "",
+                "No",
+                "2",
+                "later",
+                "",
+            ],
+            [
+                "2026-11-01",
+                "P01",
+                "Water",
+                "Active",
+                "",
+                "",
+                "1",
+                "replacement",
+                "original",
+            ],
+            [
+                "2026-11-02",
+                "P01",
+                "Move",
+                "Active",
+                'Shelf, "room" side',
+                "",
+                "2",
+                "move",
+                "",
+            ],
+            [
+                "2026-11-03",
+                "P02",
+                "Water",
+                "Active",
+                "",
+                "not recorded",
+                "1",
+                "unknown",
+                "",
+            ],
+        ];
+        const feed = decodeWateringFeed(csv(versionTwoRows(records)));
+
+        expect(feed.version).toBe(2);
+        expect(feed.history.map((event) => event._index)).toStrictEqual([
+            0,
+            1,
+            2,
+            3,
+            4,
+        ]);
+        expect(
+            feed.history.map((event) => event["Nutrients used"])
+        ).toStrictEqual([
+            "Yes",
+            "No",
+            "",
+            "",
+            "not recorded",
+        ]);
+        expect(feed.history[0]).toMatchObject({
+            "Observation ID": "original",
+            "Record status": "Removed",
+        });
+        expect(feed.history[2]).toMatchObject({
+            "Corrects observation ID": "original",
+            "Observation ID": "replacement",
+            "Pot setup": "1",
+        });
+        expect(feed.history[3]?.["New location"]).toBe('Shelf, "room" side');
+    });
+
+    it("accepts complete empty version 2 and retains version 1 without inventing nutrient evidence", () => {
+        expect.hasAssertions();
+
+        const empty = csv(versionTwoRows([]));
+
+        expect(decodeWateringFeed(empty)).toStrictEqual({
+            history: [],
+            version: 2,
+        });
+
+        const legacy = decodeWateringFeed(csv(feedRows()));
+
+        expect(legacy.version).toBe(1);
+        expect(legacy.history[0]).not.toHaveProperty("Nutrients used");
+        expect(legacy.history[0]).not.toHaveProperty("Observation ID");
+    });
+
+    it.each([
+        [
+            "incorrect version",
+            1,
+            9,
+            "3",
+        ],
+        [
+            "mixed footer version",
+            3,
+            9,
+            "1",
+        ],
+        [
+            "missing record count",
+            1,
+            11,
+            "",
+        ],
+        [
+            "mismatched record count",
+            1,
+            11,
+            "2",
+        ],
+        [
+            "mismatched footer count",
+            3,
+            11,
+            "2",
+        ],
+        [
+            "source data in boundary",
+            1,
+            5,
+            "Yes",
+        ],
+        [
+            "metadata inside a record",
+            2,
+            9,
+            "2",
+        ],
+        [
+            "incorrect nutrient header",
+            0,
+            5,
+            "Fertilizer",
+        ],
+        [
+            "incorrect correction header",
+            0,
+            8,
+            "Corrects",
+        ],
+        [
+            "error status",
+            1,
+            10,
+            "#REF!",
+        ],
+    ])(
+        "rejects version 2 with %s",
+        (_description, rowIndex, columnIndex, replacement) => {
+            expect.hasAssertions();
+
+            const malformed = versionTwoRows().map((row, index) =>
+                index === rowIndex
+                    ? row.map((value, column) =>
+                          column === columnIndex ? replacement : value
+                      )
+                    : row
+            );
+
+            expect(() => decodeWateringFeed(csv(malformed))).toThrow(
+                /watering map feed/v
+            );
+        }
+    );
+
+    it("rejects truncated version 2 records and footer fields even when the row count still matches", () => {
+        expect.hasAssertions();
+
+        for (const rowIndex of [2, 3]) {
+            const truncated = versionTwoRows().map((row, index) =>
+                index === rowIndex ? row.slice(0, -1) : row
+            );
+
+            expect(() => decodeWateringFeed(csv(truncated))).toThrow(
+                /watering map feed/v
+            );
+        }
+
+        expect(() =>
+            decodeWateringFeed(csv(versionTwoRows()).slice(0, -1))
+        ).toThrow(/watering map feed/v);
+    });
+
     it("retains canonical ordering and removed/future observations for the existing map semantics", () => {
         expect.hasAssertions();
 
@@ -453,5 +707,27 @@ describe("compact watering map projection", () => {
         expect((await loader.loadWateringMapSnapshot()).history).toStrictEqual(
             []
         );
+    });
+
+    it("upgrades a live version 1 read to version 2 without changing fertilizer evidence or accepting a partial refresh", async () => {
+        expect.hasAssertions();
+
+        const { loader, response } = await loaderFixture();
+        const legacy = await loader.loadWateringMapSnapshot();
+
+        expect(legacy.history[0]).not.toHaveProperty("Nutrients used");
+
+        response.csv = csv(versionTwoRows());
+        const current = await loader.loadWateringMapSnapshot();
+
+        expect(current.history[0]?.["Nutrients used"]).toBe("Yes");
+        expect(current.readAt).toBeGreaterThanOrEqual(legacy.readAt);
+
+        response.csv = csv(versionTwoRows().slice(0, -1));
+
+        await expect(loader.loadWateringMapSnapshot()).rejects.toThrow(
+            "incomplete or invalid"
+        );
+        expect(loader.getSavedWateringMapData()).toStrictEqual(current);
     });
 });

@@ -17,7 +17,7 @@
    dryDownModelFormula_, installDailyCareDashboard, GARDEN_CYCLE_COMPARISON, GARDEN_ENVIRONMENT_READINGS, GARDEN_RECORDED_LOCATIONS */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.41.1",
+    version: "5.42.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -1102,7 +1102,7 @@ function webAppBootstrap_(diagnostics) {
     const {
         potSizeByPlant,
         locations,
-        wateringDays,
+        wateringReads,
         activitySummaries,
         weightReads,
         environmentReads,
@@ -1127,7 +1127,7 @@ function webAppBootstrap_(diagnostics) {
                 .slice(1)
                 .map((row) => [cleanText_(row[1]), cleanText_(row[3])])
         );
-        const wateringDays = webWateringDaysFromRows_(
+        const wateringReads = webWateringReadModelsFromRows_(
             historyRows,
             refreshedAt,
             timeZone
@@ -1155,7 +1155,7 @@ function webAppBootstrap_(diagnostics) {
         return {
             potSizeByPlant,
             locations,
-            wateringDays,
+            wateringReads,
             activitySummaries,
             weightReads,
             environmentReads,
@@ -1187,6 +1187,7 @@ function webAppBootstrap_(diagnostics) {
                         null
                     );
                 const dryOrLowestWeight = weightRead.weightSeries.previousDry;
+                const wateringRead = wateringReads.get(cleanText_(plantId));
                 return {
                     id: cleanText_(plantId),
                     name: cleanText_(commonName),
@@ -1211,8 +1212,8 @@ function webAppBootstrap_(diagnostics) {
                         daysSinceWater === "" || daysSinceWater === null
                             ? ""
                             : Number(daysSinceWater),
-                    lastWateredDayKey:
-                        wateringDays.get(cleanText_(plantId)) || "",
+                    lastWateredDayKey: wateringRead?.dayKey || "",
+                    lastWateredNutrientsUsed: wateringRead?.nutrientsUsed || "",
                     latestWeight: weightRead.latestWeight,
                     latestWeightAt: weightRead.latestWeightAt,
                     ...environmentReads.get(cleanText_(plantId)),
@@ -11056,12 +11057,12 @@ function ensureHistoryAnchors_(spreadsheet) {
  */
 function wateringMapFeedFormula_() {
     const end = GARDEN_LOGGER.historyCapacityRows;
-    const source = `{History!A2:C${end},History!AJ2:AJ${end},History!AX2:AX${end}}`;
+    const source = `{History!A2:C${end},History!AJ2:AJ${end},History!AX2:AX${end},History!Q2:Q${end},History!K2:K${end},History!AA2:AA${end},History!AE2:AE${end}}`;
     const headers =
-        '{"Date","Plant ID","Event","Record status","New location","Feed version","Feed status","Record count"}';
-    const ready = '{"","","","","",1,"Ready",recordCount}';
-    const footer = '{"","","","","",1,"End",recordCount}';
-    return `=LET(wanted,ARRAYFORMULA(REGEXMATCH(LOWER(TRIM(History!C2:C${end})),"^(water|move)$")),recordCount,SUM(ARRAYFORMULA(N(wanted))),records,IF(recordCount>0,FILTER(${source},wanted),{"","","","",""}),invalid,SUM(ARRAYFORMULA(N(ISERROR(records)))),IF(invalid>0,NA(),IF(recordCount>0,{${headers};${ready};records,ARRAYFORMULA(IF(SEQUENCE(MAX(1,recordCount),3)>0,"",""));${footer}},{${headers};${ready};${footer}})))`;
+        '{"Date","Plant ID","Event","Record status","New location","Nutrients used","Pot setup","Observation ID","Corrects observation ID","Feed version","Feed status","Record count"}';
+    const ready = '{"","","","","","","","","",2,"Ready",recordCount}';
+    const footer = '{"","","","","","","","","",2,"End",recordCount}';
+    return `=LET(wanted,ARRAYFORMULA(REGEXMATCH(LOWER(TRIM(History!C2:C${end})),"^(water|move)$")),recordCount,SUM(ARRAYFORMULA(N(wanted))),records,IF(recordCount>0,FILTER(${source},wanted),{"","","","","","","","",""}),invalid,SUM(ARRAYFORMULA(N(ISERROR(records)))),IF(invalid>0,NA(),IF(recordCount>0,{${headers};${ready};records,ARRAYFORMULA(IF(SEQUENCE(MAX(1,recordCount),3)>0,"",""));${footer}},{${headers};${ready};${footer}})))`;
 }
 
 /**
@@ -11077,6 +11078,10 @@ function ensureWateringMapFeed_(spreadsheet) {
         [0, "Date"],
         [1, "Plant ID"],
         [2, "Event"],
+        [10, "Pot setup"],
+        [16, "Nutrients used"],
+        [26, "Observation ID"],
+        [30, "Corrects observation ID"],
         [35, "Record status"],
         [49, "New location"],
     ]);
@@ -11101,7 +11106,7 @@ function ensureWateringMapFeed_(spreadsheet) {
         );
     if (
         existing &&
-        (existing.getMaxColumns() !== 8 || existing.getMaxRows() > rowCount)
+        (existing.getMaxColumns() !== 12 || existing.getMaxRows() > rowCount)
     )
         throw new Error("Watering map has unexpected grid dimensions.");
     const sheets = spreadsheet.getSheets();
@@ -11111,13 +11116,13 @@ function ensureWateringMapFeed_(spreadsheet) {
         (sum, sheet) => sum + sheet.getMaxRows() * sheet.getMaxColumns(),
         0
     );
-    if (allocated + (rowCount - (existing?.getMaxRows() ?? 0)) * 8 > 20000000)
+    if (allocated + (rowCount - (existing?.getMaxRows() ?? 0)) * 12 > 20000000)
         throw new Error("Watering map would exceed the workbook cell limit.");
     const properties = {
         sheetId,
         title,
         hidden: true,
-        gridProperties: { rowCount, columnCount: 8 },
+        gridProperties: { rowCount, columnCount: 12 },
     };
     /** @type {GardenCorrectionSheetsRequest[]} */
     const requests = existing
@@ -12351,18 +12356,20 @@ function webHistoryTimestamp_(value) {
 }
 
 /**
- * Watering age follows the permanent pot across setups and uses calendar
- * midnight in the workbook timezone, independently of the 4 a.m. weighing day.
+ * Watering age and nutrient use describe the same latest Water across setups.
+ * Calendar midnight is independent of the 4 a.m. weighing day; corrections
+ * retain their original equal-time position in the observation ledger.
  * @param {GardenHistoryRow[]} historyRows
  * @param {Date} now
  * @param {string} timeZone
- * @returns {Map<string, string>}
+ * @returns {Map<string, GardenWebWateringReadModel>}
  */
-function webWateringDaysFromRows_(historyRows, now, timeZone) {
-    /** @type {Map<string, number>} */
+function webWateringReadModelsFromRows_(historyRows, now, timeZone) {
+    /** @type {Map<string, GardenHistoryOrder & { nutrientsUsed: "" | "No" | "Yes" }>} */
     const latest = new Map();
     const nowMs = now.getTime();
-    historyRows.forEach((row) => {
+    const correctionOrder = historyCorrectionContext_(historyRows).order;
+    historyRows.forEach((row, rowIndex) => {
         if (
             cleanText_(row[2]).toLowerCase() !== "water" ||
             cleanText_(row[35]).toLowerCase() === "removed"
@@ -12370,18 +12377,31 @@ function webWateringDaysFromRows_(historyRows, now, timeZone) {
             return;
         const plantId = cleanText_(row[1]);
         const timestamp = webHistoryTimestamp_(row[0]);
-        if (
-            plantId &&
-            timestamp &&
-            timestamp <= nowMs &&
-            timestamp > (latest.get(plantId) || 0)
-        )
-            latest.set(plantId, timestamp);
+        if (!plantId || !timestamp || timestamp > nowMs) return;
+        const nutrients = cleanText_(row[16]).toLowerCase();
+        /** @type {GardenHistoryOrder & { nutrientsUsed: "" | "No" | "Yes" }} */
+        const record = {
+            timestamp,
+            rowIndex,
+            orderIndex: correctionOrder[rowIndex],
+            nutrientsUsed:
+                nutrients === "yes" ? "Yes" : nutrients === "no" ? "No" : "",
+        };
+        const previous = latest.get(plantId);
+        if (!previous || compareHistoryRecords_(record, previous) > 0)
+            latest.set(plantId, record);
     });
     return new Map(
-        [...latest].map(([plantId, timestamp]) => [
+        [...latest].map(([plantId, record]) => [
             plantId,
-            Utilities.formatDate(new Date(timestamp), timeZone, "yyyy-MM-dd"),
+            {
+                dayKey: Utilities.formatDate(
+                    new Date(record.timestamp),
+                    timeZone,
+                    "yyyy-MM-dd"
+                ),
+                nutrientsUsed: record.nutrientsUsed,
+            },
         ])
     );
 }

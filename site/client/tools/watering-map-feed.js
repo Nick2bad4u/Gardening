@@ -7,19 +7,31 @@ import {
 import { isWateringObservationDate } from "./watering-map-data.js";
 
 /** @typedef {import("../../../docs/layouts/plant-tracker-data.js").HistoryEvent} HistoryEvent */
-/** @typedef {{ history: HistoryEvent[]; version: 1 }} WateringFeed */
+/** @typedef {{ history: HistoryEvent[]; version: 1 | 2 }} WateringFeed */
 
-const feedHeaders = [
+const legacyHistoryFields = [
     "Date",
     "Plant ID",
     "Event",
     "Record status",
     "New location",
+];
+const historyFields = [
+    ...legacyHistoryFields,
+    "Nutrients used",
+    "Pot setup",
+    "Observation ID",
+    "Corrects observation ID",
+];
+const envelopeFields = [
     "Feed version",
     "Feed status",
     "Record count",
 ];
-const historyFields = feedHeaders.slice(0, 5);
+const feedSchemas = [
+    { fields: legacyHistoryFields, version: /** @type {const} */ (1) },
+    { fields: historyFields, version: /** @type {const} */ (2) },
+];
 
 const invalidFeedCause = "invalid-watering-feed";
 
@@ -33,16 +45,17 @@ const feedCache = createSheetSnapshotCache({
         decodeWateringFeed(await fetchCsv(sheetUrls.wateringMapCsv)),
     sourceKey: JSON.stringify({
         feed: sheetUrls.wateringMapCsv,
-        schema: "watering-map-feed-v1",
+        schema: "watering-map-feed-v2",
     }),
-    storageKey: "gardening-public-watering-map-snapshot-v1",
+    storageKey: "gardening-public-watering-map-snapshot-v2",
     validate: isWateringFeed,
 });
 
 /**
  * Require the complete atomic projection, including its terminal marker. A
- * matching row count alone cannot detect a response cut inside its final
- * field.
+ * matching row count alone cannot detect a response cut inside its final field.
+ * Version 1 remains readable during staged publication; it supplies no
+ * fertilizer evidence and must not acquire inferred nutrient fields.
  *
  * @param {string} csv
  *
@@ -56,16 +69,23 @@ export function decodeWateringFeed(csv) {
     const rows = parseCsv(csv);
     const [headers, metadata] = rows;
     const footer = rows.at(-1);
+    const schema = feedSchemas.find(
+        ({ fields }) =>
+            headers?.length === fields.length + envelopeFields.length &&
+            [...fields, ...envelopeFields].every(
+                (field, index) => headers[index] === field
+            )
+    );
     if (
         hasUnpairedQuote ||
-        !headers ||
+        !schema ||
         rows.length < 3 ||
-        rows.some((row) => row.length !== feedHeaders.length) ||
-        feedHeaders.some((field, index) => headers[index] !== field) ||
-        !isBoundaryRow(metadata, "Ready") ||
-        !isBoundaryRow(footer, "End") ||
-        metadata[7] !== footer[7] ||
-        Number(metadata[7]) !== rows.length - 3
+        rows.some((row) => row.length !== schema.fields.length + 3) ||
+        !isBoundaryRow(metadata, "Ready", schema) ||
+        !isBoundaryRow(footer, "End", schema) ||
+        metadata[schema.fields.length + 2] !==
+            footer[schema.fields.length + 2] ||
+        Number(metadata[schema.fields.length + 2]) !== rows.length - 3
     ) {
         throw new Error(
             "The published watering map feed is incomplete or invalid.",
@@ -75,13 +95,15 @@ export function decodeWateringFeed(csv) {
     const records = rows.slice(2, -1);
     const history = records.map((row, index) => ({
         ...Object.fromEntries(
-            historyFields.map((field, column) => [field, row[column] ?? ""])
+            schema.fields.map((field, column) => [field, row[column] ?? ""])
         ),
         _index: index,
     }));
-    const feed = { history, version: /** @type {const} */ (1) };
+    const feed = { history, version: schema.version };
     if (
-        records.some((row) => row.slice(5).some((field) => field !== "")) ||
+        records.some((row) =>
+            row.slice(schema.fields.length).some((field) => field !== "")
+        ) ||
         !isWateringFeed(feed)
     ) {
         throw new Error(
@@ -110,17 +132,20 @@ export async function loadWateringMapSnapshot() {
 }
 
 /**
- * @param {string[] | undefined} row @param {"Ready" | "End"} status @returns
- *   {row is string[]}
+ * @param {string[] | undefined} row @param {"Ready" | "End"} status
+ * @param {{ fields: string[]; version: 1 | 2 }} schema
+ *
+ * @returns {row is string[]}
  */
-function isBoundaryRow(row, status) {
+function isBoundaryRow(row, status, schema) {
+    const countIndex = schema.fields.length + 2;
     return (
         row !== undefined &&
-        row.slice(0, 5).every((field) => field === "") &&
-        row[5] === "1" &&
-        row[6] === status &&
-        /^(?:0|[1-9]\d*)$/v.test(row[7] ?? "") &&
-        Number.isSafeInteger(Number(row[7]))
+        row.slice(0, schema.fields.length).every((field) => field === "") &&
+        row[schema.fields.length] === String(schema.version) &&
+        row[schema.fields.length + 1] === status &&
+        /^(?:0|[1-9]\d*)$/v.test(row[countIndex] ?? "") &&
+        Number.isSafeInteger(Number(row[countIndex]))
     );
 }
 
@@ -130,29 +155,37 @@ function isWateringFeed(value) {
         typeof value !== "object" ||
         value === null ||
         !("version" in value) ||
-        value.version !== 1 ||
+        (value.version !== 1 && value.version !== 2) ||
         !("history" in value) ||
         !Array.isArray(value.history)
     )
         return false;
+    const fields = value.version === 1 ? legacyHistoryFields : historyFields;
     return value.history.every((event, index) =>
-        isWateringRecord(event, index)
+        isWateringRecord(event, index, fields)
     );
 }
 
-/** @param {unknown} value @param {number} index @returns {value is HistoryEvent} */
-function isWateringRecord(value, index) {
+/**
+ * @param {unknown} value
+ * @param {number} index
+ * @param {string[]} historyFieldsForVersion
+ *
+ * @returns {value is HistoryEvent}
+ */
+function isWateringRecord(value, index, historyFieldsForVersion) {
     if (typeof value !== "object" || value === null || !("_index" in value))
         return false;
     const { _index: rowIndex } = value;
     if (rowIndex !== index) return false;
     const fields = Object.entries(value);
     if (
-        fields.length !== 6 ||
+        fields.length !== historyFieldsForVersion.length + 1 ||
         fields.some(
             ([field, entry]) =>
                 field !== "_index" &&
-                (!historyFields.includes(field) || typeof entry !== "string")
+                (!historyFieldsForVersion.includes(field) ||
+                    typeof entry !== "string")
         )
     )
         return false;

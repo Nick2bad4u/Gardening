@@ -1,5 +1,8 @@
 import { sourceReadLabel } from "../../../docs/layouts/plant-sheet-cache.js";
-import { wateringAgeColor } from "./watering-map-data.js";
+import {
+    wateringAgeColor,
+    wateringNutrientLabel,
+} from "./watering-map-data.js";
 
 /**
  * @typedef {ReturnType<
@@ -32,7 +35,7 @@ export function renderWateringMapSvg(
         (marker) => marker.days !== null
     ).length;
     const legendTop = lowerLayout.bottom + 32;
-    const height = legendTop + 350;
+    const height = legendTop + 420;
     const text = (
         /** @type {number} */ x,
         /** @type {number} */ y,
@@ -59,7 +62,8 @@ export function renderWateringMapSvg(
             const { x, y } = card ?? marker;
             const isOutside = card !== undefined;
             const watering = markerWatering(marker, isAvailable);
-            const description = `${marker.label} / ${marker.id}: ${marker.name}. ${marker.position}. ${watering.description}.${watering.location}`;
+            const nutrients = wateringNutrientLabel(marker, isAvailable);
+            const description = `${marker.label} / ${marker.id}: ${marker.name}. ${marker.position}. ${watering.description}. Nutrients at last Water: ${nutrients}.${watering.location}`;
             const shape = isOutside
                 ? `<rect x="${x - card.width / 2}" y="${y - 40}" width="${card.width}" height="${card.height}" rx="14" class="pot outside"/>`
                 : marker.id === "P20"
@@ -97,11 +101,22 @@ export function renderWateringMapSvg(
                         )
                     )
                     .join("") ?? "";
+            const fertilizer =
+                isAvailable &&
+                marker.lastWater !== null &&
+                marker.lastWaterNutrientsUsed === "Yes"
+                    ? fertilizerBadge(
+                          isOutside ? x + card.width / 2 - 40 : x - 17,
+                          isOutside ? y - 32 : y + 28,
+                          icon
+                      )
+                    : "";
             return `<g data-pot-id="${escapeXml(marker.id)}" data-placement-zone="${marker.zone}" class="${watering.className}"><title>${escapeXml(description)}</title>${shape}${portrait}
             ${text(portrait ? x + 20 : x, y, watering.count, watering.countClass, "middle", watering.fill)}
             ${text(x, y + 21, `${marker.label} · ${marker.id}`, "identity", "middle")}
             ${name}
             ${locationLines}
+            ${fertilizer}
         </g>`;
         })
         .join("");
@@ -115,7 +130,7 @@ export function renderWateringMapSvg(
         : "Watering counts are hidden until a live read succeeds. A dash means watering data is unavailable.";
     return `<svg xmlns="http://www.w3.org/2000/svg" class="wm-svg" data-watering-map="" width="1000" height="${height}" viewBox="0 0 1000 ${height}" role="img" aria-labelledby="watering-map-svg-title watering-map-svg-description" data-color-scheme="dark">
         <title id="watering-map-svg-title">Days since watering — ${escapeXml(dateText)}</title>
-        <desc id="watering-map-svg-description">Recorded table positions, viewed from the room. North window at top, Mylar left, white wall right. ${escapeXml(countDescription)} Room-side shelf plants are grouped separately; their left-to-right order is unrecorded. Other locations are listed below. ${escapeXml(status)}. ${escapeXml(sourceText)}.</desc>
+        <desc id="watering-map-svg-description">Recorded table positions, viewed from the room. North window at top, Mylar left, white wall right. ${escapeXml(countDescription)} A bottle badge means fertilizer or supplement was recorded with the last Water event. Room-side shelf plants are grouped separately; their left-to-right order is unrecorded. Other locations are listed below. ${escapeXml(status)}. ${escapeXml(sourceText)}.</desc>
         <defs>${includeDefinitions ? artwork.definitions : ""}<linearGradient id="wm-age-gradient"><stop offset="0" stop-color="${wateringAgeColor(0)}"/><stop offset="0.5" stop-color="${wateringAgeColor(14)}"/><stop offset="1" stop-color="${wateringAgeColor(28)}"/></linearGradient></defs>
         <style>
             .wm-svg { fill: #e2efe6; }
@@ -140,6 +155,8 @@ export function renderWateringMapSvg(
             .wm-svg .total { font-size: 16px; font-weight: 700; fill: #b6ebcc; }
             .wm-svg .legend-heading { font-size: 20px; font-weight: 700; }
             .wm-svg .legend-label { font-size: 16px; font-weight: 700; }
+            .wm-svg .fertilizer-badge { fill: #263b2a; stroke: #d7dfad; stroke-width: 1.5; }
+            .wm-svg .fertilizer-letter { font-size: 14px; font-weight: 700; fill: #edf4ca; }
         </style>
         <rect width="1000" height="${height}" fill="#0c1815" data-map-background=""/>
         ${icon("water", 42, 28, 36)}
@@ -195,7 +212,7 @@ export function renderWateringMapSvg(
             .join("")}
         ${markers}
         <g data-watering-legend="">
-            <rect x="48" y="${legendTop}" width="904" height="256" rx="18" class="surface"/>
+            <rect x="48" y="${legendTop}" width="904" height="326" rx="18" class="surface"/>
             ${text(72, legendTop + 34, "Reading this map", "legend-heading")}
             ${text(72, legendTop + 62, isAvailable ? `${recordedCount} with Water records · ${model.markers.length - recordedCount} without` : "Watering record coverage unavailable until data loads.", "meta")}
             <rect x="72" y="${legendTop + 84}" width="856" height="20" rx="10" fill="url(#wm-age-gradient)" data-watering-age-scale=""/>
@@ -209,6 +226,11 @@ export function renderWateringMapSvg(
             <g class="unavailable"><rect x="522" y="${legendTop + 182}" width="54" height="46" rx="10" class="pot"/>${text(549, legendTop + 212, "—", legendLabelClass, "middle")}</g>
             ${text(590, legendTop + 202, "Data unavailable", legendLabelClass)}
             ${text(590, legendTop + 224, "Refresh to load observations", "note")}
+            <g data-fertilizer-legend="">
+                ${fertilizerBadge(82, legendTop + 265, icon, false)}
+                ${text(140, legendTop + 278, "Fertilizer / supplement recorded at last Water", legendLabelClass)}
+                ${text(140, legendTop + 302, "No badge can mean plain water or not recorded; check the pot details.", "note")}
+            </g>
         </g>
         ${text(48, height - 62, "Recorded arrangement; schematic spacing. A logged Move does not assign a new grid slot.", "note")}
         ${text(48, height - 36, "Published Sheet data can lag workbook edits. Check the source time before using a saved image.", "note")}
@@ -223,6 +245,24 @@ function escapeXml(value) {
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&apos;");
+}
+
+/**
+ * A bottle and a letter keep this status distinct from the plant portrait.
+ * Artless test/export callers still receive the readable F badge.
+ *
+ * @param {number} x
+ * @param {number} y
+ * @param {(name: string, x: number, y: number, size?: number) => string} icon
+ * @param {boolean} [isObservation]
+ */
+function fertilizerBadge(x, y, icon, isObservation = true) {
+    const bottle = icon("feeding", x + 1, y + 1, 20);
+    const letterX = x + (bottle ? 27 : 17);
+    const observationAttribute = isObservation
+        ? ' data-fertilizer-badge=""'
+        : "";
+    return `<g${observationAttribute} aria-hidden="true"><rect x="${x}" y="${y}" width="34" height="22" rx="7" class="fertilizer-badge"/>${bottle}<text x="${letterX}" y="${y + 16}" text-anchor="middle" class="fertilizer-letter">F</text></g>`;
 }
 
 /**

@@ -5,13 +5,17 @@ import { historyLastRow } from "./history-capacity-config.mjs";
 export const wateringMapFeedSheetId = 907_202_615;
 export const wateringMapFeedTitle = "Watering map";
 export const wateringMapFeedRowCount = historyLastRow + 2;
-export const wateringMapFeedColumnCount = 8;
+export const wateringMapFeedColumnCount = 12;
 export const wateringMapFeedDateFormat = 'yyyy-mm-dd"T"hh:mm:ss.000';
 const cellBudget = 20_000_000;
 const sourceHeaders = new Map([
     [0, "Date"],
     [1, "Plant ID"],
     [2, "Event"],
+    [10, "Pot setup"],
+    [16, "Nutrients used"],
+    [26, "Observation ID"],
+    [30, "Corrects observation ID"],
     [35, "Record status"],
     [49, "New location"],
 ]);
@@ -45,7 +49,21 @@ export function assertWateringMapFeedPreconditions(plan, fresh) {
  * @returns {import("../../types/watering-map-feed.d.ts").WateringMapFeedPlan}
  */
 export function buildWateringMapFeedRequests(snapshot, historyHeaders) {
-    const allocatedCellsBefore = validateSnapshot(snapshot, historyHeaders);
+    const allocatedCellsBefore = validateSnapshot(
+        snapshot,
+        historyHeaders,
+        wateringMapFeedRowCount * wateringMapFeedColumnCount
+    );
+    if (
+        snapshot.metadata.sheets.some(
+            ({ properties }) =>
+                properties.sheetId === wateringMapFeedSheetId ||
+                properties.title === wateringMapFeedTitle
+        )
+    )
+        throw new Error(
+            "Watering map helper destination already exists; never replay this migration"
+        );
     const sheetId = wateringMapFeedSheetId;
     const range = {
         endColumnIndex: wateringMapFeedColumnCount,
@@ -182,6 +200,120 @@ export function buildWateringMapFeedRequests(snapshot, historyHeaders) {
 }
 
 /**
+ * Upgrade only the installed v1 helper. Capture complete metadata, History's
+ * headers, and user-entered values across the entire existing helper grid.
+ * Computed spill values are not occupied cells. Rehearse on a native copy, then
+ * re-read and assert the precondition digest immediately before writing.
+ *
+ * @param {import("../../types/watering-map-feed.d.ts").WateringMapFeedSnapshot} snapshot
+ * @param {readonly string[]} historyHeaders
+ *
+ * @returns {import("../../types/watering-map-feed.d.ts").WateringMapFeedPlan}
+ */
+export function buildWateringMapFeedUpgradeRequests(snapshot, historyHeaders) {
+    const addedColumns = wateringMapFeedColumnCount - 8;
+    const addedCells = wateringMapFeedRowCount * addedColumns;
+    const allocatedCellsBefore = validateSnapshot(
+        snapshot,
+        historyHeaders,
+        addedCells
+    );
+    validateInstalledFeed(snapshot);
+    const sheetId = wateringMapFeedSheetId;
+    const newColumns = {
+        endColumnIndex: wateringMapFeedColumnCount,
+        endRowIndex: wateringMapFeedRowCount,
+        sheetId,
+        startColumnIndex: 8,
+        startRowIndex: 0,
+    };
+    return {
+        allocatedCellsAfter: allocatedCellsBefore + addedCells,
+        allocatedCellsBefore,
+        footprint: [
+            "Watering map A1 formula/note and appended I:L columns only",
+        ],
+        preconditionDigest: digest(snapshot),
+        requests: [
+            {
+                appendDimension: {
+                    dimension: "COLUMNS",
+                    length: addedColumns,
+                    sheetId,
+                },
+            },
+            {
+                updateCells: {
+                    fields: "userEnteredValue,note",
+                    rows: [
+                        {
+                            values: [
+                                {
+                                    note: "Read-only Water/Move projection of canonical History, including fertilizer status and correction lineage. The website validates the Ready/End envelope and record count. Publication may lag recent saves; this formula does not establish an observation or refresh timestamp.",
+                                    userEnteredValue: {
+                                        formulaValue: wateringMapFeedFormula(),
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                    start: { columnIndex: 0, rowIndex: 0, sheetId },
+                },
+            },
+            {
+                repeatCell: {
+                    cell: {
+                        userEnteredFormat: {
+                            textFormat: {
+                                fontFamily: "JetBrains Mono",
+                                fontSize: 10,
+                            },
+                            verticalAlignment: "MIDDLE",
+                            wrapStrategy: "CLIP",
+                        },
+                    },
+                    fields: "userEnteredFormat.textFormat,userEnteredFormat.verticalAlignment,userEnteredFormat.wrapStrategy,dataValidation",
+                    range: newColumns,
+                },
+            },
+            {
+                repeatCell: {
+                    cell: {
+                        userEnteredFormat: {
+                            backgroundColor: {
+                                blue: 0.17,
+                                green: 0.24,
+                                red: 0.09,
+                            },
+                            textFormat: {
+                                bold: true,
+                                foregroundColor: { blue: 1, green: 1, red: 1 },
+                            },
+                            wrapStrategy: "WRAP",
+                        },
+                    },
+                    fields: "userEnteredFormat.backgroundColor,userEnteredFormat.textFormat.bold,userEnteredFormat.textFormat.foregroundColor,userEnteredFormat.wrapStrategy",
+                    range: { ...newColumns, endRowIndex: 2 },
+                },
+            },
+            {
+                updateDimensionProperties: {
+                    fields: "pixelSize",
+                    properties: { pixelSize: 165 },
+                    range: {
+                        dimension: "COLUMNS",
+                        endIndex: wateringMapFeedColumnCount,
+                        sheetId,
+                        startIndex: 8,
+                    },
+                },
+            },
+        ],
+        sheetId,
+    };
+}
+
+/**
  * One atomic spill includes a versioned envelope and terminal count marker.
  * Keep all Water/Move records in native order; consumers apply removed/future
  * rules. A source error must propagate instead of becoming an empty success.
@@ -190,6 +322,17 @@ export function buildWateringMapFeedRequests(snapshot, historyHeaders) {
  * @returns {string}
  */
 export function wateringMapFeedFormula() {
+    const end = historyLastRow;
+    const source = `{History!A2:C${end},History!AJ2:AJ${end},History!AX2:AX${end},History!Q2:Q${end},History!K2:K${end},History!AA2:AA${end},History!AE2:AE${end}}`;
+    const headers =
+        '{"Date","Plant ID","Event","Record status","New location","Nutrients used","Pot setup","Observation ID","Corrects observation ID","Feed version","Feed status","Record count"}';
+    const ready = '{"","","","","","","","","",2,"Ready",recordCount}';
+    const footer = '{"","","","","","","","","",2,"End",recordCount}';
+    return `=LET(wanted,ARRAYFORMULA(REGEXMATCH(LOWER(TRIM(History!C2:C${end})),"^(water|move)$")),recordCount,SUM(ARRAYFORMULA(N(wanted))),records,IF(recordCount>0,FILTER(${source},wanted),{"","","","","","","","",""}),invalid,SUM(ARRAYFORMULA(N(ISERROR(records)))),IF(invalid>0,NA(),IF(recordCount>0,{${headers};${ready};records,ARRAYFORMULA(IF(SEQUENCE(MAX(1,recordCount),3)>0,"",""));${footer}},{${headers};${ready};${footer}})))`;
+}
+
+/** Exact installed version-1 formula, retained only as an upgrade precondition. */
+export function wateringMapFeedV1Formula() {
     const end = historyLastRow;
     const source = `{History!A2:C${end},History!AJ2:AJ${end},History!AX2:AX${end}}`;
     const headers =
@@ -264,16 +407,6 @@ function validateAllocation(snapshot) {
         indices.add(index);
         allocated += gridProperties.rowCount * gridProperties.columnCount;
     }
-    if (ids.has(wateringMapFeedSheetId) || titles.has(wateringMapFeedTitle))
-        throw new Error(
-            "Watering map helper destination already exists; never replay this migration"
-        );
-    if (
-        !Number.isSafeInteger(allocated) ||
-        allocated + wateringMapFeedRowCount * wateringMapFeedColumnCount >
-            cellBudget
-    )
-        throw new Error("Watering map would exceed the workbook cell budget");
     return allocated;
 }
 
@@ -335,6 +468,89 @@ function validateHistory(snapshot, historyHeaders) {
     }
 }
 
+/** @param {import("../../types/watering-map-feed.d.ts").WateringMapFeedSnapshot} snapshot */
+function validateInstalledFeed(snapshot) {
+    const helper = snapshot.metadata.sheets.find(
+        ({ properties }) => properties.sheetId === wateringMapFeedSheetId
+    );
+    if (
+        helper?.properties.title !== wateringMapFeedTitle ||
+        helper.properties.hidden !== true ||
+        helper.properties.gridProperties.columnCount !== 8 ||
+        helper.properties.gridProperties.rowCount !== wateringMapFeedRowCount
+    )
+        throw new Error(
+            "Expected the hidden 50,003 by 8 version-1 Watering map; reject replay or ownership drift"
+        );
+    if (
+        helper.protectedRanges?.some(
+            (protection) =>
+                protection.warningOnly === true &&
+                Number.isSafeInteger(protection.protectedRangeId) &&
+                protection.range.sheetId === wateringMapFeedSheetId &&
+                Object.keys(protection.range).length === 1 &&
+                (protection.unprotectedRanges?.length ?? 0) === 0
+        ) !== true
+    )
+        throw new Error(
+            "Watering map requires its whole-sheet warning protection"
+        );
+    if (
+        snapshot.readRanges.every(
+            (range) =>
+                range.sheet !== wateringMapFeedTitle ||
+                range.startRow !== 0 ||
+                range.endRow !== wateringMapFeedRowCount ||
+                range.startColumn !== 0 ||
+                range.endColumn !== 8
+        )
+    )
+        throw new Error(
+            "Capture all Watering map user-entered values before upgrade"
+        );
+    validateInstalledFeedCells(snapshot);
+}
+
+/** @param {import("../../types/watering-map-feed.d.ts").WateringMapFeedSnapshot} snapshot */
+function validateInstalledFeedCells(snapshot) {
+    const cells = snapshot.cells.filter(
+        (cell) => cell.sheet === wateringMapFeedTitle
+    );
+    const seen = new Set();
+    let hasAnchor = false;
+    for (const cell of cells) {
+        const key = `${cell.row}:${cell.column}`;
+        if (
+            seen.has(key) ||
+            !Number.isSafeInteger(cell.row) ||
+            cell.row < 0 ||
+            cell.row >= wateringMapFeedRowCount ||
+            !Number.isSafeInteger(cell.column) ||
+            cell.column < 0 ||
+            cell.column >= 8
+        )
+            throw new Error("Ambiguous Watering map user-entered cell capture");
+        seen.add(key);
+        if (cell.row === 0 && cell.column === 0) {
+            hasAnchor =
+                Object.keys(cell.value).length === 1 &&
+                cell.value.formulaValue === wateringMapFeedV1Formula();
+            if (!hasAnchor)
+                throw new Error(
+                    "Watering map A1 must contain the exact version-1 formula; reject replay or formula drift"
+                );
+            continue;
+        }
+        if (Object.keys(cell.value).length > 0) {
+            throw new Error(
+                "Watering map contains occupied user-entered cells outside A1"
+            );
+        }
+    }
+    if (!hasAnchor)
+        throw new Error("Missing Watering map version-1 A1 formula capture");
+}
+
 /**
  * @param {import("../../types/watering-map-feed.d.ts").WateringMapFeedSnapshot["metadata"]["sheets"][number]["properties"]} properties
  * @param {number} sheetCount
@@ -360,10 +576,11 @@ function validateSheetProperties(properties, sheetCount) {
 /**
  * @param {import("../../types/watering-map-feed.d.ts").WateringMapFeedSnapshot} snapshot
  * @param {readonly string[]} historyHeaders
+ * @param {number} addedCells
  *
  * @returns {number}
  */
-function validateSnapshot(snapshot, historyHeaders) {
+function validateSnapshot(snapshot, historyHeaders, addedCells) {
     if (
         !snapshot.metadataComplete ||
         !snapshot.metadata.spreadsheetId ||
@@ -373,6 +590,8 @@ function validateSnapshot(snapshot, historyHeaders) {
             "Complete native metadata and the garden timezone are required"
         );
     const allocated = validateAllocation(snapshot);
+    if (!Number.isSafeInteger(allocated) || allocated + addedCells > cellBudget)
+        throw new Error("Watering map would exceed the workbook cell budget");
     validateHistory(snapshot, historyHeaders);
     return allocated;
 }

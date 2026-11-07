@@ -193,12 +193,27 @@ and the image legend flow from their text heights to preserve spacing.
 The map reads the hidden **Watering map** helper independently: its maintained
 placement data already supplies pot names and labels, so a slow Plant tracker
 export cannot block the image. The helper projects only History's Water and Move
-records and the five fields used by the map, retaining ledger order, Removed
-records, and future dates for the browser's existing eligibility checks. The
-versioned eight-column feed has a Ready row, expected record count, and mandatory
+records and nine source fields, including nutrient use and correction lineage.
+It retains ledger order, Removed records, and future dates for the browser's
+eligibility checks. The version-2 twelve-column feed has a Ready row, expected record count, and mandatory
 End footer; incomplete, malformed, and formula-error responses cannot replace a
 successful read. The helper formula covers all 50,000 History slots and updates
 without a new trigger. Published data may still lag a recent workbook save.
+
+The fertilizer-bottle/F badge appears only when **Nutrients used** is explicitly
+Yes on the selected latest eligible Water. The date and nutrient status come
+from the same event across the permanent pot's setups. Equal timestamps use
+correction-root order, then physical ledger order. A newer No or unknown value
+clears an older Yes. Details distinguish plain water, unknown nutrient use, no
+Water record, and unavailable data. The badge follows the same freshness gate
+as watering ages and appears in both downloads.
+
+The reader accepts the original eight-column v1 feed during staged rollout or
+publication lag, with nutrient use left unknown. Its v2 cache namespace keeps
+older saved records separate. The guarded native upgrade in
+`scripts/google-sheets/watering-map-feed.mjs` checks the exact v1 helper and all
+its entered cells before appending I:L and replacing only its A1 formula/note.
+It preserves the existing protection, tab position, and canonical/staging schemas.
 
 The compact reader uses its own bounded browser cache; the tracker, pot-history
 pages, and full CSV exports retain their existing complete History contracts.

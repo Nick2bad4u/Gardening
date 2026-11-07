@@ -1,5 +1,6 @@
 import {
     dayColor,
+    historyCorrectionOrder,
     isActiveHistoryEvent,
     parseDate,
 } from "../../../docs/layouts/plant-tracker-data.js";
@@ -24,6 +25,15 @@ import {
  *     instant: number | null;
  * }} GardenDate
  */
+/** @typedef {"Yes" | "No" | null} WaterNutrientsUsed */
+/**
+ * @typedef {{
+ *     date: GardenDate;
+ *     nutrientsUsed: WaterNutrientsUsed;
+ *     orderIndex: number;
+ *     physicalIndex: number;
+ * }} WaterObservation
+ */
 
 const gardenClock = new Intl.DateTimeFormat("en-US", {
     day: "2-digit",
@@ -46,11 +56,11 @@ const gardenClock = new Intl.DateTimeFormat("en-US", {
  */
 export function buildWateringMap(placements, history, now = new Date()) {
     const today = gardenDate(now);
-    /** @type {Map<string, GardenDate>} */
+    /** @type {Map<string, WaterObservation>} */
     const waterById = new Map();
     /** @type {Map<string, { date: GardenDate; location: string }>} */
     const locationById = new Map();
-    for (const event of history) {
+    for (const [index, event] of historyCorrectionOrder(history).entries()) {
         const date = observationDate(event["Date"]);
         if (!date || !isActiveHistoryEvent(event) || isAfter(date, today))
             continue;
@@ -59,11 +69,19 @@ export function buildWateringMap(placements, history, now = new Date()) {
             .trim()
             .toLowerCase();
         const previousWater = waterById.get(id);
+        const { _index: orderIndex } = event;
+        const { _index: physicalIndex } = history[index] ?? { _index: index };
+        const water = {
+            date,
+            nutrientsUsed: waterNutrientsUsed(event["Nutrients used"]),
+            orderIndex,
+            physicalIndex,
+        };
         if (
             kind === "water" &&
-            (!previousWater || isAfter(date, previousWater))
+            (!previousWater || isLaterWater(water, previousWater))
         ) {
-            waterById.set(id, date);
+            waterById.set(id, water);
         }
         const location = String(event["New location"] ?? "").trim();
         const previousLocation = locationById.get(id);
@@ -82,8 +100,9 @@ export function buildWateringMap(placements, history, now = new Date()) {
             return {
                 ...placement,
                 currentLocation: locationById.get(placement.id)?.location ?? "",
-                days: water ? today.day - water.day : null,
-                lastWater: water?.date ?? null,
+                days: water ? today.day - water.date.day : null,
+                lastWater: water?.date.date ?? null,
+                lastWaterNutrientsUsed: water?.nutrientsUsed ?? null,
             };
         }),
     };
@@ -106,6 +125,26 @@ export function isWateringObservationDate(value) {
 export function wateringAgeColor(days) {
     if (days === null || !Number.isSafeInteger(days) || days < 0) return "";
     return dayColor(days);
+}
+
+/**
+ * Keep an absent answer distinct from explicit plain water and from a missing
+ * or unavailable watering observation.
+ *
+ * @param {{
+ *     lastWater: string | null;
+ *     lastWaterNutrientsUsed: WaterNutrientsUsed;
+ * }} marker
+ * @param {boolean} isAvailable
+ */
+export function wateringNutrientLabel(marker, isAvailable) {
+    if (!isAvailable) return "Unavailable";
+    if (marker.lastWater === null) return "No Water record";
+    if (marker.lastWaterNutrientsUsed === "Yes")
+        return "Yes — fertilizer / supplement";
+    return marker.lastWaterNutrientsUsed === "No"
+        ? "No — plain water"
+        : "Not recorded";
 }
 
 /** @param {Date} value @returns {GardenDate} */
@@ -136,6 +175,17 @@ function isAfter(date, reference) {
     return date.instant !== null && reference.instant !== null
         ? date.instant > reference.instant
         : date.key > reference.key;
+}
+
+/** @param {WaterObservation} candidate @param {WaterObservation} previous */
+function isLaterWater(candidate, previous) {
+    if (isAfter(candidate.date, previous.date)) return true;
+    if (isAfter(previous.date, candidate.date)) return false;
+    return (
+        candidate.orderIndex > previous.orderIndex ||
+        (candidate.orderIndex === previous.orderIndex &&
+            candidate.physicalIndex > previous.physicalIndex)
+    );
 }
 
 /** @param {string} text */
@@ -220,4 +270,12 @@ function observationDate(value) {
         return timestamp ? gardenDate(timestamp) : null;
     }
     return result;
+}
+
+/** @param {unknown} value @returns {WaterNutrientsUsed} */
+function waterNutrientsUsed(value) {
+    if (typeof value !== "string") return null;
+    const normalized = value.trim().toLowerCase();
+    if (normalized === "yes") return "Yes";
+    return normalized === "no" ? "No" : null;
 }

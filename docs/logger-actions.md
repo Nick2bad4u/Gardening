@@ -83,6 +83,13 @@ cannot currently be confirmed, including while refreshing, after a failed
 refresh, or when using an older saved plant list. Removed and future-dated Water
 events do not contribute to the count.
 
+The fertilizer-bottle badge means **Last watering included fertilizer**. It
+appears in all picker views, Bulk care, and the selected-plant summary, even
+when **Days since watered** is off. It uses the nutrient flag on that same
+latest Water event. A newer plain-water or unanswered entry removes the badge;
+it does not search back for an older fertilized watering. Cached, refreshing,
+or failed reads hide it until current data confirms the latest event.
+
 The grid describes the maintained arrangement. Recording a Move does not assign
 a new grid slot; update the placement guide when the table arrangement changes.
 

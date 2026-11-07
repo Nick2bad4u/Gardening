@@ -36,7 +36,7 @@
             : []),
     ].join("\n");
     const historyHeaders =
-        "Date,Plant ID,Event,Weight state,Weight (g),Height (cm),Width (cm),Plant condition,Notes,Pot setup,Record status,Request ID,Relative humidity (%),PPFD (µmol/m²/s),Illuminance (lux),Observation quality,Measurement method,Observation ID,Corrects observation ID,Soil moisture,Mist targets,Mist amount (mL),Mist details,Previous location,New location,Temperature (°C),Temperature target,Temperature entry unit,Environment aspect,Previous setting,New setting,Propagation method,Propagation details,Support action,Support details,Leaf temperature (°C),Leaf temperature entry unit,Paired air temperature (°C),Paired air temperature entry unit,Paired relative humidity (%),Leaf VPD (kPa),Leaf VPD source";
+        "Date,Plant ID,Event,Weight state,Weight (g),Height (cm),Width (cm),Plant condition,Notes,Pot setup,Record status,Request ID,Relative humidity (%),PPFD (µmol/m²/s),Illuminance (lux),Observation quality,Measurement method,Observation ID,Corrects observation ID,Soil moisture,Mist targets,Mist amount (mL),Mist details,Previous location,New location,Temperature (°C),Temperature target,Temperature entry unit,Environment aspect,Previous setting,New setting,Propagation method,Propagation details,Support action,Support details,Leaf temperature (°C),Leaf temperature entry unit,Paired air temperature (°C),Paired air temperature entry unit,Paired relative humidity (%),Leaf VPD (kPa),Leaf VPD source,Nutrients used";
     /** @type {Record<string, string | number>[]} */
     const lightObservations = [
         {
@@ -174,10 +174,30 @@
             Notes: "Leaf only without pairing",
         },
     ];
+    /** @param {Record<string, string | number>} record */
+    const historyRecord = (record) =>
+        historyHeaders
+            .split(",")
+            .map((header) => record[header] ?? "")
+            .join(",");
     const history = [
         historyHeaders,
         "2026-09-01,P01,Weight,Dry,400,,,Healthy,First dry reading,1,Active,storybook-dry",
-        "2026-09-02,P01,Water,,,,,Healthy,Plain water,1,Active,storybook-water",
+        historyRecord({
+            Date: "2026-09-02",
+            Event: "Water",
+            Notes:
+                scenario === "plain-water"
+                    ? "Plain water"
+                    : "Synthetic nutrient watering",
+            "Nutrients used": scenario === "plain-water" ? "No" : "Yes",
+            "Observation ID": "storybook-water",
+            "Plant condition": "Healthy",
+            "Plant ID": "P01",
+            "Pot setup": 1,
+            "Record status": "Active",
+            "Request ID": "storybook-water",
+        }),
         "2026-09-02,P01,Weight,Wet,600,,,Healthy,Drained wet reading,1,Active,storybook-wet",
         "2026-09-03,P01,Weight,Routine,550,8,6,Healthy,Routine check,1,Active,storybook-routine",
         "2026-09-04,P02,Check,,,,,Healthy,No weight recorded,1,Active,storybook-check",
@@ -239,6 +259,7 @@
             : history;
     /** @param {string} source */
     const wateringFeedCsv = (source) => {
+        const sourceHeaders = historyHeaders.split(",");
         const records = source
             .split("\n")
             .slice(1)
@@ -252,6 +273,10 @@
                 row[2] ?? "",
                 row[10] ?? "",
                 row[24] ?? "",
+                row[sourceHeaders.indexOf("Nutrients used")] ?? "",
+                row[9] ?? "",
+                row[17] ?? "",
+                row[18] ?? "",
                 "",
                 "",
                 "",
@@ -264,6 +289,10 @@
                 "Event",
                 "Record status",
                 "New location",
+                "Nutrients used",
+                "Pot setup",
+                "Observation ID",
+                "Corrects observation ID",
                 "Feed version",
                 "Feed status",
                 "Record count",
@@ -274,7 +303,11 @@
                 "",
                 "",
                 "",
-                "1",
+                "",
+                "",
+                "",
+                "",
+                "2",
                 "Ready",
                 count,
             ],
@@ -285,7 +318,11 @@
                 "",
                 "",
                 "",
-                "1",
+                "",
+                "",
+                "",
+                "",
+                "2",
                 "End",
                 count,
             ],
