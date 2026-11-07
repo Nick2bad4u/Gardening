@@ -455,9 +455,10 @@
 
             .label-choice {
                 display: inline-flex;
+                flex-direction: column;
                 gap: 6px;
                 align-items: center;
-                justify-content: center;
+                justify-content: flex-start;
                 min-block-size: 44px;
                 font-weight: 900;
                 color: var(--ink);
@@ -511,8 +512,8 @@
                 }
 
                 .label-choice & {
-                    flex-basis: 100%;
                     justify-content: center;
+                    order: 1;
                     padding: 0;
                     background: transparent;
 
@@ -524,10 +525,7 @@
 
             .label-choice.has-water-age,
             .label-choice.has-last-water-fertilizer {
-                flex-wrap: wrap;
-
                 & .water-age {
-                    flex-basis: 100%;
                     font-size: 0.625rem;
                     line-height: 1.25;
                 }
@@ -552,13 +550,8 @@
                     padding: 3px 1px;
                     font-size: 0.875rem;
                 }
-                & .label-choice .water-age,
-                & .label-choice .last-water-fertilizer {
-                    flex-basis: auto;
-                }
                 & .label-choice::before,
                 & .label-choice::after {
-                    flex-basis: auto;
                     max-inline-size: 100%;
                     overflow-wrap: anywhere;
                 }
@@ -702,7 +695,6 @@
             }
 
             .label-choice.queued-weighed {
-                flex-wrap: wrap;
                 color: #174d2b;
                 background: #d9f2df;
                 border-color: #27864b;
@@ -710,7 +702,7 @@
             }
 
             .label-choice.queued-weighed::after {
-                flex-basis: 100%;
+                order: 3;
                 font-size: 0.75rem;
                 font-weight: 800;
                 content: "Queued";
@@ -722,12 +714,11 @@
             }
 
             .label-choice.saved-today {
-                flex-wrap: wrap;
                 border-block-end: 4px solid var(--forest-2);
             }
 
             .label-choice.saved-today::before {
-                flex-basis: 100%;
+                order: 2;
                 font-size: 0.75rem;
                 font-weight: 800;
                 content: "Saved today";

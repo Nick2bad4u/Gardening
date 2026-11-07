@@ -1592,6 +1592,138 @@ const expectUnavailableAgeContrast = async (tile: Readonly<Locator>) => {
     expect.soft(ratio).toBeGreaterThanOrEqual(4.5);
 };
 
+const expectAlignedPicker = async (
+    page: Readonly<Page>,
+    mode: "Labels" | "Table",
+    isBulk: boolean,
+    areAgesShown: boolean
+) => {
+    await pickerMode(page, mode).click();
+    const geometry = await tablePicker(page, isBulk).evaluate((picker) => {
+        const tiles = [...picker.querySelectorAll<HTMLElement>(".label-choice")]
+            .filter((tile) => tile.getClientRects().length > 0)
+            .map((tile) => {
+                const label = tile.querySelector<HTMLElement>(":scope > span");
+                if (!label) throw new Error("Missing pot identity label");
+                const age = tile.querySelector<HTMLElement>(".water-age");
+                return {
+                    ageTop: age?.getBoundingClientRect().top ?? null,
+                    fertilized: tile.classList.contains(
+                        "has-last-water-fertilizer"
+                    ),
+                    id: tile.dataset["plantId"] ?? tile.dataset["bulkPlantId"],
+                    label: label.textContent,
+                    labelTop: label.getBoundingClientRect().top,
+                    queued: tile.classList.contains("queued-weighed"),
+                    saved: tile.classList.contains("saved-today"),
+                    tileTop: tile.getBoundingClientRect().top,
+                };
+            });
+        const rows = new Map<number, typeof tiles>();
+        for (const tile of tiles) {
+            const rowTop = Math.round(tile.tileTop);
+            const row = rows.get(rowTop) ?? [];
+            row.push(tile);
+            rows.set(rowTop, row);
+        }
+        const violations = [...rows].flatMap(([rowTop, row]) => {
+            const ageTops = row.flatMap((tile) =>
+                tile.ageTop === null ? [] : [tile.ageTop]
+            );
+            const labelSpread =
+                Math.max(...row.map((tile) => tile.labelTop)) -
+                Math.min(...row.map((tile) => tile.labelTop));
+            const ageSpread =
+                ageTops.length > 1
+                    ? Math.max(...ageTops) - Math.min(...ageTops)
+                    : 0;
+            return labelSpread > 1 || ageSpread > 1
+                ? [
+                      {
+                          ageSpread,
+                          ids: row.map((tile) => tile.id),
+                          labelSpread,
+                          rowTop,
+                      },
+                  ]
+                : [];
+        });
+        return {
+            ageCount: tiles.filter((tile) => tile.ageTop !== null).length,
+            fits: document.documentElement.scrollWidth <= innerWidth,
+            tiles,
+            violations,
+        };
+    });
+    const state = `${isBulk ? "bulk" : "single"} ${mode} ages ${areAgesShown ? "on" : "off"}`;
+    expect.soft(geometry.tiles).toHaveLength(39);
+    expect
+        .soft(
+            {
+                fertilized: geometry.tiles.some((tile) => tile.fertilized),
+                plain: geometry.tiles.some((tile) => !tile.fertilized),
+                queued: geometry.tiles.some((tile) => tile.queued),
+                saved: geometry.tiles.some((tile) => tile.saved),
+            },
+            state
+        )
+        .toMatchObject({
+            fertilized: true,
+            plain: true,
+            ...(!isBulk && { queued: true, saved: true }),
+        });
+    expect.soft(geometry.ageCount, state).toBe(areAgesShown ? 39 : 0);
+    expect.soft(geometry.fits, state).toBe(true);
+    expect.soft(geometry.violations, state).toStrictEqual([]);
+    return { state, ...geometry };
+};
+const expectFertilizerAlignment = async (page: Readonly<Page>) => {
+    const singleLabelsOff = await expectAlignedPicker(
+        page,
+        "Labels",
+        false,
+        false
+    );
+    const singleTableOff = await expectAlignedPicker(
+        page,
+        "Table",
+        false,
+        false
+    );
+    await pickerMode(page, waterAgeToggleName).click();
+    const singleLabelsOn = await expectAlignedPicker(
+        page,
+        "Labels",
+        false,
+        true
+    );
+    const singleTableOn = await expectAlignedPicker(page, "Table", false, true);
+    await page.getByRole("tab", { exact: true, name: bulkCareTab }).click();
+    const bulkLabelsOn = await expectAlignedPicker(page, "Labels", true, true);
+    const bulkTableOn = await expectAlignedPicker(page, "Table", true, true);
+    await page.getByRole("tab", { exact: true, name: "Single plant" }).click();
+    await pickerMode(page, waterAgeToggleName).click();
+    await page.getByRole("tab", { exact: true, name: bulkCareTab }).click();
+    const bulkLabelsOff = await expectAlignedPicker(
+        page,
+        "Labels",
+        true,
+        false
+    );
+    const bulkTableOff = await expectAlignedPicker(page, "Table", true, false);
+    await page.getByRole("tab", { exact: true, name: "Single plant" }).click();
+    return [
+        singleLabelsOff,
+        singleTableOff,
+        singleLabelsOn,
+        singleTableOn,
+        bulkLabelsOn,
+        bulkTableOn,
+        bulkLabelsOff,
+        bulkTableOff,
+    ];
+};
+
 test.describe("latest-water fertilizer badge", { tag: "@logger" }, () => {
     const badgeLabel = "Last watering included fertilizer";
     const expectSingleFertilizer = async (page: Readonly<Page>) => {
@@ -1674,6 +1806,27 @@ test.describe("latest-water fertilizer badge", { tag: "@logger" }, () => {
                     'plant.lastWateredNutrientsUsed = index === 1 ? "Yes" : "No"; plant.lastWateredDayKey ='
                 );
                 await openLogger(page, width, theme, fixture);
+                const alignment = await expectFertilizerAlignment(page);
+                await testInfo.attach("picker-row-alignment", {
+                    body: JSON.stringify(alignment, null, 2),
+                    contentType: "application/json",
+                });
+                await pickerMode(page, "Labels").click();
+                await pickerMode(page, waterAgeToggleName).click();
+                await tablePicker(page).screenshot({
+                    path: testInfo.outputPath(
+                        "fertilizer-single-labels-ages.png"
+                    ),
+                    style: ".actions { visibility: hidden !important; }",
+                });
+                await pickerMode(page, "Table").click();
+                await tablePicker(page).screenshot({
+                    path: testInfo.outputPath(
+                        "fertilizer-single-table-ages.png"
+                    ),
+                    style: ".actions { visibility: hidden !important; }",
+                });
+                await pickerMode(page, waterAgeToggleName).click();
                 await expectSingleFertilizer(page);
                 await expectFertilizerAgePreference(page);
                 const picker = tablePicker(page);
