@@ -1,10 +1,10 @@
 # Google Sheets observation logger
 
-Production logger **5.41.1 / immutable version 128** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.42.0 / immutable version 129** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Production **5.41.1 / immutable version 128** and **AppSheet 1.100141** retain portrait
+Production **5.42.0 / immutable version 129** and **AppSheet 1.100141** retain portrait
 revision **1010123212eade00**, verified on November 1. The remaining cactus and
 front-grid portraits are described below. P41's appended optional weight field
 remains unchanged; the earlier dated receipts retain their verified versions.
@@ -40,7 +40,7 @@ under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-
 
 ## Latest-watering fertilizer indicator
 
-The maintained **5.42.0** candidate adds the existing fertilizer-bottle icon
+Production **5.42.0** adds the existing fertilizer-bottle icon
 beside pots whose latest active, valid, nonfuture Water explicitly records
 **Nutrients used: Yes**. The logger shows it in Labels, Table, List, Bulk care,
 and the selected-plant summary, independently of **Days since watered**. The
@@ -75,8 +75,7 @@ App bulk**, and AppSheet configuration need no migration.
 
 Publish the compatible website reader before upgrading the live helper, then
 promote the logger through an immutable version at its existing deployment.
-Source validation and the November 6 native rehearsal are complete; production
-promotion and final verification are recorded after the rollout.
+The November 6 receipt below records production promotion and verification.
 
 The disposable native rehearsal verified v2 with empty history, retained ledger
 order, corrections, explicit Yes/No/unknown nutrient values, future exclusions,
@@ -95,6 +94,78 @@ analytics; the only structural difference was the helper's four appended
 columns. Stale model calculations temporarily omitted chart-series metadata
 until that refresh. The temporary test sheet was removed, the canonical feed
 restored, and the scratch script restored exactly.
+
+## November 6 fertilizer-indicator rollout
+
+Production **5.42.0 / immutable version 129** was promoted on November 6 at
+**19:21:10 EST**, preserving the existing logger URL, owner-only access,
+execution identity, and manifest. Head and immutable source both matched
+**6b3cfff**, the merge of [PR #42](https://github.com/Nick2bad4u/Gardening/pull/42).
+The immediate deployment read briefly returned version 128; separate deployment
+get/list reads confirmed 129 without repeating the promotion.
+
+The compatible website was published first through
+[Pages run 42316190838](https://github.com/Nick2bad4u/Gardening/actions/runs/42316190838).
+The public map bundle and shared data module matched the validated build
+byte-for-byte. A verified owner-only
+[native backup](https://docs.google.com/spreadsheets/d/1yShTAsMgZCNckGEGfFcTsokyvdj4fPwaAxK6EtpcJJY/edit)
+preceded the guarded five-request helper upgrade at **19:19:26 EST**.
+The helper is now **50,003 rows × 12 columns**, still hidden and warning-protected.
+Total workbook allocation is **19,359,623 cells**.
+The **67/59/77-column** History/App entries/App bulk contracts and AppSheet
+**1.100141** configuration remain unchanged.
+
+The before/after comparison preserved **2,226 observations and unique IDs**,
+**1,815 request groups**, and captured source values, formulas, notes, and
+validations across History, both staging tables, RO refills, Baselines, and
+Plant tracker. Fourteen source captures totaled **31.9 MB**. All **194 chart
+definitions and positions**, **131 protections**, and **70 tabs** matched;
+the only metadata change was the helper's four appended columns. Existing
+formatting and validation samples matched, all of **I1:L50003** had no inherited
+validation, and the native formula-error checks were clear with analytics Ready.
+No synthetic production observations were submitted.
+
+Native and public v2 reads matched all **232 Water/Move records** and their nine
+source fields. The public response was **23,429 bytes**. Both decoded reads
+identified **20 latest-Water Yes values**, **18 No values**, and **P38 without a
+Water record**, across all 39 pots. These are the verified rollout observations,
+not permanent counts or a watering schedule.
+
+A fresh authenticated logger displayed **Connected · Logger 5.42.0**. Single and
+bulk Labels, Table, and List pickers retained the expected badges with watering
+ages switched off. The logger passed desktop **1280 px** and phone **390 px**
+checks in both themes, keyboard selection, and horizontal-overflow checks.
+The public watering page and embedded placement map displayed the same 20
+fertilizer IDs; details distinguished the 18 plain-water pots and P38's missing
+Water record. SVG and PNG exports succeeded, and the downloaded SVG contained
+**39 pot markers and 20 fertilizer badges**. Browser checks reported no console
+errors.
+
+Exactly one existing five-minute `processQueuedAppSheetEntries` trigger remained
+installed. Post-promotion executions at **19:24:34 EST** and **19:29:34 EST**
+completed in **7.098 seconds** and **21.751 seconds**. Version 129 `doGet` and
+bootstrap executions also completed successfully. The preceding rolling
+24-hour audit, November 5 at 18:35 through November 6 at 18:35 EST, contained
+**288 completed queue runs**, no failures, and **66.84 minutes** of runtime.
+That project subtotal is **74.27%** of the documented
+[90-minute consumer trigger allowance](https://developers.google.com/apps-script/guides/services/quotas).
+It excludes other projects and trigger types and is not an account-wide quota
+meter. This change adds no scheduled work.
+
+The final PR passed **19 checks**, with three expected skips and one superseded
+labeling run. The successful main workflow passed **302 Chromium cases**,
+**63 Storybook cases** with coverage gates, and the **224-page** publication
+checks. Logger validation passed **2,042 tests** with **99.59% statements,
+98.42% branches, 100% functions, and 99.8% lines**. Type, lint, format, HTML,
+artwork, and source checks passed; repository ESLint retained nine existing
+warnings in unchanged files.
+
+Staged and hosted secret checks passed. The full-directory Gitleaks scan
+reported **201 findings in 27 older ignored cache/diagnostic files**, with none
+tracked or included in publication; no scan rules were weakened. Existing
+development dependency findings were reviewed without finding an exposed
+release path, and the production-only audit reported zero findings. Dependencies
+and the lockfile were unchanged.
 
 ## November 4 houseplant location records
 
