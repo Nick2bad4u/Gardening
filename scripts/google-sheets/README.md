@@ -1,10 +1,10 @@
 # Google Sheets observation logger
 
-Production logger **5.42.1 / immutable version 130** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.42.2 / immutable version 131** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Production **5.42.1 / immutable version 130** and **AppSheet 1.100141** retain portrait
+Production **5.42.2 / immutable version 131** and **AppSheet 1.100141** retain portrait
 revision **1010123212eade00**, verified on November 1. The remaining cactus and
 front-grid portraits are described below. P41's appended optional weight field
 remains unchanged; the earlier dated receipts retain their verified versions.
@@ -65,10 +65,20 @@ not all table formatting or validation metadata. No observations, schemas,
 AppSheet settings, triggers, or workbook calculations were changed, and no
 installer or broad refresh ran.
 
-The maintained **5.42.2** source prevents Dashboard refreshes from restoring the
-old link. At this workbook verification, production remained **5.42.1 /
-immutable version 130**; **5.42.2 promotion is pending**. The existing deployment
-URL, owner-only access, and execution identity were verified before the update.
+Production **5.42.2 / immutable version 131** was promoted on November 9 at
+**02:33 EST**, preventing Dashboard refreshes from restoring the old link.
+API readback verified that Head, immutable source, and the maintained files
+match. The existing deployment URL, owner-only access, execution identity,
+client HTML, and manifest were preserved. The server diff contains only its
+patch version and the two Dashboard display strings.
+
+The [retirement commit](https://github.com/Nick2bad4u/Gardening/commit/348eaa2dc849eb4a8edd8ffef0c85651f1e57777)
+passed the [Pages workflow](https://github.com/Nick2bad4u/Gardening/actions/runs/42578439365),
+logger coverage, SonarCloud, Codecov, and hosted secret checks. Public HTTP
+verification confirmed all **31 dated retirement notices**, removal of report
+navigation, search and Storybook entries, and absence of the three report app
+manifests. Historical JSON remains in the repository archive and is not copied
+into the website artifact.
 
 ## Latest-watering fertilizer indicator
 
