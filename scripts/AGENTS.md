@@ -46,10 +46,8 @@
 - `npm run build:pages` runs the Astro site builder and appends Storybook last
   under `.pages-site/storybook`. A subsequent site rebuild replaces that artifact.
   `npm run prepare:site` prepares the same allowed assets for local Astro preview.
-- `build-daily-report.mjs` validates reviewed dated report inputs. Astro renders
-  reports from JSON; generated site HTML is not a committed input. Neither build
-  fetches private workbook data nor makes care decisions. Read
-  `docs/daily-reports/AGENTS.md` for input/publication requirements.
+- Daily reports and their renderer are retired. Preserve historical inputs in
+  `docs/archive/daily-reports/`; never publish them as current care guidance.
 - `analyze-drying.mjs` evaluates the checked-in Apps Script detector in a local
   VM. Keep imported History cells as data. Require fresh header-bearing
   `UNFORMATTED_VALUE` input, actual `readAt`, and current plant IDs; numeric dates

@@ -151,7 +151,7 @@ async function serveFixture(request, response) {
     response.end(body);
 }
 
-// Generated reports and builds must not reload previews or restart test watchers.
+// Generated build output must not reload previews or restart test watchers.
 /** @type {import("vite").UserConfig} */
 export const storybookViteConfig = {
     plugins: [

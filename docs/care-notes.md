@@ -9,7 +9,7 @@ Start with the [watering quick guide](./watering-quick-guide.md) for each group'
 drying target. This page brings together the collection's routine checks,
 equipment changes, repot history, and care exceptions.
 
-Use the [watering strategy](./watering-strategy.md) for each plant group's readiness checks, the [weighing strategy](./weighing-strategy.md) for useful weight comparisons, and the [logger action guide](./logger-actions.md) for recording care. The daily report highlights useful inspections and weigh-ins; actual moisture and plant condition determine watering.
+Use the [watering strategy](./watering-strategy.md) for each plant group's readiness checks, the [weighing strategy](./weighing-strategy.md) for useful weight comparisons, and the [logger action guide](./logger-actions.md) for recording care. Daily reports were retired November 9, 2026; their archived advice is not the current care plan. Actual moisture and plant condition remain necessary context for interpreting weights.
 
 The [AW200 + AeroLight 240 W pair](./equipment/aw200-and-aerolight-240w.md)
 was hung September 13 with **AW200 at 45% and AeroLight 240 W at 38%, both in Veg mode** and the room
@@ -187,7 +187,7 @@ dry and the plant is ready earlier, do not keep it dry until an estimated date.
 The logger does not automatically ingest a lighting change or use a skewer
 observation to prove that every part of a shared root ball is dry.
 
-Use the daily report for the current care plan. It requests useful weigh-ins without a quota and keeps reference-only monitoring separate from Water candidates. Moisture and readiness checks remain necessary before watering, with separate checks for houseplants and leaf-replacing succulents. Neither a forecast nor a plateau proves physical dryness.
+Moisture and readiness checks remain necessary before watering, with separate checks for houseplants and leaf-replacing succulents. Neither a forecast nor a plateau proves physical dryness.
 
 Do not deliberately extend a dry-down until the scale stops moving. Equally,
 1–2 g/day is not a universal watering threshold: a daily whole-pot difference
@@ -238,7 +238,7 @@ checks. Do not wait for zero daily loss or deliberately add extra dry days.
 New watering starts a fresh cycle. A supposed wet weight already below the
 preceding pre-water reference calls for checking timing or setup, not another
 watering. The [current detector runbook](../scripts/google-sheets/README.md#improved-drying-detector-5230)
-documents the criteria and shared daily-report analyzer.
+documents the logger's detector criteria.
 
 ### September 13 Forecast Review
 
@@ -489,7 +489,7 @@ setup-2 pots (`P01`–`P18`) received plain Beauchamp's RO water with
 12:14 and 12:20 a.m. on **August 27**, about eight hours later. Those are useful
 first-cycle observations, but they are not 30–60-minute drainage weights; keep
 the actual interval visible when comparing this cycle with later wet baselines.
-Current weigh-ins follow the daily report's adaptive cadence; the intensive first-cycle comparison is historical.
+The intensive first-cycle comparison and former daily-report weighing cadence are historical.
 Use the [MSU 13-3-15 fertilizer schedule](./equipment/msu-fertilizer-schedule.md) to assess feeding alongside healthy active growth and a normal dry-down.
 
 - Judge dryness below the rocky top layer, not from the appearance of the rocks.

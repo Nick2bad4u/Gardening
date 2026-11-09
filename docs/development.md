@@ -9,7 +9,7 @@ npm ci
 ## Node diagnostic reports
 
 Files named `report.YYYYMMDD.HHMMSS.pid.thread.sequence.json` are Node.js
-diagnostic dumps, separate from the garden's daily reports. Store them in the
+diagnostic dumps. Store them in the
 ignored `reports/node/` directory. Its checked-in README keeps that directory
 available in fresh checkouts.
 
@@ -43,9 +43,6 @@ This prepares the explicitly allowed public assets and starts Astro at `http://1
 | Individual profile              | `/Gardening/plants/pachira-glabra/` |
 | Live tracker                    | `/Gardening/tracker/`               |
 | Pot history                     | `/Gardening/pots/P21/`              |
-| Latest reviewed report          | `/Gardening/report/`                |
-| Latest pocket report            | `/Gardening/pocket-report/`         |
-| Report archive                  | `/Gardening/reports/`               |
 | Collection photos               | `/Gardening/photos/`                |
 | Care guides                     | `/Gardening/guides/`                |
 | Current setup                   | `/Gardening/setup/`                 |
@@ -65,21 +62,21 @@ consumers share the pending read. The placement map uses this reader for its com
 tracker and pot-history pages validate both feeds before replacing their saved
 pair. Failed refreshes keep the saved source-read time and display a failure.
 
-The snapshot is bounded to 1,048,576 serialized characters and keyed by the complete source URLs and schema. Invalid, expired, future-dated, or incompatible snapshots are ignored; blocked or full browser storage leaves ordinary network reads working. Storybook paths do not persist synthetic observations. `docs/layouts/plant-sheet-cache.js` manages storage and refresh coordination; `plant-tracker-data.js` validates the CSV pair and applies the existing data calculations. Keep this browser cache out of report preparation: daily reports require new live reads, not a saved website preview.
+The snapshot is bounded to 1,048,576 serialized characters and keyed by the complete source URLs and schema. Invalid, expired, future-dated, or incompatible snapshots are ignored; blocked or full browser storage leaves ordinary network reads working. Storybook paths do not persist synthetic observations. `docs/layouts/plant-sheet-cache.js` manages storage and refresh coordination; `plant-tracker-data.js` validates the CSV pair and applies the existing data calculations.
 
 ## Maintained sources and page boundaries
 
 - `site/pages/` defines individual routes. Plant profile routes use slugs; pot histories use permanent P-IDs because several botanical profiles can share one weighed container.
 - `site/components/` contains the shared page layout, navigation, plant cards, profiles, document articles, and tool presentation. `site/styles/` holds design tokens and maintained styles. `site/client/` holds browser enhancements.
-- `site/lib/` contains build-time content adapters, route resolution, legacy redirects, and reviewed-report loading. Profile parsing comes from `site/lib/content/profile-source.mjs`; its validated input remains the maintained Markdown under `docs/plants/` and the photo manifests.
+- `site/lib/` contains build-time content adapters, route resolution, and legacy redirects. Profile parsing comes from `site/lib/content/profile-source.mjs`; its validated input remains the maintained Markdown under `docs/plants/` and the photo manifests.
 - `docs/equipment/inventory.md` remains the equipment catalog. Care and setup Markdown remain the source for their web pages. Do not maintain another editable copy inside an Astro template.
 - `docs/layouts/plant-profile-data.json` remains the profile-to-pot mapping. The existing `plant-tracker-data.js` and `plant-charts.js` modules retain spreadsheet parsing and measurement calculations. Website layout work does not authorize changing their data semantics.
-- `docs/daily-reports/YYYY-MM-DD.json` contains reviewed report inputs. The renderer preserves source timestamps, incomplete coverage, and historical schema distinctions; it never reads private Sheets or makes new watering decisions during a build.
+- `docs/archive/daily-reports/` preserves retired inputs and historical guidance. These JSON files are not current care instructions or rendered report content. Old report routes show retirement notices.
 - `astro.config.ts` controls typed static-output options, the `/Gardening/` base, and the explicitly prepared public directory. `tsconfig.astro.json` extends Astro's `strictest` preset, including exact optional properties and unchecked-index checks, with verbatim module syntax and index-signature access enforced. `.cache/site-public/` and `.pages-site/` are generated artifacts, not content sources.
 
 Markdown rendering uses the existing `remark-html` sanitization. Resolve relative links from their source document through the shared route map. Preserve exact scientific names, identity qualifiers, nursery evidence, acquisition dates, labels, and source citations. The homepage and directory must not embed complete profile bodies.
 
-Ordinary HTML navigation replaces booklet pagination and reader shortcuts. Keep long-page contents links, visible keyboard focus, 44 px touch targets, reduced-motion behavior, and the `gardening-site-theme` preference. Individual profiles, reports, and applicable setup pages have print styles; there is no print-all collection mode.
+Ordinary HTML navigation replaces booklet pagination and reader shortcuts. Keep long-page contents links, visible keyboard focus, 44 px touch targets, reduced-motion behavior, and the `gardening-site-theme` preference. Individual profiles and applicable setup pages have print styles; there is no print-all collection mode.
 
 ## Build and publication
 
@@ -97,16 +94,9 @@ The builder uses an explicit asset allowlist and contained-path checks. Do not p
 
 Old root fragments, `/docs/plant-booklet/` bookmarks, and `/layouts/*.html` addresses have small compatibility redirects. Keep nested plant/photo anchors and history P-ID or label query handling working. Update maintained links to canonical routes, but retain these aliases for existing bookmarks. A redirect must not load a retired all-profile document.
 
-For an authorized deployment, push the reviewed commit normally to `main`, follow **Website Checks and Pages** for that exact commit through deployment, and verify the public homepage, a profile, a shared-pot history, the latest and dated reports, legacy bookmarks, and image/icon assets. A successful push alone does not confirm publication. The preceding site commit for the Astro migration is `ef789f7059d58a10653921a4e5e1f74c2120b5c2`. If rollback is needed, inspect subsequent work and revert the migration in a new commit, then run the preceding build and deployment workflow; do not reset or force-push shared history. Revert the scheduled task's publication instructions in coordination with a rollback because the preceding site expects committed report HTML.
+For an authorized deployment, push the reviewed commit normally to `main`, follow **Website Checks and Pages** for that exact commit through deployment, and verify the public homepage, a profile, a shared-pot history, the retired report bookmarks, legacy bookmarks, and image/icon assets. A successful push alone does not confirm publication. The preceding site commit for the Astro migration is `ef789f7059d58a10653921a4e5e1f74c2120b5c2`. If rollback is needed, inspect subsequent work and revert the migration in a new commit, then run the preceding build and deployment workflow; do not reset or force-push shared history.
 
-For reports:
-
-```powershell
-npm run check:daily-report
-npm run build:daily-report
-```
-
-The first command validates the reviewed report inputs and their rendering. The second also writes a standalone ignored preview under `.cache/daily-report-preview/`. Use the Astro development route to review the report with full site navigation. Daily publication commits the reviewed dated JSON, not generated site HTML; follow the report-specific instructions and existing scheduled-task authority.
+The daily report pipeline is retired. See the [archive](./archive/daily-reports/README.md) for preserved inputs and the immutable previous implementation. Do not resume the paused report automation as part of a website deployment or rollback.
 
 ### Home-screen entries
 
@@ -131,15 +121,12 @@ inherit the homepage's app identity.
 | `/setup/`           | Garden Setup        |
 | `/setup/equipment/` | Equipment           |
 | `/setup/placement/` | Placement           |
-| `/reports/`         | Report Archive      |
 | `/search/`          | Garden Search       |
-| `/report/`          | Full Report         |
-| `/pocket-report/`   | Pocket Report       |
 
 Routes above are relative to the configured `/Gardening/` site base. The static
 `[...app]/manifest.webmanifest.ts` endpoint generates each route's manifest from
 the same registry. App IDs contain no query or fragment, and each start URL
-stays within its declared scope. Keep the existing report IDs, manifest paths,
+stays within its declared scope. Keep existing active app IDs, manifest paths,
 and icon URLs stable when adding entries. Generated PNGs retain the public
 `assets/report-apps/` directory for compatibility; their source is the explicit
 app registry and canonical SVG exports, not a broad asset-directory scan.
@@ -156,9 +143,7 @@ still require a successful live read. See
 [Edge's optional service-worker guidance](https://learn.microsoft.com/en-us/microsoft-edge/progressive-web-apps/how-to/#a-service-worker-is-optional)
 for the distinction between installation and offline support.
 
-The latest full and pocket reports share `LatestReportPage.astro` and the same reviewed JSON. `/report/` supplies the **Full Report** name and blue document icon. `/pocket-report/` supplies **Pocket Report** and an amber pocket icon, opening the existing pocket list by default. Explicit pot fragments take precedence; `/report/#pocket-list` remains a working bookmark.
-
-Each launch page links its own static manifest with a distinct fragment-free ID, route scope, and start URL. Names and SVG/PNG fallbacks also appear in the page head for home-screen shortcuts. The pocket start URL includes `#pocket-list`; the fragment is a scroll target, not the app identity. All URLs use the configured site base, including isolated Storybook builds. Canonical vectors stay in `assets/artwork/plant-icons.svg`; the public asset preparation generates 192/512-pixel PNGs. No service worker or offline report cache is added. A home-screen entry still opens the latest **published** review, whose source timestamp and stale-report warning remain visible.
+Each launch page links its own static manifest with a distinct fragment-free ID, route scope, and start URL. Names and SVG/PNG fallbacks also appear in the page head for home-screen shortcuts. All URLs use the configured site base, including isolated Storybook builds. Canonical vectors stay in `assets/artwork/plant-icons.svg`; public asset preparation generates 192/512-pixel PNGs. Retired report routes have no app identity or manifest.
 
 To add the distinct entries in Edge on Android, open each launch URL and use **Add to home screen / Install app**. Existing shortcuts may need to be recreated to pick up the new name and icon; actual launcher behavior must be checked on the phone. These entries share one site origin, so site permissions and browser storage are shared. The main app's scope contains the section apps; use the browser's manual install menu if an automatic install banner is absent.
 
@@ -293,7 +278,6 @@ npm run lint:style
 npm run lint:remark
 npm run lint:html
 npm run check:artwork
-npm run check:daily-report
 npm run check:logger
 ```
 

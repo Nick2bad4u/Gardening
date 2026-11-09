@@ -20,7 +20,7 @@ Read alongside the [watering strategy](./watering-strategy.md), [weighing strate
 | AppSheet Bulk Log                                            | Water, individual weights, combined Water + weigh, and supported shared-care rounds.                              | Writes to App bulk staging, then the bridge creates the per-plant History records.                                             |
 | History, History view, dashboards, Pxx pages, public tracker | Review, comparisons, charts, and history.                                                                         | Derived/read-only views are not a second place to type canonical measurements. Use the supported correction flow for an error. |
 
-Quick log is hidden for compatibility; use the mobile logger or AppSheet for routine entry. Use the daily report for the care plan.
+Quick log is hidden for compatibility; use the mobile logger or AppSheet for routine entry.
 
 **History** is the canonical observation ledger. **History view** is its sorted projection. AppSheet staging and a local browser queue are not confirmation that a record has reached History. The [AppSheet companion guide](./appsheet-companion.md#data-ownership-and-save-path) explains the bridge and receipts.
 
@@ -410,7 +410,7 @@ Do not delete entire History rows, overwrite a formula on a Pxx page, or repeate
 | Only wrote a dated note with no selected event or measurement | Notes-only entry where supported                                  | An automatic Note record.                                                          |
 | Noticed a mistake in a saved Water amount                     | Correct that Water event with a reason                            | A reviewed replacement for that event; the accompanying Weigh row is unchanged.    |
 
-These examples explain how to record care. Use the [daily report policy](./daily-weighing-watering-prompt.md) and each plant's readiness checks to decide which care is due.
+These examples explain how to record care. The retired daily report policy is not the current care plan; measurement records do not replace plant-specific readiness checks.
 
 ## Sources and Implementation References
 

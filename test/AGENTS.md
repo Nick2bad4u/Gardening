@@ -28,7 +28,7 @@
 - `.storybook/prepare-pages.mjs` builds the actual Astro routes into
   `.cache/storybook-pages`, with the `/Gardening/storybook/preview/` base. It
   injects `stories/fixtures/page-bootstrap.js` before page scripts for isolated
-  storage and synthetic Sheet responses; reports use `fixtures/daily-report.json`.
+  storage and synthetic Sheet responses.
   Fixture builds disable analytics and use local photo placeholders. Never use
   a production save as a test fixture.
 - The development fixture server maps known Astro source-map entrypoints back

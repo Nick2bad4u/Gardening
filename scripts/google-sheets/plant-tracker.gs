@@ -17,7 +17,7 @@
    dryDownModelFormula_, installDailyCareDashboard, GARDEN_CYCLE_COMPARISON, GARDEN_ENVIRONMENT_READINGS, GARDEN_RECORDED_LOCATIONS */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.42.1",
+    version: "5.42.2",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -7564,15 +7564,13 @@ function refreshDashboardView_(spreadsheet, plants) {
         .getRange(4, 1, 1, 3)
         .merge()
         .setFormula(
-            `=HYPERLINK("${GARDEN_LOGGER.fieldGuideUrl}layouts/daily-report.html","Open daily care report ↗")`
+            `=HYPERLINK("${GARDEN_LOGGER.fieldGuideUrl}watering/","Open watering map ↗")`
         )
         .setWrap(true);
     sheet
         .getRange(4, 4, 1, 5)
         .merge()
-        .setValue(
-            "Model dates are estimates; use daily report and plant checks."
-        )
+        .setValue("Model dates are estimates; use plant and soil checks.")
         .setWrap(true);
     sheet.getRange(5, 1).setValue("Calculated as of");
     sheet

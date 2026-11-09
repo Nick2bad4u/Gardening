@@ -281,13 +281,13 @@ function addDashboard(context) {
         "Dashboard",
         3,
         0,
-        '=HYPERLINK("https://nick2bad4u.github.io/Gardening/layouts/daily-report.html","Open daily care report ↗")'
+        '=HYPERLINK("https://nick2bad4u.github.io/Gardening/watering/","Open watering map ↗")'
     );
     write(
         "Dashboard",
         3,
         3,
-        "Model dates are estimates; use daily report and plant checks."
+        "Model dates are estimates; use plant and soil checks."
     );
     prepareRequests.push({
         mergeCells: {
@@ -534,7 +534,7 @@ function addInsights(context) {
         "Insights",
         2,
         19,
-        "Past watering gaps describe history; model dates require the daily report and plant checks."
+        "Past watering gaps describe history; use plant and soil checks before watering."
     );
     prepareRequests.push(
         numberFormat(
@@ -883,8 +883,8 @@ function addPlantPages(context, pages, factories) {
             ],
             [
                 36,
-                "Care plan",
-                '=HYPERLINK("https://nick2bad4u.github.io/Gardening/layouts/daily-report.html","Open daily report")',
+                "Watering history",
+                '=HYPERLINK("https://nick2bad4u.github.io/Gardening/watering/","Open watering map")',
             ],
             [
                 38,

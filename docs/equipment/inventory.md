@@ -110,7 +110,7 @@ The September 28 purchase list adds the supplies below. Quantities describe that
 - **[SUPVAN E11 label maker](https://www.amazon.com/dp/B0DKS89T75).** Keyboard/Bluetooth thermal printer for permanent pot labels. The print guide preserves physical labels separately from P-IDs and inventory IDs.
 - **[SUPVAN E10/E11 continuous label tape](https://www.amazon.com/dp/B0CN6KKVSQ).** Four-roll, 15 mm × 6 m black-on-white refill listing. A [SUPVAN E11 protective case](https://www.amazon.com/dp/B0G58LJG2P) stores the printer and accessories.
 - **[House Plant Logbook](https://www.amazon.com/dp/B0GPCDCKS3).** Paper notebook found in the garden orders, alongside the maintained digital records.
-- **Digital garden records.** Google Sheets and the mobile logger hold observations; the field guide, daily report, and Gyazo Collections provide the readable references and photo history. The Android PPFD Meter app supports the owner's light comparisons.
+- **Digital garden records.** Google Sheets and the mobile logger hold observations; the field guide and Gyazo Collections provide the readable references and photo history. The Android PPFD Meter app supports the owner's light comparisons.
 
 ## Stored and Historical Choices
 

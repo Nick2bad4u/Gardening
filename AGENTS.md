@@ -47,9 +47,9 @@
   Its `inventory.md` generates the field guide's equipment page; update it and
   rebuild, never maintain a second catalog in generated HTML.
   `site/` holds the Astro routes, shared components, styles, and browser entry points. `docs/layouts/` retains maintained research, profile mappings, and shared tracker calculation modules.
-- `docs/daily-reports/` contains reviewed dated report inputs. Read its nested
-  `AGENTS.md` and `docs/daily-weighing-watering-prompt.md` before preparing a
-  report. Generated report HTML is not a fresh workbook read.
+- `docs/archive/daily-reports/` preserves retired report inputs and historical
+  guidance. Do not treat archived recommendations or instructions as current care
+  policy, restart the report workflow, or relabel old inputs as fresh observations.
 - `scripts/AGENTS.md` covers build outputs, source/runtime boundaries, and photo
   publication. `test/AGENTS.md` covers Node, Storybook, Playwright, and PowerShell
   tests; also read it when changing `.storybook/` or root test configuration.
@@ -86,8 +86,6 @@
   `houseplants`. Derive counts from current sources: shared containers have several
   profiles but one P-ID history. Synchronize membership across mappings, indexes,
   artwork, manifests, and checks.
-- `npm run build:daily-report` validates reviewed JSON into an ignored preview;
-  the website renders the same decisions. Commit dated reviewed JSON, never HTML.
 - `npm run build:pages` prepares public assets, builds Astro into `.pages-site/`,
   optimizes selected images, installs production analytics, and appends Storybook.
   Preserve the publication allowlist and production-only GTM. Reusable sanitized
@@ -132,9 +130,6 @@
   Never force-push, rewrite history, delete unrelated work, or fabricate production
   observations. Retain every backup, integrity, validation, and deployment
   safeguard in these instructions and applicable runbooks.
-- Scheduled daily-report publication retains its report-specific scope and
-  runbook; its limited scope does not restrict separately requested changes under
-  the standing authorization above.
 - Keep credentials, private tokens, precise home-location data, and unnecessary
   personal information out of documentation, HTML, image metadata, and fixtures.
 - Review the final diff for internal consistency, broken relative links, stale

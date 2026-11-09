@@ -12,7 +12,7 @@ function createSite({ blockedStorage = false, theme = "light" } = {}) {
     const window = new Window({ url: "https://example.test/Gardening/" });
     onTestFinished(async () => window.happyDOM.close());
     window.document.documentElement.dataset["theme"] = theme;
-    window.document.body.innerHTML = `<button id="theme-toggle"><span id="theme-label"></span></button><button data-menu-toggle aria-expanded="false">Menu</button><nav id="site-nav"><a href="/Gardening/plants/">Plants</a></nav><main><input aria-label="Search"><article data-reviewed-date="2000-01-01"><span data-review-freshness></span></article><article data-reviewed-date="2999-01-01"><span data-review-freshness></span></article></main>`;
+    window.document.body.innerHTML = `<button id="theme-toggle"><span id="theme-label"></span></button><button data-menu-toggle aria-expanded="false">Menu</button><nav id="site-nav"><a href="/Gardening/plants/">Plants</a></nav><main><input aria-label="Search"></main>`;
     if (blockedStorage)
         Object.defineProperty(window, "localStorage", {
             get() {
@@ -145,22 +145,6 @@ describe("the modular website shell", () => {
         expect(button?.getAttribute("aria-expanded")).toBe("false");
         expect(nav?.classList.contains("is-open")).toBe(false);
         expect(activation.defaultPrevented).toBe(false);
-    });
-
-    it("distinguishes old and future reviewed reports rather than calling either today's advice", () => {
-        expect.hasAssertions();
-
-        const window = createSite();
-        const cards = window.document.querySelectorAll("[data-reviewed-date]");
-
-        expect(cards[0]?.textContent).toContain("Earlier review");
-        expect(cards[1]?.textContent).toContain("Future-dated review");
-        expect(cards[0]?.getAttribute("data-fresh")).toBe("false");
-
-        cards[0]?.setAttribute("data-reviewed-date", "2999-02-01");
-        window.dispatchEvent(new window.Event("pageshow"));
-
-        expect(cards[0]?.textContent).toContain("Future-dated review");
     });
 });
 

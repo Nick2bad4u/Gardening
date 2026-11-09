@@ -12,28 +12,6 @@ import { siteUrl } from "./routes.mjs";
  * }} SiteApp
  */
 
-/** @type {SiteApp} */
-export const fullReportApp = {
-    description:
-        "The latest reviewed garden report, including evidence and every pot decision.",
-    fragment: "",
-    icon: "full-report",
-    name: "Full Report",
-    route: "report/",
-    themeColor: "#24558c",
-};
-
-/** @type {SiteApp} */
-export const pocketReportApp = {
-    description:
-        "The pocket list from the latest reviewed garden report, with the full review below.",
-    fragment: "#pocket-list",
-    icon: "pocket-report",
-    name: "Pocket Report",
-    route: "pocket-report/",
-    themeColor: "#985b1e",
-};
-
 /** @type {SiteApp[]} */
 export const siteApps = [
     {
@@ -135,14 +113,6 @@ export const siteApps = [
         themeColor: "#734957",
     },
     {
-        description: "Browse previously reviewed daily garden reports by date.",
-        fragment: "",
-        icon: "garden-reports",
-        name: "Report Archive",
-        route: "reports/",
-        themeColor: "#795130",
-    },
-    {
         description:
             "Search the garden's plant profiles, guides, equipment, and reference pages.",
         fragment: "",
@@ -151,8 +121,6 @@ export const siteApps = [
         route: "search/",
         themeColor: "#66385f",
     },
-    fullReportApp,
-    pocketReportApp,
 ];
 
 /** @param {string} pathname */

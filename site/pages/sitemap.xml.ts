@@ -7,7 +7,6 @@ import {
     getOldPlans,
     getProfiles,
 } from "../lib/content.mjs";
-import { getReports } from "../lib/reports.mjs";
 import {
     containerUrl,
     potUrl,
@@ -21,13 +20,11 @@ export const GET: APIRoute = async () => {
         profiles,
         guides,
         equipment,
-        reports,
         oldPlans,
     ] = await Promise.all([
         getProfiles(),
         getGuides(),
         getEquipmentDocs(),
-        getReports(),
         getOldPlans(),
     ]);
     const containers = await getContainers();
@@ -39,8 +36,6 @@ export const GET: APIRoute = async () => {
             "containers/",
             "tracker/",
             "watering/",
-            "report/",
-            "reports/",
             "photos/",
             "guides/",
             "guides/old-plans/",
@@ -62,7 +57,6 @@ export const GET: APIRoute = async () => {
         ...guides.map((doc) => siteUrl(`guides/${doc.slug}/`)),
         ...oldPlans.map((doc) => siteUrl(`guides/old-plans/${doc.slug}/`)),
         ...equipment.map((doc) => siteUrl(`setup/equipment/${doc.slug}/`)),
-        ...reports.map((report) => siteUrl(`reports/${report.date}/`)),
     ];
     const locations = routes
         .map((route) => `<url><loc>${siteOrigin}${route}</loc></url>`)

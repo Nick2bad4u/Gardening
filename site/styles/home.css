@@ -81,41 +81,6 @@
         font: 500 2rem/1 var(--font-display);
     }
 }
-.review-banner {
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-    padding: 1.75rem 2rem;
-    background: var(--surface-soft);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-}
-.review-icon {
-    padding: 0.8rem;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    border-radius: 50%;
-}
-.review-banner h2 {
-    margin-block-end: 0.5rem;
-    font-size: 1.75rem;
-}
-.review-banner p {
-    margin-block-end: 0.3rem;
-    font-size: 0.875rem;
-}
-.review-banner .eyebrow {
-    margin-block-end: 0.5rem;
-    font-size: 0.625rem;
-}
-.review-banner .button {
-    flex-shrink: 0;
-    margin-inline-start: auto;
-}
-.review-banner .review-freshness {
-    font-size: 0.75rem;
-    color: var(--muted);
-}
 .home-collections {
     display: grid;
     grid-template-columns:
@@ -250,17 +215,6 @@
         & > div {
             padding-inline-end: 1rem;
         }
-    }
-    .review-banner {
-        flex-wrap: wrap;
-        gap: 1rem;
-        padding: 1.25rem;
-    }
-    .review-icon {
-        display: none;
-    }
-    .review-banner .button {
-        margin-inline-start: 0;
     }
     .recent-photos {
         grid-template-columns:

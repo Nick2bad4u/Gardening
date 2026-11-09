@@ -149,12 +149,6 @@ export const primaryNavigation = [
         section: "containers",
     },
     {
-        href: siteUrl("report/"),
-        icon: "full-report",
-        label: "Daily Report",
-        section: "report",
-    },
-    {
         href: siteUrl("tracker/"),
         icon: "tracker",
         label: "Tracker",

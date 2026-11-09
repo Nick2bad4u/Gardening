@@ -1,29 +1,10 @@
 # Weighing Strategy
 
-Updated: 2026-09-21. This guide documents the owner's requested transition from frequent learning measurements to fewer, better-timed weigh-ins. The daily chat report and generated report page are the maintained care plan; the Daily care worksheet is retired.
+Updated: 2026-11-09. The daily report and its adaptive weighing schedule are retired. This reference retains measurement handling and model interpretation; it does not prescribe the owner's current weighing cadence. The former policy remains in the [historical archive](./archive/daily-reports/README.md).
 
-Read alongside the [watering strategy](./watering-strategy.md), [logger action guide](./logger-actions.md), and [daily task prompt](./daily-weighing-watering-prompt.md).
+Read alongside the [watering strategy](./watering-strategy.md) and [logger action guide](./logger-actions.md).
 
-## The Goal: Fewer Useful Measurements
-
-Frequent early weighing helps establish how a particular plant, pot, and medium behave. Once that evidence becomes useful, it should reduce routine work. The long-term aim is the fewest measurements that still support timely decisions and keep the learned pattern honest.
-
-**Four to six pots is an example of a lighter day, not a quota, floor, or cap.** One, two, or zero can be appropriate. A larger group can also be due together. Do not add measurements to fill a list, postpone important readings to make the count look good, or water on staggered days merely to spread the weighing workload.
-
-Reviewing every active container's existing data each morning does not require physically weighing every container. A shared planter counts as one weighed assembly even when several plants live in it.
-
-The active roster has **35 tracked containers: P01–P32, P35, P36 and P37**. Shared containers receive one whole-pot weight; separate botanical profiles do not create additional weigh-ins.
-
-## What Exists Today
-
-| Surface                         | Current role                                                                                                                                                                                                                                                                                      |
-| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Daily AI task instructions      | The [saved prompt](./daily-weighing-watering-prompt.md) requests an adaptive per-pot schedule that can reduce routine weighing below the former daily/every-other-day cadence when evidence supports it. The daily chat report and generated page apply this policy to freshly reviewed evidence. |
-| Logger Not weighed today filter | Shows collection progress within the care day. It is a filter, not a list of plants that must be weighed.                                                                                                                                                                                         |
-| Dry-check window                | A forecast of approaching a historical mass reference. It is not the next appointment to weigh.                                                                                                                                                                                                   |
-| Water date*                     | A conditional care-planning date. It does not authorize watering from weight alone.                                                                                                                                                                                                               |
-
-The daily report uses this adaptive policy alongside the validity, correction, watering, and measurement rules below.
+Shared containers receive one whole-pot weight; separate botanical profiles do not create additional weigh-ins. The [collection inventory](./collection.md) records the maintained roster.
 
 ## What Makes a Weight Comparable
 
@@ -80,53 +61,21 @@ Recent, better-fitting cycles receive more influence, including a 60-day recency
 
 Forecast windows widen with weak or variable evidence. They are planning ranges, not statistical confidence intervals or promises that nothing can happen earlier. The model withholds very distant forecasts beyond its implemented 90-day horizon from the last observation; a displayed window still does not justify waiting that long without useful intermediate evidence.
 
-### Keep Learning Without Repeating the Initial Work Forever
+## Limits of Weight Evidence
 
-Not every later cycle needs intensive daily sampling. A reliable historical estimate is the benefit of the earlier work. Preserve occasional intermediate points and periodically obtain a well-sampled completed cycle so usable history can remain recent.
-
-There is a tradeoff: a cycle with too few measurements may help the current care decision but fail the training criteria. Do not label it a newly learned cycle just because a lighter schedule was desired. If qualifying evidence ages out, the pot's setup changes, or current behavior contradicts history, increase sampling for that pot temporarily.
-
-## Choosing Today's Small Subset
-
-1. **Read the current evidence for every active container.** Include new waterings, corrections, exact weight times, current setup, model support, and unresolved alerts. Use current records rather than a previous day's report.
-2. **Remove already-satisfied work.** A confirmed eligible weight is different from a queued draft. Do not ask for a duplicate merely because a filter or date changed.
-3. **Prioritize necessary follow-ups.** Missing post-water anchors, credible measurement problems, genuinely overdue observations, and pots approaching or at a relevant window come first.
-4. **Choose a few flexible learning samples only when useful.** Favor the pot for which a reading would reduce meaningful uncertainty or prevent its evidence becoming stale. An unfamiliar curve is a reason to plan learning, not an automatic lifelong daily assignment.
-5. **Spread flexible work within defensible windows.** Use each pot's last actual reading and current evidence. Do not use fixed groups that can put a rapidly changing pot on the wrong day.
-6. **Explain exceptions briefly.** If many pots really need weights today, include them. If none needs one, the report can say “No weigh-ins due” after a complete review.
-
-For any request, the useful question is: **What will this weight help decide or validate?** If missing leaf-cycle, drainage, or other plant-specific confirmation is the only obstacle to watering, another gram reading may not resolve it. The daily report should retain any plant-specific Check-only exception, distinguish it from Water candidates, and avoid repeated weights that cannot resolve the missing evidence. A dry-reference hit alone stays in the hold/monitor category until a plateau is confirmed; another same-evening weight should not be requested merely to force that signal.
+Another gram reading cannot establish missing leaf-cycle, drainage, or root-zone moisture evidence. Do not prolong drought or repeat same-session weights merely to obtain a plateau.
 
 ### Partial-Drying Houseplants
 
 **P31 / #7 [Peperomia Bicolor](./plants/houseplants/peperomia-obtipan-bicolor.md)** and **P32 / #8 [Tricolor oyster plant](./plants/houseplants/tradescantia-spathacea-tricolor.md)** need manual partial-drying checks rather than a cactus-style whole-pot plateau. Peperomia should partially dry without prolonged drought; the oyster plant uses an upper 1–2-inch check scaled to its actual root-ball depth once measured. The [watering exceptions](./watering-strategy.md#collection-exceptions) link the supporting species guidance.
 
-Request a weight when it can establish a real baseline, clarify a changing trend, check a credible measurement problem, or support a justified follow-up. Missing root-zone moisture or plant-condition evidence calls for that physical check; repeated weights cannot supply it. Keep their Check-only decisions separate from main Water candidates, and do not prolong drought to obtain a flat curve. Start their weight history with actual measurements during ordinary care.
+Request a weight when it can establish a real baseline, clarify a changing trend, check a credible measurement problem, or support a justified follow-up. Missing root-zone moisture or plant-condition evidence calls for that physical check; repeated weights cannot supply it. Do not prolong drought to obtain a flat curve. Start their weight history with actual measurements during ordinary care.
 
 **P41 / #15 [Alpine Spires Chinese evergreen](./plants/houseplants/aglaonema-commutatum-alpine-spires.md)** also uses manual moisture checks, as the upper mix begins to dry. Its pot setup and initial measurements are unrecorded, and repotting is planned. Keep any real weights and compatible last-two changes as observations; do not request a cactus dry baseline, plateau, model calibration, or repeated weigh-ins merely to initialize this new record. Record the actual weighed assembly and setup after repotting before comparing its trend.
 
 ### Leaf-Cycle Plants
 
 The same evidence rule applies to **P35 / #9 shared Lithops**, **P36 / #10 split rock**, and **P28 / G3 Royal Flush**: another weight cannot establish the leaf-replacement stage. Their [manual watering exceptions](./watering-strategy.md#collection-exceptions) take priority over a weight-only forecast. P35 is now one shared pot and P36 a separate pot, both repotted into **setup 2 on September 23**. Their initial setup-2 Routine weights are **1247 g for P35** and **713.5 g for P36**, with Dry medium and firm plants recorded separately. Neither is a verified dry baseline, and neither repot batch records a Water event. Keep nursery/setup-1 observations outside the new setup's comparisons; weigh the entire P35 container once, not its four visible heads separately.
-
-### Avoid Indefinite Deferral
-
-Anchor a proposed next observation to actual records and a plausible measurement window. Do not recalculate “today plus three days” every morning while no new evidence arrives. That would continually move the appointment away.
-
-Carry genuinely overdue evidence-based follow-ups into today. An old every-other-day flag alone need not make an otherwise predictable pot urgent under the adaptive policy, but every deferral still needs a reason. When a longer gap cannot be justified, use the repository's conservative cadence temporarily for the affected pot.
-
-## Examples of the Policy
-
-Use these examples to choose which measurement would help next.
-
-| Evidence today                                                                                                           | Reasonable scheduling response                                                                                                            |
-| ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| Several compatible completed cycles, a recent confirming weight, and ample time before the early edge of a stable window | Defer today's routine weighing; keep the next evidence-based sample anchored to the latest actual reading.                                |
-| Only one such pot needs an intermediate sample; the others have fresh evidence                                           | Weigh that one pot. Do not add three to five more merely to fill the list.                                                                |
-| A pot reaches its relevant window sooner than its neighbors                                                              | Bring that pot forward. A rotation group does not outrank its evidence.                                                                   |
-| A new setup has no valid history                                                                                         | Collect a useful sequence during normal care, using closer spacing where justified. Do not infer its behavior from the old pot's weights. |
-| Eight pots have necessary follow-ups together                                                                            | Request all eight and explain the reason. The workload preference is not a cap.                                                           |
-| Every active pot has been reviewed and no useful measurement is due                                                      | Request zero weigh-ins.                                                                                                                   |
 
 ## Understanding the Weight Metrics
 
@@ -150,22 +99,13 @@ Negative signed change means the weight fell. Positive loss rate means drying-re
 
 The workbook uses **America/New_York** and a **4 a.m. local care-day boundary**, including daylight-saving changes. A Monday 3 a.m. reading belongs to Sunday's care-day progress; Monday begins at 4 a.m. The observation keeps its actual Monday timestamp. The rollover uses local wall time, not an assumed fixed UTC offset.
 
-Rollover alone is not a reason to repeat a recent reading at 9 a.m. The daily task should use the actual elapsed time and adaptive need. A new watering after that reading or a genuine measurement problem can justify a further weight.
+Rollover alone is not a reason to repeat a recent reading at 9 a.m. Use actual elapsed time when comparing observations. A new watering after that reading or a genuine measurement problem can justify a further weight.
 
 **Queued** means the device is holding an entry. **Saved today** means the relevant observation has been confirmed in History for that care day. Send or recover the existing request before entering it again; a retry should retain its original identity. See [saving and corrections](./logger-actions.md#saving-queues-and-corrections).
 
-## What Causes the Schedule to Tighten Again
-
-- A real repot or changed weighing setup invalidates comparison with old-setup anchors.
-- Changed light, airflow, temperature, or plant activity may make the earlier drying pattern less predictive without changing the setup number.
-- Unexpected gains, rapid loss, conflicting fits, partial watering, or stale evidence can make a closer observation useful.
-- Sparse or aged-out training may require another informative completed cycle.
-
-The model does not automatically interpret an Other note about lighting, prune away an unexplained mass change, or know that a plant is resting. The reviewer must use the recorded context and avoid inventing confidence. Any temporary increase should have an evidence-based reason and a path back to less work.
-
 ## Sources and Implementation References
 
-- [Daily task prompt](./daily-weighing-watering-prompt.md) — the owner's adaptive workload policy and report restrictions.
+- [Retired report archive](./archive/daily-reports/README.md) — historical inputs and the former weighing policy.
 - [Dry-down learning](../scripts/google-sheets/README.md#dry-down-learning) — eligible cycles, forecast basis, and learning limits.
 - [Daily care and Integrity](../scripts/google-sheets/README.md#daily-care-and-integrity) — the retired calendar and maintained integrity checks.
 - [Recent-weight metrics](../scripts/google-sheets/README.md#recent-weights-and-curve-inspection-5220) — signed changes and elapsed-time rates. See the [current detector rules](../scripts/google-sheets/README.md#improved-drying-detector-5230) for plateau evidence.

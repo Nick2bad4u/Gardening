@@ -15,7 +15,7 @@ append-only row on `History`.
 The Dashboard, Insights, Baselines, individual plant tabs, and public website
 all read from that shared history.
 
-For everyday use, see the [watering strategy](../../docs/watering-strategy.md), [weighing strategy](../../docs/weighing-strategy.md), and [complete action guide](../../docs/logger-actions.md). The daily chat report and generated report page provide the adaptive care plan. The retired Daily care sheet is no longer a source or a second schedule.
+For everyday use, see the [watering map](https://nick2bad4u.github.io/Gardening/watering/), [watering strategy](../../docs/watering-strategy.md), [weighing strategy](../../docs/weighing-strategy.md), and [complete action guide](../../docs/logger-actions.md). Daily reports are archived. Use recorded history alongside current plant and soil checks; elapsed days and model estimates are not watering instructions. The retired Daily care sheet remains unused.
 
 The [sensor import runbook](SENSOR-IMPORT.md) covers the separate Garden Sensor
 History workbook and private original-export archive. Local preparation commands
@@ -37,6 +37,38 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## November 9 daily-report retirement
+
+Daily reports are archived at the owner's request. The watering map remains a
+record of elapsed time and the latest recorded watering; current plant and soil
+checks guide watering decisions.
+
+A verified owner-only
+[native backup](https://docs.google.com/spreadsheets/d/1RtY4nc9WzR8NtCtsSUbdaUKXo8YwnDzXQhxcb_5k1cY/edit)
+preceded an **81-cell** navigation update, verified on November 9 at **02:13 EST**.
+Dashboard **A4** now opens the watering map, **D4** points to plant and soil
+checks, and **Insights T3** describes watering gaps as history. All **39 plant
+pages** use **A36** for the Watering history label and **D36** for the map link.
+The **40 hyperlink formulas and their stored link URIs** now point to
+`/Gardening/watering/`.
+
+Before/after comparison preserved all captured entered values and formulas in
+**History A1:BO50001**, **App entries A1:BG1000**, and **App bulk A1:BY1000**,
+including **2,294 unique observations** and **1,849 request groups**. Every
+changed cell and its captured neighbors matched the backup before the update;
+their formats, notes, and validations were preserved except for the 40 intended
+link URI changes. Full native metadata retained all tabs, chart definitions,
+protections, merges, and dimensions; protection arrays were compared by stable
+ID because Google can reorder them. Full-table captures covered entered values,
+not all table formatting or validation metadata. No observations, schemas,
+AppSheet settings, triggers, or workbook calculations were changed, and no
+installer or broad refresh ran.
+
+The maintained **5.42.2** source prevents Dashboard refreshes from restoring the
+old link. At this workbook verification, production remained **5.42.1 /
+immutable version 130**; **5.42.2 promotion is pending**. The existing deployment
+URL, owner-only access, and execution identity were verified before the update.
 
 ## Latest-watering fertilizer indicator
 
@@ -2912,7 +2944,7 @@ edit a restricted sheet, so warning protection is the useful accidental-edit
 prompt here. Quick log is hidden for compatibility, with no pending inputs.
 
 **Daily care is removed.** Use the existing 9:45 a.m. Eastern daily chat report
-and [generated report page](../../docs/daily-reports/README.md). Dashboard U3/W3
+and [generated report page](../../docs/archive/daily-reports/historical-runbook.md). Dashboard U3/W3
 now link directly to Integrity A4:D21. Integrity B12 no longer scans the deleted
 tab; it continues to exclude the Dashboard indicators to avoid a dependency
 cycle. History, report policy, and the daily schedule are unchanged.
@@ -3083,7 +3115,7 @@ These thresholds are adjustable heuristics, not validated moisture cutoffs.
 History, inferred weight-state rules, and the 22-column model schema are
 unchanged. The daily task runs the same source through
 [`analyze-drying.mjs`](../analyze-drying.mjs); see its
-[snapshot contract](../../docs/daily-reports/README.md#shared-detector-analysis).
+[snapshot contract](../../docs/archive/daily-reports/historical-runbook.md#shared-detector-analysis).
 
 ### Forecast input and guidance audit (5.22.1)
 
@@ -3935,8 +3967,9 @@ whole-pot mass, without converting its slope into a watering instruction.
 
 ### Daily care and Integrity
 
-Daily care was retired on September 16, 2026 at the owner's request. The daily
-chat report and generated report page are the maintained care plan. Do not
+Daily care was retired on September 16, 2026 at the owner's request. Daily
+reports are also archived. Use the watering map for recorded history and
+current plant and soil checks for watering decisions. Do not
 recreate the sheet or run `installDailyCareDashboard()` against production;
 that compatibility installer and its tests document the old workbook layout.
 
@@ -3945,8 +3978,8 @@ linked directly to the visible Integrity sheet. These count check categories,
 not unique plants or observations. Missing results show **Checks unavailable**.
 Integrity's formula-error scan excludes the indicators to avoid a cycle and
 contains no Daily care reference. Latest-weight/time selection, correction
-ordering, recent-weight metrics, and the 4 a.m. care-day boundary remain shared
-logger/report behavior. The signed current-weight difference is in Dashboard I.
+ordering, recent-weight metrics, and the 4 a.m. care-day boundary retain their
+logger behavior. The signed current-weight difference is in Dashboard I.
 
 ### Saved-entry corrections
 

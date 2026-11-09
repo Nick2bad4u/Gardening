@@ -69,12 +69,13 @@
 - Progress: workbook timezone/4 a.m. care days; drying rates: actual intervals.
   Preserve correction order and future/Removed/estimated/invalid/other-setup exclusions.
   Keep reference-reached/plateau evidence separate; neither forecast nor plateau
-  proves dry soil. Report policy: `docs/daily-weighing-watering-prompt.md`.
+  proves dry soil. Use current plant and soil checks for watering decisions.
 
 ## Presentation
 
-- Daily report is the care plan. Exclude retired `installDailyCareDashboard()`
-  from production/menus/refreshes/triggers/sources.
+- Daily reports are archived, and the former Daily care sheet remains retired.
+  Exclude `installDailyCareDashboard()` from production/menus/refreshes/triggers.
+  Link current watering history to the watering map; do not restore report links.
 - Preserve tab order/visibility/formatting/protections, hidden Quick log.
   Whole-sheet warnings must not block logger/AppSheet. RO refills: A20:I/K20:M
   editable, calculated J protected.

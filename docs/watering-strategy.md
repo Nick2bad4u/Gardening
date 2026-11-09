@@ -1,10 +1,10 @@
 # Watering Strategy
 
-For everyday care, start with the [watering quick guide](./watering-quick-guide.md): drying targets, plant groups, and the collection's exceptions. This longer reference explains the measurement and reporting rules behind those decisions.
+For everyday care, start with the [watering quick guide](./watering-quick-guide.md): drying targets, plant groups, and the collection's exceptions. This longer reference explains the measurement concepts behind those decisions.
 
-Updated: 2026-09-23. This guide explains how plant checks, measured weights and the daily report support care decisions. Use the latest daily report for today's pot-by-pot review.
+Updated: 2026-11-09. Daily reports and their plateau-gated recommendation policy are retired. This guide retains measurement interpretation and plant-specific reference guidance; it does not establish a replacement watering policy. Historical report advice remains in the [archive](./archive/daily-reports/README.md).
 
-Read alongside the [weighing strategy](./weighing-strategy.md), [logger action guide](./logger-actions.md), and [daily task prompt](./daily-weighing-watering-prompt.md).
+Read alongside the [weighing strategy](./weighing-strategy.md) and [logger action guide](./logger-actions.md).
 
 ## What We Are Trying to Learn
 
@@ -23,8 +23,6 @@ For the usual cactus and succulent group, the care starting point is a thorough 
 | Water today                     | Current evidence and the plant-specific care rules support watering.                                    | A forecast date alone has authorized it. |
 
 The logger's **Water date*** is conditional; the asterisk matters. Its **Dry-check window** describes uncertainty around approaching a previous mass reference. It is not the next weighing appointment. **Forecast basis** explains which observations support the forecast; it is not a separate care action.
-
-The daily report separates **Water Today**, **Dry reference reached — waiting for plateau**, plant-specific **Check only** exceptions, and useful weighing. Its main Water list requires a confirmed sustained plateau and the current validity/manual guards; a reached dry reference alone stays out of that list. The owner performs the usual moisture/readiness check before watering, so an unlogged routine check alone does not exclude an otherwise supported candidate. Known moisture, root, setup, new-watering, and species restrictions still take precedence. A separately labeled AI assessment can explain an exception without changing the main list or claiming an unsupported plateau is confirmed. Follow the [current report policy](./daily-weighing-watering-prompt.md) rather than a generic calendar.
 
 ## What Wet and Dry References Mean
 
@@ -58,7 +56,7 @@ The current implementation has two signals that can bring a readiness inspection
 - **Previous weight reference reached:** an eligible current weight has reached or crossed the completed dry reference.
 - **Sustained plateau:** the recent tail is small relative to that pot's earlier decline, even if it is still above the old reference.
 
-The current plateau detector uses four readings at least 12 hours apart over 2–10 days, with **no seven-day lockout**. The earlier measured decline must start at least 24 hours after Water, span at least a day, and exceed 4 g; total observed loss must be at least 10 g. Elapsed-time regression rates compare the tail with that earlier decline: tail loss must be at most 20% of the earlier rate, and its spread at most 5% of total loss, with a minimum 2 g allowance. A net tail gain up to 2 g is tolerated as noise; renewed loss exceeding 2 g and 40% of the earlier rate invalidates the plateau. These are adjustable software heuristics, not species-specific moisture limits. The report uses the same detector as the logger. See the [current detector rules](../scripts/google-sheets/README.md#improved-drying-detector-5230).
+The current plateau detector uses four readings at least 12 hours apart over 2–10 days, with **no seven-day lockout**. The earlier measured decline must start at least 24 hours after Water, span at least a day, and exceed 4 g; total observed loss must be at least 10 g. Elapsed-time regression rates compare the tail with that earlier decline: tail loss must be at most 20% of the earlier rate, and its spread at most 5% of total loss, with a minimum 2 g allowance. A net tail gain up to 2 g is tolerated as noise; renewed loss exceeding 2 g and 40% of the earlier rate invalidates the plateau. These are adjustable software heuristics, not species-specific moisture limits. See the [current detector rules](../scripts/google-sheets/README.md#improved-drying-detector-5230).
 
 A supported observed plateau can remain useful without an old dry reference or timely wet anchor. Those missing anchors still prevent a calibrated future forecast. A flat pot with no demonstrated earlier decline remains uncertain.
 
@@ -69,7 +67,7 @@ A plateau can also reflect measurement noise, changed conditions, or poor uptake
 1. **Confirm that the evidence belongs together.** Check the plant/container identity, current setup, actual observation times, last watering, and any corrections or unusual changes. Do not combine old-pot readings with a new setup.
 2. **Locate the current observation on its own curve.** Consider the difference from the old dry reference, recent measured losses, any plateau, and whether the current curve agrees with learned history.
 3. **Apply the plant-specific rule.** A dry-looking surface, a reached forecast date, or another plant being watered is not enough. The exceptions below take precedence over a general cactus routine.
-4. **Choose the supported action.** For the main daily report, require a confirmed plateau and valid plant-specific guards for a conditional Water candidate. Keep reference-only hits in the hold/monitor category, or request a useful weight when due. Keep plant-specific Check-only exceptions separate. Actual watering still requires the usual readiness check; do not invent a water date to complete a table.
+4. **Keep measurements in context.** A historical dry reference or plateau does not establish physical dryness. Preserve the actual readiness evidence and uncertainty; do not invent a water date to complete a table.
 5. **When watering actually occurs, log it accurately.** Record the application style, nutrients if used, and measured volume only if known. Record a separate post-drain weight or include the actual post-drain weight with Water.
 
 There is no automatic extra four- or six-day drought after reaching the reference. Equally, a pot that remains damp should not be watered to satisfy a forecast. The existing [small-pot dryness guidance](./care-notes.md#checking-dryness-in-small-pots) explains the limitations of a skewer observation without treating it as a calibrated test.

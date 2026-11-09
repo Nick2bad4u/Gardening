@@ -386,75 +386,85 @@ describe("plant-page presentation", () => {
         }
     );
 
-    it("preserves formulas, source facts, links, number formats, validations, merges and columns", () => {
-        expect.hasAssertions();
+    it.each(["Care plan", "Watering history"])(
+        "preserves formulas, source facts, links, number formats, validations, merges and columns with %s navigation",
+        (navigationLabel) => {
+            expect.hasAssertions();
 
-        const snapshot = fixture();
-        const original = structuredClone(snapshot);
-        const plan = buildPlantPagePresentationRequests(snapshot);
+            const snapshot = fixture();
+            for (const page of snapshot.sheets) {
+                const label = required(
+                    required(required(page.data[0]).rowData[35]).values?.[0]
+                );
+                label.userEnteredValue = { stringValue: navigationLabel };
+            }
+            const original = structuredClone(snapshot);
+            const plan = buildPlantPagePresentationRequests(snapshot);
 
-        expect(snapshot).toStrictEqual(original);
+            expect(snapshot).toStrictEqual(original);
 
-        apply(snapshot, plan.requests);
-        for (const [index, page] of snapshot.sheets.entries()) {
-            const before = required(original.sheets[index]);
+            apply(snapshot, plan.requests);
+            for (const [index, page] of snapshot.sheets.entries()) {
+                const before = required(original.sheets[index]);
 
-            expect(page.merges).toStrictEqual(before.merges);
-            expect(required(page.data[0]).columnMetadata).toStrictEqual(
-                required(before.data[0]).columnMetadata
-            );
+                expect(page.merges).toStrictEqual(before.merges);
+                expect(required(page.data[0]).columnMetadata).toStrictEqual(
+                    required(before.data[0]).columnMetadata
+                );
 
-            for (let row = 0; row < 38; row++) {
-                for (let column = 0; column < 10; column++) {
-                    const prior = required(
-                        required(required(before.data[0]).rowData[row])
-                            .values?.[column]
-                    );
-                    const after = required(
-                        required(required(page.data[0]).rowData[row]).values?.[
-                            column
-                        ]
-                    );
+                for (let row = 0; row < 38; row++) {
+                    for (let column = 0; column < 10; column++) {
+                        const prior = required(
+                            required(required(before.data[0]).rowData[row])
+                                .values?.[column]
+                        );
+                        const after = required(
+                            required(required(page.data[0]).rowData[row])
+                                .values?.[column]
+                        );
 
-                    expect(after.userEnteredValue?.formulaValue).toBe(
-                        prior.userEnteredValue?.formulaValue
-                    );
-                    expect(after.note).toBe(prior.note);
-                    expect(after.dataValidation).toStrictEqual(
-                        prior.dataValidation
-                    );
-                    expect(
-                        after.userEnteredFormat?.["numberFormat"]
-                    ).toStrictEqual(prior.userEnteredFormat?.["numberFormat"]);
-                    expect(
-                        readField(after, [
-                            "userEnteredFormat",
-                            "textFormat",
-                            "link",
-                        ])
-                    ).toStrictEqual(
-                        readField(prior, [
-                            "userEnteredFormat",
-                            "textFormat",
-                            "link",
-                        ])
-                    );
+                        expect(after.userEnteredValue?.formulaValue).toBe(
+                            prior.userEnteredValue?.formulaValue
+                        );
+                        expect(after.note).toBe(prior.note);
+                        expect(after.dataValidation).toStrictEqual(
+                            prior.dataValidation
+                        );
+                        expect(
+                            after.userEnteredFormat?.["numberFormat"]
+                        ).toStrictEqual(
+                            prior.userEnteredFormat?.["numberFormat"]
+                        );
+                        expect(
+                            readField(after, [
+                                "userEnteredFormat",
+                                "textFormat",
+                                "link",
+                            ])
+                        ).toStrictEqual(
+                            readField(prior, [
+                                "userEnteredFormat",
+                                "textFormat",
+                                "link",
+                            ])
+                        );
+                    }
                 }
+
+                expect(
+                    required(required(page.data[0]).rowData[0]).values?.[0]
+                        ?.userEnteredFormat?.["backgroundColorStyle"]
+                ).toStrictEqual(
+                    required(required(before.data[0]).rowData[0]).values?.[0]
+                        ?.userEnteredFormat?.["backgroundColorStyle"]
+                );
             }
 
             expect(
-                required(required(page.data[0]).rowData[0]).values?.[0]
-                    ?.userEnteredFormat?.["backgroundColorStyle"]
-            ).toStrictEqual(
-                required(required(before.data[0]).rowData[0]).values?.[0]
-                    ?.userEnteredFormat?.["backgroundColorStyle"]
-            );
+                buildPlantPagePresentationRequests(snapshot).requests
+            ).toStrictEqual([]);
         }
-
-        expect(
-            buildPlantPagePresentationRequests(snapshot).requests
-        ).toStrictEqual([]);
-    });
+    );
 
     it("fits long notes using visible merged width, keeps narrow top conditions readable, and never shrinks owner rows", () => {
         expect.hasAssertions();

@@ -1,7 +1,6 @@
 import { expect, test } from "@playwright/test";
 
 const landings = [
-    { icon: "full-report", name: "Full Report", route: "report/" },
     { icon: "garden-containers", name: "Containers", route: "containers/" },
     { icon: "garden-equipment", name: "Equipment", route: "setup/equipment/" },
     { icon: "garden-guides", name: "Care Guides", route: "guides/" },
@@ -10,7 +9,6 @@ const landings = [
     { icon: "garden-placement", name: "Placement", route: "setup/placement/" },
     { icon: "garden-plants", name: "Plant Library", route: "plants/" },
     { icon: "garden-pots", name: "Pot History", route: "pots/" },
-    { icon: "garden-reports", name: "Report Archive", route: "reports/" },
     { icon: "garden-search", name: "Garden Search", route: "search/" },
     { icon: "garden-setup", name: "Garden Setup", route: "setup/" },
     { icon: "garden-tracker", name: "Plant Tracker", route: "tracker/" },
@@ -19,7 +17,6 @@ const landings = [
         name: "Garden Watering Map",
         route: "watering/",
     },
-    { icon: "pocket-report", name: "Pocket Report", route: "pocket-report/" },
 ] as const;
 
 test.describe("garden landing app identities", { tag: "@apps" }, () => {
@@ -119,7 +116,7 @@ test.describe("garden landing app identities", { tag: "@apps" }, () => {
                             landing.route === "watering/"
                                 ? "Watering Map"
                                 : landing.name,
-                        start_url: `${route}${landing.route === "pocket-report/" ? "#pocket-list" : ""}`,
+                        start_url: route,
                     },
                     ok: true,
                     type: expect.stringContaining("application/manifest+json"),

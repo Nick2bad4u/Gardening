@@ -59,11 +59,8 @@ jobs:
                   npm run lint
                   npm run lint:style
 
-            - name: "Verify artwork and reviewed report inputs"
-              run: |
-                  npm run check:artwork
-                  npm run check:daily-report
-                  npm run test:unit -- test/daily-report.test.mjs
+            - name: "Verify artwork"
+              run: "npm run check:artwork"
 
             - name: "Install Chromium and system dependencies"
               run: "npx playwright install --with-deps chromium"

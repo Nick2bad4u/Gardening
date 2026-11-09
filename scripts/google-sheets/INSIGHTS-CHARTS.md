@@ -361,7 +361,8 @@ reads verified the new backup and rehearsal links.
 
 The recent-weight additions use current-cycle measured readings and actual
 elapsed time. **Dashboard Z:AE** shows the five metrics and the curve's
-inspection prompt. Daily care is retired; use the daily report for care planning.
+inspection prompt. Daily care remains retired, and daily reports are archived.
+Use current plant and soil checks for watering decisions.
 
 | Location      | Comparison                                                      |
 | ------------- | --------------------------------------------------------------- |
@@ -410,7 +411,7 @@ estimated dimensions do not establish a measured growth rate.
 
 The **Calculated as of** value at **Insights T2** discloses the shared clock's
 last calculation. It may be cached during an API read. Keep absolute observation
-times and the daily report's evidence review alongside elapsed-age values.
+times alongside elapsed-age values, and check the plant and soil before watering.
 See the [analytics operator guide](WORKBOOK-ANALYTICS.md) for the calendar,
 per-plant evidence, formula ownership, and migration checks.
 

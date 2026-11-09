@@ -77,7 +77,7 @@ export const Home: Story = {
         ).toHaveLength(0);
         await expect(
             document.querySelector("[data-reviewed-date]")
-        ).toBeVisible();
+        ).not.toBeInTheDocument();
         await expectNoOverflow(document);
     },
 };

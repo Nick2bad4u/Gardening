@@ -4,8 +4,8 @@ The original 5.25.0 migration added derived views with a 42-column History
 contract. Its **September 17, 2026** production audit recorded 54 tabs, 147
 charts, and immutable Apps Script version 92; see the historical
 [rollout record](#rollout-record). The maintained 5.35.0 extension below adds
-care-event fields, temperature, and recorded-location evidence while preserving
-the daily report's care policy. Deployment status belongs in the
+care-event fields, temperature, and recorded-location evidence. Watering decisions
+use current plant and soil checks. Deployment status belongs in the
 [main runbook](README.md).
 
 ## Finding the information
@@ -26,8 +26,8 @@ the daily report's care policy. Deployment status belongs in the
 | RO refills O1:T12                   | Latest refill date and gallons, plus each container's latest recorded fill and empty status.                                        |
 
 Dashboard groups secondary columns **L:O** and advanced metrics **Y:AE** into
-collapsible sections. Model-estimate labels and a daily-report link distinguish
-forecast evidence from the reviewed care plan. The Waterings header note
+collapsible sections. Model-estimate labels distinguish forecasts from recorded
+history, and the watering-map link opens that history. The Waterings header note
 describes recorded events. Short conditions wrap, while full history notes
 remain accessible. Display formats retain the underlying stored precision.
 
@@ -93,7 +93,8 @@ cycle data in A:D, completed-gap comparisons in F:H, and derived plant-color
 series for the cycle chart. Neither helper nor the Watering calendar is an
 AppSheet staging table. Existing protections, owner tab order, hidden Quick log
 compatibility, and RO manual-entry exceptions remain in place. Daily care stays
-retired; the daily report remains the care-planning surface.
+retired, and daily reports are archived. Current plant and soil checks guide
+watering decisions; these views describe recorded evidence.
 
 [`cycle-comparison.mjs`](cycle-comparison.mjs) generates the maintained
 `GARDEN_CYCLE_COMPARISON` server snippet. Its formula takes native History A:AP,

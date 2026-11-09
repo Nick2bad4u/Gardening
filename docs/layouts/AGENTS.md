@@ -12,7 +12,7 @@
 - `plant-profile-data.json` is the maintained profile-to-pot mapping. Plant profile slugs and permanent pot P-IDs are different identifiers; shared pots may have several profiles. Coordinate changes with profiles and shared build validation.
 - `plant-tracker-data.js` and `plant-charts.js` remain shared, runtime-safe browser modules. Keep imports explicit with `.js` extensions and use the ES2024 browser baseline. Node build dependencies must not become browser dependencies.
 - Modern pages expose `data-site-base` on the HTML element. Use it when generating canonical pot/profile URLs; retain standalone-fixture compatibility. Keep source query parameters and unknown-pot errors working through the compatibility route.
-- The photo gallery reads public collection manifests through the Astro content adapter. Reviewed reports read dated JSON; follow `../daily-reports/AGENTS.md`. Do not edit generated `.pages-site/` output.
+- The photo gallery reads public collection manifests through the Astro content adapter. Daily reports are retired; their archived inputs are not current care guidance. Do not edit generated `.pages-site/` output.
 - Layout drawings present recorded evidence. Follow `table-placement-research.md`, preserve orientation and permanent labels, and mark inferred dimensions/light distribution as estimates. Keep old calendar and diagram assumptions visibly historical. Moving a pot or table does not itself reset its weighing setup or watering references.
 - Archived calendar completion and compact-view settings retain `gardening-indoor-calendar-completed` and `gardening-indoor-calendar-hide-empty`. SVG plant markers are SVG elements, not HTML elements; preserve pointer and keyboard interactions when narrowing DOM types.
 
@@ -47,10 +47,7 @@
   `plant-charts.js`. Keep removed/superseded records, missing values, setup
   boundaries, actual timestamps, and incomplete watering cycles consistent
   with the logger contract. A missing reading is not a zero-weight point.
-- Keep public pages read-only with respect to the live workbook. The daily
-  report is a dated reviewed snapshot; preserve its source-read timestamp and
-  stale-date warning. See
-  `../daily-reports/AGENTS.md` before changing its decision semantics.
+- Keep public pages read-only with respect to the live workbook.
 - `watering-history-snapshot.json` is a minimal publication fallback, not a fresh
   workbook read. Refresh it only from a complete reviewed canonical read; retain
   its actual timestamp and only latest active Water/Move fields. Never include
@@ -65,7 +62,7 @@
 
 - Keep table header sorting keyboard-accessible, retain sticky labels on narrow
   screens, and check both ordinary and maximized table views.
-- Run relevant `test/layouts/` or `test/daily-report.test.mjs` unit tests for
+- Run relevant `test/layouts/` unit tests for
   parsing/calculation changes. For interactions, use `test/stories/` and the
   Playwright publication checks described in `test/AGENTS.md`; fixture previews
   must stay separate from live data and production storage.

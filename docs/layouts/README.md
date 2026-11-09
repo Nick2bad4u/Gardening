@@ -16,9 +16,7 @@ The [installed AW200 + AeroLight 240 W](../equipment/aw200-and-aerolight-240w.md
 
 Read the [current placement page](https://nick2bad4u.github.io/Gardening/setup/placement/) for the automatically refreshed **Days since watering** image, PNG/SVG downloads, current written guide, and historical illustration gallery. The watering map uses active published Water observations; unknown histories stay unknown, and elapsed days are not watering instructions. Earlier interactive room and riser diagrams are in the [setup archive](https://nick2bad4u.github.io/Gardening/setup/archive/layout/).
 
-Open the [daily report](https://nick2bad4u.github.io/Gardening/report/) for the latest published watering
-mixes, quick list, and per-pot evidence. The [daily report guide](../daily-reports/README.md)
-explains its dated input, generator, and daily publication.
+The daily report was retired November 9, 2026. Its [historical archive](../archive/daily-reports/README.md) preserves the dated inputs and former guidance; it is not the current care plan.
 
 Open the [plant tracker](https://nick2bad4u.github.io/Gardening/tracker/) for the live collection
 dashboard backed by Google Sheets. The finished workbook includes Dashboard,

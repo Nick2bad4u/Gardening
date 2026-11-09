@@ -1,4 +1,4 @@
-/** Initialize the shared navigation, theme control, and report freshness labels. */
+/** Initialize shared navigation, theme controls, and plant profile analytics. */
 export function initializeSite() {
     trackPlantProfile();
     const themeButton = document.querySelector("#theme-toggle");
@@ -65,35 +65,6 @@ export function initializeSite() {
         )
             setMenu(false);
     });
-    refreshReportDates();
-    window.addEventListener("pageshow", refreshReportDates);
-    document.addEventListener("visibilitychange", () => {
-        if (!document.hidden) refreshReportDates();
-    });
-}
-
-function refreshReportDates() {
-    const formatter = new Intl.DateTimeFormat("en-CA", {
-        day: "2-digit",
-        month: "2-digit",
-        timeZone: "America/New_York",
-        year: "numeric",
-    });
-    const today = formatter.format(new Date());
-    for (const element of document.querySelectorAll("[data-reviewed-date]")) {
-        if (!(element instanceof HTMLElement)) continue;
-        const date = element.dataset["reviewedDate"];
-        const message = element.querySelector("[data-review-freshness]");
-        if (date !== undefined && date !== "" && message) {
-            const isCurrent = date === today;
-            element.dataset["fresh"] = String(isCurrent);
-            message.textContent = isCurrent
-                ? "Reviewed today · America/New_York"
-                : date.localeCompare(today) > 0
-                  ? "Future-dated review · verify its date before acting"
-                  : "Earlier review · open the report for its date and evidence";
-        }
-    }
 }
 
 function trackPlantProfile() {

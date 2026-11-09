@@ -24,7 +24,7 @@ remaining stock or completed applications.
 The previously used Deadbug bottle is not assumed empty. Its application date,
 plants, and dose were not supplied with this list. The already documented
 September 26 systemic-granule application remains in the
-[September 27 report](https://nick2bad4u.github.io/Gardening/reports/2026-09-27/);
+[archived September 27 report input](https://github.com/Nick2bad4u/Gardening/blob/main/docs/archive/daily-reports/2026-09-27.json);
 these purchase quantities do not replace that treatment record.
 
 ## Choose by the problem

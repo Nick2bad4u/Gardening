@@ -22,7 +22,7 @@ const labels = new Map([
     [32, ["Recorded dose"]],
     [33, ["Plain-water events after feed time"]],
     [35, ["Calculated as of", "🕒 Calculated as of"]],
-    [36, ["Care plan"]],
+    [36, ["Watering history", "Care plan"]],
     [38, ["Dimension evidence"]],
 ]);
 

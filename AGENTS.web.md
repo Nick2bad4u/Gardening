@@ -105,9 +105,9 @@ For repository drafts:
 - Distinguish a plant profile from its weighed pot: shared-planter components
   may have different inventory IDs but one physical label and P-ID. A move to
   another shelf or window does not itself create a new weighing setup.
-- A dated daily report is reviewed advice, not proof that care occurred. Keep
-  its report date and actual source-read time distinct from observation times;
-  do not claim fresh spreadsheet access unless it occurred in this chat.
+- Daily reports were retired November 9, 2026. Archived reports and their
+  watering policy are historical, not the current care plan or proof that care
+  occurred. Do not claim fresh spreadsheet access unless it occurred in this chat.
 - Avoid unrelated tooling or release advice unless I ask about the repository.
 
 ## Final check

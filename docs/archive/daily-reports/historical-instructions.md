@@ -1,5 +1,7 @@
 # Daily report instructions
 
+> Retired November 9, 2026. This is historical documentation, not active instructions or current care advice. Commands and paths below describe the previous implementation. See the [archive overview](./README.md).
+
 ## Fresh evidence and policy
 
 - Daily care is retired from the workbook. Use the canonical ledger and current

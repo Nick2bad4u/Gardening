@@ -4,14 +4,9 @@ import SiteIcon from "../components/SiteIcon.astro";
 import LegacyBookmarks from "../components/LegacyBookmarks.astro";
 import { getCollectionManifest, getProfiles, photoPreview } from "../lib/content.mjs";
 import { getContainers } from "../lib/containers.mjs";
-import { getLatestReport } from "../lib/reports.mjs";
 import { loggerUrl, profileUrl, siteUrl } from "../lib/routes.mjs";
 import "../styles/home.css";
-const [profiles, manifest, report] = await Promise.all([
-    getProfiles(),
-    getCollectionManifest(),
-    getLatestReport(),
-]);
+const [profiles, manifest] = await Promise.all([getProfiles(), getCollectionManifest()]);
 const containers = await getContainers();
 const overviewSlugs = new Set(
     containers.flatMap((container) => (container.overview ? [container.overview.slug] : []))
@@ -67,12 +62,6 @@ const groupCounts = new Map(
             ).length,
     ])
 );
-const reportDate = new Intl.DateTimeFormat("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "UTC",
-}).format(new Date(`${report.date}T12:00:00Z`));
 ---
 
 <SiteLayout title="The Garden">
@@ -141,26 +130,6 @@ const reportDate = new Intl.DateTimeFormat("en-US", {
                 </figcaption>
             </figure>
         )}
-    </section>
-    <section class="review-banner" data-reviewed-date={report.date} aria-labelledby="review-title">
-        <div class="review-icon">
-            <SiteIcon name="care" size={38} />
-        </div>
-        <div>
-            <p class="eyebrow">LATEST REVIEWED REPORT</p>
-            <h2 id="review-title">A plan for the next observation.</h2>
-            <p>
-                <time datetime={report.date}>{reportDate}</time>
-                <span class="review-separator"> · </span>
-                {report.coverage} coverage
-            </p>
-            <p class="review-freshness" data-review-freshness>
-                Reviewed snapshot · check its date before acting.
-            </p>
-        </div>
-        <a class="button button-secondary" href={siteUrl("report/")}>
-            Read the report <span aria-hidden="true">→</span>
-        </a>
     </section>
     <section class="section-block" aria-labelledby="collections-title">
         <div class="section-heading">

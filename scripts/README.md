@@ -4,8 +4,8 @@
 
 The maintained website lives under `site/`, with separate routes, layouts,
 components, styles, and browser modules. Its content adapters read the existing
-plant Markdown, licensed-photo manifests, collection-photo manifests, and
-reviewed daily-report JSON. `build-pages-site.mjs` prepares the public asset
+plant Markdown, licensed-photo manifests, and collection-photo manifests.
+`build-pages-site.mjs` prepares the public asset
 allowlist, builds Astro pages, optimizes published images, and installs
 production analytics. It never changes the logger source or workbook.
 
@@ -63,17 +63,11 @@ pwsh -File scripts/publish-collection-photo.ps1 `
   -WhatIf
 ```
 
-## Daily report
+## Retired daily reports
 
-`build-daily-report.mjs` validates the newest reviewed dated JSON in
-`docs/daily-reports/`. Astro renders the latest report and dated archive pages;
-only reviewed JSON is committed by report publication. See the
-[input and publication guide](../docs/daily-reports/README.md).
-
-```powershell
-npm run build:daily-report
-npm run check:daily-report
-```
+Daily-report generation and publication have been retired. The
+[historical archive](../docs/archive/daily-reports/README.md) preserves the
+reviewed inputs and records where to recover the former implementation.
 
 ## `fetch-plant-images.ps1`
 

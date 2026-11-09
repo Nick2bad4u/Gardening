@@ -6,13 +6,13 @@
   `.pages-site/`. Pull requests validate only; deployment requires a successful
   non-PR run on `main`. Preserve that gate, the `github-pages` environment, and
   deploy-job-only Pages write permissions.
-- Keep the existing type/lint, artwork/report validation, public-site checks, Storybook coverage,
+- Keep the existing type/lint, artwork validation, public-site checks, Storybook coverage,
   and static `/storybook/` smoke checks before artifact upload. Preserve the
   selected-photo cache without publishing `.cache`, private originals, source
   snapshots, credentials, or test coverage as site content.
 - Pages does not deploy Apps Script or write private workbook observations.
-  The daily local task reviews live sources; GitHub builds its reviewed commit.
-  Do not add a second care scheduler or Google account credentials to CI.
+  Daily reports are retired; do not restore their publication workflow or add
+  a care scheduler or Google account credentials to CI.
 - `workflows/logger-coverage.yml` tests and typechecks Apps Script and sends its
   explicit LCOV file to Codecov using OIDC. `workflows/sonarqube-cloud.yml`
   analyzes that source; preserve its fork-PR secret boundary. Neither workflow

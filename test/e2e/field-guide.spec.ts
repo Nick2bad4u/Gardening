@@ -301,7 +301,7 @@ for (const theme of ["dark", "light"] as const) {
                 .toHaveURL(`${base}plants/mammillaria-plumosa/`);
         });
 
-        test("loads a homepage with normal navigation and a dated report", async ({
+        test("loads a homepage with navigation and the care logger", async ({
             page,
         }) => {
             await openSite(page, "", theme);
@@ -529,8 +529,6 @@ test.describe("migration compatibility", { tag: "@routes" }, () => {
         "tracker/",
         "pots/P19/",
         "pots/P20/",
-        "report/",
-        "reports/",
         "photos/",
         "guides/",
         "setup/",

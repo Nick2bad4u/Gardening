@@ -25,13 +25,9 @@ P38 / #12 is the [Terrarium container](https://nick2bad4u.github.io/Gardening/co
 - [Watering quick guide](docs/watering-quick-guide.md) — when to water each plant group, when to wait, and why
 - [Light and moisture reference](docs/light-moisture.md) — plant care cards, working DLI/PPFD ranges, approximate lux, and drying-stage checks
 - [Detailed watering strategy](docs/watering-strategy.md) — how references, curves, readiness, and plant-specific exceptions guide watering decisions
-- [Weighing strategy](docs/weighing-strategy.md) — how learned cycles reduce routine weigh-ins, with no daily quota or cap
+- [Weighing strategy](docs/weighing-strategy.md) — comparable measurements, learned cycles, and the limits of weight evidence
 - [Spreadsheet and logger actions](docs/logger-actions.md) — all action types, structured fields, bulk entry, queues, and corrections
-- [Daily weighing and watering prompt](docs/daily-weighing-watering-prompt.md) —
-  copyable instructions for the 9:45 a.m. Eastern review and daily report publication
-- [Daily garden report](https://nick2bad4u.github.io/Gardening/report/) —
-  a phone-friendly quick list, watering recipes, and expandable weight/plateau evidence,
-  generated from each day's reviewed data; [generator and publishing guide](docs/daily-reports/README.md)
+- [Retired daily report archive](docs/archive/daily-reports/README.md) — preserved historical inputs and guidance; retired November 9, 2026
 - [Live plant tracker](https://nick2bad4u.github.io/Gardening/tracker/) — a mobile-friendly view
   of the Google Sheets log with current status, search and filters, stable
   per-plant history URLs, dry/wet baselines, calculations, charts, and direct
@@ -47,7 +43,7 @@ P38 / #12 is the [Terrarium container](https://nick2bad4u.github.io/Gardening/co
   desktop entry, save receipts, image-first plant cards, watering-age badges,
   all eight collection Insights charts, and interactive per-plant measurement
   and weight charts
-- [The Garden website](https://nick2bad4u.github.io/Gardening/) — a collection homepage, searchable plant directory, individual profiles, reviewed reports, photos, setup, equipment, and care guides. Shared navigation, light/dark themes, and individual print styles work across the site; old booklet bookmarks redirect to their new pages.
+- [The Garden website](https://nick2bad4u.github.io/Gardening/) — a collection homepage, searchable plant directory, individual profiles, photos, setup, equipment, and care guides. Shared navigation, light/dark themes, and individual print styles work across the site; old booklet bookmarks redirect to their new pages.
 - [Plant photo Collections index](https://nick2bad4u.github.io/Gardening/photos/) — a searchable,
   mobile-friendly index of one public Gyazo Collection per current plant plus
   the collection-wide overview timeline

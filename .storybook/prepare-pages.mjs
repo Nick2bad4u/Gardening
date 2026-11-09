@@ -40,7 +40,7 @@ export function injectFixture(html) {
     );
 }
 
-/** Build the real Astro site with deterministic report and network fixtures. */
+/** Build the real Astro site with deterministic network fixtures. */
 export async function preparePages() {
     const fingerprint = await sourceFingerprint();
     const stamp = new URL(".cache/storybook-site.sha256", root);
@@ -108,7 +108,6 @@ async function buildFixture() {
                 env: {
                     ...childEnvironment,
                     ASTRO_SITE_ANALYTICS: "off",
-                    GARDENING_REPORT_INPUT: "test/fixtures/daily-report.json",
                     GARDENING_SITE_BASE: fixtureBase,
                     GARDENING_SITE_FIXTURES: "1",
                     GARDENING_SITE_OUT_DIR: ".cache/storybook-pages",
@@ -150,13 +149,12 @@ async function sourceFingerprint() {
             "scripts/*.mjs",
             "docs/**/*.md",
             "docs/layouts/*",
-            "docs/daily-reports/*.json",
+            "docs/archive/daily-reports/*.json",
             "assets/**/*.json",
             "assets/artwork/*.svg",
             "astro.config.ts",
             "package-lock.json",
             ".storybook/*.mjs",
-            "test/fixtures/daily-report.json",
             "test/stories/fixtures/page-bootstrap.js",
         ],
         { cwd: root }

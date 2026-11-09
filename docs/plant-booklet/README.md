@@ -2,7 +2,6 @@
 
 The booklet has been replaced by a modular Astro website. Browse the
 [plant directory](https://nick2bad4u.github.io/Gardening/plants/),
-[latest reviewed report](https://nick2bad4u.github.io/Gardening/report/),
 [tracker](https://nick2bad4u.github.io/Gardening/tracker/), or
 [photo Collections](https://nick2bad4u.github.io/Gardening/photos/).
 Existing booklet bookmarks redirect to their matching pages.

@@ -29,7 +29,6 @@ const {
     noindex = false,
 } = Astro.props;
 const app = siteAppForPath(Astro.url.pathname);
-const isReportApp = app?.route === "report/" || app?.route === "pocket-report/";
 const canonical = new URL(Astro.url.pathname, siteOrigin).href;
 ---
 
@@ -41,7 +40,7 @@ const canonical = new URL(Astro.url.pathname, siteOrigin).href;
         <meta name="description" content={description} />
         <meta name="theme-color" content={app?.themeColor ?? "#244633"} />
         {noindex && <meta name="robots" content="noindex" />}
-        <title>{(isReportApp ? title : undefined) ?? (title === "The Garden" ? "The Garden · Fenton Collection" : `${title} · The Garden`)}</title>
+        <title>{title === "The Garden" ? "The Garden · Fenton Collection" : `${title} · The Garden`}</title>
         <link rel="canonical" href={canonical} />
         <link
             rel="icon"
@@ -186,10 +185,6 @@ const canonical = new URL(Astro.url.pathname, siteOrigin).href;
                     <a href={siteUrl("setup/equipment/")}>
                         <SiteIcon name="light" />
                         <span>Equipment &amp; supplies</span>
-                    </a>
-                    <a href={siteUrl("reports/")}>
-                        <SiteIcon name="history" />
-                        <span>Report archive</span>
                     </a>
                     <a href={repositoryUrl}>
                         <SiteIcon name="source" />

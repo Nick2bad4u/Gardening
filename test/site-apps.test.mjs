@@ -19,7 +19,6 @@ describe("installed garden app routing", () => {
         ["/Gardening/watering", "Garden Watering Map"],
         ["/Gardening/watering/", "Garden Watering Map"],
         ["/Gardening/plants/peperomia-obtipan-bicolor/", "Plant Library"],
-        ["/Gardening/reports/2026-09-22/", "Report Archive"],
     ])(
         "assigns %s to %s rather than a broader parent identity",
         (pathname, name) => {
@@ -34,6 +33,10 @@ describe("installed garden app routing", () => {
         "/Gardening/plants-extra/",
         "/Gardening/containers-extra/",
         "/Gardening/watering-extra/",
+        "/Gardening/report/",
+        "/Gardening/pocket-report/",
+        "/Gardening/reports/",
+        "/Gardening/reports/2026-09-22/",
         "/Garden/plants/",
     ])("does not offer an unrelated install for %s", (pathname) => {
         expect.hasAssertions();
@@ -46,17 +49,11 @@ describe("installed garden app routing", () => {
         const manifests = siteApps.map((app) => siteManifest(app));
         const identities = new Set(manifests.map((manifest) => manifest.id));
 
-        expect(identities.size).toBe(15);
-        expect(manifests).toHaveLength(15);
+        expect(identities.size).toBe(12);
+        expect(manifests).toHaveLength(12);
         expect([...identities].filter((id) => id.includes("#"))).toStrictEqual(
             []
         );
-        expect(
-            manifests.find((manifest) => manifest.name === "Pocket Report")
-        ).toMatchObject({
-            id: "/Gardening/pocket-report/",
-            start_url: "/Gardening/pocket-report/#pocket-list",
-        });
         expect(
             manifests.find(
                 (manifest) => manifest.name === "Garden Watering Map"

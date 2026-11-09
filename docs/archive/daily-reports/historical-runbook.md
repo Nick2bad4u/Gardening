@@ -1,5 +1,7 @@
 # Daily garden report
 
+> Retired November 9, 2026. This is historical documentation, not active instructions or current care advice. Commands and paths below describe the previous implementation. See the [archive overview](./README.md).
+
 The [daily report](https://nick2bad4u.github.io/Gardening/report/)
 is a static page for the phone: a quick list, watering recipes, searchable
 plant cards, weight changes, plateau evidence, a compact pocket list, and a
@@ -9,7 +11,7 @@ a visible date warning when opened or revisited. Refresh the page to retrieve
 a newly published report; it does not poll or write to the spreadsheet.
 
 The **Garden — Watering & Weighing** task runs at **9:45 a.m. Eastern daily**.
-Its [complete instructions](../daily-weighing-watering-prompt.md) govern the
+Its [complete instructions](./historical-task-prompt.md) govern the
 live review and care recommendations. The owner authorized daily report commits
 and pushes on September 14, 2026. This permission covers report publication;
 it does not authorize recording care, changing workbook formulas, or deploying
@@ -24,16 +26,16 @@ Dashboard and Integrity remain live workbook summaries.
 
 - `YYYY-MM-DD.json` holds the reviewed public report for that Eastern date.
   Historical inputs stay in this directory; Git also records same-day revisions.
-- [Report types](../../types/daily-report.d.ts) define the version 2 input.
-- [Validation and calculations](../../scripts/daily-report-model.mjs) check
+- [Report types](https://raw.githubusercontent.com/Nick2bad4u/Gardening/4688e69e6391e5b116f510bcb8ceaf48936f1bcc/types/daily-report.d.ts) define the version 2 input.
+- [Validation and calculations](https://raw.githubusercontent.com/Nick2bad4u/Gardening/4688e69e6391e5b116f510bcb8ceaf48936f1bcc/scripts/daily-report-model.mjs) check
   coverage, identifiers, timestamps, current-cycle intervals, plateau tails,
   and watering-reason/mix consistency. They calculate the last-two change per
   actual elapsed day, including daylight-saving transitions.
-- [Generator](../../scripts/build-daily-report.mjs) selects the latest dated
-  input and renders the [HTML template](../../scripts/templates/daily-report.html).
-- [Astro report pages](../../site/pages/reports/index.astro),
-  [styles](../../site/styles/report.css), and
-  [browser enhancements](../../site/client/report.js) use the shared site layout.
+- [Generator](https://raw.githubusercontent.com/Nick2bad4u/Gardening/4688e69e6391e5b116f510bcb8ceaf48936f1bcc/scripts/build-daily-report.mjs) selects the latest dated
+  input and renders the [HTML template](https://raw.githubusercontent.com/Nick2bad4u/Gardening/4688e69e6391e5b116f510bcb8ceaf48936f1bcc/scripts/templates/daily-report.html).
+- [Astro report pages](https://raw.githubusercontent.com/Nick2bad4u/Gardening/4688e69e6391e5b116f510bcb8ceaf48936f1bcc/site/pages/reports/index.astro),
+  [styles](https://raw.githubusercontent.com/Nick2bad4u/Gardening/4688e69e6391e5b116f510bcb8ceaf48936f1bcc/site/styles/report.css), and
+  [browser enhancements](https://raw.githubusercontent.com/Nick2bad4u/Gardening/4688e69e6391e5b116f510bcb8ceaf48936f1bcc/site/client/report.js) use the shared site layout.
   The readable HTML and native expandable cards work without JavaScript.
 - `/report/` shows the latest reviewed input. `/reports/` lists the archive;
   `/reports/YYYY-MM-DD/` is a permanent dated page. The former
@@ -64,7 +66,7 @@ the pocket list; Copy list includes them after the main recommendations.
 The main Water list remains plateau-gated. If the AI suggests a different action,
 it must label an **AI exception to the main list**, explain the evidence and
 uncertainty, and retain the plant-specific readiness and nutrient conditions.
-See the [task instructions](../daily-weighing-watering-prompt.md) for the full
+See the [task instructions](./historical-task-prompt.md) for the full
 assessment policy. The generator does not infer or invent this assessment.
 
 The field is optional only for compatibility with earlier version-2 reports.

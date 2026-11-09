@@ -1,5 +1,7 @@
 # Daily Weighing and Watering Prompt
 
+> Retired November 9, 2026. This is historical documentation, not active instructions or current care advice. Commands and paths below describe the previous implementation. See the [archive overview](./README.md).
+
 Use the prompt below as the instructions for the daily task. The verified local checkout is `C:\Repos\Gardening`.
 
 - **Task name:** Garden — Watering & Weighing
@@ -11,14 +13,14 @@ The existing local task was found **paused on October 29, 2026**, with its
 9:45 a.m. schedule retained. This enrollment updates the maintained prompt below;
 it does not resume or replace the saved task.
 
-The [watering strategy](./watering-strategy.md), [weighing strategy](./weighing-strategy.md), and [logger action guide](./logger-actions.md) provide collection context. The owner's Water policy below supersedes older reporting restrictions that withheld otherwise qualifying pots solely because a routine moisture check was not logged.
+The [watering strategy](https://github.com/Nick2bad4u/Gardening/blob/4688e69e6391e5b116f510bcb8ceaf48936f1bcc/docs/watering-strategy.md), [weighing strategy](https://github.com/Nick2bad4u/Gardening/blob/4688e69e6391e5b116f510bcb8ceaf48936f1bcc/docs/weighing-strategy.md), and [logger action guide](https://github.com/Nick2bad4u/Gardening/blob/4688e69e6391e5b116f510bcb8ceaf48936f1bcc/docs/logger-actions.md) provide collection context. The owner's Water policy below supersedes older reporting restrictions that withheld otherwise qualifying pots solely because a routine moisture check was not logged.
 
 **October 28 source update:** the maintained collection has 39 allocations, now
 including **P41 / #15 / Houseplant-08 — Alpine Spires Chinese evergreen**,
 nursery-labelled _Aglaonema commutatum_, Igneous™ Alpine Spires™. The owner bought
 it at Home Depot for $19.99 that day. Repotting, specimen photographs, pot setup,
 placement, and starting measurements remain unrecorded. Read the fresh live
-roster and [logger deployment record](../scripts/google-sheets/README.md) before
+roster and [logger deployment record](https://github.com/Nick2bad4u/Gardening/blob/4688e69e6391e5b116f510bcb8ceaf48936f1bcc/scripts/google-sheets/README.md) before
 claiming production enrollment. P41 uses manual moisture checks as the upper mix
 begins to dry, without a cactus-style dry baseline or automatic forecast. P39
 still needs lightly moist, aerated mix, while P40 allows partial drying.

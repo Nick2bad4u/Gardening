@@ -1,26 +1,17 @@
 ---
-import { siteUrl } from "../../lib/routes.mjs";
-import SiteLayout from "../../components/SiteLayout.astro";
-import ReviewedReport from "../../components/report/ReviewedReport.astro";
-import { getReports } from "../../lib/reports.mjs";
+import { readdir } from "node:fs/promises";
+import RetiredReports from "../../components/RetiredReports.astro";
+
 export async function getStaticPaths() {
-    return (await getReports()).map((report) => ({
-        params: { date: report.date },
-        props: { report },
-    }));
+    const filenames = await readdir("docs/archive/daily-reports");
+    return filenames
+        .filter((filename) => /^\d{4}-\d{2}-\d{2}\.json$/v.test(filename))
+        .map((filename) => ({
+            params: { date: filename.slice(0, -5) },
+            props: { date: filename.slice(0, -5) },
+        }));
 }
-const { report } = Astro.props;
+const { date } = Astro.props;
 ---
 
-<SiteLayout
-    title={`Garden report · ${report.date}`}
-    description={report.summary}
-    section="report"
-    breadcrumbs={[{ label: "Reports", href: siteUrl("reports/") }]}
->
-    <p class="report-archive-link">
-        <a href={siteUrl("report/")}>Latest reviewed report</a> ·{" "}
-        <a href={siteUrl("reports/")}>All reports</a>
-    </p>
-    <ReviewedReport report={report} archived />
-</SiteLayout>
+<RetiredReports date={date} />

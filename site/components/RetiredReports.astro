@@ -1,0 +1,37 @@
+---
+import SiteLayout from "./SiteLayout.astro";
+import { repositoryUrl, siteUrl } from "../lib/routes.mjs";
+
+interface Props {
+    date?: string;
+}
+const { date } = Astro.props;
+---
+
+<SiteLayout
+    title="Daily reports archived"
+    description="Daily reports are no longer maintained. Historical files are preserved in the repository."
+    noindex
+>
+    <header class="page-heading" data-retired-reports>
+        <p class="eyebrow">Retired workflow</p>
+        <h1>Daily reports archived</h1>
+        <p>
+            Daily reports are no longer maintained. Historical files are preserved in the
+            repository; use the watering map for current recorded watering history.
+        </p>
+        {date && (
+            <p>
+                This retired report URL was dated <time datetime={date}>{date}</time>.
+            </p>
+        )}
+        <div class="action-row">
+            <a class="button" href={siteUrl("watering/")}>
+                Open the watering map
+            </a>
+            <a href={`${repositoryUrl}/tree/main/docs/archive/daily-reports`}>
+                Open the report archive on GitHub
+            </a>
+        </div>
+    </header>
+</SiteLayout>

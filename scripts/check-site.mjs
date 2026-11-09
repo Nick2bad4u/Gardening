@@ -12,9 +12,7 @@ import {
 } from "../site/lib/content.mjs";
 import { renumberedPots } from "../site/lib/legacy.mjs";
 import { archivedAmazonPlan } from "../site/lib/old-plans.mjs";
-import { getReports } from "../site/lib/reports.mjs";
 import { siteApps } from "../site/lib/site-apps.mjs";
-// eslint-disable-next-line import-x/max-dependencies -- Publication checks read the same validated container catalog as the renderer.
 import { isProfileData, isRecord, readJson } from "./build-data.mjs";
 
 /** @typedef {{ slug: string; title: string }} ProfileIdentity */
@@ -261,15 +259,18 @@ async function main() {
         profiles,
         guides,
         equipment,
-        reports,
+        reportFiles,
         oldPlans,
     ] = await Promise.all([
         getProfiles(),
         getGuides(),
         getEquipmentDocs(),
-        getReports(),
+        readdir(path.join(root, "docs/archive/daily-reports")),
         getOldPlans(),
     ]);
+    const reportDates = reportFiles
+        .filter((name) => /^\d{4}-\d{2}-\d{2}\.json$/v.test(name))
+        .map((name) => name.slice(0, -5));
     const mapping = await readJson(
         "docs/layouts/plant-profile-data.json",
         isProfileData
@@ -313,7 +314,7 @@ async function main() {
         ),
         ...Object.keys(renumberedPots).map((id) => `pots/${id}/index.html`),
         ...equipment.map((doc) => `setup/equipment/${doc.slug}/index.html`),
-        ...reports.map((report) => `reports/${report.date}/index.html`),
+        ...reportDates.map((date) => `reports/${date}/index.html`),
     ];
     await Promise.all(
         required.map((filename) =>
@@ -465,7 +466,7 @@ async function main() {
         0
     );
     console.log(
-        `Verified ${pages.length} HTML pages, ${profiles.length} profiles, ${pots.size} tracked pots, ${reports.length} reports, ${equipment.length} equipment research pages. Homepage ${Buffer.byteLength(homepage).toLocaleString()} bytes; total HTML ${totalBytes.toLocaleString()} bytes.`
+        `Verified ${pages.length} HTML pages, ${profiles.length} profiles, ${pots.size} tracked pots, ${reportDates.length} dated retirement notices, ${equipment.length} equipment research pages. Homepage ${Buffer.byteLength(homepage).toLocaleString()} bytes; total HTML ${totalBytes.toLocaleString()} bytes.`
     );
 }
 
