@@ -4588,8 +4588,14 @@ order below the grid. Search and Not weighed today preserve empty table slots
 instead of moving the remaining pots. Each picker remembers its own mode.
 Selected round events can
 be retained between plants; weight state is inferred and has no manual control.
-The nutrient yes/no choice, product, and amount are remembered and mirrored
-between single and bulk care for that browser session. The single-entry form
+New waterings start with **Add nutrients** unchecked in both entry modes.
+Confirmed saves, queue additions, and cleared forms reset that choice; explicitly
+resumed drafts and pending requests retain their recorded choice. Each product
+can have a browser-local usual dose, saved with **Save as usual dose** and recalled
+with **Use saved dose**. Numeric dose and units are separate controls; one-off edits
+do not overwrite the saved preference. **Other / recorded text** preserves
+custom and older dose descriptions. The existing text payload and workbook
+columns remain unchanged. The single-entry form
 offers 21 actions. Bulk care offers Water, Mist, Check, Inspect, Rotation, Move,
 Environment, Clean, Prune, Propagate, Pest, and Other; its newer shared-action
 fields retain the same validation and retry handling as individual entry.

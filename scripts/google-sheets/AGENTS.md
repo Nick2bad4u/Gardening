@@ -39,6 +39,10 @@
 - Refresh cached choices/filters without losing drafts/selections/focus/
   save locks. Test older cached-roster upgrades.
 - Water/Weigh/Measure use separate rows per save. Bulk water amount is per pot.
+- Nutrients are an explicit per-entry opt-in, reset after save/queue/clear.
+  Browser-local usual doses are separate preferences, never an automatic Yes.
+  Keep amount/unit controls compatible with recorded text and preserve exact
+  draft/pending payloads, including older inactive nutrient flags, for retries.
 - Humidity: Measured / Hygrometer, independent of weight/soil moisture/watering/
   setup. Preserve App entries AI and preceding columns.
 - Inspect: required above-ground condition, Observed / Observed provenance.

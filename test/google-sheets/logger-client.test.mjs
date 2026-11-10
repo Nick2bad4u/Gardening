@@ -4265,8 +4265,8 @@ function confirmSummarySave(window, mode) {
         queryElement(
             window.document,
             "#bulkNutrientsUsed",
-            HTMLSelectElement
-        ).value = "No";
+            HTMLInputElement
+        ).checked = false;
         const checkbox = queryElement(
             window.document,
             "#bulkPlantList input[type='checkbox']",
@@ -6190,8 +6190,8 @@ describe("garden logger single-save and watering-round recovery", () => {
         queryElement(
             window.document,
             "#bulkNutrientsUsed",
-            HTMLSelectElement
-        ).value = "No";
+            HTMLInputElement
+        ).checked = false;
         const checkbox = queryElement(
             window.document,
             "#bulkPlantList input[type='checkbox']",
@@ -6270,8 +6270,8 @@ describe("garden logger single-save and watering-round recovery", () => {
         queryElement(
             window.document,
             "#bulkNutrientsUsed",
-            HTMLSelectElement
-        ).value = "No";
+            HTMLInputElement
+        ).checked = false;
         const checkbox = queryElement(
             window.document,
             "#bulkPlantList input[type='checkbox']",
@@ -6317,6 +6317,645 @@ describe("garden logger single-save and watering-round recovery", () => {
     });
 });
 
+/** @param {Window} window @param {string} mode @param {boolean} water */
+function prepareNutrientRetry(window, mode, water) {
+    if (mode === "bulk") {
+        queryElement(
+            window.document,
+            "#bulkModeTab",
+            HTMLButtonElement
+        ).click();
+        queryElement(
+            window.document,
+            "#bulkPlantList input[type='checkbox']",
+            HTMLInputElement
+        ).click();
+        if (!water) {
+            queryElement(
+                window.document,
+                '#bulkEventChips [data-event="Water"]',
+                HTMLButtonElement
+            ).click();
+            queryElement(
+                window.document,
+                '#bulkEventChips [data-event="Rotation"]',
+                HTMLButtonElement
+            ).click();
+        }
+    } else if (water) {
+        queryElement(
+            window.document,
+            '#eventChips [data-event="Water"]',
+            HTMLButtonElement
+        ).click();
+    } else enterWorkflowValue(window, "weight", "431");
+}
+
+describe("garden logger legacy nutrient pending compatibility", () => {
+    afterEach(restoreLoggerMocks);
+
+    it.each([
+        ["single", "No"],
+        ["single", "Yes"],
+        ["bulk", "No"],
+        ["bulk", "Yes"],
+    ])(
+        "retries an unchanged legacy %s pending request with inactive nutrient flag %s",
+        (mode, nutrientsUsed) => {
+            expect.hasAssertions();
+
+            const first = createLoggerWindow();
+            first.behaviors.saveWebObservation = () => {};
+            first.behaviors.saveBulkCareObservation = () => {};
+            const isBulk = mode === "bulk";
+            prepareNutrientRetry(first.window, mode, false);
+            const formId = isBulk ? "bulkWaterForm" : "entryForm";
+            const productId = isBulk
+                ? "bulkNutrientProduct"
+                : "nutrientProduct";
+            const amountId = isBulk ? "bulkNutrientAmount" : "nutrientAmount";
+            queryElement(
+                first.window.document,
+                `#${productId}`,
+                HTMLSelectElement
+            ).value = "MSU 13-3-15";
+            queryElement(
+                first.window.document,
+                `#${amountId}`,
+                HTMLInputElement
+            ).value = "0.50 g/gal";
+            queryElement(
+                first.window.document,
+                `#${formId}`,
+                HTMLFormElement
+            ).dispatchEvent(
+                new first.window.Event("submit", {
+                    bubbles: true,
+                    cancelable: true,
+                })
+            );
+            const key = isBulk
+                ? "gardenLoggerBulkPendingV1"
+                : "gardenLoggerPendingSaveV1";
+            const pending = parseStoredRecord(
+                first.window.localStorage.getItem(key)
+            );
+            const payload = jsonRecord(pending["payload"]);
+            payload["nutrientsUsed"] = nutrientsUsed;
+            pending["replaceable"] = false;
+            const recovered = createLoggerWindow({
+                storage: { [key]: JSON.stringify(pending) },
+            });
+            recovered.behaviors.saveWebObservation = () => {};
+            recovered.behaviors.saveBulkCareObservation = () => {};
+            queryElement(
+                recovered.window.document,
+                `#${formId}`,
+                HTMLFormElement
+            ).dispatchEvent(
+                new recovered.window.Event("submit", {
+                    bubbles: true,
+                    cancelable: true,
+                })
+            );
+
+            expect(lastObservationSave(recovered.calls)).toMatchObject({
+                nutrientAmount: "0.50 g/gal",
+                nutrientProduct: "MSU 13-3-15",
+                nutrientsUsed,
+                requestId: pending["requestId"],
+            });
+            expect(
+                parseStoredRecord(recovered.window.localStorage.getItem(key))[
+                    "payload"
+                ]
+            ).toStrictEqual(payload);
+        }
+    );
+
+    it.each(["single", "bulk"])(
+        "does not disguise changed %s Water nutrient opt-in as an unchanged pending retry",
+        (mode) => {
+            expect.hasAssertions();
+
+            const first = createLoggerWindow();
+            first.behaviors.saveWebObservation = () => {};
+            first.behaviors.saveBulkCareObservation = () => {};
+            const isBulk = mode === "bulk";
+            prepareNutrientRetry(first.window, mode, true);
+            const formId = isBulk ? "bulkWaterForm" : "entryForm";
+            const checkboxId = isBulk ? "bulkNutrientsUsed" : "nutrientsUsed";
+            queryElement(
+                first.window.document,
+                `#${checkboxId}`,
+                HTMLInputElement
+            ).click();
+            changeWorkflowSelect(
+                first.window,
+                isBulk ? "bulkNutrientProduct" : "nutrientProduct",
+                "MSU 13-3-15"
+            );
+            enterWorkflowValue(
+                first.window,
+                isBulk ? "bulkNutrientDose" : "nutrientDose",
+                "0.5"
+            );
+            changeWorkflowSelect(
+                first.window,
+                isBulk ? "bulkNutrientUnit" : "nutrientUnit",
+                "g per gallon"
+            );
+            queryElement(
+                first.window.document,
+                `#${formId}`,
+                HTMLFormElement
+            ).dispatchEvent(
+                new first.window.Event("submit", {
+                    bubbles: true,
+                    cancelable: true,
+                })
+            );
+            const key = isBulk
+                ? "gardenLoggerBulkPendingV1"
+                : "gardenLoggerPendingSaveV1";
+            const stored = required(first.window.localStorage.getItem(key));
+            const recovered = createLoggerWindow({
+                storage: { [key]: stored },
+            });
+            queryElement(
+                recovered.window.document,
+                `#${checkboxId}`,
+                HTMLInputElement
+            ).click();
+            queryElement(
+                recovered.window.document,
+                `#${formId}`,
+                HTMLFormElement
+            ).dispatchEvent(
+                new recovered.window.Event("submit", {
+                    bubbles: true,
+                    cancelable: true,
+                })
+            );
+
+            expect(
+                recovered.calls.filter(
+                    (call) =>
+                        call.method === "saveWebObservation" ||
+                        call.method === "saveBulkCareObservation"
+                )
+            ).toHaveLength(0);
+            expect(
+                parseStoredRecord(recovered.window.localStorage.getItem(key))[
+                    "requestId"
+                ]
+            ).toBe(parseStoredRecord(stored)["requestId"]);
+            expect(
+                queryElement(recovered.window.document, "#toast", HTMLElement)
+                    .textContent
+            ).toContain("may still be saving");
+        }
+    );
+});
+
+describe("garden logger nutrient preferences", () => {
+    afterEach(restoreLoggerMocks);
+
+    it("starts watering with nutrients off and ignores the old session opt-in", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            configureWindow: (candidate) => {
+                candidate.sessionStorage.setItem(
+                    "gardenLoggerNutrientStateV1",
+                    JSON.stringify({
+                        nutrientAmount: "0.5 g/gal",
+                        nutrientProduct: "MSU 13-3-15",
+                        nutrientsUsed: "Yes",
+                    })
+                );
+            },
+        });
+        for (const id of ["nutrientsUsed", "bulkNutrientsUsed"]) {
+            expect(
+                queryElement(window.document, `#${id}`, HTMLInputElement)
+                    .checked
+            ).toBe(false);
+        }
+        queryElement(
+            window.document,
+            '#eventChips [data-event="Water"]',
+            HTMLElement
+        ).click();
+        queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        ).click();
+        const queue = parseStoredQueue(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        );
+
+        expect(required(queue[0]).payload).toMatchObject({
+            nutrientsUsed: "No",
+        });
+    });
+
+    it("saves usual doses by product without reusing the nutrient opt-in or overwriting a dose with one-off edits", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        queryElement(
+            window.document,
+            '#eventChips [data-event="Water"]',
+            HTMLElement
+        ).click();
+        queryElement(
+            window.document,
+            "#nutrientsUsed",
+            HTMLInputElement
+        ).click();
+        changeWorkflowSelect(window, "nutrientProduct", "MSU 13-3-15");
+        enterWorkflowValue(window, "nutrientDose", "0.5");
+        changeWorkflowSelect(window, "nutrientUnit", "g per gallon");
+        queryElement(
+            window.document,
+            "#saveNutrientDose",
+            HTMLButtonElement
+        ).click();
+        const saved = required(
+            window.localStorage.getItem("gardenLoggerNutrientPreferencesV1")
+        );
+
+        expect(JSON.parse(saved)).toStrictEqual({
+            doses: { "MSU 13-3-15": "0.5 g per gallon" },
+            product: "MSU 13-3-15",
+        });
+
+        enterWorkflowValue(window, "nutrientDose", "0.25");
+        queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        ).click();
+        const queue = parseStoredQueue(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        );
+
+        expect(required(queue[0]).payload).toMatchObject({
+            nutrientAmount: "0.25 g per gallon",
+            nutrientProduct: "MSU 13-3-15",
+            nutrientsUsed: "Yes",
+        });
+        expect(
+            queryElement(window.document, "#nutrientsUsed", HTMLInputElement)
+                .checked
+        ).toBe(false);
+        expect(
+            queryElement(
+                window.document,
+                "#bulkNutrientsUsed",
+                HTMLInputElement
+            ).checked
+        ).toBe(false);
+        expect(
+            window.localStorage.getItem("gardenLoggerNutrientPreferencesV1")
+        ).toBe(saved);
+
+        const reloaded = createLoggerWindow({
+            storage: { gardenLoggerNutrientPreferencesV1: saved },
+        }).window;
+        for (const prefix of ["", "bulk"]) {
+            const id = prefix ? "bulkNutrient" : "nutrient";
+
+            expect(
+                queryElement(reloaded.document, `#${id}Dose`, HTMLInputElement)
+                    .value
+            ).toBe("0.5");
+            expect(
+                queryElement(
+                    reloaded.document,
+                    prefix ? "#bulkNutrientsUsed" : "#nutrientsUsed",
+                    HTMLInputElement
+                ).checked
+            ).toBe(false);
+        }
+        enterWorkflowValue(reloaded, "nutrientDose", "0.1");
+        queryElement(
+            reloaded.document,
+            "#useNutrientDose",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(reloaded.document, "#nutrientDose", HTMLInputElement)
+                .value
+        ).toBe("0.5");
+
+        changeWorkflowSelect(
+            reloaded,
+            "nutrientProduct",
+            "SuperThrive Foliage Pro"
+        );
+
+        expect(
+            queryElement(reloaded.document, "#nutrientDose", HTMLInputElement)
+                .value
+        ).toBe("");
+
+        changeWorkflowSelect(reloaded, "nutrientProduct", "MSU 13-3-15");
+
+        expect(
+            queryElement(reloaded.document, "#nutrientDose", HTMLInputElement)
+                .value
+        ).toBe("0.5");
+    });
+
+    it.each([
+        "0",
+        "-1",
+        "",
+    ])("rejects nutrient dose %s while keeping the current entry", (dose) => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        queryElement(
+            window.document,
+            '#eventChips [data-event="Water"]',
+            HTMLElement
+        ).click();
+        queryElement(
+            window.document,
+            "#nutrientsUsed",
+            HTMLInputElement
+        ).click();
+        changeWorkflowSelect(window, "nutrientProduct", "MSU 13-3-15");
+        enterWorkflowValue(window, "nutrientDose", dose);
+        changeWorkflowSelect(window, "nutrientUnit", "g per gallon");
+        queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        ).toBeNull();
+        expect(
+            queryElement(window.document, "#nutrientsUsed", HTMLInputElement)
+                .checked
+        ).toBe(true);
+        expect(window.document.body.textContent).toContain(
+            "Enter a nutrient dose greater than zero"
+        );
+    });
+
+    it("keeps a recovered custom nutrient description exactly without enabling the other form", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            pendingSave: {
+                payload: {
+                    events: ["Water"],
+                    nutrientAmount: "1/4 tsp in 2 gallons (test batch)",
+                    nutrientProduct: "MSU 13-3-15",
+                    nutrientsUsed: "Yes",
+                    observedAt: "2026-08-15T14:00:00.000Z",
+                    plantId: "P01",
+                },
+                requestId: "nutrient-recovery",
+            },
+        });
+
+        expect(
+            queryElement(window.document, "#nutrientsUsed", HTMLInputElement)
+                .checked
+        ).toBe(true);
+        expect(
+            queryElement(
+                window.document,
+                "#bulkNutrientsUsed",
+                HTMLInputElement
+            ).checked
+        ).toBe(false);
+        expect(
+            queryElement(window.document, "#nutrientUnit", HTMLSelectElement)
+                .value
+        ).toBe("custom");
+        expect(
+            queryElement(window.document, "#nutrientAmount", HTMLInputElement)
+                .value
+        ).toBe("1/4 tsp in 2 gallons (test batch)");
+        expect(
+            queryElement(window.document, "#nutrientAmount", HTMLInputElement)
+                .hidden
+        ).toBe(false);
+    });
+
+    it("restores an explicit draft opt-in and legacy dose text only after Resume", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        queryElement(
+            window.document,
+            '#eventChips [data-event="Water"]',
+            HTMLElement
+        ).click();
+        queryElement(
+            window.document,
+            "#nutrientsUsed",
+            HTMLInputElement
+        ).click();
+        changeWorkflowSelect(window, "nutrientProduct", "MSU 13-3-15");
+        changeWorkflowSelect(window, "nutrientUnit", "custom");
+        enterWorkflowValue(window, "nutrientAmount", "0.5 g/gal");
+        window.dispatchEvent(new window.Event("pagehide"));
+        const key = required(ordinaryDraftKeys(window)[0]);
+        const stored = parseStoredRecord(window.localStorage.getItem(key));
+        const snapshot = jsonRecord(stored["snapshot"]);
+        const values = jsonRecord(snapshot["values"]);
+        values["nutrientsUsed"] = "Yes";
+        Reflect.deleteProperty(values, "nutrientDose");
+        Reflect.deleteProperty(values, "nutrientUnit");
+        stored["content"] = JSON.stringify(snapshot);
+        const reloaded = createLoggerWindow({
+            storage: { [key]: JSON.stringify(stored) },
+        }).window;
+
+        expect(
+            queryElement(reloaded.document, "#nutrientsUsed", HTMLInputElement)
+                .checked
+        ).toBe(false);
+
+        queryElement(
+            reloaded.document,
+            "#entryDraftResume",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(reloaded.document, "#nutrientsUsed", HTMLInputElement)
+                .checked
+        ).toBe(true);
+        expect(
+            queryElement(
+                reloaded.document,
+                "#bulkNutrientsUsed",
+                HTMLInputElement
+            ).checked
+        ).toBe(false);
+        expect(
+            queryElement(reloaded.document, "#nutrientAmount", HTMLInputElement)
+                .value
+        ).toBe("0.5 g/gal");
+        expect(
+            queryElement(reloaded.document, "#nutrientUnit", HTMLSelectElement)
+                .value
+        ).toBe("custom");
+    });
+
+    it("restores an unfinished numeric nutrient dose before units have been chosen", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        queryElement(
+            window.document,
+            '#eventChips [data-event="Water"]',
+            HTMLElement
+        ).click();
+        queryElement(
+            window.document,
+            "#nutrientsUsed",
+            HTMLInputElement
+        ).click();
+        changeWorkflowSelect(window, "nutrientProduct", "MSU 13-3-15");
+        enterWorkflowValue(window, "nutrientDose", "0.5");
+        window.dispatchEvent(new window.Event("pagehide"));
+        const reloaded = createLoggerWindow({
+            storage: copyLoggerStorage(window),
+        }).window;
+        queryElement(
+            reloaded.document,
+            "#entryDraftResume",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(reloaded.document, "#nutrientDose", HTMLInputElement)
+                .value
+        ).toBe("0.5");
+        expect(
+            queryElement(reloaded.document, "#nutrientUnit", HTMLSelectElement)
+                .value
+        ).toBe("");
+        expect(
+            queryElement(reloaded.document, "#nutrientsUsed", HTMLInputElement)
+                .checked
+        ).toBe(true);
+    });
+
+    it("resets nutrients after bulk save while retaining the saved usual dose", () => {
+        expect.hasAssertions();
+
+        const { behaviors, calls, window } = createLoggerWindow({
+            storage: {
+                gardenLoggerNutrientPreferencesV1: JSON.stringify({
+                    doses: { "MSU 13-3-15": "0.5 g per gallon" },
+                    product: "MSU 13-3-15",
+                }),
+            },
+        });
+        queryElement(
+            window.document,
+            "#bulkModeTab",
+            HTMLButtonElement
+        ).click();
+        queryElement(
+            window.document,
+            "#bulkPlantList input[type='checkbox']",
+            HTMLInputElement
+        ).click();
+        queryElement(
+            window.document,
+            "#bulkNutrientsUsed",
+            HTMLInputElement
+        ).click();
+        behaviors.saveBulkCareObservation = ({ success }) => {
+            success({ message: "Bulk care saved." });
+        };
+        queryElement(
+            window.document,
+            "#bulkWaterForm",
+            HTMLFormElement
+        ).dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
+
+        expect(lastObservationSave(calls)).toMatchObject({
+            nutrientAmount: "0.5 g per gallon",
+            nutrientsUsed: "Yes",
+        });
+        expect(
+            queryElement(
+                window.document,
+                "#bulkNutrientsUsed",
+                HTMLInputElement
+            ).checked
+        ).toBe(false);
+        expect(
+            queryElement(window.document, "#bulkNutrientDose", HTMLInputElement)
+                .value
+        ).toBe("0.5");
+        expect(
+            queryElement(window.document, "#nutrientsUsed", HTMLInputElement)
+                .checked
+        ).toBe(false);
+    });
+
+    it("does not retain untouched saved nutrient preferences as an observation draft", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            storage: {
+                gardenLoggerNutrientPreferencesV1: JSON.stringify({
+                    doses: { "MSU 13-3-15": "0.5 g per gallon" },
+                    product: "MSU 13-3-15",
+                }),
+            },
+        });
+        window.dispatchEvent(new window.Event("pagehide"));
+
+        expect(ordinaryDraftKeys(window)).toHaveLength(0);
+    });
+
+    it("reports unavailable preference storage without losing the entered dose", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({ storageUnavailable: true });
+        queryElement(
+            window.document,
+            "#nutrientsUsed",
+            HTMLInputElement
+        ).click();
+        changeWorkflowSelect(window, "nutrientProduct", "MSU 13-3-15");
+        enterWorkflowValue(window, "nutrientDose", "0.5");
+        changeWorkflowSelect(window, "nutrientUnit", "g per gallon");
+        queryElement(
+            window.document,
+            "#saveNutrientDose",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(window.document, "#nutrientDose", HTMLInputElement)
+                .value
+        ).toBe("0.5");
+        expect(window.document.body.textContent).toContain(
+            "could not save your usual dose"
+        );
+    });
+});
+
 describe("garden logger observation entry and preferences", () => {
     afterEach(restoreLoggerMocks);
 
@@ -6351,81 +6990,6 @@ describe("garden logger observation entry and preferences", () => {
             weight: "889",
         });
         expect(required(queue[0]).payload).not.toHaveProperty("weightState");
-    });
-
-    it("remembers nutrient choices across single and bulk care in one session", () => {
-        expect.hasAssertions();
-
-        const { window } = createLoggerWindow();
-        const water = queryElement(
-            window.document,
-            '#eventChips [data-event="Water"]',
-            HTMLElement
-        );
-        water.dispatchEvent(new window.Event("click", { bubbles: true }));
-        const nutrients = queryElement(
-            window.document,
-            "#nutrientsUsed",
-            HTMLSelectElement
-        );
-        const product = queryElement(
-            window.document,
-            "#nutrientProduct",
-            HTMLSelectElement
-        );
-        const amount = queryElement(
-            window.document,
-            "#nutrientAmount",
-            HTMLInputElement
-        );
-        nutrients.value = "Yes";
-        nutrients.dispatchEvent(new window.Event("change", { bubbles: true }));
-        product.value = "MSU 13-3-15";
-        product.dispatchEvent(new window.Event("input", { bubbles: true }));
-        amount.value = "0.5 g/gal";
-        amount.dispatchEvent(new window.Event("input", { bubbles: true }));
-
-        queryElement(
-            window.document,
-            "#queueButton",
-            HTMLButtonElement
-        ).dispatchEvent(new window.Event("click", { bubbles: true }));
-        queryElement(
-            window.document,
-            "#bulkModeTab",
-            HTMLButtonElement
-        ).dispatchEvent(new window.Event("click", { bubbles: true }));
-
-        expect(
-            queryElement(
-                window.document,
-                "#bulkNutrientsUsed",
-                HTMLSelectElement
-            ).value
-        ).toBe("Yes");
-        expect(
-            queryElement(
-                window.document,
-                "#bulkNutrientProduct",
-                HTMLSelectElement
-            ).value
-        ).toBe("MSU 13-3-15");
-        expect(
-            queryElement(
-                window.document,
-                "#bulkNutrientAmount",
-                HTMLInputElement
-            ).value
-        ).toBe("0.5 g/gal");
-        expect(
-            parseStoredJson(
-                window.sessionStorage.getItem("gardenLoggerNutrientStateV1")
-            )
-        ).toStrictEqual({
-            nutrientAmount: "0.5 g/gal",
-            nutrientProduct: "MSU 13-3-15",
-            nutrientsUsed: "Yes",
-        });
     });
 
     it("queues a 90 degree rotation and submits bulk rotation generically", () => {
@@ -7119,8 +7683,8 @@ describe("garden logger plant selection and label ordering", () => {
         queryElement(
             window.document,
             "#bulkNutrientsUsed",
-            HTMLSelectElement
-        ).value = "No";
+            HTMLInputElement
+        ).checked = false;
         behaviors.saveBulkCareObservation = ({ success }) => {
             success({ message: "Bulk care saved." });
         };
@@ -12373,7 +12937,7 @@ describe("garden logger refreshed controls", () => {
                 ".event-guidance-item",
                 HTMLDetailsElement
             )
-        ).toHaveLength(bootstrap.events.length);
+        ).toHaveLength(12);
 
         for (const guide of queryElements(
             window.document,

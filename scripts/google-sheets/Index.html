@@ -264,8 +264,9 @@
 
             .card-title {
                 display: flex;
+                flex-wrap: wrap;
                 gap: 12px;
-                align-items: baseline;
+                align-items: center;
                 justify-content: space-between;
                 margin-block-end: 14px;
             }
@@ -291,13 +292,7 @@
                 font-size: 1rem;
                 font-weight: 800;
                 color: #355242;
-                text-transform: uppercase;
-                letter-spacing: 0.04em;
-
-                &[for="ppfd"],
-                &[for="lux"] {
-                    text-transform: none;
-                }
+                letter-spacing: 0;
 
                 :root[data-theme="dark"] & {
                     color: #b7d8bd;
@@ -2077,8 +2072,8 @@
             }
 
             .chip[data-event="Water"][aria-pressed="true"] {
-                background: var(--blue);
-                border-color: var(--blue);
+                background: #2c6f9f;
+                border-color: #2c6f9f;
             }
             .chip[data-event="Weigh"][aria-pressed="true"] {
                 background: #765c9f;
@@ -2190,6 +2185,63 @@
                 display: grid;
                 gap: 10px;
                 margin-block-start: 14px;
+
+                & > .event-panel {
+                    margin-block-start: 0;
+                }
+
+                &:not(:has(> .visible)) {
+                    display: none;
+                }
+            }
+
+            .nutrient-toggle {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                min-block-size: 48px;
+                padding: 10px 12px;
+                font-weight: 700;
+                cursor: pointer;
+                background: var(--control);
+                border: 1px solid var(--line);
+                border-radius: 12px;
+
+                & input {
+                    flex: none;
+                    inline-size: 22px;
+                    block-size: 22px;
+                    min-block-size: 0;
+                    margin: 0;
+                    accent-color: var(--forest-2);
+                }
+
+                &:has(:checked) {
+                    background: var(--leaf-soft);
+                    border-color: var(--forest-2);
+                }
+            }
+
+            .fields.nutrient-dose-fields {
+                display: grid;
+                grid-template-columns:
+                    [dose-start] minmax(0, 1fr)
+                    [dose-end unit-start] minmax(0, 1.6fr) [unit-end];
+                gap: 10px;
+            }
+
+            .nutrient-preference-actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin-block: 8px;
+
+                & button {
+                    min-block-size: 44px;
+                    padding: 8px 10px;
+                    font-size: 0.875rem;
+                    font-weight: 700;
+                }
             }
 
             .setup-note {
@@ -2747,6 +2799,7 @@
                 }
             }
 
+            :root[data-theme="dark"] .picker-mode[aria-pressed="true"],
             :root[data-theme="dark"] .primary,
             :root[data-theme="dark"] .mode-tab[aria-selected="true"] {
                 color: #102419;
@@ -3138,17 +3191,6 @@
                 gap: 6px;
                 margin-block-start: 12px;
             }
-            .event-hint {
-                display: flex;
-                gap: 8px;
-                align-items: start;
-                padding: 12px;
-                background: var(--help-surface);
-                border-radius: 10px;
-                & > .app-icon {
-                    margin-block-start: 3px;
-                }
-            }
             .event-guidance-item {
                 overflow-wrap: anywhere;
                 background: var(--help-surface);
@@ -3164,17 +3206,14 @@
                 & summary .app-icon {
                     margin-inline-end: 6px;
                 }
-            }
-            .event-guidance-item ul,
-            .event-hint ul {
-                display: grid;
-                gap: 8px;
-                padding-inline-start: 20px;
-                margin: 0;
-                line-height: 1.5;
-            }
-            .event-guidance-item ul {
-                padding: 0 18px 14px 34px;
+
+                & ul {
+                    display: grid;
+                    gap: 8px;
+                    padding: 0 18px 14px 34px;
+                    margin: 0;
+                    line-height: 1.5;
+                }
             }
             .recent-disclosure-summary {
                 display: none;
@@ -3256,12 +3295,32 @@
                     margin-inline-end: 6px;
                 }
             }
-            .compact-history-toggle {
+            .compact-history-toggle[aria-pressed="true"] {
+                background: var(--leaf-soft);
+                border-radius: 10px;
+            }
+
+            .history-actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                align-items: center;
+                justify-content: space-between;
                 margin-block-end: 10px;
-                &[aria-pressed="true"] {
-                    background: var(--leaf-soft);
-                    border-radius: 10px;
+
+                & button {
+                    display: inline-flex;
+                    gap: 6px;
+                    align-items: center;
+                    min-block-size: 44px;
                 }
+            }
+
+            .recent-status[data-failed="true"] {
+                padding: 10px 12px;
+                background: color-mix(in srgb, var(--amber) 10%, var(--card));
+                border-inline-start: 3px solid var(--amber);
+                border-radius: 8px;
             }
 
             @media (width <= 860px) {
@@ -14447,6 +14506,7 @@
                             type="button"
                             role="tab"
                             aria-selected="true"
+                            tabindex="0"
                             aria-controls="entryForm"
                             ><svg
                                 viewBox="0 0 64 64"
@@ -14462,6 +14522,7 @@
                             type="button"
                             role="tab"
                             aria-selected="false"
+                            tabindex="-1"
                             aria-controls="bulkWaterForm"
                             ><svg
                                 viewBox="0 0 64 64"
@@ -15409,9 +15470,9 @@
                                         >Water details</h3
                                     >
                                     <p class="hint"
-                                        >Describe how water reached the root
-                                        zone. Volume is optional; leave it blank
-                                        unless it was measured.</p
+                                        >Enter an amount only if measured.
+                                        Select Weigh separately for a scale
+                                        reading.</p
                                     >
                                     <div class="fields">
                                         <div class="field">
@@ -15453,21 +15514,16 @@
                                                 placeholder="Optional"
                                             />
                                         </div>
-                                        <div class="field">
+                                        <div class="field full">
                                             <label
-                                                class="field-label"
+                                                class="nutrient-toggle"
                                                 for="nutrientsUsed"
-                                                >Nutrients?</label
-                                            >
-                                            <select id="nutrientsUsed"
-                                                ><option value=""
-                                                    >Choose yes or no</option
-                                                ><option value="No"
-                                                    >No — plain water</option
-                                                ><option value="Yes"
-                                                    >Yes — fertilizer /
-                                                    supplement</option
-                                                ></select
+                                                ><input
+                                                    id="nutrientsUsed"
+                                                    type="checkbox"
+                                                    value="Yes"
+                                                />
+                                                Add nutrients</label
                                             >
                                         </div>
                                         <div
@@ -15497,16 +15553,100 @@
                                             class="field full"
                                             hidden
                                         >
+                                            <div
+                                                class="fields nutrient-dose-fields"
+                                            >
+                                                <div class="field"
+                                                    ><label
+                                                        class="field-label"
+                                                        for="nutrientDose"
+                                                        >Dose</label
+                                                    ><input
+                                                        id="nutrientDose"
+                                                        type="number"
+                                                        min="0"
+                                                        step="any"
+                                                        inputmode="decimal"
+                                                        placeholder="Amount"
+                                                /></div>
+                                                <div class="field"
+                                                    ><label
+                                                        class="field-label"
+                                                        for="nutrientUnit"
+                                                        >Unit /
+                                                        concentration</label
+                                                    ><select id="nutrientUnit"
+                                                        ><option value=""
+                                                            >Choose
+                                                            units</option
+                                                        ><option
+                                                            value="g per gallon"
+                                                            >g per
+                                                            gallon</option
+                                                        ><option value="g per L"
+                                                            >g per L</option
+                                                        ><option
+                                                            value="mL per gallon"
+                                                            >mL per
+                                                            gallon</option
+                                                        ><option
+                                                            value="mL per L"
+                                                            >mL per L</option
+                                                        ><option
+                                                            value="tsp per gallon"
+                                                            >tsp per
+                                                            gallon</option
+                                                        ><option
+                                                            value="tsp per L"
+                                                            >tsp per L</option
+                                                        ><option value="g"
+                                                            >g</option
+                                                        ><option value="mL"
+                                                            >mL</option
+                                                        ><option value="tsp"
+                                                            >tsp</option
+                                                        ><option value="custom"
+                                                            >Other / recorded
+                                                            text</option
+                                                        ></select
+                                                    ></div
+                                                >
+                                            </div>
                                             <label
+                                                id="nutrientCustomLabel"
                                                 class="field-label"
                                                 for="nutrientAmount"
-                                                >Amount / concentration</label
+                                                hidden
+                                                >Custom dose description</label
                                             >
                                             <input
                                                 id="nutrientAmount"
                                                 maxlength="120"
-                                                placeholder="e.g. 0.5 g per gallon"
+                                                placeholder="Describe the amount and units"
+                                                hidden
                                             />
+                                            <div
+                                                class="nutrient-preference-actions"
+                                                ><button
+                                                    id="saveNutrientDose"
+                                                    type="button"
+                                                    class="secondary"
+                                                    >Save as usual dose</button
+                                                ><button
+                                                    id="useNutrientDose"
+                                                    type="button"
+                                                    class="secondary"
+                                                    >Use saved dose</button
+                                                ></div
+                                            >
+                                            <p
+                                                id="nutrientDoseHint"
+                                                class="hint"
+                                                aria-live="polite"
+                                                >Save a usual dose for this
+                                                product in this browser. You can
+                                                change it for each watering.</p
+                                            >
                                         </div>
                                     </div>
                                 </div>
@@ -16654,8 +16794,9 @@
                                         >Water details</h3
                                     >
                                     <p class="hint"
-                                        >The application and optional measured
-                                        volume apply to every selected plant.</p
+                                        >Application and measured amount are per
+                                        pot. Leave the amount blank if
+                                        unmeasured.</p
                                     >
                                     <div class="fields">
                                         <div class="field"
@@ -16692,22 +16833,18 @@
                                                 step="0.01"
                                                 placeholder="Optional"
                                         /></div>
-                                        <div class="field"
-                                            ><label
-                                                class="field-label"
+                                        <div class="field full">
+                                            <label
+                                                class="nutrient-toggle"
                                                 for="bulkNutrientsUsed"
-                                                >Nutrients?</label
-                                            ><select id="bulkNutrientsUsed"
-                                                ><option value=""
-                                                    >Choose yes or no</option
-                                                ><option value="No"
-                                                    >No — plain water</option
-                                                ><option value="Yes"
-                                                    >Yes — fertilizer /
-                                                    supplement</option
-                                                ></select
-                                            ></div
-                                        >
+                                                ><input
+                                                    id="bulkNutrientsUsed"
+                                                    type="checkbox"
+                                                    value="Yes"
+                                                />
+                                                Add nutrients</label
+                                            >
+                                        </div>
                                         <div
                                             id="bulkNutrientProductField"
                                             class="field"
@@ -16732,15 +16869,103 @@
                                             id="bulkNutrientAmountField"
                                             class="field full"
                                             hidden
-                                            ><label
+                                        >
+                                            <div
+                                                class="fields nutrient-dose-fields"
+                                            >
+                                                <div class="field"
+                                                    ><label
+                                                        class="field-label"
+                                                        for="bulkNutrientDose"
+                                                        >Dose</label
+                                                    ><input
+                                                        id="bulkNutrientDose"
+                                                        type="number"
+                                                        min="0"
+                                                        step="any"
+                                                        inputmode="decimal"
+                                                        placeholder="Amount"
+                                                /></div>
+                                                <div class="field"
+                                                    ><label
+                                                        class="field-label"
+                                                        for="bulkNutrientUnit"
+                                                        >Unit /
+                                                        concentration</label
+                                                    ><select
+                                                        id="bulkNutrientUnit"
+                                                        ><option value=""
+                                                            >Choose
+                                                            units</option
+                                                        ><option
+                                                            value="g per gallon"
+                                                            >g per
+                                                            gallon</option
+                                                        ><option value="g per L"
+                                                            >g per L</option
+                                                        ><option
+                                                            value="mL per gallon"
+                                                            >mL per
+                                                            gallon</option
+                                                        ><option
+                                                            value="mL per L"
+                                                            >mL per L</option
+                                                        ><option
+                                                            value="tsp per gallon"
+                                                            >tsp per
+                                                            gallon</option
+                                                        ><option
+                                                            value="tsp per L"
+                                                            >tsp per L</option
+                                                        ><option value="g"
+                                                            >g</option
+                                                        ><option value="mL"
+                                                            >mL</option
+                                                        ><option value="tsp"
+                                                            >tsp</option
+                                                        ><option value="custom"
+                                                            >Other / recorded
+                                                            text</option
+                                                        ></select
+                                                    ></div
+                                                >
+                                            </div>
+                                            <label
+                                                id="bulkNutrientCustomLabel"
                                                 class="field-label"
                                                 for="bulkNutrientAmount"
-                                                >Amount / concentration</label
-                                            ><input
+                                                hidden
+                                                >Custom dose description</label
+                                            >
+                                            <input
                                                 id="bulkNutrientAmount"
                                                 maxlength="120"
-                                                placeholder="e.g. 0.5 g per gallon"
-                                        /></div>
+                                                placeholder="Describe the amount and units"
+                                                hidden
+                                            />
+                                            <div
+                                                class="nutrient-preference-actions"
+                                                ><button
+                                                    id="bulkSaveNutrientDose"
+                                                    type="button"
+                                                    class="secondary"
+                                                    >Save as usual dose</button
+                                                ><button
+                                                    id="bulkUseNutrientDose"
+                                                    type="button"
+                                                    class="secondary"
+                                                    >Use saved dose</button
+                                                ></div
+                                            >
+                                            <p
+                                                id="bulkNutrientDoseHint"
+                                                class="hint"
+                                                aria-live="polite"
+                                                >Save a usual dose for this
+                                                product in this browser. You can
+                                                change it for each watering.</p
+                                            >
+                                        </div>
                                     </div>
                                 </div>
                                 <div
@@ -17018,13 +17243,30 @@
                                     ></label
                                 >
                             </div>
-                            <button
-                                id="compactHistoryToggle"
-                                type="button"
-                                class="text-button compact-history-toggle"
-                                aria-pressed="false"
-                                >Compact history</button
-                            >
+                            <div class="history-actions"
+                                ><button
+                                    id="compactHistoryToggle"
+                                    type="button"
+                                    class="text-button compact-history-toggle"
+                                    aria-pressed="false"
+                                    >Compact history</button
+                                >
+                                <button
+                                    id="refreshHistoryButton"
+                                    type="button"
+                                    class="text-button"
+                                    aria-label="Refresh history"
+                                    ><svg
+                                        viewBox="0 0 64 64"
+                                        class="app-icon app-icon--small"
+                                        aria-hidden="true"
+                                    >
+                                        <use
+                                            href="#app-icon-refresh"
+                                        ></use></svg
+                                    >Refresh history</button
+                                >
+                            </div>
                             <div
                                 id="recentList"
                                 class="recent-list"
@@ -17266,6 +17508,8 @@
             };
             const ROUND_STATE_KEY = "gardenLoggerRoundStateV1";
             const NUTRIENT_STATE_KEY = "gardenLoggerNutrientStateV1";
+            const NUTRIENT_PREFERENCES_KEY =
+                "gardenLoggerNutrientPreferencesV1";
             const BULK_PENDING_KEY = "gardenLoggerBulkPendingV1";
             const THEME_KEY = "gardenLoggerThemeV1";
             const PLANT_PICKER_MODE_KEY = "gardenLoggerPlantPickerModeV1";
@@ -17801,13 +18045,31 @@
                         const value = snapshot.values[control.id];
                         if (value === undefined) continue;
                         if (control.type === "checkbox")
-                            control.checked = value === true;
+                            control.checked =
+                                value === true ||
+                                ((control.id.endsWith("NutrientsUsed") ||
+                                    control.id === "nutrientsUsed") &&
+                                    value === "Yes");
                         else if (control.multiple && Array.isArray(value)) {
                             for (const option of control.options)
                                 option.selected = value.includes(option.value);
                         } else if (typeof value === "string")
                             control.value = value;
                     }
+                    if (
+                        Object.hasOwn(
+                            snapshot.values,
+                            bulk ? "bulkNutrientUnit" : "nutrientUnit"
+                        )
+                    )
+                        renderNutrientDose(bulk ? "bulk" : "");
+                    else
+                        restoreNutrientDose(
+                            bulk ? "bulk" : "",
+                            snapshot.values[
+                                bulk ? "bulkNutrientAmount" : "nutrientAmount"
+                            ]
+                        );
                     const timeId = bulk ? "bulkObservedAt" : "observedAt";
                     if (snapshot.time.mode === "now")
                         setObservationTime(timeId);
@@ -17822,14 +18084,11 @@
                     if (bulk) {
                         renderBulkPlants($("bulkSearch").value);
                         renderBulkEventChips();
-                        updateNutrientFields(
-                            "bulk",
-                            $("bulkNutrientsUsed").value
-                        );
+                        updateNutrientFields("bulk", nutrientUseValue("bulk"));
                     } else {
                         renderEventChips();
                         renderMeasurementControls();
-                        updateNutrientFields("", $("nutrientsUsed").value);
+                        updateNutrientFields("", nutrientUseValue());
                         renderWeightFeedback();
                     }
                     setEntryMode(snapshot.mode);
@@ -18010,68 +18269,212 @@
                 return eventNames.map(eventLabel).join(" + ");
             }
 
-            function nutrientStateFrom(prefix = "") {
-                const id = (name) =>
+            function nutrientControl(prefix, name) {
+                return $(
                     prefix
                         ? `${prefix}${name[0].toUpperCase()}${name.slice(1)}`
-                        : name;
-                return {
-                    nutrientsUsed: $(id("nutrientsUsed")).value,
-                    nutrientProduct: $(id("nutrientProduct")).value,
-                    nutrientAmount: $(id("nutrientAmount")).value,
-                };
-            }
-
-            function applyNutrientState(values) {
-                const normalized = {
-                    nutrientsUsed: ["Yes", "No"].includes(
-                        values && values.nutrientsUsed
-                    )
-                        ? values.nutrientsUsed
-                        : "",
-                    nutrientProduct: String(
-                        (values && values.nutrientProduct) || ""
-                    ),
-                    nutrientAmount: String(
-                        (values && values.nutrientAmount) || ""
-                    ),
-                };
-                ["", "bulk"].forEach((prefix) => {
-                    const id = (name) =>
-                        prefix
-                            ? `${prefix}${name[0].toUpperCase()}${name.slice(1)}`
-                            : name;
-                    $(id("nutrientsUsed")).value = normalized.nutrientsUsed;
-                    $(id("nutrientProduct")).value = normalized.nutrientProduct;
-                    $(id("nutrientAmount")).value = normalized.nutrientAmount;
-                    updateNutrientFields(prefix, normalized.nutrientsUsed);
-                });
-                safeStorageSet(
-                    sessionStorage,
-                    NUTRIENT_STATE_KEY,
-                    JSON.stringify(normalized)
+                        : name
                 );
             }
 
-            function rememberNutrientState(prefix = "") {
-                applyNutrientState(nutrientStateFrom(prefix));
+            function nutrientUseValue(prefix = "") {
+                return nutrientControl(prefix, "nutrientsUsed").checked
+                    ? "Yes"
+                    : "No";
+            }
+
+            function nutrientPreferences() {
+                try {
+                    const saved = JSON.parse(
+                        safeStorageGet(
+                            localStorage,
+                            NUTRIENT_PREFERENCES_KEY,
+                            "null"
+                        )
+                    );
+                    return saved &&
+                        typeof saved === "object" &&
+                        !Array.isArray(saved)
+                        ? saved
+                        : {};
+                } catch (error) {
+                    return {};
+                }
+            }
+
+            function restoreNutrientDose(prefix, amount) {
+                const raw = typeof amount === "string" ? amount : "";
+                const unit = nutrientControl(prefix, "nutrientUnit");
+                const match = /^(\d+(?:\.\d+)?|\.\d+) (.+)$/u.exec(raw);
+                const known =
+                    match &&
+                    [...unit.options].some(
+                        (option) =>
+                            option.value === match[2] &&
+                            option.value !== "custom"
+                    );
+                nutrientControl(prefix, "nutrientAmount").value = raw;
+                nutrientControl(prefix, "nutrientDose").value = known
+                    ? match[1]
+                    : "";
+                unit.value = known ? match[2] : raw ? "custom" : "";
+                renderNutrientDose(prefix);
+            }
+
+            function renderNutrientDose(prefix) {
+                const custom =
+                    nutrientControl(prefix, "nutrientUnit").value === "custom";
+                nutrientControl(prefix, "nutrientDose").disabled =
+                    custom || state.saving;
+                nutrientControl(prefix, "nutrientAmount").hidden = !custom;
+                nutrientControl(prefix, "nutrientCustomLabel").hidden = !custom;
+                const product = nutrientControl(
+                    prefix,
+                    "nutrientProduct"
+                ).value;
+                const saved = nutrientPreferences().doses?.[product];
+                const hasSaved =
+                    typeof saved === "string" &&
+                    saved.trim() &&
+                    saved.length <= 120;
+                nutrientControl(prefix, "useNutrientDose").disabled =
+                    !hasSaved || state.saving;
+                nutrientControl(prefix, "nutrientDoseHint").textContent =
+                    hasSaved
+                        ? `Usual dose: ${saved}. Saved in this browser; edits do not replace it until you save again.`
+                        : "Save a usual dose for this product in this browser. You can change it for each watering.";
+            }
+
+            function syncNutrientDose(prefix) {
+                const unit = nutrientControl(prefix, "nutrientUnit").value;
+                if (unit !== "custom") {
+                    const dose = nutrientControl(prefix, "nutrientDose").value;
+                    nutrientControl(prefix, "nutrientAmount").value =
+                        dose && unit ? `${dose} ${unit}` : "";
+                }
+                renderNutrientDose(prefix);
+            }
+
+            function validateNutrientDose(prefix, savingPreference = false) {
+                if (!savingPreference && nutrientUseValue(prefix) !== "Yes")
+                    return;
+                const unit = nutrientControl(prefix, "nutrientUnit").value;
+                const amount = nutrientControl(
+                    prefix,
+                    "nutrientAmount"
+                ).value.trim();
+                if (unit !== "custom") {
+                    const value = Number(
+                        nutrientControl(prefix, "nutrientDose").value
+                    );
+                    if (
+                        !unit ||
+                        !Number.isFinite(value) ||
+                        value <= 0 ||
+                        !amount
+                    )
+                        throw new Error(
+                            "Enter a nutrient dose greater than zero and choose its units."
+                        );
+                } else if (!amount)
+                    throw new Error("Describe the nutrient amount and units.");
+            }
+
+            function applyNutrientState(values = {}, prefix = "") {
+                nutrientControl(prefix, "nutrientsUsed").checked =
+                    values.nutrientsUsed === "Yes";
+                const product = nutrientControl(prefix, "nutrientProduct");
+                const productName =
+                    typeof values.nutrientProduct === "string"
+                        ? values.nutrientProduct
+                        : "";
+                if (
+                    productName &&
+                    ![...product.options].some(
+                        (option) => option.value === productName
+                    )
+                ) {
+                    const option = document.createElement("option");
+                    option.value = productName;
+                    option.textContent = productName;
+                    product.append(option);
+                }
+                product.value = productName;
+                restoreNutrientDose(prefix, values.nutrientAmount);
+                updateNutrientFields(prefix, nutrientUseValue(prefix));
+            }
+
+            function resetNutrientEntry(prefix = "") {
+                const saved = nutrientPreferences();
+                const product =
+                    nutrientControl(prefix, "nutrientProduct").value ||
+                    saved.product ||
+                    "";
+                applyNutrientState(
+                    {
+                        nutrientProduct: product,
+                        nutrientAmount: saved.doses?.[product] || "",
+                    },
+                    prefix
+                );
+            }
+
+            function useSavedNutrientDose(prefix) {
+                const product = nutrientControl(
+                    prefix,
+                    "nutrientProduct"
+                ).value;
+                const amount = nutrientPreferences().doses?.[product];
+                if (typeof amount === "string" && amount.length <= 120)
+                    restoreNutrientDose(prefix, amount);
+            }
+
+            function saveNutrientDose(prefix) {
+                try {
+                    validateNutrientDose(prefix, true);
+                    const product = nutrientControl(
+                        prefix,
+                        "nutrientProduct"
+                    ).value;
+                    const amount = nutrientControl(
+                        prefix,
+                        "nutrientAmount"
+                    ).value.trim();
+                    if (!product || !amount)
+                        throw new Error(
+                            "Choose a product and enter its dose before saving a usual dose."
+                        );
+                    const saved = nutrientPreferences();
+                    const next = JSON.stringify({
+                        product,
+                        doses: { ...saved.doses, [product]: amount },
+                    });
+                    if (
+                        !safeStorageSet(
+                            localStorage,
+                            NUTRIENT_PREFERENCES_KEY,
+                            next
+                        ) ||
+                        safeStorageGet(
+                            localStorage,
+                            NUTRIENT_PREFERENCES_KEY
+                        ) !== next
+                    )
+                        throw new Error(
+                            "This browser could not save your usual dose. Your current entry is still available."
+                        );
+                    ["", "bulk"].forEach(renderNutrientDose);
+                    showToast("Usual dose saved in this browser.");
+                } catch (error) {
+                    showToast(error.message, true);
+                }
             }
 
             function restoreNutrientState() {
-                try {
-                    applyNutrientState(
-                        JSON.parse(
-                            safeStorageGet(
-                                sessionStorage,
-                                NUTRIENT_STATE_KEY,
-                                "null"
-                            )
-                        ) || {}
-                    );
-                } catch (error) {
-                    safeStorageRemove(sessionStorage, NUTRIENT_STATE_KEY);
-                    applyNutrientState({});
-                }
+                ["", "bulk"].forEach(resetNutrientEntry);
+                // The old session preference included the opt-in. Never restore it
+                // into a new watering; explicit drafts/pending saves restore later.
+                safeStorageRemove(sessionStorage, NUTRIENT_STATE_KEY);
             }
 
             function createLink(label, href, iconName = "external") {
@@ -18263,6 +18666,7 @@
                     saving || queueWritesBlocked() || !state.queue.length;
                 $("bulkSaveButton").disabled = saving;
                 $("bulkResetButton").disabled = saving;
+                ["", "bulk"].forEach(renderNutrientDose);
                 renderEntryDraftBanner();
                 setIconLabel(
                     $("saveButton"),
@@ -18338,6 +18742,16 @@
                 const conditionId = prefix ? "bulkCondition" : "condition";
                 const soilId = prefix ? "bulkSoilMoisture" : "soilMoisture";
                 const candidate = { ...payload };
+                // Older clients copied the nutrient preference onto unrelated
+                // events. Preserve that inactive flag only for an unchanged
+                // pending retry; active Water edits still change the request.
+                if (
+                    !payload.events.includes("Water") &&
+                    !pending.payload.events.includes("Water") &&
+                    ["No", "Yes"].includes(pending.payload.nutrientsUsed) &&
+                    nutrientUseValue(prefix) === pending.payload.nutrientsUsed
+                )
+                    candidate.nutrientsUsed = pending.payload.nutrientsUsed;
                 if (
                     !payload.events.includes("Inspect") &&
                     $(conditionId).value.trim() ===
@@ -19620,6 +20034,7 @@
 
             function validateQueuedPayload(payload) {
                 const events = inferredPayloadEvents(payload);
+                validatePositiveMeasurements(payload);
                 validateCheckDetails(payload);
                 validateHumidityDetails(payload);
                 validateLightDetails(payload);
@@ -19705,6 +20120,26 @@
                         );
                 }
                 return events;
+            }
+
+            function validatePositiveMeasurements(payload) {
+                [
+                    ["weight", "Weight"],
+                    ["height", "Height"],
+                    ["width", "Width"],
+                ].forEach(([field, label]) => {
+                    const value = payload[field];
+                    if (
+                        value !== "" &&
+                        value !== undefined &&
+                        value !== null &&
+                        (!Number.isFinite(Number(value)) || Number(value) <= 0)
+                    ) {
+                        throw new Error(
+                            `${label} must be a number greater than zero.`
+                        );
+                    }
+                });
             }
 
             function renderObservationQueue() {
@@ -20330,6 +20765,14 @@
                         button,
                     ])
                 );
+                const focusedPlantId =
+                    list.contains(document.activeElement) &&
+                    plants.some(
+                        (plant) =>
+                            plant.id === document.activeElement.dataset.plantId
+                    )
+                        ? document.activeElement.dataset.plantId
+                        : "";
                 plants.forEach((plant, index) => {
                     let button = existingButtons.get(plant.id);
                     existingButtons.delete(plant.id);
@@ -20375,6 +20818,8 @@
                         "aria-selected",
                         String(plant.id === selected.id)
                     );
+                    button.tabIndex =
+                        plant.id === (focusedPlantId || selected.id) ? 0 : -1;
                     button.disabled = state.saving;
                     if (list.children[index] !== button)
                         list.insertBefore(button, list.children[index] || null);
@@ -22108,7 +22553,7 @@
                 heading.append(date);
                 const reweigh = createHelp(
                     "Dry-check window",
-                    "This estimates when the pot may approach its previous weight reference; it is not the next weighing appointment. Continue the Daily care weighing cadence and check moisture sooner when needed. For the money tree, check the upper 2 inches of mix; for Royal Flush, inspect the inner leaves and leaf replacement. After a lighting, airflow, or temperature change, reweigh sooner because the old curve may no longer describe drying.",
+                    "This estimates when the pot may approach its previous weight reference; it is not the next weighing appointment. Use current plant and soil checks, and reweigh when a new reading would help. For the money tree, check the upper 2 inches of mix; for Royal Flush, inspect the inner leaves and leaf replacement. After a lighting, airflow, or temperature change, reweigh sooner because the old curve may no longer describe drying.",
                     "weight"
                 );
                 reweigh.classList.add("forecast-reweigh");
@@ -22201,6 +22646,7 @@
                 if (state.bootstrap) renderPlantSummary();
             }
 
+            // Panels with their own instructions do not repeat them above the form.
             const EVENT_GUIDANCE = Object.freeze({
                 Mist: [
                     "Choose every area misted. Add a volume only if measured.",
@@ -22213,16 +22659,6 @@
                     "Record a changed light, airflow, enclosure or heating setting.",
                 ],
                 Propagate: ["Record the method and the material propagated."],
-                Support: [
-                    "Record adding, adjusting or removing a stake, tie or other support.",
-                ],
-                "Leaf VPD": [
-                    "Record leaf temperature, paired air and humidity, or a VPD device's displayed result.",
-                ],
-                Water: [
-                    "Record the application and any measured volume.",
-                    "Water does not imply a weight. Select Weigh for a scale reading.",
-                ],
                 Weigh: [
                     "Weigh the complete current pot setup in grams.",
                     "Record the reading as observed; watering-cycle context is calculated.",
@@ -22231,53 +22667,18 @@
                     "Choose inches or centimeters, then enter height, width, or both.",
                     "Keep the measuring method consistent and identify estimates.",
                 ],
-                Humidity: [
-                    "Enter the current hygrometer reading in % RH.",
-                    "Record where it was measured in Notes. This is an observation, not a target.",
-                ],
-                Inspect: [
-                    "Describe the plant above the medium: leaves, stems, color and visible damage.",
-                    "Use Soil check separately for moisture evidence.",
-                ],
-                Check: [
-                    "Choose the observed soil or medium moisture.",
-                    "Use Notes for method and depth; use Inspect for plant condition.",
-                ],
-                Light: [
-                    "Enter app PPFD, meter illuminance, or both.",
-                    "PPFD is an app estimate. Record the light preset and reading position in Notes.",
-                ],
-                Rotation: [
-                    "Enter the clockwise-equivalent turn in degrees.",
-                    "A quarter turn is 90°; record the actual turn.",
-                ],
                 Clean: [
-                    "Record cleaning you actually completed.",
                     "Use Notes for the leaves, pot or equipment cleaned and the method.",
                 ],
-                Prune: [
-                    "Record what you removed and why in Notes.",
-                    "Describe the completed action rather than a future plan.",
-                ],
-                Repot: [
-                    "Record the new pot and medium.",
-                    "Repot starts a new whole-pot weighing setup; older weights remain historical.",
-                ],
+                Prune: ["Record what you removed and why in Notes."],
                 Flower: [
-                    "Record the flower count and observed stage when known.",
-                    "Use details to distinguish buds, open flowers and fading blooms.",
-                ],
-                Photo: [
-                    "Add an HTTPS Google Photos share or Gyazo capture link.",
-                    "Describe the view in Notes. A photo alone does not prove an inspection.",
+                    "Record the flower count and observed stage. Distinguish buds, open flowers and fading blooms.",
                 ],
                 Pest: [
-                    "Describe the issue and any treatment actually applied.",
-                    "Keep uncertain identifications qualified; record follow-up plans in Notes.",
+                    "Keep uncertain identifications qualified. Describe any treatment actually applied and follow-up plans.",
                 ],
                 Other: [
                     "Describe the observation or completed care action in Notes.",
-                    "Use a dedicated event when it matches what you recorded.",
                 ],
             });
 
@@ -22291,55 +22692,42 @@
                         id === "eventGuidance" ? "eventChips" : "bulkEventChips"
                     ).after(container);
                 }
-                container.replaceChildren();
-                events.forEach((eventName) => {
+                const eventNames = [...events].filter(
+                    (eventName) => EVENT_GUIDANCE[eventName]
+                );
+                container.hidden = eventNames.length === 0;
+                const existing = [...container.children];
+                if (
+                    JSON.stringify(
+                        existing.map((element) => element.dataset.event)
+                    ) === JSON.stringify(eventNames)
+                )
+                    return;
+                const guides = eventNames.map((eventName) => {
+                    const retained = existing.find(
+                        (element) => element.dataset.event === eventName
+                    );
+                    if (retained) return retained;
                     const guidance = document.createElement("details");
                     guidance.className = "event-guidance-item";
+                    guidance.dataset.event = eventName;
                     const title = document.createElement("summary");
                     setIconLabel(
                         title,
                         eventIconName(eventName),
-                        `${eventLabel(eventName)} · how to record`,
+                        `${eventLabel(eventName)} · recording help`,
                         "app-icon app-icon--small"
                     );
                     const list = document.createElement("ul");
-                    (EVENT_GUIDANCE[eventName] || EVENT_GUIDANCE.Other).forEach(
-                        (text) => {
-                            const item = document.createElement("li");
-                            item.textContent = text;
-                            list.append(item);
-                        }
-                    );
-                    guidance.append(title, list);
-                    container.append(guidance);
-                });
-            }
-
-            function formatEventHints() {
-                document
-                    .querySelectorAll(
-                        '.event-panel p.hint:not([role="status"])'
-                    )
-                    .forEach((paragraph) => {
-                        const hint = document.createElement("div");
-                        hint.className = "hint event-hint";
-                        if (paragraph.id) hint.id = paragraph.id;
-                        const list = document.createElement("ul");
-                        paragraph.textContent
-                            .trim()
-                            .replace(/\s+/g, " ")
-                            .split(/(?<=[.!?])\s+(?=[A-Z])/)
-                            .forEach((text) => {
-                                const item = document.createElement("li");
-                                item.textContent = text;
-                                list.append(item);
-                            });
-                        hint.append(
-                            createIcon("info", "app-icon app-icon--small"),
-                            list
-                        );
-                        paragraph.replaceWith(hint);
+                    EVENT_GUIDANCE[eventName].forEach((text) => {
+                        const item = document.createElement("li");
+                        item.textContent = text;
+                        list.append(item);
                     });
+                    guidance.append(title, list);
+                    return guidance;
+                });
+                container.replaceChildren(...guides);
             }
 
             function orderedEventNames() {
@@ -22547,7 +22935,7 @@
                 $("soilMoistureField").hidden = !state.events.has("Check");
                 renderEventGuidance("eventGuidance", state.events);
                 renderLeafVpdPreview();
-                updateNutrientFields("", $("nutrientsUsed").value);
+                updateNutrientFields("", nutrientUseValue());
             }
 
             function updateNutrientFields(prefix, value) {
@@ -24164,6 +24552,8 @@
                 $("bulkWaterForm").hidden = !bulk;
                 $("singleModeTab").setAttribute("aria-selected", String(!bulk));
                 $("bulkModeTab").setAttribute("aria-selected", String(bulk));
+                $("singleModeTab").tabIndex = bulk ? -1 : 0;
+                $("bulkModeTab").tabIndex = bulk ? 0 : -1;
                 if (bulk) {
                     renderBulkEventChips();
                     renderBulkPlants($("bulkSearch").value);
@@ -24193,7 +24583,15 @@
                 } else {
                     state.bulkEvents.add(eventName);
                 }
-                renderBulkEventChips();
+                $("bulkEventChips")
+                    .querySelectorAll(".chip")
+                    .forEach((button) => {
+                        button.setAttribute(
+                            "aria-pressed",
+                            String(state.bulkEvents.has(button.dataset.event))
+                        );
+                    });
+                updateBulkConditionalFields();
                 renderBulkCount();
                 persistRoundState();
             }
@@ -24226,7 +24624,7 @@
                 renderEventGuidance("bulkEventGuidance", state.bulkEvents);
                 $("bulkSoilMoistureField").hidden =
                     !state.bulkEvents.has("Check");
-                updateNutrientFields("bulk", $("bulkNutrientsUsed").value);
+                updateNutrientFields("bulk", nutrientUseValue("bulk"));
             }
 
             function setBulkPickerMode(mode, persist = true) {
@@ -24461,6 +24859,7 @@
             }
 
             function bulkPayload() {
+                if (state.bulkEvents.has("Water")) validateNutrientDose("bulk");
                 const observedValue = $("bulkObservedAt").value;
                 const observedDate = observationDate("bulkObservedAt");
                 if (!observedValue || Number.isNaN(observedDate.getTime())) {
@@ -24482,7 +24881,9 @@
                         .map((plant) => plant.id),
                     events: [...state.bulkEvents],
                     observedAt: observedDate.toISOString(),
-                    nutrientsUsed: $("bulkNutrientsUsed").value,
+                    nutrientsUsed: state.bulkEvents.has("Water")
+                        ? nutrientUseValue("bulk")
+                        : "",
                     nutrientProduct: $("bulkNutrientProduct").value.trim(),
                     nutrientAmount: $("bulkNutrientAmount").value.trim(),
                     wateringApplication: $("bulkWateringApplication").value,
@@ -24577,6 +24978,7 @@
                 entryDrafts.restoring = true;
                 try {
                     restoreCareFields({}, "bulk");
+                    resetNutrientEntry("bulk");
                     state.bulkSelected.clear();
                     state.bulkEntrySource = "Mobile bulk care";
                     [
@@ -24593,7 +24995,7 @@
                     setObservationTime("bulkObservedAt");
                     renderBulkPlants($("bulkSearch").value);
                     renderBulkEventChips();
-                    updateNutrientFields("bulk", $("bulkNutrientsUsed").value);
+                    updateNutrientFields("bulk", nutrientUseValue("bulk"));
                     entryDrafts.baselines.bulk = JSON.stringify(
                         comparableOrdinaryDraft(ordinaryDraftSnapshot("bulk"))
                     );
@@ -24648,7 +25050,7 @@
                         ? "Mobile bulk water"
                         : "Mobile bulk care";
                 setObservationTime("bulkObservedAt", payload.observedAt);
-                applyNutrientState(payload);
+                applyNutrientState(payload, "bulk");
                 $("bulkCondition").value = payload.condition || "";
                 $("bulkSoilMoisture").value = payload.soilMoisture || "";
                 $("bulkRotationDegrees").value =
@@ -24878,6 +25280,7 @@
                 entryDrafts.restoring = true;
                 try {
                     restoreCareFields();
+                    resetNutrientEntry();
                     const keepEvents =
                         options.keepEvents ?? $("keepEvents").checked;
                     if (!keepEvents) state.events.clear();
@@ -24946,6 +25349,7 @@
             }
 
             function payloadFromForm() {
+                if (state.events.has("Water")) validateNutrientDose("");
                 if (state.events.has("Photo"))
                     validatePhotoUrl($("photoUrl").value.trim());
                 const observedValue = $("observedAt").value;
@@ -24974,7 +25378,9 @@
                         : "",
                     notes: $("notes").value.trim(),
                     potSetup: $("potSetup").value,
-                    nutrientsUsed: $("nutrientsUsed").value,
+                    nutrientsUsed: state.events.has("Water")
+                        ? nutrientUseValue()
+                        : "",
                     nutrientProduct: $("nutrientProduct").value.trim(),
                     nutrientAmount: $("nutrientAmount").value.trim(),
                     potSize: $("potSize").value.trim(),
@@ -25582,7 +25988,9 @@
                         : "keeping previous entries"
                     : "no entries loaded for these filters";
                 setRecentStatus(
-                    `${message} · ${retained}. Use Refresh to retry${offline ? " after reconnecting" : ""}.`
+                    `${message} · ${retained}. Try Refresh history${offline ? " after reconnecting" : ""}.`,
+                    false,
+                    true
                 );
             }
 
@@ -25640,14 +26048,20 @@
                     );
             }
 
-            function setRecentStatus(message, loading = false) {
+            function setRecentStatus(message, loading = false, failed = false) {
                 clearTimeout(state.recentTimer);
                 state.recentTimer = null;
                 const status = $("recentStatus");
                 status.textContent = message;
                 status.dataset.loading = String(loading);
+                status.dataset.failed = String(failed);
                 status.hidden = !message;
                 $("recentList").setAttribute("aria-busy", String(loading));
+                $("refreshHistoryButton").disabled = loading;
+                $("refreshHistoryButton").setAttribute(
+                    "aria-busy",
+                    String(loading)
+                );
                 if (message) $("recentCard").hidden = false;
             }
 
@@ -25726,6 +26140,7 @@
                         payloadFingerprint(state.pendingSave.payload) !==
                             payloadFingerprint(payload)
                     ) {
+                        validatePositiveMeasurements(payload);
                         validateCheckDetails(payload);
                         validateHumidityDetails(payload);
                         validateLightDetails(payload);
@@ -26582,7 +26997,63 @@
             $("plantSelect").addEventListener("change", renderPlantSummary);
             $("plantChoiceList").addEventListener("click", (event) => {
                 const button = event.target.closest("[data-plant-id]");
-                if (button) selectPlantById(button.dataset.plantId);
+                if (button) {
+                    selectPlantById(button.dataset.plantId);
+                    $("plantChoiceSummary").focus({ preventScroll: true });
+                }
+            });
+            $("plantChoiceMenu").addEventListener("keydown", (event) => {
+                if (state.saving) return;
+                const menu = $("plantChoiceMenu");
+                if (event.key === "Escape" && menu.open) {
+                    event.preventDefault();
+                    menu.open = false;
+                    $("plantChoiceSummary").focus({ preventScroll: true });
+                    return;
+                }
+                if (
+                    !["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)
+                )
+                    return;
+                const buttons = [
+                    ...$("plantChoiceList").querySelectorAll(
+                        "button:not(:disabled)"
+                    ),
+                ];
+                if (!buttons.length) return;
+                event.preventDefault();
+                const current = buttons.indexOf(document.activeElement);
+                let next = current;
+                if (event.key === "Home") next = 0;
+                else if (event.key === "End") next = buttons.length - 1;
+                else if (current === -1) {
+                    next = buttons.findIndex(
+                        (button) =>
+                            button.getAttribute("aria-selected") === "true"
+                    );
+                    if (next === -1) next = 0;
+                } else
+                    next = Math.max(
+                        0,
+                        Math.min(
+                            buttons.length - 1,
+                            current + (event.key === "ArrowDown" ? 1 : -1)
+                        )
+                    );
+                menu.open = true;
+                buttons.forEach((button, index) => {
+                    button.tabIndex = index === next ? 0 : -1;
+                });
+                buttons[next].focus();
+            });
+            $("plantChoiceSummary").addEventListener("click", () => {
+                const list = $("plantChoiceList");
+                list.querySelectorAll("button").forEach((button) => {
+                    button.tabIndex =
+                        button.getAttribute("aria-selected") === "true"
+                            ? 0
+                            : -1;
+                });
             });
             $("listPickerMode").addEventListener("click", () =>
                 setPlantPickerMode("list")
@@ -26605,6 +27076,7 @@
             $("labelPicker").addEventListener("focusout", () =>
                 showPickerName()
             );
+            $("refreshHistoryButton").addEventListener("click", refreshRecent);
             $("recentLimit").addEventListener("change", (event) => {
                 state.recentLimit = Number(event.target.value);
                 safeStorageSet(
@@ -26652,6 +27124,27 @@
             $("bulkModeTab").addEventListener("click", () =>
                 setEntryMode("bulk")
             );
+            $("modeTabs").addEventListener("keydown", (event) => {
+                if (
+                    state.saving ||
+                    !["ArrowLeft", "ArrowRight", "Home", "End"].includes(
+                        event.key
+                    )
+                )
+                    return;
+                const tabs = [$("singleModeTab"), $("bulkModeTab")];
+                const current = tabs.indexOf(document.activeElement);
+                if (current === -1) return;
+                event.preventDefault();
+                const next =
+                    event.key === "Home"
+                        ? 0
+                        : event.key === "End"
+                          ? 1
+                          : 1 - current;
+                setEntryMode(next === 0 ? "single" : "bulk");
+                tabs[next].focus({ preventScroll: true });
+            });
             $("weight").addEventListener("input", () => {
                 if ($("weight").value) toggleEvent("Weigh", true);
                 updateConditionalFields();
@@ -26667,26 +27160,38 @@
                     updateConditionalFields();
                 });
             });
-            ["nutrientsUsed", "nutrientProduct", "nutrientAmount"].forEach(
-                (id) => {
-                    $(id).addEventListener("change", () =>
-                        rememberNutrientState("")
-                    );
-                    $(id).addEventListener("input", () =>
-                        rememberNutrientState("")
-                    );
-                }
-            );
-            [
-                "bulkNutrientsUsed",
-                "bulkNutrientProduct",
-                "bulkNutrientAmount",
-            ].forEach((id) => {
-                $(id).addEventListener("change", () =>
-                    rememberNutrientState("bulk")
+            ["", "bulk"].forEach((prefix) => {
+                nutrientControl(prefix, "nutrientsUsed").addEventListener(
+                    "change",
+                    () => updateNutrientFields(prefix, nutrientUseValue(prefix))
                 );
-                $(id).addEventListener("input", () =>
-                    rememberNutrientState("bulk")
+                nutrientControl(prefix, "nutrientProduct").addEventListener(
+                    "change",
+                    () => {
+                        restoreNutrientDose(prefix, "");
+                        useSavedNutrientDose(prefix);
+                    }
+                );
+                ["nutrientDose", "nutrientUnit"].forEach((name) => {
+                    nutrientControl(prefix, name).addEventListener(
+                        "input",
+                        () => syncNutrientDose(prefix)
+                    );
+                    nutrientControl(prefix, name).addEventListener(
+                        "change",
+                        () => syncNutrientDose(prefix)
+                    );
+                });
+                nutrientControl(prefix, "saveNutrientDose").addEventListener(
+                    "click",
+                    () => saveNutrientDose(prefix)
+                );
+                nutrientControl(prefix, "useNutrientDose").addEventListener(
+                    "click",
+                    () => {
+                        useSavedNutrientDose(prefix);
+                        retainOrdinaryDraft(prefix ? "bulk" : "single");
+                    }
                 );
             });
             $("bulkSearch").addEventListener("input", (event) =>
@@ -26933,7 +27438,6 @@
             });
 
             applyTheme(preferredTheme());
-            formatEventHints();
             const cachedBootstrap = readCachedBootstrap();
             if (cachedBootstrap) {
                 initialize(cachedBootstrap, { fromCache: true });

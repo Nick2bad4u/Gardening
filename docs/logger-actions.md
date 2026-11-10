@@ -155,6 +155,21 @@ Partial and Spot waterings remain real Water events, but do not qualify for the 
 
 There is no separate Fertilize event button. The structured nutrient record belongs to Water. Do not create a fictional watering to document a different activity; use Other with an accurate note when appropriate.
 
+In the logger, **Add nutrients** starts unchecked for each new watering, including
+after a save, queue addition, or cleared entry. Check it only when that watering
+included nutrients. A resumed draft retains its original choice.
+
+Choose the product, enter the numeric dose, and choose its units separately.
+**Save as usual dose** remembers that product's dose in this browser; it does not
+save an observation. The saved dose is available on later visits and in Bulk
+care. Change the dose for a single watering without changing the saved value,
+or choose **Use saved dose** to restore it. Save a new usual dose explicitly
+when your normal mix changes. Browser storage is local to that browser/device.
+
+Use **Other / recorded text** for an amount that does not fit the listed units.
+Existing text doses remain intact when resumed. These controls record your
+actual mix; they do not recommend a nutrient concentration or convert units.
+
 **Water + Weigh** combines two existing events. Water without a scale reading is valid. Weigh without Water is valid. If the weight represents the post-drain condition of that watering, it can be included in the same observation. If it is a pre-watering reading, save it separately at its actual earlier time and record the post-drain reading separately if taken.
 
 The writer places Weigh before Water within a combined save for historical ordering. The shared save identity lets the cycle logic recognize that weight as the watering's Wet anchor. Do not rearrange rows or edit their timestamps merely to make the sheet look chronological.
