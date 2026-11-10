@@ -1,10 +1,10 @@
 # Google Sheets observation logger
 
-Production logger **5.43.0 / immutable version 132** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.44.0 / immutable version 133** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Production **5.43.0 / immutable version 132** and **AppSheet 1.100141** retain portrait
+Production **5.44.0 / immutable version 133** and **AppSheet 1.100141** retain portrait
 revision **1010123212eade00**, verified on November 10. The remaining cactus and
 front-grid portraits are described below. P41's appended optional weight field
 remains unchanged; the earlier dated receipts retain their verified versions.
@@ -37,6 +37,53 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## November 10 shared nutrient doses
+
+Production **5.44.0 / immutable version 133** was promoted at **12:34:11 EST**,
+preserving the existing URL, owner-only access, execution identity, manifest,
+and artwork. API readback verified that Head, immutable source, and maintained
+logger files match
+[e757df9](https://github.com/Nick2bad4u/Gardening/commit/e757df902b7ab788c039c081cd854eae68b4dd8b).
+
+Usual doses now synchronize through a dedicated ScriptProperties record.
+Legacy browser doses fill missing products; locked per-product updates reject
+conflicting replacements. Local caches remain usable offline, and incoming
+preferences preserve edited entries, drafts, pending saves, and nutrient opt-in.
+The release requires no workbook schema, installer, AppSheet, or trigger migration.
+
+A verified owner-only
+[native backup](https://docs.google.com/spreadsheets/d/1CccEab9jcPfhq8a4RRwAKO9C6ArroOB5TpUAr_j0SE0/edit)
+preceded deployment. Before/after comparison preserved **2,295 unique observation
+IDs**, **1,850 request groups**, **67/59/77-column headers**, all entered staging
+rows, **1,024 sampled source cells**, **70 tab properties**, and **194 chart
+IDs/titles**. Captured formulas, notes, and validations matched, with no formula,
+required-anchor, or Integrity failures. This covers full ID columns and entered
+staging data plus sampled History/helper cells, tab properties, and chart
+IDs/titles; it does not compare every History value, chart specification, format,
+or protection. No synthetic production observations or nutrient doses were saved.
+
+Local validation passed **2,107 logger tests**, server coverage gates, **125
+Chromium logger tests**, type/lint/format checks, and **224-page** site checks.
+The exact preference functions also passed **17 native Apps Script checks** in
+**2.537 seconds** in a disposable project. The
+[implementation workflow](https://github.com/Nick2bad4u/Gardening/actions/runs/42863049987)
+passed **317 Chromium tests**, **60 Storybook tests**, and Pages publication;
+hosted logger, SonarCloud, Codecov, and secret gates passed.
+
+Two independent authenticated browser profiles showed **Connected · Logger
+5.44.0** and synchronized preference status. Both started with nutrients unchecked.
+All eight live combinations of Single/Bulk, **390/1280 px**, and dark/light themes
+had no horizontal overflow; the inspected logger console had no warnings or
+errors. Temporary entries were cleared and inspection settings restored. Actual
+cross-browser preference saves, conflicting edits, and offline behavior were
+tested with isolated synthetic services and disposable Apps Script storage.
+
+Version 133 preference reads completed in **1.206–1.674 seconds**; both fresh
+bootstrap calls completed in **47.961** and **77.565 seconds**. These are observed
+timings, not latency guarantees. The **12:39:34 EST** queue run completed in
+**7.013 seconds**. Exactly one five-minute queue trigger remains configured, and
+AppSheet remains on **1.100141** with no unsaved editor changes.
 
 ## November 10 saved doses and logger interface
 
