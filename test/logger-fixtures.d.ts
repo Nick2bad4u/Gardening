@@ -58,11 +58,21 @@ export interface LoggerOptions {
     bootstrapData?: Bootstrap;
     configureWindow?: (window: Window) => void;
     matchMediaUnavailable?: boolean;
+    nutrientApiAvailable?: boolean;
+    nutrientBehaviors?: Pick<
+        ScriptBehaviors,
+        "saveWebNutrientDose" | "syncWebNutrientPreferences"
+    >;
     online?: boolean;
     pendingSave?: object;
     saveStatus?: string;
     storage?: Record<string, string>;
     storageUnavailable?: boolean;
+}
+
+export interface NutrientPreferences {
+    doses: Record<string, string>;
+    product: string;
 }
 
 export interface ObservationPayload {
@@ -202,11 +212,15 @@ export interface ScriptArguments {
     >;
     recalculateGardenWorkbook: [];
     saveBulkCareObservation: [payload: ObservationPayload];
+    saveWebNutrientDose: [
+        payload: { amount: string; expectedAmount: string; product: string },
+    ];
     saveWebObservation: [payload: ObservationPayload];
     saveWebObservationBatch: [payloads: ObservationPayload[]];
     saveWebObservationCorrection: Parameters<
         LoggerCorrectionApi["saveWebObservationCorrection"]
     >;
+    syncWebNutrientPreferences: [legacy?: null | NutrientPreferences];
 }
 
 export type ScriptBehaviors = {

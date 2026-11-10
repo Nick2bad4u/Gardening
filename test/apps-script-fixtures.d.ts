@@ -663,6 +663,10 @@ export interface AppsScriptTestApi {
         plantCount: unknown;
     };
     savedRequestStatus_: (history: unknown, requestId: unknown) => SaveStatus;
+    saveWebNutrientDose: (payload: unknown) => {
+        preferences: { doses: Record<string, string>; product: string };
+        saved: boolean;
+    };
     saveWebObservation: (payload: unknown) => SaveResult;
     saveWebObservationBatch: (payloads: WebPayload[]) => BatchResult;
     SpreadsheetApp: { flush: () => void; openById: () => object };
@@ -673,6 +677,10 @@ export interface AppsScriptTestApi {
         targetRow: unknown,
         recordedAt: unknown
     ) => CellValue[][];
+    syncWebNutrientPreferences: (legacy?: unknown) => {
+        doses: Record<string, string>;
+        product: string;
+    };
     uniqueTextValues_: (values: unknown) => string[];
     updateBaselinePotSetup_: (
         spreadsheet: unknown,

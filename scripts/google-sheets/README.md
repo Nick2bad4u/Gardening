@@ -4639,8 +4639,13 @@ be retained between plants; weight state is inferred and has no manual control.
 New waterings start with **Add nutrients** unchecked in both entry modes.
 Confirmed saves, queue additions, and cleared forms reset that choice; explicitly
 resumed drafts and pending requests retain their recorded choice. Each product
-can have a browser-local usual dose, saved with **Save as usual dose** and recalled
-with **Use saved dose**. Numeric dose and units are separate controls; one-off edits
+can have a shared usual dose, saved with **Save as usual dose** and recalled
+with **Use saved dose**. The private logger uses one dedicated ScriptProperties
+record, with browser caching for offline use. Opening/returning to the logger or
+choosing **Refresh** synchronizes doses; legacy browser preferences fill only
+missing products. Locked per-product updates reject stale replacements, and
+shared saves require a confirmed connection. Preferences do not write History
+or change AppSheet staging. Numeric dose and units are separate controls; one-off edits
 do not overwrite the saved preference. **Other / recorded text** preserves
 custom and older dose descriptions. The existing text payload and workbook
 columns remain unchanged. The single-entry form

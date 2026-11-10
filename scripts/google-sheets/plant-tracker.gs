@@ -6,6 +6,7 @@
  */
 
 /* exported onOpen, onEdit, doGet, openMobileEntry, getWebAppBootstrap,
+   syncWebNutrientPreferences, saveWebNutrientDose,
    processAppSheetEntry, processQueuedAppSheetEntries, installAppSheetBulkSheet,
    installAppSheetQueueTrigger, saveWebObservation, saveWebObservationBatch,
    saveBulkCareObservation, saveBulkWaterObservation, getRecentWebObservations,
@@ -17,7 +18,7 @@
    dryDownModelFormula_, installDailyCareDashboard, GARDEN_CYCLE_COMPARISON, GARDEN_ENVIRONMENT_READINGS, GARDEN_RECORDED_LOCATIONS */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.43.0",
+    version: "5.44.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -1039,6 +1040,194 @@ function doGet() {
         )
         .addMetaTag("mobile-web-app-capable", "yes")
         .addMetaTag("apple-mobile-web-app-capable", "yes");
+}
+
+// The owner-only web app shares these preferences across browsers. They never
+// participate in observation history, retries, or the nutrient opt-in.
+const NUTRIENT_PREFERENCES_PROPERTY = "gardenLoggerNutrientPreferencesV1";
+const NUTRIENT_PREFERENCES_MAX_PRODUCTS = 20;
+const NUTRIENT_PREFERENCES_MAX_BYTES = 8000;
+
+/**
+ * @template {string} K
+ * @param {unknown} value
+ * @param {K[]} keys
+ * @returns {Record<K, unknown>}
+ */
+function nutrientPreferenceObject_(value, keys) {
+    if (!value || typeof value !== "object" || Array.isArray(value))
+        throw new Error("NUTRIENT_PREFERENCES_INVALID: Expected an object.");
+    const record = /** @type {Record<string, unknown>} */ (value);
+    /** @type {readonly string[]} */
+    const allowedKeys = keys;
+    if (
+        Object.keys(record).some((key) => !allowedKeys.includes(key)) ||
+        keys.some((key) => !Object.hasOwn(record, key))
+    )
+        throw new Error("NUTRIENT_PREFERENCES_INVALID: Unsupported fields.");
+    return /** @type {Record<K, unknown>} */ (record);
+}
+
+/** @param {unknown} value @param {boolean} [allowEmpty] @returns {string} */
+function nutrientPreferenceText_(value, allowEmpty = false) {
+    if (
+        typeof value !== "string" ||
+        value.length > 120 ||
+        (!allowEmpty && !value.trim())
+    )
+        throw new Error(
+            "NUTRIENT_PREFERENCES_INVALID: Product and dose must contain at most 120 characters."
+        );
+    return value.trim();
+}
+
+/** @param {unknown} value @returns {string} */
+function nutrientPreferenceProduct_(value) {
+    const product = nutrientPreferenceText_(value);
+    if (product === "prototype" || Object.hasOwn(Object.prototype, product))
+        throw new Error("NUTRIENT_PREFERENCES_INVALID: Unsupported product.");
+    return product;
+}
+
+/** @param {unknown} value @returns {GardenNutrientPreferences} */
+function validateNutrientPreferences_(value) {
+    const record = nutrientPreferenceObject_(value, ["product", "doses"]);
+    if (
+        !record.doses ||
+        typeof record.doses !== "object" ||
+        Array.isArray(record.doses)
+    )
+        throw new Error(
+            "NUTRIENT_PREFERENCES_INVALID: Expected product doses."
+        );
+    const entries = Object.entries(record.doses);
+    if (entries.length > NUTRIENT_PREFERENCES_MAX_PRODUCTS)
+        throw new Error(
+            "NUTRIENT_PREFERENCES_LIMIT: At most 20 products can be saved."
+        );
+    /** @type {Record<string, string>} */
+    const doses = {};
+    for (const [name, amount] of entries) {
+        const product = nutrientPreferenceProduct_(name);
+        if (product !== name)
+            throw new Error(
+                "NUTRIENT_PREFERENCES_INVALID: Product names cannot have surrounding spaces."
+            );
+        doses[product] = nutrientPreferenceText_(amount);
+    }
+    const product = nutrientPreferenceText_(record.product, true);
+    if (product && !Object.hasOwn(doses, product))
+        throw new Error(
+            "NUTRIENT_PREFERENCES_INVALID: Selected product has no saved dose."
+        );
+    const preferences = { product, doses };
+    if (
+        gardenAnalyticsPayloadBytes_(JSON.stringify(preferences)) >
+        NUTRIENT_PREFERENCES_MAX_BYTES
+    )
+        throw new Error(
+            "NUTRIENT_PREFERENCES_LIMIT: Saved doses exceed the storage limit."
+        );
+    return preferences;
+}
+
+/** @returns {GardenNutrientPreferences} */
+function readNutrientPreferences_() {
+    const stored = PropertiesService.getScriptProperties().getProperty(
+        NUTRIENT_PREFERENCES_PROPERTY
+    );
+    if (stored === null) return { product: "", doses: {} };
+    try {
+        return validateNutrientPreferences_(JSON.parse(stored));
+    } catch {
+        throw new Error(
+            "NUTRIENT_PREFERENCES_STORAGE: Saved doses could not be read. Existing settings have been preserved."
+        );
+    }
+}
+
+/** @param {GardenNutrientPreferences} preferences */
+function storeNutrientPreferences_(preferences) {
+    const serialized = JSON.stringify(
+        validateNutrientPreferences_(preferences)
+    );
+    const properties = PropertiesService.getScriptProperties();
+    properties.setProperty(NUTRIENT_PREFERENCES_PROPERTY, serialized);
+    if (properties.getProperty(NUTRIENT_PREFERENCES_PROPERTY) !== serialized)
+        throw new Error(
+            "NUTRIENT_PREFERENCES_STORAGE: Could not confirm the saved dose. Refresh before trying again."
+        );
+}
+
+/** @template T @param {() => T} operation @returns {T} */
+function withNutrientPreferenceLock_(operation) {
+    const lock = LockService.getScriptLock();
+    if (!lock.tryLock(GARDEN_LOGGER.lockTimeoutMs))
+        throw new Error(
+            "NUTRIENT_PREFERENCES_BUSY: Another save is running. Try again shortly."
+        );
+    try {
+        return operation();
+    } finally {
+        lock.releaseLock();
+    }
+}
+
+/**
+ * Read shared doses, optionally importing browser-only doses for missing products.
+ * Existing shared doses always win during migration, including concurrent imports.
+ * @param {unknown} [legacy]
+ * @returns {GardenNutrientPreferences}
+ */
+function syncWebNutrientPreferences(legacy = null) {
+    if (legacy === null) return readNutrientPreferences_();
+    const imported = validateNutrientPreferences_(legacy);
+    return withNutrientPreferenceLock_(() => {
+        const preferences = readNutrientPreferences_();
+        let changed = false;
+        for (const [product, amount] of Object.entries(imported.doses)) {
+            if (Object.hasOwn(preferences.doses, product)) continue;
+            preferences.doses[product] = amount;
+            changed = true;
+        }
+        if (!preferences.product && imported.product) {
+            preferences.product = imported.product;
+            changed = true;
+        }
+        if (changed) storeNutrientPreferences_(preferences);
+        return preferences;
+    });
+}
+
+/**
+ * Update only the chosen product. A stale browser must review a newer dose before
+ * replacing it; replaying an already committed dose is harmless.
+ * @param {unknown} payload
+ * @returns {{saved: boolean, preferences: GardenNutrientPreferences}}
+ */
+function saveWebNutrientDose(payload) {
+    const record = nutrientPreferenceObject_(payload, [
+        "product",
+        "amount",
+        "expectedAmount",
+    ]);
+    const product = nutrientPreferenceProduct_(record.product);
+    const amount = nutrientPreferenceText_(record.amount);
+    const expectedAmount = nutrientPreferenceText_(record.expectedAmount, true);
+    return withNutrientPreferenceLock_(() => {
+        const preferences = readNutrientPreferences_();
+        const current = Object.hasOwn(preferences.doses, product)
+            ? preferences.doses[product]
+            : "";
+        if (current !== expectedAmount && current !== amount)
+            return { saved: false, preferences };
+        if (current !== amount || preferences.product !== product) {
+            preferences.doses[product] = amount;
+            preferences.product = product;
+            storeNutrientPreferences_(preferences);
+        }
+        return { saved: true, preferences };
+    });
 }
 
 function getWebAppBootstrap() {

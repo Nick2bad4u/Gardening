@@ -4299,6 +4299,8 @@ function createLoggerWindow({
     bootstrapData = bootstrap,
     configureWindow = () => {},
     matchMediaUnavailable = false,
+    nutrientApiAvailable = true,
+    nutrientBehaviors = createNutrientService().behaviors,
     online = true,
     pendingSave,
     saveStatus = "missing",
@@ -4399,13 +4401,22 @@ function createLoggerWindow({
                 state: saveStatus,
             });
         },
+        ...nutrientBehaviors,
     };
     const createChain = createScriptRunner(behaviors, calls);
     Object.defineProperty(window, "google", {
         value: {
             script: {
                 get run() {
-                    return createChain();
+                    const chain = createChain();
+                    if (!nutrientApiAvailable) {
+                        Reflect.deleteProperty(
+                            chain,
+                            "syncWebNutrientPreferences"
+                        );
+                        Reflect.deleteProperty(chain, "saveWebNutrientDose");
+                    }
+                    return chain;
                 },
             },
         },
@@ -4414,6 +4425,50 @@ function createLoggerWindow({
     configureWindow(window);
     window.eval(scriptSource);
     return { behaviors, calls, window };
+}
+
+/** @param {import("../logger-fixtures.d.ts").NutrientPreferences} [initial] */
+function createNutrientService(initial) {
+    /** @type {import("../logger-fixtures.d.ts").NutrientPreferences} */
+    const preferences = initial
+        ? structuredClone(initial)
+        : { doses: {}, product: "" };
+    /**
+     * @type {Pick<
+     *     import("../logger-fixtures.d.ts").ScriptBehaviors,
+     *     "saveWebNutrientDose" | "syncWebNutrientPreferences"
+     * >}
+     */
+    const behaviors = {
+        saveWebNutrientDose: ({ args, success }) => {
+            const [request] = args;
+            const isSaved =
+                (preferences.doses[request.product] ?? "") ===
+                request.expectedAmount;
+            if (isSaved) {
+                preferences.doses[request.product] = request.amount;
+                preferences.product = request.product;
+            }
+            success({
+                preferences: structuredClone(preferences),
+                saved: isSaved,
+            });
+        },
+        syncWebNutrientPreferences: ({ args, success }) => {
+            const [legacy] = args;
+            if (legacy) {
+                const doses = Object.entries(legacy.doses);
+                for (const [product, amount] of doses) {
+                    if (!Object.hasOwn(preferences.doses, product))
+                        preferences.doses[product] = amount;
+                }
+                if (preferences.product === "" && legacy.product !== "")
+                    preferences.product = legacy.product;
+            }
+            success(structuredClone(preferences));
+        },
+    };
+    return { behaviors, snapshot: () => structuredClone(preferences) };
 }
 
 /**
@@ -4486,6 +4541,10 @@ function createScriptRunner(behaviors, calls) {
             saveBulkCareObservation(payload) {
                 invoke("saveBulkCareObservation", [payload]);
             },
+            /** @param {import("../logger-fixtures.d.ts").ScriptArguments["saveWebNutrientDose"][0]} payload */
+            saveWebNutrientDose(payload) {
+                invoke("saveWebNutrientDose", [payload]);
+            },
             /** @param {import("../logger-fixtures.d.ts").ObservationPayload} payload */
             saveWebObservation(payload) {
                 invoke("saveWebObservation", [payload]);
@@ -4497,6 +4556,10 @@ function createScriptRunner(behaviors, calls) {
             /** @param {import("../logger-correction-fixtures.d.ts").CorrectionSavePayload} request */
             saveWebObservationCorrection(request) {
                 invoke("saveWebObservationCorrection", [request]);
+            },
+            /** @param {import("../logger-fixtures.d.ts").NutrientPreferences | null} [legacy] */
+            syncWebNutrientPreferences(legacy = null) {
+                invoke("syncWebNutrientPreferences", [legacy]);
             },
             /** @param {(error: unknown) => void} handler */
             withFailureHandler(handler) {
@@ -6564,7 +6627,10 @@ describe("garden logger nutrient preferences", () => {
     it("saves usual doses by product without reusing the nutrient opt-in or overwriting a dose with one-off edits", () => {
         expect.hasAssertions();
 
-        const { window } = createLoggerWindow();
+        const service = createNutrientService();
+        const { window } = createLoggerWindow({
+            nutrientBehaviors: service.behaviors,
+        });
         queryElement(
             window.document,
             '#eventChips [data-event="Water"]',
@@ -6590,6 +6656,7 @@ describe("garden logger nutrient preferences", () => {
         expect(JSON.parse(saved)).toStrictEqual({
             doses: { "MSU 13-3-15": "0.5 g per gallon" },
             product: "MSU 13-3-15",
+            synced: true,
         });
 
         enterWorkflowValue(window, "nutrientDose", "0.25");
@@ -6623,6 +6690,7 @@ describe("garden logger nutrient preferences", () => {
         ).toBe(saved);
 
         const reloaded = createLoggerWindow({
+            nutrientBehaviors: service.behaviors,
             storage: { gardenLoggerNutrientPreferencesV1: saved },
         }).window;
         for (const prefix of ["", "bulk"]) {
@@ -6928,10 +6996,14 @@ describe("garden logger nutrient preferences", () => {
         expect(ordinaryDraftKeys(window)).toHaveLength(0);
     });
 
-    it("reports unavailable preference storage without losing the entered dose", () => {
+    it("saves a shared usual dose when browser preference storage is unavailable", () => {
         expect.hasAssertions();
 
-        const { window } = createLoggerWindow({ storageUnavailable: true });
+        const service = createNutrientService();
+        const { window } = createLoggerWindow({
+            nutrientBehaviors: service.behaviors,
+            storageUnavailable: true,
+        });
         queryElement(
             window.document,
             "#nutrientsUsed",
@@ -6950,9 +7022,522 @@ describe("garden logger nutrient preferences", () => {
             queryElement(window.document, "#nutrientDose", HTMLInputElement)
                 .value
         ).toBe("0.5");
-        expect(window.document.body.textContent).toContain(
-            "could not save your usual dose"
+        expect(service.snapshot()).toMatchObject({
+            doses: { "MSU 13-3-15": "0.5 g per gallon" },
+        });
+
+        enterWorkflowValue(window, "nutrientDose", "0.1");
+        queryElement(
+            window.document,
+            "#useNutrientDose",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(window.document, "#nutrientDose", HTMLInputElement)
+                .value
+        ).toBe("0.5");
+    });
+});
+
+/** @param {Window} window */
+function cachedNutrientPreferences(window) {
+    return parseStoredRecord(
+        window.localStorage.getItem("gardenLoggerNutrientPreferencesV1")
+    );
+}
+
+/** @param {Window} window */
+function currentNutrientDose(window) {
+    return queryElement(window.document, "#nutrientDose", HTMLInputElement)
+        .value;
+}
+
+/** @param {Window} window @param {string} amount @param {string} [product] */
+function enterSharedNutrientDose(window, amount, product = "MSU 13-3-15") {
+    const checkbox = queryElement(
+        window.document,
+        "#nutrientsUsed",
+        HTMLInputElement
+    );
+    checkbox.checked = true;
+    checkbox.dispatchEvent(new window.Event("change", { bubbles: true }));
+    changeWorkflowSelect(window, "nutrientProduct", product);
+    enterWorkflowValue(window, "nutrientDose", amount);
+    changeWorkflowSelect(window, "nutrientUnit", "g per gallon");
+}
+
+/** @param {Window} window */
+function saveSharedNutrientDose(window) {
+    queryElement(
+        window.document,
+        "#saveNutrientDose",
+        HTMLButtonElement
+    ).click();
+}
+
+const initialSharedNutrients = {
+    doses: { "MSU 13-3-15": "0.5 g per gallon" },
+    product: "MSU 13-3-15",
+};
+
+describe("garden logger shared nutrient synchronization", () => {
+    afterEach(restoreLoggerMocks);
+
+    it("imports browser-only doses once without replacing a product already saved on another device", () => {
+        expect.hasAssertions();
+
+        const service = createNutrientService(initialSharedNutrients);
+        const legacy = {
+            doses: {
+                "MSU 13-3-15": "0.25 g per gallon",
+                "SuperThrive Foliage Pro": "1 mL per L",
+            },
+            product: "MSU 13-3-15",
+        };
+        const { calls, window } = createLoggerWindow({
+            nutrientBehaviors: service.behaviors,
+            storage: {
+                gardenLoggerNutrientPreferencesV1: JSON.stringify(legacy),
+            },
+        });
+
+        expect(service.snapshot().doses).toStrictEqual({
+            "MSU 13-3-15": "0.5 g per gallon",
+            "SuperThrive Foliage Pro": "1 mL per L",
+        });
+
+        const migrationCall = required(
+            calls.find((call) => call.method === "syncWebNutrientPreferences")
         );
+
+        expect(
+            parseStoredJson(JSON.stringify(migrationCall.args))
+        ).toStrictEqual([legacy]);
+        expect(cachedNutrientPreferences(window)).toMatchObject({
+            synced: true,
+        });
+
+        refreshWorkflow(window);
+
+        expect(
+            required(
+                calls.findLast(
+                    (call) => call.method === "syncWebNutrientPreferences"
+                )
+            ).args
+        ).toStrictEqual([null]);
+        expect(currentNutrientDose(window)).toBe("0.5");
+    });
+
+    it("loads a saved dose on a different browser with nutrients still off", () => {
+        expect.hasAssertions();
+
+        const service = createNutrientService();
+        const phone = createLoggerWindow({
+            nutrientBehaviors: service.behaviors,
+        });
+        enterSharedNutrientDose(phone.window, "0.5");
+        saveSharedNutrientDose(phone.window);
+        const computer = createLoggerWindow({
+            nutrientBehaviors: service.behaviors,
+        });
+
+        expect(currentNutrientDose(computer.window)).toBe("0.5");
+        expect(
+            queryElement(
+                computer.window.document,
+                "#nutrientsUsed",
+                HTMLInputElement
+            ).checked
+        ).toBe(false);
+        expect(
+            queryElement(
+                computer.window.document,
+                "#bulkNutrientsUsed",
+                HTMLInputElement
+            ).checked
+        ).toBe(false);
+        expect(
+            queryElement(
+                computer.window.document,
+                "#bulkNutrientDose",
+                HTMLInputElement
+            ).value
+        ).toBe("0.5");
+        expect(cachedNutrientPreferences(computer.window)).toMatchObject({
+            ...initialSharedNutrients,
+            synced: true,
+        });
+    });
+
+    it("refreshes on focus without replacing an edited dose or silently advancing its overwrite baseline", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        const service = createNutrientService(initialSharedNutrients);
+        const phone = createLoggerWindow({
+            nutrientBehaviors: service.behaviors,
+        });
+        const computer = createLoggerWindow({
+            nutrientBehaviors: service.behaviors,
+        });
+        enterSharedNutrientDose(computer.window, "0.25");
+        enterSharedNutrientDose(phone.window, "0.75");
+        saveSharedNutrientDose(phone.window);
+        vi.advanceTimersByTime(5001);
+        computer.window.dispatchEvent(new computer.window.Event("focus"));
+
+        expect(cachedNutrientPreferences(computer.window)).toMatchObject({
+            doses: { "MSU 13-3-15": "0.75 g per gallon" },
+        });
+        expect(currentNutrientDose(computer.window)).toBe("0.25");
+        expect(
+            queryElement(
+                computer.window.document,
+                "#nutrientsUsed",
+                HTMLInputElement
+            ).checked
+        ).toBe(true);
+
+        saveSharedNutrientDose(computer.window);
+
+        expect(service.snapshot().doses["MSU 13-3-15"]).toBe(
+            "0.75 g per gallon"
+        );
+        expect(
+            queryElement(computer.window.document, "#toast", HTMLElement)
+                .textContent
+        ).toContain("changed on another device");
+
+        saveSharedNutrientDose(computer.window);
+
+        expect(service.snapshot().doses["MSU 13-3-15"]).toBe(
+            "0.25 g per gallon"
+        );
+    });
+
+    it("merges independent product saves from two browsers", () => {
+        expect.hasAssertions();
+
+        const service = createNutrientService();
+        const phone = createLoggerWindow({
+            nutrientBehaviors: service.behaviors,
+        });
+        const computer = createLoggerWindow({
+            nutrientBehaviors: service.behaviors,
+        });
+        enterSharedNutrientDose(phone.window, "0.5");
+        enterSharedNutrientDose(
+            computer.window,
+            "1",
+            "SuperThrive Foliage Pro"
+        );
+        saveSharedNutrientDose(phone.window);
+        saveSharedNutrientDose(computer.window);
+
+        expect(service.snapshot().doses).toStrictEqual({
+            "MSU 13-3-15": "0.5 g per gallon",
+            "SuperThrive Foliage Pro": "1 g per gallon",
+        });
+
+        refreshWorkflow(phone.window);
+
+        expect(cachedNutrientPreferences(phone.window)).toMatchObject({
+            doses: service.snapshot().doses,
+        });
+        expect(currentNutrientDose(phone.window)).toBe("0.5");
+    });
+
+    it("preserves an explicitly resumed nutrient draft when a delayed initial sync completes", () => {
+        expect.hasAssertions();
+
+        const first = createLoggerWindow();
+        enterSharedNutrientDose(first.window, "0.25");
+        first.window.dispatchEvent(new first.window.Event("pagehide"));
+        /**
+         * @type {import("../logger-fixtures.d.ts").ScriptHandlers<"syncWebNutrientPreferences">
+         *     | undefined}
+         */
+        let held;
+        const { window } = createLoggerWindow({
+            nutrientBehaviors: {
+                syncWebNutrientPreferences: (handlers) => {
+                    held = handlers;
+                },
+            },
+            storage: copyLoggerStorage(first.window),
+        });
+        queryElement(
+            window.document,
+            "#entryDraftResume",
+            HTMLButtonElement
+        ).click();
+        required(held).success(initialSharedNutrients);
+
+        expect(currentNutrientDose(window)).toBe("0.25");
+        expect(
+            queryElement(window.document, "#nutrientsUsed", HTMLInputElement)
+                .checked
+        ).toBe(true);
+        expect(cachedNutrientPreferences(window)).toMatchObject({
+            doses: initialSharedNutrients.doses,
+        });
+    });
+
+    it("preserves pending-save dose text and opt-in when initial shared preferences arrive", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            nutrientBehaviors: createNutrientService(initialSharedNutrients)
+                .behaviors,
+            pendingSave: {
+                payload: {
+                    events: ["Water"],
+                    nutrientAmount: "1/4 tsp in 2 gallons",
+                    nutrientProduct: "MSU 13-3-15",
+                    nutrientsUsed: "Yes",
+                    observedAt: "2026-08-15T14:00:00.000Z",
+                    plantId: "P01",
+                },
+                requestId: "shared-dose-pending",
+            },
+        });
+
+        expect(
+            queryElement(window.document, "#nutrientAmount", HTMLInputElement)
+                .value
+        ).toBe("1/4 tsp in 2 gallons");
+        expect(
+            queryElement(window.document, "#nutrientsUsed", HTMLInputElement)
+                .checked
+        ).toBe(true);
+        expect(
+            parseStoredRecord(
+                window.localStorage.getItem("gardenLoggerPendingSaveV1")
+            )["requestId"]
+        ).toBe("shared-dose-pending");
+    });
+});
+
+describe("garden logger nutrient synchronization failures", () => {
+    afterEach(restoreLoggerMocks);
+
+    it("uses an offline cached dose but does not claim an offline shared save succeeded", () => {
+        expect.hasAssertions();
+
+        const { calls, window } = createLoggerWindow({
+            online: false,
+            storage: {
+                gardenLoggerNutrientPreferencesV1: JSON.stringify({
+                    ...initialSharedNutrients,
+                    synced: true,
+                }),
+            },
+        });
+
+        expect(currentNutrientDose(window)).toBe("0.5");
+
+        enterSharedNutrientDose(window, "0.25");
+        saveSharedNutrientDose(window);
+
+        expect(
+            calls.filter((call) => call.method === "saveWebNutrientDose")
+        ).toHaveLength(0);
+        expect(currentNutrientDose(window)).toBe("0.25");
+        expect(
+            queryElement(window.document, "#toast", HTMLElement).textContent
+        ).toContain("Connect and use Refresh");
+    });
+
+    it("refreshes saved doses when the browser returns online", () => {
+        expect.hasAssertions();
+
+        const service = createNutrientService(initialSharedNutrients);
+        const { calls, window } = createLoggerWindow({
+            nutrientBehaviors: service.behaviors,
+            online: false,
+        });
+
+        expect(
+            calls.filter((call) => call.method === "syncWebNutrientPreferences")
+        ).toHaveLength(0);
+
+        Object.defineProperty(window.navigator, "onLine", {
+            configurable: true,
+            value: true,
+        });
+        window.dispatchEvent(new window.Event("online"));
+
+        expect(
+            calls.filter((call) => call.method === "syncWebNutrientPreferences")
+        ).toHaveLength(1);
+        expect(cachedNutrientPreferences(window)).toMatchObject({
+            ...initialSharedNutrients,
+            synced: true,
+        });
+    });
+
+    it("isolates missing older preference APIs without breaking observation entry", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({ nutrientApiAvailable: false });
+
+        expect(
+            queryElement(window.document, "#entryForm", HTMLFormElement).hidden
+        ).toBe(false);
+
+        enterSharedNutrientDose(window, "0.5");
+        saveSharedNutrientDose(window);
+
+        expect(currentNutrientDose(window)).toBe("0.5");
+        expect(
+            queryElement(window.document, "#toast", HTMLElement).textContent
+        ).toContain("Connect and use Refresh");
+        expect(
+            queryElement(window.document, "#nutrientDoseHint", HTMLElement)
+                .textContent
+        ).toContain("Sync unavailable");
+    });
+
+    it("retains an entry after a failed shared save and requires refresh before trying again", () => {
+        expect.hasAssertions();
+
+        const service = createNutrientService(initialSharedNutrients);
+        const { behaviors, calls, window } = createLoggerWindow({
+            nutrientBehaviors: {
+                ...service.behaviors,
+                saveWebNutrientDose: ({ failure }) => {
+                    failure(new Error("Disconnected"));
+                },
+            },
+        });
+        enterSharedNutrientDose(window, "0.25");
+        saveSharedNutrientDose(window);
+
+        expect(currentNutrientDose(window)).toBe("0.25");
+        expect(
+            queryElement(window.document, "#toast", HTMLElement).textContent
+        ).toContain("Could not confirm the shared dose");
+
+        saveSharedNutrientDose(window);
+
+        expect(
+            calls.filter((call) => call.method === "saveWebNutrientDose")
+        ).toHaveLength(1);
+
+        behaviors.saveWebNutrientDose = required(
+            service.behaviors.saveWebNutrientDose
+        );
+        refreshWorkflow(window);
+        saveSharedNutrientDose(window);
+
+        expect(service.snapshot().doses["MSU 13-3-15"]).toBe(
+            "0.25 g per gallon"
+        );
+    });
+
+    it("times out a save, preserves edits, and ignores its late response after a newer sync", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        /**
+         * @type {import("../logger-fixtures.d.ts").ScriptHandlers<"saveWebNutrientDose">
+         *     | undefined}
+         */
+        let held;
+        const service = createNutrientService(initialSharedNutrients);
+        const { behaviors, window } = createLoggerWindow({
+            nutrientBehaviors: {
+                ...service.behaviors,
+                saveWebNutrientDose: (handlers) => {
+                    held = handlers;
+                },
+            },
+        });
+        enterSharedNutrientDose(window, "0.25");
+        saveSharedNutrientDose(window);
+
+        expect(
+            queryElement(
+                window.document,
+                "#saveNutrientDose",
+                HTMLButtonElement
+            ).disabled
+        ).toBe(true);
+        expect(
+            queryElement(
+                window.document,
+                "#bulkSaveNutrientDose",
+                HTMLButtonElement
+            ).disabled
+        ).toBe(true);
+
+        vi.advanceTimersByTime(30_001);
+
+        expect(currentNutrientDose(window)).toBe("0.25");
+        expect(
+            queryElement(window.document, "#toast", HTMLElement).textContent
+        ).toContain("Could not confirm the shared dose");
+
+        behaviors.syncWebNutrientPreferences = ({ success }) => {
+            success({
+                doses: { "MSU 13-3-15": "0.75 g per gallon" },
+                product: "MSU 13-3-15",
+            });
+        };
+        refreshWorkflow(window);
+        required(held).success({
+            preferences: {
+                doses: { "MSU 13-3-15": "0.25 g per gallon" },
+                product: "MSU 13-3-15",
+            },
+            saved: true,
+        });
+
+        expect(cachedNutrientPreferences(window)).toMatchObject({
+            doses: { "MSU 13-3-15": "0.75 g per gallon" },
+        });
+        expect(currentNutrientDose(window)).toBe("0.25");
+    });
+
+    it("times out initial sync and ignores its stale response after a successful retry", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        /**
+         * @type {import("../logger-fixtures.d.ts").ScriptHandlers<"syncWebNutrientPreferences">
+         *     | undefined}
+         */
+        let held;
+        const { behaviors, window } = createLoggerWindow({
+            nutrientBehaviors: {
+                syncWebNutrientPreferences: (handlers) => {
+                    held = handlers;
+                },
+            },
+        });
+        enterSharedNutrientDose(window, "0.25");
+        vi.advanceTimersByTime(30_001);
+
+        expect(
+            queryElement(window.document, "#nutrientDoseHint", HTMLElement)
+                .textContent
+        ).toContain("Sync unavailable");
+
+        behaviors.syncWebNutrientPreferences = ({ success }) => {
+            success(initialSharedNutrients);
+        };
+        refreshWorkflow(window);
+        required(held).success({
+            doses: { "MSU 13-3-15": "1 g per gallon" },
+            product: "MSU 13-3-15",
+        });
+
+        expect(cachedNutrientPreferences(window)).toMatchObject({
+            doses: initialSharedNutrients.doses,
+        });
+        expect(currentNutrientDose(window)).toBe("0.25");
     });
 });
 

@@ -17510,6 +17510,13 @@
             const NUTRIENT_STATE_KEY = "gardenLoggerNutrientStateV1";
             const NUTRIENT_PREFERENCES_KEY =
                 "gardenLoggerNutrientPreferencesV1";
+            const nutrientSync = {
+                preferences: null,
+                confirmed: false,
+                busy: false,
+                attempt: 0,
+                lastReadAt: 0,
+            };
             const BULK_PENDING_KEY = "gardenLoggerBulkPendingV1";
             const THEME_KEY = "gardenLoggerThemeV1";
             const PLANT_PICKER_MODE_KEY = "gardenLoggerPlantPickerModeV1";
@@ -18284,6 +18291,7 @@
             }
 
             function nutrientPreferences() {
+                if (nutrientSync.preferences) return nutrientSync.preferences;
                 try {
                     const saved = JSON.parse(
                         safeStorageGet(
@@ -18292,14 +18300,154 @@
                             "null"
                         )
                     );
-                    return saved &&
-                        typeof saved === "object" &&
-                        !Array.isArray(saved)
-                        ? saved
-                        : {};
+                    nutrientSync.preferences =
+                        checkedNutrientPreferences(saved);
+                    nutrientSync.preferences.synced = saved.synced === true;
                 } catch (error) {
-                    return {};
+                    nutrientSync.preferences = { product: "", doses: {} };
                 }
+                return nutrientSync.preferences;
+            }
+
+            function checkedNutrientPreferences(value) {
+                if (
+                    !value ||
+                    typeof value.product !== "string" ||
+                    value.product.length > 120 ||
+                    !value.doses ||
+                    typeof value.doses !== "object" ||
+                    Array.isArray(value.doses) ||
+                    Object.keys(value.doses).length > 20
+                )
+                    throw new Error(
+                        "Google returned invalid saved doses. Your entry is unchanged."
+                    );
+                const doses = {};
+                for (const [product, amount] of Object.entries(value.doses)) {
+                    if (
+                        !product.trim() ||
+                        product.length > 120 ||
+                        ["__proto__", "constructor", "prototype"].includes(
+                            product
+                        ) ||
+                        typeof amount !== "string" ||
+                        !amount.trim() ||
+                        amount.length > 120
+                    )
+                        throw new Error(
+                            "Google returned invalid saved doses. Your entry is unchanged."
+                        );
+                    doses[product] = amount;
+                }
+                return { product: value.product, doses };
+            }
+
+            function receiveNutrientPreferences(value, fillUntouched = false) {
+                const saved = {
+                    ...checkedNutrientPreferences(value),
+                    synced: true,
+                };
+                nutrientSync.preferences = saved;
+                nutrientSync.confirmed = true;
+                const serialized = JSON.stringify(saved);
+                const cached =
+                    safeStorageSet(
+                        localStorage,
+                        NUTRIENT_PREFERENCES_KEY,
+                        serialized
+                    ) &&
+                    safeStorageGet(localStorage, NUTRIENT_PREFERENCES_KEY) ===
+                        serialized;
+                for (const prefix of ["", "bulk"]) {
+                    const mode = prefix ? "bulk" : "single";
+                    // A refresh can supply defaults only to an untouched form.
+                    // Pending requests and deliberate drafts keep their exact values.
+                    if (
+                        fillUntouched &&
+                        !state.saving &&
+                        !state.pendingSave &&
+                        !readBulkPendingSave() &&
+                        !entryDrafts.current[mode] &&
+                        JSON.stringify(
+                            comparableOrdinaryDraft(ordinaryDraftSnapshot(mode))
+                        ) === entryDrafts.baselines[mode]
+                    ) {
+                        resetNutrientEntry(prefix);
+                        entryDrafts.baselines[mode] = JSON.stringify(
+                            comparableOrdinaryDraft(ordinaryDraftSnapshot(mode))
+                        );
+                    }
+                    renderNutrientDose(prefix);
+                }
+                return cached;
+            }
+
+            function runNutrientRequest(
+                method,
+                payload,
+                onSuccess,
+                saving = false
+            ) {
+                nutrientSync.busy = true;
+                const attempt = ++nutrientSync.attempt;
+                const finish = () => {
+                    if (attempt !== nutrientSync.attempt) return false;
+                    clearTimeout(timer);
+                    nutrientSync.attempt += 1;
+                    nutrientSync.busy = false;
+                    return true;
+                };
+                const failed = () => {
+                    if (!finish()) return;
+                    nutrientSync.confirmed = false;
+                    ["", "bulk"].forEach(renderNutrientDose);
+                    if (saving)
+                        showToast(
+                            "Could not confirm the shared dose. Your entry is unchanged. Use Refresh to check before saving again.",
+                            true
+                        );
+                };
+                const timer = window.setTimeout(failed, 30000);
+                ["", "bulk"].forEach(renderNutrientDose);
+                try {
+                    google.script.run
+                        .withSuccessHandler((response) => {
+                            if (!finish()) return;
+                            try {
+                                onSuccess(response);
+                            } catch (error) {
+                                nutrientSync.confirmed = false;
+                                showToast(error.message, true);
+                            }
+                            ["", "bulk"].forEach(renderNutrientDose);
+                        })
+                        .withFailureHandler(failed)
+                        [method](payload);
+                } catch (error) {
+                    failed();
+                }
+            }
+
+            function refreshNutrientPreferences(force = false) {
+                if (!state.bootstrapReady || nutrientSync.busy) return;
+                if (!browserIsOnline()) {
+                    nutrientSync.confirmed = false;
+                    ["", "bulk"].forEach(renderNutrientDose);
+                    return;
+                }
+                if (!force && Date.now() - nutrientSync.lastReadAt < 5000)
+                    return;
+                nutrientSync.lastReadAt = Date.now();
+                const saved = nutrientPreferences();
+                const legacy =
+                    !saved.synced && Object.keys(saved.doses).length
+                        ? { product: saved.product, doses: saved.doses }
+                        : null;
+                runNutrientRequest(
+                    "syncWebNutrientPreferences",
+                    legacy,
+                    (response) => receiveNutrientPreferences(response, true)
+                );
             }
 
             function restoreNutrientDose(prefix, amount) {
@@ -18339,10 +18487,18 @@
                     saved.length <= 120;
                 nutrientControl(prefix, "useNutrientDose").disabled =
                     !hasSaved || state.saving;
+                const save = nutrientControl(prefix, "saveNutrientDose");
+                save.disabled = state.saving || nutrientSync.busy;
+                save.setAttribute("aria-busy", String(nutrientSync.busy));
+                const syncStatus = nutrientSync.busy
+                    ? "Syncing saved doses…"
+                    : nutrientSync.confirmed
+                      ? "Synced across your devices."
+                      : "Sync unavailable; cached doses remain usable. Use Refresh to reconnect.";
                 nutrientControl(prefix, "nutrientDoseHint").textContent =
                     hasSaved
-                        ? `Usual dose: ${saved}. Saved in this browser; edits do not replace it until you save again.`
-                        : "Save a usual dose for this product in this browser. You can change it for each watering.";
+                        ? `Usual dose: ${saved}. ${syncStatus} Edits apply to this watering until you save again.`
+                        : `Save a usual dose for this product to use on your phone and computer. ${syncStatus}`;
             }
 
             function syncNutrientDose(prefix) {
@@ -18400,6 +18556,8 @@
                     product.append(option);
                 }
                 product.value = productName;
+                product.dataset.savedDose =
+                    nutrientPreferences().doses[productName] || "";
                 restoreNutrientDose(prefix, values.nutrientAmount);
                 updateNutrientFields(prefix, nutrientUseValue(prefix));
             }
@@ -18425,12 +18583,15 @@
                     "nutrientProduct"
                 ).value;
                 const amount = nutrientPreferences().doses?.[product];
+                nutrientControl(prefix, "nutrientProduct").dataset.savedDose =
+                    amount || "";
                 if (typeof amount === "string" && amount.length <= 120)
                     restoreNutrientDose(prefix, amount);
             }
 
             function saveNutrientDose(prefix) {
                 try {
+                    if (nutrientSync.busy) return;
                     validateNutrientDose(prefix, true);
                     const product = nutrientControl(
                         prefix,
@@ -18444,27 +18605,41 @@
                         throw new Error(
                             "Choose a product and enter its dose before saving a usual dose."
                         );
-                    const saved = nutrientPreferences();
-                    const next = JSON.stringify({
-                        product,
-                        doses: { ...saved.doses, [product]: amount },
-                    });
-                    if (
-                        !safeStorageSet(
-                            localStorage,
-                            NUTRIENT_PREFERENCES_KEY,
-                            next
-                        ) ||
-                        safeStorageGet(
-                            localStorage,
-                            NUTRIENT_PREFERENCES_KEY
-                        ) !== next
-                    )
+                    if (!browserIsOnline() || !nutrientSync.confirmed)
                         throw new Error(
-                            "This browser could not save your usual dose. Your current entry is still available."
+                            "Connect and use Refresh before saving a shared dose. Your current entry is still available."
                         );
-                    ["", "bulk"].forEach(renderNutrientDose);
-                    showToast("Usual dose saved in this browser.");
+                    const expectedAmount =
+                        nutrientControl(prefix, "nutrientProduct").dataset
+                            .savedDose || "";
+                    runNutrientRequest(
+                        "saveWebNutrientDose",
+                        { product, amount, expectedAmount },
+                        (response) => {
+                            if (typeof response?.saved !== "boolean")
+                                throw new Error(
+                                    "Google returned an invalid save confirmation. Use Refresh to check your saved dose."
+                                );
+                            const cached = receiveNutrientPreferences(
+                                response.preferences
+                            );
+                            const control = nutrientControl(
+                                prefix,
+                                "nutrientProduct"
+                            );
+                            if (control.value === product)
+                                control.dataset.savedDose =
+                                    nutrientPreferences().doses[product] || "";
+                            showToast(
+                                response.saved
+                                    ? `Usual dose saved across your devices.${cached ? "" : " This browser could not keep an offline copy."}`
+                                    : `This product changed on another device. Usual dose: ${nutrientPreferences().doses[product] || "none"}. Your entry is unchanged; review it, then save again to replace the shared dose.`,
+                                !response.saved,
+                                9000
+                            );
+                        },
+                        true
+                    );
                 } catch (error) {
                     showToast(error.message, true);
                 }
@@ -26882,6 +27057,7 @@
                     $("loading").setAttribute("aria-busy", "false");
                     $("loading").hidden = true;
                     $("modeTabs").hidden = false;
+                    refreshNutrientPreferences(true);
                 } catch (error) {
                     showLoadFailure(error, step);
                 }
@@ -26951,6 +27127,7 @@
                 recalculateWorkbook
             );
             $("refreshDataButton").addEventListener("click", () => {
+                refreshNutrientPreferences(true);
                 if (state.bootstrapRefreshTimer || state.recentTimer) return;
                 refreshSavedPlantData();
             });
@@ -27300,9 +27477,10 @@
                     refreshQueueFromStorage();
                 }
             });
-            window.addEventListener("focus", () =>
-                scheduleInterruptedWorkCheck()
-            );
+            window.addEventListener("focus", () => {
+                scheduleInterruptedWorkCheck();
+                refreshNutrientPreferences();
+            });
             window.addEventListener("orientationchange", () => {
                 scheduleMobileHitTargetRefresh(250);
                 scheduleInterruptedWorkCheck(350);
@@ -27316,14 +27494,19 @@
                 );
             }
             document.addEventListener("visibilitychange", () => {
-                if (document.visibilityState === "visible")
+                if (document.visibilityState === "visible") {
                     scheduleInterruptedWorkCheck();
+                    refreshNutrientPreferences();
+                }
             });
             window.addEventListener("online", () => {
+                refreshNutrientPreferences(true);
                 showToast("Connection restored. Checking saved work…");
                 scheduleInterruptedWorkCheck(100);
             });
             window.addEventListener("offline", () => {
+                nutrientSync.confirmed = false;
+                ["", "bulk"].forEach(renderNutrientDose);
                 if (state.recentTimer !== null) {
                     state.recentAttempt += 1;
                     setRecentUnavailable("Offline", true);

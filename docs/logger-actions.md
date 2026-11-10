@@ -160,11 +160,21 @@ after a save, queue addition, or cleared entry. Check it only when that watering
 included nutrients. A resumed draft retains its original choice.
 
 Choose the product, enter the numeric dose, and choose its units separately.
-**Save as usual dose** remembers that product's dose in this browser; it does not
-save an observation. The saved dose is available on later visits and in Bulk
-care. Change the dose for a single watering without changing the saved value,
+**Save as usual dose** saves that product's dose in your private logger account,
+so the same dose is available on your phone, computer, and in Bulk care. Open
+the logger with the same Google account on each device. Saved doses refresh
+when you open or return to the logger; **Refresh** also checks them immediately.
+Saving a dose does not save an observation or turn on **Add nutrients**.
+Change the dose for a single watering without changing the saved value,
 or choose **Use saved dose** to restore it. Save a new usual dose explicitly
-when your normal mix changes. Browser storage is local to that browser/device.
+when your normal mix changes. If another device changed the same product,
+review the displayed shared dose before saving again to replace it.
+
+Existing browser doses transfer automatically for products without a shared
+dose. A dose already saved from another device takes precedence. Cached doses
+remain available offline, but saving a shared dose needs a connection. Sync
+failures retain your current entry and show how to retry. An incoming refresh
+does not replace an edited entry or resumed draft.
 
 Use **Other / recorded text** for an amount that does not fit the listed units.
 Existing text doses remain intact when resumed. These controls record your

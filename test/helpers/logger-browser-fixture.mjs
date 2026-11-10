@@ -171,6 +171,29 @@ export function loggerBrowserFixture({
                 requestId: "browser-fixture-queue-" + plantId
             }))
         ));
+        function fixtureNutrientRequest(method, payload) {
+            if (typeof window.fixtureSharedNutrientService === "function")
+                return window.fixtureSharedNutrientService(method, payload);
+            const key = "gardenLoggerFixtureNutrientsV1";
+            const preferences = JSON.parse(localStorage.getItem(key) || "null") || { product: "", doses: {} };
+            let saved = false;
+            if (method === "sync") {
+                if (payload) {
+                    for (const [product, amount] of Object.entries(payload.doses)) {
+                        if (!Object.hasOwn(preferences.doses, product)) preferences.doses[product] = amount;
+                    }
+                    if (!preferences.product) preferences.product = payload.product;
+                }
+            } else {
+                saved = (preferences.doses[payload.product] || "") === payload.expectedAmount;
+                if (saved) {
+                    preferences.doses[payload.product] = payload.amount;
+                    preferences.product = payload.product;
+                }
+            }
+            localStorage.setItem(key, JSON.stringify(preferences));
+            return Promise.resolve(method === "sync" ? preferences : { saved, preferences });
+        }
         window.google = { script: { get run() {
             let success = () => {};
             let failure = () => {};
@@ -178,6 +201,8 @@ export function loggerBrowserFixture({
                 withSuccessHandler(callback) { success = callback; return chain; },
                 withFailureHandler(callback) { failure = callback; return chain; },
                 getWebAppBootstrap() { success(fixtureBootstrap); },
+                syncWebNutrientPreferences(legacy = null) { fixtureNutrientRequest("sync", legacy).then(success, failure); },
+                saveWebNutrientDose(payload) { fixtureNutrientRequest("save", payload).then(success, failure); },
                 recalculateGardenWorkbook() {
                     document.documentElement.dataset.fixtureRecalculations = String(Number(document.documentElement.dataset.fixtureRecalculations || "0") + 1);
                     window.addEventListener("fixture-confirm-recalculation", (event) => {

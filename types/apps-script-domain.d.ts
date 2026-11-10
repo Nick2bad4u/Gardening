@@ -7,6 +7,10 @@ type GardenCell =
     | string
     | undefined;
 type GardenHistoryRow = GardenCell[];
+interface GardenNutrientPreferences {
+    doses: Record<string, string>;
+    product: string;
+}
 type GardenOptionalNumber = "" | number;
 type GardenRange = GoogleAppsScript.Spreadsheet.Range;
 type GardenSheet = GoogleAppsScript.Spreadsheet.Sheet;
