@@ -1,11 +1,11 @@
 # Google Sheets observation logger
 
-Production logger **5.42.2 / immutable version 131** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.43.0 / immutable version 132** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Production **5.42.2 / immutable version 131** and **AppSheet 1.100141** retain portrait
-revision **1010123212eade00**, verified on November 1. The remaining cactus and
+Production **5.43.0 / immutable version 132** and **AppSheet 1.100141** retain portrait
+revision **1010123212eade00**, verified on November 10. The remaining cactus and
 front-grid portraits are described below. P41's appended optional weight field
 remains unchanged; the earlier dated receipts retain their verified versions.
 
@@ -37,6 +37,54 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## November 10 saved doses and logger interface
+
+Production **5.43.0 / immutable version 132** was promoted on November 10 at
+**01:04:55 EST**, preserving the existing logger URL, owner-only access,
+execution identity, manifest, and artwork. API readback verified that Head,
+immutable source, and the maintained logger files match
+[e367ab3](https://github.com/Nick2bad4u/Gardening/commit/e367ab3a3d13a157563645a985749e58ebce48d3).
+The server change is its version string; this release requires no workbook
+schema, AppSheet, installer, or trigger migration.
+
+Both entry modes now start new waterings with **Add nutrients** unchecked.
+Per-product usual doses are saved explicitly in browser storage, independently
+of one-off edits. Numeric doses and units have separate controls, while custom
+text and older draft/pending payloads retain their recorded form. The interface
+also removes duplicate watering guidance, preserves opened help, improves
+contrast and unit casing, adds a local History refresh, and repairs keyboard
+navigation and Bulk action focus. Positive measurement validation now runs
+before queueing or starting a new save.
+
+A verified owner-only
+[native backup](https://docs.google.com/spreadsheets/d/1vHHkGSdtklrSkuqYvpt4Ney2QpDEXJEBIAq2o6sY1K0/edit)
+preceded deployment. Fresh before/after comparison preserved **2,295 unique
+observation IDs**, **1,850 request groups**, **67/59/77-column headers**, all
+entered staging rows, **1,024 sampled source cells**, **70 tab properties**, and
+**194 chart IDs/titles**. Captured formulas, notes, and validations matched;
+formula, required-anchor, and Integrity checks passed. The comparison covers
+full ID columns and entered staging data, but not every History value, table
+format/validation, chart specification, or protection. No synthetic production
+observations were submitted.
+
+The [implementation workflow](https://github.com/Nick2bad4u/Gardening/actions/runs/42763373821)
+passed **316 Chromium tests**, **60 Storybook tests**, and **224-page** publication
+checks. Hosted logger validation passed **2,059 tests** and its coverage gates;
+SonarCloud, Codecov, and hosted secret checks passed. The first Pages deployment
+timed out while syncing files and was confirmed canceled. Retrying only its
+deployment job succeeded with the validated artifact; public HTTP verification
+confirmed the new [action guide](https://nick2bad4u.github.io/Gardening/guides/logger-actions/).
+
+A fresh authenticated session showed **Connected · Logger 5.43.0**, unchecked
+nutrient controls, separate dose/unit fields, and successful local History
+refresh. All eight live combinations of Single/Bulk, **390/1280 px**, and
+dark/light themes had no horizontal overflow. Local accessibility checks also
+passed all eight combinations. Browser inspection settings were restored, with
+no console errors. Version 132 `doGet`, bootstrap, and History reads completed;
+the **01:09:34 EST** queue run completed in **15.064 seconds**. Exactly one
+five-minute queue trigger remains configured, and AppSheet remains on
+**1.100141** with no unsaved editor changes.
 
 ## November 9 daily-report retirement
 
