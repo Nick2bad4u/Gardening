@@ -124,10 +124,9 @@
   model/correction rules. Use the existing queue trigger and explicit analytics
   refresh, never onEdit or the save critical section. Publish all four snapshots
   and successful metadata atomically.
-- Keep five-minute queue intake. Scheduled analytics may reuse Ready snapshots
-  under eight minutes old (normally ten-minute refreshes); invalid/future/stale/
-  non-Ready metadata forces refresh. Explicit analytics/manual recalculation bypass
-  this guard. Consumer freshness stays 15 minutes.
+- Keep ten-minute queue intake and attempt analytics on every scheduled run.
+  Do not skip a tick after a recent manual refresh: the next tick can exceed
+  consumer freshness, which stays 15 minutes. Preserve refresh leases and retries.
 - `Workbook calculations` H:K: calculated time/state/cycle plant ID/setup.
   Failed refreshes preserve prior successful time/results.
   Cycle data/role labels require Ready, selected plant/setup match, valid timestamp
@@ -207,4 +206,4 @@
   `appsscript.json`. Source/`clasp push` does not update the versioned web app.
 - Installers/queue-trigger reinstall: contract changes only. Verify
   `Connected · Logger <version>`, successful web-app/trigger executions,
-  one five-minute `processQueuedAppSheetEntries` trigger.
+  one ten-minute `processQueuedAppSheetEntries` trigger.

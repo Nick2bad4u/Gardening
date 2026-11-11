@@ -289,7 +289,7 @@ destinations, changed plant mappings, and an already-installed destination.
    existing deployment URL. Retain the queue trigger and staging schema;
    installers are not required for this derived-view upgrade.
 8. Verify the live logger version, successful executions, exactly one
-   five-minute queue trigger, Integrity results, calculation timestamps,
+   ten-minute queue trigger, Integrity results, calculation timestamps,
    canonical-data preservation, and chart presentation. Record the evidence
    below; source publication alone does not prove deployment.
 

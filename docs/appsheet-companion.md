@@ -1182,9 +1182,11 @@ tables.
 
 - Use AppSheet's sync button after a workbook-side correction or when a new
   image, receipt, baseline, or chart point has not appeared yet.
-- Detailed and bulk entries may remain queued until the five-minute bridge
-  trigger processes them. The receipt, not disappearance from the staging
-  table, confirms the result.
+- Detailed and bulk entries may remain queued until the ten-minute bridge
+  trigger processes them; scheduling, execution, or offline sync can add delay.
+  The receipt, not disappearance from the staging table, confirms the result.
+  The separate web logger's **Save now** action sends directly without waiting
+  for this schedule.
 - A `Needs correction` row stays editable. Correct it, then use **Retry save**;
   do not recreate the observation with a new ID.
 - The app can start offline and retain a staged field note, but derived

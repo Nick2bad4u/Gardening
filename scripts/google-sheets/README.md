@@ -4439,6 +4439,19 @@ writing.
 
 ## AppSheet companion intake
 
+The bridge runs every **ten minutes**, approximately **144 scheduled checks per
+day**. Each run checks both staging tables and attempts the shared analytics
+refresh. The former eight-minute reuse guard is removed: after a recent manual
+refresh, skipping a ten-minute tick could leave calculated results beyond the
+unchanged **15-minute** consumer freshness limit. Refresh leases, failed-refresh
+recovery, manual recalculation, and immediate web-logger saves remain intact.
+
+This reduces queue polling and workbook-opening attempts; it does not promise a
+50% runtime reduction because analytics already normally refreshed about every
+ten minutes. A sheet-edit trigger cannot replace the bridge: script/API writes
+do not fire [Apps Script edit triggers](https://developers.google.com/apps-script/guides/triggers/installable#restrictions),
+and analytics also depend on observation time and the selected plant/setup.
+
 The AppSheet companion is a second phone-friendly entry surface, not a second
 database. Its writable tables are the workbook's flat `App entries` and
 `App bulk` staging sheets. The app must keep `Plant tracker`, `Baselines`, and
@@ -4547,11 +4560,11 @@ the AppSheet and mobile writers to race.
 
 Instead, deploy the bridge with the existing bound logger and run
 `installAppSheetQueueTrigger()` once from its Apps Script editor. The
-installer creates a new five-minute trigger first, then removes every older
+installer creates a new ten-minute trigger first, then removes every older
 matching bridge trigger, including legacy one-minute schedules. The final state
 is exactly one trigger for `processQueuedAppSheetEntries()`; creating first
 prevents a transient trigger-creation failure from removing the working
-schedule. Every five minutes, that function processes
+schedule. Every ten minutes, that function processes
 up to 50 ordinary `Queued` or `Retry` observations and one or more complete
 bulk rounds totaling no more than 50 observations per canonical batch through
 `saveWebObservationBatch()`. This keeps AppSheet and the mobile logger inside
@@ -4581,8 +4594,9 @@ user, and should be restricted to the workbook owner or an explicit allowlist.
 The workbook uses spreadsheet formulas and queued form rows must reach the
 workbook promptly, so leave server caching, delta sync, and quick sync disabled;
 enable sync on start and automatic updates; and disable delayed sync. The bound
-trigger normally archives a queued entry within five minutes, and the next app
-sync retrieves its receipt. The app may start offline so a field note can remain
+trigger attempts queued entries every ten minutes, and the next app sync
+retrieves their receipts. Scheduling and execution can add delay. The app may
+start offline so a field note can remain
 queued until connectivity returns. Store content for offline use is enabled
 for the relative Drive portrait paths; complete the first online download in
 the native mobile app. External photo URLs and browser AppSheet retain the

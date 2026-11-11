@@ -18,7 +18,7 @@
    dryDownModelFormula_, installDailyCareDashboard, GARDEN_CYCLE_COMPARISON, GARDEN_ENVIRONMENT_READINGS, GARDEN_RECORDED_LOCATIONS */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.44.1",
+    version: "5.44.2",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -75,7 +75,6 @@ const GARDEN_LOGGER = Object.freeze({
     historyAnchorsMarker: "Garden History anchor index v1",
     wateringMapSheet: "Watering map",
     wateringMapSheetId: 907202615,
-    analyticsMinimumScheduledAgeMs: 480000,
     lockTimeoutMs: 5000,
     spreadsheetUrl:
         "https://docs.google.com/spreadsheets/d/1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0/edit",
@@ -2039,10 +2038,9 @@ function finishAppSheetQueueRun_(
     );
     // All intake writers have released their canonical script lock. Analytics
     // failures never turn a saved observation or receipt into a failed save.
-    const analytics = refreshScheduledGardenAnalytics_(
-        spreadsheet,
-        diagnostics
-    );
+    // Refresh on each ten-minute tick. Reusing a recent manual calculation can
+    // otherwise leave the next tick beyond the consumers' fifteen-minute limit.
+    const analytics = refreshGardenAnalyticsSafely_(spreadsheet, diagnostics);
     const summary = {
         ...entrySummary,
         ok: entrySummary.ok && bulkSummary.ok,
@@ -3033,7 +3031,7 @@ function installAppSheetQueueTrigger() {
     // Apps Script does not expose a trigger's minute interval. Create the new
     // schedule before deleting legacy copies so a transient creation failure
     // cannot leave the bridge without any trigger.
-    ScriptApp.newTrigger(handler).timeBased().everyMinutes(5).create();
+    ScriptApp.newTrigger(handler).timeBased().everyMinutes(10).create();
     matching.forEach((trigger) => ScriptApp.deleteTrigger(trigger));
 
     const result = {
@@ -5435,31 +5433,6 @@ function releaseGardenAnalyticsLease_(lease) {
 }
 
 /** @param {GardenSpreadsheet} spreadsheet @param {GardenDiagnosticContext} [diagnostics] @returns {GardenAnalyticsRefreshResult} */
-function refreshScheduledGardenAnalytics_(
-    spreadsheet,
-    diagnostics = gardenDiagnosticContext_("refreshGardenAnalytics")
-) {
-    const snapshot = gardenDiagnosticPhase_(
-        diagnostics,
-        "analytics.freshness",
-        () => workbookCalculationStatus_(spreadsheet)
-    );
-    const calculatedAt = snapshot.calculatedAt;
-    const age = Date.now() - Date.parse(calculatedAt || "");
-    // Intake still runs every five minutes. Reuse only a recent successful
-    // snapshot; manual refreshes bypass this quota-conscious cadence guard.
-    if (
-        snapshot.status === "Ready" &&
-        calculatedAt &&
-        Number.isFinite(age) &&
-        age >= 0 &&
-        age < GARDEN_LOGGER.analyticsMinimumScheduledAgeMs
-    )
-        return { status: "Ready", calculatedAt, skipped: true };
-    return refreshGardenAnalyticsSafely_(spreadsheet, diagnostics);
-}
-
-/** @param {GardenSpreadsheet} spreadsheet @param {GardenDiagnosticContext} [diagnostics] @returns {GardenAnalyticsRefreshResult} */
 function refreshGardenAnalyticsSafely_(
     spreadsheet,
     diagnostics = gardenDiagnosticContext_("refreshGardenAnalytics")
@@ -6338,7 +6311,7 @@ function refreshDryDownModels_(spreadsheet) {
     sheet
         .getRange("A1")
         .setNote(
-            "Read-only derived models. Refreshed with the other analytics every five minutes or through Recalculate workbook. See Workbook calculations H2:I2 for calculation time/status. Keep disconnected from AppSheet."
+            "Read-only derived models. Recalculates from active History; no editable observations. Keep this helper disconnected from AppSheet."
         );
     sheet.hideSheet();
 }

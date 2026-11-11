@@ -10254,7 +10254,7 @@ describe("garden logger AppSheet staging migration and trigger installation", ()
         );
     });
 
-    it("keeps exactly one AppSheet queue trigger", () => {
+    it("installs one ten-minute AppSheet trigger before deleting old schedules and preserves them if creation fails", () => {
         expect.hasAssertions();
 
         const workbook = createLoggerWorkbook(["P01"]);
@@ -10262,6 +10262,9 @@ describe("garden logger AppSheet staging migration and trigger installation", ()
         const deleted = [];
         /** @type {{ handler: string; minutes: number }[]} */
         const created = [];
+        /** @type {string[]} */
+        const operations = [];
+        let shouldFailCreation = false;
         /** @type {{ getHandlerFunction: () => string; name?: string }[]} */
         let triggers = [
             {
@@ -10284,13 +10287,24 @@ describe("garden logger AppSheet staging migration and trigger installation", ()
                  */ trigger
             ) => {
                 deleted.push(trigger.name);
+                operations.push(`delete:${trigger.name ?? "unnamed"}`);
+                triggers = triggers.filter(
+                    (candidate) => candidate !== trigger
+                );
             },
             getProjectTriggers: () => triggers,
             newTrigger: (/** @type {string} */ handler) => ({
                 timeBased: () => ({
                     everyMinutes: (/** @type {number} */ minutes) => ({
                         create: () => {
+                            if (shouldFailCreation)
+                                throw new Error("Trigger creation unavailable");
                             created.push({ handler, minutes });
+                            operations.push("create");
+                            triggers.push({
+                                getHandlerFunction: () => handler,
+                                name: "replacement",
+                            });
                         },
                     }),
                 }),
@@ -10311,8 +10325,16 @@ describe("garden logger AppSheet staging migration and trigger installation", ()
         });
         expect(structuredClone(deleted)).toStrictEqual(["first", "duplicate"]);
         expect(structuredClone(created)).toStrictEqual([
-            { handler: "processQueuedAppSheetEntries", minutes: 5 },
+            { handler: "processQueuedAppSheetEntries", minutes: 10 },
         ]);
+        expect(operations).toStrictEqual([
+            "create",
+            "delete:first",
+            "delete:duplicate",
+        ]);
+        expect(
+            triggers.map((trigger) => trigger.getHandlerFunction())
+        ).toStrictEqual(["otherHandler", "processQueuedAppSheetEntries"]);
 
         triggers = [{ getHandlerFunction: () => "otherHandler" }];
 
@@ -10325,9 +10347,19 @@ describe("garden logger AppSheet staging migration and trigger installation", ()
             removedTriggerCount: 0,
         });
         expect(structuredClone(created)).toStrictEqual([
-            { handler: "processQueuedAppSheetEntries", minutes: 5 },
-            { handler: "processQueuedAppSheetEntries", minutes: 5 },
+            { handler: "processQueuedAppSheetEntries", minutes: 10 },
+            { handler: "processQueuedAppSheetEntries", minutes: 10 },
         ]);
+
+        const installed = [...triggers];
+        shouldFailCreation = true;
+
+        expect(() => context.installAppSheetQueueTrigger()).toThrow(
+            "Trigger creation unavailable"
+        );
+        expect(triggers).toStrictEqual(installed);
+        expect(deleted).toHaveLength(2);
+        expect(created).toHaveLength(2);
     });
 });
 

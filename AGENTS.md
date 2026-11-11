@@ -153,7 +153,7 @@
   after deployment. One request may legitimately produce multiple event rows.
 - Preserve the existing production Apps Script deployment URL by creating an
   immutable version and updating that deployment in place. Verify the live
-  logger version, successful executions, and exactly one five-minute AppSheet
+  logger version, successful executions, and exactly one ten-minute AppSheet
   queue trigger before calling the release complete.
 
 ## Setup and validation

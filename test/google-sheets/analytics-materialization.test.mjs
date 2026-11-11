@@ -401,7 +401,6 @@ describe("queue and analytics phase diagnostics", () => {
                 "open-workbook",
                 "single-intake",
                 "bulk-intake",
-                "analytics.freshness",
                 "analytics",
                 "analytics.lease",
                 "analytics.prepare",
@@ -807,6 +806,54 @@ describe("scheduled analytics materialization", () => {
             false
         );
     });
+
+    it("refreshes the ten-minute tick after a minute-three manual refresh even with no queued entries", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers({ toFake: ["Date"] });
+        try {
+            const options = {
+                calculationStatus: "Ready",
+                calculationTime: asOf,
+            };
+            vi.setSystemTime(new Date(asOf.getTime() + 180_000));
+            const test = fixture(options);
+
+            test.context["processQueuedAppSheetBulkEntries_"] = () => ({
+                ok: true,
+            });
+
+            const manual = test.api.refreshGardenAnalytics();
+            options.calculationTime = new Date();
+
+            expect(manual.status).toBe("Ready");
+            expect(test.batchUpdate).toHaveBeenCalledTimes(1);
+
+            const scheduledAt = new Date(asOf.getTime() + 600_000);
+            vi.setSystemTime(scheduledAt);
+            const scheduled = test.api.finishAppSheetQueueRun_(
+                test.spreadsheet,
+                {
+                    ok: true,
+                    savedCount: 0,
+                }
+            );
+
+            expect(scheduled.analytics.calculatedAt).toBe(
+                scheduledAt.toISOString()
+            );
+            expect(scheduled.analytics.skipped).toBeUndefined();
+            expect(scheduled.savedCount).toBe(0);
+            expect(test.batchUpdate).toHaveBeenCalledTimes(2);
+            expect(test.valuesRead).toHaveBeenCalledTimes(6);
+            expect(test.releaseLock).toHaveBeenCalledTimes(4);
+            expect(test.properties.has("gardenAnalyticsRefreshLeaseV1")).toBe(
+                false
+            );
+        } finally {
+            vi.useRealTimers();
+        }
+    });
 });
 
 describe("analytics recovery and publication guards", () => {
@@ -885,21 +932,18 @@ describe("analytics recovery and publication guards", () => {
     });
 
     it.each([
-        { age: 0, skipped: true, status: "Ready" },
-        { age: 479_999, skipped: true, status: "Ready" },
-        { age: 480_000, skipped: false, status: "Ready" },
-        { age: 600_000, skipped: false, status: "Ready" },
-        { age: -1, skipped: false, status: "Ready" },
-        { age: 0, skipped: false, status: "Refresh failed" },
-        { age: 0, skipped: false, status: "Refreshing" },
-        { age: 0, skipped: false, status: "" },
+        { age: 0, status: "Ready" },
+        { age: 420_000, status: "Ready" },
+        { age: 600_000, status: "Ready" },
+        { age: -1, status: "Ready" },
+        { age: 0, status: "Refresh failed" },
+        { age: 0, status: "Refreshing" },
+        { age: 0, status: "" },
     ])(
-        "scheduled analytics age $age / $status skips=$skipped without skipping intake",
-        ({ age, skipped, status }) => {
+        "scheduled analytics refreshes age $age / $status after intake",
+        ({ age, status }) => {
             expect.hasAssertions();
 
-            const expectedSkip = skipped ? true : undefined;
-            const expectedBatches = skipped ? 0 : 1;
             const clock = vi.spyOn(Date, "now").mockReturnValue(asOf.getTime());
             try {
                 const calculatedAt = new Date(asOf.getTime() - age);
@@ -925,45 +969,15 @@ describe("analytics recovery and publication guards", () => {
                     savedCount: 3,
                 });
                 expect(bulk).toHaveBeenCalledExactlyOnceWith(test.spreadsheet);
-                expect(summary.analytics.skipped).toBe(expectedSkip);
-                expect(test.batchUpdate).toHaveBeenCalledTimes(expectedBatches);
-                expect(test.valuesRead).toHaveBeenCalledTimes(
-                    expectedBatches * 3
-                );
+                expect(summary.analytics.skipped).toBeUndefined();
+                expect(test.batchUpdate).toHaveBeenCalledTimes(1);
+                expect(test.valuesRead).toHaveBeenCalledTimes(3);
+                expect(bulk).toHaveBeenCalledBefore(test.batchUpdate);
             } finally {
                 clock.mockRestore();
             }
         }
     );
-
-    it("returns the previous successful time without locks or writes when scheduled analytics is skipped", () => {
-        expect.hasAssertions();
-
-        const clock = vi.spyOn(Date, "now").mockReturnValue(asOf.getTime());
-        try {
-            const test = fixture({
-                calculationStatus: "Ready",
-                calculationTime: asOf,
-            });
-
-            test.context["processQueuedAppSheetBulkEntries_"] = () => ({
-                ok: true,
-            });
-
-            const summary = test.api.finishAppSheetQueueRun_(test.spreadsheet, {
-                ok: true,
-                savedCount: 0,
-            });
-
-            expect(summary.analytics.calculatedAt).toBe(asOf.toISOString());
-            expect(summary.analytics.skipped).toBe(true);
-            expect(test.getScriptLock).not.toHaveBeenCalled();
-            expect(test.writes).not.toHaveBeenCalled();
-            expect(test.flush).not.toHaveBeenCalled();
-        } finally {
-            clock.mockRestore();
-        }
-    });
 
     it.each([
         "",

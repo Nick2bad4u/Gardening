@@ -1237,7 +1237,7 @@ assert.match(source, /function appSheetBulkWateredPlants_\(value\)/v);
 assert.match(source, /function appSheetBulkSelectedPlants_\(value\)/v);
 assert.match(source, /`appsheet-bulk-\$\{roundId\}-\$\{plantId\}`/v);
 assert.match(source, /function installAppSheetQueueTrigger\(\)/v);
-assert.match(source, /\.timeBased\(\)\.everyMinutes\(5\)\.create\(\)/v);
+assert.match(source, /\.timeBased\(\)\.everyMinutes\(10\)\.create\(\)/v);
 assert.doesNotMatch(source, /Logger 5\.8 is ready/v);
 assert.match(
     source,
