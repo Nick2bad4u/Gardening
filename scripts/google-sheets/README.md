@@ -1,11 +1,11 @@
 # Google Sheets observation logger
 
-Production logger **5.44.1 / immutable version 134** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.44.2 / immutable version 135** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Production **5.44.1 / immutable version 134** and **AppSheet 1.100141** retain portrait
-revision **1010123212eade00**, verified on November 10. The remaining cactus and
+Production **5.44.2 / immutable version 135** and **AppSheet 1.100141** retain portrait
+revision **1010123212eade00**, verified on November 11. The remaining cactus and
 front-grid portraits are described below. P41's appended optional weight field
 remains unchanged; the earlier dated receipts retain their verified versions.
 
@@ -37,6 +37,56 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## November 11 ten-minute AppSheet cadence
+
+Production **5.44.2 / immutable version 135** was promoted at **01:01:43 EST**,
+preserving the existing URL, owner-only access, execution identity, client,
+manifest, and artwork. Head and immutable source match
+[68b99c0](https://github.com/Nick2bad4u/Gardening/commit/68b99c0535f1885b273474edcd45e6d487017bf0).
+The existing `processQueuedAppSheetEntries` trigger now uses a ten-minute
+interval; its handler, Head deployment, owner, and daily failure notifications
+are unchanged. Reloaded trigger settings confirmed exactly one schedule.
+
+The bridge makes approximately **144 scheduled checks per day**, down from 288.
+It attempts analytics after each intake run, including when a manual refresh
+ran recently. This prevents skipping a tick that could leave results beyond the
+existing **15-minute** consumer freshness limit. Refresh leases, retries,
+manual recalculation, and immediate web-logger saves remain intact. Reduced
+polling does not establish a 50% runtime saving or daily quota headroom.
+
+A verified owner-only
+[native backup](https://docs.google.com/spreadsheets/d/1f0r3QOU7jaXI6RZ_gj_A_WJSHqZm30HdOu3rhmmUf-k/edit)
+preceded deployment. Before/after comparison preserved **2,309 unique
+observation IDs**, **1,863 request groups**, **67/59/77-column headers**,
+entered staging data, **1,072 sampled source cells**, **70 tab properties**,
+and **194 chart IDs/titles**, with no sampled formula, required-anchor, or
+Integrity failures. This covers full ID columns and entered staging data plus
+sampled source cells and chart identities; it does not compare every History
+value, format, validation, full chart specification, or protection. No workbook
+schema, helper-note, or observation edits were required. No synthetic observations
+were submitted; AppSheet remains **1.100141**.
+
+Local and hosted logger checks passed **2,157 tests** in **52 files**, with
+**99.6% statements**, **98.44% branches**, **100% functions**, and **99.81% lines**
+covered; hosted validation also passed **nine checker regressions**. Twelve
+checks of extracted functions passed in a disposable native Apps Script V8
+project using mock services. That rehearsal confirms runtime compatibility and
+control flow; it is not a full-workbook I/O benchmark. Source/test lint and type
+checks, documentation formatting, **224-page** site checks, and secret gates
+passed. The
+[implementation workflow](https://github.com/Nick2bad4u/Gardening/actions/runs/42967480372)
+passed **345 Chromium tests**, **60 Storybook tests**, and Pages publication;
+Sonar, Codecov, and Socket passed.
+
+Authenticated production showed **Connected · Logger 5.44.2**, retained its
+unsent-draft prompt, and had no inspected console warnings or errors. Bootstrap
+completed in **14.011 seconds**. The first verified run after the interval change
+started at **01:09:13 EST** and completed in **13.498 seconds**; its diagnostics
+confirmed **5.44.2** and successful analytics publication. A fresh native read
+at **01:10:33 EST** found calculation status **Ready** with timestamp
+**01:09:20 EST**. These observations verify deployment and initial operation;
+the daily runtime concern still needs a longer observation window.
 
 ## November 10 mobile recovery and validation
 
