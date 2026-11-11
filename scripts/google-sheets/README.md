@@ -1,10 +1,10 @@
 # Google Sheets observation logger
 
-Production logger **5.44.0 / immutable version 133** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.44.1 / immutable version 134** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Production **5.44.0 / immutable version 133** and **AppSheet 1.100141** retain portrait
+Production **5.44.1 / immutable version 134** and **AppSheet 1.100141** retain portrait
 revision **1010123212eade00**, verified on November 10. The remaining cactus and
 front-grid portraits are described below. P41's appended optional weight field
 remains unchanged; the earlier dated receipts retain their verified versions.
@@ -37,6 +37,65 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## November 10 mobile recovery and validation
+
+Production **5.44.1 / immutable version 134** was promoted at **23:26:22 EST**,
+preserving the existing URL, owner-only access, execution identity, manifest,
+and artwork. Readback verified that Head, immutable source, and maintained
+logger files match
+[260198b](https://github.com/Nick2bad4u/Gardening/commit/260198bcc638f8061f942ea8833e668a8aa2b0d4).
+The server change is its version literal; no workbook schema, installer,
+AppSheet, permission, or trigger migration was needed.
+
+Unanswered single and bulk saves retain their retry identity after missing
+receipts, generic failures, and page restoration. Explicit Clear warns before
+discarding an unresolved request. Confirmed-save cleanup verifies browser
+storage removal and avoids a second bulk cleanup. Drafts preserve incomplete
+date/time parts, field errors persist with focus and accessibility associations,
+and correction forms check changed numbers against server ranges while retaining
+supported signed readings and unchanged legacy values. Queue, Mist, and save
+controls wrap with enlarged text.
+
+Fresh preflight found two genuine observations appended since the initial
+backup, so an updated owner-only
+[native backup](https://docs.google.com/spreadsheets/d/1QQLS4BUzeHAuzs0HTlrH_rUYAbpPCBaiD8sJNkchSKI/edit)
+was created and verified. Before/after comparison preserved **2,309 unique
+observation IDs**, **1,863 request groups**, **67/59/77-column headers**, all
+entered staging data, **1,113 sampled source cells**, **70 tab properties**, and
+**194 chart IDs/titles**. No sampled formula, required-anchor, or Integrity
+failures appeared. This verifies full ID columns and entered staging data plus
+sampled History/helper cells and chart identities; it does not compare every
+History value, format, validation, full chart specification, or protection.
+
+The [validated workflow](https://github.com/Nick2bad4u/Gardening/actions/runs/42935508321)
+passed **345 Chromium tests**, **60 Storybook tests**, **224-page** site checks,
+and Pages publication. Hosted logger validation passed **2,158 tests** and
+**9 checker regressions**, with **99.6% statements**, **98.45% branches**,
+**100% functions**, and **99.81% lines** covered. Sonar, Codecov, Socket, and
+secret gates passed. Local checks also covered **153 logger browser cases**,
+including 320/390/1280 px and 100/150/200% text layouts.
+
+Authenticated production showed **Connected · Logger 5.44.1**. All eight
+Single/Bulk, 390/1280 px, and dark/light combinations had no horizontal overflow;
+keyboard mode navigation retained focus and the inspected console was clear.
+The existing unsent-draft prompt remained available. No synthetic observations
+were submitted. Version 134 bootstrap completed in **12.194 seconds**, and the
+**23:29:36 EST** queue run completed in **6.734 seconds**. Exactly one five-minute
+queue trigger remains configured; AppSheet remains **1.100141** with no unsaved
+editor changes.
+
+This client-only release proceeded under an owner-authorized, one-time exception
+to the daily trigger-runtime headroom safeguard. The corrected pre-release
+capture contained **287 completed runs and one 360.54-second timeout**, totaling
+**191.34 minutes** across the latest 288 runs, from November 9 at 19:44:34 to
+November 10 at 19:39:34 EST. The initial extraction missed the capitalized
+`Timed Out` status; its earlier 185.53-minute, zero-failure summary is superseded.
+This project-only sliding window is not an account quota counter and does not
+establish remaining [daily quota](https://developers.google.com/apps-script/guides/services/quotas).
+The trigger implementation and schedule are unchanged. The existing runtime
+concern remains open for separate investigation; the successful post-deployment
+sample does not establish daily headroom or resolve that concern.
 
 ## November 10 shared nutrient doses
 
