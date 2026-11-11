@@ -1,6 +1,6 @@
 # Pot labels
 
-Last updated: 2026-11-04
+Last updated: 2026-11-11
 
 This is the print reference for 49 active profile records across 39 tracked pot allocations. Several profiles can share one pot label and one P-ID; they are not separate weigh-ins. Pot labels use the short permanent ID, such as `A1`, `B2`, or `#1`. These identify pots, not physical row/column coordinates. The longer inventory IDs identify individual profile records, so historical documentation and photo archives do not need to be renamed when a pot moves.
 
@@ -29,6 +29,36 @@ The compact adhesive strips still use the short two-strip format below. The
 visual description, interesting fact, and acquisition details are the expanded
 fields for the collection book; trying to fit all of them on a 15 mm pot label
 would make the label unreadable.
+
+## Newer labels for the booklet
+
+Use this index to catch up on the September and October additions without
+reprinting the older labels. Each linked section has two compact, two-line
+strips. Copy the description, interesting fact, and acquisition details from
+the [collection-book table](#expanded-collection-book-fields) onto separate
+booklet strips or into the handwritten entry; keep the pot strips readable.
+
+**#7 / P31:** [Peperomia Bicolor](#september-20-houseplant-labels) — acquired 2026-09-20.
+
+**#8 / P32:** [Tricolor oyster plant](#september-20-houseplant-labels) — acquired 2026-09-20.
+
+**#9 / P35:** [Shared Lithops planter](#september-21-lithops-and-split-rock-labels) — acquired 2026-09-21.
+
+**#10 / P36:** [Split rock](#september-21-lithops-and-split-rock-labels) — acquired 2026-09-21.
+
+**#11 / P37:** [Arctic Ice echeveria](#october-7-arctic-ice-label) — acquired 2026-10-06; label assigned October 7.
+
+**#12 / P38:** [Terrarium](#terrarium-label) — delivery date unconfirmed; arrival photos supplied 2026-10-10.
+
+**#13 / P39:** [Nightly nerve plant](#october-21-houseplant-labels) — acquired 2026-10-21.
+
+**#14 / P40:** [Spice is Nice peperomia](#october-21-houseplant-labels) — acquired 2026-10-21.
+
+**#15 / P41:** [Alpine Spires Chinese evergreen](#october-28-alpine-spires-label) — acquired 2026-10-28.
+
+`#9` and `#12` each identify one shared container. Their component plants do
+not receive extra pot IDs. Dates above describe acquisition or the stated
+evidence event, never a repot or a plant's botanical publication date.
 
 ## SUPVAN E11 print setup
 
@@ -69,13 +99,15 @@ Source: [SUPVAN E11 Amazon listing](https://www.amazon.com/dp/B0DKS89T75?th=1).
 
 ## Rotation and orientation
 
-Do not print `ROT90` stickers for the ordinary individual pots. Put the
-common-name label on the side facing the inspection aisle. That label is the
-orientation marker: every Sunday after the light turns off, rotate the pot 90°
-clockwise. The label will return to the aisle after four turns.
+Use the common-name label as an orientation marker; for the cactus display,
+place it on the side facing the inspection aisle. Follow the current plant
+profile before rotating a pot rather than printing a blanket weekly rotation
+instruction. In particular, [G3 Royal Flush](./succulents/pleiospilos-nelii-royal-flush.md#rotation-propagation-and-watch-points)
+retains a consistent photographed orientation while its leaf cycle is being
+assessed.
 
-Only the variegated moon cactus and two fixed shared planters need a
-nonstandard orientation label:
+Retain these specific orientation labels for the variegated moon cactus and
+two fixed shared planters:
 
 ```text
 A1 | DO NOT ROUTINELY ROTATE
@@ -113,52 +145,59 @@ filled in without a reliable record.
 
 ## Expanded collection-book fields
 
-This companion table covers every current pot label, with component rows for
-the two large shared planters. The linked profiles below carry botanical
-sources and the full collection records. Mountain Crest dates are receipt dates.
+This companion table covers all **39 current pot labels** in **44 rows**, with
+component rows for the two large shared planters. The smaller mixed planter
+(`#6`) and Lithops pot (`#9`) retain one booklet overview each; their linked
+sections identify the component profiles. The linked profiles below carry
+botanical sources and the full collection records. Mountain Crest dates are
+receipt dates; the terrarium's exact delivery date remains unknown.
 
-| ID    | Plant                           | Short visual description                                                                        | Interesting or unusual fact                                                                                         | Obtained for this collection                   |
-| ----- | ------------------------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| `A1`  | Variegated moon cactus          | Flattened ribbed globe marbled green, bronze, yellow, and pink.                                 | Unlike neon grafted moon cacti, this chlorophyll-bearing plant grows on its own roots.                              | Costa Farms — 2026-07-23                       |
-| `B1`  | Grass-blade cactus              | Small green globe with thin wavy ribs and long flattened spines.                                | Its accordion-like ribs can expand after watering without the whole stem stretching.                                | Costa Farms — 2026-07-23                       |
-| `C1`  | Giant chin cactus               | Broad blue-green globe with heavy ribs and stout curved brown spines.                           | Its flowers stay surprisingly small beside the massive body an old plant can develop.                               | Costa Farms — 2026-07-23                       |
-| `D1`  | Dragon's Egg                    | Rounded ribbed green-and-brown body with few visible spines.                                    | Its tiny crown cups, called cyathia, contain reduced flowers; damaged tissue can release caustic latex.             | Altman Reserve — 2026-07-23                    |
-| `A2`  | Feather cactus                  | Low mound hidden beneath soft-looking white featherlike spines.                                 | Interlacing, finely divided white spines shade the green body beneath the fluffy-looking covering.                  | Altman Reserve — 2026-07-15                    |
-| `B2`  | Old Man of the Andes            | Short upright column wrapped in white wool with reddish spines beneath.                         | Its wool helps protect an Andean cactus from intense high-altitude sun and cold nights.                             | Altman Reserve — 2026-07-15                    |
-| `C2`  | Rainbow hedgehog cactus         | Compact cylinder banded in pink, red, and white comb-like spines.                               | Most of its vivid body color comes from the spines; mature plants can add large magenta flowers.                    | Costa Farms — 2026-07-23                       |
-| `D2`  | Domino cactus                   | Nearly spineless green globe with broad ribs and white felted areoles.                          | A mature plant can make a fragrant night-opening flower that looks enormous beside the cactus.                      | Costa Farms — 2026-07-23                       |
-| `A3`  | Serpent cactus                  | Slender branching green stem lined with white areoles and sharp spines.                         | Its long flowers open at night, matching the former genus name _Nyctocereus_, or “night cereus.”                    | Costa Farms — 2026-07-23                       |
-| `B3`  | Indigo Wave                     | Blue-green crested mass with rippled, fanlike, irregular growth.                                | The normal species produces sweet edible Mexican berries called garambullos.                                        | Altman Reserve — 2026-07-15                    |
-| `C3`  | Monk's hood cactus              | Star-ribbed green column with white flecks and long yellow-brown spines.                        | White surface flecks are separate from the woolly, spine-bearing areoles; a young globe gradually becomes a column. | Costa Farms — 2026-07-23                       |
-| `D3`  | Ming Thing                      | Dense blue-green cluster of knobby, brainlike monstrose stems.                                  | A monstrose stem can occasionally revert and produce a normal-looking shoot.                                        | Altman Reserve — 2026-07-15                    |
-| `E1`  | Dwarf old man cactus            | Compact upright column wrapped in dense cream-white wool.                                       | The soft-looking wool conceals numerous sharp spines.                                                               | Carlsons' Greenhouse, Torrey Road — 2026-08-10 |
-| `E2`  | Chamaelobivia / peanut hybrid   | Dense clump of short green peanut-shaped ribbed stems.                                          | Chamaelobivia hybrids have been bred in vivid yellow, orange, red, and pink flower colors.                          | Carlsons' Greenhouse, Torrey Road — 2026-08-10 |
-| `E3`  | Woolly nipple cactus            | Woolly green globe with large tubercles and pale and dark spines.                               | The red club-shaped projection seen on this plant is a fruit, not a flower.                                         | Carlsons' Greenhouse, Torrey Road — 2026-08-10 |
-| `F1`  | Hook-spined pincushion cactus   | Green globe with pale radial spines and scattered hooked central spines.                        | The hooks can catch animal fur in the wild—and clothing or skin in the grow room.                                   | Carlsons' Greenhouse, Torrey Road — 2026-08-10 |
-| `F2`  | Boobie cactus                   | Blue-green upright column divided into rounded breastlike knobs.                                | The normal species makes very sweet garambullo berries sold in Mexican markets.                                     | Carlsons' Greenhouse, Torrey Road — 2026-08-10 |
-| `F3`  | Yellow tower cactus             | Golden-spined globe developing into a ribbed upright column.                                    | Mature plants can produce repeated bursts of pale-yellow flowers around the crown.                                  | Carlsons' Greenhouse, Torrey Road — 2026-08-10 |
-| `#1`  | Variegated blue torch cactus    | Tall blue-green ribbed column streaked with pale cream variegation.                             | Blue wax makes the normal tissue look glaucous; pale sectors contain less chlorophyll and scorch more easily.       | Gerych's Design, Fenton — 2023-06-21           |
-| `#1`  | Monkey tail cactus              | Long trailing fingerlike stems hidden beneath soft white hairs.                                 | In habitat its stems hang from steep Bolivian rock faces instead of standing upright.                               | Gerych's Design, Fenton — 2023-06-21           |
-| `#1`  | Golden torch cactus             | Upright green ribbed column lined with dense golden-brown spines.                               | It can open large white flowers at night and is also used as cactus grafting stock.                                 | Gerych's Design, Fenton — 2023-06-21           |
-| `#2`  | Pulido's echeveria              | Powdery blue-green rosette with pointed leaves outlined in red.                                 | Its farina is a natural sunscreen and does not grow back where a fingerprint rubs it off.                           | Gerych's Greenhouse — 2026-07-27               |
-| `#2`  | Elephant bush                   | Branching reddish stems carrying many small round glossy leaves.                                | It can shift between C3 photosynthesis and water-saving CAM behavior as conditions change.                          | Gerych's Greenhouse — 2026-07-27               |
-| `#2`  | Silver teaspoons                | Thick spoon-shaped leaves covered in reflective silver felt.                                    | Its reflective hairs reduce the intensity of sunlight reaching the leaf surface.                                    | Gerych's Greenhouse — 2026-07-27               |
-| `#2`  | Copper spoons                   | Spoon-shaped leaves with cinnamon felt above and grey-bronze undersides.                        | Turning a leaf reveals the contrast between its cinnamon upper surface and greyer underside.                        | Gerych's Greenhouse — 2026-07-27               |
-| `#3`  | Money tree                      | Young tropical tree with a green trunk and hand-shaped glossy leaf clusters.                    | Each hand-shaped fan is one compound leaf, with several leaflets meeting at the end of a single long stalk.         | Home Depot, Howell — 2026-07-29                |
-| `#4`  | Kiwi aeonium                    | Branching green-and-yellow rosettes with vivid pink-red edges.                                  | Aeoniums grow most actively in cooler seasons and can slow or partially rest during summer heat.                    | Carlsons' Greenhouse, Torrey Road — 2026-08-10 |
-| `#5`  | Probable tuberculate tiger jaws | Paired triangular green leaves with soft white marginal teeth and raised white bumps.           | The upper-leaf bumps vary naturally from a single tubercle to an almost completely bumpy surface.                   | Home Depot — 2026-09-02                        |
-| `#6`  | Tiny mixed succulent planter    | Pale powdery rosettes, copper-orange narrow leaves, and broad green paddles with red margins.   | Three contrasting growth habits share one small planter and one watering history.                                   | Home Depot — 2026-09-02                        |
-| `#7`  | Peperomia Bicolor               | Thick rounded green leaves with broad cream variegation on branching stems.                     | Each slender cream-colored flower spike holds many minute, petal-less flowers with two stamens apiece.              | Carlson's Greenhouses — 2026-09-20             |
-| `#8`  | Tricolor oyster plant           | Pointed strap-shaped leaves striped green and cream, with pink tones and purple undersides.     | The purple boat around the tiny white flowers consists of bracts, or modified leaves.                               | Carlson's Greenhouses — 2026-09-20             |
-| `#9`  | Shared Lithops planter          | Four visible heads: two tan/brown patterned heads and two grey-green heads with darker windows. | Each head is a pair of succulent leaves; replacement growth draws water from the older pair.                        | Home Depot, Howell — 2026-09-21                |
-| `#11` | Arctic Ice echeveria            | Owner-confirmed pale rosette in the grey/blue rear pot.                                         | Cultivar selected from a 2012 cross; patent issued in 2018.                                                         | Home Depot — 2026-10-06                        |
-| `#10` | Split rock                      | Rounded grey-green speckled leaves divided by a deep central cleft.                             | Seed capsules open when wet and close as they dry, releasing some seeds with each shower.                           | Home Depot, Howell — 2026-09-21                |
-| `G1`  | Black Widow chin cactus         | Dark ribbed globe variegated in near-black purple, red, and green.                              | It belongs to the same species commonly sold as colorful grafted moon cacti.                                        | Mountain Crest Gardens — received 2026-08-28   |
-| `G2`  | Paper spine cactus              | Rounded gray-green segments carrying broad curling paperlike spines.                            | Loose segments detach readily and can root as new plants; the “paper” structures are true spines.                   | Mountain Crest Gardens — received 2026-08-28   |
-| `G3`  | Royal Flush split rock          | Pair of thick purple speckled leaves divided by a deep central fissure.                         | A daisy-like flower can emerge while a new leaf pair replaces the old one from inside.                              | Mountain Crest Gardens — received 2026-08-28   |
-| `H1`  | Coconut Crystal hens and chicks | Compact lime-green rosette with maroon center shading that spreads outward seasonally.          | Each rosette flowers once, but offsets can keep the colony alive afterward.                                         | Mountain Crest Gardens — received 2026-08-28   |
-| `H2`  | Raindrops echeveria             | Blue-green rosette with rounded raindroplike bumps on mature leaves.                            | The firm bumps are cultivar features called caruncles, not edema or pest damage.                                    | Mountain Crest Gardens — received 2026-08-28   |
-| `H3`  | Eve's needle cactus             | Upright branching green cylinders with awl-shaped leaves and sharp spines.                      | Unlike most adult cacti, it retains conspicuous succulent leaves along young stems.                                 | Mountain Crest Gardens — received 2026-08-28   |
+| ID    | Plant                                                                                  | Short visual description                                                                                                                            | Interesting or unusual fact                                                                                                      | Obtained for this collection                                                                       |
+| ----- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `A1`  | Variegated moon cactus                                                                 | Flattened ribbed globe marbled green, bronze, yellow, and pink.                                                                                     | Unlike neon grafted moon cacti, this chlorophyll-bearing plant grows on its own roots.                                           | Costa Farms — 2026-07-23                                                                           |
+| `B1`  | Grass-blade cactus                                                                     | Small green globe with thin wavy ribs and long flattened spines.                                                                                    | Its accordion-like ribs can expand after watering without the whole stem stretching.                                             | Costa Farms — 2026-07-23                                                                           |
+| `C1`  | Giant chin cactus                                                                      | Broad blue-green globe with heavy ribs and stout curved brown spines.                                                                               | Its flowers stay surprisingly small beside the massive body an old plant can develop.                                            | Costa Farms — 2026-07-23                                                                           |
+| `D1`  | Dragon's Egg                                                                           | Rounded ribbed green-and-brown body with few visible spines.                                                                                        | Its tiny crown cups, called cyathia, contain reduced flowers; damaged tissue can release caustic latex.                          | Altman Reserve — 2026-07-23                                                                        |
+| `A2`  | Feather cactus                                                                         | Low mound hidden beneath soft-looking white featherlike spines.                                                                                     | Interlacing, finely divided white spines shade the green body beneath the fluffy-looking covering.                               | Altman Reserve — 2026-07-15                                                                        |
+| `B2`  | Old Man of the Andes                                                                   | Short upright column wrapped in white wool with reddish spines beneath.                                                                             | Its wool helps protect an Andean cactus from intense high-altitude sun and cold nights.                                          | Altman Reserve — 2026-07-15                                                                        |
+| `C2`  | Rainbow hedgehog cactus                                                                | Compact cylinder banded in pink, red, and white comb-like spines.                                                                                   | Most of its vivid body color comes from the spines; mature plants can add large magenta flowers.                                 | Costa Farms — 2026-07-23                                                                           |
+| `D2`  | Domino cactus                                                                          | Nearly spineless green globe with broad ribs and white felted areoles.                                                                              | A mature plant can make a fragrant night-opening flower that looks enormous beside the cactus.                                   | Costa Farms — 2026-07-23                                                                           |
+| `A3`  | Serpent cactus                                                                         | Slender branching green stem lined with white areoles and sharp spines.                                                                             | Its long flowers open at night, matching the former genus name _Nyctocereus_, or “night cereus.”                                 | Costa Farms — 2026-07-23                                                                           |
+| `B3`  | Indigo Wave                                                                            | Blue-green crested mass with rippled, fanlike, irregular growth.                                                                                    | The normal species produces sweet edible Mexican berries called garambullos.                                                     | Altman Reserve — 2026-07-15                                                                        |
+| `C3`  | Monk's hood cactus                                                                     | Star-ribbed green column with white flecks and long yellow-brown spines.                                                                            | White surface flecks are separate from the woolly, spine-bearing areoles; a young globe gradually becomes a column.              | Costa Farms — 2026-07-23                                                                           |
+| `D3`  | Ming Thing                                                                             | Dense blue-green cluster of knobby, brainlike monstrose stems.                                                                                      | A monstrose stem can occasionally revert and produce a normal-looking shoot.                                                     | Altman Reserve — 2026-07-15                                                                        |
+| `E1`  | Dwarf old man cactus                                                                   | Compact upright column wrapped in dense cream-white wool.                                                                                           | The soft-looking wool conceals numerous sharp spines.                                                                            | Carlsons' Greenhouse, Torrey Road — 2026-08-10                                                     |
+| `E2`  | Chamaelobivia / peanut hybrid                                                          | Dense clump of short green peanut-shaped ribbed stems.                                                                                              | Chamaelobivia hybrids have been bred in vivid yellow, orange, red, and pink flower colors.                                       | Carlsons' Greenhouse, Torrey Road — 2026-08-10                                                     |
+| `E3`  | Woolly nipple cactus                                                                   | Woolly green globe with large tubercles and pale and dark spines.                                                                                   | The red club-shaped projection seen on this plant is a fruit, not a flower.                                                      | Carlsons' Greenhouse, Torrey Road — 2026-08-10                                                     |
+| `F1`  | Hook-spined pincushion cactus                                                          | Green globe with pale radial spines and scattered hooked central spines.                                                                            | The hooks can catch animal fur in the wild—and clothing or skin in the grow room.                                                | Carlsons' Greenhouse, Torrey Road — 2026-08-10                                                     |
+| `F2`  | Boobie cactus                                                                          | Blue-green upright column divided into rounded breastlike knobs.                                                                                    | The normal species makes very sweet garambullo berries sold in Mexican markets.                                                  | Carlsons' Greenhouse, Torrey Road — 2026-08-10                                                     |
+| `F3`  | Yellow tower cactus                                                                    | Golden-spined globe developing into a ribbed upright column.                                                                                        | Mature plants can produce repeated bursts of pale-yellow flowers around the crown.                                               | Carlsons' Greenhouse, Torrey Road — 2026-08-10                                                     |
+| `#1`  | Variegated blue torch cactus                                                           | Tall blue-green ribbed column streaked with pale cream variegation.                                                                                 | Blue wax makes the normal tissue look glaucous; pale sectors contain less chlorophyll and scorch more easily.                    | Gerych's Design, Fenton — 2023-06-21                                                               |
+| `#1`  | Monkey tail cactus                                                                     | Long trailing fingerlike stems hidden beneath soft white hairs.                                                                                     | In habitat its stems hang from steep Bolivian rock faces instead of standing upright.                                            | Gerych's Design, Fenton — 2023-06-21                                                               |
+| `#1`  | Golden torch cactus                                                                    | Upright green ribbed column lined with dense golden-brown spines.                                                                                   | It can open large white flowers at night and is also used as cactus grafting stock.                                              | Gerych's Design, Fenton — 2023-06-21                                                               |
+| `#2`  | Pulido's echeveria                                                                     | Powdery blue-green rosette with pointed leaves outlined in red.                                                                                     | Its farina is a natural sunscreen and does not grow back where a fingerprint rubs it off.                                        | Gerych's Greenhouse — 2026-07-27                                                                   |
+| `#2`  | Elephant bush                                                                          | Branching reddish stems carrying many small round glossy leaves.                                                                                    | It can shift between C3 photosynthesis and water-saving CAM behavior as conditions change.                                       | Gerych's Greenhouse — 2026-07-27                                                                   |
+| `#2`  | Silver teaspoons                                                                       | Thick spoon-shaped leaves covered in reflective silver felt.                                                                                        | Its reflective hairs reduce the intensity of sunlight reaching the leaf surface.                                                 | Gerych's Greenhouse — 2026-07-27                                                                   |
+| `#2`  | Copper spoons                                                                          | Spoon-shaped leaves with cinnamon felt above and grey-bronze undersides.                                                                            | Turning a leaf reveals the contrast between its cinnamon upper surface and greyer underside.                                     | Gerych's Greenhouse — 2026-07-27                                                                   |
+| `#3`  | Money tree                                                                             | Young tropical tree with a green trunk and hand-shaped glossy leaf clusters.                                                                        | Each hand-shaped fan is one compound leaf, with several leaflets meeting at the end of a single long stalk.                      | Home Depot, Howell — 2026-07-29                                                                    |
+| `#4`  | Kiwi aeonium                                                                           | Branching green-and-yellow rosettes with vivid pink-red edges.                                                                                      | Aeoniums grow most actively in cooler seasons and can slow or partially rest during summer heat.                                 | Carlsons' Greenhouse, Torrey Road — 2026-08-10                                                     |
+| `#5`  | Probable tuberculate tiger jaws                                                        | Paired triangular green leaves with soft white marginal teeth and raised white bumps.                                                               | The upper-leaf bumps vary naturally from a single tubercle to an almost completely bumpy surface.                                | Home Depot — 2026-09-02                                                                            |
+| `#6`  | Tiny mixed succulent planter                                                           | Pale powdery rosettes, copper-orange narrow leaves, and broad green paddles with red margins.                                                       | Three contrasting growth habits share one small planter and one watering history.                                                | Home Depot — 2026-09-02                                                                            |
+| `#7`  | Peperomia Bicolor                                                                      | Thick rounded green leaves with broad cream variegation on branching stems.                                                                         | Each slender cream-colored flower spike holds many minute, petal-less flowers with two stamens apiece.                           | Carlson's Greenhouses — 2026-09-20                                                                 |
+| `#8`  | Tricolor oyster plant                                                                  | Pointed strap-shaped leaves striped green and cream, with pink tones and purple undersides.                                                         | The purple boat around the tiny white flowers consists of bracts, or modified leaves.                                            | Carlson's Greenhouses — 2026-09-20                                                                 |
+| `#9`  | Shared Lithops planter                                                                 | Four visible heads: two tan/brown patterned heads and two grey-green heads with darker windows.                                                     | Each head is a pair of succulent leaves; replacement growth draws water from the older pair.                                     | Home Depot, Howell — 2026-09-21                                                                    |
+| `#10` | Split rock                                                                             | Rounded grey-green speckled leaves divided by a deep central cleft.                                                                                 | Seed capsules open when wet and close as they dry, releasing some seeds with each shower.                                        | Home Depot, Howell — 2026-09-21                                                                    |
+| `#11` | Arctic Ice echeveria                                                                   | Owner-confirmed pale rosette in the grey/blue rear pot.                                                                                             | Bred from a 2012 cross in Vista, California; selected in 2013 and patented in 2018.                                              | Home Depot — 2026-10-06; store location unrecorded                                                 |
+| `#12` | [Terrarium](./houseplants/terrarium.md)                                                | Cork-lidded jar with red-veined leaves, white-speckled foliage, small trailing stems, fern-like growth, and moss; component IDs remain provisional. | Moisture can cycle from soil through leaves and back from condensation; glass condensation alone is not a soil-moisture reading. | Seller and exact delivery date unrecorded; enrolled 2026-10-09; arrival photos supplied 2026-10-10 |
+| `#13` | [Nightly nerve plant](./houseplants/fittonia-albivenis-nightly.md)                     | Small oval leaves with pink netted veins and broad pink areas edged in green, on hairy trailing stems.                                              | The species name _albivenis_ means white-veined, although cultivated nerve plants can have pink or red veins.                    | Home Depot, Howell — 2026-10-21                                                                    |
+| `#14` | [Spice is Nice peperomia](./houseplants/peperomia-obtusifolia-spice-is-nice.md)        | Thick, glossy dark-green leaves with rounded ends and slightly cupped blades on fleshy upright stems.                                               | Cream-colored flower spikes carry many tiny flowers; the baby rubber plant common name does not make it a rubber tree.           | Home Depot, Howell — 2026-10-21                                                                    |
+| `#15` | [Alpine Spires Chinese evergreen](./houseplants/aglaonema-commutatum-alpine-spires.md) | Nursery-tag image shows pointed green-and-cream leaves, pink central areas, and pink petioles; the owned specimen has not been photographed.        | An arum-family plant: its flowers form a spadix surrounded by a spathe rather than a conventional petalled bloom.                | Home Depot — 2026-10-28; $19.99 owner-reported payment; store location unrecorded                  |
+| `G1`  | Black Widow chin cactus                                                                | Dark ribbed globe variegated in near-black purple, red, and green.                                                                                  | It belongs to the same species commonly sold as colorful grafted moon cacti.                                                     | Mountain Crest Gardens — received 2026-08-28                                                       |
+| `G2`  | Paper spine cactus                                                                     | Rounded gray-green segments carrying broad curling paperlike spines.                                                                                | Loose segments detach readily and can root as new plants; the “paper” structures are true spines.                                | Mountain Crest Gardens — received 2026-08-28                                                       |
+| `G3`  | Royal Flush split rock                                                                 | Pair of thick purple speckled leaves divided by a deep central fissure.                                                                             | A daisy-like flower can emerge while a new leaf pair replaces the old one from inside.                                           | Mountain Crest Gardens — received 2026-08-28                                                       |
+| `H1`  | Coconut Crystal hens and chicks                                                        | Compact lime-green rosette with maroon center shading that spreads outward seasonally.                                                              | Each rosette flowers once, but offsets can keep the colony alive afterward.                                                      | Mountain Crest Gardens — received 2026-08-28                                                       |
+| `H2`  | Raindrops echeveria                                                                    | Blue-green rosette with rounded raindroplike bumps on mature leaves.                                                                                | The firm bumps are cultivar features called caruncles, not edema or pest damage.                                                 | Mountain Crest Gardens — received 2026-08-28                                                       |
+| `H3`  | Eve's needle cactus                                                                    | Upright branching green cylinders with awl-shaped leaves and sharp spines.                                                                          | Unlike most adult cacti, it retains conspicuous succulent leaves along young stems.                                              | Mountain Crest Gardens — received 2026-08-28                                                       |
 
 Rehab-04, the probable silken pincushion cactus, has no current label because
 it was removed on 2026-07-24. Its visual history and acquisition uncertainty
@@ -343,7 +382,7 @@ ORIGIN: HORTICULTURAL RETAIL MIX
 WARN: TRACK + WATER AS ONE POT
 ```
 
-## September 20 Carlson's Greenhouses labels
+## September 20 houseplant labels
 
 These labels identify the two houseplants purchased at Carlson's Greenhouses on September 20, 2026. Their cultivar names follow the photographed nursery labels.
 
@@ -358,9 +397,26 @@ Peperomia obtusifolia 'Obtipan Bicolor'
 ```
 
 ```text
+NATIVE SPECIES: FLORIDA TO TROPICAL AMERICA
+DESC: 1753 | WARN: AVOID SOGGY ROOTS
+```
+
+```text
 #8 | TRICOLOR OYSTER PLANT
 Tradescantia spathacea 'Tricolor'
 ```
+
+```text
+NATIVE SPECIES: S MEXICO TO GUATEMALA
+DESC: 1788 | WARN: IRRITATING SAP
+```
+
+The dates belong to the underlying species, not the nursery selections.
+_Peperomia obtusifolia_ was first named in 1753 and received its current
+combination in 1831; _Tradescantia spathacea_ dates to 1788. Separate cultivar
+introduction dates are not established. See the linked profiles and
+[Kew's Peperomia record](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:679269-1)
+and [Tradescantia record](https://powo.science.kew.org/taxon/173471-1).
 
 Both plants were purchased in six-inch nursery pots. The owner confirmed October 24 that the eight-inch Amazon Basics repots and kitchen window-shelf move happened about two weeks earlier. Current mix is estimated at 30% perlite + 70% greenhouse houseplant mix; labels **#7** and **#8** stay with their plants. See the profiles for the installed lights and remaining measurements.
 
@@ -383,14 +439,22 @@ Suggested strips:
 
 ```text
 #9 | LITHOPS SHARED PLANTER
-Probable L. lesliei (tan/brown) + L. salicola (grey/green)
-CHECK EVERY HEAD BEFORE WATERING
+PROB. L. lesliei + L. salicola
+```
+
+```text
+NATIVE: SOUTHERN AFRICA | DESC: 1912 / 1936
+WARN: CHECK EVERY HEAD + LEAF CYCLE
 ```
 
 ```text
 #10 | SPLIT ROCK
-Pleiospilos nelii | NURSERY-LABEL SPECIES
-CULTIVAR NOT RECORDED
+Pleiospilos nelii | CULTIVAR UNRECORDED
+```
+
+```text
+NATIVE: SOUTH AFRICA | DESC: 1930
+WARN: LEAF CYCLE; NOT ROYAL FLUSH
 ```
 
 Native-origin wording is southern Africa for the Lithops genus and South
@@ -435,9 +499,12 @@ The [archived purchase research](../old-plans/amazon-plant-order-2026-09.md) has
 
 ### Acquisition details still missing
 
-Acquisition sources and dates are recorded for every active label above. Only
-the historical, removed Rehab-04 record still lacks an acquisition source
-and date.
+The terrarium (`#12 / P38`) still lacks a confirmed seller identity and exact
+delivery date. Its October 9 enrollment and October 10 arrival photographs are
+separate dated events, not substitutes for a delivery date. The historical,
+removed Rehab-04 record also lacks an acquisition source and date. Home Depot
+is recorded for Arctic Ice and Alpine Spires, but their exact store locations
+remain unrecorded.
 
 Keep an order date and a received date as separate facts. They answer different
 questions and should not be silently substituted for one another.
@@ -478,22 +545,44 @@ Important date conventions:
 
 ## October 7 Arctic Ice label
 
+Acquired **October 6, 2026**; permanent label **#11** assigned **October 7**.
+Those are separate events, so the heading retains the label-allocation date.
+
 **Succulent-17 / #11 / P37** is [Arctic Ice echeveria](./succulents/echeveria-arctic-ice.md). The owner confirmed October 23 that the pale rosette in the grey/blue pot between P35 and P19 at the back center-left is this specimen, in photos supplied October 22 (capture date unknown). The cultivar name retains the owner-associated Altman listing basis; physical nursery-label evidence remains pending. Permanent #11 stays with P37 when it moves.
+
+**Origin and date for the book:** horticultural hybrid bred in Vista,
+California; no wild native range. The breeder records a February 2012 cross,
+March 2013 selection, and patent publication on August 7, 2018. `PATENT: 2018`
+below is a cultivar-record date, not a species discovery or description date.
+Source: [USPP29584P2](https://patents.google.com/patent/USPP29584P2/en).
 
 ```text
 #11 | ARCTIC ICE ECHEVERIA
-Echeveria 'Arctic Ice' | OWNER-ASSOCIATED LISTING
-CONFIRM DRAINAGE AND ROOT-ZONE DRYNESS
+Echeveria 'Arctic Ice'
 ```
 
-## Terrarium label — Houseplants aggregate
+```text
+ORIGIN: CULTIVAR BRED IN CALIFORNIA
+PATENT: 2018 | WARN: CHECK ROOT-ZONE DRYNESS
+```
+
+## Terrarium label
 
 **#12 / P38** identifies the whole terrarium. The [October 10 arrival record](../terrarium.md) includes five owner-supplied photographs of its cork-lidded glass jar and qualified plant identifications. [Houseplant-05](./houseplants/terrarium.md) is its aggregate Houseplants profile; the probable and tentative IDs remain qualified, and fern-like foliage and moss remain unidentified. Keep this single physical label and container history. Humidity readings use % RH and are observations, not a care target.
 
+**Origin and date for the book:** a cultivated mixed planting, with no single
+native range or botanical publication date. The seller and exact delivery
+date remain unrecorded; October 9 is enrollment, and October 10 is the date
+the arrival photographs were supplied. Keep those unknowns in the booklet.
+
 ```text
 #12 | TERRARIUM
-P38 | Houseplant-05 | Mixed houseplants
-One container · one care history
+MIXED HOUSEPLANTS | IDS PROVISIONAL
+```
+
+```text
+ORIGIN: CULTIVATED MIX | DESC: N/A
+WARN: CHECK SOIL, NOT CONDENSATION ALONE
 ```
 
 ## October 21 houseplant labels
@@ -507,26 +596,61 @@ profile sources for care; the printed prompts are inspection reminders.
 | `#13` | `P39`   | Houseplant-06 | [Nightly nerve plant](./houseplants/fittonia-albivenis-nightly.md), _Fittonia albivenis_, Network News™ Nightly™                          |
 | `#14` | `P40`   | Houseplant-07 | [Spice is Nice peperomia](./houseplants/peperomia-obtusifolia-spice-is-nice.md), _Peperomia obtusifolia_, Savory Delights™ Spice is Nice™ |
 
+**Origin and dates for the book:** the nursery-labelled Fittonia species is
+native to southern tropical America, first named in **1861**, with its current
+combination published in **1979**. The Peperomia species is native from Florida
+through tropical America, first named in **1753**, with its current combination
+published in **1831**. These are species histories, not the origins or release
+dates of Nightly or Spice is Nice. Nightly's separate cultivar denomination
+and this Spice is Nice plant's exact cultivar remain unverified.
+
+Sources: [Kew: Fittonia](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:105033-2)
+and [Kew: Peperomia](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:679269-1).
+
 ```text
 #13 | NIGHTLY NERVE PLANT
-P39 | Fittonia albivenis | NURSERY LABEL
-LIGHTLY MOIST, NOT SOGGY; NO WHOLE-POT DROUGHT
+Fittonia albivenis | NURSERY LABEL
+```
+
+```text
+NATIVE SPECIES: S TROPICAL AMERICA
+DESC: 1861 | WARN: AVOID WHOLE-POT DROUGHT
 ```
 
 ```text
 #14 | SPICE IS NICE PEPEROMIA
-P40 | Peperomia obtusifolia | NURSERY LABEL
-PARTIAL DRYING; CHECK BELOW THE SURFACE
+Peperomia obtusifolia | NURSERY LABEL
 ```
+
+```text
+NATIVE SPECIES: FLORIDA TO TROPICAL AMERICA
+DESC: 1753 | WARN: AVOID SOGGY ROOTS
+```
+
+For #13, inspect for lightly moist rather than soggy medium; avoid whole-pot
+drought. For #14, allow partial drying and check below the surface. The short
+warnings are reminders, not a substitute for the profiles' pot-specific care.
 
 ## October 28 Alpine Spires label
 
 **#15 / P41 / Houseplant-08** is [Alpine Spires Chinese evergreen](./houseplants/aglaonema-commutatum-alpine-spires.md), nursery-labelled _Aglaonema commutatum_, Igneous™ Alpine Spires™. The owner reported the October 28 Home Depot purchase for $19.99. The front-tag photograph shows “I'm New”. The barcode photograph supplied October 29 documents “PW Leafjoy Trial 12cm”, $19.98, UPC `810160692423`, and “Grown by TPC- Stuarts Draft, VA”. The sticker price does not replace the owner-reported $19.99 paid on October 28; retail 12cm is not a measured pot dimension, and the grower location is not the purchase store. “Trial” is label evidence, not proof of rarity or a release date. The October 29 canonical Repot establishes setup 2; the [profile](./houseplants/aglaonema-commutatum-alpine-spires.md#care-in-this-collection) records the glass jar, one-inch drainage hole, and exact substrate wording. Specimen photographs remain pending.
 
+**Origin and date for the book:** the nursery-labelled species is native to
+the **Philippines and Sulawesi** and was published in **1856**. This does not
+establish Alpine Spires' breeding origin, parentage, cultivar denomination, or
+introduction year. Sources: [Kew](https://powo.science.kew.org/taxon/84050-1)
+and the linked profile's nursery evidence. The plant is an ornamental arum;
+keep it away from chewing pets and children. [NParks' species record](https://www.nparks.gov.sg/florafaunaweb/flora/1/6/1611)
+documents the spadix/spathe flowers and ingestion hazard.
+
 ```text
 #15 | ALPINE SPIRES CHINESE EVERGREEN
-P41 | Aglaonema commutatum | NURSERY LABEL
-CHECK UPPER MIX AND DRAINAGE; IRRITATING IF CHEWED
+Aglaonema commutatum | NURSERY LABEL
+```
+
+```text
+NATIVE SPECIES: PHILIPPINES + SULAWESI
+DESC: 1856 | WARN: IRRITATING IF CHEWED
 ```
 
 The owner reports P41 on the **shelf next to the cacti table on the room side**, with P39 / #13 and P40 / #14, on November 4, 2026. Shelf geometry and leaf-level light remain unmeasured; this placement report does not confirm a repot or watering. The owner reported on November 4 that the move was five days earlier, approximately October 30; the time was not supplied.
