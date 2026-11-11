@@ -2,12 +2,11 @@
 
 ## Runtime/history
 
-- `.gs`: shared global scope, no Node/browser APIs. `Index.html` stays self-contained
-  unless `doGet()` gains templating. Keep `tsconfig.apps-script.json` ES2023,
-  `types/apps-script*.d.ts` aligned, and global/fixture checks.
-- Apps Script rejects numeric separators. Beyond typechecking, validate syntax/APIs
-  in a disposable bound script. Cycle generation uses `sort`/`reverse` instead of
-  `toSorted`/`toReversed` only on new arrays.
+- `.gs`: shared globals, no Node/browser APIs. Keep `Index.html` self-contained
+  unless templated by `doGet()`. Align ES2023 `tsconfig.apps-script.json`,
+  `types/apps-script*.d.ts`, global/fixture checks.
+- Apps Script rejects numeric separators. Validate syntax/APIs on a disposable
+  bound script. Cycles use `sort`/`reverse`, not `toSorted`/`toReversed`, on new arrays only.
 - History is append-only; distinguish observation/request/save/batch IDs.
   P Request ID groups save events for idempotent retries.
   Corrections preview one event, append replacement, mark its ancestor
@@ -33,12 +32,10 @@
   URLs, keep per-plant retries idempotent. Queue writes reload under a Web Lock
   through send/reconcile; fail closed without locks, preserving Save now.
   Drafts need Resume/Discard; pending-save recovery takes priority.
-- A missing History receipt or RPC failure does not prove a save stopped. Keep
-  its request ID on resume/retry; warn before explicitly discarding an unresolved
-  single or bulk request. Verify storage cleanup before clearing pending state.
-- Preserve incomplete date/time parts in ordinary drafts. Field errors remain
-  visible and linked to their controls; correction bounds match the server while
-  preserving supported zero, negative, fractional, and unchanged legacy values.
+- Missing receipts/RPC failures never release a pending retry ID. Warn before
+  unresolved Clear; verify storage removal before clearing pending state.
+- Preserve partial draft date/time and persistent linked errors. Correction bounds
+  match the server, including valid zero/signed/fractional/unchanged legacy values.
 - Preflight batches before mutation: 50,000 History slots (rows 2:50001).
   Align logger/`history-capacity-config.mjs`; migrate full-history projections before
   raising write limits. Retries need no slots.
@@ -83,9 +80,8 @@
 
 ## Presentation
 
-- Daily reports are archived, and the former Daily care sheet remains retired.
-  Exclude `installDailyCareDashboard()` from production/menus/refreshes/triggers.
-  Link current watering history to the watering map; do not restore report links.
+- Keep reports/Daily care retired and `installDailyCareDashboard()` out of
+  production/menus/refreshes/triggers. Link watering history to the watering map.
 - Preserve tab order/visibility/formatting/protections, hidden Quick log.
   Whole-sheet warnings must not block logger/AppSheet. RO refills: A20:I/K20:M
   editable, calculated J protected.
@@ -190,27 +186,25 @@
   bindings. Test empty-to-populated on a copy; reapply specs after real intervals
   if needed. No styling-only triggers.
 
-- Behavior/schema changes: run `npm run test:logger`, `npm run test:logger:coverage`,
-  `npm run check:logger`. Align server constants/row builders, client, tests/checker,
-  AppSheet staging/mappings, public parsers/CSV, and runbook.
-- For `.gs`: `npm run lint:apps-script`, `npm run typecheck:apps-script`.
-  Client changes: check inline HTML/styles/client tests.
-  Before deployment inspect synced artwork/published dependencies.
-- Before live writes, back up in native Drive; freshly read headers/formulas/
-  validations/last rows/request IDs/staging schemas/deployment/triggers.
-- Keep native before/after metadata/cells privately ignored. Rehearse structure in
-  native workbook/script copies; exactly compare History/staging/RO entries/formulas/
-  chart IDs/specs/positions/protections/relative tab order.
+- Behavior/schema: `npm run test:logger`, `npm run test:logger:coverage`,
+  `npm run check:logger`; align server constants/rows, client, tests/checker,
+  AppSheet staging/mappings, public parsers/CSV, runbook.
+- `.gs`: `npm run lint:apps-script`, `npm run typecheck:apps-script`.
+  Client: inline HTML/styles/tests. Inspect artwork/published dependencies before deployment.
+- Before writes: native Drive backup; fresh headers/formulas/validations/last rows/
+  request IDs/staging schemas/deployment/triggers.
+- Privately ignore native snapshots. Rehearse structure on native workbook/script
+  copies; compare History/staging/RO entries/formulas/chart IDs/specs/positions/
+  protections/relative tab order exactly.
 - Reject snapshots over 40,000,000 UTF-8 bytes. Before release verify representative
   full-scale native refresh duration/payload size/daily trigger-runtime quota headroom;
   local timing cannot prove these.
 - Drive copies include bound scripts; avoid competing functions. Never replay
   `sortSpecs` when extending History's BasicFilter: it re-sorts History.
-- Appended native columns inherit validation. Replace rules only in new ranges;
-  preserve existing-column validations.
+- Appended columns inherit validation; replace rules only in new ranges.
 - Run `installGardenLogger()`/`installAppSheetIntake()` only after source/tests agree.
 - `npm run apps-script:status`: only `plant-tracker.gs`, `Index.html`,
-  and `appsscript.json`. Source edits/`clasp push` do not update the versioned web app.
+  `appsscript.json`. Source/`clasp push` does not update the versioned web app.
 - Installers/queue-trigger reinstall: contract changes only. Verify
   `Connected · Logger <version>`, successful web-app/trigger executions,
   one five-minute `processQueuedAppSheetEntries` trigger.
