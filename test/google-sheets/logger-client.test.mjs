@@ -397,7 +397,13 @@ describe("garden logger observation times", () => {
 
             expect(saves).toHaveLength(0);
             expect(
-                queryElement(window.document, "#toast", HTMLElement).textContent
+                queryElement(
+                    window.document,
+                    mode === "bulk"
+                        ? "#bulkEntryValidation"
+                        : "#entryValidation",
+                    HTMLElement
+                ).textContent
             ).toContain("Choose a valid");
         }
     );
@@ -3439,6 +3445,290 @@ describe("saved History correction editor and durable recovery", () => {
     });
 });
 
+describe("correction numeric boundaries", () => {
+    afterEach(restoreLoggerMocks);
+
+    it("focuses a negative device VPD correction without rejecting a zero reading", () => {
+        expect.hasAssertions();
+
+        const { calls, context, window } = createCorrectionLogger("Other");
+        context.original.event = "Leaf VPD";
+        context.fields.push(correctionField("leafVpd", "number"));
+        context.original.values["leafVpd"] = 1;
+        context.original.values["leafVpdSource"] = "Device";
+        openFirstCorrection(window);
+        editCorrection(window, "leafVpd", "-1");
+        editCorrection(window, "reason", "Correct the device reading");
+        submitCorrectionReview(window);
+
+        expect(calls.map((call) => call.method)).not.toContain(
+            "previewWebObservationCorrection"
+        );
+        expect(window.document.activeElement).toBe(
+            queryElement(
+                window.document,
+                "#correctionField-leafVpd",
+                HTMLInputElement
+            )
+        );
+
+        editCorrection(window, "leafVpd", "0");
+        submitCorrectionReview(window);
+        const request = required(
+            calls.find(
+                (call) => call.method === "previewWebObservationCorrection"
+            )
+        );
+
+        expect(request.args[0].changes["leafVpd"]).toBe(0);
+    });
+
+    it("does not block a note-only correction on an unchanged historical numeric value", () => {
+        expect.hasAssertions();
+
+        const { calls, context, window } = createCorrectionLogger("Weigh");
+        context.original.values["weight"] = -2;
+        openFirstCorrection(window);
+        editCorrection(window, "notes", "Correct only the note");
+        editCorrection(
+            window,
+            "reason",
+            "Fix wording without rewriting evidence"
+        );
+        submitCorrectionReview(window);
+        const request = required(
+            calls.find(
+                (call) => call.method === "previewWebObservationCorrection"
+            )
+        );
+
+        expect(request.args[0].changes["notes"]).toBe("Correct only the note");
+        expect(request.args[0].changes).not.toHaveProperty("weight");
+    });
+
+    it.each([
+        [
+            "Weigh",
+            "weight",
+            "-2",
+        ],
+        [
+            "Weigh",
+            "weight",
+            "0",
+        ],
+        [
+            "Measure",
+            "heightCm",
+            "0",
+        ],
+        [
+            "Measure",
+            "widthCm",
+            "-1",
+        ],
+        [
+            "Water",
+            "waterAmount",
+            "0",
+        ],
+        [
+            "Mist",
+            "mistAmountMl",
+            "-1",
+        ],
+        [
+            "Flower",
+            "flowerCount",
+            "1.5",
+        ],
+        [
+            "Flower",
+            "flowerCount",
+            "0",
+        ],
+        [
+            "Rotation",
+            "rotationDegrees",
+            "361",
+        ],
+        [
+            "Rotation",
+            "rotationDegrees",
+            "0",
+        ],
+        [
+            "Temperature",
+            "temperatureC",
+            "-274",
+        ],
+        [
+            "Leaf VPD",
+            "leafTemperatureC",
+            "101",
+        ],
+        [
+            "Leaf VPD",
+            "leafAirTemperatureC",
+            "-51",
+        ],
+        [
+            "Leaf VPD",
+            "leafHumidity",
+            "101",
+        ],
+        [
+            "Humidity",
+            "relativeHumidity",
+            "-1",
+        ],
+        [
+            "Light",
+            "ppfd",
+            "-1",
+        ],
+        [
+            "Light",
+            "lux",
+            "-1",
+        ],
+    ])(
+        "rejects changed %s correction %s=%s locally and focuses the field",
+        (event, key, value) => {
+            expect.hasAssertions();
+
+            const { calls, context, window } = createCorrectionLogger("Other");
+            context.original.event = event;
+            context.fields.push(correctionField(key, "number"));
+            context.original.values[key] = 10;
+            openFirstCorrection(window);
+            editCorrection(window, key, value);
+            editCorrection(window, "reason", "Correct the numeric reading");
+            submitCorrectionReview(window);
+            const input = queryElement(
+                window.document,
+                `#correctionField-${key}`,
+                HTMLInputElement
+            );
+
+            expect(calls.map((call) => call.method)).not.toContain(
+                "previewWebObservationCorrection"
+            );
+            expect(window.document.activeElement).toBe(input);
+            expect(input.value).toBe(value);
+            expect(
+                queryElement(window.document, "#correctionStatus", HTMLElement)
+                    .textContent
+            ).toMatch(/must/v);
+            expect(
+                queryElement(window.document, "#correctionEditor", HTMLElement)
+                    .hidden
+            ).toBe(false);
+        }
+    );
+
+    it.each([
+        [
+            "Weigh",
+            "weight",
+            ".25",
+            0.25,
+        ],
+        [
+            "Measure",
+            "heightCm",
+            ".5",
+            0.5,
+        ],
+        [
+            "Water",
+            "waterAmount",
+            ".25",
+            0.25,
+        ],
+        [
+            "Flower",
+            "flowerCount",
+            "2",
+            2,
+        ],
+        [
+            "Rotation",
+            "rotationDegrees",
+            "360",
+            360,
+        ],
+        [
+            "Humidity",
+            "relativeHumidity",
+            "0",
+            0,
+        ],
+        [
+            "Light",
+            "lux",
+            "0",
+            0,
+        ],
+        [
+            "Water",
+            "waterAmount",
+            "",
+            "",
+        ],
+    ])(
+        "reviews valid %s correction %s=%s without narrowing accepted readings",
+        (event, key, value, expected) => {
+            expect.hasAssertions();
+
+            const { calls, window } = createCorrectionLogger(event);
+            openFirstCorrection(window);
+            editCorrection(window, key, value);
+            editCorrection(window, "reason", "Correct the reading");
+            submitCorrectionReview(window);
+            const request = required(
+                calls.find(
+                    (call) => call.method === "previewWebObservationCorrection"
+                )
+            );
+
+            expect(request.args[0].changes[key]).toBe(expected);
+        }
+    );
+
+    it("keeps canonical temperature and signed calculated VPD valid when correcting other fields", () => {
+        expect.hasAssertions();
+
+        const { calls, context, window } = createCorrectionLogger("Other");
+        context.original.event = "Leaf VPD";
+        context.fields.push(correctionField("leafTemperatureC", "number"));
+        Object.assign(context.original.values, {
+            leafAirTemperatureC: 20,
+            leafAirTemperatureUnit: "F",
+            leafHumidity: 100,
+            leafTemperatureC: -1,
+            leafTemperatureUnit: "F",
+            leafVpd: -1.77,
+            leafVpdSource: "Calculated",
+        });
+        openFirstCorrection(window);
+        editCorrection(window, "leafTemperatureC", "-2");
+        editCorrection(window, "reason", "Correct canonical Celsius reading");
+        submitCorrectionReview(window);
+        const request = required(
+            calls.find(
+                (call) => call.method === "previewWebObservationCorrection"
+            )
+        );
+
+        expect(structuredClone(request.args[0].changes)).toStrictEqual({
+            leafTemperatureC: -2,
+        });
+        expect(context.original.values["leafTemperatureUnit"]).toBe("F");
+        expect(context.original.values["leafVpd"]).toBe(-1.77);
+    });
+});
+
 describe("saved History correction immutable requests and receipts", () => {
     afterEach(restoreLoggerMocks);
 
@@ -5077,7 +5367,8 @@ describe("garden logger humidity observations", () => {
                 calls.some((call) => call.method === "saveWebObservation")
             ).toBe(false);
             expect(
-                queryElement(window.document, "#toast", HTMLElement).textContent
+                queryElement(window.document, "#entryValidation", HTMLElement)
+                    .textContent
             ).toMatch(/relative humidity/iv);
         }
     );
@@ -6136,7 +6427,7 @@ describe("garden logger single-save and watering-round recovery", () => {
         ).toBeNull();
     });
 
-    it("lets a confirmed failed entry be corrected without Clear entry", () => {
+    it("requires a warned discard before replacing an entry after a failure callback", () => {
         expect.hasAssertions();
 
         const { behaviors, calls, window } = createLoggerWindow();
@@ -6170,7 +6461,7 @@ describe("garden logger single-save and watering-round recovery", () => {
             window.localStorage.getItem("gardenLoggerPendingSaveV1")
         );
 
-        expect(failedPending["replaceable"]).toBe(true);
+        expect(failedPending["replaceable"]).not.toBe(true);
 
         weight.value = "425";
         weight.dispatchEvent(new window.Event("input", { bubbles: true }));
@@ -6181,10 +6472,31 @@ describe("garden logger single-save and watering-round recovery", () => {
             })
         );
 
+        expect(
+            calls.filter((call) => call.method === "saveWebObservation")
+        ).toHaveLength(1);
+
+        const confirm = vi.fn(() => true);
+        Object.defineProperty(window, "confirm", {
+            configurable: true,
+            value: confirm,
+        });
+        queryElement(
+            window.document,
+            "#clearButton",
+            HTMLButtonElement
+        ).click();
+        enterWorkflowValue(window, "weight", "425");
+        form.dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
         const saveCalls = calls.filter(
             (call) => call.method === "saveWebObservation"
         );
 
+        expect(confirm).toHaveBeenCalledWith(
+            expect.stringContaining("A late save could still appear in History")
+        );
         expect(saveCalls).toHaveLength(2);
         expect(required(saveCalls[1]).args[0].requestId).not.toBe(
             required(firstSave).args[0].requestId
@@ -6237,6 +6549,375 @@ describe("garden logger single-save and watering-round recovery", () => {
             )["replaceable"]
         ).not.toBe(true);
     });
+});
+
+describe("garden logger single-save and watering-round recovery safeguards", () => {
+    afterEach(restoreLoggerMocks);
+
+    it.each([
+        ["single", "focus"],
+        ["single", "visibilitychange"],
+        ["single", "pageshow"],
+        ["single", "online"],
+        ["bulk", "focus"],
+        ["bulk", "visibilitychange"],
+        ["bulk", "pageshow"],
+        ["bulk", "online"],
+    ])(
+        "keeps an unanswered %s request protected after %s",
+        (mode, eventName) => {
+            expect.hasAssertions();
+
+            vi.useFakeTimers();
+            const { behaviors, calls, window } = createLoggerWindow();
+            const method =
+                mode === "bulk"
+                    ? "saveBulkCareObservation"
+                    : "saveWebObservation";
+            behaviors[method] = () => {};
+            confirmSummarySave(window, mode);
+            const key =
+                mode === "bulk"
+                    ? "gardenLoggerBulkPendingV1"
+                    : "gardenLoggerPendingSaveV1";
+            const original = window.localStorage.getItem(key);
+            vi.advanceTimersByTime(20_000);
+            const checks = calls.filter(
+                (call) => call.method === "getWebSaveStatus"
+            ).length;
+            Object.defineProperty(window.document, "visibilityState", {
+                configurable: true,
+                value: "visible",
+            });
+            const eventTarget =
+                eventName === "visibilitychange" ? window.document : window;
+            eventTarget.dispatchEvent(new window.Event(eventName));
+            vi.advanceTimersByTime(350);
+
+            expect(
+                calls.filter((call) => call.method === "getWebSaveStatus")
+                    .length
+            ).toBeGreaterThan(checks);
+
+            const notes = queryElement(
+                window.document,
+                mode === "bulk" ? "#bulkNotes" : "#notes",
+                HTMLTextAreaElement
+            );
+            notes.value = "Changed while the original is unresolved";
+            notes.dispatchEvent(new window.Event("input", { bubbles: true }));
+            queryElement(
+                window.document,
+                mode === "bulk" ? "#bulkWaterForm" : "#entryForm",
+                HTMLFormElement
+            ).dispatchEvent(
+                new window.Event("submit", { bubbles: true, cancelable: true })
+            );
+
+            expect(calls.filter((call) => call.method === method)).toHaveLength(
+                1
+            );
+            expect(window.localStorage.getItem(key)).toBe(original);
+        }
+    );
+
+    it.each(["single", "bulk"])(
+        "does not trust a legacy replaceable flag on a recovered %s request",
+        (mode) => {
+            expect.hasAssertions();
+
+            const original = createLoggerWindow();
+            const method =
+                mode === "bulk"
+                    ? "saveBulkCareObservation"
+                    : "saveWebObservation";
+            original.behaviors[method] = () => {};
+            confirmSummarySave(original.window, mode);
+            const key =
+                mode === "bulk"
+                    ? "gardenLoggerBulkPendingV1"
+                    : "gardenLoggerPendingSaveV1";
+            const pending = parseStoredRecord(
+                original.window.localStorage.getItem(key)
+            );
+            pending["replaceable"] = true;
+            const { calls, window } = createLoggerWindow({
+                storage: { [key]: JSON.stringify(pending) },
+            });
+            queryElement(
+                window.document,
+                mode === "bulk" ? "#bulkNotes" : "#notes",
+                HTMLTextAreaElement
+            ).value = "Different entry";
+            queryElement(
+                window.document,
+                mode === "bulk" ? "#bulkWaterForm" : "#entryForm",
+                HTMLFormElement
+            ).dispatchEvent(
+                new window.Event("submit", { bubbles: true, cancelable: true })
+            );
+
+            expect(calls.filter((call) => call.method === method)).toHaveLength(
+                0
+            );
+            expect(
+                parseStoredRecord(window.localStorage.getItem(key))["requestId"]
+            ).toBe(pending["requestId"]);
+        }
+    );
+
+    it("does not queue a replacement for a legacy replaceable pending request", () => {
+        expect.hasAssertions();
+
+        const original = createLoggerWindow();
+        original.behaviors.saveWebObservation = () => {};
+        confirmSummarySave(original.window, "single");
+        const key = "gardenLoggerPendingSaveV1";
+        const pending = parseStoredRecord(
+            original.window.localStorage.getItem(key)
+        );
+        pending["replaceable"] = true;
+        const { window } = createLoggerWindow({
+            storage: { [key]: JSON.stringify(pending) },
+        });
+        queryElement(window.document, "#notes", HTMLTextAreaElement).value =
+            "Different entry";
+        queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        ).toBeNull();
+        expect(
+            parseStoredRecord(window.localStorage.getItem(key))["requestId"]
+        ).toBe(pending["requestId"]);
+    });
+
+    it.each(["single", "bulk"])(
+        "retains the exact pending %s request when warned discard is canceled",
+        (mode) => {
+            expect.hasAssertions();
+
+            vi.useFakeTimers();
+            const { behaviors, window } = createLoggerWindow();
+            const method =
+                mode === "bulk"
+                    ? "saveBulkCareObservation"
+                    : "saveWebObservation";
+            behaviors[method] = () => {};
+            confirmSummarySave(window, mode);
+            vi.advanceTimersByTime(20_000);
+            const key =
+                mode === "bulk"
+                    ? "gardenLoggerBulkPendingV1"
+                    : "gardenLoggerPendingSaveV1";
+            const original = window.localStorage.getItem(key);
+            const confirm = vi.fn(() => false);
+            Object.defineProperty(window, "confirm", {
+                configurable: true,
+                value: confirm,
+            });
+            queryElement(
+                window.document,
+                mode === "bulk" ? "#bulkResetButton" : "#clearButton",
+                HTMLButtonElement
+            ).click();
+
+            expect(confirm).toHaveBeenCalledExactlyOnceWith(
+                mode === "bulk"
+                    ? "This bulk-care round may still be finishing in the spreadsheet. Clear it anyway? A late save could still appear in History."
+                    : "This entry may still be finishing in the spreadsheet. Clear it anyway? A late save could still appear in History."
+            );
+            expect(window.localStorage.getItem(key)).toBe(original);
+            expect(
+                mode === "bulk"
+                    ? queryElement(window.document, "#bulkCount", HTMLElement)
+                          .textContent
+                    : queryElement(window.document, "#weight", HTMLInputElement)
+                          .value
+            ).toBe(mode === "bulk" ? "1 selected" : "450");
+        }
+    );
+
+    it.each(["throw", "no-op"])(
+        "keeps single-save retry identity after successful-save cleanup %s",
+        (fault) => {
+            expect.hasAssertions();
+
+            const { behaviors, calls, window } = createLoggerWindow();
+            /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"saveWebObservation">[]} */
+            const saves = [];
+            behaviors.saveWebObservation = (handlers) => {
+                saves.push(handlers);
+            };
+            confirmSummarySave(window, "single");
+            const key = "gardenLoggerPendingSaveV1";
+            const original = window.localStorage.getItem(key);
+            const remove = window.localStorage.removeItem.bind(
+                window.localStorage
+            );
+            const cleanup = vi
+                .spyOn(window.localStorage, "removeItem")
+                .mockImplementation((name) => {
+                    if (name !== key) {
+                        remove(name);
+                        return;
+                    }
+                    if (fault === "throw")
+                        throw new Error("Storage access failed");
+                });
+            required(saves[0]).success({ message: "Saved" });
+
+            expect(window.localStorage.getItem(key)).toBe(original);
+            expect(
+                queryElement(window.document, "#weight", HTMLInputElement).value
+            ).toBe("450");
+            expect(
+                queryElement(window.document, "#toast", HTMLElement).textContent
+            ).toContain("reached History");
+
+            cleanup.mockRestore();
+            const confirm = vi.fn(() => false);
+            Object.defineProperty(window, "confirm", {
+                configurable: true,
+                value: confirm,
+            });
+            queryElement(
+                window.document,
+                "#entryForm",
+                HTMLFormElement
+            ).dispatchEvent(
+                new window.Event("submit", { bubbles: true, cancelable: true })
+            );
+
+            expect(saves).toHaveLength(2);
+            expect(required(saves[1]).args[0].requestId).toBe(
+                required(saves[0]).args[0].requestId
+            );
+
+            required(saves[1]).success({ message: "Saved" });
+
+            expect(confirm).not.toHaveBeenCalled();
+            expect(window.localStorage.getItem(key)).toBeNull();
+            expect(
+                queryElement(window.document, "#weight", HTMLInputElement).value
+            ).toBe("");
+            expect(
+                calls.filter((call) => call.method === "saveWebObservation")
+            ).toHaveLength(2);
+        }
+    );
+
+    it.each(["throw", "no-op"])(
+        "keeps single pending state when explicit clear cleanup fails: %s",
+        (fault) => {
+            expect.hasAssertions();
+
+            vi.useFakeTimers();
+            const { behaviors, calls, window } = createLoggerWindow();
+            behaviors.saveWebObservation = () => {};
+            confirmSummarySave(window, "single");
+            vi.advanceTimersByTime(20_000);
+            const key = "gardenLoggerPendingSaveV1";
+            const original = window.localStorage.getItem(key);
+            const remove = window.localStorage.removeItem.bind(
+                window.localStorage
+            );
+            const cleanup = vi
+                .spyOn(window.localStorage, "removeItem")
+                .mockImplementation((name) => {
+                    if (name !== key) {
+                        remove(name);
+                        return;
+                    }
+                    if (fault === "throw")
+                        throw new Error("Storage access failed");
+                });
+            Object.defineProperty(window, "confirm", {
+                configurable: true,
+                value: () => true,
+            });
+            queryElement(
+                window.document,
+                "#clearButton",
+                HTMLButtonElement
+            ).click();
+
+            expect(window.localStorage.getItem(key)).toBe(original);
+            expect(
+                queryElement(window.document, "#weight", HTMLInputElement).value
+            ).toBe("450");
+
+            cleanup.mockRestore();
+            confirmSummarySave(window, "single");
+            const saves = calls.filter(
+                (call) => call.method === "saveWebObservation"
+            );
+
+            expect(saves).toHaveLength(2);
+            expect(required(saves[1]).args[0].requestId).toBe(
+                required(saves[0]).args[0].requestId
+            );
+        }
+    );
+
+    it("cleans up a confirmed bulk request once before resetting its form", () => {
+        expect.hasAssertions();
+
+        const { behaviors, calls, window } = createLoggerWindow();
+        /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"saveBulkCareObservation">[]} */
+        const saves = [];
+        behaviors.saveBulkCareObservation = (handlers) => {
+            saves.push(handlers);
+        };
+        confirmSummarySave(window, "bulk");
+        const key = "gardenLoggerBulkPendingV1";
+        const remove = window.localStorage.removeItem.bind(window.localStorage);
+        let pendingRemovals = 0;
+        vi.spyOn(window.localStorage, "removeItem").mockImplementation(
+            (name) => {
+                if (name === key) {
+                    pendingRemovals += 1;
+                    if (pendingRemovals > 1)
+                        throw new Error("Storage access failed after cleanup");
+                }
+                remove(name);
+            }
+        );
+        const confirm = vi.fn(() => false);
+        Object.defineProperty(window, "confirm", {
+            configurable: true,
+            value: confirm,
+        });
+
+        required(saves[0]).success({ message: "Saved" });
+
+        expect(pendingRemovals).toBe(1);
+        expect(confirm).not.toHaveBeenCalled();
+        expect(window.localStorage.getItem(key)).toBeNull();
+        expect(
+            queryElement(window.document, "#bulkCount", HTMLElement).textContent
+        ).toBe("0 selected");
+
+        queryElement(
+            window.document,
+            "#bulkWaterForm",
+            HTMLFormElement
+        ).dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
+
+        expect(
+            calls.filter((call) => call.method === "saveBulkCareObservation")
+        ).toHaveLength(1);
+    });
+});
+
+describe("garden logger single-save and watering-round recovery for bulk requests", () => {
+    afterEach(restoreLoggerMocks);
 
     it("also releases and reconciles a hanging watering-round save", () => {
         expect.hasAssertions();
@@ -6317,7 +6998,7 @@ describe("garden logger single-save and watering-round recovery", () => {
         ).toHaveLength(1);
     });
 
-    it("lets a confirmed failed watering round be corrected", () => {
+    it("requires a warned discard before replacing a watering round after a failure callback", () => {
         expect.hasAssertions();
 
         const { behaviors, calls, window } = createLoggerWindow();
@@ -6358,7 +7039,7 @@ describe("garden logger single-save and watering-round recovery", () => {
             window.localStorage.getItem("gardenLoggerBulkPendingV1")
         );
 
-        expect(failedPending["replaceable"]).toBe(true);
+        expect(failedPending["replaceable"]).not.toBe(true);
 
         queryElement(window.document, "#bulkNotes", HTMLTextAreaElement).value =
             "Corrected round";
@@ -6369,10 +7050,34 @@ describe("garden logger single-save and watering-round recovery", () => {
             })
         );
 
+        expect(
+            calls.filter((call) => call.method === "saveBulkCareObservation")
+        ).toHaveLength(1);
+
+        const confirm = vi.fn(() => true);
+        Object.defineProperty(window, "confirm", {
+            configurable: true,
+            value: confirm,
+        });
+        queryElement(
+            window.document,
+            "#bulkResetButton",
+            HTMLButtonElement
+        ).click();
+        checkbox.checked = true;
+        checkbox.dispatchEvent(new window.Event("change", { bubbles: true }));
+        queryElement(window.document, "#bulkNotes", HTMLTextAreaElement).value =
+            "Corrected round";
+        form.dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
         const saveCalls = calls.filter(
             (call) => call.method === "saveBulkCareObservation"
         );
 
+        expect(confirm).toHaveBeenCalledWith(
+            expect.stringContaining("A late save could still appear in History")
+        );
         expect(saveCalls).toHaveLength(2);
         expect(required(saveCalls[1]).args[0].requestId).not.toBe(
             required(saveCalls[0]).args[0].requestId
@@ -12773,7 +13478,8 @@ describe("garden logger Inspect and Light entries", () => {
             window.localStorage.getItem("gardenLoggerObservationQueueV1")
         ).toBeNull();
         expect(
-            queryElement(window.document, "#toast", HTMLElement).textContent
+            queryElement(window.document, "#entryValidation", HTMLElement)
+                .textContent
         ).toContain("observed plant condition");
 
         queryElement(
@@ -13003,7 +13709,8 @@ describe("garden logger Inspect and Light entries", () => {
                 calls.some((call) => call.method === "saveWebObservation")
             ).toBe(false);
             expect(
-                queryElement(window.document, "#toast", HTMLElement).textContent
+                queryElement(window.document, "#entryValidation", HTMLElement)
+                    .textContent
             ).toMatch(/PPFD/v);
         }
     );
@@ -13757,7 +14464,8 @@ describe("garden logger expanded care events", () => {
 
         expect(queue(window)).toStrictEqual([]);
         expect(
-            queryElement(window.document, "#toast", HTMLElement).textContent
+            queryElement(window.document, "#entryValidation", HTMLElement)
+                .textContent
         ).toContain("Choose where");
 
         queryElement(
@@ -13771,7 +14479,8 @@ describe("garden logger expanded care events", () => {
             false
         );
         expect(
-            queryElement(window.document, "#toast", HTMLElement).textContent
+            queryElement(window.document, "#entryValidation", HTMLElement)
+                .textContent
         ).toContain("other area");
     });
 
@@ -13841,7 +14550,8 @@ describe("garden logger expanded care events", () => {
             false
         );
         expect(
-            queryElement(window.document, "#toast", HTMLElement).textContent
+            queryElement(window.document, "#entryValidation", HTMLElement)
+                .textContent
         ).toContain("air or soil");
     });
 
@@ -14562,6 +15272,27 @@ describe("ordinary unsent entry recovery", () => {
                     HTMLElement
                 ).hidden
             ).toBe(false);
+
+            queryElement(
+                fixed.window.document,
+                "#entryDraftResume",
+                HTMLButtonElement
+            ).click();
+
+            expect(
+                queryElement(
+                    fixed.window.document,
+                    mode === "bulk" ? "#bulkObservedAtDate" : "#observedAtDate",
+                    HTMLInputElement
+                ).value
+            ).toBe("2026-10-22");
+            expect(
+                queryElement(
+                    fixed.window.document,
+                    mode === "bulk" ? "#bulkObservedAtTime" : "#observedAtTime",
+                    HTMLInputElement
+                ).value
+            ).toBe("19:15");
         }
     );
 
@@ -14745,6 +15476,137 @@ describe("ordinary unsent entry recovery", () => {
             reloaded.calls.some((call) => call.method.startsWith("save"))
         ).toBe(false);
         expect(ordinaryDraftKeys(reloaded.window)).toHaveLength(1);
+    });
+
+    it.each([
+        [
+            "single",
+            "observedAt",
+            "2026-11-09",
+            "",
+        ],
+        [
+            "single",
+            "observedAt",
+            "",
+            "18:45",
+        ],
+        [
+            "bulk",
+            "bulkObservedAt",
+            "2026-11-09",
+            "",
+        ],
+        [
+            "bulk",
+            "bulkObservedAt",
+            "",
+            "18:45",
+        ],
+    ])(
+        "restores an unfinished %s split date %s (%s / %s)",
+        (mode, id, date, time) => {
+            expect.hasAssertions();
+
+            const first = createLoggerWindow();
+            queryElement(
+                first.window.document,
+                mode === "bulk" ? "#bulkModeTab" : "#singleModeTab",
+                HTMLButtonElement
+            ).click();
+            const dateInput = queryElement(
+                first.window.document,
+                `#${id}Date`,
+                HTMLInputElement
+            );
+            const timeInput = queryElement(
+                first.window.document,
+                `#${id}Time`,
+                HTMLInputElement
+            );
+            dateInput.value = date;
+            timeInput.value = time;
+            timeInput.dispatchEvent(
+                new first.window.Event("input", { bubbles: true })
+            );
+            const reloaded = createLoggerWindow({
+                storage: copyLoggerStorage(first.window),
+            });
+            queryElement(
+                reloaded.window.document,
+                "#entryDraftResume",
+                HTMLButtonElement
+            ).click();
+
+            expect(
+                queryElement(
+                    reloaded.window.document,
+                    `#${id}Date`,
+                    HTMLInputElement
+                ).value
+            ).toBe(date);
+            expect(
+                queryElement(
+                    reloaded.window.document,
+                    `#${id}Time`,
+                    HTMLInputElement
+                ).value
+            ).toBe(time);
+            expect(
+                queryElement(
+                    reloaded.window.document,
+                    `#${id}`,
+                    HTMLInputElement
+                ).value
+            ).toBe("");
+            expect(
+                reloaded.calls.some((call) => call.method.startsWith("save"))
+            ).toBe(false);
+        }
+    );
+
+    it("retains edits to the surviving part of an incomplete observation time", () => {
+        expect.hasAssertions();
+
+        const first = createLoggerWindow();
+        const date = queryElement(
+            first.window.document,
+            "#observedAtDate",
+            HTMLInputElement
+        );
+        const time = queryElement(
+            first.window.document,
+            "#observedAtTime",
+            HTMLInputElement
+        );
+        date.value = "2026-11-09";
+        time.value = "";
+        time.dispatchEvent(new first.window.Event("input", { bubbles: true }));
+        date.value = "2026-11-08";
+        date.dispatchEvent(new first.window.Event("input", { bubbles: true }));
+        const reloaded = createLoggerWindow({
+            storage: copyLoggerStorage(first.window),
+        });
+        queryElement(
+            reloaded.window.document,
+            "#entryDraftResume",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(
+                reloaded.window.document,
+                "#observedAtDate",
+                HTMLInputElement
+            ).value
+        ).toBe("2026-11-08");
+        expect(
+            queryElement(
+                reloaded.window.document,
+                "#observedAtTime",
+                HTMLInputElement
+            ).value
+        ).toBe("");
     });
 
     it("preserves automatic observation time instead of fixing it to the old draft time", () => {
@@ -15411,7 +16273,8 @@ describe("leaf VPD entry and history capacity", () => {
             )
         ).toHaveLength(0);
         expect(
-            queryElement(window.document, "#toast", HTMLElement).textContent
+            queryElement(window.document, "#entryValidation", HTMLElement)
+                .textContent
         ).toContain("paired air temperature");
 
         enterWorkflowValue(window, "leafHumidity", "");

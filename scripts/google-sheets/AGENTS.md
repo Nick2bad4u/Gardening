@@ -33,6 +33,12 @@
   URLs, keep per-plant retries idempotent. Queue writes reload under a Web Lock
   through send/reconcile; fail closed without locks, preserving Save now.
   Drafts need Resume/Discard; pending-save recovery takes priority.
+- A missing History receipt or RPC failure does not prove a save stopped. Keep
+  its request ID on resume/retry; warn before explicitly discarding an unresolved
+  single or bulk request. Verify storage cleanup before clearing pending state.
+- Preserve incomplete date/time parts in ordinary drafts. Field errors remain
+  visible and linked to their controls; correction bounds match the server while
+  preserving supported zero, negative, fractional, and unchanged legacy values.
 - Preflight batches before mutation: 50,000 History slots (rows 2:50001).
   Align logger/`history-capacity-config.mjs`; migrate full-history projections before
   raising write limits. Retries need no slots.

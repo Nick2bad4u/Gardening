@@ -2456,9 +2456,18 @@
             .queue-tools,
             .queue-item {
                 display: flex;
+                flex-wrap: wrap;
                 gap: 10px;
                 align-items: center;
                 justify-content: space-between;
+                min-inline-size: 0;
+            }
+
+            .queue-header > div,
+            .queue-main {
+                flex: 1 1 12rem;
+                min-inline-size: 0;
+                overflow-wrap: anywhere;
             }
 
             .queue-count {
@@ -2521,8 +2530,13 @@
 
             .queue-tools .primary,
             .queue-tools .secondary {
+                flex: 1 1 auto;
+                min-inline-size: 0;
+                max-inline-size: 100%;
                 min-block-size: 44px;
                 padding: 8px 13px;
+                overflow-wrap: anywhere;
+                white-space: normal;
             }
 
             .actions {
@@ -2542,6 +2556,12 @@
                 border-radius: 18px;
                 /* stylelint-disable-next-line css-performance-budget/no-expensive-positioning-patterns -- One bounded action-bar shadow; touch devices use normal document flow. */
                 box-shadow: 0 -8px 22px rgb(24 61 38 / 0.08);
+
+                & .primary,
+                & .secondary {
+                    min-inline-size: 0;
+                    overflow-wrap: anywhere;
+                }
             }
 
             /*
@@ -2607,6 +2627,32 @@
                 color: var(--forest-2);
                 background: transparent;
                 border: 0;
+            }
+
+            .entry-validation {
+                padding: 10px 12px;
+                margin-block: 10px;
+                line-height: 1.5;
+                color: #94342e;
+                overflow-wrap: anywhere;
+                background: color-mix(
+                    in srgb,
+                    var(--danger) 8%,
+                    var(--control)
+                );
+                border: 1px solid var(--danger);
+                border-inline-start-width: 4px;
+                border-radius: 10px;
+
+                :root[data-theme="dark"] & {
+                    color: #ffb4ac;
+                }
+            }
+
+            .entry-invalid {
+                outline: 2px solid var(--danger);
+                outline-offset: 2px;
+                border-color: var(--danger);
             }
 
             .recent-list {
@@ -3256,10 +3302,13 @@
                 border: 0;
             }
             .mist-target-grid {
+                --mist-target-minimum: min(100%, max(4.5rem, 30%));
+
                 display: grid;
                 grid-template-columns: repeat(
-                    3,
-                    [target-start] minmax(0, 1fr) [target-end]
+                    auto-fit,
+                    [target-start] minmax(var(--mist-target-minimum), 1fr)
+                        [target-end]
                 );
                 gap: 6px;
             }
@@ -3268,9 +3317,11 @@
                 flex-direction: column;
                 gap: 6px;
                 align-items: center;
+                min-inline-size: 0;
                 padding: 8px 4px;
                 font-size: 0.875rem;
                 text-align: center;
+                overflow-wrap: anywhere;
                 border: 1px solid var(--line);
                 border-radius: 10px;
                 & input {
@@ -17772,6 +17823,14 @@
                     ),
                     time: {
                         mode: $(timeId).dataset.timeMode || "now",
+                        dateValue:
+                            $(timeId).dataset.timeMode === "fixed"
+                                ? $(`${timeId}Date`).value
+                                : "",
+                        timeValue:
+                            $(timeId).dataset.timeMode === "fixed"
+                                ? $(`${timeId}Time`).value
+                                : "",
                         value:
                             $(timeId).dataset.timeMode === "fixed"
                                 ? $(timeId).value
@@ -17815,7 +17874,13 @@
                     ),
                     time:
                         time.mode === "now"
-                            ? { ...time, value: "", instant: "" }
+                            ? {
+                                  ...time,
+                                  dateValue: "",
+                                  timeValue: "",
+                                  value: "",
+                                  instant: "",
+                              }
                             : time,
                 };
             }
@@ -17837,7 +17902,14 @@
                             ].includes(key)
                     ) ||
                     Object.keys(snapshot.time).some(
-                        (key) => !["mode", "value", "instant"].includes(key)
+                        (key) =>
+                            ![
+                                "mode",
+                                "value",
+                                "instant",
+                                "dateValue",
+                                "timeValue",
+                            ].includes(key)
                     )
                 )
                     return false;
@@ -18086,6 +18158,15 @@
                         $(timeId).dataset.timeValue = snapshot.time.value;
                         $(timeId).dataset.timeInstant = snapshot.time.instant;
                         syncObservationTimeParts(timeId);
+                        // Older drafts retain only the combined value. New
+                        // drafts also preserve an unfinished date/time edit.
+                        if (
+                            typeof snapshot.time.dateValue === "string" &&
+                            typeof snapshot.time.timeValue === "string"
+                        ) {
+                            $(`${timeId}Date`).value = snapshot.time.dateValue;
+                            $(`${timeId}Time`).value = snapshot.time.timeValue;
+                        }
                         renderObservationTimeHint(timeId);
                     }
                     if (bulk) {
@@ -18529,11 +18610,15 @@
                         value <= 0 ||
                         !amount
                     )
-                        throw new Error(
-                            "Enter a nutrient dose greater than zero and choose its units."
+                        throw entryValidationError(
+                            "Enter a nutrient dose greater than zero and choose its units.",
+                            ["nutrientDose", "nutrientUnit"]
                         );
                 } else if (!amount)
-                    throw new Error("Describe the nutrient amount and units.");
+                    throw entryValidationError(
+                        "Describe the nutrient amount and units.",
+                        ["nutrientAmount"]
+                    );
             }
 
             function applyNutrientState(values = {}, prefix = "") {
@@ -18743,6 +18828,156 @@
                 return value === null || value === undefined
                     ? ""
                     : String(value);
+            }
+
+            const entryValidation = new Map();
+
+            function entryValidationError(message, fields = []) {
+                return Object.assign(new Error(message), {
+                    entryFields: fields,
+                });
+            }
+
+            function entryValidationControlVisible(control) {
+                return !control.closest("[hidden], .conditional:not(.visible)");
+            }
+
+            function entryValidationControls(fields, mode) {
+                const prefix = mode === "bulk" ? "bulk" : "";
+                return fields.flatMap((field) => {
+                    let selector;
+                    if (field === "plantId")
+                        selector = "#plantChoiceSummary, #labelPicker button";
+                    else if (field === "plantIds")
+                        selector =
+                            "#bulkPlantList input, #bulkPlantList button";
+                    else if (field === "events")
+                        selector = `#${prefix ? "bulkEventChips" : "eventChips"} button`;
+                    else if (field === "observedAt") {
+                        const parts = ["Date", "Time"].map((part) =>
+                            $(`${careFieldId(field, prefix)}${part}`)
+                        );
+                        const invalid = parts.filter(
+                            (control) =>
+                                !control.value || !control.validity.valid
+                        );
+                        return invalid.length ? invalid : parts;
+                    } else if (field === "mistTargets")
+                        selector = `#${careFieldId(field, prefix)} input`;
+                    else if (field === "nutrientAmount")
+                        selector = [
+                            "nutrientAmount",
+                            "nutrientDose",
+                            "nutrientUnit",
+                        ]
+                            .map((key) => `#${careFieldId(key, prefix)}`)
+                            .join(", ");
+                    else selector = `#${careFieldId(field, prefix)}`;
+                    return [...document.querySelectorAll(selector)].filter(
+                        entryValidationControlVisible
+                    );
+                });
+            }
+
+            function clearEntryValidation(mode = "single") {
+                const previous = entryValidation.get(mode);
+                if (!previous) return;
+                previous.controls.forEach((control) => {
+                    control.classList.remove("entry-invalid");
+                    control.removeAttribute("aria-invalid");
+                    const descriptions = (
+                        control.getAttribute("aria-describedby") || ""
+                    )
+                        .split(/\s+/)
+                        .filter((id) => id && id !== previous.feedback.id);
+                    if (descriptions.length)
+                        control.setAttribute(
+                            "aria-describedby",
+                            descriptions.join(" ")
+                        );
+                    else control.removeAttribute("aria-describedby");
+                });
+                previous.feedback.remove();
+                entryValidation.delete(mode);
+            }
+
+            function showEntryValidation(error, mode = "single", focus = true) {
+                clearEntryValidation(mode);
+                const fields = Array.isArray(error?.entryFields)
+                    ? error.entryFields
+                    : [];
+                const controls = [
+                    ...new Set(entryValidationControls(fields, mode)),
+                ];
+                const form = $(mode === "bulk" ? "bulkWaterForm" : "entryForm");
+                const feedback = document.createElement("div");
+                feedback.id =
+                    mode === "bulk" ? "bulkEntryValidation" : "entryValidation";
+                feedback.className = "entry-validation";
+                feedback.setAttribute("role", "alert");
+                feedback.tabIndex = -1;
+                feedback.textContent = error?.message || String(error);
+                const first = controls.find((control) => !control.disabled);
+                const anchor =
+                    first?.closest(
+                        ".field, fieldset, .chips, .plant-choice-menu, .bulk-list, .label-picker, .observation-time-control"
+                    ) ||
+                    first ||
+                    form.querySelector(".actions");
+                if (anchor) anchor.after(feedback);
+                else form.prepend(feedback);
+                controls.forEach((control) => {
+                    control.classList.add("entry-invalid");
+                    control.setAttribute("aria-invalid", "true");
+                    const descriptions = (
+                        control.getAttribute("aria-describedby") || ""
+                    )
+                        .split(/\s+/)
+                        .filter(Boolean);
+                    descriptions.push(feedback.id);
+                    control.setAttribute(
+                        "aria-describedby",
+                        descriptions.join(" ")
+                    );
+                });
+                entryValidation.set(mode, { controls, feedback, fields });
+                if (focus) (first || feedback).focus();
+            }
+
+            function refreshEntryValidation(mode, event) {
+                const previous = entryValidation.get(mode);
+                if (!previous || !previous.fields.length) return;
+                if (
+                    previous.controls.length &&
+                    previous.controls.every(
+                        (control) => !entryValidationControlVisible(control)
+                    )
+                ) {
+                    clearEntryValidation(mode);
+                    return;
+                }
+                if (
+                    !previous.controls.some(
+                        (control) =>
+                            control === event.target ||
+                            control.contains(event.target)
+                    )
+                )
+                    return;
+                try {
+                    if (mode === "bulk") validateCheckDetails(bulkPayload());
+                    else validateQueuedPayload(payloadFromForm());
+                    clearEntryValidation(mode);
+                } catch (error) {
+                    if (
+                        error.entryFields?.some((field) =>
+                            previous.fields.includes(field)
+                        )
+                    )
+                        showEntryValidation(error, mode, false);
+                    else if (Array.isArray(error.entryFields))
+                        clearEntryValidation(mode);
+                }
             }
 
             function showToast(message, isError = false, duration = 4200) {
@@ -19038,7 +19273,7 @@
                 const has = (event) => payload.events.includes(event);
                 const required = (key, message) => {
                     if (!String(payload[key] ?? "").trim())
-                        throw new Error(message);
+                        throw entryValidationError(message, [key]);
                 };
                 if (has("Mist")) {
                     const targets = String(payload.mistTargets || "")
@@ -19049,7 +19284,9 @@
                         !targets.length ||
                         targets.some((target) => !MIST_TARGETS.includes(target))
                     )
-                        throw new Error("Choose where you misted.");
+                        throw entryValidationError("Choose where you misted.", [
+                            "mistTargets",
+                        ]);
                     if (targets.includes("Other"))
                         required(
                             "mistDetails",
@@ -19060,26 +19297,37 @@
                         (!Number.isFinite(Number(payload.mistAmountMl)) ||
                             Number(payload.mistAmountMl) <= 0)
                     )
-                        throw new Error(
-                            "Mist amount must be a positive number of milliliters."
+                        throw entryValidationError(
+                            "Mist amount must be a positive number of milliliters.",
+                            ["mistAmountMl"]
                         );
                 }
                 if (has("Move")) required("moveTo", "Enter the new location.");
                 if (has("Temperature")) {
                     required("temperature", "Enter the temperature reading.");
                     if (!Number.isFinite(Number(payload.temperature)))
-                        throw new Error("Temperature must be a finite number.");
+                        throw entryValidationError(
+                            "Temperature must be a finite number.",
+                            ["temperature"]
+                        );
                     if (!["C", "F"].includes(payload.temperatureUnit))
-                        throw new Error("Choose Celsius or Fahrenheit.");
+                        throw entryValidationError(
+                            "Choose Celsius or Fahrenheit.",
+                            ["temperatureUnit"]
+                        );
                     if (!["Air", "Soil"].includes(payload.temperatureTarget))
-                        throw new Error("Choose air or soil temperature.");
+                        throw entryValidationError(
+                            "Choose air or soil temperature.",
+                            ["temperatureTarget"]
+                        );
                     const celsius =
                         payload.temperatureUnit === "F"
                             ? ((Number(payload.temperature) - 32) * 5) / 9
                             : Number(payload.temperature);
                     if (celsius < -273.15)
-                        throw new Error(
-                            "Temperature cannot be below absolute zero."
+                        throw entryValidationError(
+                            "Temperature cannot be below absolute zero.",
+                            ["temperature"]
                         );
                 }
                 if (has("Environment")) {
@@ -19092,8 +19340,9 @@
                             "Other",
                         ].includes(payload.environmentAspect)
                     )
-                        throw new Error(
-                            "Choose what changed in the environment."
+                        throw entryValidationError(
+                            "Choose what changed in the environment.",
+                            ["environmentAspect"]
                         );
                     required(
                         "environmentTo",
@@ -19111,7 +19360,10 @@
                             "Other",
                         ].includes(payload.propagationMethod)
                     )
-                        throw new Error("Choose the propagation method.");
+                        throw entryValidationError(
+                            "Choose the propagation method.",
+                            ["propagationMethod"]
+                        );
                     required(
                         "propagationDetails",
                         "Describe what you propagated."
@@ -19123,7 +19375,10 @@
                             payload.supportAction
                         )
                     )
-                        throw new Error("Choose the support action.");
+                        throw entryValidationError(
+                            "Choose the support action.",
+                            ["supportAction"]
+                        );
                     required("supportDetails", "Describe the support change.");
                 }
                 if (has("Leaf VPD")) validateLeafVpdDetails(payload);
@@ -19142,8 +19397,9 @@
                 if (
                     !["Device", "Calculated", "Not calculated"].includes(source)
                 )
-                    throw new Error(
-                        "Choose how the leaf VPD reading was obtained."
+                    throw entryValidationError(
+                        "Choose how the leaf VPD reading was obtained.",
+                        ["leafVpdSource"]
                     );
                 if (source === "Device") {
                     if (
@@ -19151,18 +19407,23 @@
                         !Number.isFinite(Number(payload.leafVpd)) ||
                         Number(payload.leafVpd) < 0
                     )
-                        throw new Error(
-                            "Enter the device's nonnegative VPD reading in kPa."
+                        throw entryValidationError(
+                            "Enter the device's nonnegative VPD reading in kPa.",
+                            ["leafVpd"]
                         );
                 } else {
                     if (!present("leafTemperature"))
-                        throw new Error("Enter the leaf temperature reading.");
+                        throw entryValidationError(
+                            "Enter the leaf temperature reading.",
+                            ["leafTemperature"]
+                        );
                     if (
                         present("leafAirTemperature") !==
                         present("leafHumidity")
                     )
-                        throw new Error(
-                            "Enter paired air temperature and humidity together, or leave both blank for a leaf-temperature-only observation."
+                        throw entryValidationError(
+                            "Enter paired air temperature and humidity together, or leave both blank for a leaf-temperature-only observation.",
+                            ["leafAirTemperature", "leafHumidity"]
                         );
                 }
                 for (const [key, unitKey, label] of [
@@ -19179,16 +19440,18 @@
                 ]) {
                     if (!present(key)) continue;
                     if (!["C", "F"].includes(payload[unitKey]))
-                        throw new Error(
-                            `Choose Celsius or Fahrenheit for ${label.toLowerCase()}.`
+                        throw entryValidationError(
+                            `Choose Celsius or Fahrenheit for ${label.toLowerCase()}.`,
+                            [unitKey]
                         );
                     const value = leafReadingCelsius(
                         payload[key],
                         payload[unitKey]
                     );
                     if (!Number.isFinite(value) || value < -50 || value > 100)
-                        throw new Error(
-                            `${label} must be between -50 and 100 °C (-58 and 212 °F).`
+                        throw entryValidationError(
+                            `${label} must be between -50 and 100 °C (-58 and 212 °F).`,
+                            [key]
                         );
                 }
                 if (
@@ -19197,8 +19460,9 @@
                         Number(payload.leafHumidity) < 0 ||
                         Number(payload.leafHumidity) > 100)
                 )
-                    throw new Error(
-                        "Paired relative humidity must be between 0 and 100%."
+                    throw entryValidationError(
+                        "Paired relative humidity must be between 0 and 100%.",
+                        ["leafHumidity"]
                     );
             }
 
@@ -19334,8 +19598,12 @@
             }
 
             function clearPendingSave() {
-                state.pendingSave = null;
                 localStorage.removeItem(PENDING_SAVE_KEY);
+                if (localStorage.getItem(PENDING_SAVE_KEY) !== null)
+                    throw new Error(
+                        "Pending request cleanup could not be verified."
+                    );
+                state.pendingSave = null;
             }
 
             function readPendingSave() {
@@ -20132,8 +20400,9 @@
                         photoUrl
                     )
                 ))
-                    throw new Error(
-                        "Enter an HTTPS Google Photos share link or Gyazo capture link."
+                    throw entryValidationError(
+                        "Enter an HTTPS Google Photos share link or Gyazo capture link.",
+                        ["photoUrl"]
                     );
             }
 
@@ -20142,8 +20411,9 @@
                     payload.events.includes("Inspect") &&
                     !String(payload.condition || "").trim()
                 )
-                    throw new Error(
-                        "Enter the observed plant condition for the Inspect event."
+                    throw entryValidationError(
+                        "Enter the observed plant condition for the Inspect event.",
+                        ["condition"]
                     );
                 const checkCondition = payload.events.includes("Inspect")
                     ? ""
@@ -20153,8 +20423,9 @@
                     !String(checkCondition || "").trim() &&
                     !String(payload.soilMoisture || "").trim()
                 )
-                    throw new Error(
-                        "Choose the observed soil or medium moisture for the Soil check event."
+                    throw entryValidationError(
+                        "Choose the observed soil or medium moisture for the Soil check event.",
+                        ["soilMoisture"]
                     );
             }
 
@@ -20162,13 +20433,15 @@
                 if (!payload.events.includes("Humidity")) return;
                 const value = String(payload.relativeHumidity ?? "").trim();
                 if (value === "")
-                    throw new Error(
-                        "Enter the current relative humidity for the Humidity event."
+                    throw entryValidationError(
+                        "Enter the current relative humidity for the Humidity event.",
+                        ["relativeHumidity"]
                     );
                 const number = Number(value);
                 if (!Number.isFinite(number) || number < 0 || number > 100)
-                    throw new Error(
-                        "Relative humidity must be between 0 and 100 % RH."
+                    throw entryValidationError(
+                        "Relative humidity must be between 0 and 100 % RH.",
+                        ["relativeHumidity"]
                     );
             }
 
@@ -20178,8 +20451,9 @@
                     String(value ?? "").trim()
                 );
                 if (values.every((value) => value === ""))
-                    throw new Error(
-                        "Enter PPFD, illuminance, or both for the Light reading."
+                    throw entryValidationError(
+                        "Enter PPFD, illuminance, or both for the Light reading.",
+                        ["ppfd", "lux"]
                     );
                 if (
                     values.some(
@@ -20189,8 +20463,14 @@
                                 Number(value) < 0)
                     )
                 )
-                    throw new Error(
-                        "PPFD and illuminance must be finite numbers of zero or greater."
+                    throw entryValidationError(
+                        "PPFD and illuminance must be finite numbers of zero or greater.",
+                        ["ppfd", "lux"].filter(
+                            (key) =>
+                                payload[key] !== "" &&
+                                (!Number.isFinite(Number(payload[key])) ||
+                                    Number(payload[key]) < 0)
+                        )
                     );
             }
 
@@ -20215,35 +20495,47 @@
                 validateLightDetails(payload);
                 validateCareDetails(payload);
                 if (!payload.plantId)
-                    throw new Error("Choose a plant before adding to queue.");
+                    throw entryValidationError(
+                        "Choose a plant before adding to queue.",
+                        ["plantId"]
+                    );
                 if (!events.length)
-                    throw new Error(
-                        "Choose an event or enter a measurement, condition, or note."
+                    throw entryValidationError(
+                        "Choose an event or enter a measurement, condition, or note.",
+                        ["events"]
                     );
                 if (events.includes("Weigh") && !payload.weight)
-                    throw new Error("Enter a weight for the Weigh event.");
+                    throw entryValidationError(
+                        "Enter a weight for the Weigh event.",
+                        ["weight"]
+                    );
                 if (
                     events.includes("Measure") &&
                     !payload.height &&
                     !payload.width
                 )
-                    throw new Error(
-                        "Enter a height or width for the Measure event."
+                    throw entryValidationError(
+                        "Enter a height or width for the Measure event.",
+                        ["height", "width"]
                     );
                 if (
                     events.includes("Water") &&
                     !["Yes", "No"].includes(payload.nutrientsUsed)
                 )
-                    throw new Error(
-                        "For Water, choose whether nutrients were used."
+                    throw entryValidationError(
+                        "For Water, choose whether nutrients were used.",
+                        ["nutrientsUsed"]
                     );
                 if (
                     events.includes("Water") &&
                     payload.nutrientsUsed === "Yes" &&
                     (!payload.nutrientProduct || !payload.nutrientAmount)
                 )
-                    throw new Error(
-                        "Enter both the nutrient product and amount used."
+                    throw entryValidationError(
+                        "Enter both the nutrient product and amount used.",
+                        ["nutrientProduct", "nutrientAmount"].filter(
+                            (key) => !payload[key]
+                        )
                     );
                 if (
                     events.includes("Water") &&
@@ -20252,25 +20544,33 @@
                             WATERING_APPLICATION_OPTIONS[0]
                     )
                 )
-                    throw new Error("Choose a valid watering application.");
+                    throw entryValidationError(
+                        "Choose a valid watering application.",
+                        ["wateringApplication"]
+                    );
                 if (
                     events.includes("Water") &&
                     payload.waterAmount &&
                     (!Number.isFinite(Number(payload.waterAmount)) ||
                         Number(payload.waterAmount) <= 0)
                 )
-                    throw new Error(
-                        "Water amount must be a positive number of milliliters."
+                    throw entryValidationError(
+                        "Water amount must be a positive number of milliliters.",
+                        ["waterAmount"]
                     );
                 if (events.includes("Repot") && !payload.potSize)
-                    throw new Error("Enter the new pot size for Repot.");
+                    throw entryValidationError(
+                        "Enter the new pot size for Repot.",
+                        ["potSize"]
+                    );
                 if (
                     events.includes("Flower") &&
                     !payload.flowerCount &&
                     !payload.flowerDetails
                 )
-                    throw new Error(
-                        "Enter a flower count, description, or both."
+                    throw entryValidationError(
+                        "Enter a flower count, description, or both.",
+                        ["flowerCount", "flowerDetails"]
                     );
                 if (events.includes("Photo"))
                     validatePhotoUrl(payload.photoUrl);
@@ -20278,8 +20578,11 @@
                     events.includes("Pest") &&
                     (!payload.pestIssue || !payload.pestTreatment)
                 )
-                    throw new Error(
-                        "Describe both the issue and the treatment or action."
+                    throw entryValidationError(
+                        "Describe both the issue and the treatment or action.",
+                        ["pestIssue", "pestTreatment"].filter(
+                            (key) => !payload[key]
+                        )
                     );
                 if (events.includes("Rotation")) {
                     const rotationDegrees = Number(
@@ -20290,8 +20593,9 @@
                         rotationDegrees <= 0 ||
                         rotationDegrees > 360
                     )
-                        throw new Error(
-                            "Rotation must be more than 0 and at most 360 degrees."
+                        throw entryValidationError(
+                            "Rotation must be more than 0 and at most 360 degrees.",
+                            ["rotationDegrees"]
                         );
                 }
                 return events;
@@ -20310,8 +20614,9 @@
                         value !== null &&
                         (!Number.isFinite(Number(value)) || Number(value) <= 0)
                     ) {
-                        throw new Error(
-                            `${label} must be a number greater than zero.`
+                        throw entryValidationError(
+                            `${label} must be a number greater than zero.`,
+                            [field]
                         );
                     }
                 });
@@ -20557,7 +20862,7 @@
                     );
                     return;
                 }
-                if (state.pendingSave && !state.pendingSave.replaceable) {
+                if (state.pendingSave) {
                     showToast(
                         "The direct save is still being confirmed. Wait for it before adding another reading.",
                         true,
@@ -20601,8 +20906,6 @@
                         state.queueSendSummary = null;
                         persistObservationQueue(nextQueue);
                         forgetOrdinaryDraft(draftReference);
-                        if (state.pendingSave && state.pendingSave.replaceable)
-                            clearPendingSave();
                         showToast(`${plantName} added to the phone queue.`);
                         // Acquiring the browser lock is asynchronous. Do not
                         // clear changes entered after the Queue click.
@@ -20620,7 +20923,7 @@
                         }
                     });
                 } catch (error) {
-                    showToast(error.message, true, 8000);
+                    showEntryValidation(error, "single");
                 }
             }
 
@@ -23672,11 +23975,13 @@
                                 : field.type;
                         if (["number", "datetime"].includes(field.type))
                             input.step = "any";
-                        if (["ppfd", "lux"].includes(field.key))
-                            input.min = "0";
-                        if (field.key === "relativeHumidity") {
-                            input.min = "0";
-                            input.max = "100";
+                        if (field.type === "number") {
+                            const rules = correctionNumberRules(field.key);
+                            if (rules.min !== undefined)
+                                input.min = String(rules.min);
+                            if (rules.max !== undefined)
+                                input.max = String(rules.max);
+                            if (rules.integer) input.step = "1";
                         }
                     }
                     input.value =
@@ -23803,6 +24108,58 @@
                 $("correctionClose").focus();
             }
 
+            function correctionNumberRules(key) {
+                if (key === "temperatureC") return { min: -273.15 };
+                if (["leafTemperatureC", "leafAirTemperatureC"].includes(key))
+                    return { min: -50, max: 100 };
+                if (key === "leafVpd") {
+                    const source =
+                        correction.inputs.get("leafVpdSource")?.value ??
+                        correction.context?.original.values.leafVpdSource;
+                    return source === "Device" ? { min: 0 } : {};
+                }
+                if (["relativeHumidity", "leafHumidity"].includes(key))
+                    return { min: 0, max: 100 };
+                if (["ppfd", "lux"].includes(key)) return { min: 0 };
+                if (key === "flowerCount") return { min: 1, integer: true };
+                if (key === "rotationDegrees")
+                    return { min: 0, max: 360, positive: true };
+                return { min: 0, positive: true };
+            }
+
+            function validateCorrectionNumber(field, number, input) {
+                const rules = correctionNumberRules(field.key);
+                let message = "";
+                if (!Number.isFinite(number))
+                    message = `${field.label} must be a finite number.`;
+                else if (
+                    field.key === "relativeHumidity" &&
+                    (number < 0 || number > 100)
+                )
+                    message =
+                        "Relative humidity must be between 0 and 100 % RH.";
+                else if (["ppfd", "lux"].includes(field.key) && number < 0)
+                    message =
+                        "PPFD and illuminance must be finite numbers of zero or greater.";
+                else if (rules.integer && !Number.isInteger(number))
+                    message = `${field.label} must be a whole number of 1 or greater.`;
+                else if (rules.positive && number <= 0)
+                    message = `${field.label} must be greater than zero.`;
+                else if (
+                    (rules.min !== undefined && number < rules.min) ||
+                    (rules.max !== undefined && number > rules.max)
+                )
+                    message = `${field.label} must be ${
+                        rules.max === undefined
+                            ? `${rules.min} or greater`
+                            : `between ${rules.min} and ${rules.max}`
+                    }.`;
+                if (message) {
+                    input.focus();
+                    throw new Error(message);
+                }
+            }
+
             function correctionPatch() {
                 const changes = {};
                 correction.context.fields.forEach((field) => {
@@ -23828,21 +24185,7 @@
                             changes[field.key] = date.toISOString();
                     } else if (field.type === "number" && value !== "") {
                         const number = Number(value);
-                        if (!Number.isFinite(number))
-                            throw new Error(
-                                `${field.label} must be a finite number.`
-                            );
-                        if (["ppfd", "lux"].includes(field.key) && number < 0)
-                            throw new Error(
-                                "PPFD and illuminance must be finite numbers of zero or greater."
-                            );
-                        if (
-                            field.key === "relativeHumidity" &&
-                            (number < 0 || number > 100)
-                        )
-                            throw new Error(
-                                "Relative humidity must be between 0 and 100 % RH."
-                            );
+                        validateCorrectionNumber(field, number, input);
                         if (
                             number !==
                                 Number(
@@ -25038,13 +25381,21 @@
                 const observedValue = $("bulkObservedAt").value;
                 const observedDate = observationDate("bulkObservedAt");
                 if (!observedValue || Number.isNaN(observedDate.getTime())) {
-                    throw new Error("Choose a valid care date and time.");
+                    throw entryValidationError(
+                        "Choose a valid care date and time.",
+                        ["observedAt"]
+                    );
                 }
                 if (!state.bulkSelected.size) {
-                    throw new Error("Choose at least one plant.");
+                    throw entryValidationError("Choose at least one plant.", [
+                        "plantIds",
+                    ]);
                 }
                 if (!state.bulkEvents.size) {
-                    throw new Error("Choose at least one bulk-care action.");
+                    throw entryValidationError(
+                        "Choose at least one bulk-care action.",
+                        ["events"]
+                    );
                 }
                 const payload = {
                     ...(["P31", "P32"].some((id) => state.bulkSelected.has(id))
@@ -25080,8 +25431,9 @@
                     state.bulkEvents.has("Water") &&
                     !["Yes", "No"].includes(payload.nutrientsUsed)
                 ) {
-                    throw new Error(
-                        "For Water, choose whether nutrients were used."
+                    throw entryValidationError(
+                        "For Water, choose whether nutrients were used.",
+                        ["nutrientsUsed"]
                     );
                 }
                 if (
@@ -25089,8 +25441,11 @@
                     payload.nutrientsUsed === "Yes" &&
                     (!payload.nutrientProduct || !payload.nutrientAmount)
                 ) {
-                    throw new Error(
-                        "Enter both the nutrient product and amount used."
+                    throw entryValidationError(
+                        "Enter both the nutrient product and amount used.",
+                        ["nutrientProduct", "nutrientAmount"].filter(
+                            (key) => !payload[key]
+                        )
                     );
                 }
                 if (
@@ -25099,7 +25454,10 @@
                         payload.wateringApplication
                     )
                 ) {
-                    throw new Error("Choose a valid watering application.");
+                    throw entryValidationError(
+                        "Choose a valid watering application.",
+                        ["wateringApplication"]
+                    );
                 }
                 if (
                     state.bulkEvents.has("Water") &&
@@ -25107,8 +25465,9 @@
                     (!Number.isFinite(Number(payload.waterAmount)) ||
                         Number(payload.waterAmount) <= 0)
                 ) {
-                    throw new Error(
-                        "Water amount must be a positive number of milliliters."
+                    throw entryValidationError(
+                        "Water amount must be a positive number of milliliters.",
+                        ["waterAmount"]
                     );
                 }
                 if (state.bulkEvents.has("Rotation")) {
@@ -25118,8 +25477,9 @@
                         rotationDegrees <= 0 ||
                         rotationDegrees > 360
                     ) {
-                        throw new Error(
-                            "Rotation must be more than 0 and at most 360 degrees."
+                        throw entryValidationError(
+                            "Rotation must be more than 0 and at most 360 degrees.",
+                            ["rotationDegrees"]
                         );
                     }
                 }
@@ -25127,29 +25487,42 @@
                     state.bulkEvents.has("Pest") &&
                     (!payload.pestIssue || !payload.pestTreatment)
                 ) {
-                    throw new Error(
-                        "Describe both the shared issue and the treatment or action."
+                    throw entryValidationError(
+                        "Describe both the shared issue and the treatment or action.",
+                        ["pestIssue", "pestTreatment"].filter(
+                            (key) => !payload[key]
+                        )
                     );
                 }
                 return payload;
             }
 
-            function clearBulkRound() {
-                const draftReference = entryDrafts.current.bulk;
-                try {
-                    localStorage.removeItem(BULK_PENDING_KEY);
-                    if (localStorage.getItem(BULK_PENDING_KEY) !== null)
-                        throw new Error(
-                            "Pending request cleanup could not be verified."
+            function clearBulkRound(options = {}) {
+                if (!options.afterSave) {
+                    const pending = readBulkPendingSave();
+                    if (pending) {
+                        const discard = window.confirm(
+                            "This bulk-care round may still be finishing in the spreadsheet. Clear it anyway? A late save could still appear in History."
                         );
-                } catch (error) {
-                    showToast(
-                        "The saved bulk request could not be cleared from browser storage. Its entry and recovery data were kept; restore storage access before continuing.",
-                        true,
-                        12000
-                    );
-                    return;
+                        if (!discard) return;
+                    }
+                    try {
+                        localStorage.removeItem(BULK_PENDING_KEY);
+                        if (localStorage.getItem(BULK_PENDING_KEY) !== null)
+                            throw new Error(
+                                "Pending request cleanup could not be verified."
+                            );
+                    } catch (error) {
+                        showToast(
+                            "The saved bulk request could not be cleared from browser storage. Its entry and recovery data were kept; restore storage access before continuing.",
+                            true,
+                            12000
+                        );
+                        return;
+                    }
                 }
+                const draftReference = entryDrafts.current.bulk;
+                clearEntryValidation("bulk");
                 entryDrafts.restoring = true;
                 try {
                     restoreCareFields({}, "bulk");
@@ -25271,7 +25644,7 @@
                     )
                         validateCheckDetails(payload);
                 } catch (error) {
-                    showToast(error.message, true);
+                    showEntryValidation(error, "bulk");
                     return;
                 }
                 let pending = stored;
@@ -25287,15 +25660,12 @@
                     pending &&
                     JSON.stringify(pending.payload) !== JSON.stringify(payload)
                 ) {
-                    if (!pending.replaceable) {
-                        showToast(
-                            "A previous bulk-care round may still be saving. Restore its values or wait for Google to confirm the result before changing the round.",
-                            true,
-                            10000
-                        );
-                        return;
-                    }
-                    pending = null;
+                    showToast(
+                        "A previous bulk-care round may still be saving. Restore its values to retry safely, or use Clear round to review discarding it.",
+                        true,
+                        10000
+                    );
+                    return;
                 }
                 if (!pending) {
                     pending = {
@@ -25361,9 +25731,7 @@
                             true,
                             10000
                         );
-                        reconcileBulkSave(requestId, {
-                            allowReplacementIfMissing: true,
-                        });
+                        reconcileBulkSave(requestId);
                     })
                     .saveBulkCareObservation({
                         ...pending.payload,
@@ -25397,12 +25765,12 @@
                 }
                 showToast(result.message);
                 forgetOrdinaryDraft(draftReference);
-                if (!keepNewDraft) clearBulkRound();
+                if (!keepNewDraft) clearBulkRound({ afterSave: true });
                 refreshSavedPlantData();
                 return true;
             }
 
-            function reconcileBulkSave(requestId, options = {}) {
+            function reconcileBulkSave(requestId) {
                 const pending = readBulkPendingSave();
                 if (!pending || pending.requestId !== requestId) return;
                 requestSaveStatus(pending, readBulkPendingSave, {
@@ -25417,24 +25785,6 @@
                     unconfirmed: (result) => {
                         $("connectionStatus").textContent =
                             "Bulk-care round kept · retry is safe";
-                        if (
-                            result.state === "missing" &&
-                            options.allowReplacementIfMissing
-                        ) {
-                            pending.replaceable = true;
-                            localStorage.setItem(
-                                BULK_PENDING_KEY,
-                                JSON.stringify(pending)
-                            );
-                            $("connectionStatus").textContent =
-                                "Bulk-care save failed · edit and retry";
-                            showToast(
-                                "The failed bulk-care request is not in History. Correct the round and save again; Clear entry is not needed.",
-                                true,
-                                12000
-                            );
-                            return;
-                        }
                         if (result.state === "partial")
                             showToast(result.message, true, 12000);
                     },
@@ -25447,8 +25797,18 @@
                         "This entry may still be finishing in the spreadsheet. Clear it anyway? A late save could still appear in History."
                     );
                     if (!discard) return;
-                    clearPendingSave();
+                    try {
+                        clearPendingSave();
+                    } catch (error) {
+                        showToast(
+                            "The saved request could not be cleared from browser storage. Its entry and recovery data were kept; restore storage access before continuing.",
+                            true,
+                            12000
+                        );
+                        return;
+                    }
                 }
+                clearEntryValidation();
                 const draftReference = options.draftHandled
                     ? null
                     : entryDrafts.current.single;
@@ -25530,8 +25890,9 @@
                 const observedValue = $("observedAt").value;
                 const observedDate = observationDate("observedAt");
                 if (!observedValue || Number.isNaN(observedDate.getTime()))
-                    throw new Error(
-                        "Choose a valid observation date and time."
+                    throw entryValidationError(
+                        "Choose a valid observation date and time.",
+                        ["observedAt"]
                     );
                 return {
                     ...carePayloadFields(state.events),
@@ -26322,7 +26683,7 @@
                         validateCareDetails(payload);
                     }
                 } catch (error) {
-                    showToast(error.message, true);
+                    showEntryValidation(error, "single");
                     return;
                 }
                 let pending = state.pendingSave;
@@ -26339,15 +26700,12 @@
                     payloadFingerprint(pending.payload) !==
                         payloadFingerprint(payload)
                 ) {
-                    if (!pending.replaceable) {
-                        showToast(
-                            "A previous version of this entry may still be saving. Restore its values or wait for Google to confirm the result before changing the reading.",
-                            true,
-                            10000
-                        );
-                        return;
-                    }
-                    pending = null;
+                    showToast(
+                        "A previous version of this entry may still be saving. Restore its values to retry safely, or use Clear entry to review discarding it.",
+                        true,
+                        10000
+                    );
+                    return;
                 }
 
                 if (!pending) {
@@ -26415,9 +26773,7 @@
                                 ? error.message
                                 : "Google did not confirm the save. Your entry is still on this phone; wait a moment and tap Save again.";
                         showToast(message, true, 10000);
-                        reconcileSingleSave(requestId, {
-                            allowReplacementIfMissing: true,
-                        });
+                        reconcileSingleSave(requestId);
                     })
                     .saveWebObservation(requestPayload);
             }
@@ -26438,7 +26794,16 @@
                         entryDrafts.current.single.revision !==
                             draftReference?.revision);
                 invalidateSaveAttempt();
-                clearPendingSave();
+                try {
+                    clearPendingSave();
+                } catch (error) {
+                    showToast(
+                        "The observation reached History, but its browser recovery data could not be cleared. The entry was kept; restore storage access and retry safely.",
+                        true,
+                        12000
+                    );
+                    return false;
+                }
                 showToast(result.message);
                 forgetOrdinaryDraft(draftReference);
                 if (!keepNewDraft) {
@@ -26449,7 +26814,7 @@
                 return true;
             }
 
-            function reconcileSingleSave(requestId, options = {}) {
+            function reconcileSingleSave(requestId) {
                 const pending = state.pendingSave;
                 if (!pending || pending.requestId !== requestId) return;
                 requestSaveStatus(pending, () => state.pendingSave, {
@@ -26464,21 +26829,6 @@
                     unconfirmed: (result) => {
                         $("connectionStatus").textContent =
                             "Entry kept · retry is safe";
-                        if (
-                            result.state === "missing" &&
-                            options.allowReplacementIfMissing
-                        ) {
-                            pending.replaceable = true;
-                            persistPendingSave(pending);
-                            $("connectionStatus").textContent =
-                                "Save failed · edit and retry";
-                            showToast(
-                                "The failed request is not in History. Correct this entry and save again; Clear entry is not needed.",
-                                true,
-                                12000
-                            );
-                            return;
-                        }
                         if (result.state === "partial")
                             showToast(result.message, true, 12000);
                     },
@@ -26506,15 +26856,11 @@
                 const pending = readPendingSave();
                 if (pending) {
                     persistPendingSave(pending);
-                    reconcileSingleSave(pending.requestId, {
-                        allowReplacementIfMissing: true,
-                    });
+                    reconcileSingleSave(pending.requestId);
                 }
                 const bulkPending = readBulkPendingSave();
                 if (bulkPending) {
-                    reconcileBulkSave(bulkPending.requestId, {
-                        allowReplacementIfMissing: true,
-                    });
+                    reconcileBulkSave(bulkPending.requestId);
                 }
                 const attemptedQueue = state.queue
                     .filter((entry) => entry.attemptedAt)
@@ -27401,7 +27747,9 @@
                 state.bulkSelected.clear();
                 renderBulkPlants($("bulkSearch").value);
             });
-            $("bulkResetButton").addEventListener("click", clearBulkRound);
+            $("bulkResetButton").addEventListener("click", () =>
+                clearBulkRound()
+            );
             document.addEventListener("click", guardMobileButtonHit, true);
             document.addEventListener("pointerdown", dismissOutsideHelp, {
                 capture: true,
@@ -27525,11 +27873,22 @@
                 ["single", "entryForm"],
                 ["bulk", "bulkWaterForm"],
             ]) {
+                $(formId).addEventListener(
+                    "submit",
+                    () => clearEntryValidation(mode),
+                    true
+                );
                 for (const eventName of ["input", "change", "click"])
-                    $(formId).addEventListener(eventName, () =>
-                        retainOrdinaryDraft(mode)
-                    );
+                    $(formId).addEventListener(eventName, (event) => {
+                        refreshEntryValidation(mode, event);
+                        retainOrdinaryDraft(mode);
+                    });
             }
+            $("queueButton").addEventListener(
+                "click",
+                () => clearEntryValidation("single"),
+                true
+            );
             $("entryDraftResume").addEventListener(
                 "click",
                 resumeOrdinaryDraft

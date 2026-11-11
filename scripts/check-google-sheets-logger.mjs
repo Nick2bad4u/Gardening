@@ -847,11 +847,8 @@ assert.match(html, /function safeStorageSet\(storage, key, value\)/v);
 assert.match(html, /function safeStorageRemove\(storage, key\)/v);
 assert.match(html, /const ROUND_STATE_KEY = "gardenLoggerRoundStateV1"/v);
 assert.match(html, /const NUTRIENT_STATE_KEY = "gardenLoggerNutrientStateV1"/v);
-assert.match(
-    html,
-    /function reconcileSingleSave\(requestId, options = \{\}\)/v
-);
-assert.match(html, /function reconcileBulkSave\(requestId, options = \{\}\)/v);
+assert.match(html, /function reconcileSingleSave\(requestId\)/v);
+assert.match(html, /function reconcileBulkSave\(requestId\)/v);
 assert.match(
     html,
     /function beginSaveAttempt\(timeoutMs = SAVE_WATCHDOG_MS\)/v
@@ -878,7 +875,7 @@ assert.match(
     /function refreshCachedBootstrap\(\{ updateHistory = true \} = \{\}\)/v
 );
 assert.match(html, /target="_top"/v);
-assert.match(html, /pending\.replaceable = true;/v);
+assert.doesNotMatch(html, /pending\.replaceable|allowReplacement/v);
 assert.doesNotMatch(html, /id="weightStates"/v);
 assert.doesNotMatch(html, /function renderWeightState\(\)/v);
 assert.doesNotMatch(html, /weightState:\s*state\.weightState/v);

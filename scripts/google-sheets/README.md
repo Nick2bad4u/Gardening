@@ -4565,6 +4565,15 @@ The main production safeguards are:
 - **Idempotent writes:** every request has a stable retry ID. Retries reconcile
   against the hidden History request-ID column and cannot silently duplicate a
   completed observation.
+- **Unresolved saves:** source 5.44.1 keeps single/bulk request identity after
+  timeouts, missing History status, and generic RPC failures, including page
+  restoration and older cached replacement flags. Explicit Clear actions warn
+  before discarding an unresolved request. Confirmed-save cleanup verifies
+  browser removal before dropping pending state; a cleanup failure retains the
+  original retry identity. Google's
+  [failure-handler contract](https://developers.google.com/apps-script/guides/html/communication#failure_handlers)
+  includes a server that does not respond, so an error alone cannot prove that
+  an earlier call stopped.
 - **Native entry constraints:** `QuickCareLog` uses Google Sheets table column
   types for row-level checkboxes, dropdowns, dates, and numbers. The installer
   configures only the bulk controls so it does not conflict with those native
@@ -4713,6 +4722,12 @@ The desktop sidebar keeps the garden links. On both desktop and phones, the
 active form's save/queue controls come first, followed by the phone queue when
 it contains entries (or a storage warning), then Recent History last. A queued
 single-plant observation remains visible and sendable while using bulk care.
+Source 5.44.1 lets queue controls wrap with enlarged text. Ordinary entry errors
+remain next to their fields, link through accessibility metadata, and focus the
+first affected control. Drafts preserve the separate date/time parts even while
+one part is blank, with a fallback for older combined-time drafts. Corrections
+check changed numeric values against server ranges before requesting a preview;
+unchanged legacy values and supported signed or fractional readings remain valid.
 
 Apps Script serves HTML inside Google's own sandboxed wrapper. The Google
 authorship banner belongs to that wrapper and cannot be hidden by this project's

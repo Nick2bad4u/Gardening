@@ -397,7 +397,13 @@ is not a queued request or a saved History record. Restoring it does not rewrite
 a submitted request or change its retry identity. Selecting a plant or bulk pots,
 changing form preferences, and keeping event choices after saving do not by
 themselves create an unfinished draft. Measurements, notes, and deliberate new
-event choices remain recoverable.
+event choices remain recoverable. A partially edited observation date or time
+also remains in the draft; complete both fields before saving.
+
+If an entry needs correction before it can be sent, the logger keeps its error
+message beside the affected field and moves focus there. The message clears
+when the problem is corrected or its action is removed. Your other values stay
+on the form.
 
 Queue changes coordinate across logger tabs in the same browser where the Web
 Locks API is available. If another tab owns a queue mutation or send, the logger
@@ -415,9 +421,22 @@ ranges extended before retrying; do not delete historical rows to make room.
 
 Retry the existing request after a connection problem rather than immediately creating a new observation. The queue and bridge use request identities to avoid duplicating a confirmed save. In AppSheet, use the receipt and supported retry/correction path; staging rows are not a second editable History.
 
+Returning to the logger or receiving an error does not establish that an earlier
+save stopped. Keep its values and retry **Save now** or the bulk Save button to
+confirm the same request. To deliberately start over, use **Clear entry** or
+**Clear round** and review the warning: the earlier save may still appear in
+History. Check History before recreating the same observation. If browser
+storage cannot clear a confirmed save's recovery record, the logger retains it
+and reports the problem so a retry stays tied to that original request.
+
 Correct entry operates on one event, not every row from the same Save. Choose whether to edit its details, move it to another plant, or delete it. Each action requires a reason, a preview, and confirmation. A move shows the destination plant, label, and pot setup before saving. The observation time, measurements, and other untouched details are preserved.
 
 The correction dialog keeps its action buttons visible while you scroll the form. Open **Entry details** for the saved setup, historical label, and observation ID. **Back** returns from the preview to your edits; **Close** keeps an unsent draft available to resume.
+
+Changed numeric values are checked before the correction preview is requested.
+Weights and dimensions must be positive, flower counts must be whole numbers,
+and rotation must be greater than zero and at most 360 degrees. Temperature and
+calculated Leaf VPD retain their supported zero or negative values.
 
 Edits and moves append a replacement and exclude the original from active calculations. Deletion excludes the original and saves an excluded audit record; neither record contributes to care history or calculations. Event type remains fixed. Repot entries cannot be moved or deleted through this form because other observations depend on their setup boundary. A date change or move with an uncertain setup can also be refused; coordinated setup changes need a separately reviewed correction.
 
