@@ -75,33 +75,62 @@ The owner supplied **48 lux-derived estimated PPFD readings at individual plant 
 
 Across the **whole mapped rectangle, including the intentionally unlit far edge**, the app estimates range from **145 to 677 µmol·m⁻²·s⁻¹**. Its **13-hour DLI calculation** ranges from **6.8 to 31.7 mol·m⁻²·day⁻¹**. These are approximate phone/lux-sensor/app conversions, not calibrated PAR measurements or species thresholds. Height, shadows, and spectrum affect the comparison; the extrema do not describe every occupied pot or prove that the whole display has too little or too much light. The actual program remains **13 h 15 m total, including 15 m sunrise and 15 m sunset**; the app's 13-hour DLI output is not a measured daily light integral through those ramps.
 
-**A3 Serpent Cactus and F1 Hook-spined Pincushion exchanged positions** after this comparison. That comparison did not establish the later October 22 arrangement. The written grid below includes the four later front-cell changes; Money Tree is now recorded on a room-side stool. The illustrations predate both updates. Different-height plants do not inherit the previous occupant's light reading, and the comparison did not measure the windowsill.
+**A3 Serpent Cactus and F1 Hook-spined Pincushion exchanged positions** after this comparison. That comparison did not establish the later October 22 arrangement. The written grid and November 11 illustrations below include the four later front-cell changes; Money Tree is now recorded on a room-side stool. The historical September drawings predate both updates. Different-height plants do not inherit the previous occupant's light reading, and the comparison did not measure the windowsill.
 
 ## Illustrated Views
 
-These **historical September illustrations are not the current arrangement**. They predate the A3/F1 exchange, the four front-cell changes documented October 22, the P35/P36 rear additions, Money Tree's room-side stool, and the terrarium's desk location. They predate the Arctic Ice back-center-left position confirmed by the owner October 23. **Use the written grid and current position records below.** Plant shapes and sizes are illustrative. Light-priority badges describe care needs, not measured intensity.
+These illustrations were refreshed **November 11, 2026** from the recorded
+October and November placements. They include **all 39 tracked containers**:
+24 front pots, eight rear-table pots, Money Tree on its room-side stool,
+Terrarium on the right-hand desk, two kitchen window-shelf plants, and three
+room-side shelf plants. The front grid includes the A3/F1 exchange and four
+changes documented October 22; the rear group includes P35 Lithops, P36 split
+rock, and P37 Arctic Ice.
+
+The illustration date is not a new observation. The sources are photographs
+supplied October 22 (capture date unknown), the October 23 Arctic Ice
+identification, the October 24 kitchen report, and the November 4 room-side
+shelf report. **Use the written grid and position records below.** Plant forms,
+sizes, spacing, and shelf order are schematic; the exact within-shelf order
+of P39/P40/P41 remains unrecorded. The light illustration is a qualitative
+comparison aid, not measured exposure or a plot of the 48 app readings.
 
 ### Illustrated Whole Display
 
-![Illustrated whole display with 24 front pots, five rear containers and Money Tree on the separate north windowsill](../../assets/layouts/2026-09-16-illustrated/combined-plan-illustrated.png)
+![Illustrated current collection with 24 front pots, eight rear pots, Money Tree on its room-side stool, Terrarium on the right-hand desk, and the kitchen and room-side shelf plants](../../assets/layouts/2026-11-11-illustrated/combined-plan-illustrated.png)
 
 ### Illustrated Front Pots
 
-![Illustrated front-pot chart with six columns and four rows, D3 at R1C1 and F2 at R1C6](../../assets/layouts/2026-09-16-illustrated/front-pots-illustrated.png)
+![Illustrated 24-pot front grid with six columns and four rows, including the A3 and F1 exchange and the four October 22 position updates](../../assets/layouts/2026-11-11-illustrated/front-pots-illustrated.png)
 
-### Illustrated Rear Pots and Windowsill
+### Illustrated Rear Pots and Nearby Plants
 
-![Illustrated rear containers with the square wooden shared planter and Money Tree separately on the north windowsill](../../assets/layouts/2026-09-16-illustrated/rear-pots-illustrated.png)
+![Illustrated eight rear-table pots plus Money Tree on a room-side stool, Terrarium on the right-hand desk, two kitchen shelf plants, and three room-side shelf plants](../../assets/layouts/2026-11-11-illustrated/rear-pots-illustrated.png)
 
 ### Illustrated Relative Light
 
-![Illustrated relative-light hypothesis for four wooden tables and a separate unmeasured windowsill](../../assets/layouts/2026-09-16-illustrated/relative-light-illustrated.png)
+![Illustrated relative-light hypothesis for the current four-table collection with separate stool, desk, kitchen shelf, and room-side shelf locations whose leaf-level exposure remains unmeasured](../../assets/layouts/2026-11-11-illustrated/relative-light-illustrated.png)
 
-The [illustration notes and limits](../../assets/layouts/2026-09-16-illustrated/image-prompts.md) record the style references and current-data constraints. The [original reference map](../../assets/layouts/2026-09-15-four-tables/estimated-light-map.png) and its [transparent-background copy](../../assets/layouts/2026-09-16-illustrated/estimated-light-map-transparent.png) remain available as downloads.
+The [November 11 illustration notes and limits](../../assets/layouts/2026-11-11-illustrated/image-prompts.md)
+record the source evidence and generation prompts. The **historical September 16
+artwork** remains available: [whole display](../../assets/layouts/2026-09-16-illustrated/combined-plan-illustrated.png),
+[front pots](../../assets/layouts/2026-09-16-illustrated/front-pots-illustrated.png),
+[rear pots and former windowsill](../../assets/layouts/2026-09-16-illustrated/rear-pots-illustrated.png),
+and [relative light](../../assets/layouts/2026-09-16-illustrated/relative-light-illustrated.png).
+Those drawings predate the later moves and additions. The [original September
+reference map](../../assets/layouts/2026-09-15-four-tables/estimated-light-map.png)
+and its [transparent-background copy](../../assets/layouts/2026-09-16-illustrated/estimated-light-map-transparent.png)
+also remain historical downloads.
 
 ## Reading the Light Map
 
-The illustrated map shows an **earlier qualitative light estimate**. For the later 48 app-derived readings, use the measurement summary above; those values are not plotted on this illustration. Two panels can light the new block, but the larger wooden footprint does not create more light. Exact fixture alignment over it is not established by these cropped photographs.
+The November 11 map updates the recorded plant locations while retaining a
+**qualitative light hypothesis**. For the 48 app-derived readings, use the
+measurement summary above; those values are not plotted on this illustration.
+The stool, desk, and shelf groups need separate leaf-level comparisons; their
+placement on the page does not establish fixture coverage. Two panels can light
+the table block, but the larger wooden footprint does not create more light.
+Exact fixture alignment over it is not established by the photographs.
 
 | Area                       | Working Expectation                                                                         | What to Compare                                                                                            |
 | -------------------------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
@@ -113,7 +142,15 @@ The illustrated map shows an **earlier qualitative light estimate**. For the lat
 | Room-side stool, #3        | Separate height and exposure; outside the historical table heatmap                          | Actual upper and lower leaf exposure, time and support height; do not reuse the old windowsill assumptions |
 | Fixture join               | Spill may fill a small gap; no dark stripe or hottest stripe is assumed                     | A short comparison across the actual join after locating it                                                |
 
-The current position record supersedes the illustrated windowsill position for #3 and includes the A3/F1 exchange. The following comparison questions record the earlier reasoning; they are not additional move recommendations. The strongest placement question is whether **B3 Indigo Wave at the front** has sufficient clear light and whether **H1 Coconut Crystal in the interior** is shaded. Do not automatically exchange them: they have different heights and both need useful exposure. D3 and F2 occupy opposite front corners, rather than the two left corners of the old drawing. Their benefit is an inference to test.
+The current position record and refreshed illustrations supersede the historical
+windowsill position for #3 and include the A3/F1 exchange. The following
+comparison questions record the earlier reasoning; they are not additional
+move recommendations. The strongest placement question is whether **B3 Indigo
+Wave at the front** has sufficient clear light and whether **H1 Coconut Crystal
+in the interior** is shaded. Do not automatically exchange them: they have
+different heights and both need useful exposure. D3 and F2 occupy opposite
+front corners, rather than the two left corners of the old drawing. Their
+benefit is an inference to test.
 
 Six nominal 4-inch rims span about 24 inches across the nominal 26-inch front width. Four rows span about 16 inches of nominal front-table depth, leaving little margin for rails, larger rims and foliage. Check that bases are fully supported and leave room to lift each pot without catching neighboring plants. The larger rear pot dimensions are not newly measured.
 
@@ -247,7 +284,7 @@ This is a physical placement change, not a repot or watering event. **Keep the e
 - **Later owner evidence, measurement date not supplied:** 48 app-converted readings at individual plant heights, whole mapped rectangle range 145–677 estimated PPFD and 13-hour app DLI 6.8–31.7; includes the intentionally unlit far edge. Owner confirmed only the A3/F1 exchange.
 - **Operating record:** September 13 installed lights, AW200 45%, AeroLight 240 W 38%, 18-inch tip reference and the shared 13 h 15 m cycle. See the [equipment record](../equipment/aw200-and-aerolight-240w.md), [AW200 manual][aw200] and [AeroLight manual][aerolight-240]. These are the last reported settings.
 - **Plant evidence:** the [source-by-source review](../two-light-placement-review.md), [plant profiles](../plants/), [inventory](../collection.md), [NC State Ming Thing][ming], [RHS Feather Cactus][feather], [RHS Rainbow Hedgehog][rainbow], [RHS Monk's Hood][monks-hood], [NC State Sempervivum][sempervivum] and [SANBI split rock][split-rock].
-- **Illustrations:** [generation prompts and evidence limits](../../assets/layouts/2026-09-15-four-tables/image-prompts.md). The [September 14 image set](../../assets/layouts/2026-09-14-relative-light/image-prompts.md) is historical and does not represent this new furniture arrangement.
+- **November 11 illustrations:** [generation prompts and evidence limits](../../assets/layouts/2026-11-11-illustrated/image-prompts.md). These drawings synthesize the dated owner evidence above; they supply no new placement or light measurements. The [September 15 diagrams](../../assets/layouts/2026-09-15-four-tables/image-prompts.md), [September 16 illustrated set](../../assets/layouts/2026-09-16-illustrated/image-prompts.md), and [September 14 image set](../../assets/layouts/2026-09-14-relative-light/image-prompts.md) remain historical references.
 
 [rainbow]: https://www.rhs.org.uk/plants/115504/echinocereus-rigidissimus/details
 [feather]: https://www.rhs.org.uk/plants/10832/mammillaria-plumosa/details

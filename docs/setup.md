@@ -1,10 +1,25 @@
 # Setup and equipment
 
-Last updated: 2026-11-04
+Last updated: 2026-11-11
 
 The [equipment and supplies inventory](./equipment/inventory.md) lists the collection's products and model references. All four wooden tables are the [LEJANEOYE two-tier bamboo side-table model](https://www.amazon.com/dp/B0D25H73ZS), identified September 17; measured tabletop dimensions are recorded separately from seller specifications.
 
 The [container guide](./containers.md) separates the 46 current botanical profile groups from three whole-planter overviews. P19, P20, P30, P35, and P38 are shared plantings with one label, one tracker history, and one current setup per container; P38 keeps its provisional identities within a Houseplants aggregate overview. The P-ID persists when a planting moves to a different pot; repots record a setup boundary rather than a new container ID.
+
+## Current collection in the setup pictures
+
+The [refreshed placement illustrations](./layouts/table-placement-research.md#illustrated-views)
+cover all **39 tracked containers**: **24 front pots and eight rear pots** on the
+four wooden tables, **Money Tree on a room-side stool**, **Terrarium on the desk
+to the right**, **two plants on the kitchen window shelf**, and **three plants
+on the room-side shelf next to the cacti table**.
+
+The drawings were refreshed **November 11, 2026** from the photographs supplied
+October 22, the Arctic Ice identification confirmed October 23, the kitchen
+placement reported October 24, and the room-side shelf report from November 4.
+That is an illustration date, not a new observation or move. Plant sizes,
+distances, and the order within the room-side shelf are schematic; light
+shading remains an estimate. The September pictures are retained as history.
 
 ## November 4 room-side shelf placement
 
@@ -89,7 +104,7 @@ The shelf has one FECiDA 54 W six-tube fixture and one Juhefa 10 W three-head fi
 
 Photographs supplied **October 22, 2026** (capture date unrecorded) update the [current placement guide](./layouts/table-placement-research.md). The 24-pot front grid retains six columns and four rows, with **B3 / P06 at R1C4, D1 / P10 at R1C5, C1 / P07 at R2C6, and D2 / P11 at R3C6**; the other front cells retain their recorded positions, including A3/F1. **P35 Lithops sits behind Kiwi at the back left**, and **P36 split rock sits between the shared cactus and square box at the back center-right**. **P21 Money Tree is on a room-side stool**, superseding its historical September 16 north-windowsill location; **P38 Terrarium is on the desk to the right**. P30 is visible in a green glazed round bowl. The owner confirmed October 23 that the pale rosette in the grey/blue pot at the back center-left is P37 / #11 Arctic Ice, between P35 Lithops and P19 shared cactus. P31/P32 are absent from these views; the later October 24 owner report places both on a kitchen window shelf after completed repots about two weeks earlier. P39/P40 are not pictured here; the October report placed them in another-room quarantine with a future shelf position planned after repotting. The later November 4 report places P39/P40/P41 on the shelf next to the cacti table on the room side, without confirming those repots. The photographs establish no new watering, medium, repot/setup boundary, dimensions, light reading, or controller setting.
 
-The current diagram faces the window: **north window top, open room bottom, Mylar left, white wall right**. This rotates the old schematic view without changing the room. The two-foot end reflector remains absent. See the [current placement guide](./layouts/table-placement-research.md) for the current positions, earlier illustrative light map and [owner light readings](./layouts/table-placement-research.md#owner-light-readings-and-confirmed-swap). The 48 approximate lux-derived PPFD readings were taken at individual plant heights, not one level plane. The whole mapped rectangle, including the intentionally unlit far edge, ranged from 145 to 677 estimated PPFD; the app's 13-hour DLI output ranged from 6.8 to 31.7. This is not calibrated PAR evidence, and the measurement date was not supplied. That earlier review confirmed the A3/F1 exchange; the October 22 photographs supply the later position updates above without new light measurements. Old proposed swaps and the glass-spill gradient are historical.
+The current diagram faces the window: **north window top, open room bottom, Mylar left, white wall right**. This rotates the old schematic view without changing the room. The two-foot end reflector remains absent. See the [current placement guide](./layouts/table-placement-research.md) for the current positions, refreshed qualitative light map and [owner light readings](./layouts/table-placement-research.md#owner-light-readings-and-confirmed-swap). The 48 approximate lux-derived PPFD readings were taken at individual plant heights, not one level plane. The whole mapped rectangle, including the intentionally unlit far edge, ranged from 145 to 677 estimated PPFD; the app's 13-hour DLI output ranged from 6.8 to 31.7. This is not calibrated PAR evidence, and the measurement date was not supplied. That earlier review confirmed the A3/F1 exchange; the October 22 photographs supply the later position updates above without new light measurements. Old proposed swaps and the glass-spill gradient are historical.
 
 The **AW200 at 45%** and **AeroLight 240 W at 38%**, **Veg mode on both lights**, shared **13 h 15 m total cycle** including **15 m sunrise and 15 m sunset**, **18-inch plant-tip reference** and four independent ceiling hooks remain the last reported operating record. The September 15 photos do not remeasure controller settings, exact fixture centers or individual clearances. The previous one-inch table margins and ½–1-inch fixture gap must not be transferred to the new footprint as verified geometry.
 

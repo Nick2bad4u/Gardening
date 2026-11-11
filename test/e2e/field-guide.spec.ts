@@ -181,7 +181,7 @@ for (const theme of ["dark", "light"] as const) {
                 await page.setViewportSize({ height: 900, width });
                 await openSite(page, "setup/", theme);
                 const preview = page.getByRole("link", {
-                    name: /Four-Table Arrangement/v,
+                    name: /Current Collection Arrangement/v,
                 });
                 const previewSize = await preview
                     .getByRole("img")
