@@ -38,6 +38,21 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## November 13 loading and calculation status layout
+
+Candidate **5.44.3** centers the loading spinner, heading, and connection message,
+keeps recovery controls within narrow or enlarged-text layouts, and gives the
+calculation disclosure a full-width row below the toolbar. The last confirmed
+calculation time appears separately from the current status. Saved queue entries
+wait for bootstrap data before rendering, preventing an early page-restoration
+callback from reading a missing plant list. They remain in browser storage and
+appear after connection succeeds.
+
+Production remains **5.44.2 / immutable version 135** until the candidate passes
+release safeguards and its existing deployment is updated. The server change is
+only its version literal; workbook schema, observations, AppSheet, artwork,
+manifest, and ten-minute schedule do not change.
+
 ## November 11 ten-minute AppSheet cadence
 
 Production **5.44.2 / immutable version 135** was promoted at **01:01:43 EST**,

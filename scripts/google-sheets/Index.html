@@ -747,17 +747,19 @@
             }
 
             .workflow-status {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 8px 12px;
-                align-items: center;
-                justify-content: space-between;
-                margin-block-end: 8px;
+                display: grid;
+                gap: 10px;
+                margin-block: 12px;
+
+                & > :where(.hint):empty {
+                    display: none;
+                }
             }
 
             .workbook-calculation-details {
                 --calculation-surface: var(--card-soft);
                 --calculation-ink: var(--muted);
+                inline-size: 100%;
                 max-inline-size: 100%;
                 overflow: hidden;
                 font-size: 0.875rem;
@@ -784,12 +786,14 @@
 
                 & > summary {
                     display: flex;
-                    gap: 8px;
+                    gap: 10px;
                     align-items: center;
                     min-block-size: 44px;
-                    padding: 10px 12px;
+                    padding: 12px 14px;
                     font-weight: 700;
+                    line-height: 1.5;
                     color: var(--calculation-ink);
+                    overflow-wrap: anywhere;
                     cursor: pointer;
                     list-style-type: "";
                     background: var(--calculation-surface);
@@ -812,8 +816,6 @@
                 }
 
                 &:where([open]) {
-                    flex-basis: 100%;
-
                     & > summary {
                         border-block-end: 1px solid var(--line);
                     }
@@ -824,10 +826,22 @@
                 }
 
                 & p {
-                    margin: 10px 12px;
+                    margin: 12px 14px;
                     line-height: 1.5;
                     overflow-wrap: anywhere;
+
+                    &:empty {
+                        display: none;
+                    }
                 }
+            }
+
+            .workbook-calculation-time {
+                display: block;
+                padding-block-start: 10px;
+                margin-block-start: 10px;
+                font-size: 0.875rem;
+                border-block-start: 1px solid var(--line);
             }
 
             .history-filters {
@@ -2899,31 +2913,43 @@
                 display: grid;
                 place-items: center;
                 min-block-size: 220px;
+                padding: 28px 20px;
                 color: var(--muted);
                 text-align: center;
             }
 
             .loading-content {
+                display: grid;
+                gap: 12px;
+                justify-items: center;
                 inline-size: min(100%, 34rem);
+
+                & :where(.spinner) {
+                    margin: 0 0 4px;
+                }
             }
 
             .loading strong {
                 display: block;
-                font-size: 18px;
+                font-size: 1.125rem;
+                line-height: 1.5;
                 color: var(--ink);
             }
 
             .loading-detail {
-                margin: 8px 0 0;
+                max-inline-size: 32ch;
+                margin: 0;
                 line-height: 1.5;
             }
 
             .loading-actions {
                 display: flex;
+                flex-wrap: wrap;
                 gap: 10px;
                 align-items: stretch;
                 justify-content: center;
-                margin-block-start: 18px;
+                inline-size: 100%;
+                margin-block-start: 6px;
 
                 &[hidden] {
                     display: none;
@@ -2932,10 +2958,13 @@
                 & .primary,
                 & .secondary {
                     display: inline-flex;
+                    flex: 1 1 11rem;
+                    gap: 8px;
                     align-items: center;
                     justify-content: center;
                     min-block-size: 46px;
                     padding: 9px 15px;
+                    white-space: normal;
                     text-decoration: none;
                 }
             }
@@ -14488,6 +14517,7 @@
                     <section
                         id="loading"
                         class="card loading"
+                        aria-label="Garden connection"
                         aria-live="polite"
                         aria-busy="true"
                     >
@@ -14661,8 +14691,15 @@
                         <details
                             id="workbookCalculationDetails"
                             class="workbook-calculation-details"
+                            aria-label="Workbook calculation status"
                         >
                             <summary id="workbookCalculationSummary"
+                                ><svg
+                                    viewBox="0 0 64 64"
+                                    class="app-icon app-icon--small"
+                                    aria-hidden="true"
+                                >
+                                    <use href="#app-icon-info"></use></svg
                                 >Calculation status</summary
                             >
                             <p
@@ -20623,6 +20660,7 @@
             }
 
             function renderObservationQueue() {
+                if (!state.bootstrap) return;
                 const card = $("queueCard");
                 const list = $("queueList");
                 const focusedRequest =
@@ -27041,11 +27079,14 @@
                 );
                 if (status !== "ready")
                     $("workbookCalculationDetails").open = true;
-                const lastSuccess = state.workbookCalculatedAt
-                    ? ` Last confirmed calculation: ${new Date(state.workbookCalculatedAt).toLocaleString()}.`
-                    : "";
-                $("workbookCalculationStatus").textContent =
-                    message + lastSuccess;
+                const detail = $("workbookCalculationStatus");
+                detail.textContent = message;
+                if (state.workbookCalculatedAt) {
+                    const lastSuccess = document.createElement("span");
+                    lastSuccess.className = "workbook-calculation-time";
+                    lastSuccess.textContent = ` Last confirmed calculation: ${new Date(state.workbookCalculatedAt).toLocaleString()}.`;
+                    detail.append(lastSuccess);
+                }
             }
 
             function recalculateWorkbook() {

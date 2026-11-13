@@ -289,7 +289,8 @@ const openLogger = async (
     page: Readonly<Page>,
     width: number,
     theme: "dark" | "light",
-    fixtureHtml = loggerBrowserFixture()
+    fixtureHtml = loggerBrowserFixture(),
+    shouldWaitForConnection = true
 ) => {
     await page.clock.setFixedTime(fixtureClockTime);
     await page.setViewportSize({ height: 900, width });
@@ -315,6 +316,7 @@ const openLogger = async (
         }
     });
     await page.goto("/Gardening/logger-fixture");
+    if (!shouldWaitForConnection) return;
     await expect
         .soft(
             page.getByText("Connected · Logger browser-fixture", {
@@ -910,6 +912,31 @@ const beginWorkbookRecalculation = async (page: Readonly<Page>) => {
 
 const confirmedCalculationText = "Last confirmed calculation:";
 
+const expectCalculationLayout = async (page: Readonly<Page>) => {
+    const details = page.getByRole("group", {
+        exact: true,
+        name: "Workbook calculation status",
+    });
+    const bounds = await details.evaluate((element) => {
+        const toolbar = document.querySelector(".workflow-toolbar");
+        if (!toolbar) throw new Error("Missing workbook controls");
+        const card = element.getBoundingClientRect();
+        const controls = toolbar.getBoundingClientRect();
+        return {
+            aligned: Math.abs(card.left - controls.left) < 1,
+            contained: card.right <= innerWidth,
+            fullWidth: Math.abs(card.width - controls.width) < 1,
+            separated: card.top - controls.bottom >= 10,
+        };
+    });
+    expect.soft(bounds).toStrictEqual({
+        aligned: true,
+        contained: true,
+        fullWidth: true,
+        separated: true,
+    });
+};
+
 const confirmWorkbookRecalculation = async (page: Readonly<Page>) => {
     await page.evaluate(() =>
         dispatchEvent(
@@ -937,6 +964,10 @@ const confirmWorkbookRecalculation = async (page: Readonly<Page>) => {
                 .filter({ hasText: confirmedCalculationText })
         )
         .toBeVisible();
+    await expectCalculationLayout(page);
+    await expect
+        .soft(page.getByText(/Last confirmed calculation:/v, { exact: false }))
+        .toHaveCSS("display", "block");
 };
 
 const expectToolbarGeometry = async (page: Readonly<Page>) => {
@@ -981,6 +1012,7 @@ const expectCalculationDisclosure = async (page: Readonly<Page>) => {
         .filter({ hasText: confirmedCalculationText });
     await summary.click();
     await expect.soft(status).toBeHidden();
+    await expectCalculationLayout(page);
     const capacity = page.getByRole("button", {
         name: /History space at last refresh:/v,
     });
@@ -1335,6 +1367,159 @@ for (const theme of ["dark", "light"] as const) {
         );
     }
 }
+
+const expectLoadingState = async (page: Readonly<Page>, isLoading: boolean) => {
+    const panel = page.getByRole("region", { name: "Garden connection" });
+    await expect.soft(panel).toHaveAttribute("aria-busy", String(isLoading));
+    expect
+        .soft(
+            await panel.evaluate((element) => {
+                const spinner = element.querySelector("#loadingSpinner");
+                const actions = element.querySelector("#loadingActions");
+                if (
+                    !(spinner instanceof HTMLElement) ||
+                    !(actions instanceof HTMLElement)
+                )
+                    throw new Error("Missing loading feedback");
+                return {
+                    actionsHidden: actions.hidden,
+                    spinnerHidden: spinner.hidden,
+                };
+            })
+        )
+        .toStrictEqual({ actionsHidden: isLoading, spinnerHidden: !isLoading });
+};
+
+const expectLoadingGeometry = async (page: Readonly<Page>) => {
+    const panel = page.getByRole("region", { name: "Garden connection" });
+    const geometry = await panel.evaluate((element) => {
+        const spinner = element.querySelector("#loadingSpinner");
+        if (!spinner) throw new Error("Missing loading spinner");
+        const outer = element.getBoundingClientRect();
+        const inner = spinner.getBoundingClientRect();
+        return {
+            centered:
+                Math.abs(
+                    inner.left + inner.width / 2 - outer.left - outer.width / 2
+                ) < 1,
+            motion: getComputedStyle(spinner).animationName,
+        };
+    });
+    expect.soft(geometry).toStrictEqual({ centered: true, motion: "none" });
+    await expectCalculationLayout(page);
+};
+
+const expectLoadingRecoveryLayout = async (page: Readonly<Page>) => {
+    await expectLoadingState(page, false);
+    await page.addStyleTag({ content: "html { font-size: 200%; }" });
+    const isContained = await page
+        .getByRole("region", { name: "Garden connection" })
+        .evaluate((element) => {
+            const actions = element.querySelector("#loadingActions");
+            if (!actions) throw new Error("Missing loading actions");
+            const rect = actions.getBoundingClientRect();
+            return (
+                [...actions.children].every((child) => {
+                    const bounds = child.getBoundingClientRect();
+                    return (
+                        bounds.left >= rect.left &&
+                        bounds.right <= rect.right &&
+                        bounds.height >= 44 &&
+                        child.scrollWidth <= child.clientWidth
+                    );
+                }) && document.documentElement.scrollWidth <= innerWidth
+            );
+        });
+    expect.soft(isContained).toBe(true);
+};
+
+test.describe("loading feedback", { tag: "@logger" }, () => {
+    for (const theme of ["dark", "light"] as const) {
+        for (const width of [
+            320,
+            390,
+            1280,
+        ]) {
+            test(`loading panel ${theme} ${width}px stays aligned through retry and recovery`, async ({
+                page,
+            }, testInfo) => {
+                const errors: string[] = [];
+                const recordError = (error: Readonly<Error>) => {
+                    errors.push(error.message);
+                };
+                page.on("pageerror", recordError);
+                const fixture = loggerBrowserFixture().replace(
+                    "getWebAppBootstrap() { success(fixtureBootstrap); }",
+                    `getWebAppBootstrap() {
+                        window.addEventListener("fixture-release-bootstrap", (event) => {
+                            if (event.detail === "failure") failure({ message: "The spreadsheet connection is temporarily unavailable. Please try again." });
+                            else success(fixtureBootstrap);
+                        }, { once: true });
+                    }`
+                );
+                await page.clock.install({ time: fixtureClockTime });
+                await openLogger(page, width, theme, fixture, false);
+                await page.clock.pauseAt("2026-09-09T14:00:01Z");
+                const loading = page.getByRole("region", {
+                    name: "Garden connection",
+                });
+                await expectLoadingState(page, true);
+                await expectLoadingGeometry(page);
+                await loading.screenshot({
+                    path: testInfo.outputPath("loading.png"),
+                });
+                await page.clock.fastForward(120_000);
+                await expect
+                    .soft(
+                        page.getByText("Still loading your plants…", {
+                            exact: true,
+                        })
+                    )
+                    .toBeVisible();
+                await page.evaluate(() =>
+                    dispatchEvent(
+                        new CustomEvent("fixture-release-bootstrap", {
+                            detail: "failure",
+                        })
+                    )
+                );
+                await expectLoadingRecoveryLayout(page);
+                await loading.screenshot({
+                    path: testInfo.outputPath("loading-failure-large-text.png"),
+                });
+                await page
+                    .getByRole("button", { name: "Retry connection" })
+                    .focus();
+                await page.keyboard.press("Enter");
+                await expectLoadingState(page, true);
+                await page.evaluate(() =>
+                    dispatchEvent(
+                        new CustomEvent("fixture-release-bootstrap", {
+                            detail: "success",
+                        })
+                    )
+                );
+                await expect.soft(loading).toBeHidden();
+                await expect
+                    .soft(
+                        page.getByLabel("2 queued observations", {
+                            exact: true,
+                        })
+                    )
+                    .toHaveText("2");
+                page.off("pageerror", recordError);
+                expect.soft(errors).toStrictEqual([]);
+                await expect
+                    .soft(
+                        page.getByText("Connected · Logger browser-fixture", {
+                            exact: true,
+                        })
+                    )
+                    .toBeVisible();
+            });
+        }
+    }
+});
 
 const waterAgeToggleName = "Days since watered";
 const waterAgeFixtureResult = "fixture-bootstrap-result";
