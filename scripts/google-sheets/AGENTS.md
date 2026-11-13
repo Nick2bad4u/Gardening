@@ -42,7 +42,8 @@
 - Refresh cached choices/filters without losing drafts/selections/focus/
   save locks. Test older cached-roster upgrades.
 - Water/Weigh/Measure use separate rows per save. Bulk water amount is per pot.
-- Nutrients are per-entry opt-in, reset after save/queue/clear. Shared usual doses
+- Keep selected retains single-plant nutrient opt-in/product/dose after save/queue;
+  unchecked, Clear, and bulk reset. Shared usual doses
   never opt in or enter History. Import missing legacy doses; lock updates and
   reject conflicts. Cache offline; confirm remote saves. Preserve amount/unit text
   and exact draft/pending payloads, including older inactive flags, for retries.
@@ -116,9 +117,9 @@
   errors. Filter Removed/future rows; retain correction order. Upgrade v1 only
   through guarded migration. Fertilizer: explicit Yes on latest Water.
   The formula is neither an observation nor a refresh clock.
-- Logger picker watering ages follow the permanent pot across setups, using
-  workbook-timezone calendar midnight independently of the 4 a.m. weighing day.
-  Cached, pending, or failed bootstrap data must not expose unconfirmed ages.
+- Picker ages/streaks follow the pot across setups. Ages use workbook-timezone
+  midnight, not the 4 a.m. weighing day. Withhold cached/pending/failed ages/streaks.
+  Count eligible Water until opposite/unknown nutrients.
 - Refresh Dry-down models/cycle comparison/environment readings/recorded
   locations together via ordinary Apps Script from full History; preserve exact
   model/correction rules. Use the existing queue trigger and explicit analytics

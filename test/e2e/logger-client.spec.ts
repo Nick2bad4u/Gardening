@@ -1626,7 +1626,7 @@ const expectBulkWaterAgeRefresh = async (page: Readonly<Page>) => {
     const bulk = waterAgeTile(tablePicker(page, true), "P02");
     await bulk.click();
     await refreshLogger(page);
-    await expect.soft(bulk).toContainText("No data");
+    await expect.soft(bulk).toContainText("Wait…");
     await confirmWaterAgeRefresh(page);
     await expect.soft(bulk).toContainText("1d");
     await expect.soft(bulk).toHaveAttribute(pressedAttribute, "true");
@@ -1909,14 +1909,37 @@ const expectFertilizerAlignment = async (page: Readonly<Page>) => {
     ];
 };
 
+const expectNutrientStreakIcons = async (page: Readonly<Page>) => {
+    const picker = tablePicker(page);
+    const plain = waterAgeTile(picker, "P01").getByRole("img", {
+        name: "4 waterings in a row without nutrients",
+    });
+    const fed = waterAgeTile(picker, "P02").getByRole("img", {
+        name: "3 waterings in a row with nutrients",
+    });
+    const readBadge = (badge: Readonly<Locator>) =>
+        badge.evaluate((element) => ({
+            count: element.querySelector(".watering-streak-count")?.textContent,
+            icon: element.querySelector("use")?.getAttribute("href"),
+        }));
+    await expect.soft(plain).toBeVisible();
+    expect
+        .soft(await readBadge(plain))
+        .toStrictEqual({ count: "4", icon: "#app-icon-water" });
+    expect
+        .soft(await readBadge(fed))
+        .toStrictEqual({ count: "3", icon: "#app-icon-feeding" });
+};
+
 test.describe("latest-water fertilizer badge", { tag: "@logger" }, () => {
-    const badgeLabel = "Last watering included fertilizer";
+    const badgeLabel = "3 waterings in a row with nutrients";
     const expectSingleFertilizer = async (page: Readonly<Page>) => {
         await pickerMode(page, "Table").click();
         const fertilized = waterAgeTile(tablePicker(page), "P02");
         await expect
             .soft(fertilized.getByRole("img", { name: badgeLabel }))
             .toBeVisible();
+        await expectNutrientStreakIcons(page);
         await expect
             .soft(
                 waterAgeTile(tablePicker(page), "P01").getByRole("img", {
@@ -1926,7 +1949,7 @@ test.describe("latest-water fertilizer badge", { tag: "@logger" }, () => {
             .toHaveCount(0);
         await expect
             .soft(fertilized)
-            .toHaveAccessibleName(/Last watering included fertilizer/v);
+            .toHaveAccessibleName(/3 waterings in a row with nutrients/v);
         await expect
             .soft(fertilized.getByText("1d", { exact: true }))
             .toHaveCount(0);
@@ -1988,7 +2011,7 @@ test.describe("latest-water fertilizer badge", { tag: "@logger" }, () => {
             }, testInfo) => {
                 const fixture = wateringAgeFixture().replace(
                     "plant.lastWateredDayKey =",
-                    'plant.lastWateredNutrientsUsed = index === 1 ? "Yes" : "No"; plant.lastWateredDayKey ='
+                    'plant.lastWateredNutrientsUsed = index === 1 ? "Yes" : "No"; plant.lastWateredNutrientStreakCount = index === 1 ? 3 : index === 0 ? 4 : 1; plant.lastWateredDayKey ='
                 );
                 await openLogger(page, width, theme, fixture);
                 const alignment = await expectFertilizerAlignment(page);
@@ -2053,7 +2076,90 @@ test.describe("latest-water fertilizer badge", { tag: "@logger" }, () => {
     }
 });
 
+const refreshControl = (page: Readonly<Page>) =>
+    page.getByRole("button", {
+        name: /^Refresh(?:ing)? plant summaries/v,
+    });
+const expectRefreshProgress = async (
+    page: Readonly<Page>,
+    isPending: boolean
+) => {
+    const refresh = refreshControl(page);
+    expect
+        .soft(
+            await refresh.evaluate((element) => ({
+                busy: element.getAttribute("aria-busy"),
+                disabled: element.hasAttribute("disabled"),
+                text: element.textContent.trim(),
+            }))
+        )
+        .toStrictEqual({
+            busy: String(isPending),
+            disabled: isPending,
+            text: isPending ? "Refreshing…" : "Refresh",
+        });
+    await expect
+        .soft(refresh)
+        .toHaveAccessibleName(
+            isPending
+                ? "Refreshing plant summaries, watering days and History"
+                : "Refresh plant summaries and History"
+        );
+};
+const expectRefreshMotion = async (
+    page: Readonly<Page>,
+    isReduced: boolean
+) => {
+    await page.emulateMedia({
+        reducedMotion: isReduced ? "reduce" : "no-preference",
+    });
+    expect
+        .soft(
+            await refreshControl(page).evaluate((button) => {
+                const icon = button.querySelector("svg");
+                if (!icon) throw new Error("Missing refresh icon");
+                return getComputedStyle(icon).animationName;
+            })
+        )
+        .toBe(isReduced ? "none" : "spin");
+};
+
 test.describe("watering age picker", { tag: "@logger" }, () => {
+    for (const theme of ["dark", "light"] as const) {
+        test(`390px ${theme} shows refresh progress and stops on timeout without accepting a late reply`, async ({
+            page,
+        }, testInfo) => {
+            await openLogger(page, 390, theme, wateringAgeFixture());
+            await pickerMode(page, "Labels").click();
+            await pickerMode(page, waterAgeToggleName).click();
+            await refreshLogger(page);
+            await expectRefreshProgress(page, true);
+            await expect
+                .soft(waterAgeTile(tablePicker(page), "P02"))
+                .toContainText("Wait…");
+            await expectRefreshMotion(page, false);
+            await expectRefreshMotion(page, true);
+            await refreshControl(page).screenshot({
+                path: testInfo.outputPath("refresh-pending.png"),
+            });
+            await page.clock.runFor(121_000);
+            await expectRefreshProgress(page, false);
+            await expect
+                .soft(waterAgeTile(tablePicker(page), "P02"))
+                .toContainText("No data");
+            await confirmWaterAgeRefresh(page);
+            await expect
+                .soft(waterAgeTile(tablePicker(page), "P02"))
+                .toContainText("No data");
+            await refreshLogger(page);
+            await confirmWaterAgeRefresh(page);
+            await expectRefreshProgress(page, false);
+            await expect
+                .soft(waterAgeTile(tablePicker(page), "P02"))
+                .toContainText("1d");
+        });
+    }
+
     for (const theme of ["dark", "light"] as const) {
         const neutralColor =
             theme === "dark" ? "rgb(17, 25, 20)" : "rgb(255, 255, 255)";
@@ -2186,7 +2292,7 @@ test.describe("watering age picker", { tag: "@logger" }, () => {
         await pickerMode(page, waterAgeToggleName).click();
         const plant = waterAgeTile(tablePicker(page), "P02");
         await refreshLogger(page);
-        await expect.soft(plant).toContainText("No data");
+        await expect.soft(plant).toContainText("Wait…");
         await expectWaterAgeCalls(page, "2", undefined);
         await confirmWaterAgeRefresh(page, true);
         await expect.soft(plant).toContainText("No data");

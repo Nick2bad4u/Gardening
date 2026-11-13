@@ -5463,7 +5463,7 @@ describe("garden logger humidity observations", () => {
     });
 });
 
-describe("garden logger latest-water fertilizer badge", () => {
+describe("garden logger watering nutrient streak badges", () => {
     afterEach(restoreLoggerMocks);
 
     const fertilizedBootstrap = () => ({
@@ -5471,6 +5471,7 @@ describe("garden logger latest-water fertilizer badge", () => {
         plants: workflowBootstrap().plants.map((plant, index) => ({
             ...plant,
             lastWateredDayKey: "2026-09-05",
+            lastWateredNutrientStreakCount: index === 0 ? 2 : 1,
             lastWateredNutrientsUsed: /** @type {"No" | "Yes"} */ (
                 index === 0 ? "Yes" : "No"
             ),
@@ -5478,7 +5479,8 @@ describe("garden logger latest-water fertilizer badge", () => {
         wateringAgesAvailable: true,
     });
     const badgeSelector = ".last-water-fertilizer";
-    const badgeLabel = "Last watering included fertilizer";
+    const badgeLabel = "2 waterings in a row with nutrients";
+    const plainLabel = "1 watering in a row without nutrients";
     const badgeCount = (/** @type {Window} */ window) =>
         window.document.querySelectorAll(badgeSelector).length;
     const click = (
@@ -5525,6 +5527,14 @@ describe("garden logger latest-water fertilizer badge", () => {
                         .querySelector(`${badgeSelector} use`)
                         ?.getAttribute("href")
                 ).toBe("#app-icon-feeding");
+                expect(
+                    parent.querySelector(
+                        `${badgeSelector} .watering-streak-count`
+                    )?.textContent
+                ).toBe("2");
+                expect(
+                    parent.querySelector(badgeSelector)?.getAttribute("role")
+                ).toBe("img");
             }
 
             expect(
@@ -5532,6 +5542,20 @@ describe("garden logger latest-water fertilizer badge", () => {
                     '#labelPicker [data-plant-id="P02"] .last-water-fertilizer'
                 )
             ).toBeNull();
+
+            const plain = queryElement(
+                window.document,
+                '#labelPicker [data-plant-id="P02"] .last-water-plain',
+                HTMLElement
+            );
+
+            expect(plain.getAttribute("aria-label")).toBe(plainLabel);
+            expect(plain.querySelector("use")?.getAttribute("href")).toBe(
+                "#app-icon-water"
+            );
+            expect(
+                plain.querySelector(".watering-streak-count")?.textContent
+            ).toBe("1");
         }
         for (let count = 0; count < 4; count += 1)
             click(window, "#daysSinceWatered");
@@ -5566,6 +5590,13 @@ describe("garden logger latest-water fertilizer badge", () => {
                     '#bulkPlantList [data-bulk-plant-id="P02"] .last-water-fertilizer'
                 )
             ).toBeNull();
+            expect(
+                window.document
+                    .querySelector(
+                        '#bulkPlantList [data-bulk-plant-id="P02"] .last-water-plain'
+                    )
+                    ?.getAttribute("aria-label")
+            ).toBe(plainLabel);
         }
     });
 
@@ -5575,7 +5606,9 @@ describe("garden logger latest-water fertilizer badge", () => {
         const data = fertilizedBootstrap();
         const { behaviors, window } = createLoggerWindow({
             bootstrapData: data,
+            storage: { gardenLoggerWaterAgesVisibleV1: "shown" },
         });
+        click(window, "#labelPickerMode");
 
         expect(badgeCount(window)).toBeGreaterThan(0);
 
@@ -5590,10 +5623,37 @@ describe("garden logger latest-water fertilizer badge", () => {
         refreshWorkflow(window);
 
         expect(badgeCount(window)).toBe(0);
+        expect(
+            window.document.querySelectorAll(".watering-streak")
+        ).toHaveLength(0);
+        expect(
+            queryElement(
+                window.document,
+                '#labelPicker [data-plant-id="P01"] .water-age',
+                HTMLElement
+            ).textContent
+        ).toBe("Wait…");
+        expect(
+            queryElement(
+                window.document,
+                "#plantChoiceSummary .water-age",
+                HTMLElement
+            ).textContent
+        ).toBe("Refreshing watering days…");
 
         required(handlers).failure({ message: "Fixture unavailable" });
 
         expect(badgeCount(window)).toBe(0);
+        expect(
+            window.document.querySelectorAll(".watering-streak")
+        ).toHaveLength(0);
+        expect(
+            queryElement(
+                window.document,
+                '#labelPicker [data-plant-id="P01"] .water-age',
+                HTMLElement
+            ).textContent
+        ).toBe("No data");
 
         refreshWorkflow(window);
         required(handlers).success(data);
@@ -5605,6 +5665,7 @@ describe("garden logger latest-water fertilizer badge", () => {
             ...data,
             plants: data.plants.map((plant) => ({
                 ...plant,
+                lastWateredNutrientStreakCount: 1,
                 lastWateredNutrientsUsed: "No",
             })),
         });
@@ -5617,6 +5678,13 @@ describe("garden logger latest-water fertilizer badge", () => {
                 HTMLElement
             ).getAttribute("aria-label")
         ).not.toContain(badgeLabel);
+        expect(
+            queryElement(
+                window.document,
+                "#plantChoiceSummary .last-water-plain",
+                HTMLElement
+            ).getAttribute("aria-label")
+        ).toBe(plainLabel);
     });
 
     it("withholds cached fertilizer until a fresh bootstrap confirms it", () => {
@@ -5667,6 +5735,103 @@ describe("garden logger latest-water fertilizer badge", () => {
         expect(
             badgeCount(createLoggerWindow({ bootstrapData: data }).window)
         ).toBe(0);
+    });
+
+    it.each([
+        undefined,
+        0,
+        -1,
+        1.5,
+        "2",
+    ])("withholds streaks from missing or invalid counts: %j", (count) => {
+        expect.hasAssertions();
+
+        const data = fertilizedBootstrap();
+        for (const plant of data.plants)
+            Reflect.set(plant, "lastWateredNutrientStreakCount", count);
+        const { window } = createLoggerWindow({ bootstrapData: data });
+
+        expect(
+            window.document.querySelectorAll(".watering-streak")
+        ).toHaveLength(0);
+    });
+
+    it("does not describe unknown nutrient history as plain watering", () => {
+        expect.hasAssertions();
+
+        const data = fertilizedBootstrap();
+        for (const plant of data.plants)
+            Reflect.set(plant, "lastWateredNutrientsUsed", "");
+        const { window } = createLoggerWindow({ bootstrapData: data });
+
+        expect(
+            window.document.querySelectorAll(".watering-streak")
+        ).toHaveLength(0);
+    });
+
+    it("replaces pending watering ages with unavailable after refresh timeout", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        const { behaviors, window } = createLoggerWindow({
+            bootstrapData: fertilizedBootstrap(),
+            storage: { gardenLoggerWaterAgesVisibleV1: "shown" },
+        });
+        click(window, "#labelPickerMode");
+        behaviors.getWebAppBootstrap = () => undefined;
+        refreshWorkflow(window);
+
+        expect(
+            queryElement(
+                window.document,
+                '#labelPicker [data-plant-id="P01"] .water-age',
+                HTMLElement
+            ).textContent
+        ).toBe("Wait…");
+        expect(
+            window.document.querySelectorAll(".watering-streak")
+        ).toHaveLength(0);
+
+        vi.advanceTimersByTime(120_000);
+
+        expect(
+            queryElement(
+                window.document,
+                '#labelPicker [data-plant-id="P01"] .water-age',
+                HTMLElement
+            ).textContent
+        ).toBe("No data");
+        expect(
+            window.document.querySelectorAll(".watering-streak")
+        ).toHaveLength(0);
+    });
+
+    it("ends pending watering ages without streaks when the phone goes offline", () => {
+        expect.hasAssertions();
+
+        const { behaviors, window } = createLoggerWindow({
+            bootstrapData: fertilizedBootstrap(),
+            storage: { gardenLoggerWaterAgesVisibleV1: "shown" },
+        });
+        click(window, "#labelPickerMode");
+        behaviors.getWebAppBootstrap = () => undefined;
+        refreshWorkflow(window);
+        Object.defineProperty(window.navigator, "onLine", {
+            configurable: true,
+            value: false,
+        });
+        window.dispatchEvent(new window.Event("offline"));
+
+        expect(
+            queryElement(
+                window.document,
+                '#labelPicker [data-plant-id="P01"] .water-age',
+                HTMLElement
+            ).textContent
+        ).toBe("No data");
+        expect(
+            window.document.querySelectorAll(".watering-streak")
+        ).toHaveLength(0);
     });
 
     it.each([
@@ -7336,6 +7501,8 @@ describe("garden logger nutrient preferences", () => {
         const { window } = createLoggerWindow({
             nutrientBehaviors: service.behaviors,
         });
+        queryElement(window.document, "#keepEvents", HTMLInputElement).checked =
+            false;
         queryElement(
             window.document,
             '#eventChips [data-event="Water"]',
@@ -7785,6 +7952,180 @@ const initialSharedNutrients = {
     doses: { "MSU 13-3-15": "0.5 g per gallon" },
     product: "MSU 13-3-15",
 };
+
+/** @param {Window} window @param {string} action */
+function finishNutrientEntry(window, action) {
+    if (action === "queue") {
+        queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        ).click();
+    } else {
+        queryElement(
+            window.document,
+            "#entryForm",
+            HTMLFormElement
+        ).dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
+        changeWorkflowSelect(window, "plantSelect", "P02");
+    }
+}
+
+describe("garden logger kept nutrient selections", () => {
+    afterEach(restoreLoggerMocks);
+
+    it.each([
+        ["queue", true],
+        ["save", true],
+        ["queue", false],
+        ["save", false],
+    ])(
+        "honors Keep selected after %s with keep=%s and the next plant",
+        (action, keep) => {
+            expect.hasAssertions();
+
+            const { behaviors, window } = createLoggerWindow();
+            behaviors.saveWebObservation = ({ success }) => {
+                success({ message: "Saved" });
+            };
+            queryElement(
+                window.document,
+                "#keepEvents",
+                HTMLInputElement
+            ).checked = keep;
+            queryElement(
+                window.document,
+                "#advanceAfterQueue",
+                HTMLInputElement
+            ).checked = true;
+            queryElement(
+                window.document,
+                '#eventChips [data-event="Water"]',
+                HTMLButtonElement
+            ).click();
+            enterSharedNutrientDose(window, "0.25");
+            changeWorkflowSelect(window, "nutrientUnit", "custom");
+            enterWorkflowValue(
+                window,
+                "nutrientAmount",
+                "1/4 tsp in 2 gallons (one-off)"
+            );
+            finishNutrientEntry(window, action);
+
+            expect(
+                queryElement(window.document, "#plantSelect", HTMLSelectElement)
+                    .value
+            ).toBe("P02");
+            expect(
+                queryElement(
+                    window.document,
+                    "#nutrientsUsed",
+                    HTMLInputElement
+                ).checked
+            ).toBe(keep);
+            expect(
+                queryElement(
+                    window.document,
+                    "#nutrientAmount",
+                    HTMLInputElement
+                ).value
+            ).toBe(keep ? "1/4 tsp in 2 gallons (one-off)" : "");
+            expect(
+                queryElement(
+                    window.document,
+                    "#nutrientProduct",
+                    HTMLSelectElement
+                ).value
+            ).toBe("MSU 13-3-15");
+
+            changeWorkflowSelect(window, "plantSelect", "P01");
+
+            expect(
+                queryElement(
+                    window.document,
+                    "#nutrientsUsed",
+                    HTMLInputElement
+                ).checked
+            ).toBe(keep);
+            expect(
+                queryElement(
+                    window.document,
+                    "#nutrientAmount",
+                    HTMLInputElement
+                ).value
+            ).toBe(keep ? "1/4 tsp in 2 gallons (one-off)" : "");
+            expect(
+                queryElement(
+                    window.document,
+                    "#bulkNutrientsUsed",
+                    HTMLInputElement
+                ).checked
+            ).toBe(false);
+        }
+    );
+
+    it("clears explicit nutrient opt-in and one-off dose even with Keep selected checked", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow();
+        enterSharedNutrientDose(window, "0.25");
+        queryElement(
+            window.document,
+            "#clearButton",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(window.document, "#keepEvents", HTMLInputElement)
+                .checked
+        ).toBe(true);
+        expect(
+            queryElement(window.document, "#nutrientsUsed", HTMLInputElement)
+                .checked
+        ).toBe(false);
+        expect(currentNutrientDose(window)).toBe("");
+    });
+
+    it("preserves kept nutrients when delayed shared preferences arrive after queueing", () => {
+        expect.hasAssertions();
+
+        /**
+         * @type {import("../logger-fixtures.d.ts").ScriptHandlers<"syncWebNutrientPreferences">
+         *     | undefined}
+         */
+        let held;
+        const { window } = createLoggerWindow({
+            nutrientBehaviors: {
+                syncWebNutrientPreferences: (handlers) => {
+                    held = handlers;
+                },
+            },
+        });
+        queryElement(
+            window.document,
+            '#eventChips [data-event="Water"]',
+            HTMLButtonElement
+        ).click();
+        enterSharedNutrientDose(window, "0.25");
+        queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        ).click();
+        required(held).success(initialSharedNutrients);
+
+        expect(currentNutrientDose(window)).toBe("0.25");
+        expect(
+            queryElement(window.document, "#nutrientsUsed", HTMLInputElement)
+                .checked
+        ).toBe(true);
+        expect(cachedNutrientPreferences(window)).toMatchObject({
+            doses: initialSharedNutrients.doses,
+        });
+    });
+});
 
 describe("garden logger shared nutrient synchronization", () => {
     afterEach(restoreLoggerMocks);

@@ -161,6 +161,7 @@ export interface PlantSummary {
     label: string;
     lastWatered: string;
     lastWateredDayKey?: string;
+    lastWateredNutrientStreakCount?: number;
     lastWateredNutrientsUsed?:
         | ""
         | "No"

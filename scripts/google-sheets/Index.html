@@ -487,7 +487,7 @@
                 }
             }
 
-            .last-water-fertilizer {
+            .watering-streak {
                 display: inline-flex;
                 gap: 4px;
                 align-items: center;
@@ -499,6 +499,31 @@
                 color: var(--ink);
                 background: var(--control);
                 border-radius: 6px;
+
+                & .watering-streak-icon {
+                    position: relative;
+                    display: inline-flex;
+                    flex: 0 0 auto;
+                    align-items: end;
+                    inline-size: 2rem;
+                    block-size: 1.65rem;
+                }
+
+                & .watering-streak-count {
+                    position: absolute;
+                    inset-block-start: 0;
+                    inset-inline-end: 0;
+                    min-inline-size: 1.05rem;
+                    padding: 0 2px;
+                    font-size: 0.625rem;
+                    font-variant-numeric: tabular-nums;
+                    line-height: 1.25;
+                    color: var(--ink);
+                    text-align: center;
+                    background: var(--control);
+                    border: 1px solid var(--line);
+                    border-radius: 999px;
+                }
 
                 & .app-icon {
                     flex: 0 0 auto;
@@ -512,7 +537,7 @@
                     padding: 0;
                     background: transparent;
 
-                    & .last-water-fertilizer-text {
+                    & .watering-streak-text {
                         display: none;
                     }
                 }
@@ -3471,7 +3496,7 @@
             }
 
             .workflow-toolbar button[aria-busy="true"] .app-icon {
-                animation: button-working 1s ease-in-out infinite alternate;
+                animation: spin 0.9s linear infinite;
 
                 @media (prefers-reduced-motion: reduce) {
                     animation: none;
@@ -14633,7 +14658,7 @@
                             >
                                 <use href="#app-icon-refresh"></use>
                             </svg>
-                            Refresh
+                            <span id="refreshDataLabel">Refresh</span>
                         </button>
                         <button
                             id="recalculateWorkbookButton"
@@ -16273,7 +16298,8 @@
                                     checked
                                 />
                                 <label for="keepEvents"
-                                    >Keep selected events after saving</label
+                                    >Keep selected events and nutrient settings
+                                    after saving</label
                                 >
                             </div>
                             <div class="control-row">
@@ -17575,6 +17601,7 @@
                 bootstrapRefreshAttempt: 0,
                 bootstrapReceivedAt: 0,
                 wateringAgesConfirmed: false,
+                wateringAgesPending: false,
                 waterAgesVisible: false,
                 summaryPlantId: "",
                 recentDataKey: "",
@@ -18485,6 +18512,7 @@
                         !state.saving &&
                         !state.pendingSave &&
                         !readBulkPendingSave() &&
+                        nutrientUseValue(prefix) !== "Yes" &&
                         !entryDrafts.current[mode] &&
                         JSON.stringify(
                             comparableOrdinaryDraft(ordinaryDraftSnapshot(mode))
@@ -20064,6 +20092,11 @@
             }
 
             function wateringAge(plant, today) {
+                if (state.wateringAgesPending)
+                    return {
+                        short: "Wait…",
+                        text: "Refreshing watering days…",
+                    };
                 const unavailable = {
                     short: "No data",
                     text: "Water age unavailable",
@@ -20165,32 +20198,48 @@
                             }
                         } else badge?.remove();
                         element.classList.toggle("has-water-age", shown);
-                        const fertilized =
+                        const nutrientStatus = plant.lastWateredNutrientsUsed;
+                        const streakCount =
+                            plant.lastWateredNutrientStreakCount;
+                        const hasStreak =
                             Number.isInteger(age.days) &&
-                            plant.lastWateredNutrientsUsed === "Yes";
-                        const fertilizerText =
-                            "Last watering included fertilizer";
-                        let fertilizerBadge = element.querySelector(
-                            ".last-water-fertilizer"
-                        );
-                        if (fertilized && !fertilizerBadge) {
-                            fertilizerBadge = document.createElement("span");
-                            fertilizerBadge.className = "last-water-fertilizer";
-                            fertilizerBadge.setAttribute("role", "img");
-                            fertilizerBadge.setAttribute(
-                                "aria-label",
-                                fertilizerText
+                            (nutrientStatus === "Yes" ||
+                                nutrientStatus === "No") &&
+                            Number.isInteger(streakCount) &&
+                            streakCount > 0;
+                        const fertilized =
+                            hasStreak && nutrientStatus === "Yes";
+                        const streakText = hasStreak
+                            ? `${streakCount} ${streakCount === 1 ? "watering" : "waterings"} in a row ${fertilized ? "with" : "without"} nutrients`
+                            : "";
+                        let streakBadge =
+                            element.querySelector(".watering-streak");
+                        if (hasStreak) {
+                            if (!streakBadge) {
+                                streakBadge = document.createElement("span");
+                                streakBadge.setAttribute("role", "img");
+                                parent.append(streakBadge);
+                            }
+                            streakBadge.className = `watering-streak ${fertilized ? "last-water-fertilizer" : "last-water-plain"}`;
+                            streakBadge.setAttribute("aria-label", streakText);
+                            streakBadge.title = streakText;
+                            const icon = document.createElement("span");
+                            icon.className = "watering-streak-icon";
+                            icon.setAttribute("aria-hidden", "true");
+                            const count = document.createElement("span");
+                            count.className = "watering-streak-count";
+                            count.textContent = String(streakCount);
+                            icon.append(
+                                createIcon(fertilized ? "feeding" : "water"),
+                                count
                             );
-                            fertilizerBadge.title = fertilizerText;
                             const label = document.createElement("span");
-                            label.className = "last-water-fertilizer-text";
-                            label.textContent = "Fertilizer";
-                            fertilizerBadge.append(
-                                createIcon("feeding"),
-                                label
-                            );
-                            parent.append(fertilizerBadge);
-                        } else if (!fertilized) fertilizerBadge?.remove();
+                            label.className = "watering-streak-text";
+                            label.textContent = fertilized
+                                ? "With nutrients"
+                                : "Without nutrients";
+                            streakBadge.replaceChildren(icon, label);
+                        } else streakBadge?.remove();
                         element.classList.toggle(
                             "has-last-water-fertilizer",
                             fertilized
@@ -20198,7 +20247,7 @@
                         const previous = element.dataset.waterAgeSuffix || "";
                         const details = [
                             shown ? age.text : "",
-                            fertilized ? fertilizerText : "",
+                            streakText,
                         ].filter(Boolean);
                         const suffix = details.length
                             ? `, ${details.join(", ")}`
@@ -25853,10 +25902,12 @@
                 entryDrafts.restoring = true;
                 try {
                     restoreCareFields();
-                    resetNutrientEntry();
                     const keepEvents =
                         options.keepEvents ?? $("keepEvents").checked;
-                    if (!keepEvents) state.events.clear();
+                    if (!keepEvents) {
+                        resetNutrientEntry();
+                        state.events.clear();
+                    }
                     [
                         "weight",
                         "height",
@@ -27171,18 +27222,35 @@
                 }
             }
 
+            function setBootstrapRefreshPending(pending) {
+                state.wateringAgesPending = pending;
+                const button = $("refreshDataButton");
+                button.disabled = pending;
+                button.setAttribute("aria-busy", String(pending));
+                button.setAttribute(
+                    "aria-label",
+                    pending
+                        ? "Refreshing plant summaries, watering days and History"
+                        : "Refresh plant summaries and History"
+                );
+                $("refreshDataLabel").textContent = pending
+                    ? "Refreshing…"
+                    : "Refresh";
+                renderWaterAgeDisplays();
+            }
+
             function refreshCachedBootstrap({ updateHistory = true } = {}) {
                 state.wateringAgesConfirmed = false;
-                renderWaterAgeDisplays();
+                clearBootstrapRefreshTimer();
+                const attemptId = ++state.bootstrapRefreshAttempt;
                 if (!browserIsOnline()) {
+                    setBootstrapRefreshPending(false);
                     $("connectionStatus").textContent =
                         "Offline · using the saved plant list";
                     if (updateHistory) setRecentUnavailable("Offline", true);
                     return;
                 }
-                clearBootstrapRefreshTimer();
-                const attemptId = ++state.bootstrapRefreshAttempt;
-                $("refreshDataButton").setAttribute("aria-busy", "true");
+                setBootstrapRefreshPending(true);
                 const recentAttempt = updateHistory
                     ? ++state.recentAttempt
                     : state.recentAttempt;
@@ -27197,49 +27265,47 @@
                     if (updateHistory && recentAttempt === state.recentAttempt)
                         setRecentUnavailable("History refresh unavailable");
                 };
-                state.bootstrapRefreshTimer = window.setTimeout(() => {
-                    if (attemptId !== state.bootstrapRefreshAttempt) return;
-                    state.bootstrapRefreshTimer = null;
+                const finish = () => {
+                    if (attemptId !== state.bootstrapRefreshAttempt)
+                        return false;
+                    clearBootstrapRefreshTimer();
                     state.bootstrapRefreshAttempt += 1;
-                    $("refreshDataButton").setAttribute("aria-busy", "false");
+                    setBootstrapRefreshPending(false);
+                    return true;
+                };
+                const failed = () => {
+                    if (!finish()) return;
+                    $("connectionStatus").textContent =
+                        "Using saved plant list · Google refresh unavailable";
+                    historyUnavailable();
+                };
+                state.bootstrapRefreshTimer = window.setTimeout(() => {
+                    if (!finish()) return;
                     $("connectionStatus").textContent =
                         "Using saved plant list · Google refresh delayed";
                     historyUnavailable();
                 }, BOOTSTRAP_TIMEOUT_MS);
-                google.script.run
-                    .withSuccessHandler((bootstrap) => {
-                        if (attemptId !== state.bootstrapRefreshAttempt) return;
-                        clearBootstrapRefreshTimer();
-                        state.bootstrapRefreshAttempt += 1;
-                        $("refreshDataButton").setAttribute(
-                            "aria-busy",
-                            "false"
-                        );
-                        if (
-                            !applyBootstrapRefresh(
-                                bootstrap,
-                                recentAttempt,
-                                updateHistory
-                            )
-                        ) {
-                            $("connectionStatus").textContent =
-                                "Using saved plant list · Google returned invalid data";
-                            historyUnavailable();
-                        }
-                    })
-                    .withFailureHandler(() => {
-                        if (attemptId !== state.bootstrapRefreshAttempt) return;
-                        clearBootstrapRefreshTimer();
-                        state.bootstrapRefreshAttempt += 1;
-                        $("refreshDataButton").setAttribute(
-                            "aria-busy",
-                            "false"
-                        );
-                        $("connectionStatus").textContent =
-                            "Using saved plant list · Google refresh unavailable";
-                        historyUnavailable();
-                    })
-                    .getWebAppBootstrap();
+                try {
+                    google.script.run
+                        .withSuccessHandler((bootstrap) => {
+                            if (!finish()) return;
+                            if (
+                                !applyBootstrapRefresh(
+                                    bootstrap,
+                                    recentAttempt,
+                                    updateHistory
+                                )
+                            ) {
+                                $("connectionStatus").textContent =
+                                    "Using saved plant list · Google returned invalid data";
+                                historyUnavailable();
+                            }
+                        })
+                        .withFailureHandler(failed)
+                        .getWebAppBootstrap();
+                } catch {
+                    failed();
+                }
             }
 
             function showBootstrapLoading() {
@@ -27896,6 +27962,11 @@
             window.addEventListener("offline", () => {
                 nutrientSync.confirmed = false;
                 ["", "bulk"].forEach(renderNutrientDose);
+                if (state.wateringAgesPending) {
+                    clearBootstrapRefreshTimer();
+                    state.bootstrapRefreshAttempt += 1;
+                    setBootstrapRefreshPending(false);
+                }
                 if (state.recentTimer !== null) {
                     state.recentAttempt += 1;
                     setRecentUnavailable("Offline", true);

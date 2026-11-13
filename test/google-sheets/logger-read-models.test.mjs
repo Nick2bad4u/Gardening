@@ -255,6 +255,13 @@ describe("logger refresh performance and watering age", () => {
             "",
         ]);
         expect(
+            result.plants.map((plant) => plant.lastWateredNutrientStreakCount)
+        ).toStrictEqual([
+            0,
+            0,
+            0,
+        ]);
+        expect(
             baselineReads.mock.calls.filter(([rowNumber]) => rowNumber === 1)
         ).toHaveLength(1);
     });
@@ -301,6 +308,7 @@ describe("logger refresh performance and watering age", () => {
             expect(required(result.plants[0])).toMatchObject({
                 daysSinceWater: "",
                 lastWatered: "",
+                lastWateredNutrientStreakCount: 1,
                 lastWateredNutrientsUsed: "Yes",
             });
         } finally {
@@ -333,6 +341,7 @@ describe("logger refresh performance and watering age", () => {
 
             expect(structuredClone(result.get("P01"))).toStrictEqual({
                 dayKey,
+                nutrientStreakCount: 0,
                 nutrientsUsed: "",
             });
         }
@@ -373,9 +382,84 @@ describe("logger refresh performance and watering age", () => {
 
             expect(structuredClone(result.get("P01"))).toStrictEqual({
                 dayKey: "2026-09-04",
+                nutrientStreakCount:
+                    expected === "Yes" ? 2 : expected === "No" ? 1 : 0,
                 nutrientsUsed: expected,
             });
             expect(observations).toStrictEqual(original);
+        }
+    );
+
+    it.each(["Yes", "No"])(
+        "counts consecutive %s Water records across same-day saves and setups",
+        (nutrientsUsed) => {
+            expect.hasAssertions();
+
+            const opposite = nutrientsUsed === "Yes" ? "No" : "Yes";
+            const observations = [
+                row("2026-09-05T14:00:00Z", "Water", {
+                    10: 2,
+                    16: nutrientsUsed,
+                }),
+                row("2026-09-01T12:00:00Z", "Water", { 16: nutrientsUsed }),
+                row("2026-09-02T12:00:00Z", "Water", { 16: opposite }),
+                row("2026-09-03T12:00:00Z", "Water", { 16: nutrientsUsed }),
+                row("2026-09-04T12:00:00Z", "Repot", { 10: 2 }),
+                row("2026-09-05T12:00:00Z", "Water", {
+                    10: 2,
+                    16: nutrientsUsed,
+                }),
+                row("2026-09-05T13:00:00Z", "Water", {
+                    1: "P02",
+                    16: opposite,
+                }),
+                row("2026-09-05T15:00:00Z", "Mist", { 16: opposite }),
+                row("2026-09-05T16:00:00Z", "Water", {
+                    16: opposite,
+                    35: " removed ",
+                }),
+                row("2026-09-07T12:00:00Z", "Water", { 16: opposite }),
+                row("invalid", "Water", { 16: opposite }),
+                row("2026-09-06T12:00:00Z", "Water", { 1: "", 16: opposite }),
+            ];
+            const original = structuredClone(observations);
+            const models = runtime().api.webWateringReadModelsFromRows_(
+                observations,
+                now,
+                zone
+            );
+
+            expect(structuredClone(models.get("P01"))).toStrictEqual({
+                dayKey: "2026-09-05",
+                nutrientStreakCount: 3,
+                nutrientsUsed,
+            });
+            expect(models.get("P02")?.nutrientStreakCount).toBe(1);
+            expect(models.has("")).toBe(false);
+            expect(observations).toStrictEqual(original);
+        }
+    );
+
+    it.each(["", "Unknown"])(
+        "ends the known nutrient run at historical %j",
+        (unknown) => {
+            expect.hasAssertions();
+
+            const observations = [
+                row("2026-09-01T12:00:00Z", "Water", { 16: "No" }),
+                row("2026-09-02T12:00:00Z", "Water", {
+                    16: unknown,
+                    17: "Product is not evidence",
+                }),
+                row("2026-09-03T12:00:00Z", "Water", { 16: "No" }),
+                row("2026-09-04T12:00:00Z", "Water", { 16: "No" }),
+            ];
+            const model = runtime()
+                .api.webWateringReadModelsFromRows_(observations, now, zone)
+                .get("P01");
+
+            expect(model?.nutrientStreakCount).toBe(2);
+            expect(model?.nutrientsUsed).toBe("No");
         }
     );
 
@@ -437,7 +521,11 @@ describe("logger refresh performance and watering age", () => {
                     )
                     .get("P01")
             )
-        ).toStrictEqual({ dayKey: "2026-09-05", nutrientsUsed: "No" });
+        ).toStrictEqual({
+            dayKey: "2026-09-05",
+            nutrientStreakCount: 1,
+            nutrientsUsed: "No",
+        });
         expect(
             structuredClone(
                 api
@@ -448,7 +536,32 @@ describe("logger refresh performance and watering age", () => {
                     )
                     .get("P01")
             )
-        ).toStrictEqual({ dayKey: "2026-09-05", nutrientsUsed: "Yes" });
+        ).toStrictEqual({
+            dayKey: "2026-09-05",
+            nutrientStreakCount: 1,
+            nutrientsUsed: "Yes",
+        });
+
+        const plainCorrection = water(
+            "water-correction-plain-005",
+            4,
+            "No",
+            String(original[26])
+        );
+
+        expect(
+            api
+                .webWateringReadModelsFromRows_(
+                    [
+                        original,
+                        later,
+                        plainCorrection,
+                    ],
+                    now,
+                    zone
+                )
+                .get("P01")?.nutrientStreakCount
+        ).toBe(2);
 
         const ordinaryLater = water("water-later-004", 5, "Yes");
 

@@ -729,6 +729,7 @@ export interface AppsScriptTestApi {
         string,
         {
             dayKey: string;
+            nutrientStreakCount: number;
             nutrientsUsed:
                 | ""
                 | "No"

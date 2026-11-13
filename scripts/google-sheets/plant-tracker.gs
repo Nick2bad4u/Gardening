@@ -18,7 +18,7 @@
    dryDownModelFormula_, installDailyCareDashboard, GARDEN_CYCLE_COMPARISON, GARDEN_ENVIRONMENT_READINGS, GARDEN_RECORDED_LOCATIONS */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.44.3",
+    version: "5.45.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -1402,6 +1402,8 @@ function webAppBootstrap_(diagnostics) {
                             : Number(daysSinceWater),
                     lastWateredDayKey: wateringRead?.dayKey || "",
                     lastWateredNutrientsUsed: wateringRead?.nutrientsUsed || "",
+                    lastWateredNutrientStreakCount:
+                        wateringRead?.nutrientStreakCount || 0,
                     latestWeight: weightRead.latestWeight,
                     latestWeightAt: weightRead.latestWeightAt,
                     ...environmentReads.get(cleanText_(plantId)),
@@ -12517,6 +12519,8 @@ function webHistoryTimestamp_(value) {
 
 /**
  * Watering age and nutrient use describe the same latest Water across setups.
+ * Count consecutive Water records with that explicit nutrient choice; unknown
+ * choices end the run, while unrelated events and setup changes do not.
  * Calendar midnight is independent of the 4 a.m. weighing day; corrections
  * retain their original equal-time position in the observation ledger.
  * @param {GardenHistoryRow[]} historyRows
@@ -12525,8 +12529,8 @@ function webHistoryTimestamp_(value) {
  * @returns {Map<string, GardenWebWateringReadModel>}
  */
 function webWateringReadModelsFromRows_(historyRows, now, timeZone) {
-    /** @type {Map<string, GardenHistoryOrder & { nutrientsUsed: "" | "No" | "Yes" }>} */
-    const latest = new Map();
+    /** @type {Map<string, (GardenHistoryOrder & { nutrientsUsed: "" | "No" | "Yes" })[]>} */
+    const recordsByPlant = new Map();
     const nowMs = now.getTime();
     const correctionOrder = historyCorrectionContext_(historyRows).order;
     historyRows.forEach((row, rowIndex) => {
@@ -12547,23 +12551,34 @@ function webWateringReadModelsFromRows_(historyRows, now, timeZone) {
             nutrientsUsed:
                 nutrients === "yes" ? "Yes" : nutrients === "no" ? "No" : "",
         };
-        const previous = latest.get(plantId);
-        if (!previous || compareHistoryRecords_(record, previous) > 0)
-            latest.set(plantId, record);
+        const records = recordsByPlant.get(plantId) || [];
+        records.push(record);
+        recordsByPlant.set(plantId, records);
     });
-    return new Map(
-        [...latest].map(([plantId, record]) => [
-            plantId,
-            {
-                dayKey: Utilities.formatDate(
-                    new Date(record.timestamp),
-                    timeZone,
-                    "yyyy-MM-dd"
-                ),
-                nutrientsUsed: record.nutrientsUsed,
-            },
-        ])
-    );
+    /** @type {Map<string, GardenWebWateringReadModel>} */
+    const reads = new Map();
+    for (const [plantId, records] of recordsByPlant) {
+        records.sort((left, right) => compareHistoryRecords_(right, left));
+        const record = records[0];
+        if (!record) continue;
+        let nutrientStreakCount = 0;
+        if (record.nutrientsUsed) {
+            for (const previous of records) {
+                if (previous.nutrientsUsed !== record.nutrientsUsed) break;
+                nutrientStreakCount += 1;
+            }
+        }
+        reads.set(plantId, {
+            dayKey: Utilities.formatDate(
+                new Date(record.timestamp),
+                timeZone,
+                "yyyy-MM-dd"
+            ),
+            nutrientsUsed: record.nutrientsUsed,
+            nutrientStreakCount,
+        });
+    }
+    return reads;
 }
 
 /**

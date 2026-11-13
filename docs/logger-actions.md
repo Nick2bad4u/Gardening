@@ -7,6 +7,10 @@ supported. Air, soil, and leaf measurements keep their own context.
 The [deployment record](../scripts/google-sheets/README.md) keeps the
 logger version and production details.
 
+The refresh progress, retained nutrient settings, and numbered watering badges
+below are prepared for **5.45.0**. Production remains **5.44.3** while its release
+checks are unresolved; see the deployment record for current status.
+
 Read alongside the [watering strategy](./watering-strategy.md), [weighing strategy](./weighing-strategy.md), and [operator runbook](../scripts/google-sheets/README.md).
 
 ## Where to Enter Observations
@@ -79,16 +83,24 @@ separate 4 a.m. care-day boundary. A watering age is history, not a watering
 schedule or evidence that the soil is dry.
 
 **No Water** means no eligible Water event is recorded. **No data** means the age
-cannot currently be confirmed, including while refreshing, after a failed
-refresh, or when using an older saved plant list. Removed and future-dated Water
-events do not contribute to the count.
+cannot currently be confirmed after a failed refresh or when using an older
+saved plant list. During a refresh, the control says **Refreshing…**, its icon
+spins, and visible day badges say **Wait…**. The control becomes available again
+after the response or a timeout; reduced-motion settings keep its icon still.
+Removed and future-dated Water events do not contribute to the count.
 
-The fertilizer-bottle badge means **Last watering included fertilizer**. It
-appears in all picker views, Bulk care, and the selected-plant summary, even
-when **Days since watered** is off. It uses the nutrient flag on that same
-latest Water event. A newer plain-water or unanswered entry removes the badge;
-it does not search back for an older fertilized watering. Cached, refreshing,
-or failed reads hide it until current data confirms the latest event.
+The numbered fertilizer-bottle badge counts consecutive recorded waterings
+**with nutrients**; the numbered water drop counts consecutive waterings
+**without nutrients**. The count includes the latest watering and stops at the
+first opposite or unknown nutrient flag. Each eligible Water event counts,
+including distinct events on the same day. Other events and repots do not reset
+the permanent pot's watering history. An unknown latest flag has no badge.
+
+These badges appear in all picker views, Bulk care, and the selected-plant
+summary, even when **Days since watered** is off. The accessible label and
+hover text spell out the count and nutrient choice. Cached, refreshing, or
+failed reads hide them until current data confirms the latest events. A streak
+describes recorded history; it is not a feeding recommendation.
 
 The grid describes the maintained arrangement. Recording a Move does not assign
 a new grid slot; update the placement guide when the table arrangement changes.
@@ -155,9 +167,15 @@ Partial and Spot waterings remain real Water events, but do not qualify for the 
 
 There is no separate Fertilize event button. The structured nutrient record belongs to Water. Do not create a fictional watering to document a different activity; use Other with an accurate note when appropriate.
 
-In the logger, **Add nutrients** starts unchecked for each new watering, including
-after a save, queue addition, or cleared entry. Check it only when that watering
-included nutrients. A resumed draft retains its original choice.
+In the logger, **Add nutrients** starts unchecked. Check it only when the
+watering actually included nutrients. With **Keep selected events and nutrient
+settings after saving** checked, the single-plant form retains that choice,
+product, and exact amount after saving or queuing, including when advancing to
+the next plant. Adjust them whenever the next watering differs. Saving or queuing
+with **Keep selected** unchecked, explicit **Clear**, and bulk completion reset
+nutrient entry.
+A resumed draft retains its original choice. Saved usual doses never opt in on
+their own.
 
 Choose the product, enter the numeric dose, and choose its units separately.
 **Save as usual dose** saves that product's dose in your private logger account,

@@ -39,6 +39,38 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## November 13 watering feedback candidate
+
+Maintained **5.45.0** adds explicit refresh progress for watering-day reads,
+retains selected nutrient settings for a single-plant round when **Keep selected**
+is checked, and adds numbered water-drop / fertilizer-bottle badges for
+consecutive waterings without / with nutrients. The run counts eligible Water
+records across setups in correction-aware order; an opposite or unknown nutrient
+flag stops it. The existing bootstrap History snapshot supplies the count,
+without another Sheet read or a workbook schema change. Shared usual doses still
+never opt in on their own. Bulk completion and explicit Clear reset nutrient entry.
+
+This candidate has not yet replaced production **5.44.3 / immutable version 136**.
+The release requires no workbook, AppSheet, artwork, or trigger migration.
+
+The candidate passed **2,175 logger tests**, server coverage gates (**99.58%
+statements**, **98.41% branches**, **100% functions**, **99.81% lines**), and
+**17 native Apps Script assertions** using synthetic data and mocked workbook
+services. The native rehearsal confirms the actual changed functions and one
+History read; it is not a full-workbook performance benchmark. **161 Chromium
+logger browser cases** passed across the client, nutrient, interface, keyboard,
+large-text, queue/draft, and validation suites. Type checks, HTML/style/source
+lint, changed-file formatting, secret checks, and **224-page** site validation
+also passed. Source lint retained two existing warnings outside this change.
+
+A fresh production execution audit found **144 scheduled runs totaling
+143.12 minutes**, with **143 completed and one timeout**, in the displayed
+24-hour window from November 12 at 17:39 through November 13 at 17:29 EST.
+This does not establish the required daily trigger-runtime headroom. The
+scheduled handler and cadence are unchanged by this candidate. The existing
+external Codecov upload concern also requires the new commit's hosted result;
+the previous release's exception is not a verification result for this one.
+
 ## November 13 loading and calculation status layout
 
 Production **5.44.3 / immutable version 136** centers the loading spinner, heading, and connection message,

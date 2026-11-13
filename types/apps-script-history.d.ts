@@ -196,6 +196,7 @@ type GardenWebHistoryDetails = Record<
 
 interface GardenWebWateringReadModel {
     dayKey: string;
+    nutrientStreakCount: number;
     nutrientsUsed:
         | ""
         | "No"

@@ -27,6 +27,21 @@ const openLogger = async (page: Readonly<Page>) => {
         )
         .toBeVisible();
 };
+const waitForStoredDraft = async (page: Readonly<Page>) => {
+    await expect
+        .poll(() =>
+            page.evaluate(
+                () =>
+                    Object.keys(
+                        document.defaultView?.localStorage ?? {}
+                    ).filter((key) =>
+                        key.startsWith("gardenLoggerEntryDraftV1:")
+                    ).length
+            )
+        )
+        .toBe(1);
+};
+
 const readQueue = async (page: Readonly<Page>) =>
     page.evaluate(() => {
         const parsed: unknown = JSON.parse(
@@ -161,9 +176,12 @@ test.describe(
                 .getByRole("button", { exact: true, name: "Water" })
                 .click();
             await page
-                .getByLabel("Keep selected events after saving", {
-                    exact: true,
-                })
+                .getByLabel(
+                    "Keep selected events and nutrient settings after saving",
+                    {
+                        exact: true,
+                    }
+                )
                 .check();
             await page
                 .getByRole("button", { exact: true, name: "Save now" })
@@ -205,6 +223,7 @@ test.describe(
             await page
                 .getByRole("button", { exact: true, name: "Water" })
                 .click();
+            await waitForStoredDraft(page);
             await page.reload();
             await page
                 .getByRole("button", { exact: true, name: "Resume draft" })
@@ -212,6 +231,7 @@ test.describe(
             await page
                 .getByRole("textbox", { exact: true, name: "Notes" })
                 .click();
+            await waitForStoredDraft(page);
             await page.reload();
             await expect
                 .soft(page.getByRole("region", { name: "Unsent entry drafts" }))

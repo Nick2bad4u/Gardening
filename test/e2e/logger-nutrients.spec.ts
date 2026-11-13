@@ -12,6 +12,26 @@ import { loggerBrowserFixture } from "../helpers/logger-browser-fixture.mjs";
 const usualDoseActionName = "Save as usual dose";
 const singlePlantEntryName = "Single plant entry";
 const nutrientCheckboxName = "Add nutrients";
+const nutrientProduct = "MSU 13-3-15";
+const nutrientProductName = "Product / mix";
+const nutrientUnitName = "Unit / concentration";
+const keepSelectedName =
+    "Keep selected events and nutrient settings after saving";
+
+const expectKeptNutrients = async (form: Readonly<Locator>) => {
+    await expect
+        .soft(form.getByRole("checkbox", { name: nutrientCheckboxName }))
+        .toBeChecked();
+    await expect
+        .soft(form.getByLabel(nutrientProductName, { exact: true }))
+        .toHaveValue(nutrientProduct);
+    await expect
+        .soft(form.getByLabel("Dose", { exact: true }))
+        .toHaveValue("0.25");
+    await expect
+        .soft(form.getByLabel(nutrientUnitName, { exact: true }))
+        .toHaveValue("g per gallon");
+};
 
 const createSharedNutrientService = () => {
     const preferences: { doses: Record<string, string>; product: string } = {
@@ -69,11 +89,11 @@ const prepareSharedDose = async (page: Readonly<Page>, amount: string) => {
     await form.getByRole("button", { exact: true, name: "Water" }).click();
     await form.getByRole("checkbox", { name: nutrientCheckboxName }).check();
     await form
-        .getByLabel("Product / mix", { exact: true })
-        .selectOption("MSU 13-3-15");
+        .getByLabel(nutrientProductName, { exact: true })
+        .selectOption(nutrientProduct);
     await form.getByLabel("Dose", { exact: true }).fill(amount);
     await form
-        .getByLabel("Unit / concentration", { exact: true })
+        .getByLabel(nutrientUnitName, { exact: true })
         .selectOption("g per gallon");
     return form;
 };
@@ -110,11 +130,11 @@ const saveAndOverride = async (form: Readonly<Locator>) => {
     await expect.soft(form.getByLabel("Dose", { exact: true })).toBeHidden();
     await nutrients.check();
     await form
-        .getByLabel("Product / mix", { exact: true })
-        .selectOption("MSU 13-3-15");
+        .getByLabel(nutrientProductName, { exact: true })
+        .selectOption(nutrientProduct);
     await form.getByLabel("Dose", { exact: true }).fill("0.5");
     await form
-        .getByLabel("Unit / concentration", { exact: true })
+        .getByLabel(nutrientUnitName, { exact: true })
         .selectOption("g per gallon");
     await form.getByRole("button", { name: usualDoseActionName }).click();
     await expect
@@ -124,7 +144,61 @@ const saveAndOverride = async (form: Readonly<Locator>) => {
     await form
         .getByRole("button", { exact: true, name: "Add to queue" })
         .click();
+    await expectKeptNutrients(form);
+};
+
+const checkNextPlantNutrients = async (
+    page: Readonly<Page>,
+    form: Readonly<Locator>
+) => {
+    await page.getByRole("button", { exact: true, name: "Labels" }).click();
+    const picker = page.getByRole("group", {
+        name: "Choose plant by pot label",
+    });
+    await picker.getByRole("button", { name: /P02/v }).click();
+    await expectKeptNutrients(form);
+    await form
+        .getByRole("checkbox", {
+            name: "Advance to the next plant after queueing",
+        })
+        .check();
+    await form
+        .getByRole("button", { exact: true, name: "Add to queue" })
+        .click();
+    await expect
+        .soft(picker.getByRole("button", { name: /P03/v }))
+        .toHaveAttribute("aria-pressed", "true");
+    await expectKeptNutrients(form);
+    expect.soft(await readLastPayload(page)).toMatchObject({
+        nutrientAmount: "0.25 g per gallon",
+        nutrientProduct: nutrientProduct,
+        nutrientsUsed: "Yes",
+        plantId: "P02",
+    });
+};
+
+const checkNutrientResetChoices = async (form: Readonly<Locator>) => {
+    const nutrients = form.getByLabel(nutrientCheckboxName, { exact: true });
+    const keepSelected = form.getByRole("checkbox", { name: keepSelectedName });
+    await form
+        .getByRole("button", { exact: true, name: "Clear entry" })
+        .click();
+    await expect.soft(keepSelected).toBeChecked();
     await expect.soft(nutrients).not.toBeChecked();
+    await form.getByRole("button", { exact: true, name: "Water" }).click();
+    await nutrients.check();
+    await expect
+        .soft(form.getByLabel("Dose", { exact: true }))
+        .toHaveValue("0.5");
+    await form.getByLabel("Dose", { exact: true }).fill("0.25");
+    await keepSelected.uncheck();
+    await form
+        .getByRole("button", { exact: true, name: "Add to queue" })
+        .click();
+    await expect.soft(nutrients).not.toBeChecked();
+    await expect
+        .soft(form.getByRole("button", { exact: true, name: "Water" }))
+        .toHaveAttribute("aria-pressed", "false");
 };
 
 const checkReloadedDose = async (
@@ -132,9 +206,7 @@ const checkReloadedDose = async (
     form: Readonly<Locator>
 ) => {
     await page.reload();
-    const nutrients = form.getByRole("checkbox", {
-        name: nutrientCheckboxName,
-    });
+    const nutrients = form.getByLabel(nutrientCheckboxName, { exact: true });
     await expect.soft(nutrients).not.toBeChecked();
     const water = form.getByRole("button", { exact: true, name: "Water" });
     if ((await water.getAttribute("aria-pressed")) !== "true")
@@ -144,7 +216,7 @@ const checkReloadedDose = async (
         .soft(form.getByLabel("Dose", { exact: true }))
         .toHaveValue("0.5");
     await expect
-        .soft(form.getByLabel("Unit / concentration", { exact: true }))
+        .soft(form.getByLabel(nutrientUnitName, { exact: true }))
         .toHaveValue("g per gallon");
     await form.getByLabel("Dose", { exact: true }).fill("0.1");
     await form.getByRole("button", { name: "Use saved dose" }).click();
@@ -161,8 +233,8 @@ const checkBulkDose = async (page: Readonly<Page>) => {
         .not.toBeChecked();
     await bulk.getByRole("checkbox", { name: nutrientCheckboxName }).check();
     await bulk
-        .getByLabel("Product / mix", { exact: true })
-        .selectOption("MSU 13-3-15");
+        .getByLabel(nutrientProductName, { exact: true })
+        .selectOption(nutrientProduct);
     await expect
         .soft(bulk.getByLabel("Dose", { exact: true }))
         .toHaveValue("0.5");
@@ -174,7 +246,7 @@ for (const width of [390, 1280]) {
             `nutrient preferences ${width}px ${theme}`,
             { tag: "@logger" },
             () => {
-                test("keeps a usual dose separate from one-off amounts and requires explicit opt-in", async ({
+                test("retains selected nutrients between plants while keeping usual doses and reset choices separate", async ({
                     page,
                 }) => {
                     await page.setViewportSize({ height: 900, width });
@@ -203,9 +275,11 @@ for (const width of [390, 1280]) {
                     await saveAndOverride(form);
                     expect.soft(await readLastPayload(page)).toMatchObject({
                         nutrientAmount: "0.25 g per gallon",
-                        nutrientProduct: "MSU 13-3-15",
+                        nutrientProduct: nutrientProduct,
                         nutrientsUsed: "Yes",
                     });
+                    await checkNextPlantNutrients(page, form);
+                    await checkNutrientResetChoices(form);
                     await checkReloadedDose(page, form);
                     await checkBulkDose(page);
                     expect
@@ -249,7 +323,7 @@ test.describe(
                     .getByRole("button", { name: usualDoseActionName })
                     .click();
                 await expect
-                    .poll(() => service.preferences.doses["MSU 13-3-15"])
+                    .poll(() => service.preferences.doses[nutrientProduct])
                     .toBe("0.5 g per gallon");
                 const computerPage = await computer.newPage();
                 await computerPage.goto(
@@ -267,7 +341,7 @@ test.describe(
                     .getByRole("button", { name: usualDoseActionName })
                     .click();
                 await expect
-                    .poll(() => service.preferences.doses["MSU 13-3-15"])
+                    .poll(() => service.preferences.doses[nutrientProduct])
                     .toBe("0.75 g per gallon");
                 await computerForm
                     .getByRole("button", { name: usualDoseActionName })
@@ -286,7 +360,7 @@ test.describe(
                     .getByRole("button", { name: usualDoseActionName })
                     .click();
                 await expect
-                    .poll(() => service.preferences.doses["MSU 13-3-15"])
+                    .poll(() => service.preferences.doses[nutrientProduct])
                     .toBe("0.25 g per gallon");
             } finally {
                 await phone.close();
