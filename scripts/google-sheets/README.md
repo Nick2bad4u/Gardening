@@ -1,11 +1,12 @@
 # Google Sheets observation logger
 
-Production logger **5.44.2 / immutable version 135** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.44.3 / immutable version 136** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Production **5.44.2 / immutable version 135** and **AppSheet 1.100141** retain portrait
-revision **1010123212eade00**, verified on November 11. The remaining cactus and
+Production **5.44.3 / immutable version 136** retains portrait revision
+**1010123212eade00**, verified on November 13. AppSheet was last verified on
+November 11 at **1.100141** and was not changed in this release. The remaining cactus and
 front-grid portraits are described below. P41's appended optional weight field
 remains unchanged; the earlier dated receipts retain their verified versions.
 
@@ -40,7 +41,7 @@ under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-
 
 ## November 13 loading and calculation status layout
 
-Candidate **5.44.3** centers the loading spinner, heading, and connection message,
+Production **5.44.3 / immutable version 136** centers the loading spinner, heading, and connection message,
 keeps recovery controls within narrow or enlarged-text layouts, and gives the
 calculation disclosure a full-width row below the toolbar. The last confirmed
 calculation time appears separately from the current status. Saved queue entries
@@ -48,10 +49,45 @@ wait for bootstrap data before rendering, preventing an early page-restoration
 callback from reading a missing plant list. They remain in browser storage and
 appear after connection succeeds.
 
-Production remains **5.44.2 / immutable version 135** until the candidate passes
-release safeguards and its existing deployment is updated. The server change is
-only its version literal; workbook schema, observations, AppSheet, artwork,
-manifest, and ten-minute schedule do not change.
+The existing deployment was updated at **10:47:00 EST**, preserving its URL,
+owner-only access, and execution identity. Head and immutable source match
+[3822da2](https://github.com/Nick2bad4u/Gardening/commit/3822da2644f175a30a34bbd7f238c51f05446a5d).
+The server change is only its version literal; workbook schema, observations,
+AppSheet, artwork, manifest, and the ten-minute schedule are unchanged.
+
+The verified owner-only
+[native backup](https://docs.google.com/spreadsheets/d/1zTPPL3z2g9YUgbpLJ50uyytwtAKwGq9cl9dLWcBz4lU/edit)
+still matched the fresh predeployment capture. Before/after comparison preserved
+**2,310 unique observation IDs**, **1,864 request groups**, **67/59/77-column
+headers**, entered staging data, **1,071 sampled source cells**, **70 tab
+properties**, and **194 chart IDs/titles**. No sampled formula, required-anchor,
+or Integrity failures appeared. This covers full ID columns and entered staging
+plus sampled source cells and chart identities; it does not compare every
+History value, format, validation, full chart specification, or protection.
+
+Authenticated production showed **Connected · Logger 5.44.3**. All eight
+Single/Bulk, **390/1280 px**, and dark/light combinations had no horizontal
+overflow; the calculation panel matched the toolbar width and its timestamp
+occupied a separate line. Keyboard disclosure retained focus, the inspected
+console was clear, and the existing unsent draft remained available. No
+synthetic observations were submitted. Bootstrap completed in **15.284 seconds**.
+The **10:49:13 EST** queue run completed in **12.186 seconds**; diagnostics
+confirmed **5.44.3**, successful analytics publication, and **Ready** status.
+Exactly one existing ten-minute queue trigger remains configured.
+
+Hosted validation passed **2,157 logger tests**, **nine checker regressions**,
+lint/type checks, and coverage thresholds (**99.6% statements**, **98.44%
+branches**, **100% functions**, **99.81% lines**). Sonar, Socket, secret scans,
+and [website checks and Pages publication](https://github.com/Nick2bad4u/Gardening/actions/runs/43380270179)
+passed. The sole failed step in the
+[logger workflow](https://github.com/Nick2bad4u/Gardening/actions/runs/43380270018)
+was the external Codecov upload, rejected as repository deactivated; its
+GitHub coverage statuses remain missing. The earlier **119.91-minute** total
+across 144 scheduled runs also did not establish daily trigger-runtime
+headroom. After these limitations were disclosed, the owner directed this
+UI-only deployment to proceed. Both concerns remain unresolved; no workflow
+policy, coverage threshold, or scheduled server behavior was changed, and the
+successful postdeployment sample does not establish daily quota headroom.
 
 ## November 11 ten-minute AppSheet cadence
 
