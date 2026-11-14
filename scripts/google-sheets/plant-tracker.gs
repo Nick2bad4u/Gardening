@@ -2190,55 +2190,16 @@ function processQueuedAppSheetBulkEntries_(spreadsheet) {
             if (idCounts.get(roundId) !== 1) {
                 throw new Error(`AppSheet Round ID ${roundId} is duplicated.`);
             }
-            if (
-                cleanText_(row[APP_SHEET_BULK_ACTION_INDEX]) === "Rotation" &&
-                cleanText_(row[77]) &&
-                !cleanText_(row[78])
-            ) {
-                const selected = appSheetBulkSelectedPlants_(
-                    row[APP_SHEET_BULK_SELECTED_PLANTS_INDEX]
-                );
-                const observedAt = webHistoryTimestamp_(row[2] || row[1]);
-                const hasPredecessor = queued.some((candidate) => {
-                    if (
-                        candidate.rowNumber === rowNumber ||
-                        cleanText_(
-                            candidate.row[APP_SHEET_BULK_ACTION_INDEX]
-                        ) !== "Rotation"
-                    )
-                        return false;
-                    const candidateTime = webHistoryTimestamp_(
-                        candidate.row[2] || candidate.row[1]
-                    );
-                    if (
-                        candidateTime > observedAt ||
-                        (candidateTime === observedAt &&
-                            candidate.rowNumber > rowNumber)
-                    )
-                        return false;
-                    return cleanText_(
-                        candidate.row[APP_SHEET_BULK_SELECTED_PLANTS_INDEX]
-                    )
-                        .split(/[,;]/)
-                        .map(cleanText_)
-                        .some((id) => selected.has(id));
-                });
-                if (hasPredecessor) {
-                    // Freeze only after earlier turns reach canonical History.
-                    // A failed or deferred predecessor must never become a speculative origin.
-                    deferredCount += 1;
-                    return;
-                }
+            if (appSheetBulkRotationHasPredecessor_(queued, row, rowNumber)) {
+                // Freeze only after earlier turns reach canonical History.
+                // A failed or deferred predecessor must never become a speculative origin.
+                deferredCount += 1;
+                return;
             }
-            if (cleanText_(row[APP_SHEET_BULK_ACTION_INDEX]) === "Rotation") {
-                if (cleanText_(row[78]))
-                    appSheetBulkRotationSnapshot_(row, roundId);
-                else if (cleanText_(row[77])) rotationFacing_(row[77], true);
-            }
-            capturingRotationSnapshot =
-                cleanText_(row[APP_SHEET_BULK_ACTION_INDEX]) === "Rotation" &&
-                Boolean(cleanText_(row[77])) &&
-                !cleanText_(row[78]);
+            capturingRotationSnapshot = appSheetBulkRotationNeedsCapture_(
+                row,
+                roundId
+            );
             const rotationRow = freezeAppSheetBulkRotation_(
                 spreadsheet,
                 bulkSheet,
@@ -2365,6 +2326,59 @@ function processQueuedAppSheetBulkEntries_(spreadsheet) {
     return summary;
 }
 
+/**
+ * @param {{row: GardenHistoryRow; rowNumber: number}[]} queued
+ * @param {GardenHistoryRow} row
+ * @param {number} rowNumber
+ * @returns {boolean}
+ */
+function appSheetBulkRotationHasPredecessor_(queued, row, rowNumber) {
+    if (
+        cleanText_(row[APP_SHEET_BULK_ACTION_INDEX]) !== "Rotation" ||
+        !cleanText_(row[77]) ||
+        cleanText_(row[78])
+    )
+        return false;
+    const selected = appSheetBulkSelectedPlants_(
+        row[APP_SHEET_BULK_SELECTED_PLANTS_INDEX]
+    );
+    const observedAt = webHistoryTimestamp_(row[2] || row[1]);
+    return queued.some((candidate) => {
+        if (
+            candidate.rowNumber === rowNumber ||
+            cleanText_(candidate.row[APP_SHEET_BULK_ACTION_INDEX]) !==
+                "Rotation"
+        )
+            return false;
+        const candidateTime = webHistoryTimestamp_(
+            candidate.row[2] || candidate.row[1]
+        );
+        if (
+            candidateTime > observedAt ||
+            (candidateTime === observedAt && candidate.rowNumber > rowNumber)
+        )
+            return false;
+        return cleanText_(candidate.row[APP_SHEET_BULK_SELECTED_PLANTS_INDEX])
+            .split(/[,;]/)
+            .map(cleanText_)
+            .some((id) => selected.has(id));
+    });
+}
+
+/** @param {GardenHistoryRow} row @param {string} roundId @returns {boolean} */
+function appSheetBulkRotationNeedsCapture_(row, roundId) {
+    if (cleanText_(row[APP_SHEET_BULK_ACTION_INDEX]) !== "Rotation")
+        return false;
+    if (cleanText_(row[78])) {
+        appSheetBulkRotationSnapshot_(row, roundId);
+        return false;
+    }
+    const target = cleanText_(row[77]);
+    if (!target) return false;
+    rotationFacing_(target, true);
+    return true;
+}
+
 /** @param {GardenHistoryRow} row @param {string} roundId */
 function appSheetBulkPayloadsFromRow_(row, roundId) {
     const selection = row[APP_SHEET_BULK_SELECTED_PLANTS_INDEX];
@@ -2489,12 +2503,18 @@ function appSheetBulkPayloadsFromRow_(row, roundId) {
                     weight,
                     notes,
                     ...sharedDetails,
-                    ...(rotations?.[plantId] || {}),
+                    ...rotations?.[plantId],
                     entrySource: "AppSheet bulk",
                 },
             },
         ];
     });
+}
+
+/** @param {string} left @param {string} right @returns {number} */
+function compareRotationPlantIds_(left, right) {
+    if (left === right) return 0;
+    return left < right ? -1 : 1;
 }
 
 /**
@@ -2522,7 +2542,7 @@ function appSheetBulkRotationSnapshot_(row, roundId) {
         ...appSheetBulkSelectedPlants_(
             row[APP_SHEET_BULK_SELECTED_PLANTS_INDEX]
         ),
-    ].sort();
+    ].sort(compareRotationPlantIds_);
     const date = row[2] || row[1];
     const observedAt = webHistoryTimestamp_(date);
     const toFacing = rotationFacing_(row[77], true);
@@ -2630,7 +2650,7 @@ function freezeAppSheetBulkRotation_(
             ...appSheetBulkSelectedPlants_(
                 current[APP_SHEET_BULK_SELECTED_PLANTS_INDEX]
             ),
-        ].sort();
+        ].sort(compareRotationPlantIds_);
         const timestamp = webHistoryTimestamp_(current[2] || current[1]);
         if (!timestamp)
             throw Object.assign(
@@ -3915,19 +3935,7 @@ function saveBulkCareObservation(payload) {
         return plant;
     });
     const details = eventDetailsFromPayload_(payload, eventNames, null);
-    const rotations =
-        eventNames.includes("Rotation") && payload.rotationByPlant !== undefined
-            ? rotationByPlantDetails_(payload.rotationByPlant, plantIds)
-            : null;
-    if (
-        !rotations &&
-        eventNames.includes("Rotation") &&
-        (payload.rotationFromFacing !== undefined ||
-            payload.rotationToFacing !== undefined)
-    )
-        throw new Error(
-            "Bulk cardinal rotations need separate from/to facings for every selected plant."
-        );
+    const rotations = bulkRotationDetails_(payload, eventNames, plantIds);
     const notes = cleanText_(payload.notes);
     const observationDate = normalizeDate_(payload.observedAt);
     const baseRequestId = normalizeRequestId_(payload.requestId, true);
@@ -3990,6 +3998,26 @@ function saveBulkCareObservation(payload) {
         events: eventNames,
         message,
     };
+}
+
+/**
+ * @param {GardenEntryPayload} payload
+ * @param {string[]} eventNames
+ * @param {string[]} plantIds
+ * @returns {Map<string, GardenObservationDetails> | null}
+ */
+function bulkRotationDetails_(payload, eventNames, plantIds) {
+    if (!eventNames.includes("Rotation")) return null;
+    if (payload.rotationByPlant !== undefined)
+        return rotationByPlantDetails_(payload.rotationByPlant, plantIds);
+    if (
+        payload.rotationFromFacing !== undefined ||
+        payload.rotationToFacing !== undefined
+    )
+        throw new Error(
+            "Bulk cardinal rotations need separate from/to facings for every selected plant."
+        );
+    return null;
 }
 
 /** @param {unknown} events @returns {string[]} */
@@ -10297,42 +10325,7 @@ function correctionValidateDependencies_(row, changes) {
     /** @param {...string} keys @returns {boolean} */
     const changed = (...keys) =>
         keys.some((key) => Object.hasOwn(changes, key));
-    if (row[2] === "Rotation") {
-        const cardinal =
-            Boolean(row[67] || row[68]) ||
-            changed("rotationFromFacing", "rotationToFacing");
-        if (cardinal) {
-            /** @type {GardenObservationDetails} */
-            const details = {};
-            try {
-                addRotationDetails_(
-                    details,
-                    {
-                        rotationFromFacing: row[67],
-                        rotationToFacing: row[68],
-                        ...(changed("rotationDegrees")
-                            ? { rotationDegrees: row[39] }
-                            : {}),
-                    },
-                    ["Rotation"]
-                );
-            } catch (error) {
-                throw correctionValidationError_(
-                    `INVALID_CORRECTION: ${error instanceof Error ? error.message : String(error)}`
-                );
-            }
-            row[39] = details.rotationDegrees ?? "";
-            row[67] = details.rotationFromFacing || "";
-            row[68] = details.rotationToFacing || "";
-        } else if (
-            changed("rotationDegrees") &&
-            (row[39] === "" || row[39] <= 0)
-        ) {
-            throw correctionValidationError_(
-                "INVALID_CORRECTION: Legacy rotation degrees must be more than 0 and at most 360."
-            );
-        }
-    }
+    correctionValidateRotation_(row, changes);
     if (row[2] === "Leaf VPD" && changed("leafVpd") && row[66] !== "Device")
         throw correctionValidationError_(
             "INVALID_CORRECTION: Calculated Leaf VPD must be recomputed from leaf temperature and paired air/RH."
@@ -10377,6 +10370,43 @@ function correctionValidateDependencies_(row, changes) {
             "INVALID_CORRECTION: Keep a flower count or details."
         );
     }
+}
+
+/** @param {GardenCorrectionCanonicalRow} row @param {GardenCorrectionChanges} changes @returns {void} */
+function correctionValidateRotation_(row, changes) {
+    if (row[2] !== "Rotation") return;
+    const degreesChanged = Object.hasOwn(changes, "rotationDegrees");
+    const cardinal =
+        Boolean(row[67] || row[68]) ||
+        Object.hasOwn(changes, "rotationFromFacing") ||
+        Object.hasOwn(changes, "rotationToFacing");
+    if (!cardinal) {
+        if (degreesChanged && (row[39] === "" || row[39] <= 0))
+            throw correctionValidationError_(
+                "INVALID_CORRECTION: Legacy rotation degrees must be more than 0 and at most 360."
+            );
+        return;
+    }
+    /** @type {GardenObservationDetails} */
+    const details = {};
+    try {
+        addRotationDetails_(
+            details,
+            {
+                rotationFromFacing: row[67],
+                rotationToFacing: row[68],
+                ...(degreesChanged ? { rotationDegrees: row[39] } : {}),
+            },
+            ["Rotation"]
+        );
+    } catch (error) {
+        throw correctionValidationError_(
+            `INVALID_CORRECTION: ${error instanceof Error ? error.message : String(error)}`
+        );
+    }
+    row[39] = details.rotationDegrees ?? "";
+    row[67] = details.rotationFromFacing || "";
+    row[68] = details.rotationToFacing || "";
 }
 
 /** @param {GardenCorrectionCanonicalRow} row @returns {void} */
@@ -11826,13 +11856,10 @@ function historyMeasurementRow_(input, eventName, rowNumber) {
  * @param {string} eventName
  */
 function historyRotationRow_(input, eventName) {
-    return [
-        eventName === "Rotation"
-            ? input.details?.rotationToFacing
-                ? (input.details.rotationDegrees ?? "")
-                : Number(input.details?.rotationDegrees) || 90
-            : "",
-    ];
+    if (eventName !== "Rotation") return [""];
+    if (input.details?.rotationToFacing)
+        return [input.details.rotationDegrees ?? ""];
+    return [Number(input.details?.rotationDegrees) || 90];
 }
 
 /**
@@ -13210,34 +13237,39 @@ function webActionContextsFromRows_(historyRows, baselineSetups, now) {
             details: webHistoryDetails_(row),
         };
         if (event === "Measure") {
-            const previous = byEvent["Measure"];
-            if (previous?.height) context.height = previous.height;
-            if (previous?.width) context.width = previous.width;
-            /** @type {readonly ["height" | "width", number][]} */
-            const dimensions = [
-                ["height", 5],
-                ["width", 6],
-            ];
-            for (const [dimension, column] of dimensions) {
-                const value = row[column];
-                if (
-                    typeof value === "number" &&
-                    Number.isFinite(value) &&
-                    value > 0
-                )
-                    context[dimension] = {
-                        valueCm: value,
-                        observedAt: context.observedAt,
-                        quality: context.quality,
-                        method: context.method,
-                        entryUnit: cleanText_(row[36]) || "cm",
-                    };
-            }
+            webActionMeasurementContext_(row, context, byEvent["Measure"]);
         }
         byEvent[event] = context;
         contexts.set(id, byEvent);
     }
     return contexts;
+}
+
+/**
+ * @param {GardenHistoryRow} row
+ * @param {GardenWebActionContext} context
+ * @param {GardenWebActionContext | undefined} previous
+ * @returns {void}
+ */
+function webActionMeasurementContext_(row, context, previous) {
+    if (previous?.height) context.height = previous.height;
+    if (previous?.width) context.width = previous.width;
+    /** @type {readonly ["height" | "width", number][]} */
+    const dimensions = [
+        ["height", 5],
+        ["width", 6],
+    ];
+    for (const [dimension, column] of dimensions) {
+        const value = row[column];
+        if (typeof value === "number" && Number.isFinite(value) && value > 0)
+            context[dimension] = {
+                valueCm: value,
+                observedAt: context.observedAt,
+                quality: context.quality,
+                method: context.method,
+                entryUnit: cleanText_(row[36]) || "cm",
+            };
+    }
 }
 
 /**

@@ -112,21 +112,31 @@ for (const width of [390, 1280]) {
                         exact: true,
                         name: "Rotation",
                     });
-                    const degrees = form.getByRole("spinbutton", {
+                    const facing = form.getByRole("combobox", {
                         exact: true,
-                        name: "Rotation (degrees)",
+                        name: "New facing for selected plants",
                     });
                     await rotation.focus();
                     await expectFocusedAfterKey(page, "Space", rotation);
                     await expect
                         .soft(rotation)
                         .toHaveAttribute("aria-pressed", "true");
-                    await expect.soft(degrees).toBeVisible();
+                    await expect.soft(facing).toBeVisible();
+                    await form
+                        .getByRole("combobox", {
+                            exact: true,
+                            name: "Rotation entry",
+                        })
+                        .focus();
+                    await expectFocusedAfterKey(page, "Tab", facing);
+                    await page.keyboard.press("ArrowDown");
+                    await expect.soft(facing).toHaveValue("N");
+                    await rotation.focus();
                     await expectFocusedAfterKey(page, "Enter", rotation);
                     await expect
                         .soft(rotation)
                         .toHaveAttribute("aria-pressed", "false");
-                    await expect.soft(degrees).toBeHidden();
+                    await expect.soft(facing).toBeHidden();
                     await expectFocusedAfterKey(
                         page,
                         "Tab",
