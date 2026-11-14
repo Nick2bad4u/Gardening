@@ -1912,6 +1912,21 @@ const expectFertilizerAlignment = async (page: Readonly<Page>) => {
     ];
 };
 
+const expectStreakCountContrast = async (badge: Readonly<Locator>) => {
+    const colors = await badge.evaluate((element) => {
+        const count = element.querySelector(".watering-streak-count");
+        if (!count) throw new Error("Missing streak count");
+        const style = getComputedStyle(count);
+        return { background: style.backgroundColor, foreground: style.color };
+    });
+    const foreground = opaqueLuminance(colors.foreground);
+    const background = opaqueLuminance(colors.background);
+    const ratio =
+        (Math.max(foreground, background) + 0.05) /
+        (Math.min(foreground, background) + 0.05);
+    expect.soft(ratio).toBeGreaterThanOrEqual(4.5);
+};
+
 const expectNutrientStreakIcons = async (page: Readonly<Page>) => {
     const picker = tablePicker(page);
     const plain = waterAgeTile(picker, "P01").getByRole("img", {
@@ -1928,6 +1943,8 @@ const expectNutrientStreakIcons = async (page: Readonly<Page>) => {
             icon: element.querySelector("use")?.getAttribute("href"),
         }));
     await expect.soft(plain).toBeVisible();
+    await expectStreakCountContrast(plain);
+    await expectStreakCountContrast(fed);
     expect
         .soft(await readBadge(plain))
         .toStrictEqual({ count: "4", icon: "#app-icon-water" });
