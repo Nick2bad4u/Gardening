@@ -1,11 +1,11 @@
 # Google Sheets observation logger
 
-Production logger **5.46.1 / immutable version 139** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.47.0 / immutable version 140** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Production **5.46.1 / immutable version 139** retains portrait revision
-**1010123212eade00**. The November 14 compact-badge patch and November 13
+Production **5.47.0 / immutable version 140** retains portrait revision
+**1010123212eade00**. The November 14 interface and compact-badge updates and November 13
 cardinal-rotation rollout are recorded below;
 AppSheet **1.100144** is saved and verified through native client checks. The remaining cactus and
 front-grid portraits are described below. P41's appended optional weight field
@@ -40,9 +40,9 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
-## Compact logger interface — 5.47.0 candidate
+## Compact logger interface — 5.47.0
 
-The maintained **5.47.0** candidate adds compact weighing check/queue clock
+Production **5.47.0 / immutable version 140** adds compact weighing check/queue clock
 badges, a separate selection outline, larger picker portraits, a shorter phone
 header with **Garden links**, and a **More plant details** disclosure. The picker
 summary explicitly describes weighing; queued weights remain unconfirmed and
@@ -55,9 +55,55 @@ path, draft and retry contracts. This release changes client presentation and
 the version marker; server behavior, workbook schemas, AppSheet **1.100144**,
 artwork, and the ten-minute queue schedule remain unchanged.
 
-Production remains **5.46.1 / immutable version 139** until the deployment
-receipt below is replaced with verified source, browser, workbook, and trigger
-results. No synthetic observations are submitted during verification.
+The existing deployment was promoted on November 14 at
+**16:06:08 EST / 21:06:08 UTC**, preserving its URL, owner-only access, and
+execution identity. Fresh Head and immutable-source reads matched
+[c17e986](https://github.com/Nick2bad4u/Gardening/commit/c17e986ca155658f895b4bea443f32f00a350113).
+The update response reported version **140** before an immediate read still
+returned **139**; a fresh read verified **140**, and the update was not repeated.
+
+Authenticated production reported **Connected · Logger 5.47.0** at
+**390/1280 px in both themes**. Fresh viewport screenshots and functional
+checks verified the header disclosures, compact summary, loaded portraits,
+selection outline, and single/bulk compasses, including keyboard navigation.
+No application errors, console errors, or horizontal overflow were observed.
+Existing browser storage was untouched, and verification submitted no
+production observations.
+
+Fresh postdeployment captures from **21:09:36–21:10:40 UTC**, verified at
+**21:10:58 UTC**, preserved **2,364 unique observation IDs**, **1,908 request
+groups**, **38 Saved** App entries, and no App bulk rows. Exact **69/69/61/79-column**
+headers, **757 formulas**, **46 validation rules**, and **4,597 entered cells**
+were unchanged. The comparison covered full-capacity identity, request, and
+state columns plus the last 31 History rows and populated staging; older
+nonidentity values outside that recent range were not compared. Projected IDs
+matched History, formula and Integrity errors were zero, and analytics were
+**Ready**.
+
+The **21:09:13 UTC** scheduled execution reported logger **5.47.0** and completed
+in **19.871 seconds** (**14.653 seconds** inside the handler), with zero queued,
+processed, or saved entries. It published fresh **Ready** analytics
+(**46,860 bytes**, refresh not skipped). At **21:11:44 UTC**, the native trigger
+editor reconfirmed exactly one unchanged Head queue trigger every ten minutes.
+
+The exact candidate passed **2,329 logger tests**, **nine checker tests**, and
+coverage gates (**99.56% statements**, **98.16% branches**, **100% functions**,
+**99.80% lines**). The
+[Pages workflow](https://github.com/Nick2bad4u/Gardening/actions/runs/43639104374)
+passed **374 browser cases** and **60 Storybook tests** and deployed the site.
+Local validation also passed all **178 logger browser cases**. Sonar, Socket,
+and hosted secret checks passed. The sole
+[logger workflow failure](https://github.com/Nick2bad4u/Gardening/actions/runs/43639104341)
+was the external Codecov upload's repository-deactivated rejection, after all
+validation and coverage-artifact steps passed.
+
+Daily trigger-runtime headroom remains unproved. The native 24-hour window
+ending at **20:12:11 UTC** contained **144 runs totaling 5,915.011 seconds**:
+143 completed, zero timeouts, and the known **37.51-second** earlier schema-transition
+failure described under 5.46.0. These are project execution durations, not an
+account quota meter. This UI-only release proceeded under the current publish
+request and continuing owner authorization with the same disclosed Codecov and
+quota limitations; neither all-green CI nor verified quota headroom is claimed.
 
 ## Compact watering feedback — 5.46.1
 
