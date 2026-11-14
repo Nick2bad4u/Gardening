@@ -210,7 +210,7 @@ describe("care event workbook migration", () => {
                 const rules = new Map();
                 const sheet = {
                     getMaxRows() { return GARDEN_LOGGER.historyCapacityRows; },
-                    getMaxColumns() { return 67; },
+                    getMaxColumns() { return 69; },
                     getRange(row, column, height, width) {
                         return {
                             getDisplayValues() { return [headers.slice(column - 1, column - 1 + width)]; },

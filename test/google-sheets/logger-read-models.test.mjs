@@ -18,6 +18,308 @@ const source = fs.readFileSync(sourceUrl, "utf8");
 const now = new Date("2026-09-06T18:00:00Z");
 const zone = "America/New_York";
 
+describe("logger action selection context", () => {
+    it("withholds incomplete action hints and retains independent valid dimensions", () => {
+        expect.hasAssertions();
+
+        const observations = [
+            row("2026-09-01T12:00:00Z", "Inspect", { 7: "Healthy" }),
+            row("2026-09-02T12:00:00Z", "Inspect", { 7: "" }),
+            row("2026-09-01T12:00:00Z", "Move", { 49: "Window" }),
+            row("2026-09-02T12:00:00Z", "Move", { 49: "" }),
+            row("2026-09-01T12:00:00Z", "Measure", { 5: 10 }),
+            row("2026-09-02T12:00:00Z", "Measure", { 5: NaN, 6: -1 }),
+            row("2026-09-03T12:00:00Z", "Measure", { 5: 0, 6: 5 }),
+            row("2026-09-04T12:00:00Z", "Measure", {
+                5: Infinity,
+                6: "invalid",
+            }),
+            row("2026-09-05T12:00:00Z", "Repot", { 10: 2, 20: "Other setup" }),
+            row("2026-09-05T12:00:00Z", "Inspect", {
+                1: "P99",
+                7: "Unknown plant",
+            }),
+        ];
+        const contexts = runtime().api.webActionContextsFromRows_(
+            observations,
+            new Map([["P01", 1]]),
+            now
+        );
+        const context = required(contexts.get("P01"));
+
+        expect(context["Inspect"]?.details["condition"]).toBe("Healthy");
+        expect(context["Move"]?.details["moveTo"]).toBe("Window");
+        expect(context["Measure"]?.height).toMatchObject({
+            entryUnit: "cm",
+            observedAt: "2026-09-01T12:00:00.000Z",
+            valueCm: 10,
+        });
+        expect(context["Measure"]?.width).toMatchObject({
+            observedAt: "2026-09-03T12:00:00.000Z",
+            valueCm: 5,
+        });
+        expect(context["Repot"]).toBeUndefined();
+        expect(contexts.has("P99")).toBe(false);
+    });
+
+    it("keeps independent dimension dates and provenance within the current setup", () => {
+        expect.hasAssertions();
+
+        const observations = [
+            row("2026-09-01T12:00:00Z", "Measure", { 5: 50, 6: 40 }),
+            row("2026-09-02T12:00:00Z", "Measure", {
+                5: 10,
+                6: 5,
+                10: 2,
+                28: "Measured",
+                34: "Ruler",
+                36: "cm",
+            }),
+            row("2026-09-03T12:00:00Z", "Measure", {
+                5: 11,
+                10: 2,
+                28: "Estimated",
+                34: "Photo estimate",
+                36: "in",
+            }),
+            row("2026-09-04T12:00:00Z", "Measure", {
+                6: 6,
+                10: 2,
+                28: "Measured",
+                34: "Ruler",
+                36: "cm",
+            }),
+            row("2026-09-05T12:00:00Z", "Measure", {
+                5: 99,
+                10: 2,
+                35: "Removed",
+            }),
+            row("2026-09-07T12:00:00Z", "Measure", { 5: 88, 10: 2 }),
+            row("invalid", "Measure", { 5: 77, 10: 2 }),
+        ];
+        const original = structuredClone(observations);
+        const context = runtime()
+            .api.webActionContextsFromRows_(
+                observations,
+                new Map([["P01", 2]]),
+                now
+            )
+            .get("P01")?.["Measure"];
+
+        expect(structuredClone(context?.height)).toStrictEqual({
+            entryUnit: "in",
+            method: "Photo estimate",
+            observedAt: "2026-09-03T12:00:00.000Z",
+            quality: "Estimated",
+            valueCm: 11,
+        });
+        expect(structuredClone(context?.width)).toStrictEqual({
+            entryUnit: "cm",
+            method: "Ruler",
+            observedAt: "2026-09-04T12:00:00.000Z",
+            quality: "Measured",
+            valueCm: 6,
+        });
+        expect(context?.potSetup).toBe(2);
+        expect(observations).toStrictEqual(original);
+    });
+
+    it("separates soil checks from legacy condition-only Checks and inspections", () => {
+        expect.hasAssertions();
+
+        const observations = [
+            row("2026-09-02T12:00:00Z", "Check", { 32: "Dry" }),
+            row("2026-09-03T12:00:00Z", "Inspect", {
+                7: "New growth",
+                28: "Observed",
+                34: "Observed",
+            }),
+            row("2026-09-04T12:00:00Z", "Check", {
+                7: "Legacy condition only",
+            }),
+            row("2026-09-05T12:00:00Z", "Inspect", {
+                7: "Removed condition",
+                35: "Removed",
+            }),
+        ];
+        const context = required(
+            runtime()
+                .api.webActionContextsFromRows_(
+                    observations,
+                    new Map([["P01", 1]]),
+                    now
+                )
+                .get("P01")
+        );
+
+        expect(context["Check"]?.details["soilMoisture"]).toBe("Dry");
+        expect(context["Check"]?.observedAt).toBe("2026-09-02T12:00:00.000Z");
+        expect(context["Inspect"]?.details["condition"]).toBe("New growth");
+        expect(context["Inspect"]?.quality).toBe("Observed");
+    });
+
+    it("keeps Leaf VPD paired readings on their own observation", () => {
+        expect.hasAssertions();
+
+        const observations = [
+            row("2026-09-02T12:00:00Z", "Leaf VPD", {
+                60: 23,
+                61: "C",
+                62: 24,
+                63: "C",
+                64: 0,
+                65: 1.1,
+                66: "Calculated",
+            }),
+            row("2026-09-03T12:00:00Z", "Humidity", { 42: 88 }),
+            row("2026-09-04T12:00:00Z", "Temperature", { 50: 35, 51: "Air" }),
+        ];
+        const context = required(
+            runtime()
+                .api.webActionContextsFromRows_(
+                    observations,
+                    new Map([["P01", 1]]),
+                    now
+                )
+                .get("P01")
+        );
+
+        expect(context["Leaf VPD"]?.details).toMatchObject({
+            leafAirTemperatureC: 24,
+            leafHumidity: 0,
+            leafTemperatureC: 23,
+            leafVpd: 1.1,
+            leafVpdSource: "Calculated",
+        });
+        expect(context["Leaf VPD"]?.observedAt).toBe(
+            "2026-09-02T12:00:00.000Z"
+        );
+    });
+
+    it("retains dated Water, Move, Repot and optional activity details without copying old blanks", () => {
+        expect.hasAssertions();
+
+        const observations = [
+            row("2026-09-01T12:00:00Z", "Water", {
+                16: "Yes",
+                17: "Old product",
+                18: "Old dose",
+            }),
+            row("2026-09-02T12:00:00Z", "Water", {
+                16: "No",
+                40: "Partial",
+                41: 50,
+            }),
+            row("2026-09-03T12:00:00Z", "Move", {
+                48: "Old shelf",
+                49: "Window",
+            }),
+            row("2026-09-04T12:00:00Z", "Repot", {
+                10: 2,
+                20: "4 inches",
+                33: "Recorded mix",
+            }),
+            row("2026-09-05T12:00:00Z", "Prune", {
+                8: "Removed one damaged leaf",
+            }),
+            row("2026-09-05T13:00:00Z", "Other", { 8: "Unrelated" }),
+        ];
+        const context = required(
+            runtime()
+                .api.webActionContextsFromRows_(
+                    observations,
+                    new Map([["P01", 2]]),
+                    now
+                )
+                .get("P01")
+        );
+
+        expect(context["Water"]?.details).toMatchObject({
+            nutrientsUsed: "No",
+            waterAmount: 50,
+            wateringApplication: "Partial",
+        });
+        expect(context["Water"]?.details).not.toHaveProperty("nutrientProduct");
+        expect(context["Move"]?.observedAt).toBe("2026-09-03T12:00:00.000Z");
+        expect(context["Move"]?.details["moveTo"]).toBe("Window");
+        expect(context["Repot"]?.details).toMatchObject({
+            medium: "Recorded mix",
+            potSize: "4 inches",
+        });
+        expect(context["Prune"]?.details["notes"]).toBe(
+            "Removed one damaged leaf"
+        );
+        expect(context["Other"]).toBeUndefined();
+    });
+
+    it("uses correction-root ordering for tied latest action details", () => {
+        expect.hasAssertions();
+
+        const observations = [
+            row("2026-09-04T12:00:00Z", "Water", {
+                16: "Yes",
+                26: "original",
+                35: "Removed",
+            }),
+            row("2026-09-04T12:00:00Z", "Water", { 16: "No", 26: "later" }),
+            row("2026-09-04T12:00:00Z", "Water", {
+                16: "Yes",
+                26: "replacement",
+                30: "original",
+            }),
+        ];
+        const context = runtime()
+            .api.webActionContextsFromRows_(
+                observations,
+                new Map([["P01", 1]]),
+                now
+            )
+            .get("P01")?.["Water"];
+
+        expect(context?.observationId).toBe("later");
+        expect(context?.details["nutrientsUsed"]).toBe("No");
+    });
+
+    it("publishes facing and action context from the bootstrap's existing History read", () => {
+        expect.hasAssertions();
+
+        vi.useFakeTimers();
+        try {
+            vi.setSystemTime(now);
+            const observations = [
+                row("2026-09-04T12:00:00Z", "Rotation", {
+                    26: "recorded-facing",
+                    39: 90,
+                    67: "N",
+                    68: "E",
+                }),
+                row("2026-09-05T12:00:00Z", "Measure", { 5: 15, 34: "Ruler" }),
+            ];
+            const { api, historyReads } = runtime(observations);
+            const bootstrap = api.getWebAppBootstrap();
+            const firstPlant = required(bootstrap.plants[0]);
+            const measurement = required(
+                required(firstPlant.actionContexts)["Measure"]
+            );
+
+            expect(bootstrap.actionContextsAvailable).toBe(true);
+            expect(firstPlant.rotationFacing).toMatchObject({
+                facing: "E",
+                observationId: "recorded-facing",
+                observedAt: "2026-09-04T12:00:00.000Z",
+                potSetup: 1,
+            });
+            expect(required(measurement.height).valueCm).toBe(15);
+            expect(
+                structuredClone(required(bootstrap.plants[2]).actionContexts)
+            ).toStrictEqual({});
+            expect(historyReads).toHaveBeenCalledExactlyOnceWith(2, 1, 2, 69);
+        } finally {
+            vi.useRealTimers();
+        }
+    });
+});
+
 /** @param {Date} date @param {string} timeZone @param {string} pattern */
 function formatDate(date, timeZone, pattern) {
     if (pattern !== "yyyy-MM-dd" && pattern !== "yyyy-MM-dd HH")
@@ -60,7 +362,7 @@ function readPlant(rows, setup = 1) {
  */
 function row(at, event = "Weigh", cells = {}) {
     /** @type {import("../logger-fixtures.d.ts").CellValue[]} */
-    const values = Array.from({ length: 60 }, () => "");
+    const values = Array.from({ length: 69 }, () => "");
     values[0] = new Date(at);
     values[1] = "P01";
     values[2] = event;
@@ -93,7 +395,7 @@ function runtime(historyRows = []) {
     const sheet = (name, values) => ({
         getLastColumn: () => required(values[0]).length,
         getLastRow: () => values.length,
-        getMaxColumns: () => 60,
+        getMaxColumns: () => 69,
         getName: () => name,
         /**
          * @param {number} rowNumber @param {number} column @param {number}
@@ -136,7 +438,7 @@ function runtime(historyRows = []) {
         [
             "History",
             sheet("History", [
-                Array.from({ length: 60 }, () => ""),
+                Array.from({ length: 69 }, () => ""),
                 ...historyRows,
             ]),
         ],
@@ -303,7 +605,7 @@ describe("logger refresh performance and watering age", () => {
                 2,
                 1,
                 observations.length,
-                60
+                69
             );
             expect(required(result.plants[0])).toMatchObject({
                 daysSinceWater: "",
@@ -883,7 +1185,7 @@ describe("logger History-backed read models", () => {
                 latestWeightAt: "",
                 weightSeries: { points: [] },
             });
-            expect(historyReads).toHaveBeenCalledExactlyOnceWith(2, 1, 2, 60);
+            expect(historyReads).toHaveBeenCalledExactlyOnceWith(2, 1, 2, 69);
             expect(rows).toStrictEqual(before);
         } finally {
             vi.useRealTimers();
@@ -958,7 +1260,7 @@ describe("logger History-backed read models", () => {
                 2,
                 1,
                 rows.length,
-                60
+                69
             );
         } finally {
             vi.useRealTimers();

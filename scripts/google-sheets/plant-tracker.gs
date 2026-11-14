@@ -18,7 +18,7 @@
    dryDownModelFormula_, installDailyCareDashboard, GARDEN_CYCLE_COMPARISON, GARDEN_ENVIRONMENT_READINGS, GARDEN_RECORDED_LOCATIONS */
 
 const GARDEN_LOGGER = Object.freeze({
-    version: "5.45.0",
+    version: "5.46.0",
     dayStartHour: 4,
     spreadsheetId: "1XatdY2Z7izqHtE1ZVfCyu3yWkFviKllhqVQT2Z_88M0",
     quickLogSheet: "Quick log",
@@ -68,7 +68,8 @@ const GARDEN_LOGGER = Object.freeze({
     historyLightStartColumn: 44,
     historyLightColumns: 2,
     historyCareStartColumn: 46,
-    historyStoredColumns: 67,
+    historyRotationFacingStartColumn: 68,
+    historyStoredColumns: 69,
     historyCapacityRows: 50001,
     historyAnchorsSheet: "History anchors",
     historyAnchorsSheetId: 907202613,
@@ -458,6 +459,11 @@ const HISTORY_MEASUREMENT_HEADERS = Object.freeze([
 ]);
 
 const HISTORY_ROTATION_HEADERS = Object.freeze(["Rotation (°)"]);
+const HISTORY_ROTATION_FACING_HEADERS = Object.freeze([
+    "Rotation from facing",
+    "Rotation to facing",
+]);
+const ROTATION_FACING_OPTIONS = Object.freeze(["N", "E", "S", "W"]);
 
 const HISTORY_WATER_HEADERS = Object.freeze([
     "Watering application",
@@ -519,9 +525,13 @@ const APP_SHEET_ENTRY_V534_HEADERS = Object.freeze([
     ...APP_SHEET_ENTRY_V532_HEADERS,
     ...HISTORY_LIGHT_HEADERS,
 ]);
-const APP_SHEET_ENTRY_HEADERS = Object.freeze([
+const APP_SHEET_ENTRY_V545_HEADERS = Object.freeze([
     ...APP_SHEET_ENTRY_V534_HEADERS,
     ...APP_SHEET_CARE_HEADERS,
+]);
+const APP_SHEET_ENTRY_HEADERS = Object.freeze([
+    ...APP_SHEET_ENTRY_V545_HEADERS,
+    ...HISTORY_ROTATION_FACING_HEADERS,
 ]);
 const APP_SHEET_QUEUE_STATUSES = Object.freeze(["Queued", "Retry"]);
 const APP_SHEET_QUEUE_LIMIT = 50;
@@ -704,9 +714,14 @@ const APP_SHEET_BULK_V538_HEADERS = Object.freeze([
     "P40 weight (g)",
 ]);
 
-const APP_SHEET_BULK_HEADERS = Object.freeze([
+const APP_SHEET_BULK_V545_HEADERS = Object.freeze([
     ...APP_SHEET_BULK_V538_HEADERS,
     "P41 weight (g)",
+]);
+const APP_SHEET_BULK_HEADERS = Object.freeze([
+    ...APP_SHEET_BULK_V545_HEADERS,
+    "Rotation to facing",
+    "Rotation facing snapshot",
 ]);
 
 const APP_SHEET_BULK_ACTION_INDEX = 3;
@@ -1291,6 +1306,8 @@ function webAppBootstrap_(diagnostics) {
         potSizeByPlant,
         locations,
         wateringReads,
+        rotationReads,
+        actionContexts,
         activitySummaries,
         weightReads,
         environmentReads,
@@ -1320,6 +1337,16 @@ function webAppBootstrap_(diagnostics) {
             refreshedAt,
             timeZone
         );
+        const rotationReads = webRotationReadModelsFromRows_(
+            historyRows,
+            potSetupByPlant,
+            refreshedAt
+        );
+        const actionContexts = webActionContextsFromRows_(
+            historyRows,
+            potSetupByPlant,
+            refreshedAt
+        );
         const activitySummaries = plantActivitySummariesFromRows_(
             historyRows,
             potSetupByPlant,
@@ -1344,6 +1371,8 @@ function webAppBootstrap_(diagnostics) {
             potSizeByPlant,
             locations,
             wateringReads,
+            rotationReads,
+            actionContexts,
             activitySummaries,
             weightReads,
             environmentReads,
@@ -1404,6 +1433,9 @@ function webAppBootstrap_(diagnostics) {
                     lastWateredNutrientsUsed: wateringRead?.nutrientsUsed || "",
                     lastWateredNutrientStreakCount:
                         wateringRead?.nutrientStreakCount || 0,
+                    rotationFacing: rotationReads.get(cleanText_(plantId)),
+                    actionContexts:
+                        actionContexts.get(cleanText_(plantId)) || {},
                     latestWeight: weightRead.latestWeight,
                     latestWeightAt: weightRead.latestWeightAt,
                     ...environmentReads.get(cleanText_(plantId)),
@@ -1448,6 +1480,7 @@ function webAppBootstrap_(diagnostics) {
             timeZone,
             serverTime: refreshedAt.toISOString(),
             wateringAgesAvailable: true,
+            actionContextsAvailable: true,
             dayKey: weightReads.dayKey,
             dayStartHour: GARDEN_LOGGER.dayStartHour,
             weighedTodayPlantIds: weightReads.weighedTodayPlantIds.filter(
@@ -2100,6 +2133,7 @@ function processQueuedAppSheetBulkEntries_(spreadsheet) {
     migrateLegacyAppSheetBulkSheet_(bulkSheet, false);
     const bulkHeaders = [
         APP_SHEET_BULK_HEADERS,
+        APP_SHEET_BULK_V545_HEADERS,
         APP_SHEET_BULK_V538_HEADERS,
         APP_SHEET_BULK_V536_HEADERS,
         APP_SHEET_BULK_V534_HEADERS,
@@ -2150,12 +2184,70 @@ function processQueuedAppSheetBulkEntries_(spreadsheet) {
 
     queued.forEach(({ row, rowNumber }) => {
         const roundId = cleanText_(row[0]);
+        let capturingRotationSnapshot = false;
         try {
             if (!roundId) throw new Error("AppSheet Round ID is required.");
             if (idCounts.get(roundId) !== 1) {
                 throw new Error(`AppSheet Round ID ${roundId} is duplicated.`);
             }
-            const requests = appSheetBulkPayloadsFromRow_(row, roundId);
+            if (
+                cleanText_(row[APP_SHEET_BULK_ACTION_INDEX]) === "Rotation" &&
+                cleanText_(row[77]) &&
+                !cleanText_(row[78])
+            ) {
+                const selected = appSheetBulkSelectedPlants_(
+                    row[APP_SHEET_BULK_SELECTED_PLANTS_INDEX]
+                );
+                const observedAt = webHistoryTimestamp_(row[2] || row[1]);
+                const hasPredecessor = queued.some((candidate) => {
+                    if (
+                        candidate.rowNumber === rowNumber ||
+                        cleanText_(
+                            candidate.row[APP_SHEET_BULK_ACTION_INDEX]
+                        ) !== "Rotation"
+                    )
+                        return false;
+                    const candidateTime = webHistoryTimestamp_(
+                        candidate.row[2] || candidate.row[1]
+                    );
+                    if (
+                        candidateTime > observedAt ||
+                        (candidateTime === observedAt &&
+                            candidate.rowNumber > rowNumber)
+                    )
+                        return false;
+                    return cleanText_(
+                        candidate.row[APP_SHEET_BULK_SELECTED_PLANTS_INDEX]
+                    )
+                        .split(/[,;]/)
+                        .map(cleanText_)
+                        .some((id) => selected.has(id));
+                });
+                if (hasPredecessor) {
+                    // Freeze only after earlier turns reach canonical History.
+                    // A failed or deferred predecessor must never become a speculative origin.
+                    deferredCount += 1;
+                    return;
+                }
+            }
+            if (cleanText_(row[APP_SHEET_BULK_ACTION_INDEX]) === "Rotation") {
+                if (cleanText_(row[78]))
+                    appSheetBulkRotationSnapshot_(row, roundId);
+                else if (cleanText_(row[77])) rotationFacing_(row[77], true);
+            }
+            capturingRotationSnapshot =
+                cleanText_(row[APP_SHEET_BULK_ACTION_INDEX]) === "Rotation" &&
+                Boolean(cleanText_(row[77])) &&
+                !cleanText_(row[78]);
+            const rotationRow = freezeAppSheetBulkRotation_(
+                spreadsheet,
+                bulkSheet,
+                rowNumber,
+                row,
+                roundId
+            );
+            capturingRotationSnapshot = false;
+            const requests = appSheetBulkPayloadsFromRow_(rotationRow, roundId);
             if (!requests.length) {
                 throw new Error(
                     "Select at least one watered plant or enter at least one weight before sending this round."
@@ -2171,9 +2263,16 @@ function processQueuedAppSheetBulkEntries_(spreadsheet) {
             selectedRequestCount += requests.length;
             pendingRounds.push({ roundId, rowNumber, requests });
         } catch (error) {
+            const invalidSnapshot =
+                error instanceof Error &&
+                "retryable" in error &&
+                error.retryable === false;
             receipts.push({
                 rowNumber,
-                status: "Needs correction",
+                status:
+                    capturingRotationSnapshot && !invalidSnapshot
+                        ? "Retry"
+                        : "Needs correction",
                 message: error instanceof Error ? error.message : String(error),
                 requestCount: 0,
                 savedCount: 0,
@@ -2292,6 +2391,12 @@ function appSheetBulkPayloadsFromRow_(row, roundId) {
     const includesWater = action === "Water" || action === "Water + weigh";
     const includesWeigh = action === "Weigh" || action === "Water + weigh";
     const validatedSelection = appSheetBulkSelectedPlants_(selection);
+    const rotationTarget = action === "Rotation" ? cleanText_(row[77]) : "";
+    const rotationSnapshot = action === "Rotation" ? cleanText_(row[78]) : "";
+    const rotations =
+        rotationTarget || rotationSnapshot
+            ? appSheetBulkRotationSnapshot_(row, roundId).rotationByPlant
+            : null;
     /** @type {Set<string>} */
     const selectedPlants =
         includesWeigh && !includesWater ? new Set() : validatedSelection;
@@ -2384,11 +2489,209 @@ function appSheetBulkPayloadsFromRow_(row, roundId) {
                     weight,
                     notes,
                     ...sharedDetails,
+                    ...(rotations?.[plantId] || {}),
                     entrySource: "AppSheet bulk",
                 },
             },
         ];
     });
+}
+
+/**
+ * Validate the immutable origin snapshot before expanding any per-plant retry.
+ * The target, observation date, selection and round ID cannot drift underneath it.
+ * @param {GardenHistoryRow} row
+ * @param {string} roundId
+ * @returns {GardenBulkRotationSnapshot}
+ */
+function appSheetBulkRotationSnapshot_(row, roundId) {
+    const text = cleanText_(row[78]);
+    if (!text || text.length > 20000)
+        throw new Error(
+            "The bulk rotation needs a confirmed per-plant facing snapshot before saving."
+        );
+    let value;
+    try {
+        value = JSON.parse(text);
+    } catch {
+        throw new Error(
+            "The bulk rotation facing snapshot is unreadable; keep the round for review."
+        );
+    }
+    const plantIds = [
+        ...appSheetBulkSelectedPlants_(
+            row[APP_SHEET_BULK_SELECTED_PLANTS_INDEX]
+        ),
+    ].sort();
+    const date = row[2] || row[1];
+    const observedAt = webHistoryTimestamp_(date);
+    const toFacing = rotationFacing_(row[77], true);
+    if (
+        !value ||
+        typeof value !== "object" ||
+        Array.isArray(value) ||
+        value.version !== 1 ||
+        value.roundId !== roundId ||
+        !observedAt ||
+        value.observedAt !== new Date(observedAt).toISOString() ||
+        value.toFacing !== toFacing ||
+        JSON.stringify(value.plantIds) !== JSON.stringify(plantIds)
+    )
+        throw new Error(
+            "This bulk rotation no longer matches its frozen facing snapshot. Keep the original round for retries; create a new round for changed observations."
+        );
+    const rotations = rotationByPlantDetails_(value.rotationByPlant, plantIds);
+    if (
+        [...rotations.values()].some(
+            (rotation) => rotation.rotationToFacing !== toFacing
+        )
+    )
+        throw new Error(
+            "The frozen per-plant rotations do not match the round's target facing."
+        );
+    return {
+        version: 1,
+        roundId,
+        observedAt: value.observedAt,
+        plantIds,
+        toFacing,
+        rotationByPlant: Object.fromEntries(rotations),
+    };
+}
+
+/**
+ * Freeze AppSheet's per-plant origins under the writer lock, flush and read back
+ * the snapshot before any History write. Later partial retries reuse these exact
+ * endpoints even after other observations or corrections change current facing.
+ * @param {GardenSpreadsheet} spreadsheet
+ * @param {GardenSheet} sheet
+ * @param {number} rowNumber
+ * @param {GardenHistoryRow} row
+ * @param {string} roundId
+ * @returns {GardenHistoryRow}
+ */
+function freezeAppSheetBulkRotation_(
+    spreadsheet,
+    sheet,
+    rowNumber,
+    row,
+    roundId
+) {
+    if (
+        normalizeAppSheetBulkAction_(row[APP_SHEET_BULK_ACTION_INDEX]) !==
+            "Rotation" ||
+        (!cleanText_(row[77]) && !cleanText_(row[78]))
+    )
+        return row;
+    if (cleanText_(row[78])) {
+        appSheetBulkRotationSnapshot_(row, roundId);
+        return row;
+    }
+    const lock = LockService.getScriptLock();
+    if (!lock.tryLock(GARDEN_LOGGER.lockTimeoutMs))
+        throw new Error(
+            "Another reading is finishing. The bulk rotation facing snapshot has not been changed; retry this round."
+        );
+    try {
+        const current = sheet
+            .getRange(rowNumber, 1, 1, APP_SHEET_BULK_HEADERS.length)
+            .getValues()[0];
+        if (
+            !current ||
+            current[0] !== row[0] ||
+            current
+                .slice(0, 78)
+                .some(
+                    (cell, index) =>
+                        comparableHistoryValue_(cell) !==
+                        comparableHistoryValue_(row[index])
+                )
+        )
+            throw Object.assign(
+                new Error(
+                    "The AppSheet rotation round changed while its origins were being captured. Sync and review the retained round."
+                ),
+                { retryable: false }
+            );
+        if (cleanText_(current[78])) {
+            try {
+                appSheetBulkRotationSnapshot_(current, roundId);
+            } catch (error) {
+                throw Object.assign(
+                    new Error(
+                        error instanceof Error ? error.message : String(error)
+                    ),
+                    { retryable: false }
+                );
+            }
+            return current;
+        }
+        const plantIds = [
+            ...appSheetBulkSelectedPlants_(
+                current[APP_SHEET_BULK_SELECTED_PLANTS_INDEX]
+            ),
+        ].sort();
+        const timestamp = webHistoryTimestamp_(current[2] || current[1]);
+        if (!timestamp)
+            throw Object.assign(
+                new Error(
+                    "Record the bulk rotation date and time before freezing its facings."
+                ),
+                { retryable: false }
+            );
+        const target = rotationFacing_(current[77], true);
+        const plants = plantRecordsById_(spreadsheet, false);
+        const setups = new Map(
+            plantIds.map((id) => {
+                const plant = plants.get(id);
+                if (!plant)
+                    throw Object.assign(
+                        new Error(`Plant ID ${id} is not valid.`),
+                        { retryable: false }
+                    );
+                return [id, plant.potSetup];
+            })
+        );
+        const facings = webRotationReadModelsFromRows_(
+            readHistorySnapshot_(spreadsheet),
+            setups,
+            new Date(Math.min(timestamp, Date.now()))
+        );
+        /** @type {Record<string, GardenObservationDetails>} */
+        const rotationByPlant = {};
+        for (const id of plantIds) {
+            /** @type {GardenObservationDetails} */
+            const details = {};
+            addRotationDetails_(
+                details,
+                {
+                    rotationFromFacing: facings.get(id)?.facing || "",
+                    rotationToFacing: target,
+                },
+                ["Rotation"]
+            );
+            rotationByPlant[id] = details;
+        }
+        const serialized = JSON.stringify({
+            version: 1,
+            roundId,
+            observedAt: new Date(timestamp).toISOString(),
+            plantIds,
+            toFacing: target,
+            rotationByPlant,
+        });
+        const destination = sheet.getRange(rowNumber, 79, 1, 1);
+        destination.setValue(serialized);
+        SpreadsheetApp.flush();
+        if (destination.getValue() !== serialized)
+            throw new Error(
+                "The bulk rotation facing snapshot could not be confirmed. No rotation has been sent; retry the retained round."
+            );
+        current[78] = serialized;
+        return current;
+    } finally {
+        lock.releaseLock();
+    }
 }
 
 /** @param {unknown} value @returns {string} */
@@ -2692,6 +2995,7 @@ function installAppSheetBulkSheet() {
     sheet.showColumns(APP_SHEET_BULK_V528_HEADERS.length + 1, 3);
 
     configureCareColumns_(sheet, APP_SHEET_BULK_HEADERS);
+    configureRotationFacingColumns_(sheet, APP_SHEET_BULK_HEADERS);
     const result = {
         created,
         migrated,
@@ -2724,6 +3028,7 @@ function migrateLegacyAppSheetBulkSheet_(sheet, shouldUpgradeInventory = true) {
 
     if (hasHeaders(APP_SHEET_BULK_HEADERS)) return false;
     const priorSchema = [
+        { headers: APP_SHEET_BULK_V545_HEADERS, lastColumn: "BY" },
         { headers: APP_SHEET_BULK_V538_HEADERS, lastColumn: "BX" },
         { headers: APP_SHEET_BULK_V536_HEADERS, lastColumn: "BV" },
         { headers: APP_SHEET_BULK_V534_HEADERS, lastColumn: "BJ" },
@@ -2926,6 +3231,27 @@ function ensureAppSheetEntryColumns_(sheet, configureColumn = false) {
                 `App entries!${columnName_(column)} contains existing data; review before adding care events.`
             );
     });
+    HISTORY_ROTATION_FACING_HEADERS.forEach((header, index) => {
+        const column = 60 + index;
+        if (
+            extensionHeaders[column - extensionStartColumn] === header ||
+            column > sheet.getMaxColumns()
+        )
+            return;
+        const destination = sheet.getRange(
+            2,
+            column,
+            Math.max(1, sheet.getLastRow() - 1),
+            1
+        );
+        if (
+            destination.getValues().some((row) => row[0] !== "") ||
+            destination.getFormulas().some((row) => row[0])
+        )
+            throw new Error(
+                `App entries!${columnName_(column)} contains existing data; review before adding rotation facings.`
+            );
+    });
     ensureSheetColumnCapacity_(sheet, APP_SHEET_ENTRY_HEADERS.length);
     const changed = expectedExtension.some(
         (header, index) => extensionHeaders[index] !== header
@@ -2953,7 +3279,7 @@ function ensureAppSheetEntryColumns_(sheet, configureColumn = false) {
             .getRange(2, plantIdColumn, dataRowCount, 1)
             .setDataValidation(plantIdValidation);
         const rotationValidation = SpreadsheetApp.newDataValidation()
-            .requireNumberBetween(1, 360)
+            .requireNumberBetween(0, 360)
             .setAllowInvalid(false)
             .build();
         sheet
@@ -2997,6 +3323,7 @@ function ensureAppSheetEntryColumns_(sheet, configureColumn = false) {
             .setDataValidation(lightReadingValidation_())
             .setNumberFormat("0.##");
         configureCareColumns_(sheet, APP_SHEET_ENTRY_HEADERS);
+        configureRotationFacingColumns_(sheet, APP_SHEET_ENTRY_HEADERS);
         const nutrientProductColumn =
             APP_SHEET_ENTRY_HEADERS.indexOf("Nutrient product") + 1;
         const nutrientProductValidation = SpreadsheetApp.newDataValidation()
@@ -3082,7 +3409,11 @@ function appSheetPayloadFromRow_(row, requestId) {
         photoUrl: cleanText_(row[21]),
         pestIssue: cleanText_(row[22]),
         pestTreatment: cleanText_(row[23]),
-        rotationDegrees: row[31],
+        rotationDegrees:
+            cleanText_(row[59]) || cleanText_(row[60]) ? undefined : row[31],
+        ...(cleanText_(row[59]) || cleanText_(row[60])
+            ? { rotationFromFacing: row[59], rotationToFacing: row[60] }
+            : {}),
         wateringApplication: cleanText_(row[32]),
         waterAmount: row[33],
         relativeHumidity: row[34],
@@ -3584,6 +3915,19 @@ function saveBulkCareObservation(payload) {
         return plant;
     });
     const details = eventDetailsFromPayload_(payload, eventNames, null);
+    const rotations =
+        eventNames.includes("Rotation") && payload.rotationByPlant !== undefined
+            ? rotationByPlantDetails_(payload.rotationByPlant, plantIds)
+            : null;
+    if (
+        !rotations &&
+        eventNames.includes("Rotation") &&
+        (payload.rotationFromFacing !== undefined ||
+            payload.rotationToFacing !== undefined)
+    )
+        throw new Error(
+            "Bulk cardinal rotations need separate from/to facings for every selected plant."
+        );
     const notes = cleanText_(payload.notes);
     const observationDate = normalizeDate_(payload.observedAt);
     const baseRequestId = normalizeRequestId_(payload.requestId, true);
@@ -3606,6 +3950,7 @@ function saveBulkCareObservation(payload) {
                 pestIssue: details.pestIssue,
                 pestTreatment: details.pestTreatment,
                 rotationDegrees: details.rotationDegrees,
+                ...rotations?.get(plant.id),
                 entrySource,
             }))
         );
@@ -3924,6 +4269,7 @@ function installGardenLogger() {
     ensureHistoryHumidityColumn_(history, true);
     ensureHistoryLightColumns_(history, true);
     ensureHistoryCareColumns_(history, true);
+    ensureHistoryRotationFacingColumns_(history, true);
     ensureHistoryAnchors_(spreadsheet);
     ensureWateringMapFeed_(spreadsheet);
     ensureHistoryView_(spreadsheet);
@@ -4016,7 +4362,7 @@ function installGardenLogger() {
             `Garden logger ${GARDEN_LOGGER.version} verified. One Save tap can archive multiple event rows.`
         );
     spreadsheet.toast(
-        `Logger ${GARDEN_LOGGER.version} is ready. Weight state is inferred automatically, and rotations default to 90° when selected.`,
+        `Logger ${GARDEN_LOGGER.version} is ready. Weight state is inferred automatically. Choose the new cardinal facing for rotations; the amount is calculated when the previous facing is known.`,
         "Garden logger verified",
         6
     );
@@ -8847,11 +9193,11 @@ function correctionChangeValues_(changes) {
 function correctionSnapshot_(spreadsheet) {
     const history = requireSheet_(spreadsheet, GARDEN_LOGGER.historySheet);
     if (
-        GARDEN_LOGGER.historyStoredColumns !== 67 ||
-        history.getMaxColumns() < 67
+        GARDEN_LOGGER.historyStoredColumns !== 69 ||
+        history.getMaxColumns() < 69
     ) {
         throw new Error(
-            "HISTORY_SCHEMA: Expected the installed 67-column History schema."
+            "HISTORY_SCHEMA: Expected the installed 69-column History schema."
         );
     }
     const expected = [
@@ -8868,10 +9214,11 @@ function correctionSnapshot_(spreadsheet) {
         ...HISTORY_HUMIDITY_HEADERS,
         ...HISTORY_LIGHT_HEADERS,
         ...HISTORY_CARE_HEADERS,
+        ...HISTORY_ROTATION_FACING_HEADERS,
     ];
     /** @type {GardenHistoryRow | undefined} */
-    const headers = history.getRange(1, 1, 1, 67).getValues()[0];
-    const headerFormulas = history.getRange(1, 1, 1, 67).getFormulas()[0];
+    const headers = history.getRange(1, 1, 1, 69).getValues()[0];
+    const headerFormulas = history.getRange(1, 1, 1, 69).getFormulas()[0];
     if (
         !headers ||
         !headerFormulas ||
@@ -8885,7 +9232,7 @@ function correctionSnapshot_(spreadsheet) {
         );
     }
     const rowCount = Math.max(0, history.getLastRow() - 1);
-    const range = rowCount ? history.getRange(2, 1, rowCount, 67) : null;
+    const range = rowCount ? history.getRange(2, 1, rowCount, 69) : null;
     /** @type {GardenHistoryRow[]} */
     const values = range ? range.getValues() : [];
     const formulas = range ? range.getFormulas() : [];
@@ -9442,8 +9789,28 @@ function correctionFieldDefinitions_(event) {
             "Rotation",
             "number",
             [],
-            true,
+            false,
             "°",
+            ["Rotation"],
+        ],
+        [
+            "rotationFromFacing",
+            67,
+            "Rotation from facing",
+            "select",
+            [...ROTATION_FACING_OPTIONS],
+            false,
+            "",
+            ["Rotation"],
+        ],
+        [
+            "rotationToFacing",
+            68,
+            "Rotation to facing",
+            "select",
+            [...ROTATION_FACING_OPTIONS],
+            false,
+            "",
             ["Rotation"],
         ],
     ];
@@ -9876,6 +10243,7 @@ function correctionNumericValue_(definition, input) {
                         "leafAirTemperatureC",
                         "leafVpd",
                         "leafHumidity",
+                        "rotationDegrees",
                     ].includes(key)))) ||
         (key === "temperatureC" && value !== "" && value < -273.15) ||
         (key === "relativeHumidity" && value !== "" && value > 100) ||
@@ -9929,6 +10297,42 @@ function correctionValidateDependencies_(row, changes) {
     /** @param {...string} keys @returns {boolean} */
     const changed = (...keys) =>
         keys.some((key) => Object.hasOwn(changes, key));
+    if (row[2] === "Rotation") {
+        const cardinal =
+            Boolean(row[67] || row[68]) ||
+            changed("rotationFromFacing", "rotationToFacing");
+        if (cardinal) {
+            /** @type {GardenObservationDetails} */
+            const details = {};
+            try {
+                addRotationDetails_(
+                    details,
+                    {
+                        rotationFromFacing: row[67],
+                        rotationToFacing: row[68],
+                        ...(changed("rotationDegrees")
+                            ? { rotationDegrees: row[39] }
+                            : {}),
+                    },
+                    ["Rotation"]
+                );
+            } catch (error) {
+                throw correctionValidationError_(
+                    `INVALID_CORRECTION: ${error instanceof Error ? error.message : String(error)}`
+                );
+            }
+            row[39] = details.rotationDegrees ?? "";
+            row[67] = details.rotationFromFacing || "";
+            row[68] = details.rotationToFacing || "";
+        } else if (
+            changed("rotationDegrees") &&
+            (row[39] === "" || row[39] <= 0)
+        ) {
+            throw correctionValidationError_(
+                "INVALID_CORRECTION: Legacy rotation degrees must be more than 0 and at most 360."
+            );
+        }
+    }
     if (row[2] === "Leaf VPD" && changed("leafVpd") && row[66] !== "Device")
         throw correctionValidationError_(
             "INVALID_CORRECTION: Calculated Leaf VPD must be recomputed from leaf temperature and paired air/RH."
@@ -10713,6 +11117,7 @@ function prepareHistoryForObservationWrites_(history) {
     ensureHistoryHumidityColumn_(history);
     ensureHistoryLightColumns_(history);
     ensureHistoryCareColumns_(history);
+    ensureHistoryRotationFacingColumns_(history);
 }
 
 /**
@@ -10853,6 +11258,8 @@ function sameCanonicalObservationRow_(actual, expected) {
             { length: HISTORY_CARE_FIELDS.length },
             (_, index) => 45 + index
         ),
+        67,
+        68,
     ];
     return comparableColumns.every(
         (index) =>
@@ -10917,6 +11324,8 @@ function storedObservationRows_(input, requestId, targetRow, recordedAt) {
             eventName === "Light" ? details.ppfd : "",
             eventName === "Light" ? details.lux : "",
             ...historyCareRow_(details, eventName),
+            eventName === "Rotation" ? details.rotationFromFacing || "" : "",
+            eventName === "Rotation" ? details.rotationToFacing || "" : "",
         ];
     });
 }
@@ -11419,7 +11828,9 @@ function historyMeasurementRow_(input, eventName, rowNumber) {
 function historyRotationRow_(input, eventName) {
     return [
         eventName === "Rotation"
-            ? Number(input.details?.rotationDegrees) || 90
+            ? input.details?.rotationToFacing
+                ? (input.details.rotationDegrees ?? "")
+                : Number(input.details?.rotationDegrees) || 90
             : "",
     ];
 }
@@ -11560,6 +11971,35 @@ function addRotationDetails_(details, payload, eventNames) {
     if (!eventNames.includes("Rotation")) {
         return;
     }
+    if (
+        payload &&
+        (Object.hasOwn(payload, "rotationFromFacing") ||
+            Object.hasOwn(payload, "rotationToFacing"))
+    ) {
+        const from = rotationFacing_(payload.rotationFromFacing);
+        const to = rotationFacing_(payload.rotationToFacing, true);
+        const degrees = from
+            ? ((ROTATION_FACING_OPTIONS.indexOf(to) -
+                  ROTATION_FACING_OPTIONS.indexOf(from) +
+                  4) %
+                  4) *
+              90
+            : "";
+        if (
+            payload.rotationDegrees !== undefined &&
+            (degrees === ""
+                ? cleanText_(payload.rotationDegrees) !== ""
+                : cleanText_(payload.rotationDegrees) === "" ||
+                  Number(payload.rotationDegrees) !== degrees)
+        )
+            throw new Error(
+                "Rotation degrees must match the recorded from/to facings; leave degrees blank when the previous facing is unknown."
+            );
+        details.rotationFromFacing = from;
+        details.rotationToFacing = to;
+        details.rotationDegrees = degrees;
+        return;
+    }
     const raw = cleanText_(payload?.rotationDegrees) || "90";
     const rotationDegrees = Number(raw);
     if (
@@ -11572,6 +12012,67 @@ function addRotationDetails_(details, payload, eventNames) {
         );
     }
     details.rotationDegrees = rotationDegrees;
+}
+
+/** @param {unknown} value @param {boolean} [required] @returns {string} */
+function rotationFacing_(value, required = false) {
+    const facing = cleanText_(value).toUpperCase();
+    if (
+        (!facing && required) ||
+        (facing && !ROTATION_FACING_OPTIONS.includes(facing))
+    )
+        throw new Error(
+            "Choose North, East, South or West for the rotation facing."
+        );
+    return facing;
+}
+
+/**
+ * The phone freezes each pot's endpoints before saving the bulk round. Never
+ * calculate a retry from a newer bootstrap or another pot's facing.
+ * @param {unknown} value
+ * @param {string[]} plantIds
+ * @returns {Map<string, GardenObservationDetails>}
+ */
+function rotationByPlantDetails_(value, plantIds) {
+    if (!value || typeof value !== "object" || Array.isArray(value))
+        throw new Error(
+            "Keep a separate rotation facing for every selected plant."
+        );
+    const entries = Object.entries(value);
+    if (
+        entries.length !== plantIds.length ||
+        entries.some(([id]) => !plantIds.includes(id))
+    )
+        throw new Error(
+            "Rotation facings must match the selected plants exactly."
+        );
+    /** @type {Map<string, GardenObservationDetails>} */
+    const rotations = new Map();
+    for (const [plantId, entry] of entries) {
+        if (
+            !entry ||
+            typeof entry !== "object" ||
+            Array.isArray(entry) ||
+            !Object.hasOwn(entry, "rotationToFacing") ||
+            Object.keys(entry).some(
+                (key) =>
+                    ![
+                        "rotationFromFacing",
+                        "rotationToFacing",
+                        "rotationDegrees",
+                    ].includes(key)
+            )
+        )
+            throw new Error(
+                "Each selected plant needs its own from/to rotation facings."
+            );
+        /** @type {GardenObservationDetails} */
+        const details = {};
+        addRotationDetails_(details, entry, ["Rotation"]);
+        rotations.set(plantId, details);
+    }
+    return rotations;
 }
 
 /** @param {GardenObservationDetails} details @param {GardenEventDetailPayload | null | undefined} payload @param {string[]} eventNames */
@@ -12582,6 +13083,164 @@ function webWateringReadModelsFromRows_(historyRows, now, timeZone) {
 }
 
 /**
+ * Absolute facing is evidence from the current setup's latest eligible Rotation.
+ * A subsequent legacy degree-only turn invalidates an older cardinal anchor;
+ * a missing direction is never a North default or an accumulated assumption.
+ * @param {GardenHistoryRow[]} historyRows
+ * @param {Map<string, GardenCell>} baselineSetups
+ * @param {Date} now
+ * @returns {Map<string, GardenWebRotationReadModel>}
+ */
+function webRotationReadModelsFromRows_(historyRows, baselineSetups, now) {
+    /** @type {Map<string, GardenWebRotationReadModel>} */
+    const reads = new Map(
+        [...baselineSetups].map(([id, setup]) => [
+            id,
+            {
+                facing: "",
+                observedAt: "",
+                observationId: "",
+                potSetup: positiveIntegerOrDefault_(setup, 1),
+            },
+        ])
+    );
+    /** @type {Map<string, GardenHistoryOrder>} */
+    const latest = new Map();
+    const corrections = historyCorrectionContext_(historyRows);
+    historyRows.forEach((row, rowIndex) => {
+        const id = cleanText_(row[1]);
+        const read = reads.get(id);
+        const timestamp = webHistoryTimestamp_(row[0]);
+        if (
+            !read ||
+            cleanText_(row[2]).toLowerCase() !== "rotation" ||
+            cleanText_(row[35]).toLowerCase() === "removed" ||
+            corrections.superseded.has(rowIndex) ||
+            !timestamp ||
+            timestamp > now.getTime() ||
+            positiveIntegerOrDefault_(row[10], 1) !== read.potSetup
+        )
+            return;
+        const order = {
+            timestamp,
+            rowIndex,
+            orderIndex: corrections.order[rowIndex],
+        };
+        const previous = latest.get(id);
+        if (previous && compareHistoryRecords_(order, previous) <= 0) return;
+        latest.set(id, order);
+        const facing = cleanText_(row[68]).toUpperCase();
+        read.facing = ROTATION_FACING_OPTIONS.includes(facing) ? facing : "";
+        read.observedAt = new Date(timestamp).toISOString();
+        read.observationId = cleanText_(row[26]);
+    });
+    return reads;
+}
+
+/**
+ * Dated action hints reuse the full bootstrap snapshot; they never populate new
+ * observations or combine separate sensor records into a paired measurement.
+ * Height and width keep independent dates and provenance within the current setup.
+ * @param {GardenHistoryRow[]} historyRows
+ * @param {Map<string, GardenCell>} baselineSetups
+ * @param {Date} now
+ * @returns {Map<string, Record<string, GardenWebActionContext>>}
+ */
+function webActionContextsFromRows_(historyRows, baselineSetups, now) {
+    const events = new Set([
+        "Water",
+        "Measure",
+        "Check",
+        "Inspect",
+        "Move",
+        "Repot",
+        "Leaf VPD",
+        "Mist",
+        "Prune",
+        "Clean",
+        "Pest",
+        "Flower",
+        "Propagate",
+        "Photo",
+        "Environment",
+    ]);
+    const corrections = historyCorrectionContext_(historyRows);
+    /** @type {Map<string, Record<string, GardenWebActionContext>>} */
+    const contexts = new Map();
+    const records = historyRows
+        .map((row, rowIndex) => ({
+            row,
+            rowIndex,
+            orderIndex: corrections.order[rowIndex],
+            timestamp: webHistoryTimestamp_(row[0]),
+        }))
+        .filter(
+            ({ row, rowIndex, timestamp }) =>
+                baselineSetups.has(cleanText_(row[1])) &&
+                events.has(cleanText_(row[2])) &&
+                cleanText_(row[35]).toLowerCase() !== "removed" &&
+                !corrections.superseded.has(rowIndex) &&
+                timestamp > 0 &&
+                timestamp <= now.getTime()
+        )
+        .sort(compareHistoryRecords_);
+    for (const { row, timestamp } of records) {
+        const id = cleanText_(row[1]);
+        const event = cleanText_(row[2]);
+        const setup = positiveIntegerOrDefault_(row[10], 1);
+        if (
+            (event === "Measure" || event === "Repot") &&
+            setup !== positiveIntegerOrDefault_(baselineSetups.get(id), 1)
+        )
+            continue;
+        if (
+            (event === "Check" && !cleanText_(row[32])) ||
+            (event === "Inspect" && !cleanText_(row[7])) ||
+            (event === "Move" && !cleanText_(row[49]))
+        )
+            continue;
+        const byEvent = contexts.get(id) || {};
+        /** @type {GardenWebActionContext} */
+        const context = {
+            observedAt: new Date(timestamp).toISOString(),
+            observationId: cleanText_(row[26]),
+            potSetup: setup,
+            quality: cleanText_(row[28]),
+            method: cleanText_(row[34]),
+            details: webHistoryDetails_(row),
+        };
+        if (event === "Measure") {
+            const previous = byEvent["Measure"];
+            if (previous?.height) context.height = previous.height;
+            if (previous?.width) context.width = previous.width;
+            /** @type {readonly ["height" | "width", number][]} */
+            const dimensions = [
+                ["height", 5],
+                ["width", 6],
+            ];
+            for (const [dimension, column] of dimensions) {
+                const value = row[column];
+                if (
+                    typeof value === "number" &&
+                    Number.isFinite(value) &&
+                    value > 0
+                )
+                    context[dimension] = {
+                        valueCm: value,
+                        observedAt: context.observedAt,
+                        quality: context.quality,
+                        method: context.method,
+                        entryUnit: cleanText_(row[36]) || "cm",
+                    };
+            }
+        }
+        byEvent[event] = context;
+        contexts.set(id, byEvent);
+    }
+    return contexts;
+}
+
+/**
  * Latest independent environment measurements from the same bootstrap snapshot.
  * Keep each metric's timestamp: a lux-only reading does not redate older PPFD.
  * @param {GardenHistoryRow[]} historyRows
@@ -12982,7 +13641,11 @@ function webHistoryDetails_(row) {
         Flower: { flowerCount: 21, flowerDetails: 22 },
         Photo: { photoUrl: 23 },
         Pest: { pestIssue: 24, pestTreatment: 25 },
-        Rotation: { rotationDegrees: 39 },
+        Rotation: {
+            rotationDegrees: 39,
+            rotationFromFacing: 67,
+            rotationToFacing: 68,
+        },
     };
     /** @type {GardenWebHistoryDetails} */
     const details = {};
@@ -13375,7 +14038,7 @@ function ensureHistoryRotationColumns_(history, configureColumn = false) {
         range.setValues([[...HISTORY_ROTATION_HEADERS]]);
         range.setNotes([
             [
-                "Clockwise-equivalent rotation recorded in degrees. The mobile logger defaults a Rotation event to 90°.",
+                "Clockwise-equivalent degrees. Cardinal endpoints determine this value; an unknown origin leaves it blank and matching endpoints record 0. Legacy degree-only entries default to 90°.",
             ],
         ]);
     } else if (current[0] !== HISTORY_ROTATION_HEADERS[0]) {
@@ -13387,13 +14050,78 @@ function ensureHistoryRotationColumns_(history, configureColumn = false) {
     if (!configureColumn) return;
     const dataRows = Math.max(1, history.getMaxRows() - 1);
     const rotationRule = SpreadsheetApp.newDataValidation()
-        .requireNumberBetween(1, 360)
+        .requireNumberBetween(0, 360)
         .setAllowInvalid(false)
         .build();
     history
         .getRange(2, GARDEN_LOGGER.historyRotationStartColumn, dataRows, 1)
         .setDataValidation(rotationRule)
         .setNumberFormat("0.##");
+}
+
+/** @param {GardenSheet} history @param {boolean} [configureColumn] */
+function ensureHistoryRotationFacingColumns_(history, configureColumn = false) {
+    ensureHistoryGrid_(history);
+    const range = history.getRange(
+        1,
+        GARDEN_LOGGER.historyRotationFacingStartColumn,
+        1,
+        HISTORY_ROTATION_FACING_HEADERS.length
+    );
+    const current = firstDisplayRow_(range).map(cleanText_);
+    HISTORY_ROTATION_FACING_HEADERS.forEach((header, index) => {
+        if (current[index] === header) return;
+        const column = GARDEN_LOGGER.historyRotationFacingStartColumn + index;
+        if (!isReplaceableGeneratedHeader_(current[index], column))
+            throw new Error(
+                `History!${columnName_(column)}1 must be "${header}".`
+            );
+        const destination = history.getRange(
+            2,
+            column,
+            Math.max(1, history.getLastRow() - 1),
+            1
+        );
+        if (
+            destination.getValues().some((row) => row[0] !== "") ||
+            destination.getFormulas().some((row) => row[0])
+        )
+            throw new Error(
+                `History!${columnName_(column)} contains existing data; review before adding rotation facings.`
+            );
+    });
+    const changed = HISTORY_ROTATION_FACING_HEADERS.some(
+        (header, index) => current[index] !== header
+    );
+    if (changed) range.setValues([[...HISTORY_ROTATION_FACING_HEADERS]]);
+    if (changed || configureColumn)
+        configureRotationFacingColumns_(history, [
+            ...Array.from({ length: 67 }, () => ""),
+            ...HISTORY_ROTATION_FACING_HEADERS,
+        ]);
+}
+
+/** @param {GardenSheet} sheet @param {readonly string[]} headers */
+function configureRotationFacingColumns_(sheet, headers) {
+    const rows = Math.max(1, sheet.getMaxRows() - 1);
+    const validation = SpreadsheetApp.newDataValidation()
+        .requireValueInList([...ROTATION_FACING_OPTIONS], true)
+        .setAllowInvalid(false)
+        .build();
+    HISTORY_ROTATION_FACING_HEADERS.forEach((header) => {
+        const column = headers.indexOf(header) + 1;
+        if (column)
+            sheet
+                .getRange(2, column, rows, 1)
+                .setDataValidation(validation)
+                .setNumberFormat("@");
+    });
+    const snapshotColumn = headers.indexOf("Rotation facing snapshot") + 1;
+    if (snapshotColumn)
+        sheet
+            .getRange(2, snapshotColumn, rows, 1)
+            .clearDataValidations()
+            .setNumberFormat("@");
 }
 
 /**

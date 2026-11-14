@@ -118,6 +118,78 @@ const initialPotSizeByPlant = Object.freeze({
     P28: "4 in",
 });
 
+const HISTORY_HEADERS = Object.freeze([
+    "Date",
+    "Plant ID",
+    "Event",
+    "Weight state",
+    "Weight (g)",
+    "Height (cm)",
+    "Width (cm)",
+    "Plant condition",
+    "Notes",
+    "Recorded",
+    "Pot setup",
+    "Pot label at entry",
+    "Plant / planter",
+    "Trend anchor",
+    "Days after anchor",
+    "Request ID",
+    "Nutrients used",
+    "Nutrient product",
+    "Nutrient amount",
+    "Previous pot size",
+    "Pot size",
+    "Flower count",
+    "Flower details",
+    "Photo URL",
+    "Pest / issue",
+    "Treatment / action",
+    "Observation ID",
+    "Entry source",
+    "Observation quality",
+    "Save group / batch ID",
+    "Corrects observation ID",
+    "Correction reason",
+    "Soil moisture",
+    "Medium / substrate",
+    "Measurement method",
+    "Record status",
+    "Measurement unit",
+    "Height (in)",
+    "Width (in)",
+    "Rotation (°)",
+    "Watering application",
+    "Water amount (mL)",
+    "Relative humidity (%)",
+    "PPFD (µmol/m²/s)",
+    "Illuminance (lux)",
+    "Mist targets",
+    "Mist amount (mL)",
+    "Mist details",
+    "Previous location",
+    "New location",
+    "Temperature (°C)",
+    "Temperature target",
+    "Temperature entry unit",
+    "Environment aspect",
+    "Previous setting",
+    "New setting",
+    "Propagation method",
+    "Propagation details",
+    "Support action",
+    "Support details",
+    "Leaf temperature (°C)",
+    "Leaf temperature entry unit",
+    "Paired air temperature (°C)",
+    "Paired air temperature entry unit",
+    "Paired relative humidity (%)",
+    "Leaf VPD (kPa)",
+    "Leaf VPD source",
+    "Rotation from facing",
+    "Rotation to facing",
+]);
+
 const DAY_MS = 86_400_000;
 
 /**
@@ -190,6 +262,74 @@ export function formatDate(value, fallback = "Not logged") {
         year: "numeric",
     });
     return date ? formatter.format(date) : fallback;
+}
+
+/**
+ * @param {readonly HistoryEvent[]} events
+ */
+export function historyCsvText(events) {
+    const rows = events.map((event) =>
+        HISTORY_HEADERS.map((header) => csvCell(event[header])).join(",")
+    );
+    return `\u{FEFF}${HISTORY_HEADERS.map((header) => csvCell(header)).join(",")}\r\n${rows.join("\r\n")}\r\n`;
+}
+
+/** @param {string | number | undefined} value */
+function csvCell(value) {
+    const text = String(value ?? "");
+    return /[\n\r",]/v.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
+}
+
+/** @type {Readonly<Record<string, string>>} */
+const rotationFacingLabels = Object.freeze({
+    E: "E (wall)",
+    N: "N (window)",
+    S: "S (room)",
+    W: "W (Mylar)",
+});
+
+/**
+ * Describe the recorded event, never infer a current facing from an old turn.
+ * The compact legacy summary retains its historical 90-degree fallback only
+ * when neither facing was recorded.
+ *
+ * @param {HistoryEvent} event
+ * @param {boolean} [isCompact]
+ */
+export function formatRotation(event, isCompact = false) {
+    const from = String(event["Rotation from facing"] ?? "")
+        .trim()
+        .toUpperCase();
+    const to = String(event["Rotation to facing"] ?? "")
+        .trim()
+        .toUpperCase();
+    const fromLabel = rotationFacingLabels[from];
+    const toLabel = rotationFacingLabels[to];
+    if (toLabel !== undefined) {
+        if (fromLabel === undefined)
+            return `Facing ${toLabel} · previous facing not recorded`;
+        const compass = [
+            "N",
+            "E",
+            "S",
+            "W",
+        ];
+        const degrees =
+            ((compass.indexOf(to) - compass.indexOf(from) + 4) % 4) * 90;
+        const turn =
+            degrees === 0
+                ? "0° · facing confirmed"
+                : degrees === 270
+                  ? "90° counterclockwise"
+                  : `${degrees}° clockwise`;
+        return `${fromLabel} → ${toLabel} · ${turn}`;
+    }
+    if (from || to) return "Rotation logged · destination facing not recorded";
+    const degrees = numericValue(event["Rotation (°)"]);
+    if (isCompact) return `${degrees ?? 90}°`;
+    return degrees === null
+        ? "Rotation logged · amount not recorded"
+        : `${degrees}° clockwise-equivalent turn`;
 }
 
 /**
@@ -729,7 +869,10 @@ export function calculateSummary(sourceEvents, plantId = "") {
     const pestEvents = eventNamed("Pest");
     const checkEvents = eventNamed("Check");
     const inspectEvents = eventNamed("Inspect");
-    const rotationEvents = eventNamed("Rotation");
+    const rotationEvents = eventNamed("Rotation").filter((event) => {
+        const date = parseDate(event["Date"]);
+        return date !== null && date.getTime() <= Date.now();
+    });
     const cleanEvents = eventNamed("Clean");
     const pruneEvents = eventNamed("Prune");
     const mistEvents = eventNamed("Mist");

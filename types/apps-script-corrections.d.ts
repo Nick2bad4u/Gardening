@@ -119,7 +119,9 @@ type GardenCorrectionFieldColumn =
     | 63
     | 64
     | 65
-    | 66;
+    | 66
+    | 67
+    | 68;
 interface GardenCorrectionFieldDefinition extends GardenCorrectionField {
     column: GardenCorrectionFieldColumn;
     events: GardenCorrectionEvent[];
@@ -270,6 +272,8 @@ type GardenCorrectionRowFields = [
     leafHumidity: GardenOptionalNumber,
     leafVpd: GardenOptionalNumber,
     leafVpdSource: string,
+    rotationFromFacing: string,
+    rotationToFacing: string,
 ];
 interface GardenCorrectionRowSnapshot {
     formulas: string[];

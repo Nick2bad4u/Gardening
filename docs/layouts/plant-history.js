@@ -11,9 +11,11 @@ import {
     displayValue,
     formatDate,
     formatMeasurement,
+    formatRotation,
     formatSigned,
     getRequiredElement,
     getSavedCollectionData,
+    historyCsvText,
     historyPageUrl,
     installThemeToggle,
     isActiveHistoryEvent,
@@ -79,76 +81,6 @@ async function loadFieldGuideProfiles() {
     }
     return profilesById;
 }
-
-const HISTORY_HEADERS = Object.freeze([
-    "Date",
-    "Plant ID",
-    "Event",
-    "Weight state",
-    "Weight (g)",
-    "Height (cm)",
-    "Width (cm)",
-    "Plant condition",
-    "Notes",
-    "Recorded",
-    "Pot setup",
-    "Pot label at entry",
-    "Plant / planter",
-    "Trend anchor",
-    "Days after anchor",
-    "Request ID",
-    "Nutrients used",
-    "Nutrient product",
-    "Nutrient amount",
-    "Previous pot size",
-    "Pot size",
-    "Flower count",
-    "Flower details",
-    "Photo URL",
-    "Pest / issue",
-    "Treatment / action",
-    "Observation ID",
-    "Entry source",
-    "Observation quality",
-    "Save group / batch ID",
-    "Corrects observation ID",
-    "Correction reason",
-    "Soil moisture",
-    "Medium / substrate",
-    "Measurement method",
-    "Record status",
-    "Measurement unit",
-    "Height (in)",
-    "Width (in)",
-    "Rotation (°)",
-    "Watering application",
-    "Water amount (mL)",
-    "Relative humidity (%)",
-    "PPFD (µmol/m²/s)",
-    "Illuminance (lux)",
-    "Mist targets",
-    "Mist amount (mL)",
-    "Mist details",
-    "Previous location",
-    "New location",
-    "Temperature (°C)",
-    "Temperature target",
-    "Temperature entry unit",
-    "Environment aspect",
-    "Previous setting",
-    "New setting",
-    "Propagation method",
-    "Propagation details",
-    "Support action",
-    "Support details",
-    "Leaf temperature (°C)",
-    "Leaf temperature entry unit",
-    "Paired air temperature (°C)",
-    "Paired air temperature entry unit",
-    "Paired relative humidity (%)",
-    "Leaf VPD (kPa)",
-    "Leaf VPD source",
-]);
 
 const searchParameters = new URLSearchParams(location.search);
 const potRoot = document.querySelector("[data-pot-id]");
@@ -251,12 +183,6 @@ function configurePager(plants, index) {
     } else {
         next.hidden = true;
     }
-}
-
-/** @param {string | number | undefined} value */
-function csvCell(value) {
-    const text = String(value ?? "");
-    return /[\n\r",]/v.test(text) ? `"${text.replaceAll('"', '""')}"` : text;
 }
 
 /**
@@ -380,12 +306,7 @@ function eventSpecificDetails(event) {
             ].filter(Boolean);
         }
         case "rotation": {
-            const degrees = numericValue(event["Rotation (°)"]);
-            return [
-                degrees === null
-                    ? "Rotation logged · amount not recorded"
-                    : `${degrees}° clockwise-equivalent turn`,
-            ];
+            return [formatRotation(event)];
         }
 
         case "water": {
@@ -408,13 +329,8 @@ function eventSpecificDetails(event) {
 
 function exportHistory() {
     if (!state.currentPlant) return;
-    const rows = sortedEvents(state.currentPlant.events, false).map((event) =>
-        HISTORY_HEADERS.map((header) => csvCell(event[header])).join(",")
-    );
     const blob = new Blob(
-        [
-            `\u{FEFF}${HISTORY_HEADERS.map((value) => csvCell(value)).join(",")}\r\n${rows.join("\r\n")}\r\n`,
-        ],
+        [historyCsvText(sortedEvents(state.currentPlant.events, false))],
         { type: "text/csv;charset=utf-8" }
     );
     const url = URL.createObjectURL(blob);
@@ -1561,7 +1477,7 @@ function renderCareSummary(plant) {
     setText(
         "#latest-rotation-detail",
         summary.latestRotation
-            ? `${displayValue(summary.latestRotation["Rotation (°)"], "90")}° · ${formatDate(summary.latestRotation["Date"])}`
+            ? `${formatRotation(summary.latestRotation, true)} · ${formatDate(summary.latestRotation["Date"])}`
             : "No rotation logged"
     );
     const latestClean = latestMatching(

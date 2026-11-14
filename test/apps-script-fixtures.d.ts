@@ -1,8 +1,11 @@
 import type { DailyApi } from "./daily-dashboard-fixtures.js";
 import type {
+    ActionContext,
     Bootstrap,
     CellValue,
     ObservationPayload,
+    RotationEndpoints,
+    RotationFacing,
 } from "./logger-fixtures.js";
 import type {
     HistoryDetailValue,
@@ -197,6 +200,17 @@ export interface AppsScriptTestApi {
         };
         plantId: string;
     }[];
+    appSheetBulkRotationSnapshot_: (
+        row: CellValue[],
+        roundId: string
+    ) => {
+        observedAt: string;
+        plantIds: string[];
+        rotationByPlant: Record<string, RotationEndpoints>;
+        roundId: string;
+        toFacing: string;
+        version: number;
+    };
     appSheetBulkWateredPlants_: (value: unknown) => Set<string>;
     appSheetEventList_: (value: unknown) => string[];
     archiveQuickLogRow_: (quickLog: unknown, rowNumber: unknown) => void;
@@ -236,6 +250,10 @@ export interface AppsScriptTestApi {
     columnName_: (columnNumber: unknown) => string;
     comparableHistoryValue_: (value: unknown) => number | string;
     configureCareColumns_: (sheet: unknown, headers: string[]) => void;
+    configureRotationFacingColumns_: (
+        sheet: unknown,
+        headers: string[]
+    ) => void;
     currentLabelForPlant_: (spreadsheet: unknown, plantId: unknown) => string;
     dashboardMinimumWeightFormula_: (row: number) => string;
     dashboardViewRow_: (
@@ -298,6 +316,10 @@ export interface AppsScriptTestApi {
         history: unknown,
         shouldConfigureColumn?: boolean
     ) => void;
+    ensureHistoryRotationFacingColumns_: (
+        history: unknown,
+        shouldConfigureColumn?: boolean
+    ) => void;
     ensureHistoryView_: (spreadsheet: unknown) => boolean;
     ensureHistoryWaterColumns_: (
         history: unknown,
@@ -329,7 +351,9 @@ export interface AppsScriptTestApi {
         photoUrl: string;
         potSize: string;
         previousPotSize: string;
-        rotationDegrees: string;
+        rotationDegrees: number | string;
+        rotationFromFacing?: string;
+        rotationToFacing?: string;
         waterAmount: string;
         wateringApplication: string;
     };
@@ -358,6 +382,13 @@ export interface AppsScriptTestApi {
         pattern: unknown
     ) => string;
     formulaString_: (value: unknown) => string;
+    freezeAppSheetBulkRotation_: (
+        spreadsheet: object,
+        sheet: object,
+        rowNumber: number,
+        row: CellValue[],
+        roundId: string
+    ) => CellValue[];
     GARDEN_DRY_DOWN: (history: unknown, plantIds: unknown) => DryDownRow[];
     GARDEN_ENVIRONMENT_READINGS: (history: unknown) => CellValue[][];
     GARDEN_RECORDED_LOCATIONS: (history: unknown) => CellValue[][];
@@ -647,6 +678,10 @@ export interface AppsScriptTestApi {
         expectedHeader: unknown
     ) => number;
     requireSheet_: (spreadsheet: unknown, name: unknown) => object;
+    rotationByPlantDetails_: (
+        value: unknown,
+        plantIds: string[]
+    ) => Map<string, RotationEndpoints>;
     safeSheetText_: (value: unknown) => string;
     saveBulkCareObservation: (payload: unknown) => {
         duplicateCount: unknown;
@@ -712,6 +747,11 @@ export interface AppsScriptTestApi {
     ) =>
         | { date: number; guidance: string }
         | { date: string; guidance: unknown };
+    webActionContextsFromRows_: (
+        historyRows: CellValue[][],
+        baselineSetups: Map<string, number>,
+        now: Date
+    ) => Map<string, Record<string, ActionContext>>;
     webHistoryDetails_: (row: unknown) => WebHistoryDetails;
     webHistoryDetailValue_: (value: unknown) => HistoryDetailValue;
     webHistoryTimestamp_: (value: unknown) => number;
@@ -721,6 +761,11 @@ export interface AppsScriptTestApi {
         nowMs: number,
         previousDry: unknown
     ) => WebPlantWeightReadModel;
+    webRotationReadModelsFromRows_: (
+        historyRows: CellValue[][],
+        baselineSetups: Map<string, number>,
+        now: Date
+    ) => Map<string, RotationFacing>;
     webWateringReadModelsFromRows_: (
         historyRows: CellValue[][],
         now: Date,

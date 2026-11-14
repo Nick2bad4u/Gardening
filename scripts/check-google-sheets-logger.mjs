@@ -341,8 +341,10 @@ assert.deepEqual(appSheetEntryHeaders, [
     "Paired relative humidity (%)",
     "Leaf VPD (kPa)",
     "Leaf VPD source",
+    "Rotation from facing",
+    "Rotation to facing",
 ]);
-assert.equal(evaluateLogger("GARDEN_LOGGER.historyStoredColumns"), 67);
+assert.equal(evaluateLogger("GARDEN_LOGGER.historyStoredColumns"), 69);
 assert.equal(evaluateLogger("GARDEN_LOGGER.historyHumidityColumn"), 43);
 assert.equal(evaluateLogger("GARDEN_LOGGER.historyLightStartColumn"), 44);
 assert.equal(evaluateLogger("GARDEN_LOGGER.historyLightColumns"), 2);
@@ -350,7 +352,11 @@ assert.deepEqual(strings(evaluateLogger("HISTORY_LIGHT_HEADERS")), [
     "PPFD (µmol/m²/s)",
     "Illuminance (lux)",
 ]);
-assert.equal(appSheetEntryHeaders.length, 59);
+assert.equal(appSheetEntryHeaders.length, 61);
+assert.deepEqual(strings(evaluateLogger("HISTORY_ROTATION_FACING_HEADERS")), [
+    "Rotation from facing",
+    "Rotation to facing",
+]);
 const careHeaders = [
     "Mist targets",
     "Mist amount (mL)",
@@ -378,7 +384,7 @@ const careHeaders = [
 assert.equal(evaluateLogger("GARDEN_LOGGER.historyCareStartColumn"), 46);
 assert.deepEqual(strings(evaluateLogger("HISTORY_CARE_HEADERS")), careHeaders);
 assert.deepEqual(
-    appSheetEntryHeaders.slice(37),
+    appSheetEntryHeaders.slice(37, 59),
     careHeaders.map((header) => header.replace(" (°C)", ""))
 );
 const webEventOptions = strings(evaluateLogger("WEB_EVENT_OPTIONS"));
@@ -669,7 +675,7 @@ const inspectProvenance = strings(
 assert.equal(inspectProvenance[2], "Observed");
 assert.equal(inspectProvenance[8], "Observed");
 const appSheetBulkHeaders = strings(evaluateLogger("APP_SHEET_BULK_HEADERS"));
-assert.equal(appSheetBulkHeaders.length, 77);
+assert.equal(appSheetBulkHeaders.length, 79);
 assert.deepEqual(appSheetBulkHeaders.slice(62, 74), [
     ...careHeaders.slice(0, 5),
     ...careHeaders.slice(8, 15),
@@ -689,10 +695,14 @@ assert.deepEqual(
         (_, index) => `P${String(index + 1).padStart(2, "0")} weight (g)`
     )
 );
-assert.deepEqual(appSheetBulkHeaders.slice(74), [
+assert.deepEqual(appSheetBulkHeaders.slice(74, 77), [
     "P39 weight (g)",
     "P40 weight (g)",
     "P41 weight (g)",
+]);
+assert.deepEqual(appSheetBulkHeaders.slice(77), [
+    "Rotation to facing",
+    "Rotation facing snapshot",
 ]);
 assert.equal(appSheetBulkHeaders[36], "Notes");
 assert.equal(appSheetBulkHeaders[39], "Status");

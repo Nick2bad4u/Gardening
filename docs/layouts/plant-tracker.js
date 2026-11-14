@@ -6,6 +6,7 @@ import {
     displayValue,
     formatDate,
     formatMeasurement,
+    formatRotation,
     getRequiredElement,
     getSavedCollectionData,
     historyPageUrl,
@@ -229,13 +230,10 @@ function renderRow(plant) {
     const rotationCell = element("td");
     if (summary.latestRotation) {
         rotationCell.append(
-            element(
-                "strong",
-                `${displayValue(summary.latestRotation["Rotation (°)"], "90")}°`
-            ),
+            element("strong", formatRotation(summary.latestRotation, true)),
             element(
                 "small",
-                `Rotated ${formatDate(summary.latestRotation["Date"])}`
+                `${String(summary.latestRotation["Rotation to facing"] ?? "").trim() === "" ? "Rotated" : "Recorded"} ${formatDate(summary.latestRotation["Date"])}`
             )
         );
     } else {

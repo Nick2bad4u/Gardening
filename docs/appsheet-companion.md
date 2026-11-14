@@ -6,8 +6,10 @@ workbook. It supports daily browsing, individual observations, collection-wide
 care/weight rounds, save receipts, dashboards, and per-plant charts without
 creating a second gardening database.
 
-Production **AppSheet 1.100141**, logger **5.40.4 / immutable version 126**, and
-the **39-container** native workbook were verified on November 1, 2026. The
+Production **AppSheet 1.100141** and the **39-container** native workbook were
+verified with logger 5.40.4 on November 1, 2026. The logger has since reached
+**5.45.0 / immutable version 137**, deployed on November 13, without changing
+AppSheet configuration. The
 [logger runbook](../scripts/google-sheets/README.md)
 records the verified deployment and preservation checks.
 Earlier dated records retain their verified historical state.
@@ -17,6 +19,74 @@ The owner-only
 contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
+
+## Cardinal rotation candidate — 5.46.0
+
+The maintained **5.46.0** logger and prepared AppSheet plan add cardinal-facing
+Rotation entries. This section describes the candidate; it does **not** certify
+a saved AppSheet version or a completed workbook migration. Follow the
+[candidate runbook](../scripts/google-sheets/README.md#cardinal-rotation-and-recorded-action-context-candidate--5460)
+for deployment and native-validation status.
+
+Use the **pot label / front** as the same reference side every time:
+**N = window, E = wall, S = room, W = Mylar**. In the planned **Log** form,
+Rotation shows dated recorded-facing context, **Rotation from facing**,
+**Rotation to facing**, and a turn preview. Check the pot before accepting the
+suggested start. The destination is required for new cardinal entries; an
+unknown start remains blank. N → W displays **90° counterclockwise** while
+the existing History degree field stores the equivalent **270°**. An unknown
+start records a new absolute-facing baseline with blank degrees. An unchanged
+facing records **0°** as a confirmation, not a physical turn.
+
+The prepared suggestion considers active, nonsuperseded Rotation records for
+that plant's current setup, no later than **Started at** or the present time.
+A later degree-only record prevents an older cardinal facing from being reused.
+No matching history, an unknown latest facing, or multiple eligible records at
+the latest timestamp leaves the suggestion blank. The context reports the date
+and asks the operator to confirm the marked side of the pot. AppSheet's local
+synchronized history may be stale offline; it is recorded evidence, not proof of
+the pot's present position. A pending single-plant Rotation or Repot, or an
+overlapping pending bulk Rotation, suppresses the automatic starting facing and
+shows a warning. Native validation must confirm that new-form defaults
+respond to plant/time changes without rewriting saved or queued rows.
+
+The planned **Bulk Log** uses one target facing for selected pots and explains
+that each pot keeps its own starting direction. Before writing History, the
+Apps Script bridge freezes those per-pot origins at the round's observation time
+in a hidden **Rotation facing snapshot**. Unknown origins produce blank amounts.
+The snapshot is bridge-owned, read-only, and has no App formula or user-entered
+default. Retries retain it; changing the round's identity, time, target, or
+selected plants requires a separately reviewed new round. Repeated bulk
+rotations sharing a pot are deferred until the predecessor is **Saved**, so the
+next round can use its committed facing.
+
+| Workbook table | Appended fields                                        | Physical width after migration |
+| -------------- | ------------------------------------------------------ | ------------------------------ |
+| History        | BP `Rotation from facing`; BQ `Rotation to facing`     | 69                             |
+| App entries    | BH `Rotation from facing`; BI `Rotation to facing`     | 61                             |
+| App bulk       | BZ `Rotation to facing`; CA `Rotation facing snapshot` | 79                             |
+
+The prepared native schema totals are **72 / 65 / 81** respectively, including
+system and virtual fields; those counts are not physical worksheet widths.
+History remains read-only and uses Observation ID as its key. App entries and
+App bulk remain writable staging with their existing Entry ID and Round ID
+keys. Active History and the correction-review slice gain the relevant fields;
+the plan preserves unrelated actions, security, offline settings, and bindings.
+
+Existing degree-only staging retains its prior defaults and validation. The
+legacy degree control is shown when no cardinal target is present; the bridge
+ignores its stale default when directional fields supply the turn. Older queued
+rows remain compatible and are not assigned invented facings. No physical
+degree field is replaced by a per-row App formula.
+
+Before a production AppSheet save, verify the migrated workbook and bridge,
+compile the prepared expressions natively, exercise all 16 direction pairs and
+unknown starts on disposable data, and compare the saved definition with the
+reviewed plan. Check same-time ambiguity, corrections, removed/future/other-setup
+records, offline sync, and unsaved form behavior. Do not create synthetic
+production observations. The phone logger's broader **Last recorded** hints for
+measurements and other actions are separate from this rotation-specific AppSheet
+plan.
 
 ## November 1 remaining cactus portrait update
 
@@ -932,9 +1002,12 @@ stored state, so refreshing formulas never relabels old observations. P38's
 review: provisional member identities, a humid enclosure, and unresolved
 root-zone moisture do not support a cactus dry/plateau/full-dry watering trigger.
 
-Rotation is available in Log and Bulk Log. It accepts 1–360 degrees
-and defaults to 90. The degree value is archived in `History!AN:AN`, displayed
-in read-only care history, and remains available to the public plant history.
+The deployed degree-only Rotation control in Log and Bulk Log accepts
+1–360 degrees and defaults to 90. Its value is archived in `History!AN:AN`,
+displayed in read-only care history, and remains available to public plant
+history. The [5.46.0 candidate](#cardinal-rotation-candidate--5460) preserves that
+legacy path while adding explicit from/to facings, blank-baseline amounts, and
+zero-degree confirmations; its rollout is documented separately above.
 Clean and Prune are lightweight dated actions whose specifics belong in Notes.
 Bulk Log uses one `Selected plants` field for every supported shared action;
 per-plant weights use the active roster recorded in the latest enrollment above; P33/P34 fields remain hidden compatibility columns. `Selected plants` is

@@ -27,6 +27,15 @@ interface GardenBulkReceipt {
         | "Saved";
 }
 
+interface GardenBulkRotationSnapshot {
+    observedAt: string;
+    plantIds: string[];
+    rotationByPlant: Record<string, GardenObservationDetails>;
+    roundId: string;
+    toFacing: string;
+    version: 1;
+}
+
 interface GardenDiagnosticContext {
     operation: string;
     runId: string;
@@ -81,7 +90,10 @@ interface GardenEntryPayload {
     propagationMethod?: unknown;
     relativeHumidity?: unknown;
     requestId?: unknown;
+    rotationByPlant?: unknown;
     rotationDegrees?: unknown;
+    rotationFromFacing?: unknown;
+    rotationToFacing?: unknown;
     soilMoisture?: unknown;
     supportAction?: unknown;
     supportDetails?: unknown;

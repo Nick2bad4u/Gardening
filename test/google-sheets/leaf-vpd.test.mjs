@@ -113,8 +113,8 @@ describe("leaf VPD scientific calculation and independent context", () => {
             )[0]
         );
 
-        expect(row).toHaveLength(67);
-        expect(row.slice(60)).toStrictEqual([
+        expect(row).toHaveLength(69);
+        expect(row.slice(60, 67)).toStrictEqual([
             20,
             "F",
             25,
@@ -169,7 +169,7 @@ describe("leaf VPD scientific calculation and independent context", () => {
         const temperature = required(result[1]);
         const humidity = required(result[2]);
 
-        expect(leaf.slice(60)).toStrictEqual([
+        expect(leaf.slice(60, 67)).toStrictEqual([
             0,
             "C",
             "",
@@ -190,8 +190,8 @@ describe("leaf VPD scientific calculation and independent context", () => {
         expect(humidity[42]).toBe(50);
 
         for (const row of [temperature, humidity]) {
-            expect(row).toHaveLength(67);
-            expect(row.slice(60)).toStrictEqual(
+            expect(row).toHaveLength(69);
+            expect(row.slice(60, 67)).toStrictEqual(
                 Array.from({ length: 7 }, () => "")
             );
         }
@@ -215,7 +215,7 @@ describe("leaf VPD scientific calculation and independent context", () => {
             ]
         );
 
-        expect(required(result[0]).slice(60)).toStrictEqual([
+        expect(required(result[0]).slice(60, 67)).toStrictEqual([
             20,
             "C",
             25,
@@ -244,7 +244,7 @@ describe("leaf VPD scientific calculation and independent context", () => {
             ["Note"]
         );
 
-        expect(required(result[0]).slice(60)).toStrictEqual(
+        expect(required(result[0]).slice(60, 67)).toStrictEqual(
             Array.from({ length: 7 }, () => "")
         );
     });
@@ -260,7 +260,7 @@ describe("leaf VPD device evidence and validation", () => {
                 rows(server(), { leafVpd: reading, leafVpdSource: "Device" })[0]
             );
 
-            expect(row.slice(60)).toStrictEqual([
+            expect(row.slice(60, 67)).toStrictEqual([
                 "",
                 "",
                 "",
@@ -284,7 +284,7 @@ describe("leaf VPD device evidence and validation", () => {
             )[0]
         );
 
-        expect(row.slice(60)).toStrictEqual([
+        expect(row.slice(60, 67)).toStrictEqual([
             20,
             "C",
             25,

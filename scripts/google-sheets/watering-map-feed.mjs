@@ -37,7 +37,7 @@ export function assertWateringMapFeedPreconditions(plan, fresh) {
 
 /**
  * Build a one-time, add-only helper installation. Supply the complete
- * maintained 67-column server schema and freshly captured native metadata plus
+ * maintained 69-column server schema and freshly captured native metadata plus
  * History's header cells. Rehearse on a native copy before production. This
  * does not change publication settings, canonical observations, staging, or any
  * existing sheet.
@@ -420,16 +420,16 @@ function validateHistory(snapshot, historyHeaders) {
     );
     const uniqueHeaders = new Set(historyHeaders);
     if (
-        history?.properties.gridProperties.columnCount !== 67 ||
+        history?.properties.gridProperties.columnCount !== 69 ||
         history.properties.gridProperties.rowCount < historyLastRow ||
-        historyHeaders.length !== 67 ||
-        uniqueHeaders.size !== 67 ||
+        historyHeaders.length !== 69 ||
+        uniqueHeaders.size !== 69 ||
         historyHeaders.some(
             (header) => typeof header !== "string" || !header.trim()
         )
     )
         throw new Error(
-            "Expected the maintained 67-column History schema and 50,000 observation slots"
+            "Expected the maintained 69-column History schema and 50,000 observation slots"
         );
     for (const [column, expected] of sourceHeaders) {
         if (historyHeaders[column] !== expected)
@@ -444,7 +444,7 @@ function validateHistory(snapshot, historyHeaders) {
                 range.startRow !== 0 ||
                 range.endRow < 1 ||
                 range.startColumn !== 0 ||
-                range.endColumn < 67
+                range.endColumn < 69
         )
     )
         throw new Error(

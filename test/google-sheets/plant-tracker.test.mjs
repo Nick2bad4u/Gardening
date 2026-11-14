@@ -70,6 +70,10 @@ const historyMeasurementHeaders = [
     "Width (in)",
 ];
 const historyRotationHeaders = ["Rotation (°)"];
+const historyRotationFacingHeaders = [
+    "Rotation from facing",
+    "Rotation to facing",
+];
 const historyCareHeaders = [
     "Mist targets",
     "Mist amount (mL)",
@@ -134,6 +138,7 @@ const appSheetEntryHeaders = [
     "PPFD (µmol/m²/s)",
     "Illuminance (lux)",
     ...historyCareHeaders.map((header) => header.replace(" (°C)", "")),
+    ...historyRotationFacingHeaders,
 ];
 
 const appSheetBulkV512Plants = Array.from(
@@ -200,6 +205,8 @@ const appSheetBulkHeaders = [
     "P39 weight (g)",
     "P40 weight (g)",
     "P41 weight (g)",
+    "Rotation to facing",
+    "Rotation facing snapshot",
 ];
 const appSheetBulkLegacyHeaders = [
     "Round ID",
@@ -596,6 +603,9 @@ function createHistorySheet(
     header[44] = "Illuminance (lux)";
     for (const [index, value] of historyCareHeaders.entries()) {
         header[45 + index] = value;
+    }
+    for (const [index, value] of historyRotationFacingHeaders.entries()) {
+        header[67 + index] = value;
     }
     header[15] = "Request ID";
     for (const [index, value] of historyDetailHeaders.entries()) {
@@ -2525,7 +2535,7 @@ describe("garden logger workbook refresh and navigation", () => {
             workbook.history.__rangeReads.filter(
                 (read) =>
                     read.column === 1 &&
-                    read.columnCount === 67 &&
+                    read.columnCount === 69 &&
                     read.row === 2
             )
         ).toHaveLength(1);
@@ -2543,7 +2553,7 @@ describe("garden logger workbook refresh and navigation", () => {
             workbook.history.__rangeReads.filter(
                 (read) =>
                     read.column === 1 &&
-                    read.columnCount === 67 &&
+                    read.columnCount === 69 &&
                     read.row === 2
             )
         ).toHaveLength(1);
@@ -4500,7 +4510,7 @@ describe("garden logger mobile bootstrap and collection lookups", () => {
         });
         expect(Array.from(bootstrap.recent)).toHaveLength(5);
         expect(structuredClone(history.__rangeReads)).toStrictEqual([
-            { column: 1, columnCount: 67, row: 2, rowCount: 5 },
+            { column: 1, columnCount: 69, row: 2, rowCount: 5 },
         ]);
     });
 
@@ -5052,7 +5062,7 @@ describe("garden logger canonical observation persistence", () => {
         expect(required(history.__rows[1])[16]).toBe("Yes");
         expect(required(history.__rows[5])[20]).toBe("5 in");
         expect(required(history.__rows[8])[25]).toBe("Isolated and treated");
-        expect(history.__rows[1]).toHaveLength(67);
+        expect(history.__rows[1]).toHaveLength(69);
         expect(required(history.__rows[1])[12]).toMatch(/^=IF\(/v);
         expect(required(history.__rows[1])[13]).toMatch(
             /\^\(Water\|Repot\)\$/v
@@ -5613,11 +5623,11 @@ describe("garden logger phone queue batches and per-entry failures", () => {
 
         const historyWrites = workbook.history.__setValuesCalls.filter(
             (call) =>
-                call.row >= 2 && call.column === 1 && call.columnCount === 67
+                call.row >= 2 && call.column === 1 && call.columnCount === 69
         );
 
         expect(structuredClone(historyWrites)).toStrictEqual([
-            { column: 1, columnCount: 67, row: 2, rowCount: 30 },
+            { column: 1, columnCount: 69, row: 2, rowCount: 30 },
         ]);
         expect(flushCount).toBe(1);
         expect(workbook.history.__rangeReads.length).toBeLessThan(20);
@@ -5962,7 +5972,7 @@ describe("garden logger bulk care and watering rounds", () => {
                     (call) => call.column === 1 && call.row >= 2
                 )
             )
-        ).toStrictEqual([{ column: 1, columnCount: 67, row: 2, rowCount: 4 }]);
+        ).toStrictEqual([{ column: 1, columnCount: 69, row: 2, rowCount: 4 }]);
     });
 
     it("validates bulk-care inputs and keeps retry messages actionable", () => {
@@ -6152,7 +6162,7 @@ describe("garden logger bulk care and watering rounds", () => {
         });
         expect(
             structuredClone(workbook.history.__setValuesCalls)
-        ).toStrictEqual([{ column: 1, columnCount: 67, row: 2, rowCount: 30 }]);
+        ).toStrictEqual([{ column: 1, columnCount: 69, row: 2, rowCount: 30 }]);
         expect(flushCount).toBe(1);
         expect(workbook.history.__rows.slice(1)).toHaveLength(30);
         expect(
@@ -6416,7 +6426,7 @@ describe("garden logger supported History capacity", () => {
         expect(result).toMatchObject({ ok: true, savedCount: 2 });
         expect(workbook.history.__setValuesCalls).toContainEqual({
             column: 1,
-            columnCount: 67,
+            columnCount: 69,
             row: 50_000,
             rowCount: 2,
         });
@@ -7170,7 +7180,7 @@ describe("garden logger AppSheet entry intake", () => {
         expect.hasAssertions();
 
         const workbook = createLoggerWorkbook(["P01"]);
-        const previousHeaders = appSheetEntryHeaders.slice(0, -2);
+        const previousHeaders = appSheetEntryHeaders.slice(0, 57);
         const stagedRow = emptyCells(previousHeaders.length);
         stagedRow[0] = "ENTRY123";
         stagedRow[31] = 90;
@@ -7215,6 +7225,287 @@ describe("garden logger AppSheet entry intake", () => {
         expect(() => context.ensureAppSheetEntryColumns_(entries)).toThrow(
             /app entries!ah1 must be "water amount \(ml\)"/iv
         );
+    });
+});
+
+describe("garden logger cardinal bulk queue sequencing and retries", () => {
+    it("retains a lock-busy cardinal round as Retry and saves it on the next available tick", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook(["P01"]);
+        const round = emptyCells(appSheetBulkHeaders.length);
+        round[0] = "CARDINAL-LOCK-RETRY";
+        round[2] = new Date("2026-09-10T12:00:00-04:00");
+        round[appSheetBulkActionIndex] = "Rotation";
+        round[appSheetBulkSelectedPlantsIndex] = "P01";
+        round[appSheetBulkStatusIndex] = "Queued";
+        round[77] = "E";
+        required(workbook.sheets.get("App bulk")).__rows.push(round);
+        const lock = { releaseLock: vi.fn(), tryLock: vi.fn(() => false) };
+        const context = loadAppsScript(workbook.history, {
+            globals: { LockService: { getScriptLock: () => lock } },
+            spreadsheet: workbook.spreadsheet,
+        });
+
+        expect(context.processQueuedAppSheetEntries().bulk).toMatchObject({
+            needsCorrectionCount: 0,
+            retryCount: 1,
+            savedRoundCount: 0,
+        });
+        expect(round[appSheetBulkStatusIndex]).toBe("Retry");
+        expect(round[78]).toBe("");
+        expect(workbook.history.__rows).toHaveLength(1);
+        expect(lock.releaseLock).not.toHaveBeenCalled();
+
+        lock.tryLock.mockReturnValue(true);
+
+        expect(context.processQueuedAppSheetEntries().bulk).toMatchObject({
+            retryCount: 0,
+            savedRoundCount: 1,
+        });
+        expect(round[appSheetBulkStatusIndex]).toBe("Saved");
+        expect(
+            required(workbook.history.__rows[1]).slice(67, 69)
+        ).toStrictEqual(["", "E"]);
+        expect(required(workbook.history.__rows[1])[39]).toBe("");
+        expect(workbook.history.__rows).toHaveLength(2);
+    });
+
+    it("retains a persisted snapshot after an uncertain flush and reuses its exact origin on retry", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook(["P01"]);
+        const writer = loadAppsScript(workbook.history, {
+            globals: workbook.globals,
+            spreadsheet: workbook.spreadsheet,
+        });
+        const anchor = {
+            events: ["Rotation"],
+            observedAt: "2026-09-09T12:00:00-04:00",
+            plantId: "P01",
+            requestId: "uncertain-snapshot-anchor",
+            rotationToFacing: "N",
+        };
+        writer.saveWebObservation(anchor);
+        const round = emptyCells(appSheetBulkHeaders.length);
+        round[0] = "CARDINAL-FLUSH-RETRY";
+        round[2] = new Date("2026-09-11T12:00:00-04:00");
+        round[appSheetBulkActionIndex] = "Rotation";
+        round[appSheetBulkSelectedPlantsIndex] = "P01";
+        round[appSheetBulkStatusIndex] = "Queued";
+        round[77] = "W";
+        required(workbook.sheets.get("App bulk")).__rows.push(round);
+        const flush = vi.fn().mockImplementationOnce(() => {
+            throw new Error("Temporary flush service failure");
+        });
+        const context = loadAppsScript(workbook.history, {
+            globals: workbook.globals,
+            spreadsheet: workbook.spreadsheet,
+            SpreadsheetApp: {
+                flush,
+                newDataValidation: createDataValidationBuilder,
+                openById: () => workbook.spreadsheet,
+                ProtectionType: { RANGE: "RANGE" },
+            },
+        });
+
+        expect(context.processQueuedAppSheetEntries().bulk).toMatchObject({
+            needsCorrectionCount: 0,
+            retryCount: 1,
+            savedRoundCount: 0,
+        });
+        expect(round[appSheetBulkStatusIndex]).toBe("Retry");
+        expect(round[78]).toBeTypeOf("string");
+        expect(round[78]).not.toBe("");
+        expect(workbook.history.__rows).toHaveLength(2);
+
+        const frozen = round[78];
+        writer.saveWebObservation({
+            ...anchor,
+            observedAt: "2026-09-10T12:00:00-04:00",
+            requestId: "intervening-snapshot-anchor",
+            rotationToFacing: "E",
+        });
+
+        expect(context.processQueuedAppSheetEntries().bulk).toMatchObject({
+            retryCount: 0,
+            savedRoundCount: 1,
+        });
+        expect(round[appSheetBulkStatusIndex]).toBe("Saved");
+        expect(round[78]).toBe(frozen);
+        expect(
+            required(workbook.history.__rows[3]).slice(67, 69)
+        ).toStrictEqual(["N", "W"]);
+        expect(required(workbook.history.__rows[3])[39]).toBe(270);
+        expect(workbook.history.__rows).toHaveLength(4);
+    });
+
+    it("marks malformed persisted cardinal snapshots Needs correction without writing History", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook(["P01"]);
+        const round = emptyCells(appSheetBulkHeaders.length);
+        round[0] = "CARDINAL-BAD-SNAPSHOT";
+        round[2] = new Date("2026-09-10T12:00:00-04:00");
+        round[appSheetBulkActionIndex] = "Rotation";
+        round[appSheetBulkSelectedPlantsIndex] = "P01";
+        round[appSheetBulkStatusIndex] = "Queued";
+        round[77] = "E";
+        round[78] = "{invalid";
+        required(workbook.sheets.get("App bulk")).__rows.push(round);
+        const context = loadAppsScript(workbook.history, {
+            globals: workbook.globals,
+            spreadsheet: workbook.spreadsheet,
+        });
+
+        expect(context.processQueuedAppSheetEntries().bulk).toMatchObject({
+            needsCorrectionCount: 1,
+            retryCount: 0,
+            savedRoundCount: 0,
+        });
+        expect(round[appSheetBulkStatusIndex]).toBe("Needs correction");
+        expect(round[78]).toBe("{invalid");
+        expect(workbook.history.__rows).toHaveLength(1);
+    });
+
+    it.each([
+        {
+            order: [0, 1],
+            orderName: "chronological",
+            secondDate: "2026-09-11T12:00:00-04:00",
+        },
+        {
+            order: [1, 0],
+            orderName: "reverse staging",
+            secondDate: "2026-09-11T12:00:00-04:00",
+        },
+        {
+            order: [0, 1],
+            orderName: "same-time staging",
+            secondDate: "2026-09-10T12:00:00-04:00",
+        },
+    ])(
+        "defers overlapping cardinal rounds in $orderName order until the earlier facing is saved",
+        ({ order, secondDate }) => {
+            expect.hasAssertions();
+
+            const workbook = createLoggerWorkbook(["P01"]);
+            const context = loadAppsScript(workbook.history, {
+                globals: workbook.globals,
+                spreadsheet: workbook.spreadsheet,
+            });
+            context.saveWebObservation({
+                events: ["Rotation"],
+                observedAt: "2026-09-09T12:00:00-04:00",
+                plantId: "P01",
+                requestId: "queued-cardinal-anchor-001",
+                rotationToFacing: "N",
+            });
+            const rounds = [
+                {
+                    date: "2026-09-10T12:00:00-04:00",
+                    id: "CARDINAL-EAST-ROUND",
+                    target: "E",
+                },
+                {
+                    date: secondDate,
+                    id: "CARDINAL-SOUTH-ROUND",
+                    target: "S",
+                },
+            ].map(({ date, id, target }) => {
+                const row = emptyCells(appSheetBulkHeaders.length);
+                row[0] = id;
+                row[1] = new Date(date);
+                row[2] = new Date(date);
+                row[appSheetBulkActionIndex] = "Rotation";
+                row[appSheetBulkSelectedPlantsIndex] = "P01";
+                row[appSheetBulkStatusIndex] = "Queued";
+                row[77] = target;
+                return row;
+            });
+            required(workbook.sheets.get("App bulk")).__rows.push(
+                ...order.map((index) => required(rounds[index]))
+            );
+
+            expect(context.processQueuedAppSheetEntries().bulk).toMatchObject({
+                deferredCount: 1,
+                queuedCount: 2,
+                savedRequestCount: 1,
+                savedRoundCount: 1,
+            });
+            expect(required(rounds[0])[appSheetBulkStatusIndex]).toBe("Saved");
+            expect(required(rounds[1])[appSheetBulkStatusIndex]).toBe("Queued");
+            expect(required(rounds[1])[78]).toBe("");
+            expect(
+                required(workbook.history.__rows[2]).slice(67, 69)
+            ).toStrictEqual(["N", "E"]);
+            expect(required(workbook.history.__rows[2])[39]).toBe(90);
+            expect(workbook.history.__rows).toHaveLength(3);
+
+            expect(context.processQueuedAppSheetEntries().bulk).toMatchObject({
+                deferredCount: 0,
+                queuedCount: 1,
+                savedRequestCount: 1,
+                savedRoundCount: 1,
+            });
+            expect(required(rounds[1])[appSheetBulkStatusIndex]).toBe("Saved");
+            expect(
+                required(workbook.history.__rows[3]).slice(67, 69)
+            ).toStrictEqual(["E", "S"]);
+            expect(required(workbook.history.__rows[3])[39]).toBe(90);
+            expect(workbook.history.__rows).toHaveLength(4);
+            expect(required(rounds[0])[78]).not.toBe(required(rounds[1])[78]);
+        }
+    );
+
+    it("defers a cardinal round behind a legacy turn and then preserves the unknown origin", () => {
+        expect.hasAssertions();
+
+        const workbook = createLoggerWorkbook(["P01"]);
+        const context = loadAppsScript(workbook.history, {
+            globals: workbook.globals,
+            spreadsheet: workbook.spreadsheet,
+        });
+        context.saveWebObservation({
+            events: ["Rotation"],
+            observedAt: "2026-09-09T12:00:00-04:00",
+            plantId: "P01",
+            requestId: "queued-legacy-anchor-001",
+            rotationToFacing: "N",
+        });
+        const legacy = emptyCells(appSheetBulkHeaders.length);
+        legacy[0] = "LEGACY-PREDECESSOR";
+        legacy[2] = new Date("2026-09-10T12:00:00-04:00");
+        legacy[appSheetBulkActionIndex] = "Rotation";
+        legacy[appSheetBulkSelectedPlantsIndex] = "P01";
+        legacy[appSheetBulkStatusIndex] = "Queued";
+        legacy[44] = 90;
+        const cardinal = emptyCells(appSheetBulkHeaders.length);
+        cardinal[0] = "CARDINAL-AFTER-LEGACY";
+        cardinal[2] = new Date("2026-09-11T12:00:00-04:00");
+        cardinal[appSheetBulkActionIndex] = "Rotation";
+        cardinal[appSheetBulkSelectedPlantsIndex] = "P01";
+        cardinal[appSheetBulkStatusIndex] = "Queued";
+        cardinal[77] = "S";
+        required(workbook.sheets.get("App bulk")).__rows.push(cardinal, legacy);
+
+        expect(context.processQueuedAppSheetEntries().bulk).toMatchObject({
+            deferredCount: 1,
+            savedRoundCount: 1,
+        });
+        expect(legacy[appSheetBulkStatusIndex]).toBe("Saved");
+        expect(cardinal[78]).toBe("");
+
+        expect(context.processQueuedAppSheetEntries().bulk).toMatchObject({
+            deferredCount: 0,
+            savedRoundCount: 1,
+        });
+        expect(cardinal[appSheetBulkStatusIndex]).toBe("Saved");
+        expect(
+            required(workbook.history.__rows[3]).slice(67, 69)
+        ).toStrictEqual(["", "S"]);
+        expect(required(workbook.history.__rows[3])[39]).toBe("");
+        expect(workbook.history.__rows).toHaveLength(4);
     });
 });
 
@@ -8677,8 +8968,8 @@ describe("garden logger light staging guards", () => {
             );
             expect(headers).toStrictEqual(appSheetEntryHeaders);
             expect(row.slice(0, 31)).toStrictEqual(before);
-            expect(row.slice(31)).toStrictEqual(emptyCells(28));
-            expect(entries.getMaxColumns()).toBe(59);
+            expect(row.slice(31)).toStrictEqual(emptyCells(30));
+            expect(entries.getMaxColumns()).toBe(61);
         }
     );
 
@@ -9951,7 +10242,7 @@ describe("garden logger AppSheet staging migration and trigger installation", ()
         });
 
         expect(existingContext.installAppSheetIntake().bulk).toMatchObject({
-            columnCount: 77,
+            columnCount: 79,
             created: false,
             migrated: false,
             plantCount: 39,
@@ -9992,7 +10283,7 @@ describe("garden logger AppSheet staging migration and trigger installation", ()
         });
 
         expect(v514Context.installAppSheetBulkSheet()).toMatchObject({
-            columnCount: 77,
+            columnCount: 79,
             created: false,
             migrated: true,
         });
@@ -10056,7 +10347,7 @@ describe("garden logger AppSheet staging migration and trigger installation", ()
         });
 
         expect(legacyContext.installAppSheetBulkSheet()).toMatchObject({
-            columnCount: 77,
+            columnCount: 79,
             created: false,
             migrated: true,
         });
@@ -11386,7 +11677,7 @@ describe("garden logger request reservations and retry reconciliation", () => {
         expect(required(workbook.history.__rows[1])[4]).toBe(450);
         expect(
             structuredClone(workbook.history.__setValuesCalls)
-        ).toStrictEqual([{ column: 1, columnCount: 67, row: 2, rowCount: 1 }]);
+        ).toStrictEqual([{ column: 1, columnCount: 69, row: 2, rowCount: 1 }]);
     });
 
     it("distinguishes saved, partial, and noncontiguous request reservations", () => {
@@ -11879,7 +12170,7 @@ describe("garden logger workbook installation and History headers", () => {
         expect(
             structuredClone(required(compactHistory.__rows[0]).slice(40, 42))
         ).toStrictEqual(historyWaterHeaders);
-        expect(compactHistory.getMaxColumns()).toBe(67);
+        expect(compactHistory.getMaxColumns()).toBe(69);
 
         const currentHistory = createHistorySheet();
         currentHistory.getMaxRows = () => 5000;
@@ -11984,12 +12275,12 @@ describe("garden logger workbook installation and History headers", () => {
         };
 
         expect(context.ensureHistoryView_(spreadsheet)).toBe(true);
-        expect(historyView.getMaxColumns()).toBe(67);
+        expect(historyView.getMaxColumns()).toBe(69);
         expect(historyView.getRange(1, 1).getFormula()).toContain(
-            "History!A2:BO50001"
+            "History!A2:BQ50001"
         );
         expect(historyView.getRange(1, 1).getFormula()).toContain(
-            "SEQUENCE(1,66,2,1)"
+            "SEQUENCE(1,68,2,1)"
         );
         expect(context.ensureHistoryView_(spreadsheet)).toBe(false);
 
@@ -12159,7 +12450,7 @@ describe("garden logger workbook installation and History headers", () => {
         for (const row of narrowHistory.__rows) row.splice(30);
         context.ensureHistoryGrid_(narrowHistory);
 
-        expect(narrowHistory.getMaxColumns()).toBe(67);
+        expect(narrowHistory.getMaxColumns()).toBe(69);
 
         const unvalidatedHistory = createHistorySheet();
         const storedRow = Array.from(
@@ -13100,7 +13391,7 @@ describe("structured care and temperature events", () => {
         expect(
             rows.every(
                 (row) =>
-                    row.length === 67 &&
+                    row.length === 69 &&
                     row[10] === 1 &&
                     row[4] === "" &&
                     row[41] === ""
@@ -13447,6 +13738,59 @@ describe("structured care and temperature events", () => {
 });
 
 describe("care schema destination and optional validation guards", () => {
+    it.each([59, 60])(
+        "preserves occupied cardinal App entries column %s and formulas displaying blank",
+        (index) => {
+            expect.hasAssertions();
+
+            for (const input of [
+                { formula: "", value: "N" },
+                { formula: '=IF(TRUE,"",1)', value: "" },
+            ]) {
+                const headers = [...appSheetEntryHeaders];
+                headers[index] = "";
+                const row = emptyCells(61);
+                row[index] = input.value;
+                const formulas = emptyCells(61);
+                formulas[index] = input.formula;
+                const entries = createDataSheet(
+                    "App entries",
+                    [headers, row],
+                    [[], formulas]
+                );
+                const before = structuredClone(entries.__rows);
+                const context = loadAppsScript(createHistorySheet());
+
+                expect(() =>
+                    context.ensureAppSheetEntryColumns_(entries, true)
+                ).toThrow(
+                    "contains existing data; review before adding rotation facings."
+                );
+                expect(entries.__rows).toStrictEqual(before);
+                expect(
+                    entries.getRange(2, index + 1).getFormulas()
+                ).toStrictEqual([[input.formula]]);
+            }
+        }
+    );
+
+    it("installs facings in a pre-expanded empty destination and preserves a queued row", () => {
+        expect.hasAssertions();
+
+        const headers = [...appSheetEntryHeaders];
+        headers[59] = "";
+        headers[60] = "Column 61";
+        const row = emptyCells(61);
+        row[0] = "retained-queued-request";
+        const entries = createDataSheet("App entries", [headers, row]);
+        const context = loadAppsScript(createHistorySheet());
+
+        expect(context.ensureAppSheetEntryColumns_(entries, true)).toBe(true);
+        expect(headers).toStrictEqual(appSheetEntryHeaders);
+        expect(row[0]).toBe("retained-queued-request");
+        expect(context.ensureAppSheetEntryColumns_(entries, true)).toBe(false);
+    });
+
     it.each(Array.from({ length: 15 }, (_, index) => 37 + index))(
         "preserves occupied appended App entries column %s and formulas displaying blank",
         (index) => {
@@ -13560,7 +13904,9 @@ describe("leaf VPD canonical retry identity", () => {
         expect(context.processQueuedAppSheetEntries()).toMatchObject({
             savedCount: 1,
         });
-        expect(required(workbook.history.__rows[1]).slice(60)).toStrictEqual([
+        expect(
+            required(workbook.history.__rows[1]).slice(60, 67)
+        ).toStrictEqual([
             20,
             "F",
             25,

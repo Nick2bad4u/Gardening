@@ -8,8 +8,9 @@ The [deployment record](../scripts/google-sheets/README.md) keeps the
 logger version and production details.
 
 The refresh progress, retained nutrient settings, and numbered watering badges
-below are prepared for **5.45.0**. Production remains **5.44.3** while its release
-checks are unresolved; see the deployment record for current status.
+below are live in **5.45.0 / immutable version 137**, deployed on November 13, 2026. Cardinal rotation and the additional recorded-action context described
+below are prepared for **5.46.0** and are not yet a verified production rollout.
+See the deployment record for the current status and disclosed release limits.
 
 Read alongside the [watering strategy](./watering-strategy.md), [weighing strategy](./weighing-strategy.md), and [operator runbook](../scripts/google-sheets/README.md).
 
@@ -107,7 +108,7 @@ a new grid slot; update the placement guide when the table arrangement changes.
 
 ## The 21 Selectable Actions
 
-The maintained 5.36.0 single-plant form exposes these 21 event choices. Fields listed as required here describe the detailed web/AppSheet writer; Quick log offers a smaller set of structured fields.
+The single-plant form exposes these 21 event choices. Fields listed as required here describe the detailed web/AppSheet writer; Quick log offers a smaller set of structured fields.
 
 | Action        | When to use it                                                                        | Details and effects                                                                                                                                                                             |
 | ------------- | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -120,7 +121,7 @@ The maintained 5.36.0 single-plant form exposes these 21 event choices. Fields l
 | 🔎 Soil check | You checked soil moisture.                                                            | Requires soil moisture; stored as Check. Historical condition-only Check records remain readable and correctable. Selecting Check alone does not prove verified dryness.                        |
 | Inspect       | You inspected the plant's visible condition.                                          | Requires descriptive Plant condition. Stores Observed / Observed provenance; does not establish root-zone moisture.                                                                             |
 | 📏 Measure    | You measured or estimated plant dimensions.                                           | Requires height, width, or both. Keep unit, quality, and method explicit. Both dimensions share one Measure row.                                                                                |
-| 🔄 Rotation   | You turned the pot.                                                                   | Records clockwise-equivalent degrees, default 90. The detailed server accepts a value greater than 0 and at most 360. Record the actual turn.                                                   |
+| 🔄 Rotation   | You turned the pot, or in the 5.46.0 candidate recorded its facing.                   | Production 5.45.0 records degrees. The 5.46.0 candidate adds from/to directions, an unknown-start baseline, and same-facing confirmation; see the rotation section below.                       |
 | Move          | You moved the pot to a different location.                                            | Requires New location; Previous location is optional. Keeps the same P-ID and pot setup.                                                                                                        |
 | Environment   | You changed light, airflow, enclosure, or heating settings.                           | Choose the aspect and enter New setting; Previous setting is optional. Describes a change, not a sensor measurement.                                                                            |
 | 🧽 Clean      | You cleaned something associated with this pot.                                       | Lightweight dated event; explain what was cleaned in Notes. No automatic treatment or weight correction follows.                                                                                |
@@ -146,6 +147,73 @@ plant profiles.
 The mobile writer also adds appropriate events from entered data: a weight adds Weigh, dimensions add Measure, soil moisture adds Check, and plant condition adds Inspect. Each field stays on its own event row. New AppSheet condition and moisture fields apply only to their selected actions. Entering a weight never automatically adds Water. An entirely empty submission is rejected.
 
 This means one click on Save is not always one History row. Review the event summary rather than interpreting several rows with the same save time as duplicates.
+
+## Rotation and Recorded Context — 5.46.0 Candidate
+
+This section describes maintained candidate behavior. The workbook migration,
+logger deployment, and AppSheet configuration still require their own verified
+rollout before these controls are production features.
+
+Use the **pot label / front** as the same reference side every time. The four
+directions describe where that side faces:
+
+| Facing | Direction in this setup |
+| ------ | ----------------------- |
+| N      | Toward the window       |
+| E      | Toward the wall         |
+| S      | Toward the room         |
+| W      | Toward the Mylar        |
+
+Choose the starting and final facings after checking the pot. For example,
+**N → W** displays **90° counterclockwise**. The existing degree field still
+stores its clockwise equivalent, **270°**, so older history consumers retain
+their degree convention. **N → S** is a 180° half turn. With an unknown starting
+facing, leave it blank and choose only the final facing: that establishes a
+recorded baseline and leaves the turn amount blank. Choosing the same starting
+and final facing records **0°**, confirming direction without claiming a turn.
+Do not assume an unrecorded pot starts at North.
+
+The phone logger can suggest a starting facing from the latest eligible Rotation
+in the current pot setup. Removed or superseded records and future observations
+do not establish it; corrections retain the original ledger tie order. A later
+degree-only rotation makes an older absolute facing unknown. A repot changes the
+setup, so an earlier setup's facing is not carried forward.
+
+The suggestion also needs a confirmed online read and an observation time no
+earlier than its source record. A backdated entry does not borrow a later facing.
+Offline, refreshing, failed, or older saved context remains labeled as such;
+pending queued rotations prevent that older facing from being reused as a
+confirmed starting point. Check the physical pot and enter a known starting
+direction yourself, or leave it unknown.
+
+**Bulk care** uses one target facing with a separate starting facing and turn
+preview for each selected pot. Review each pot rather than assuming they all
+start alike. Queued entries and retries retain their original per-pot endpoints.
+The planned AppSheet **Bulk Log** uses the selected target and lets the bridge
+freeze each pot's recorded starting facing at the round's observation time.
+Unknown starts remain baseline records with blank amounts. Its hidden snapshot
+belongs to the bridge, not to manual form entry.
+
+**Manual degrees** remains available for degree-only entries and older queued
+records. That path keeps its existing greater-than-zero through 360° validation
+and 90° default. Historical degree-only records are not backfilled with guessed
+directions. Cardinal corrections keep the same blank-baseline and zero-turn
+rules, and conflicting direction/degree values are rejected.
+
+The candidate phone logger also shows **Last recorded** context beside supported
+actions. These are dated references, not prefilled new observations. Height and
+width retain independent dates, quality, and method within the current setup;
+Repot context also stays within that setup. Other care references can describe
+an earlier setup and display that setup when it differs. Air and soil temperature,
+humidity, PPFD, and lux retain separate values and timestamps; earlier sensor
+readings are never combined into a new paired Leaf VPD reading.
+
+These action references describe the latest eligible records at the source read.
+They are not a reconstruction of every action at a backdated entry time. Refresh
+progress and saved/offline labels distinguish confirmed context from an older
+snapshot. Read the dates, perform the actual check or measurement, and enter the
+new observation yourself. The AppSheet candidate adds rotation-specific context;
+the broader action hints described here belong to the phone logger.
 
 ## Water, Nutrients, and Weight Are Separate
 
@@ -452,8 +520,10 @@ Correct entry operates on one event, not every row from the same Save. Choose wh
 The correction dialog keeps its action buttons visible while you scroll the form. Open **Entry details** for the saved setup, historical label, and observation ID. **Back** returns from the preview to your edits; **Close** keeps an unsent draft available to resume.
 
 Changed numeric values are checked before the correction preview is requested.
-Weights and dimensions must be positive, flower counts must be whole numbers,
-and rotation must be greater than zero and at most 360 degrees. Temperature and
+Weights and dimensions must be positive, and flower counts must be whole numbers.
+Degree-only rotations must be greater than zero and at most 360 degrees. The
+5.46.0 candidate's cardinal rotations additionally allow a blank amount for an
+unknown starting facing and zero for an unchanged facing. Temperature and
 calculated Leaf VPD retain their supported zero or negative values.
 
 Edits and moves append a replacement and exclude the original from active calculations. Deletion excludes the original and saves an excluded audit record; neither record contributes to care history or calculations. Event type remains fixed. Repot entries cannot be moved or deleted through this form because other observations depend on their setup boundary. A date change or move with an uncertain setup can also be refused; coordinated setup changes need a separately reviewed correction.

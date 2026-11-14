@@ -2220,6 +2220,22 @@
                 }
             }
 
+            .action-recorded-context {
+                padding-block: 6px;
+                overflow-wrap: anywhere;
+            }
+
+            .rotation-plant-list {
+                display: grid;
+                gap: 12px;
+                margin-block-start: 12px;
+            }
+
+            .rotation-plant-row {
+                min-inline-size: 0;
+                padding-block: 8px;
+            }
+
             .event-stack {
                 display: grid;
                 gap: 10px;
@@ -15949,23 +15965,115 @@
                                         >Rotation</h3
                                     >
                                     <p class="hint"
-                                        >Record the clockwise-equivalent turn. A
-                                        quarter turn is 90°.</p
+                                        >Track the direction the pot label /
+                                        front faces: north toward the window,
+                                        east toward the wall, south toward the
+                                        room, west toward the Mylar.</p
                                     >
+                                    <p
+                                        id="rotationFacingContext"
+                                        class="hint"
+                                        aria-live="polite"
+                                        aria-label="Last recorded facing"
+                                    ></p>
                                     <label
                                         class="field-label"
-                                        for="rotationDegrees"
-                                        >Rotation (degrees)</label
+                                        for="rotationMode"
+                                        >Rotation entry</label
                                     >
+                                    <select id="rotationMode"
+                                        ><option value="facing"
+                                            >Facing direction</option
+                                        ><option value="degrees"
+                                            >Manual degrees / older
+                                            entry</option
+                                        ></select
+                                    >
+                                    <div
+                                        id="rotationFacingFields"
+                                        class="fields"
+                                    >
+                                        <div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="rotationFromFacing"
+                                                >Starting facing</label
+                                            ><select id="rotationFromFacing"
+                                                ><option value=""
+                                                    >Unknown / not
+                                                    recorded</option
+                                                ><option value="N"
+                                                    >North · window</option
+                                                ><option value="E"
+                                                    >East · wall</option
+                                                ><option value="S"
+                                                    >South · room</option
+                                                ><option value="W"
+                                                    >West · Mylar</option
+                                                ></select
+                                            ></div
+                                        >
+                                        <div class="field"
+                                            ><label
+                                                class="field-label"
+                                                for="rotationToFacing"
+                                                >New facing</label
+                                            ><select id="rotationToFacing"
+                                                ><option value=""
+                                                    >Choose the facing you
+                                                    observed…</option
+                                                ><option value="N"
+                                                    >North · window</option
+                                                ><option value="E"
+                                                    >East · wall</option
+                                                ><option value="S"
+                                                    >South · room</option
+                                                ><option value="W"
+                                                    >West · Mylar</option
+                                                ></select
+                                            ></div
+                                        >
+                                    </div>
                                     <input
-                                        id="rotationDegrees"
-                                        type="number"
-                                        inputmode="decimal"
-                                        min="1"
-                                        max="360"
-                                        step="1"
-                                        value="90"
+                                        id="rotationFromSource"
+                                        type="hidden"
+                                        value="auto"
                                     />
+                                    <input
+                                        id="rotationFromObservedAt"
+                                        type="hidden"
+                                    />
+                                    <p
+                                        id="rotationPreview"
+                                        class="hint"
+                                        role="status"
+                                        aria-label="Rotation turn preview"
+                                    ></p>
+                                    <div
+                                        id="rotationManualFields"
+                                        hidden
+                                    >
+                                        <label
+                                            class="field-label"
+                                            for="rotationDegrees"
+                                            >Rotation (degrees)</label
+                                        >
+                                        <input
+                                            id="rotationDegrees"
+                                            type="number"
+                                            inputmode="decimal"
+                                            min="1"
+                                            max="360"
+                                            step="1"
+                                            value="90"
+                                        />
+                                        <p class="hint"
+                                            >Clockwise-equivalent degrees. Use
+                                            this for a measured non-cardinal
+                                            turn or an older entry; it does not
+                                            establish a new cardinal facing.</p
+                                        >
+                                    </div>
                                 </div>
                                 <div
                                     id="repotSection"
@@ -17170,21 +17278,77 @@
                                             <use
                                                 href="#app-icon-rotate"
                                             ></use></svg
-                                        >Shared rotation</h3
+                                        >Rotation for selected plants</h3
                                     >
                                     <label
                                         class="field-label"
-                                        for="bulkRotationDegrees"
-                                        >Rotation (degrees)</label
-                                    ><input
-                                        id="bulkRotationDegrees"
-                                        type="number"
-                                        inputmode="decimal"
-                                        min="1"
-                                        max="360"
-                                        step="1"
-                                        value="90"
-                                    />
+                                        for="bulkRotationMode"
+                                        >Rotation entry</label
+                                    >
+                                    <select id="bulkRotationMode"
+                                        ><option value="facing"
+                                            >Facing direction</option
+                                        ><option value="degrees"
+                                            >Shared manual degrees / older
+                                            entry</option
+                                        ></select
+                                    >
+                                    <div id="bulkRotationFacingFields">
+                                        <p class="hint"
+                                            >The pot label / front is the
+                                            reference. Review each plant's
+                                            starting facing; an unknown start
+                                            records the new facing without
+                                            inventing a turn.</p
+                                        >
+                                        <label
+                                            class="field-label"
+                                            for="bulkRotationToFacing"
+                                            >New facing for selected
+                                            plants</label
+                                        >
+                                        <select id="bulkRotationToFacing"
+                                            ><option value=""
+                                                >Choose the facing you
+                                                observed…</option
+                                            ><option value="N"
+                                                >North · window</option
+                                            ><option value="E"
+                                                >East · wall</option
+                                            ><option value="S"
+                                                >South · room</option
+                                            ><option value="W"
+                                                >West · Mylar</option
+                                            ></select
+                                        >
+                                        <input
+                                            id="bulkRotationState"
+                                            type="hidden"
+                                            value="{}"
+                                        />
+                                        <div
+                                            id="bulkRotationPreview"
+                                            class="rotation-plant-list"
+                                        ></div>
+                                    </div>
+                                    <div
+                                        id="bulkRotationManualFields"
+                                        hidden
+                                    >
+                                        <label
+                                            class="field-label"
+                                            for="bulkRotationDegrees"
+                                            >Rotation (degrees)</label
+                                        ><input
+                                            id="bulkRotationDegrees"
+                                            type="number"
+                                            inputmode="decimal"
+                                            min="1"
+                                            max="360"
+                                            step="1"
+                                            value="90"
+                                        />
+                                    </div>
                                 </div>
                                 <div
                                     id="bulkPestSection"
@@ -17872,7 +18036,9 @@
                         [...form.querySelectorAll("input, select, textarea")]
                             .filter(
                                 (control) =>
-                                    control.id && !ignored.has(control.id)
+                                    control.id &&
+                                    !ignored.has(control.id) &&
+                                    !control.dataset.rotationTransient
                             )
                             .map((control) => [
                                 control.id,
@@ -17928,6 +18094,18 @@
                             .filter(([id]) => !preferences.has(id))
                             .map(([id, value]) => [
                                 id,
+                                ([
+                                    "rotationFromFacing",
+                                    "rotationFromObservedAt",
+                                ].includes(id) &&
+                                    values.rotationFromSource === "auto") ||
+                                (id === "bulkRotationState" &&
+                                    !values.bulkRotationToFacing &&
+                                    !Object.values(
+                                        rotationRecordsValue(value)
+                                    ).some(
+                                        (record) => record.source !== "auto"
+                                    )) ||
                                 (id === "potSetup" &&
                                     value === String(plant?.potSetup || 1)) ||
                                 (id === "moveFrom" &&
@@ -17980,6 +18158,10 @@
                 const defaults = {
                     rotationDegrees: "90",
                     bulkRotationDegrees: "90",
+                    rotationMode: "facing",
+                    bulkRotationMode: "facing",
+                    rotationFromSource: "auto",
+                    bulkRotationState: "{}",
                     wateringApplication: WATERING_APPLICATION_OPTIONS[0],
                     bulkWateringApplication: WATERING_APPLICATION_OPTIONS[0],
                     leafVpdSource: "Calculated",
@@ -18199,6 +18381,15 @@
                         } else if (typeof value === "string")
                             control.value = value;
                     }
+                    const rotationModeId = bulk
+                        ? "bulkRotationMode"
+                        : "rotationMode";
+                    if (!Object.hasOwn(snapshot.values, rotationModeId))
+                        $(rotationModeId).value = snapshot.events.includes(
+                            "Rotation"
+                        )
+                            ? "degrees"
+                            : "facing";
                     if (
                         Object.hasOwn(
                             snapshot.values,
@@ -18247,6 +18438,9 @@
                 } finally {
                     entryDrafts.restoring = false;
                 }
+                // Recheck automatic origins after restoring their saved setup/actions.
+                if (bulk) renderBulkRotationEntry();
+                else renderRotationEntry();
             }
 
             function resumeOrdinaryDraft() {
@@ -19197,7 +19391,14 @@
                     photoUrl: payload.photoUrl,
                     pestIssue: payload.pestIssue,
                     pestTreatment: payload.pestTreatment,
-                    rotationDegrees: String(payload.rotationDegrees || ""),
+                    rotationDegrees: String(payload.rotationDegrees ?? ""),
+                    ...(Object.hasOwn(payload, "rotationToFacing")
+                        ? {
+                              rotationFromFacing:
+                                  payload.rotationFromFacing || "",
+                              rotationToFacing: payload.rotationToFacing,
+                          }
+                        : {}),
                     relativeHumidity: String(payload.relativeHumidity ?? ""),
                     ppfd: String(payload.ppfd ?? ""),
                     lux: String(payload.lux ?? ""),
@@ -20670,20 +20871,8 @@
                             (key) => !payload[key]
                         )
                     );
-                if (events.includes("Rotation")) {
-                    const rotationDegrees = Number(
-                        payload.rotationDegrees || 90
-                    );
-                    if (
-                        !Number.isFinite(rotationDegrees) ||
-                        rotationDegrees <= 0 ||
-                        rotationDegrees > 360
-                    )
-                        throw entryValidationError(
-                            "Rotation must be more than 0 and at most 360 degrees.",
-                            ["rotationDegrees"]
-                        );
-                }
+                if (events.includes("Rotation"))
+                    validateRotationDetails(payload);
                 return events;
             }
 
@@ -20792,7 +20981,9 @@
                                 ? `${payload.relativeHumidity} % RH`
                                 : "",
                             payloadEvents.includes("Rotation")
-                                ? `${payload.rotationDegrees || 90}°`
+                                ? payload.rotationToFacing
+                                    ? `${payload.rotationFromFacing || "Unknown"} → ${payload.rotationToFacing} · ${rotationTurnText(payload.rotationFromFacing, payload.rotationToFacing)}`
+                                    : `${payload.rotationDegrees || 90}°`
                                 : "",
                         ]
                             .filter(Boolean)
@@ -20836,6 +21027,8 @@
                     queueSendLabel
                 );
                 renderQueuedPlantIndicators(weighedPlantIds);
+                renderRotationEntry();
+                renderBulkRotationEntry();
                 if (focusedRequest && !blocked) {
                     const replacement = Array.from(
                         list.querySelectorAll("[data-remove-queue]")
@@ -21798,6 +21991,8 @@
                 const plant = selectedPlant();
                 const plantChanged = state.summaryPlantId !== (plant?.id || "");
                 state.summaryPlantId = plant?.id || "";
+                if (plantChanged && !entryDrafts.restoring)
+                    resetRotationEntry();
                 if (
                     !$("moveFrom").value ||
                     $("moveFrom").value ===
@@ -21839,6 +22034,8 @@
                 }
                 safeStorageSet(localStorage, "gardenPlantId", plant.id);
                 if (plantChanged) $("potSetup").value = plant.potSetup || 1;
+                renderRotationEntry();
+                renderActionContexts();
                 renderWeightFeedback();
                 $("currentPotSize").textContent =
                     `Current pot: ${plant.currentPotSize || "not logged"}`;
@@ -23448,7 +23645,654 @@
                         );
                     });
                 updateConditionalFields();
+                if (eventName === "Repot" && !state.events.has("Repot"))
+                    renderRotationEntry(true);
                 persistRoundState();
+            }
+
+            const FACING_LABELS = Object.freeze({
+                N: "North · window",
+                E: "East · wall",
+                S: "South · room",
+                W: "West · Mylar",
+            });
+
+            function rotationTurn(from, to) {
+                if (!Object.hasOwn(FACING_LABELS, to)) return "";
+                if (!Object.hasOwn(FACING_LABELS, from)) return "";
+                return (
+                    ((Object.keys(FACING_LABELS).indexOf(to) -
+                        Object.keys(FACING_LABELS).indexOf(from) +
+                        4) %
+                        4) *
+                    90
+                );
+            }
+
+            function rotationTurnText(from, to) {
+                if (!to) return "Choose the new facing to preview the turn.";
+                const degrees = rotationTurn(from, to);
+                if (degrees === "")
+                    return "Starting facing unknown · record the new facing only; no turn amount is inferred.";
+                if (degrees === 0)
+                    return "Same facing · confirms the direction without recording a turn.";
+                return degrees === 270
+                    ? "90° counterclockwise"
+                    : `${degrees}° clockwise`;
+            }
+
+            function hasQueuedFacingChange(
+                plant,
+                timeId = "observedAt",
+                events = ["Rotation", "Repot"]
+            ) {
+                const entryAt = observationDate(timeId).getTime();
+                const recordedAt =
+                    Date.parse(plant?.rotationFacing?.observedAt) || 0;
+                return state.queue.some(({ payload }) => {
+                    const queuedAt = Date.parse(payload.observedAt);
+                    return (
+                        payload.plantId === plant?.id &&
+                        Array.isArray(payload.events) &&
+                        payload.events.some((event) =>
+                            events.includes(event)
+                        ) &&
+                        Number.isFinite(queuedAt) &&
+                        queuedAt >= recordedAt &&
+                        queuedAt <= entryAt
+                    );
+                });
+            }
+
+            function hasPendingRepot(plant, timeId = "observedAt") {
+                const events =
+                    timeId === "observedAt" ? state.events : state.bulkEvents;
+                return (
+                    events.has("Repot") ||
+                    hasQueuedFacingChange(plant, timeId, ["Repot"])
+                );
+            }
+
+            function confirmedRotationFacing(plant, timeId = "observedAt") {
+                const facing = plant?.rotationFacing;
+                const observedAt = Date.parse(facing?.observedAt);
+                const entryAt = observationDate(timeId).getTime();
+                const setup =
+                    timeId === "observedAt"
+                        ? $("potSetup").value
+                        : plant?.potSetup;
+                return state.wateringAgesConfirmed &&
+                    !state.wateringAgesPending &&
+                    browserIsOnline() &&
+                    !hasPendingRepot(plant, timeId) &&
+                    !hasQueuedFacingChange(plant, timeId) &&
+                    facing &&
+                    Object.hasOwn(FACING_LABELS, facing.facing) &&
+                    String(facing.potSetup) === String(setup) &&
+                    Number.isFinite(observedAt) &&
+                    Number.isFinite(entryAt) &&
+                    observedAt <= entryAt
+                    ? facing
+                    : null;
+            }
+
+            function rotationContextText(plant, timeId = "observedAt") {
+                const facing = plant?.rotationFacing;
+                if (state.wateringAgesPending)
+                    return "Refreshing recorded facing…";
+                const status = !browserIsOnline()
+                    ? " · saved context, offline"
+                    : !state.wateringAgesConfirmed
+                      ? " · saved context, refresh unconfirmed"
+                      : "";
+                const queued = hasPendingRepot(plant, timeId)
+                    ? " · Repot changes this pot setup; confirm the starting facing"
+                    : hasQueuedFacingChange(plant, timeId)
+                      ? " · queued rotation is not yet in History; confirm the starting facing"
+                      : "";
+                if (
+                    !facing?.facing ||
+                    !Number.isFinite(Date.parse(facing.observedAt))
+                )
+                    return state.wateringAgesConfirmed &&
+                        state.bootstrap?.actionContextsAvailable
+                        ? `No cardinal facing recorded for this pot setup.${status}${queued}`
+                        : "Recorded facing unavailable; choose the starting facing if you know it.";
+                const afterEntry =
+                    Date.parse(facing.observedAt) >
+                    observationDate(timeId).getTime();
+                return `Last recorded facing: ${FACING_LABELS[facing.facing] || facing.facing} · ${formattedTimestamp(facing.observedAt)}${afterEntry ? " · later than this entry; not used as its starting facing" : ""}${status}${queued}`;
+            }
+
+            function resetRotationEntry(prefix = "") {
+                $(careFieldId("rotationMode", prefix)).value = "facing";
+                $(careFieldId("rotationDegrees", prefix)).value = "90";
+                $(careFieldId("rotationToFacing", prefix)).value = "";
+                if (prefix) $("bulkRotationState").value = "{}";
+                else {
+                    $("rotationFromFacing").value = "";
+                    $("rotationFromSource").value = "auto";
+                    $("rotationFromObservedAt").value = "";
+                }
+            }
+
+            function restoreRotationEntry(payload, prefix = "") {
+                const hasFacing = prefix
+                    ? Boolean(payload.rotationByPlant)
+                    : Object.hasOwn(payload, "rotationToFacing");
+                $(careFieldId("rotationMode", prefix)).value = hasFacing
+                    ? "facing"
+                    : "degrees";
+                $(careFieldId("rotationDegrees", prefix)).value = String(
+                    payload.rotationDegrees ?? "90"
+                );
+                if (prefix) {
+                    const records = payload.rotationByPlant || {};
+                    $("bulkRotationToFacing").value =
+                        Object.values(records)[0]?.rotationToFacing || "";
+                    $("bulkRotationState").value = JSON.stringify(
+                        Object.fromEntries(
+                            Object.entries(records).map(([id, value]) => [
+                                id,
+                                { ...value, source: "frozen" },
+                            ])
+                        )
+                    );
+                } else {
+                    $("rotationFromFacing").value =
+                        payload.rotationFromFacing || "";
+                    $("rotationToFacing").value =
+                        payload.rotationToFacing || "";
+                    $("rotationFromSource").value = "frozen";
+                    $("rotationFromObservedAt").value = "";
+                }
+            }
+
+            function renderRotationEntry(reconsiderOrigin = false) {
+                const plant = selectedPlant();
+                const manual = $("rotationMode").value === "degrees";
+                $("rotationFacingFields").hidden = manual;
+                $("rotationManualFields").hidden = !manual;
+                $("rotationFacingContext").textContent =
+                    rotationContextText(plant);
+                if (
+                    !state.pendingSave &&
+                    !entryDrafts.restoring &&
+                    $("rotationFromSource").value === "auto"
+                ) {
+                    const suggestion = confirmedRotationFacing(plant);
+                    const priorAt = Date.parse(
+                        $("rotationFromObservedAt").value
+                    );
+                    const entryAt = observationDate("observedAt").getTime();
+                    if (
+                        hasPendingRepot(plant) ||
+                        (!$("rotationToFacing").value &&
+                            hasQueuedFacingChange(plant))
+                    ) {
+                        $("rotationFromFacing").value = "";
+                        $("rotationFromObservedAt").value = "";
+                    }
+                    // A new timestamp/setup must not reuse an inapplicable suggestion.
+                    if (
+                        Number.isFinite(priorAt) &&
+                        (!Number.isFinite(entryAt) ||
+                            priorAt > entryAt ||
+                            String($("potSetup").value) !==
+                                String(plant?.potSetup))
+                    ) {
+                        $("rotationFromFacing").value = "";
+                        $("rotationFromObservedAt").value = "";
+                    }
+                    // Once a destination is chosen, a refresh cannot change its starting point.
+                    if (
+                        (!$("rotationToFacing").value ||
+                            reconsiderOrigin === true) &&
+                        suggestion
+                    ) {
+                        $("rotationFromFacing").value = suggestion.facing;
+                        $("rotationFromObservedAt").value =
+                            suggestion.observedAt;
+                    }
+                }
+                $("rotationPreview").hidden = manual;
+                $("rotationPreview").textContent = rotationTurnText(
+                    $("rotationFromFacing").value,
+                    $("rotationToFacing").value
+                );
+            }
+
+            function rotationRecordsValue(value) {
+                try {
+                    const records = JSON.parse(
+                        typeof value === "string" ? value || "{}" : "{}"
+                    );
+                    return records &&
+                        typeof records === "object" &&
+                        !Array.isArray(records)
+                        ? records
+                        : {};
+                } catch {
+                    return {};
+                }
+            }
+
+            function bulkRotationRecords() {
+                return rotationRecordsValue($("bulkRotationState").value);
+            }
+
+            function renderBulkRotationEntry() {
+                if (!state.bootstrap) return;
+                const manual = $("bulkRotationMode").value === "degrees";
+                $("bulkRotationFacingFields").hidden = manual;
+                $("bulkRotationManualFields").hidden = !manual;
+                const pending = readBulkPendingSave();
+                const records = bulkRotationRecords();
+                const target = $("bulkRotationToFacing").value;
+                const preview = $("bulkRotationPreview");
+                const active = document.activeElement;
+                const focusId = preview.contains(active) ? active.id : "";
+                preview.replaceChildren();
+                const nextRecords = {};
+                state.bootstrap.plants
+                    .filter((plant) => state.bulkSelected.has(plant.id))
+                    .forEach((plant) => {
+                        const previous = records[plant.id];
+                        const suggestion = confirmedRotationFacing(
+                            plant,
+                            "bulkObservedAt"
+                        );
+                        const record = previous || {
+                            rotationFromFacing: suggestion?.facing || "",
+                            potSetup: plant.potSetup,
+                            observedAt: suggestion?.observedAt || "",
+                            source: "auto",
+                        };
+                        if (
+                            !pending &&
+                            !entryDrafts.restoring &&
+                            record.source === "auto"
+                        ) {
+                            if (
+                                String(record.potSetup) !==
+                                String(plant.potSetup)
+                            ) {
+                                record.rotationFromFacing = "";
+                                record.observedAt = "";
+                                record.potSetup = plant.potSetup;
+                            }
+                            if (
+                                hasPendingRepot(plant, "bulkObservedAt") ||
+                                (!target &&
+                                    hasQueuedFacingChange(
+                                        plant,
+                                        "bulkObservedAt"
+                                    ))
+                            ) {
+                                record.rotationFromFacing = "";
+                                record.observedAt = "";
+                            }
+                            if (
+                                Date.parse(record.observedAt) >
+                                observationDate("bulkObservedAt").getTime()
+                            ) {
+                                record.rotationFromFacing = "";
+                                record.observedAt = "";
+                            } else if (!target && suggestion) {
+                                record.rotationFromFacing = suggestion.facing;
+                                record.observedAt = suggestion.observedAt;
+                            }
+                        }
+                        nextRecords[plant.id] = record;
+                        const row = document.createElement("div");
+                        row.className = "rotation-plant-row";
+                        const label = document.createElement("label");
+                        label.className = "field-label";
+                        const select = document.createElement("select");
+                        select.id = `bulkRotationFrom-${plant.id}`;
+                        select.dataset.rotationTransient = "true";
+                        label.htmlFor = select.id;
+                        label.textContent = `${plant.label || plant.id} · ${plant.name} — starting facing`;
+                        [
+                            ["", "Unknown / not recorded"],
+                            ...Object.entries(FACING_LABELS),
+                        ].forEach(([value, text]) => {
+                            const option = document.createElement("option");
+                            option.value = value;
+                            option.textContent = text;
+                            select.append(option);
+                        });
+                        select.value = record.rotationFromFacing;
+                        select.disabled = state.saving;
+                        select.addEventListener("change", () => {
+                            const current = bulkRotationRecords();
+                            current[plant.id] = {
+                                ...record,
+                                rotationFromFacing: select.value,
+                                source: "manual",
+                            };
+                            $("bulkRotationState").value =
+                                JSON.stringify(current);
+                            renderBulkRotationEntry();
+                            retainOrdinaryDraft("bulk");
+                        });
+                        const context = document.createElement("p");
+                        context.className = "hint";
+                        context.textContent = `${rotationContextText(plant, "bulkObservedAt")} · ${rotationTurnText(record.rotationFromFacing, record.rotationToFacing || target)}`;
+                        row.append(label, select, context);
+                        preview.append(row);
+                    });
+                $("bulkRotationState").value = JSON.stringify(nextRecords);
+                if (focusId) $(focusId)?.focus({ preventScroll: true });
+            }
+
+            function rotationPayload(prefix = "") {
+                const mode = $(careFieldId("rotationMode", prefix)).value;
+                const degrees =
+                    $(careFieldId("rotationDegrees", prefix)).value || "90";
+                const selected = prefix ? state.bulkEvents : state.events;
+                if (!selected.has("Rotation") || mode === "degrees")
+                    return { rotationDegrees: degrees };
+                const to = $(careFieldId("rotationToFacing", prefix)).value;
+                if (!Object.hasOwn(FACING_LABELS, to))
+                    throw entryValidationError(
+                        "Choose the new facing for this rotation.",
+                        ["rotationToFacing"]
+                    );
+                if (!prefix) {
+                    const from = $("rotationFromFacing").value;
+                    return {
+                        rotationFromFacing: from,
+                        rotationToFacing: to,
+                        rotationDegrees: String(rotationTurn(from, to)),
+                    };
+                }
+                const records = bulkRotationRecords();
+                return {
+                    rotationDegrees: "",
+                    rotationByPlant: Object.fromEntries(
+                        state.bootstrap.plants
+                            .filter((plant) => state.bulkSelected.has(plant.id))
+                            .map((plant) => {
+                                const from =
+                                    records[plant.id]?.rotationFromFacing || "";
+                                const target =
+                                    records[plant.id]?.rotationToFacing || to;
+                                return [
+                                    plant.id,
+                                    {
+                                        rotationFromFacing: from,
+                                        rotationToFacing: target,
+                                        rotationDegrees: String(
+                                            rotationTurn(from, target)
+                                        ),
+                                    },
+                                ];
+                            })
+                    ),
+                };
+            }
+
+            function validateRotationDetails(payload) {
+                if (Object.hasOwn(payload, "rotationToFacing")) {
+                    if (
+                        !Object.hasOwn(
+                            FACING_LABELS,
+                            payload.rotationToFacing
+                        ) ||
+                        (payload.rotationFromFacing &&
+                            !Object.hasOwn(
+                                FACING_LABELS,
+                                payload.rotationFromFacing
+                            ))
+                    )
+                        throw entryValidationError(
+                            "Choose a valid starting and new facing.",
+                            ["rotationFromFacing", "rotationToFacing"]
+                        );
+                    const expected = rotationTurn(
+                        payload.rotationFromFacing,
+                        payload.rotationToFacing
+                    );
+                    if (
+                        String(payload.rotationDegrees ?? "") !==
+                        String(expected)
+                    )
+                        throw entryValidationError(
+                            "The turn amount does not match the recorded facing directions.",
+                            ["rotationToFacing"]
+                        );
+                    return;
+                }
+                const degrees = Number(payload.rotationDegrees || 90);
+                if (!Number.isFinite(degrees) || degrees <= 0 || degrees > 360)
+                    throw entryValidationError(
+                        "Rotation must be more than 0 and at most 360 degrees.",
+                        ["rotationDegrees"]
+                    );
+            }
+
+            function actionContextSuffix() {
+                return !browserIsOnline()
+                    ? " · saved context, offline"
+                    : !state.wateringAgesConfirmed
+                      ? " · saved context, refresh unconfirmed"
+                      : "";
+            }
+
+            function actionContextSummary(event, record, plant) {
+                const details = record?.details || {};
+                const fields = {
+                    Water: [
+                        ["wateringApplication", ""],
+                        ["waterAmount", "mL"],
+                        ["nutrientsUsed", "nutrients"],
+                        ["nutrientProduct", ""],
+                        ["nutrientAmount", ""],
+                    ],
+                    Check: [["soilMoisture", ""]],
+                    Inspect: [["condition", ""]],
+                    Move: [["moveTo", ""]],
+                    Repot: [
+                        ["potSize", ""],
+                        ["medium", ""],
+                    ],
+                    Environment: [
+                        ["environmentAspect", ""],
+                        ["environmentTo", ""],
+                    ],
+                    Mist: [
+                        ["mistTargets", ""],
+                        ["mistAmountMl", "mL"],
+                        ["mistDetails", ""],
+                    ],
+                    Propagate: [
+                        ["propagationMethod", ""],
+                        ["propagationDetails", ""],
+                    ],
+                    Flower: [
+                        ["flowerCount", "flowers"],
+                        ["flowerDetails", ""],
+                    ],
+                    Pest: [
+                        ["pestIssue", ""],
+                        ["pestTreatment", ""],
+                    ],
+                    Photo: [["photoUrl", ""]],
+                    "Leaf VPD": [
+                        ["leafVpd", "kPa"],
+                        ["leafVpdSource", ""],
+                        ["leafTemperatureC", "°C leaf"],
+                        ["leafAirTemperatureC", "°C paired air"],
+                        ["leafHumidity", "% paired RH"],
+                    ],
+                };
+                let values = (fields[event] || [["notes", ""]]).flatMap(
+                    ([key, unit]) =>
+                        details[key] === undefined || details[key] === ""
+                            ? []
+                            : [`${details[key]}${unit ? ` ${unit}` : ""}`]
+                );
+                if (!values.length && details.notes) values = [details.notes];
+                if (!values.length) values = ["event recorded"];
+                const setup =
+                    record.potSetup &&
+                    String(record.potSetup) !== String(plant.potSetup)
+                        ? ` · setup ${record.potSetup}`
+                        : "";
+                return `${values.join(" · ")} · ${formattedTimestamp(record.observedAt) || "time unavailable"}${setup}`;
+            }
+
+            function setActionContextText(output, text) {
+                output.replaceChildren();
+                if (text.length <= 260) {
+                    output.textContent = text;
+                    return;
+                }
+                const details = document.createElement("details");
+                const summary = document.createElement("summary");
+                summary.textContent = `${text.slice(0, 200)}…`;
+                const complete = document.createElement("p");
+                complete.textContent = text;
+                details.append(summary, complete);
+                output.append(details);
+            }
+
+            function renderActionContexts() {
+                if (!state.bootstrap) return;
+                const plant = selectedPlant();
+                if (!plant) return;
+                const panels = {
+                    Water: "waterSection",
+                    Measure: "measureSection",
+                    Humidity: "humiditySection",
+                    Temperature: "temperatureSection",
+                    Light: "lightSection",
+                    Check: "checkSection",
+                    Inspect: "inspectSection",
+                    Move: "moveSection",
+                    Repot: "repotSection",
+                    Environment: "environmentSection",
+                    Mist: "mistSection",
+                    Propagate: "propagateSection",
+                    Flower: "flowerSection",
+                    Pest: "pestSection",
+                    Photo: "photoSection",
+                    "Leaf VPD": "leafVpdSection",
+                };
+                Object.entries(panels).forEach(([event, panelId]) => {
+                    const id = `${panelId}Context`;
+                    let output = $(id);
+                    if (!output) {
+                        output = document.createElement("div");
+                        output.id = id;
+                        output.className = "action-recorded-context hint";
+                        $(panelId).prepend(output);
+                    }
+                    output.hidden = !state.events.has(event);
+                    if (state.wateringAgesPending) {
+                        output.textContent = "Refreshing recorded context…";
+                        return;
+                    }
+                    const record = plant.actionContexts?.[event];
+                    const lines = [];
+                    if (event === "Measure") {
+                        ["height", "width"].forEach((dimension) => {
+                            const previous = record?.[dimension];
+                            if (!previous || !Number.isFinite(previous.valueCm))
+                                return;
+                            const unit = $("measurementUnit").value;
+                            const value =
+                                unit === "in"
+                                    ? previous.valueCm / 2.54
+                                    : previous.valueCm;
+                            lines.push(
+                                `${dimension}: ${Number(value.toFixed(2))} ${unit} · ${formattedTimestamp(previous.observedAt)} · ${previous.quality || "quality not recorded"}${previous.method ? ` / ${previous.method}` : ""}`
+                            );
+                        });
+                    } else if (
+                        ["Humidity", "Temperature", "Light"].includes(event)
+                    ) {
+                        const readings =
+                            event === "Humidity"
+                                ? [["latestRelativeHumidity", "% RH"]]
+                                : event === "Light"
+                                  ? [
+                                        [
+                                            "latestPpfd",
+                                            "µmol/m²/s (app estimate)",
+                                        ],
+                                        ["latestLux", "lux"],
+                                    ]
+                                  : [
+                                        ["latestAirTemperature", "air"],
+                                        ["latestSoilTemperature", "soil"],
+                                    ].filter(
+                                        ([, target]) =>
+                                            !$("temperatureTarget").value ||
+                                            target.toLowerCase() ===
+                                                $(
+                                                    "temperatureTarget"
+                                                ).value.toLowerCase()
+                                    );
+                        readings.forEach(([key, unit]) => {
+                            let value = plant[key];
+                            if (
+                                value === "" ||
+                                value == null ||
+                                !Number.isFinite(Number(value))
+                            )
+                                return;
+                            if (event === "Temperature") {
+                                const degrees = $("temperatureUnit").value;
+                                value = Number(
+                                    (degrees === "F"
+                                        ? (Number(value) * 9) / 5 + 32
+                                        : Number(value)
+                                    ).toFixed(2)
+                                );
+                                unit = `°${degrees} ${unit}`;
+                            }
+                            lines.push(
+                                `${value} ${unit} · ${formattedTimestamp(plant[`${key}At`]) || "time unavailable"}`
+                            );
+                        });
+                    } else if (record)
+                        lines.push(actionContextSummary(event, record, plant));
+                    setActionContextText(
+                        output,
+                        lines.length
+                            ? `Last recorded: ${lines.join("; ")}${actionContextSuffix()}`
+                            : state.wateringAgesConfirmed &&
+                                state.bootstrap.actionContextsAvailable
+                              ? "No earlier matching record."
+                              : "Recorded context unavailable."
+                    );
+                });
+                let extras = $("otherActionContexts");
+                if (!extras) {
+                    extras = document.createElement("div");
+                    extras.id = "otherActionContexts";
+                    extras.className = "action-recorded-context hint";
+                    $("eventChips").after(extras);
+                }
+                extras.replaceChildren();
+                ["Clean", "Prune"]
+                    .filter((event) => state.events.has(event))
+                    .forEach((event) => {
+                        const record = plant.actionContexts?.[event];
+                        const line = document.createElement("div");
+                        setActionContextText(
+                            line,
+                            state.wateringAgesPending
+                                ? `${event}: refreshing recorded context…`
+                                : record
+                                  ? `Last ${event.toLowerCase()}: ${actionContextSummary(event, record, plant)}${actionContextSuffix()}`
+                                  : `${event}: ${state.wateringAgesConfirmed && state.bootstrap.actionContextsAvailable ? "no earlier record" : "recorded context unavailable"}.`
+                        );
+                        extras.append(line);
+                    });
+                extras.hidden = !extras.childElementCount;
             }
 
             function updateConditionalFields() {
@@ -23501,6 +24345,8 @@
                 renderEventGuidance("eventGuidance", state.events);
                 renderLeafVpdPreview();
                 updateNutrientFields("", nutrientUseValue());
+                renderRotationEntry();
+                renderActionContexts();
             }
 
             function updateNutrientFields(prefix, value) {
@@ -24110,6 +24956,25 @@
                     }
                     $("correctionFields").append(wrapper);
                 });
+                const rotationFrom =
+                    correction.inputs.get("rotationFromFacing");
+                const rotationTo = correction.inputs.get("rotationToFacing");
+                const rotationAmount = correction.inputs.get("rotationDegrees");
+                if (rotationFrom && rotationTo && rotationAmount) {
+                    rotationAmount.readOnly = Boolean(rotationTo.value);
+                    const updateTurn = () => {
+                        rotationAmount.readOnly = Boolean(rotationTo.value);
+                        if (rotationTo.value)
+                            rotationAmount.value = String(
+                                rotationTurn(
+                                    rotationFrom.value,
+                                    rotationTo.value
+                                )
+                            );
+                    };
+                    rotationFrom.addEventListener("change", updateTurn);
+                    rotationTo.addEventListener("change", updateTurn);
+                }
                 $("correctionReason").value = draft?.reason || "";
                 updateCorrectionAction();
                 $("correctionEditor").hidden = false;
@@ -24210,7 +25075,14 @@
                 if (["ppfd", "lux"].includes(key)) return { min: 0 };
                 if (key === "flowerCount") return { min: 1, integer: true };
                 if (key === "rotationDegrees")
-                    return { min: 0, max: 360, positive: true };
+                    return {
+                        min: 0,
+                        max: 360,
+                        positive: !(
+                            correction.inputs.get("rotationToFacing")?.value ||
+                            correction.context?.original.values.rotationToFacing
+                        ),
+                    };
                 return { min: 0, positive: true };
             }
 
@@ -25230,6 +26102,7 @@
                 $("bulkSoilMoistureField").hidden =
                     !state.bulkEvents.has("Check");
                 updateNutrientFields("bulk", nutrientUseValue("bulk"));
+                renderBulkRotationEntry();
             }
 
             function setBulkPickerMode(mode, persist = true) {
@@ -25461,6 +26334,7 @@
                     ? `Save ${actionCount || "no"} action${actionCount === 1 ? "" : "s"} for ${count}`
                     : "Save bulk care";
                 setIconLabel($("bulkSaveButton"), "save", saveLabel);
+                renderBulkRotationEntry();
             }
 
             function bulkPayload() {
@@ -25507,7 +26381,7 @@
                     soilMoisture: state.bulkEvents.has("Check")
                         ? $("bulkSoilMoisture").value
                         : "",
-                    rotationDegrees: $("bulkRotationDegrees").value || "90",
+                    ...rotationPayload("bulk"),
                     pestIssue: $("bulkPestIssue").value.trim(),
                     pestTreatment: $("bulkPestTreatment").value.trim(),
                     notes: $("bulkNotes").value.trim(),
@@ -25557,7 +26431,10 @@
                         ["waterAmount"]
                     );
                 }
-                if (state.bulkEvents.has("Rotation")) {
+                if (
+                    state.bulkEvents.has("Rotation") &&
+                    !payload.rotationByPlant
+                ) {
                     const rotationDegrees = Number(payload.rotationDegrees);
                     if (
                         !Number.isFinite(rotationDegrees) ||
@@ -25623,7 +26500,7 @@
                         "bulkPestTreatment",
                         "bulkNotes",
                     ].forEach((id) => ($(id).value = ""));
-                    $("bulkRotationDegrees").value = "90";
+                    resetRotationEntry("bulk");
                     $("bulkWateringApplication").value =
                         WATERING_APPLICATION_OPTIONS[0];
                     $("bulkWaterAmount").value = "";
@@ -25688,8 +26565,7 @@
                 applyNutrientState(payload, "bulk");
                 $("bulkCondition").value = payload.condition || "";
                 $("bulkSoilMoisture").value = payload.soilMoisture || "";
-                $("bulkRotationDegrees").value =
-                    payload.rotationDegrees || "90";
+                restoreRotationEntry(payload, "bulk");
                 $("bulkWateringApplication").value =
                     payload.wateringApplication ||
                     WATERING_APPLICATION_OPTIONS[0];
@@ -25928,7 +26804,7 @@
                     ].forEach((id) => {
                         $(id).value = "";
                     });
-                    $("rotationDegrees").value = "90";
+                    resetRotationEntry();
                     $("wateringApplication").value =
                         WATERING_APPLICATION_OPTIONS[0];
                     $("waterAmount").value = "";
@@ -25947,6 +26823,7 @@
                     entryDrafts.restoring = false;
                 }
                 forgetOrdinaryDraft(draftReference);
+                renderRotationEntry();
             }
 
             function advancePlant() {
@@ -26017,7 +26894,7 @@
                     photoUrl: $("photoUrl").value.trim(),
                     pestIssue: $("pestIssue").value.trim(),
                     pestTreatment: $("pestTreatment").value.trim(),
-                    rotationDegrees: $("rotationDegrees").value || "90",
+                    ...rotationPayload(),
                     wateringApplication: $("wateringApplication").value,
                     waterAmount: $("waterAmount").value,
                     ppfd: state.events.has("Light") ? $("ppfd").value : "",
@@ -26722,7 +27599,7 @@
                     $(id).value = payload[id] || "";
                 });
                 applyNutrientState(payload);
-                $("rotationDegrees").value = payload.rotationDegrees || "90";
+                restoreRotationEntry(payload);
                 $("wateringApplication").value =
                     payload.wateringApplication ||
                     WATERING_APPLICATION_OPTIONS[0];
@@ -27237,6 +28114,9 @@
                     ? "Refreshing…"
                     : "Refresh";
                 renderWaterAgeDisplays();
+                renderRotationEntry();
+                renderBulkRotationEntry();
+                renderActionContexts();
             }
 
             function refreshCachedBootstrap({ updateHistory = true } = {}) {
@@ -27780,6 +28660,61 @@
                 updateConditionalFields();
                 renderWeightFeedback();
             });
+            $("rotationFromFacing").addEventListener("change", () => {
+                $("rotationFromSource").value = "manual";
+                $("rotationFromObservedAt").value = "";
+                renderRotationEntry();
+            });
+            ["rotationMode", "rotationToFacing"].forEach((id) =>
+                $(id).addEventListener("change", renderRotationEntry)
+            );
+            $("bulkRotationMode").addEventListener(
+                "change",
+                renderBulkRotationEntry
+            );
+            $("bulkRotationToFacing").addEventListener("change", () => {
+                const records = bulkRotationRecords();
+                Object.values(records).forEach((record) => {
+                    record.rotationToFacing = $("bulkRotationToFacing").value;
+                });
+                $("bulkRotationState").value = JSON.stringify(records);
+                renderBulkRotationEntry();
+            });
+            [
+                "observedAt",
+                "observedAtDate",
+                "observedAtTime",
+                "potSetup",
+            ].forEach((id) => {
+                ["input", "change"].forEach((event) =>
+                    $(id).addEventListener(event, () => {
+                        renderRotationEntry();
+                        renderActionContexts();
+                    })
+                );
+            });
+            [
+                "bulkObservedAt",
+                "bulkObservedAtDate",
+                "bulkObservedAtTime",
+            ].forEach((id) => {
+                ["input", "change"].forEach((event) =>
+                    $(id).addEventListener(event, renderBulkRotationEntry)
+                );
+            });
+            $("observedAtNow").addEventListener("click", renderRotationEntry);
+            $("bulkObservedAtNow").addEventListener(
+                "click",
+                renderBulkRotationEntry
+            );
+            [
+                "measurementUnit",
+                "temperatureUnit",
+                "temperatureTarget",
+                "environmentAspect",
+            ].forEach((id) =>
+                $(id).addEventListener("change", renderActionContexts)
+            );
             CARE_EVENT_FIELDS["Leaf VPD"].forEach((id) => {
                 $(id).addEventListener("input", renderLeafVpdPreview);
                 $(id).addEventListener("change", renderLeafVpdPreview);
@@ -27961,6 +28896,9 @@
             });
             window.addEventListener("offline", () => {
                 nutrientSync.confirmed = false;
+                renderRotationEntry();
+                renderBulkRotationEntry();
+                renderActionContexts();
                 ["", "bulk"].forEach(renderNutrientDose);
                 if (state.wateringAgesPending) {
                     clearBootstrapRefreshTimer();

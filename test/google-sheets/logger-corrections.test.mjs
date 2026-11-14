@@ -84,6 +84,8 @@ const headers = [
     "Paired relative humidity (%)",
     "Leaf VPD (kPa)",
     "Leaf VPD source",
+    "Rotation from facing",
+    "Rotation to facing",
 ];
 
 /**
@@ -153,12 +155,12 @@ function applyUpdate(rows, update, maxRows, timeZone) {
         rowIndex >= maxRows ||
         update.rows.length !== 1 ||
         columnIndex < 0 ||
-        columnIndex + values.length > 67
+        columnIndex + values.length > headers.length
     ) {
         throw new Error("Invalid update range");
     }
     while (rows.length <= rowIndex)
-        rows.push(Array.from({ length: 67 }, () => cell()));
+        rows.push(Array.from({ length: headers.length }, () => cell()));
     for (const [offset, data] of values.entries()) {
         applyCell(
             required(required(rows[rowIndex])[columnIndex + offset]),
@@ -332,7 +334,7 @@ function fixture(
         lastSelectedRow: 2,
         locked: false,
         lockUnavailable: false,
-        maxColumns: 67,
+        maxColumns: headers.length,
         maxRows: Math.max(100, observations.length + 1),
         missingFormulaReadRow: 0,
         onAlert: () => {},
@@ -624,7 +626,7 @@ function generatedCanonicalCell(value) {
  * @returns {import("../logger-correction-fixtures.d.ts").CorrectionCell[]}
  */
 function observation(event = "Weigh", id = "original-1", overrides = {}) {
-    const row = Array.from({ length: 67 }, () => cell());
+    const row = Array.from({ length: headers.length }, () => cell());
     const values = {
         0: new Date("2026-09-03T16:23:45.123Z"),
         1: "P01",
@@ -1726,7 +1728,9 @@ describe("atomic saved History corrections", () => {
 
         const model = fixture();
         for (let index = 1; index < 4999; index += 1) {
-            const removed = Array.from({ length: 67 }, () => cell());
+            const removed = Array.from({ length: headers.length }, () =>
+                cell()
+            );
             removed[1] = cell("P01");
             removed[35] = cell("Removed");
             model.state.rows.push(removed);
@@ -2580,9 +2584,9 @@ describe("correction validation and durable receipt boundaries", () => {
 
         expect(() =>
             model.api.getWebCorrectionEntry({ observationId: "original-1" })
-        ).toThrow("67-column");
+        ).toThrow("69-column");
 
-        model.state.maxColumns = 67;
+        model.state.maxColumns = headers.length;
         stored(model, 1, 1).formula = '="Date"';
 
         expect(() =>
@@ -3000,7 +3004,7 @@ describe("durable pre-batch correction rejection", () => {
             case "HISTORY_CAPACITY": {
                 while (model.state.rows.length < 4999)
                     model.state.rows.push(
-                        Array.from({ length: 67 }, () => cell())
+                        Array.from({ length: headers.length }, () => cell())
                     );
                 model.state.rows.push(
                     observation("Other", "capacity-end", { 1: "P02" })
@@ -3236,6 +3240,207 @@ describe("menu exclusion identity recheck", () => {
 });
 
 describe("structured care corrections", () => {
+    it("opens, corrects and retries cardinal endpoints from a writer-generated Rotation", () => {
+        expect.hasAssertions();
+
+        const model = fixture([]);
+        const writer = appsScriptApi(model.context);
+        const requestId = "rotation-generated-request-001";
+        const rows = writer.storedObservationRows_(
+            {
+                condition: "",
+                currentLabel: "A1",
+                details: writer.eventDetailsFromPayload_(
+                    { rotationFromFacing: "N", rotationToFacing: "E" },
+                    ["Rotation"],
+                    null
+                ),
+                entrySource: "Mobile logger",
+                eventNames: ["Rotation"],
+                height: "",
+                notes: "Generated cardinal rotation",
+                observationDate: new Date("2026-09-03T16:23:45.123Z"),
+                plantId: "P01",
+                potSetup: 2,
+                requestId,
+                weight: "",
+                weightState: "Routine",
+                width: "",
+            },
+            requestId,
+            2,
+            new Date("2026-09-03T16:24:01Z")
+        );
+        const saved = required(rows[0]);
+        const observationId = String(saved[26]);
+        model.state.rows.push(saved.map(generatedCanonicalCell));
+
+        expect(observationId).toBe("rotation-generated-request-001:1:rotation");
+        expect(
+            model.api.getWebCorrectionEntry({ observationId }).original.values
+        ).toMatchObject({
+            rotationDegrees: 90,
+            rotationFromFacing: "N",
+            rotationToFacing: "E",
+        });
+
+        const payload = prepare(
+            model,
+            { rotationToFacing: "W" },
+            observationId
+        );
+        const receipt = model.api.saveWebObservationCorrection(payload);
+
+        expect(receipt).toMatchObject({ status: "saved" });
+        expect(model.api.saveWebObservationCorrection(payload)).toStrictEqual(
+            receipt
+        );
+        expect(stored(model, 2, 36).value).toBe("Removed");
+        expect(stored(model, 2, 40).value).toBe(90);
+        expect(stored(model, 2, 69).value).toBe("E");
+        expect(stored(model, 3, 31).value).toBe(observationId);
+        expect(stored(model, 3, 40).value).toBe(270);
+        expect(stored(model, 3, 68).value).toBe("N");
+        expect(stored(model, 3, 69).value).toBe("W");
+        expect(model.state.rows).toHaveLength(3);
+    });
+
+    it.each([
+        {
+            changes: { rotationFromFacing: "E" },
+            expectedDegrees: 0,
+            expectedFrom: "E",
+        },
+        {
+            changes: { rotationFromFacing: "" },
+            expectedDegrees: "",
+            expectedFrom: "",
+        },
+    ])(
+        "recomputes cardinal correction degrees as $expectedDegrees",
+        ({ changes, expectedDegrees, expectedFrom }) => {
+            expect.hasAssertions();
+
+            const model = fixture([
+                observation("Rotation", "original-1", {
+                    39: 90,
+                    67: "N",
+                    68: "E",
+                }),
+            ]);
+            const payload = prepare(model, changes);
+            model.api.saveWebObservationCorrection(payload);
+
+            expect(stored(model, 3, 40).value).toBe(expectedDegrees);
+            expect(stored(model, 3, 68).value).toBe(expectedFrom);
+            expect(stored(model, 3, 69).value).toBe("E");
+            expect(stored(model, 2, 40).value).toBe(90);
+        }
+    );
+
+    it.each([
+        { rotationDegrees: 180 },
+        { rotationDegrees: "" },
+        { rotationFromFacing: "NE" },
+        { rotationToFacing: "" },
+    ])(
+        "rejects inconsistent cardinal corrections without writing: %j",
+        (changes) => {
+            expect.hasAssertions();
+
+            const model = fixture([
+                observation("Rotation", "original-1", {
+                    39: 90,
+                    67: "N",
+                    68: "E",
+                }),
+            ]);
+            const before = structuredClone(model.state.rows);
+
+            expect(() => prepare(model, changes)).toThrow("INVALID_CORRECTION");
+            expect(model.state.rows).toStrictEqual(before);
+            expect(model.state.writes).toBe(0);
+        }
+    );
+
+    it("preserves an unknown-origin facing anchor during a notes-only correction", () => {
+        expect.hasAssertions();
+
+        const model = fixture([
+            observation("Rotation", "original-1", { 39: "", 67: "", 68: "S" }),
+        ]);
+        const payload = prepare(model, {
+            notes: "Facing confirmed, turn unrecorded",
+        });
+        model.api.saveWebObservationCorrection(payload);
+
+        expect(stored(model, 3, 40).value).toBe("");
+        expect(stored(model, 3, 68).value).toBe("");
+        expect(stored(model, 3, 69).value).toBe("S");
+    });
+
+    it.each([0, ""])(
+        "rejects a legacy degree-only correction to %j before writing",
+        (rotationDegrees) => {
+            expect.hasAssertions();
+
+            const model = fixture([
+                observation("Rotation", "original-1", { 39: 90 }),
+            ]);
+            const before = structuredClone(model.state.rows);
+
+            expect(() => prepare(model, { rotationDegrees })).toThrow(
+                /legacy rotation degrees/iv
+            );
+            expect(model.state.rows).toStrictEqual(before);
+            expect(model.state.writes).toBe(0);
+        }
+    );
+
+    it("requires a blank turn for an unknown starting facing and accepts explicit matching zero", () => {
+        expect.hasAssertions();
+
+        const model = fixture([
+            observation("Rotation", "original-1", { 39: "", 67: "", 68: "S" }),
+        ]);
+
+        expect(() => prepare(model, { rotationDegrees: 90 })).toThrow(
+            /leave degrees blank/iv
+        );
+
+        const payload = prepare(model, {
+            rotationDegrees: 0,
+            rotationFromFacing: "S",
+        });
+        const receipt = model.api.saveWebObservationCorrection(payload);
+
+        expect(receipt).toMatchObject({ status: "saved" });
+        expect(model.api.saveWebObservationCorrection(payload)).toStrictEqual(
+            receipt
+        );
+        expect(stored(model, 3, 40).value).toBe(0);
+        expect(stored(model, 3, 68).value).toBe("S");
+        expect(stored(model, 3, 69).value).toBe("S");
+        expect(model.state.rows).toHaveLength(3);
+    });
+
+    it("converts a legacy degree-only record to a destination anchor without inventing its origin", () => {
+        expect.hasAssertions();
+
+        const model = fixture([
+            observation("Rotation", "original-1", { 39: 90 }),
+        ]);
+        const payload = prepare(model, { rotationToFacing: "W" });
+
+        expect(model.api.saveWebObservationCorrection(payload)).toMatchObject({
+            status: "saved",
+        });
+        expect(stored(model, 3, 40).value).toBe("");
+        expect(stored(model, 3, 68).value).toBe("");
+        expect(stored(model, 3, 69).value).toBe("W");
+        expect(stored(model, 2, 40).value).toBe(90);
+    });
+
     it.each([
         { column: 61, unit: "" },
         { column: 61, unit: "Kelvin" },

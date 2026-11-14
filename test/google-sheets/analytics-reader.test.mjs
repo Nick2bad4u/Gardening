@@ -140,7 +140,7 @@ function historyScenario(scenario) {
 
 /** @param {number} index @param {string} [event] @returns {Cell[]} */
 function observation(index, event = "Weigh") {
-    const row = Array.from({ length: 67 }, () => /** @type {Cell} */ (""));
+    const row = Array.from({ length: 69 }, () => /** @type {Cell} */ (""));
     row[0] = new Date(Date.UTC(2026, 0, 1) + index * 600_000 + 123);
     row[1] = `P${String((index % 3) + 1).padStart(2, "0")}`;
     row[2] = event;
@@ -200,7 +200,7 @@ describe("paired analytics History reader", () => {
     it("reconstructs truly blank rows when Sheets omits values for empty ranges", () => {
         expect.hasAssertions();
 
-        const test = fixture([Array.from({ length: 67 }, () => "")]);
+        const test = fixture([Array.from({ length: 69 }, () => "")]);
 
         test.batchGet.mockImplementation((id, options) => ({
             spreadsheetId: id,
@@ -211,7 +211,7 @@ describe("paired analytics History reader", () => {
         }));
 
         expect(test.read()).toStrictEqual([
-            Array.from({ length: 67 }, () => ""),
+            Array.from({ length: 69 }, () => ""),
         ]);
         expect(test.batchGet).toHaveBeenCalledTimes(3);
         expect(test.nativeRead).not.toHaveBeenCalled();
@@ -263,7 +263,7 @@ describe("paired analytics History reader", () => {
         const actual = test.read();
 
         expect(actual).toHaveLength(1);
-        expect(actual[0]).toHaveLength(67);
+        expect(actual[0]).toHaveLength(69);
         expect(structuredClone(actual[0])).toStrictEqual(
             row.map((value, column) => (consumed.includes(column) ? value : ""))
         );
@@ -680,7 +680,7 @@ describe("analytics reader response boundaries", () => {
 
         expect(test.read()).toStrictEqual(
             Array.from({ length: 2 }, () =>
-                Array.from({ length: 67 }, () => "")
+                Array.from({ length: 69 }, () => "")
             )
         );
         expect(test.nativeRead).not.toHaveBeenCalled();

@@ -64,6 +64,8 @@ interface GardenEventDetailPayload {
     propagationMethod?: unknown;
     relativeHumidity?: unknown;
     rotationDegrees?: unknown;
+    rotationFromFacing?: unknown;
+    rotationToFacing?: unknown;
     supportAction?: unknown;
     supportDetails?: unknown;
     temperature?: unknown;
@@ -118,6 +120,8 @@ interface GardenObservationDetails {
     propagationMethod?: string;
     relativeHumidity?: GardenOptionalNumber;
     rotationDegrees?: GardenOptionalNumber;
+    rotationFromFacing?: string;
+    rotationToFacing?: string;
     supportAction?: string;
     supportDetails?: string;
     temperatureC?: GardenOptionalNumber;
@@ -173,6 +177,17 @@ interface GardenWaterRecord
     potSetup: number;
 }
 
+interface GardenWebActionContext {
+    details: GardenWebHistoryDetails;
+    height?: GardenWebMeasurementContext;
+    method: string;
+    observationId: string;
+    observedAt: string;
+    potSetup: number;
+    quality: string;
+    width?: GardenWebMeasurementContext;
+}
+
 interface GardenWebEnvironmentReadModel {
     latestAirTemperature: GardenOptionalNumber;
     latestAirTemperatureAt: string;
@@ -193,6 +208,21 @@ type GardenWebHistoryDetails = Record<
     | number
     | string
 >;
+
+interface GardenWebMeasurementContext {
+    entryUnit: string;
+    method: string;
+    observedAt: string;
+    quality: string;
+    valueCm: number;
+}
+
+interface GardenWebRotationReadModel {
+    facing: string;
+    observationId: string;
+    observedAt: string;
+    potSetup: number;
+}
 
 interface GardenWebWateringReadModel {
     dayKey: string;

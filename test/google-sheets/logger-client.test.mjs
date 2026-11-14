@@ -1331,7 +1331,7 @@ describe("garden logger History details and current-cycle charts", () => {
         expect(window.document.querySelector(".chart-point")).toBeNull();
     });
 
-    it("refreshes only read data and preserves every draft control, bulk selection, queue, and an external correction hook", () => {
+    it("refreshes read data and automatic setup context while preserving entered draft controls, bulk selection, queue, and an external correction hook", () => {
         expect.hasAssertions();
 
         vi.useFakeTimers();
@@ -1391,6 +1391,12 @@ describe("garden logger History details and current-cycle charts", () => {
                 value: control.value,
             }));
         const before = controls();
+        const rotationState = required(
+            before.find((control) => control.id === "bulkRotationState")
+        );
+        const refreshedRotation = parseStoredRecord(rotationState.value);
+        jsonRecord(refreshedRotation["P01"])["potSetup"] = 3;
+        rotationState.value = JSON.stringify(refreshedRotation);
         const queue = window.localStorage.getItem(
             "gardenLoggerObservationQueueV1"
         );
@@ -7274,6 +7280,7 @@ function prepareNutrientRetry(window, mode, water) {
                 '#bulkEventChips [data-event="Rotation"]',
                 HTMLButtonElement
             ).click();
+            changeWorkflowSelect(window, "bulkRotationMode", "degrees");
         }
     } else if (water) {
         queryElement(
@@ -7953,6 +7960,53 @@ const initialSharedNutrients = {
     product: "MSU 13-3-15",
 };
 
+function cardinalBootstrap() {
+    return {
+        ...workflowBootstrap(),
+        actionContextsAvailable: true,
+        plants: workflowBootstrap().plants.map((plant, index) => ({
+            ...plant,
+            rotationFacing: {
+                facing: /** @type {"E" | "N"} */ (index === 0 ? "N" : "E"),
+                observationId: `fixture-facing-${plant.id}`,
+                observedAt: "2026-09-05T12:00:00.000Z",
+                potSetup: plant.potSetup,
+            },
+        })),
+    };
+}
+
+/** @param {Window} window */
+function chooseBulkRotation(window) {
+    queryElement(window.document, "#bulkModeTab", HTMLButtonElement).click();
+    queryElement(
+        window.document,
+        '#bulkEventChips [data-event="Water"]',
+        HTMLButtonElement
+    ).click();
+    queryElement(
+        window.document,
+        '#bulkEventChips [data-event="Rotation"]',
+        HTMLButtonElement
+    ).click();
+    queryElement(
+        window.document,
+        '#bulkPlantList input[value="P01"]',
+        HTMLInputElement
+    ).click();
+}
+
+/** @param {Window} window @param {string} to */
+function chooseRotation(window, to) {
+    const event = queryElement(
+        window.document,
+        '#eventChips [data-event="Rotation"]',
+        HTMLButtonElement
+    );
+    if (event.getAttribute("aria-pressed") !== "true") event.click();
+    changeWorkflowSelect(window, "rotationToFacing", to);
+}
+
 /** @param {Window} window @param {string} action */
 function finishNutrientEntry(window, action) {
     if (action === "queue") {
@@ -7972,6 +8026,902 @@ function finishNutrientEntry(window, action) {
         changeWorkflowSelect(window, "plantSelect", "P02");
     }
 }
+
+/** @param {Window} window */
+function queueCurrentEntry(window) {
+    queryElement(window.document, "#queueButton", HTMLButtonElement).click();
+    return required(
+        parseStoredQueue(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        ).at(-1)
+    ).payload;
+}
+
+describe("garden logger Repot rotation origins", () => {
+    afterEach(restoreLoggerMocks);
+
+    it("clears an automatic origin for same-save Repot and restores it when Repot is deselected", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            bootstrapData: cardinalBootstrap(),
+        });
+        chooseRotation(window, "E");
+        const repot = queryElement(
+            window.document,
+            '#eventChips [data-event="Repot"]',
+            HTMLButtonElement
+        );
+        const from = queryElement(
+            window.document,
+            "#rotationFromFacing",
+            HTMLSelectElement
+        );
+        repot.click();
+
+        expect(from.value).toBe("");
+
+        repot.click();
+
+        expect(from.value).toBe("N");
+
+        repot.click();
+        enterWorkflowValue(window, "potSize", "6 in");
+
+        expect(queueCurrentEntry(window)).toMatchObject({
+            events: expect.arrayContaining(["Repot", "Rotation"]),
+            rotationDegrees: "",
+            rotationFromFacing: "",
+            rotationToFacing: "E",
+        });
+    });
+
+    it("clears a legacy automatic origin when resuming a Repot rotation draft", () => {
+        expect.hasAssertions();
+
+        const first = createLoggerWindow({
+            bootstrapData: cardinalBootstrap(),
+        });
+        chooseRotation(first.window, "E");
+        queryElement(
+            first.window.document,
+            '#eventChips [data-event="Repot"]',
+            HTMLButtonElement
+        ).click();
+        enterWorkflowValue(first.window, "potSize", "6 in");
+        queryElement(
+            first.window.document,
+            "#rotationFromFacing",
+            HTMLSelectElement
+        ).value = "N";
+        queryElement(
+            first.window.document,
+            "#rotationFromObservedAt",
+            HTMLInputElement
+        ).value = "2026-09-05T12:00:00.000Z";
+        first.window.dispatchEvent(new first.window.Event("pagehide"));
+        const { window } = createLoggerWindow({
+            bootstrapData: cardinalBootstrap(),
+            storage: copyLoggerStorage(first.window),
+        });
+        queryElement(
+            window.document,
+            "#entryDraftResume",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(
+                window.document,
+                "#rotationFromFacing",
+                HTMLSelectElement
+            ).value
+        ).toBe("");
+        expect(queueCurrentEntry(window)).toMatchObject({
+            rotationDegrees: "",
+            rotationFromFacing: "",
+            rotationToFacing: "E",
+        });
+    });
+
+    it("preserves a manually confirmed Repot origin and its frozen uncertain retry", () => {
+        expect.hasAssertions();
+
+        const { behaviors, calls, window } = createLoggerWindow({
+            bootstrapData: cardinalBootstrap(),
+        });
+        chooseRotation(window, "E");
+        changeWorkflowSelect(window, "rotationFromFacing", "S");
+        queryElement(
+            window.document,
+            '#eventChips [data-event="Repot"]',
+            HTMLButtonElement
+        ).click();
+        enterWorkflowValue(window, "potSize", "6 in");
+        behaviors.saveWebObservation = ({ failure }) => {
+            failure({ message: "Unconfirmed" });
+        };
+        const form = queryElement(
+            window.document,
+            "#entryForm",
+            HTMLFormElement
+        );
+        form.dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
+        const first = lastObservationSave(calls);
+        refreshWorkflow(window);
+        form.dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
+
+        expect(first).toMatchObject({
+            rotationDegrees: "270",
+            rotationFromFacing: "S",
+            rotationToFacing: "E",
+        });
+        expect(lastObservationSave(calls)).toStrictEqual(first);
+    });
+
+    it.each([
+        {
+            bulk: false,
+            expectedFrom: "",
+            observedAt: "2026-09-05T13:00:00.000Z",
+        },
+        {
+            bulk: true,
+            expectedFrom: "",
+            observedAt: "2026-09-05T13:00:00.000Z",
+        },
+        {
+            bulk: false,
+            expectedFrom: "N",
+            observedAt: "2099-09-05T13:00:00.000Z",
+        },
+        {
+            bulk: false,
+            expectedFrom: "N",
+            observedAt: "2026-09-04T13:00:00.000Z",
+        },
+    ])(
+        "only withholds an automatic origin for an intervening queued Repot (%j)",
+        ({ bulk, expectedFrom, observedAt }) => {
+            expect.hasAssertions();
+
+            const queued = queuedWeight();
+            Object.assign(queued.payload, {
+                events: ["Repot"],
+                observedAt,
+                potSize: "6 in",
+                weight: "",
+            });
+            const { calls, window } = createLoggerWindow({
+                bootstrapData: cardinalBootstrap(),
+                storage: {
+                    gardenLoggerObservationQueueV1: JSON.stringify([queued]),
+                },
+            });
+            const prepare = bulk ? chooseBulkRotation : chooseRotation;
+            prepare(window, "E");
+            changeWorkflowSelect(
+                window,
+                bulk ? "bulkRotationToFacing" : "rotationToFacing",
+                "E"
+            );
+
+            expect(
+                queryElement(
+                    window.document,
+                    bulk ? "#bulkRotationFrom-P01" : "#rotationFromFacing",
+                    HTMLSelectElement
+                ).value
+            ).toBe(expectedFrom);
+
+            queryElement(
+                window.document,
+                bulk ? "#bulkWaterForm" : "#entryForm",
+                HTMLFormElement
+            ).dispatchEvent(
+                new window.Event("submit", { bubbles: true, cancelable: true })
+            );
+            const expected = {
+                rotationDegrees: expectedFrom ? "90" : "",
+                rotationFromFacing: expectedFrom,
+                rotationToFacing: "E",
+            };
+
+            expect(lastObservationSave(calls)).toMatchObject(
+                bulk ? { rotationByPlant: { P01: expected } } : expected
+            );
+
+            const storedQueue = parseStoredQueue(
+                window.localStorage.getItem("gardenLoggerObservationQueueV1")
+            );
+
+            expect(required(storedQueue[0]).payload).toStrictEqual(
+                queued.payload
+            );
+        }
+    );
+});
+
+describe("garden logger cardinal rotation and action context", () => {
+    afterEach(restoreLoggerMocks);
+
+    it("keeps a long prior condition expandable without filling a new inspection", () => {
+        expect.hasAssertions();
+
+        const data = cardinalBootstrap();
+        const condition = "Recorded lower-leaf marks. ".repeat(30);
+        Object.assign(required(data.plants[0]), {
+            actionContexts: {
+                Inspect: {
+                    details: { condition },
+                    observedAt: "2026-09-05T12:00:00Z",
+                    potSetup: 1,
+                },
+            },
+        });
+        const { window } = createLoggerWindow({ bootstrapData: data });
+        queryElement(
+            window.document,
+            '#eventChips [data-event="Inspect"]',
+            HTMLButtonElement
+        ).click();
+        const context = queryElement(
+            window.document,
+            "#inspectSectionContext details",
+            HTMLDetailsElement
+        );
+
+        expect(context.open).toBe(false);
+        expect(context.querySelector("p")?.textContent).toContain(condition);
+        expect(
+            queryElement(window.document, "#condition", HTMLInputElement).value
+        ).toBe("");
+    });
+
+    it("requires a confirmed starting choice after an unsent rotation while keeping the queued payload", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            bootstrapData: cardinalBootstrap(),
+        });
+        chooseRotation(window, "W");
+        const first = queueCurrentEntry(window);
+
+        expect(
+            queryElement(
+                window.document,
+                "#rotationFromFacing",
+                HTMLSelectElement
+            ).value
+        ).toBe("");
+        expect(
+            queryElement(window.document, "#rotationFacingContext", HTMLElement)
+                .textContent
+        ).toContain("Last recorded facing: North");
+        expect(
+            queryElement(window.document, "#rotationFacingContext", HTMLElement)
+                .textContent
+        ).toContain("queued rotation is not yet in History");
+
+        changeWorkflowSelect(window, "rotationFromFacing", "W");
+        chooseRotation(window, "E");
+
+        expect(queueCurrentEntry(window)).toMatchObject({
+            rotationDegrees: "180",
+            rotationFromFacing: "W",
+            rotationToFacing: "E",
+        });
+
+        const queued = parseStoredQueue(
+            window.localStorage.getItem("gardenLoggerObservationQueueV1")
+        );
+
+        expect(required(queued[0]).payload).toStrictEqual(first);
+    });
+
+    it.each([
+        [
+            "N",
+            "N",
+            0,
+        ],
+        [
+            "",
+            "W",
+            "",
+        ],
+    ])(
+        "derives corrected rotation %s to %s without rejecting zero or an unknown amount",
+        (from, to, degrees) => {
+            expect.hasAssertions();
+
+            const { calls, context, window } =
+                createCorrectionLogger("Rotation");
+            context.fields.push(
+                correctionField("rotationFromFacing", "select", "", [
+                    "N",
+                    "E",
+                    "S",
+                    "W",
+                ]),
+                correctionField("rotationToFacing", "select", "", [
+                    "N",
+                    "E",
+                    "S",
+                    "W",
+                ])
+            );
+            Object.assign(context.original.values, {
+                rotationDegrees: 90,
+                rotationFromFacing: "N",
+                rotationToFacing: "E",
+            });
+            openFirstCorrection(window);
+            editCorrection(window, "rotationFromFacing", from);
+            editCorrection(window, "rotationToFacing", to);
+            editCorrection(window, "reason", "Correct the observed facing");
+            submitCorrectionReview(window);
+
+            expect(
+                queryElement(
+                    window.document,
+                    "#correctionField-rotationDegrees",
+                    HTMLInputElement
+                ).readOnly
+            ).toBe(true);
+            expect(
+                required(
+                    calls.find(
+                        (call) =>
+                            call.method === "previewWebObservationCorrection"
+                    )
+                ).args[0]
+            ).toMatchObject({
+                changes: { rotationDegrees: degrees, rotationToFacing: to },
+            });
+        }
+    );
+
+    it("restores an older numeric pending request without adding cardinal endpoints", () => {
+        expect.hasAssertions();
+
+        const original = createLoggerWindow();
+        changeWorkflowSelect(original.window, "rotationMode", "degrees");
+        queryElement(
+            original.window.document,
+            '#eventChips [data-event="Rotation"]',
+            HTMLButtonElement
+        ).click();
+        enterWorkflowValue(original.window, "rotationDegrees", "45");
+        const payload = queueCurrentEntry(original.window);
+        const { calls, window } = createLoggerWindow({
+            bootstrapData: cardinalBootstrap(),
+            pendingSave: { payload, requestId: "legacy-rotation-retry" },
+        });
+        queryElement(
+            window.document,
+            "#entryForm",
+            HTMLFormElement
+        ).dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
+        const submitted = required(
+            calls.find((call) => call.method === "saveWebObservation")
+        ).args[0];
+
+        expect(
+            queryElement(window.document, "#rotationMode", HTMLSelectElement)
+                .value
+        ).toBe("degrees");
+        expect(submitted).toMatchObject({
+            requestId: "legacy-rotation-retry",
+            rotationDegrees: "45",
+        });
+        expect(submitted).not.toHaveProperty("rotationToFacing");
+    });
+
+    it("withholds a cached facing suggestion until a fresh bootstrap confirms it", () => {
+        expect.hasAssertions();
+
+        const data = cardinalBootstrap();
+        /**
+         * @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebAppBootstrap">
+         *     | undefined}
+         */
+        let held;
+        const { window } = createLoggerWindow({
+            bootstrapBehavior: (handlers) => {
+                held = handlers;
+            },
+            storage: {
+                gardenLoggerBootstrapV5: JSON.stringify({
+                    bootstrap: data,
+                    savedAt: Date.now(),
+                }),
+            },
+        });
+
+        expect(
+            queryElement(
+                window.document,
+                "#rotationFromFacing",
+                HTMLSelectElement
+            ).value
+        ).toBe("");
+        expect(
+            queryElement(window.document, "#rotationFacingContext", HTMLElement)
+                .textContent
+        ).toContain("Refreshing");
+
+        required(held).success(data);
+
+        expect(
+            queryElement(
+                window.document,
+                "#rotationFromFacing",
+                HTMLSelectElement
+            ).value
+        ).toBe("N");
+    });
+
+    it.each([
+        [
+            "N",
+            0,
+            "Same facing",
+        ],
+        [
+            "E",
+            90,
+            "90° clockwise",
+        ],
+        [
+            "S",
+            180,
+            "180° clockwise",
+        ],
+        [
+            "W",
+            270,
+            "90° counterclockwise",
+        ],
+    ])(
+        "records N to %s as %s clockwise-equivalent degrees",
+        (to, degrees, label) => {
+            expect.hasAssertions();
+
+            const { window } = createLoggerWindow({
+                bootstrapData: cardinalBootstrap(),
+            });
+            chooseRotation(window, to);
+
+            expect(
+                queryElement(
+                    window.document,
+                    "#rotationFromFacing",
+                    HTMLSelectElement
+                ).value
+            ).toBe("N");
+            expect(
+                queryElement(window.document, "#rotationPreview", HTMLElement)
+                    .textContent
+            ).toContain(label);
+            expect(queueCurrentEntry(window)).toMatchObject({
+                rotationDegrees: String(degrees),
+                rotationFromFacing: "N",
+                rotationToFacing: to,
+            });
+        }
+    );
+
+    it("records an unknown starting facing without inventing a degree amount", () => {
+        expect.hasAssertions();
+
+        const data = cardinalBootstrap();
+        Reflect.deleteProperty(required(data.plants[0]), "rotationFacing");
+        const { window } = createLoggerWindow({ bootstrapData: data });
+        chooseRotation(window, "S");
+
+        expect(
+            queryElement(window.document, "#rotationPreview", HTMLElement)
+                .textContent
+        ).toContain("no turn amount is inferred");
+        expect(queueCurrentEntry(window)).toMatchObject({
+            rotationDegrees: "",
+            rotationFromFacing: "",
+            rotationToFacing: "S",
+        });
+    });
+
+    it("requires an explicit destination and clears plant-specific endpoints on selection", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            bootstrapData: cardinalBootstrap(),
+        });
+        chooseRotation(window, "W");
+        changeWorkflowSelect(window, "plantSelect", "P02");
+        queryElement(
+            window.document,
+            "#queueButton",
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(window.document, "#keepEvents", HTMLInputElement)
+                .checked
+        ).toBe(true);
+        expect(
+            queryElement(
+                window.document,
+                "#rotationFromFacing",
+                HTMLSelectElement
+            ).value
+        ).toBe("E");
+        expect(
+            queryElement(
+                window.document,
+                "#rotationToFacing",
+                HTMLSelectElement
+            ).value
+        ).toBe("");
+        expect(
+            parseStoredQueue(
+                window.localStorage.getItem("gardenLoggerObservationQueueV1") ??
+                    "[]"
+            )
+        ).toHaveLength(0);
+        expect(
+            queryElement(window.document, "#entryValidation", HTMLElement)
+                .textContent
+        ).toContain("new facing");
+    });
+
+    it("does not use a newer recorded facing for a backdated entry", () => {
+        expect.hasAssertions();
+
+        const { window } = createLoggerWindow({
+            bootstrapData: cardinalBootstrap(),
+        });
+        chooseRotation(window, "W");
+        enterWorkflowValue(window, "observedAt", "2026-09-04T12:00");
+
+        expect(
+            queryElement(
+                window.document,
+                "#rotationFromFacing",
+                HTMLSelectElement
+            ).value
+        ).toBe("");
+        expect(
+            queryElement(window.document, "#rotationFacingContext", HTMLElement)
+                .textContent
+        ).toContain("later than this entry");
+
+        changeWorkflowSelect(window, "rotationFromFacing", "S");
+
+        expect(queueCurrentEntry(window)).toMatchObject({
+            rotationDegrees: "90",
+            rotationFromFacing: "S",
+            rotationToFacing: "W",
+        });
+    });
+
+    it("keeps exact facing endpoints through an uncertain save, refresh, and retry", () => {
+        expect.hasAssertions();
+
+        const data = cardinalBootstrap();
+        const { behaviors, calls, window } = createLoggerWindow({
+            bootstrapData: data,
+        });
+        behaviors.saveWebObservation = ({ failure }) => {
+            failure({ message: "Unconfirmed" });
+        };
+        chooseRotation(window, "W");
+        queryElement(
+            window.document,
+            "#entryForm",
+            HTMLFormElement
+        ).dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
+        const first = required(
+            calls.find((call) => call.method === "saveWebObservation")
+        ).args[0];
+        required(data.plants[0]).rotationFacing.facing = "E";
+        refreshWorkflow(window);
+        queryElement(
+            window.document,
+            "#entryForm",
+            HTMLFormElement
+        ).dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
+
+        expect(
+            calls.filter((call) => call.method === "saveWebObservation")
+        ).toHaveLength(2);
+
+        const retried = required(
+            calls.findLast((call) => call.method === "saveWebObservation")
+        ).args[0];
+
+        expect(JSON.stringify(retried)).toBe(JSON.stringify(first));
+        expect(first).toMatchObject({
+            rotationDegrees: "270",
+            rotationFromFacing: "N",
+            rotationToFacing: "W",
+        });
+    });
+
+    it("resumes a facing draft without substituting newer recorded direction", () => {
+        expect.hasAssertions();
+
+        const data = cardinalBootstrap();
+        const first = createLoggerWindow({ bootstrapData: data });
+        chooseRotation(first.window, "W");
+        first.window.dispatchEvent(new first.window.Event("pagehide"));
+        required(data.plants[0]).rotationFacing.facing = "E";
+        const { window } = createLoggerWindow({
+            bootstrapData: data,
+            storage: copyLoggerStorage(first.window),
+        });
+        queryElement(
+            window.document,
+            "#entryDraftResume",
+            HTMLButtonElement
+        ).click();
+        changeWorkflowSelect(window, "rotationToFacing", "W");
+
+        expect(queueCurrentEntry(window)).toMatchObject({
+            rotationDegrees: "270",
+            rotationFromFacing: "N",
+            rotationToFacing: "W",
+        });
+    });
+
+    it.each([
+        { resume: false, target: "" },
+        { resume: false, target: "E" },
+        { resume: true, target: "" },
+        { resume: true, target: "E" },
+    ])(
+        "clears a bulk automatic origin after setup drift (%j)",
+        ({ resume, target }) => {
+            expect.hasAssertions();
+
+            const data = cardinalBootstrap();
+            const first = createLoggerWindow({ bootstrapData: data });
+            chooseBulkRotation(first.window);
+            changeWorkflowSelect(first.window, "bulkRotationToFacing", target);
+
+            expect(
+                queryElement(
+                    first.window.document,
+                    "#bulkRotationFrom-P01",
+                    HTMLSelectElement
+                ).value
+            ).toBe("N");
+
+            first.window.dispatchEvent(new first.window.Event("pagehide"));
+            Object.assign(required(data.plants[0]), {
+                potSetup: 3,
+                rotationFacing: null,
+            });
+            const current = resume
+                ? createLoggerWindow({
+                      bootstrapData: data,
+                      storage: copyLoggerStorage(first.window),
+                  })
+                : first;
+            queryElement(
+                current.window.document,
+                resume ? "#entryDraftResume" : "#refreshDataButton",
+                HTMLButtonElement
+            ).click();
+
+            expect(
+                queryElement(
+                    current.window.document,
+                    "#bulkRotationFrom-P01",
+                    HTMLSelectElement
+                ).value
+            ).toBe("");
+            expect(
+                JSON.parse(
+                    queryElement(
+                        current.window.document,
+                        "#bulkRotationState",
+                        HTMLInputElement
+                    ).value
+                )
+            ).toMatchObject({
+                P01: {
+                    observedAt: "",
+                    potSetup: 3,
+                    rotationFromFacing: "",
+                    source: "auto",
+                },
+            });
+
+            changeWorkflowSelect(current.window, "bulkRotationToFacing", "E");
+            queryElement(
+                current.window.document,
+                "#bulkWaterForm",
+                HTMLFormElement
+            ).dispatchEvent(
+                new current.window.Event("submit", {
+                    bubbles: true,
+                    cancelable: true,
+                })
+            );
+
+            expect(lastObservationSave(current.calls)).toMatchObject({
+                rotationByPlant: {
+                    P01: {
+                        rotationDegrees: "",
+                        rotationFromFacing: "",
+                        rotationToFacing: "E",
+                    },
+                },
+            });
+        }
+    );
+
+    it("preserves an explicit bulk starting facing after setup drift", () => {
+        expect.hasAssertions();
+
+        const data = cardinalBootstrap();
+        const { calls, window } = createLoggerWindow({ bootstrapData: data });
+        chooseBulkRotation(window);
+        changeWorkflowSelect(window, "bulkRotationFrom-P01", "S");
+        Object.assign(required(data.plants[0]), {
+            potSetup: 3,
+            rotationFacing: null,
+        });
+        refreshWorkflow(window);
+        changeWorkflowSelect(window, "bulkRotationToFacing", "E");
+        queryElement(
+            window.document,
+            "#bulkWaterForm",
+            HTMLFormElement
+        ).dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
+
+        expect(lastObservationSave(calls)).toMatchObject({
+            rotationByPlant: {
+                P01: {
+                    rotationDegrees: "270",
+                    rotationFromFacing: "S",
+                    rotationToFacing: "E",
+                },
+            },
+        });
+    });
+
+    it("uses independent bulk starting facings and preserves them on a retry", () => {
+        expect.hasAssertions();
+
+        const data = cardinalBootstrap();
+        const { behaviors, calls, window } = createLoggerWindow({
+            bootstrapData: data,
+        });
+        behaviors.saveBulkCareObservation = ({ failure }) => {
+            failure({ message: "Unconfirmed" });
+        };
+        queryElement(
+            window.document,
+            "#bulkModeTab",
+            HTMLButtonElement
+        ).click();
+        queryElement(
+            window.document,
+            '#bulkEventChips [data-event="Water"]',
+            HTMLButtonElement
+        ).click();
+        queryElement(
+            window.document,
+            '#bulkEventChips [data-event="Rotation"]',
+            HTMLButtonElement
+        ).click();
+        for (const input of queryElements(
+            window.document,
+            "#bulkPlantList input[type='checkbox']",
+            HTMLInputElement
+        ).slice(0, 2))
+            input.click();
+        changeWorkflowSelect(window, "bulkRotationToFacing", "W");
+        queryElement(
+            window.document,
+            "#bulkWaterForm",
+            HTMLFormElement
+        ).dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
+        const first = required(
+            calls.find((call) => call.method === "saveBulkCareObservation")
+        ).args[0];
+        Object.assign(required(data.plants[0]), {
+            potSetup: 3,
+            rotationFacing: null,
+        });
+        refreshWorkflow(window);
+        queryElement(
+            window.document,
+            "#bulkWaterForm",
+            HTMLFormElement
+        ).dispatchEvent(
+            new window.Event("submit", { bubbles: true, cancelable: true })
+        );
+
+        expect(first).toMatchObject({
+            rotationByPlant: {
+                P01: {
+                    rotationDegrees: "270",
+                    rotationFromFacing: "N",
+                    rotationToFacing: "W",
+                },
+                P02: {
+                    rotationDegrees: "180",
+                    rotationFromFacing: "E",
+                    rotationToFacing: "W",
+                },
+            },
+        });
+
+        const retried = required(
+            calls.findLast((call) => call.method === "saveBulkCareObservation")
+        ).args[0];
+
+        expect(JSON.stringify(retried)).toBe(JSON.stringify(first));
+    });
+
+    it("shows dated sensor context without copying an old reading into the new payload", () => {
+        expect.hasAssertions();
+
+        const data = cardinalBootstrap();
+        Object.assign(required(data.plants[0]), {
+            latestRelativeHumidity: 68,
+            latestRelativeHumidityAt: "2026-09-04T12:00:00Z",
+        });
+        const { window } = createLoggerWindow({ bootstrapData: data });
+        queryElement(
+            window.document,
+            '#eventChips [data-event="Humidity"]',
+            HTMLButtonElement
+        ).click();
+
+        expect(
+            queryElement(
+                window.document,
+                "#humiditySectionContext",
+                HTMLElement
+            ).textContent
+        ).toContain("68 % RH");
+        expect(
+            queryElement(
+                window.document,
+                "#humiditySectionContext",
+                HTMLElement
+            ).textContent
+        ).toContain("2026");
+        expect(
+            queryElement(window.document, "#relativeHumidity", HTMLInputElement)
+                .value
+        ).toBe("");
+
+        enterWorkflowValue(window, "relativeHumidity", "45");
+
+        expect(queueCurrentEntry(window)).toMatchObject({
+            relativeHumidity: "45",
+        });
+    });
+});
 
 describe("garden logger kept nutrient selections", () => {
     afterEach(restoreLoggerMocks);
@@ -8627,6 +9577,8 @@ describe("garden logger observation entry and preferences", () => {
         expect.hasAssertions();
 
         const { behaviors, calls, window } = createLoggerWindow();
+        changeWorkflowSelect(window, "rotationMode", "degrees");
+        changeWorkflowSelect(window, "bulkRotationMode", "degrees");
         queryElement(
             window.document,
             '#eventChips [data-event="Rotation"]',

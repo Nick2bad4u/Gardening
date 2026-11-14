@@ -1,10 +1,10 @@
 # Google Sheets observation logger
 
-Production logger **5.44.3 / immutable version 136** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.45.0 / immutable version 137** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Production **5.44.3 / immutable version 136** retains portrait revision
+Production **5.45.0 / immutable version 137** retains portrait revision
 **1010123212eade00**, verified on November 13. AppSheet was last verified on
 November 11 at **1.100141** and was not changed in this release. The remaining cactus and
 front-grid portraits are described below. P41's appended optional weight field
@@ -39,9 +39,81 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
-## November 13 watering feedback candidate
+## Cardinal rotation and recorded-action context candidate — 5.46.0
 
-Maintained **5.45.0** adds explicit refresh progress for watering-day reads,
+Maintained **5.46.0** adds persistent cardinal facing for Rotation and dated
+read-only action context in the phone logger. It has **not yet replaced
+production 5.45.0 / immutable version 137**. Its workbook and AppSheet changes
+are prepared contracts, not a claim that production schemas or forms have been
+migrated.
+
+Facing always refers to the **pot label / front**: **N = window, E = wall,
+S = room, W = Mylar**. Known endpoints determine the clockwise-equivalent value
+in existing `History!AN`: N → W stores 270 while the interface displays
+90° counterclockwise. An unknown start with a known destination establishes an
+absolute baseline with blank degrees; an unchanged facing records zero. The
+legacy degree-only path retains its greater-than-zero through 360° validation,
+90° default, historical values, and retry compatibility. No historical row is
+backfilled with a guessed facing.
+
+| Surface      | Appended physical columns                              | Candidate width |
+| ------------ | ------------------------------------------------------ | --------------- |
+| History      | BP `Rotation from facing`; BQ `Rotation to facing`     | A:BQ / 69       |
+| History view | Read-only projection through BQ                        | A:BQ / 69       |
+| App entries  | BH `Rotation from facing`; BI `Rotation to facing`     | A:BI / 61       |
+| App bulk     | BZ `Rotation to facing`; CA `Rotation facing snapshot` | A:CA / 79       |
+
+The [guarded migration builder](./rotation-facing-migration.mjs) appends these
+fields and extends the History view formula, History filter range, and related
+Integrity checks. It preserves existing observation and staging columns, refuses
+occupied destinations or source drift, and omits filter sort specifications so
+the ledger is not reordered. Retain native backup, disposable-copy rehearsal,
+fresh preconditions, and postwrite preservation checks. Do not rerun a broad
+installer to perform this scoped migration.
+
+The facing read model uses the current setup's latest eligible Rotation,
+excluding future, Removed, and superseded records and preserving correction tie
+order. A later degree-only Rotation clears the absolute-facing inference. The
+phone's starting-facing suggestion additionally requires confirmed online data,
+a matching setup, no intervening queued rotation, and a source observation no
+later than the entry time. Backdated entries with only a later cached facing
+remain unknown until the operator supplies an observed starting direction.
+
+Phone bulk payloads freeze per-pot endpoints before saving or queueing. AppSheet
+bulk intake captures each selected pot's eligible starting facing at the round's
+observation time under the script lock, then persists a bridge-owned snapshot
+before writing History. Retries reuse that snapshot and reject changed round
+identity, selection, time, target, or inconsistent details. The snapshot is not a
+user-editable field or an AppSheet formula.
+
+The prepared AppSheet plan adds directional choices and rotation context to
+**Log**, a target facing and per-pot explanation to **Bulk Log**, and the new
+columns to read-only history. New cardinal forms require a destination; existing
+degree-only rows retain their validation/defaults. The bridge ignores stale
+legacy degree defaults when the cardinal fields are populated. AppSheet's
+prepared context withholds a default when multiple eligible rotations share the
+latest timestamp; it does not invent a tie order from the app's synchronized
+snapshot. Native formula compilation, blank-form behavior, offline sync, saved
+definition comparison, and unchanged table permissions remain rollout gates.
+See the [AppSheet candidate notes](../../docs/appsheet-companion.md#cardinal-rotation-candidate--5460).
+
+Other phone action hints reuse the existing bootstrap History snapshot. Height
+and width keep independent dates and provenance in the current setup; Repot also
+uses that setup. Other supported actions retain their dated historical context,
+including an older setup when applicable. Environment metrics keep their own
+timestamps and units. Hints never fill new measurements or manufacture paired
+Leaf VPD data. These are latest-record references at the source read, not a full
+as-of reconstruction for a backdated form. Saved, offline, unconfirmed, and
+refreshing states remain explicit.
+
+Public history and tracker displays retain legacy degree output and render the
+new directions; CSV export appends BP/BQ after the unchanged first 67 headers.
+The production deployment must retain the existing logger URL and singleton
+ten-minute queue trigger. This candidate does not require artwork changes.
+
+## November 13 watering feedback — 5.45.0
+
+Production **5.45.0** adds explicit refresh progress for watering-day reads,
 retains selected nutrient settings for a single-plant round when **Keep selected**
 is checked, and adds numbered water-drop / fertilizer-bottle badges for
 consecutive waterings without / with nutrients. The run counts eligible Water
@@ -50,10 +122,33 @@ flag stops it. The existing bootstrap History snapshot supplies the count,
 without another Sheet read or a workbook schema change. Shared usual doses still
 never opt in on their own. Bulk completion and explicit Clear reset nutrient entry.
 
-This candidate has not yet replaced production **5.44.3 / immutable version 136**.
-The release requires no workbook, AppSheet, artwork, or trigger migration.
+The existing deployment was promoted to **immutable version 137** on November 13
+at **20:57:15 EST** (**November 14, 01:57:15 UTC**). Head and immutable source
+matched [e3ecfcf](https://github.com/Nick2bad4u/Gardening/commit/e3ecfcfbc0965fd845b23ca9ef8ccdbe988c2c62),
+with the same URL, owner-only access, execution identity, manifest, and artwork.
+This release made no workbook, AppSheet, or trigger migration.
 
-The candidate passed **2,175 logger tests**, server coverage gates (**99.58%
+The retained owner-only
+[native backup](https://docs.google.com/spreadsheets/d/1CSA3mKy8VQ2-6Q7SJ4r_APCM4N4PzOumGyJL87qdw4c/edit)
+was freshly compared before deployment. Postdeployment reconciliation preserved
+all **2,361 prior observation IDs**, sampled source cells, staging data,
+**67/59/77-column headers**, previously captured tab properties, and **194 chart
+identities**, with no formula or Integrity failures. Three genuine mobile bulk
+Water entries for P20, P39, and P40 were subsequently recorded at **21:03:48 EST**,
+bringing the observed count to **2,364**. They were real care entries, not
+deployment fixtures. The comparison covers full ID columns and sampled source
+cells; earlier metadata omitted tab colors, so complete color preservation is
+not claimed.
+
+The authenticated logger showed **Connected · Logger 5.45.0**, working refresh
+progress and numbered watering badges, and no horizontal overflow across
+Single/Bulk, **390/1280 px**, and light/dark layouts. The existing ten-minute
+trigger remained a singleton. Its **20:59:13 EST** scheduled execution completed
+in **11.921 seconds** in the native execution list (**10.695 seconds** in the
+instrumented handler), with 5.45.0 diagnostics and successful analytics publication.
+No synthetic observations were submitted to production.
+
+The release passed **2,175 logger tests**, server coverage gates (**99.58%
 statements**, **98.41% branches**, **100% functions**, **99.81% lines**), and
 **17 native Apps Script assertions** using synthetic data and mocked workbook
 services. The native rehearsal confirms the actual changed functions and one
@@ -67,9 +162,17 @@ A fresh production execution audit found **144 scheduled runs totaling
 143.12 minutes**, with **143 completed and one timeout**, in the displayed
 24-hour window from November 12 at 17:39 through November 13 at 17:29 EST.
 This does not establish the required daily trigger-runtime headroom. The
-scheduled handler and cadence are unchanged by this candidate. The existing
-external Codecov upload concern also requires the new commit's hosted result;
-the previous release's exception is not a verification result for this one.
+scheduled handler and cadence were unchanged by this release. The exact
+candidate's [logger workflow](https://github.com/Nick2bad4u/Gardening/actions/runs/43522504830)
+passed tests and coverage thresholds, then failed only its external Codecov
+upload with a repository-deactivated rejection; Codecov commit statuses remained
+missing. Sonar, Socket, secret checks, and
+[website checks and Pages deployment](https://github.com/Nick2bad4u/Gardening/actions/runs/43522504954)
+passed. After both limitations were disclosed, the owner explicitly directed
+this 5.45.0 deployment to proceed. The release did not change workflow policies
+or claim all checks green. That approval does not waive gates for a later
+candidate, and the successful postdeployment execution does not establish daily
+quota headroom.
 
 ## November 13 loading and calculation status layout
 
@@ -4619,7 +4722,10 @@ The AppSheet form contract is:
   positive weight. Measure requires at least height or width and accepts inches
   or centimeters. Water records whether nutrients were used. Repot requires a
   pot size. Photo requires a URL, Pest requires both the issue and action, and
-  Rotation accepts 1–360 degrees with a default of 90. Logger 5.32.0 adds
+  degree-only Rotation accepts 1–360 degrees with a default of 90. The 5.46.0
+  candidate adds cardinal endpoints with a required destination, blank degrees
+  for an unknown start, and zero for a same-facing confirmation; native AppSheet
+  activation is tracked in the candidate section above. Logger 5.32.0 adds
   a required 0–100 relative-humidity reading when Humidity is selected;
   the Decimal field stores percentage points, not a fractional Percent value.
 - Mist requires targets and details for Other; optional measured mL must be
@@ -5005,7 +5111,8 @@ installable trigger is not required.
   appends relative humidity in AQ. The 5.33.0 source appends PPFD and illuminance
   in AR:AS. Source 5.35.0 appends 15 care fields in AT:BH, including canonical
   Celsius, Air/Soil target, and original temperature unit. Source 5.36.0 appends
-  BI:BO for Leaf VPD and writes the A:BO record block in one call so a failed service call cannot
+  BI:BO for Leaf VPD. The 5.46.0 candidate appends BP:BQ for rotation facing and
+  writes the complete A:BQ record block in one call so a failed service call cannot
   strand a request ID apart from its
   observation. Source 5.37.0 provides **50,001 History rows**, including the
   header, and full-ledger formula inputs use that same bound. Apply the

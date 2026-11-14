@@ -32,13 +32,13 @@ function fixture() {
                 {
                     basicFilter: {
                         range: {
-                            endColumnIndex: 67,
+                            endColumnIndex: 69,
                             sheetId: 100,
                             startRowIndex: 0,
                         },
                     },
                     properties: {
-                        gridProperties: { columnCount: 67, rowCount: 50_001 },
+                        gridProperties: { columnCount: 69, rowCount: 50_001 },
                         index: 0,
                         sheetId: 100,
                         title: "History",
@@ -74,7 +74,7 @@ function fixture() {
                 },
                 {
                     properties: {
-                        gridProperties: { columnCount: 59, rowCount: 1000 },
+                        gridProperties: { columnCount: 61, rowCount: 1000 },
                         index: 2,
                         sheetId: 102,
                         title: "App entries",
@@ -82,7 +82,7 @@ function fixture() {
                 },
                 {
                     properties: {
-                        gridProperties: { columnCount: 77, rowCount: 1000 },
+                        gridProperties: { columnCount: 79, rowCount: 1000 },
                         index: 3,
                         sheetId: 103,
                         title: "App bulk",
@@ -102,7 +102,7 @@ function fixture() {
         metadataComplete: true,
         readRanges: [
             {
-                endColumn: 67,
+                endColumn: 69,
                 endRow: 1,
                 sheet: "History",
                 startColumn: 0,
@@ -121,7 +121,7 @@ function maintainedHeaders() {
             ...HISTORY_HEADERS, "Plant / planter", "Trend anchor", "Days after anchor", GARDEN_LOGGER.requestIdHeader,
             ...HISTORY_DETAIL_HEADERS, ...HISTORY_PROVENANCE_HEADERS, ...HISTORY_MEASUREMENT_HEADERS,
             ...HISTORY_ROTATION_HEADERS, ...HISTORY_WATER_HEADERS, ...HISTORY_HUMIDITY_HEADERS,
-            ...HISTORY_LIGHT_HEADERS, ...HISTORY_CARE_HEADERS
+            ...HISTORY_LIGHT_HEADERS, ...HISTORY_CARE_HEADERS, ...HISTORY_ROTATION_FACING_HEADERS
         ])`,
             context
         )

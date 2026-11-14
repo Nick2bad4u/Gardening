@@ -7,6 +7,22 @@ import type {
     WebWeightSeries,
 } from "./logger-workflow-fixtures.js";
 
+export interface ActionContext {
+    details: Record<
+        string,
+        | boolean
+        | number
+        | string
+    >;
+    height?: MeasurementContext;
+    method: string;
+    observationId: string;
+    observedAt: string;
+    potSetup: number;
+    quality: string;
+    width?: MeasurementContext;
+}
+
 export interface AnalyticsReadOptions {
     dateTimeRenderOption: "FORMATTED_STRING" | "SERIAL_NUMBER";
     majorDimension: "ROWS";
@@ -24,6 +40,7 @@ export interface AnalyticsReadResponse {
 }
 
 export interface Bootstrap {
+    actionContextsAvailable?: boolean;
     dayKey?: string;
     dayStartHour?: number;
     events: string[];
@@ -68,6 +85,14 @@ export interface LoggerOptions {
     saveStatus?: string;
     storage?: Record<string, string>;
     storageUnavailable?: boolean;
+}
+
+export interface MeasurementContext {
+    entryUnit: string;
+    method: string;
+    observedAt: string;
+    quality: string;
+    valueCm: number;
 }
 
 export interface NutrientPreferences {
@@ -121,7 +146,10 @@ export interface ObservationPayload {
     propagationMethod?: string;
     relativeHumidity?: number | string;
     requestId: string;
+    rotationByPlant?: Record<string, RotationEndpoints>;
     rotationDegrees?: string;
+    rotationFromFacing?: string;
+    rotationToFacing?: string;
     supportAction?: string;
     supportDetails?: string;
     temperature?: number | string;
@@ -134,6 +162,7 @@ export interface ObservationPayload {
 }
 
 export interface PlantSummary {
+    actionContexts?: Record<string, ActionContext>;
     activitySummary?: {
         averageDryDownGramsPerDay: "" | number;
         averageWaterIntervalDays: "" | number;
@@ -184,6 +213,7 @@ export interface PlantSummary {
     nurseryLabelImageUrl?: string;
     potSetup: number;
     recommendedWaterDate?: string;
+    rotationFacing?: RotationFacing;
     scientificName: string;
     wateringGuidance?: string;
     weightSeries?: WebWeightSeries;
@@ -195,6 +225,19 @@ export interface QueuedObservation {
     error?: string;
     payload: Omit<ObservationPayload, "requestId">;
     requestId: string;
+}
+
+export interface RotationEndpoints {
+    rotationDegrees?: number | string;
+    rotationFromFacing?: string;
+    rotationToFacing: string;
+}
+
+export interface RotationFacing {
+    facing: string;
+    observationId: string;
+    observedAt: string;
+    potSetup: number;
 }
 
 export interface ScriptArguments {

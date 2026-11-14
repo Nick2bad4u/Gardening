@@ -43,6 +43,11 @@
   zero versus absent readings. Never borrow earlier sensor values as paired data.
   Leaf VPD replaces Support only in new choices; retain historical Support,
   corrections, and retry visibility. Leaf measurements do not change care cycles.
+- BP:BQ appends Rotation from/to facing for the same pot label/front: N window,
+  E wall, S room, W Mylar. Keep AN clockwise-equivalent storage; show N→W as
+  90° counterclockwise, unknown starts as blank-angle baselines, and equal facings
+  as zero confirmations. Preserve degree-only history and append CSV fields after
+  the original 67 columns. A dated last rotation is not a current-facing claim.
 - Share parsing and calculations through `plant-tracker-data.js` and
   `plant-charts.js`. Keep removed/superseded records, missing values, setup
   boundaries, actual timestamps, and incomplete watering cycles consistent
