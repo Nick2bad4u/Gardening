@@ -1,11 +1,11 @@
 # Google Sheets observation logger
 
-Production logger **5.47.0 / immutable version 140** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.47.1 / immutable version 141** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Production **5.47.0 / immutable version 140** retains portrait revision
-**1010123212eade00**. The November 14 interface and compact-badge updates and November 13
+Production **5.47.1 / immutable version 141** retains portrait revision
+**1010123212eade00**. The November 14 compass, interface, and compact-badge updates and November 13
 cardinal-rotation rollout are recorded below;
 AppSheet **1.100144** is saved and verified through native client checks. The remaining cactus and
 front-grid portraits are described below. P41's appended optional weight field
@@ -39,6 +39,71 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## SVG rotation compasses — 5.47.1
+
+Production **5.47.1 / immutable version 141** replaces the malformed compass
+indicator with an SVG dial and a clear directional arrow for starting and new
+facing. Window, wall, room, and Mylar choices have matching SVG icons; unknown
+or cleared facing shows a question mark without an inferred direction. Single
+and bulk Rotation retain their cardinal fields, turn calculations, keyboard
+controls, drafts, and retry payloads. The patch changes client presentation and
+the version marker; server behavior, workbook schemas, AppSheet **1.100144**,
+generated plant artwork, and the ten-minute queue schedule remain unchanged.
+
+The existing deployment was promoted on November 14 at
+**17:13:35 EST / 22:13:35 UTC**, preserving its URL, owner-only access, and
+execution identity. Fresh Head and immutable-source reads matched
+[5686ec1](https://github.com/Nick2bad4u/Gardening/commit/5686ec103e902eaba71699279a32d2556860439d).
+The update response reported version **141** before an immediate read still
+returned **140**; a fresh read verified **141**, without repeating the update.
+Final source verification passed at **22:16:08 UTC**.
+
+Authenticated production reported **Connected · Logger 5.47.1** at
+**390/1280 px in both themes**. Each case passed **22 checks** covering all four
+directions, unknown and cleared facing, single/bulk controls, and keyboard
+navigation. Screenshots confirmed the SVG arrows and icons; no application or
+console errors were observed. Existing browser storage and pending state were
+preserved, and verification submitted no production observations.
+
+Postdeployment captures from **22:14:14–22:14:44 UTC**, verified at
+**22:15:07 UTC**, preserved **2,364 unique observation IDs**, **1,908 request
+groups**, **38 Saved** App entries, and no App bulk rows. Exact **69/69/61/79-column**
+headers, **757 formulas**, **46 validation rules**, and **4,597 entered cells**
+were unchanged. The comparison covered full-capacity identity, request, and
+state columns plus the last 31 History rows and populated staging; older
+nonidentity values outside that recent range were not compared. Projected IDs
+matched History, formula and Integrity errors were zero, and analytics were
+**Ready**.
+
+The **22:19:13 UTC** scheduled execution reported logger **5.47.1** and completed
+in **12.751 seconds** (**10.805 seconds** inside the handler), with zero queued,
+processed, or saved entries or bulk rounds. It published fresh **Ready** analytics
+(**46,859 bytes**, refresh not skipped). The native trigger table at
+**22:20:34 UTC** reconfirmed the singleton Head trigger and its latest run;
+the unchanged ten-minute interval had been directly verified at **22:11:31 UTC**.
+
+The exact candidate passed **2,329 logger tests**, **nine checker tests**, and
+coverage gates (**99.56% statements**, **98.16% branches**, **100% functions**,
+**99.80% lines**). Local validation passed **182 logger browser cases** and
+four final SVG-artwork cases. The
+[Pages workflow](https://github.com/Nick2bad4u/Gardening/actions/runs/43644948175)
+passed **378 browser cases** and **60 Storybook tests**, then deployed the site
+at **22:10:01 UTC**. Sonar, Socket, and hosted secret checks passed; the full
+**1,467-file** shipping scan found no secrets. The sole
+[logger workflow failure](https://github.com/Nick2bad4u/Gardening/actions/runs/43644948166)
+was the current Codecov upload's repository-deactivated rejection, after tests,
+coverage, and the coverage-artifact upload passed.
+
+Daily trigger-runtime headroom remains unproved. A new native 24-hour window
+ending at **21:54:09 UTC** contained **144 runs totaling 5,762.164 seconds**:
+143 completed, zero timeouts, and the known **37.51-second** earlier schema-transition
+failure. That failure was matched by exact start and duration to its preserved
+native diagnostic; its log was not expanded again during this capture. These
+are project execution durations, not account quota measurements. This focused
+UI correction proceeded under the current change request and standing owner
+authorization with the same disclosed Codecov and quota limitations; neither
+all-green CI nor verified quota headroom is claimed.
 
 ## Compact logger interface — 5.47.0
 
