@@ -1,11 +1,12 @@
 # Google Sheets observation logger
 
-Production logger **5.46.0 / immutable version 138** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.46.1 / immutable version 139** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Production **5.46.0 / immutable version 138** retains portrait revision
-**1010123212eade00**. The November 13 cardinal-rotation rollout is recorded below;
+Production **5.46.1 / immutable version 139** retains portrait revision
+**1010123212eade00**. The November 14 compact-badge patch and November 13
+cardinal-rotation rollout are recorded below;
 AppSheet **1.100144** is saved and verified through native client checks. The remaining cactus and
 front-grid portraits are described below. P41's appended optional weight field
 remains unchanged; the earlier dated receipts retain their verified versions.
@@ -41,14 +42,51 @@ under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-
 
 ## Compact watering feedback — 5.46.1
 
-Source **5.46.1** shows a water-drop or fertilizer-bottle icon for a single
-watering and adds an inline count only for streaks of **two or more**. The full
-streak description remains in the accessible label and hover text. Label and
-Table pickers use a compact animated ring while watering days refresh; List
-views retain the explanatory text beside it. Reduced-motion settings stop the
-animation, and success, failure, offline, and timeout states clear the indicator.
-This presentation patch preserves the existing streak calculations, observation
-payloads, workbook schema, and AppSheet configuration.
+Production **5.46.1 / immutable version 139** shows a water-drop or
+fertilizer-bottle icon alone for a one-watering streak; counts of two or more sit
+beside the icon and retain contrast on selected tiles. A small ring replaces
+`Wait…` in Label and Table picker tiles while watering ages refresh; List views
+retain explanatory text. Accessible streak/refresh labels and hover text remain
+available. Reduced-motion preferences stop the animation; success, failure,
+offline, and timeout states clear it. The patch changes presentation and the version marker, preserving
+watering calculations, observation payloads, workbook schemas, AppSheet
+**1.100144**, and the ten-minute queue contract.
+
+The existing deployment was promoted at **01:33:30 EST / 06:33:30 UTC** on
+November 14, retaining its URL, owner-only access, execution identity, manifest,
+and artwork. Fresh Head and immutable-source reads matched
+[11f7291](https://github.com/Nick2bad4u/Gardening/commit/11f7291cadd1800f3e6218bac68fb69517581665).
+The live logger reported **Connected · Logger 5.46.1** at **1518 px in dark
+theme** and **390 px in both themes**; local browser tests covered **1280/390 px
+in both themes**. Single-icon streaks, actual counts **2/3/4**, and refresh
+rings appearing then clearing on success passed inspection, with no horizontal
+overflow or console warnings/errors. The existing unsent draft was preserved;
+no production observations were submitted.
+
+Postdeployment reconciliation preserved **2,364 unique observation IDs**,
+**1,908 request groups**, **38 Saved** App entries, and no App bulk rows. Exact
+headers, **757 captured formulas**, **46 captured validation rules**, and
+**4,597 cells covering the last 31 History rows and populated staging** were
+unchanged. Full-capacity identity/status/request columns and projected IDs were
+checked; older nonidentity values outside that recent range were not compared.
+Formula and Integrity errors were zero, and analytics were **Ready**. The
+existing singleton Head queue trigger remained configured every ten minutes.
+Its **06:39:13 UTC** scheduled run reported logger **5.46.1** and completed in
+**18.565 seconds** (**14.079 seconds** inside the instrumented handler), with
+zero queued/processed/saved entries and a fresh **Ready** analytics publication
+(**46,859 bytes**, refresh not skipped). The singleton was rechecked at
+**06:40:34 UTC**.
+
+The exact source passed **2,326 logger tests**, **nine checker tests**, and
+coverage gates (**99.56% statements**, **98.16% branches**, **100% functions**,
+**99.80% lines**). The
+[Pages workflow](https://github.com/Nick2bad4u/Gardening/actions/runs/43564732691)
+deployed that commit. Other hosted checks passed except the
+[logger workflow's Codecov upload](https://github.com/Nick2bad4u/Gardening/actions/runs/43564732649),
+which failed because the repository was deactivated. Daily trigger-runtime
+headroom remains unproved. This bounded UI follow-up proceeded under the
+continuing owner authorization with those disclosed limitations; it does not
+claim all checks green or extend the earlier release receipt to future work.
 
 ## Cardinal rotation and recorded-action context — 5.46.0
 
