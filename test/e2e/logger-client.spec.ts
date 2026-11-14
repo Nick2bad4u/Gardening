@@ -4,6 +4,13 @@ import { readFile } from "node:fs/promises";
 // eslint-disable-next-line import-x/extensions -- Shared ESM fixture is also served by the local preview.
 import { loggerBrowserFixture } from "../helpers/logger-browser-fixture.mjs";
 
+const compassNewFacingName = "New facing";
+const compassNorthName = "North · window";
+const compassEastName = "East · wall";
+const compassSouthName = "South · room";
+const compassWestName = "West · Mylar";
+const compassUnknownName = "Unknown / not recorded";
+const compassClearName = "Clear new facing";
 const pressedAttribute = "aria-pressed";
 const bulkCareTab = "Bulk care";
 const selectedPlantRegionName = "Selected plant";
@@ -459,22 +466,25 @@ const expectCompassKeyboard = async (page: Readonly<Page>) => {
         exact: true,
         name: "Starting facing",
     });
-    const target = page.getByRole("group", { exact: true, name: "New facing" });
+    const target = page.getByRole("group", {
+        exact: true,
+        name: compassNewFacingName,
+    });
     await expect
         .soft(
-            origin.getByRole("button", { exact: true, name: "North · window" })
+            origin.getByRole("button", { exact: true, name: compassNorthName })
         )
         .toHaveAttribute(pressedAttribute, "true");
     const west = target.getByRole("button", {
         exact: true,
-        name: "West · Mylar",
+        name: compassWestName,
     });
     await west.click();
     await expect.soft(west).toHaveAttribute(pressedAttribute, "true");
     await west.press("ArrowRight");
     const east = target.getByRole("button", {
         exact: true,
-        name: "East · wall",
+        name: compassEastName,
     });
     await expect.soft(east).toBeFocused();
     await expect.soft(east).toHaveAttribute(pressedAttribute, "true");
@@ -489,7 +499,7 @@ const expectCompassDraft = async (page: Readonly<Page>) => {
         name: "Starting facing",
     });
     await origin
-        .getByRole("button", { exact: true, name: "Unknown / not recorded" })
+        .getByRole("button", { exact: true, name: compassUnknownName })
         .click();
     const notes = page.getByRole("textbox", { exact: true, name: "Notes" });
     await notes.fill("Unfinished compass entry");
@@ -501,17 +511,25 @@ const expectCompassDraft = async (page: Readonly<Page>) => {
         rotationFromFacing: "",
         rotationToFacing: "W",
     });
-    const target = page.getByRole("group", { exact: true, name: "New facing" });
+    const target = page.getByRole("group", {
+        exact: true,
+        name: compassNewFacingName,
+    });
     await expect
-        .soft(target.getByRole("button", { exact: true, name: "West · Mylar" }))
+        .soft(
+            target.getByRole("button", { exact: true, name: compassWestName })
+        )
         .toHaveAttribute(pressedAttribute, "true");
     await expect.soft(notes).toHaveValue("Unfinished compass entry");
 };
 
 const expectCompassValidation = async (page: Readonly<Page>) => {
-    const target = page.getByRole("group", { exact: true, name: "New facing" });
+    const target = page.getByRole("group", {
+        exact: true,
+        name: compassNewFacingName,
+    });
     await target
-        .getByRole("button", { exact: true, name: "Clear new facing" })
+        .getByRole("button", { exact: true, name: compassClearName })
         .click();
     await expectCompassModels(page, { rotationToFacing: "" });
     await page
@@ -519,12 +537,12 @@ const expectCompassValidation = async (page: Readonly<Page>) => {
         .click();
     const north = target.getByRole("button", {
         exact: true,
-        name: "North · window",
+        name: compassNorthName,
     });
     await expect.soft(north).toBeFocused();
     await expect.soft(north).toHaveAttribute("aria-invalid", "true");
     await target
-        .getByRole("button", { exact: true, name: "West · Mylar" })
+        .getByRole("button", { exact: true, name: compassWestName })
         .click();
     await expect.soft(north).not.toHaveAttribute("aria-invalid", "true");
 };
@@ -546,10 +564,10 @@ const expectBulkCompass = async (page: Readonly<Page>) => {
         name: "New facing for selected plants",
     });
     await origin
-        .getByRole("button", { exact: true, name: "South · room" })
+        .getByRole("button", { exact: true, name: compassSouthName })
         .click();
     await target
-        .getByRole("button", { exact: true, name: "East · wall" })
+        .getByRole("button", { exact: true, name: compassEastName })
         .click();
     await expectCompassModels(page, {
         "bulkRotationFrom-P01": "S",
@@ -562,9 +580,274 @@ const expectBulkCompass = async (page: Readonly<Page>) => {
         bulkRotationToFacing: "E",
     });
     await expect
-        .soft(target.getByRole("button", { exact: true, name: "East · wall" }))
+        .soft(
+            target.getByRole("button", { exact: true, name: compassEastName })
+        )
         .toHaveAttribute(pressedAttribute, "true");
 };
+
+const expectCompassArtwork = async (
+    compass: Readonly<Locator>,
+    expectedX: number,
+    expectedY: number
+) => {
+    const drawing = await compass.evaluate((element) => {
+        const pot = element.querySelector(":scope .rotation-compass-pot");
+        const dial = element.querySelector<SVGSVGElement>(
+            ":scope .rotation-compass-dial"
+        );
+        const arrow = element.querySelector<SVGGraphicsElement>(
+            ":scope .rotation-compass-arrow"
+        );
+        if (!pot || !dial || !arrow)
+            throw new Error("Missing SVG compass dial or directional arrow");
+        const matrix = arrow.getScreenCTM();
+        if (!matrix) throw new Error("Compass arrow has no rendered transform");
+        const paths = [...arrow.querySelectorAll("path")];
+        const arrowhead = paths.find(
+            (path) => getComputedStyle(path).fill !== "none"
+        );
+        if (!arrowhead)
+            throw new Error("Compass arrow has no filled arrowhead");
+        const arrowheadBounds = arrowhead.getBBox();
+        const originPoint = new DOMPoint(50, 50);
+        const tipPoint = new DOMPoint(
+            arrowheadBounds.x + arrowheadBounds.width / 2,
+            arrowheadBounds.y
+        );
+        const origin = originPoint.matrixTransform(matrix);
+        const tip = tipPoint.matrixTransform(matrix);
+        const magnitude = Math.hypot(tip.x - origin.x, tip.y - origin.y);
+        const bounds = element.getBoundingClientRect();
+        const isWithinCompass = (inner: Readonly<DOMRect>) =>
+            inner.left >= bounds.left &&
+            inner.right <= bounds.right &&
+            inner.top >= bounds.top &&
+            inner.bottom <= bounds.bottom;
+        const dialBounds = dial.getBoundingClientRect();
+        const arrowBounds = arrow.getBoundingClientRect();
+        const controls = [
+            ...element.querySelectorAll<HTMLButtonElement>(
+                ":scope button[data-facing]"
+            ),
+        ];
+        const directional = controls.filter(
+            (button) => button.dataset["facing"] !== ""
+        );
+        const buttonHeights = directional.map(
+            (button) => button.getBoundingClientRect().height
+        );
+        const icons = directional.map((button) => button.querySelector("svg"));
+        const arrowStyle = getComputedStyle(arrow);
+        return {
+            arrowCentered:
+                Math.abs(origin.x - dialBounds.left - dialBounds.width / 2) <
+                    1 &&
+                Math.abs(origin.y - dialBounds.top - dialBounds.height / 2) < 1,
+            arrowFits:
+                arrowBounds.left >= dialBounds.left &&
+                arrowBounds.right <= dialBounds.right &&
+                arrowBounds.top >= dialBounds.top &&
+                arrowBounds.bottom <= dialBounds.bottom,
+            arrowVisible:
+                arrowStyle.display !== "none" &&
+                arrowStyle.visibility !== "hidden" &&
+                Number(arrowStyle.opacity) > 0,
+            buttonHeightsAligned:
+                Math.max(...buttonHeights) - Math.min(...buttonHeights) <= 1,
+            dialFits:
+                dialBounds.width > 0 &&
+                dialBounds.height > 0 &&
+                isWithinCompass(dialBounds),
+            dialOverlapsButton: controls.some((button) => {
+                const control = button.getBoundingClientRect();
+                return (
+                    Math.min(dialBounds.right, control.right) -
+                        Math.max(dialBounds.left, control.left) >
+                        1 &&
+                    Math.min(dialBounds.bottom, control.bottom) -
+                        Math.max(dialBounds.top, control.top) >
+                        1
+                );
+            }),
+            direction: {
+                x: Math.round((tip.x - origin.x) / magnitude) || 0,
+                y: Math.round((tip.y - origin.y) / magnitude) || 0,
+            },
+            hasArrowGeometry:
+                paths.length === 2 &&
+                paths.every((path) => path.getTotalLength() > 20) &&
+                arrowheadBounds.width > 0 &&
+                arrowheadBounds.height > 0,
+            iconsFit:
+                icons.length === 4 &&
+                icons.every((icon, index) => {
+                    const control = directional[index]?.getBoundingClientRect();
+                    const iconBounds = icon?.getBoundingClientRect();
+                    return (
+                        control !== undefined &&
+                        iconBounds !== undefined &&
+                        iconBounds.width > 0 &&
+                        iconBounds.height > 0 &&
+                        iconBounds.left >= control.left &&
+                        iconBounds.right <= control.right &&
+                        iconBounds.top >= control.top &&
+                        iconBounds.bottom <= control.bottom
+                    );
+                }),
+            pseudoContent: getComputedStyle(pot, "::before").content,
+        };
+    });
+    expect.soft(drawing).toStrictEqual({
+        arrowCentered: true,
+        arrowFits: true,
+        arrowVisible: true,
+        buttonHeightsAligned: true,
+        dialFits: true,
+        dialOverlapsButton: false,
+        direction: { x: expectedX, y: expectedY },
+        hasArrowGeometry: true,
+        iconsFit: true,
+        pseudoContent: "none",
+    });
+};
+
+const expectEmptyCompassArtwork = async (
+    compass: Readonly<Locator>,
+    label: string
+) => {
+    await compass.getByRole("button", { exact: true, name: label }).click();
+    expect
+        .soft(
+            await compass.evaluate((element) => {
+                const arrow = element.querySelector<SVGGraphicsElement>(
+                    ":scope .rotation-compass-arrow"
+                );
+                const unknown = element.querySelector<SVGGraphicsElement>(
+                    ":scope .rotation-compass-unknown"
+                );
+                if (!arrow || !unknown)
+                    throw new Error(
+                        "Missing SVG compass arrow or unknown marker"
+                    );
+                const style = getComputedStyle(arrow);
+                const unknownStyle = getComputedStyle(unknown);
+                return {
+                    arrowHidden:
+                        style.display === "none" ||
+                        style.visibility === "hidden" ||
+                        Number(style.opacity) === 0,
+                    unknownVisible:
+                        unknownStyle.display !== "none" &&
+                        unknownStyle.visibility !== "hidden" &&
+                        Number(unknownStyle.opacity) > 0,
+                };
+            })
+        )
+        .toStrictEqual({ arrowHidden: true, unknownVisible: true });
+};
+
+const expectCompassDirection = async (
+    compass: Readonly<Locator>,
+    name: string,
+    x: number,
+    y: number
+) => {
+    const button = compass.getByRole("button", { exact: true, name });
+    await button.click();
+    await expect.soft(button).toHaveAttribute(pressedAttribute, "true");
+    await expectCompassArtwork(compass, x, y);
+};
+
+const exerciseCompassArtwork = async (
+    compass: Readonly<Locator>,
+    emptyLabel: string
+) => {
+    await expectCompassDirection(compass, compassNorthName, 0, -1);
+    await expectCompassDirection(compass, compassEastName, 1, 0);
+    await expectCompassDirection(compass, compassSouthName, 0, 1);
+    await expectCompassDirection(compass, compassWestName, -1, 0);
+    await expectEmptyCompassArtwork(compass, emptyLabel);
+};
+
+test.describe("compass SVG artwork", () => {
+    for (const theme of ["dark", "light"] as const) {
+        for (const width of [390, 1280]) {
+            test(
+                `SVG compass artwork ${width}px ${theme} points to all four directions without overlap`,
+                { tag: "@logger" },
+                async ({ page }, testInfo) => {
+                    await openLogger(
+                        page,
+                        width,
+                        theme,
+                        cardinalLoggerFixture()
+                    );
+                    await page
+                        .getByRole("button", { exact: true, name: "Rotation" })
+                        .click();
+                    const origin = page.getByRole("group", {
+                        exact: true,
+                        name: "Starting facing",
+                    });
+                    const target = page.getByRole("group", {
+                        exact: true,
+                        name: compassNewFacingName,
+                    });
+                    await exerciseCompassArtwork(origin, compassUnknownName);
+                    await exerciseCompassArtwork(target, compassClearName);
+                    await target
+                        .getByRole("button", {
+                            exact: true,
+                            name: compassNorthName,
+                        })
+                        .click();
+                    await target.screenshot({
+                        path: testInfo.outputPath("svg-compass-north.png"),
+                    });
+                    await page
+                        .getByRole("tab", { exact: true, name: bulkCareTab })
+                        .click();
+                    await page
+                        .getByRole("button", { exact: true, name: "Water" })
+                        .click();
+                    await page
+                        .getByRole("button", { exact: true, name: "Rotation" })
+                        .click();
+                    await page
+                        .getByRole("group", {
+                            name: "Choose plants for bulk care",
+                        })
+                        .getByRole("checkbox", { name: /P01/v })
+                        .check();
+                    await exerciseCompassArtwork(
+                        page.getByRole("group", {
+                            exact: true,
+                            name: "New facing for selected plants",
+                        }),
+                        compassClearName
+                    );
+                    await exerciseCompassArtwork(
+                        page.getByRole("group", {
+                            exact: true,
+                            name: "A1 · Collection plant 1 — starting facing",
+                        }),
+                        compassUnknownName
+                    );
+                    expect
+                        .soft(
+                            await page.evaluate(
+                                () =>
+                                    document.documentElement.scrollWidth <=
+                                    innerWidth
+                            )
+                        )
+                        .toBe(true);
+                }
+            );
+        }
+    }
+});
 
 for (const theme of ["dark", "light"] as const) {
     for (const width of [390, 1280]) {
@@ -606,7 +889,10 @@ for (const theme of ["dark", "light"] as const) {
                     await expectCompassDraft(page);
                     await expectCompassValidation(page);
                     await page
-                        .getByRole("group", { exact: true, name: "New facing" })
+                        .getByRole("group", {
+                            exact: true,
+                            name: compassNewFacingName,
+                        })
                         .screenshot({
                             path: testInfo.outputPath("rotation-compass.png"),
                         });

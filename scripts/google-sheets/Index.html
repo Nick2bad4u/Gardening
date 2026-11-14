@@ -2324,26 +2324,33 @@
                     3,
                     [direction-start] minmax(0, 1fr) [direction-end]
                 );
-                gap: 6px;
+                gap: 8px;
                 inline-size: 100%;
                 max-inline-size: 340px;
                 padding-block: 8px;
                 margin-inline: auto;
 
                 & button {
+                    display: grid;
+                    gap: 3px;
+                    align-content: center;
+                    align-self: center;
+                    justify-items: center;
                     min-inline-size: 0;
-                    min-block-size: 52px;
-                    padding: 8px 4px;
+                    min-block-size: 76px;
+                    padding: 9px 4px;
+                    font-weight: 700;
+                    line-height: 1.25;
                     color: var(--ink);
                     background: var(--control);
-                    border: 1px solid var(--line);
+                    border: 2px solid var(--line);
                     border-radius: 12px;
 
                     &[aria-pressed="true"] {
                         font-weight: 800;
                         color: var(--forest);
                         background: var(--leaf-soft);
-                        border: 2px solid var(--forest-2);
+                        border-color: var(--forest-2);
                     }
 
                     &[data-facing="N"] {
@@ -2364,39 +2371,54 @@
 
                     &[data-facing=""] {
                         grid-column: 1 / -1;
+                        min-block-size: 44px;
+                        margin-block-start: 4px;
                     }
 
                     & span {
                         display: block;
                         font-size: 0.75rem;
+                        font-weight: 400;
                     }
                 }
             }
 
+            .rotation-direction-icon {
+                inline-size: 22px;
+                block-size: 22px;
+            }
+
             .rotation-compass-pot {
-                position: relative;
                 display: grid;
                 grid-area: 2 / 2;
+                gap: 5px;
                 align-content: center;
-                min-block-size: 76px;
-                padding: 12px 4px;
+                justify-items: center;
+                min-inline-size: 0;
+                color: var(--forest-2);
+                text-align: center;
+
+                [data-position="start"] & {
+                    color: var(--info-ink);
+                }
+            }
+
+            .rotation-compass-dial {
+                display: block;
+                inline-size: 100%;
+                max-inline-size: 84px;
+                block-size: auto;
+                aspect-ratio: 1;
+            }
+
+            .rotation-compass-caption {
                 font-size: 0.75rem;
                 line-height: 1.375;
-                text-align: center;
-                border: 2px solid var(--line);
-                border-radius: 50%;
+                color: var(--muted);
 
-                &::before {
-                    position: absolute;
-                    inset: -7px;
-                    content: "";
-                    border-block-start: 6px solid var(--forest-2);
-                    border-radius: 50%;
-                    transform: rotate(var(--facing-angle, 0deg));
-                }
-
-                &[data-facing=""]::before {
-                    display: none;
+                & strong {
+                    display: block;
+                    color: var(--ink);
                 }
             }
 
@@ -24092,15 +24114,108 @@
                 select.dispatchEvent(new Event("change", { bubbles: true }));
             }
 
+            function createRotationDirectionIcon(facing) {
+                const paths = {
+                    N: "M4 3h16v18H4z M4 10h16 M12 3v18",
+                    E: "M3 4h18v16H3z M3 9h18 M3 15h18 M9 4v5 M15 9v6 M9 15v5",
+                    S: "M3 21V4l11-2v19 M14 7h7v14H3 M10 12h.01",
+                    W: "M5 3h14v18H5z M8 16l8-8 M8 10l3-3 M13 17l3-3",
+                };
+                const svg = chartElement("svg", {
+                    class: "rotation-direction-icon",
+                    viewBox: "0 0 24 24",
+                    "aria-hidden": "true",
+                    focusable: "false",
+                    fill: "none",
+                    stroke: "currentColor",
+                    "stroke-width": 1.6,
+                    "stroke-linecap": "round",
+                    "stroke-linejoin": "round",
+                });
+                svg.append(chartElement("path", { d: paths[facing] }));
+                return svg;
+            }
+
+            function createRotationCompassDial() {
+                const svg = chartElement("svg", {
+                    class: "rotation-compass-dial",
+                    viewBox: "0 0 100 100",
+                    width: 100,
+                    height: 100,
+                    "aria-hidden": "true",
+                    focusable: "false",
+                });
+                const arrow = chartElement("g", {
+                    class: "rotation-compass-arrow",
+                    transform: "rotate(0 50 50)",
+                });
+                arrow.append(
+                    chartElement("path", {
+                        d: "M50 59V25",
+                        fill: "none",
+                        stroke: "currentColor",
+                        "stroke-width": 6,
+                        "stroke-linecap": "round",
+                    }),
+                    chartElement("path", {
+                        d: "M50 13 62 31H38Z",
+                        fill: "currentColor",
+                    }),
+                    chartElement("circle", {
+                        cx: 50,
+                        cy: 50,
+                        r: 9,
+                        fill: "var(--control)",
+                        stroke: "currentColor",
+                        "stroke-width": 3,
+                    })
+                );
+                svg.append(
+                    chartElement("circle", {
+                        cx: 50,
+                        cy: 50,
+                        r: 46,
+                        fill: "var(--control)",
+                        stroke: "var(--line)",
+                        "stroke-width": 2,
+                    }),
+                    chartElement("path", {
+                        d: "M50 7v5 M88 50h5 M50 88v5 M7 50h5",
+                        fill: "none",
+                        stroke: "var(--line)",
+                        "stroke-width": 2,
+                        "stroke-linecap": "round",
+                    }),
+                    arrow,
+                    chartElement("path", {
+                        class: "rotation-compass-unknown",
+                        d: "M41 40a9 9 0 1 1 15 7c-4 3-6 4-6 9 M50 66h.01",
+                        fill: "none",
+                        stroke: "var(--muted)",
+                        "stroke-width": 4,
+                        "stroke-linecap": "round",
+                    })
+                );
+                return svg;
+            }
+
             function createRotationCompass(select, label, starting) {
                 const compass = document.createElement("div");
                 compass.id = `${select.id}Compass`;
                 compass.className = "rotation-compass";
+                compass.dataset.position = starting ? "start" : "new";
                 compass.setAttribute("role", "group");
                 label.id ||= `${select.id}Label`;
                 compass.setAttribute("aria-labelledby", label.id);
                 const pot = document.createElement("span");
                 pot.className = "rotation-compass-pot";
+                const caption = document.createElement("span");
+                caption.className = "rotation-compass-caption";
+                caption.append(
+                    "Pot label / front ",
+                    document.createElement("strong")
+                );
+                pot.append(createRotationCompassDial(), caption);
                 compass.append(pot);
                 [...Object.entries(FACING_LABELS), ["", ""]].forEach(
                     ([facing, name]) => {
@@ -24111,7 +24226,10 @@
                         button.dataset.rotationModel = select.id;
                         if (facing) {
                             button.setAttribute("aria-label", name);
-                            button.append(facing);
+                            button.append(
+                                createRotationDirectionIcon(facing),
+                                facing
+                            );
                             const destination = document.createElement("span");
                             destination.textContent = name.split(" · ")[1];
                             button.append(destination);
@@ -24164,11 +24282,20 @@
                 });
                 const pot = compass.querySelector(".rotation-compass-pot");
                 pot.dataset.facing = select.value;
-                pot.style.setProperty(
-                    "--facing-angle",
-                    `${Math.max(0, Object.keys(FACING_LABELS).indexOf(select.value)) * 90}deg`
+                const arrow = pot.querySelector(".rotation-compass-arrow");
+                arrow.setAttribute(
+                    "transform",
+                    `rotate(${Math.max(0, Object.keys(FACING_LABELS).indexOf(select.value)) * 90} 50 50)`
                 );
-                pot.textContent = `Pot label / front · ${starting ? "Start" : "New"}: ${select.value || (starting ? "unknown" : "not chosen")}`;
+                arrow.toggleAttribute("hidden", !select.value);
+                pot.querySelector(".rotation-compass-unknown").toggleAttribute(
+                    "hidden",
+                    Boolean(select.value)
+                );
+                pot.querySelector(
+                    ".rotation-compass-caption strong"
+                ).textContent =
+                    `${starting ? "Start" : "New"}: ${select.value || (starting ? "unknown" : "not chosen")}`;
             }
 
             function hasQueuedFacingChange(
