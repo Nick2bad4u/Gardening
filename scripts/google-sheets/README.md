@@ -39,6 +39,17 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## Compact watering feedback — 5.46.1
+
+Source **5.46.1** shows a water-drop or fertilizer-bottle icon for a single
+watering and adds an inline count only for streaks of **two or more**. The full
+streak description remains in the accessible label and hover text. Label and
+Table pickers use a compact animated ring while watering days refresh; List
+views retain the explanatory text beside it. Reduced-motion settings stop the
+animation, and success, failure, offline, and timeout states clear the indicator.
+This presentation patch preserves the existing streak calculations, observation
+payloads, workbook schema, and AppSheet configuration.
+
 ## Cardinal rotation and recorded-action context — 5.46.0
 
 Production **5.46.0 / immutable version 138** adds persistent cardinal facing for

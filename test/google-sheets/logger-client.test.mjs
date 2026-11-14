@@ -5559,9 +5559,7 @@ describe("garden logger watering nutrient streak badges", () => {
             expect(plain.querySelector("use")?.getAttribute("href")).toBe(
                 "#app-icon-water"
             );
-            expect(
-                plain.querySelector(".watering-streak-count")?.textContent
-            ).toBe("1");
+            expect(plain.querySelector(".watering-streak-count")).toBeNull();
         }
         for (let count = 0; count < 4; count += 1)
             click(window, "#daysSinceWatered");
@@ -5606,6 +5604,58 @@ describe("garden logger watering nutrient streak badges", () => {
         }
     });
 
+    it.each(["Yes", "No"])(
+        "hides a single %s nutrient count after a refreshed streak",
+        (nutrients) => {
+            expect.hasAssertions();
+
+            const data = fertilizedBootstrap();
+            const { behaviors, window } = createLoggerWindow({
+                bootstrapData: data,
+            });
+            const updated = {
+                ...data,
+                plants: data.plants.map((plant) => ({
+                    ...plant,
+                    lastWateredNutrientStreakCount: 1,
+                    lastWateredNutrientsUsed: nutrients,
+                })),
+            };
+            behaviors.getWebAppBootstrap = (handlers) => {
+                handlers.success(updated);
+            };
+            refreshWorkflow(window);
+            click(window, "#bulkModeTab");
+            for (const mode of [
+                "#bulkLabelPickerMode",
+                "#bulkTablePickerMode",
+                "#bulkListPickerMode",
+            ]) {
+                click(window, mode);
+                const badges =
+                    window.document.querySelectorAll(".watering-streak");
+
+                expect(badges.length).toBeGreaterThan(0);
+
+                for (const badge of badges) {
+                    expect(
+                        badge.querySelector(".watering-streak-count")
+                    ).toBeNull();
+                    expect(badge.getAttribute("aria-label")).toBe(
+                        `1 watering in a row ${nutrients === "Yes" ? "with" : "without"} nutrients`
+                    );
+                    expect(
+                        badge.querySelector("use")?.getAttribute("href")
+                    ).toBe(
+                        nutrients === "Yes"
+                            ? "#app-icon-feeding"
+                            : "#app-icon-water"
+                    );
+                }
+            }
+        }
+    );
+
     it("removes badges during pending and failed refreshes and reflects the new last Water", () => {
         expect.hasAssertions();
 
@@ -5638,7 +5688,7 @@ describe("garden logger watering nutrient streak badges", () => {
                 '#labelPicker [data-plant-id="P01"] .water-age',
                 HTMLElement
             ).textContent
-        ).toBe("Wait…");
+        ).toBe("Refreshing watering days…");
         expect(
             queryElement(
                 window.document,
@@ -5793,7 +5843,7 @@ describe("garden logger watering nutrient streak badges", () => {
                 '#labelPicker [data-plant-id="P01"] .water-age',
                 HTMLElement
             ).textContent
-        ).toBe("Wait…");
+        ).toBe("Refreshing watering days…");
         expect(
             window.document.querySelectorAll(".watering-streak")
         ).toHaveLength(0);
