@@ -1,11 +1,11 @@
 # Google Sheets observation logger
 
-Production logger **5.47.1 / immutable version 141** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.47.2 / immutable version 142** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Production **5.47.1 / immutable version 141** retains portrait revision
-**1010123212eade00**. The November 14 compass, interface, and compact-badge updates and November 13
+Production **5.47.2 / immutable version 142** retains portrait revision
+**1010123212eade00**. The November 14 full-color icons, compass, interface, and compact-badge updates and November 13
 cardinal-rotation rollout are recorded below;
 AppSheet **1.100144** is saved and verified through native client checks. The remaining cactus and
 front-grid portraits are described below. P41's appended optional weight field
@@ -39,6 +39,83 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## Full-color logger icons — 5.47.2
+
+Production **5.47.2 / immutable version 142** extends full-color SVG artwork
+across logger controls, navigation, drafts, queued entries, summaries, and
+feedback. Rotation uses colored window, wall, room, and Mylar illustrations;
+recalculation controls use a full-color calculator icon. The five new canonical symbols
+are exported in the **109-icon** shared interface collection and embedded in
+the self-contained logger. All **162 existing canonical symbols**, including
+plant portraits, remain unchanged. Accessible text, submitted values, drafts,
+and retry contracts are preserved. Server behavior, workbook schemas,
+AppSheet **1.100144**, manifest, plant portrait revision, and the ten-minute
+queue schedule remain unchanged.
+
+The existing deployment was promoted on November 14 at
+**18:35:20 EST / 23:35:20 UTC**, preserving its URL, owner-only access, and
+execution identity. Fresh Head and immutable-source reads matched
+[0e8f03e](https://github.com/Nick2bad4u/Gardening/commit/0e8f03e4654ce349b0c12b138a9fd7aa5625fcff);
+final source verification passed at **23:35:41 UTC**. All five new public SVG
+exports returned HTTP 200 and matched their maintained source bytes.
+
+Authenticated production reported **Connected · Logger 5.47.2** at
+**390/1280 px in both themes**, verified from **23:41:47–23:43:19 UTC**. Each case
+passed **22 compass-state checks**, **37 targeted icon checks**, and both
+single/bulk icon censuses. Screenshots confirmed legible icons and spacing;
+no application or console errors or horizontal overflow were observed.
+Each case recorded one Google host iframe sandbox warning, retained with its
+source metadata and native-frame classification; there were no unexpected
+warnings. Pending state and existing browser storage were preserved, and no
+production observations were submitted. Verification recorded no blocked
+write attempts.
+
+Postdeployment captures from **23:35:56–23:36:30 UTC**, verified at
+**23:36:54 UTC**, preserved **2,364 unique observation IDs**, **1,908 request
+groups**, **38 Saved** App entries, and no App bulk rows. Exact **69/69/61/79-column**
+headers, **757 formulas**, **46 validation rules**, and **4,597 entered cells**
+were unchanged. Captured snapshot differences were limited to three
+clock/timestamp values. The comparison covered full-capacity identity,
+request, and state columns plus the last 31 History rows and populated
+staging; older nonidentity values outside that recent range were not compared.
+Projected IDs matched History, and formula and Integrity errors were zero.
+Analytics remained **Ready** with the **23:29:52 UTC** calculation, which
+predated promotion.
+
+The **23:39:13 UTC** scheduled execution reported logger **5.47.2** and completed
+in **16.031 seconds** (**14.314 seconds** inside the handler), with zero queued,
+processed, or saved entries or bulk rounds. It published fresh **Ready** analytics
+(**46,859 bytes**, refresh not skipped). The native trigger table at
+**23:40:21 UTC** reconfirmed the singleton Head trigger and its latest run;
+the unchanged ten-minute interval had been directly verified at **23:30:16 UTC**.
+
+The exact candidate passed **2,329 logger tests**, **nine checker tests**,
+**18 artwork tests**, and coverage gates (**99.56% statements**, **98.16% branches**,
+**100% functions**, **99.80% lines**). The
+[Pages workflow](https://github.com/Nick2bad4u/Gardening/actions/runs/43652128939)
+passed **382 Chromium cases**, **60 Storybook tests**, and checks for **224 pages**.
+The local **186-case** logger run preceded the final spacing and queue-assertion
+edits; four focused cases and four source-verified local UI suites passed on
+the final source. The full **1,472-file** shipping scan found no secrets.
+
+The [Sonar workflow](https://github.com/Nick2bad4u/Gardening/actions/runs/43652128897)
+first encountered a five-second timeout in the unchanged capacity reservation
+test. One bounded failed-job retry passed all **2,329 tests**, analysis, and
+the quality gate, without changing tests or timeouts. Socket and hosted secret
+checks passed. The remaining
+[logger workflow failure](https://github.com/Nick2bad4u/Gardening/actions/runs/43652128924)
+was the exact candidate's Codecov repository-deactivated upload rejection,
+after tests, coverage, and the coverage-artifact upload passed.
+
+Daily trigger-runtime headroom remains unproved. The retained native 24-hour
+window ending **21:54:09 UTC** contains **144 runs totaling 5,762.164 seconds**:
+143 completed, zero timeouts, and the known **37.51-second** earlier schema-transition
+failure. Its original capture and verification times were preserved; this was
+not a fresh window or account quota measurement. The focused UI rollout
+proceeded under the current change request and standing owner authorization
+with the disclosed Codecov and quota limitations. No Sonar timeout exception,
+all-green CI, or verified quota headroom is claimed.
 
 ## SVG rotation compasses — 5.47.1
 
