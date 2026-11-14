@@ -6,10 +6,10 @@ workbook. It supports daily browsing, individual observations, collection-wide
 care/weight rounds, save receipts, dashboards, and per-plant charts without
 creating a second gardening database.
 
-Production **AppSheet 1.100141** and the **39-container** native workbook were
-verified with logger 5.40.4 on November 1, 2026. The logger has since reached
-**5.45.0 / immutable version 137**, deployed on November 13, without changing
-AppSheet configuration. The
+Production **AppSheet 1.100144** was saved and read back on November 13 after the
+cardinal-rotation workbook migration and logger **5.46.0 / immutable version
+138** promotion. The **39-container** workbook has the migrated rotation columns,
+and final native-client checks passed without saving production observations. The
 [logger runbook](../scripts/google-sheets/README.md)
 records the verified deployment and preservation checks.
 Earlier dated records retain their verified historical state.
@@ -20,16 +20,18 @@ contains the live view, expression, action, formatting, and security
 configuration. AppSheet saves editor changes to the production app; treat an
 editor save as a live application change.
 
-## Cardinal rotation candidate — 5.46.0
+## Cardinal rotation — 5.46.0
 
-The maintained **5.46.0** logger and prepared AppSheet plan add cardinal-facing
-Rotation entries. This section describes the candidate; it does **not** certify
-a saved AppSheet version or a completed workbook migration. Follow the
-[candidate runbook](../scripts/google-sheets/README.md#cardinal-rotation-and-recorded-action-context-candidate--5460)
-for deployment and native-validation status.
+Logger **5.46.0 / immutable version 138**, the migrated workbook, and saved
+AppSheet **1.100144** support cardinal-facing Rotation entries. The definition
+passed native expression, isolated native-client fixture, and saved-definition
+checks. The
+[rollout runbook](../scripts/google-sheets/README.md#cardinal-rotation-and-recorded-action-context--5460)
+records source promotion, the verified native backup, and exact workbook
+preservation checks.
 
 Use the **pot label / front** as the same reference side every time:
-**N = window, E = wall, S = room, W = Mylar**. In the planned **Log** form,
+**N = window, E = wall, S = room, W = Mylar**. In **Log**,
 Rotation shows dated recorded-facing context, **Rotation from facing**,
 **Rotation to facing**, and a turn preview. Check the pot before accepting the
 suggested start. The destination is required for new cardinal entries; an
@@ -38,7 +40,7 @@ the existing History degree field stores the equivalent **270°**. An unknown
 start records a new absolute-facing baseline with blank degrees. An unchanged
 facing records **0°** as a confirmation, not a physical turn.
 
-The prepared suggestion considers active, nonsuperseded Rotation records for
+The suggestion considers active, nonsuperseded Rotation records for
 that plant's current setup, no later than **Started at** or the present time.
 A later degree-only record prevents an older cardinal facing from being reused.
 No matching history, an unknown latest facing, or multiple eligible records at
@@ -47,10 +49,11 @@ and asks the operator to confirm the marked side of the pot. AppSheet's local
 synchronized history may be stale offline; it is recorded evidence, not proof of
 the pot's present position. A pending single-plant Rotation or Repot, or an
 overlapping pending bulk Rotation, suppresses the automatic starting facing and
-shows a warning. Native validation must confirm that new-form defaults
-respond to plant/time changes without rewriting saved or queued rows.
+shows a warning. Isolated native-form checks verified that automatic origins
+respond to plant/time changes and selecting or clearing Repot, while an explicit
+origin survives later plant/time edits. The checks did not save observations.
 
-The planned **Bulk Log** uses one target facing for selected pots and explains
+**Bulk Log** uses one target facing for selected pots and explains
 that each pot keeps its own starting direction. Before writing History, the
 Apps Script bridge freezes those per-pot origins at the round's observation time
 in a hidden **Rotation facing snapshot**. Unknown origins produce blank amounts.
@@ -66,15 +69,17 @@ next round can use its committed facing.
 | App entries    | BH `Rotation from facing`; BI `Rotation to facing`     | 61                             |
 | App bulk       | BZ `Rotation to facing`; CA `Rotation facing snapshot` | 79                             |
 
-The prepared native schema totals are **72 / 65 / 81** respectively, including
+The saved AppSheet schema totals are **72 / 65 / 81** respectively, including
 system and virtual fields; those counts are not physical worksheet widths.
 History remains read-only and uses Observation ID as its key. App entries and
 App bulk remain writable staging with their existing Entry ID and Round ID
 keys. Active History and the correction-review slice gain the relevant fields;
-the plan preserves unrelated actions, security, offline settings, and bindings.
+the saved definition preserves unrelated actions, security, offline settings,
+and bindings.
 
 Existing degree-only staging retains its prior defaults and validation. The
-legacy degree control is shown when no cardinal target is present; the bridge
+legacy degree control is shown only for an existing Rotation row with no cardinal
+target; new Log and Bulk Log forms use cardinal fields. The bridge
 ignores its stale default when directional fields supply the turn. Older queued
 rows remain compatible and are not assigned invented facings. No physical
 degree field is replaced by a per-row App formula.
@@ -86,7 +91,45 @@ reviewed plan. Check same-time ambiguity, corrections, removed/future/other-setu
 records, offline sync, and unsaved form behavior. Do not create synthetic
 production observations. The phone logger's broader **Last recorded** hints for
 measurements and other actions are separate from this rotation-specific AppSheet
-plan.
+configuration.
+
+The November 13 preparation passed **25 native expression compilations**, all
+**16 direction-pair** previews, and the unknown-start/unset-target cases without
+writing synthetic observations to production. Native context checks covered
+same-time ambiguity, later degree-only records, corrections, Removed/future/
+other-setup records, backdating, and pending or newly selected Repot/Rotation
+actions. An unsaved new-key form required a destination while a legacy row did
+not. These checks do not substitute for saved-definition readback, synced client
+inspection, or observed scheduled execution after deployment.
+
+Saved-definition review of **1.100143** found only three native canonicalizations:
+the `Rotation latest at` field's `Searchable` flag became false, and the bridge
+snapshot's raw `IsHidden`/`IsReadOnly` flags became false. Its effective
+`Show_If = FALSE` and `Editable_If = FALSE` remained compiled constant conditions,
+with Show_If enforced throughout the app. The snapshot remained physical
+LongText without an App formula, default, reset expression, or behavior reference.
+Independent review found no remaining normalized differences from the prepared
+definition; the snapshot remains hidden and unavailable for user editing.
+
+The final **1.100144** save changed only the two legacy-degree visibility
+conditions after native form inspection found the old 90° default still visible
+in a new form with no cardinal destination. Native expression checks passed all
+**16 visibility cases** across new/existing rows, Rotation selection, and empty/
+populated targets. After the documented normalization, the complete saved
+definition matched the prepared definition exactly on readback at
+**04:49:30 UTC on November 14**.
+
+Native-client fixtures verified seven origin-selection lifecycle cases and all
+16 direction previews in **1.100143**. The exact final definition retained those
+expressions. Final **1.100144** form checks confirmed that new single and bulk
+Rotation forms hide degrees before a destination is chosen, expose all four
+cardinal choices, and keep the bridge snapshot hidden. An existing cardinal row
+retained its stored S → E endpoints after plant/time edits; a legacy row retained
+its editable **45.5°** value with no target. These tests used an isolated browser
+context with intercepted fixture data and blocked application writes: no Save
+clicks, no submit attempts, and no production observation writes. Existing
+browser observation storage was neither copied nor changed. Bridge saves, queue
+processing, and retries were verified separately on the disposable workbook.
 
 ## November 1 remaining cactus portrait update
 
@@ -1002,10 +1045,10 @@ stored state, so refreshing formulas never relabels old observations. P38's
 review: provisional member identities, a humid enclosure, and unresolved
 root-zone moisture do not support a cactus dry/plateau/full-dry watering trigger.
 
-The deployed degree-only Rotation control in Log and Bulk Log accepts
-1–360 degrees and defaults to 90. Its value is archived in `History!AN:AN`,
+The legacy degree-only Rotation control in Log and Bulk Log accepts
+positive amounts through 360 degrees and defaults to 90. Its value is archived in `History!AN:AN`,
 displayed in read-only care history, and remains available to public plant
-history. The [5.46.0 candidate](#cardinal-rotation-candidate--5460) preserves that
+history. The [5.46.0 rollout](#cardinal-rotation--5460) preserves that
 legacy path while adding explicit from/to facings, blank-baseline amounts, and
 zero-degree confirmations; its rollout is documented separately above.
 Clean and Prune are lightweight dated actions whose specifics belong in Notes.

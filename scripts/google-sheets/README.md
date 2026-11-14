@@ -1,12 +1,12 @@
 # Google Sheets observation logger
 
-Production logger **5.45.0 / immutable version 137** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.46.0 / immutable version 138** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Production **5.45.0 / immutable version 137** retains portrait revision
-**1010123212eade00**, verified on November 13. AppSheet was last verified on
-November 11 at **1.100141** and was not changed in this release. The remaining cactus and
+Production **5.46.0 / immutable version 138** retains portrait revision
+**1010123212eade00**. The November 13 cardinal-rotation rollout is recorded below;
+AppSheet **1.100144** is saved and verified through native client checks. The remaining cactus and
 front-grid portraits are described below. P41's appended optional weight field
 remains unchanged; the earlier dated receipts retain their verified versions.
 
@@ -39,13 +39,19 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
-## Cardinal rotation and recorded-action context candidate — 5.46.0
+## Cardinal rotation and recorded-action context — 5.46.0
 
-Maintained **5.46.0** adds persistent cardinal facing for Rotation and dated
-read-only action context in the phone logger. It has **not yet replaced
-production 5.45.0 / immutable version 137**. Its workbook and AppSheet changes
-are prepared contracts, not a claim that production schemas or forms have been
-migrated.
+Production **5.46.0 / immutable version 138** adds persistent cardinal facing for
+Rotation and dated read-only action context in the phone logger. The existing
+deployment was promoted on November 13 at **23:31:09 EST** (**November 14,
+04:31:09 UTC**), retaining its URL, owner-only access, execution identity,
+manifest, and artwork. Head and immutable source matched
+[3793273](https://github.com/Nick2bad4u/Gardening/commit/379327313da2ba56a82d64d4d14e90558d143262)
+and contained exactly the three maintained deployment files. The workbook
+migration passed before promotion, and AppSheet **1.100144** was saved at
+**04:48:51 UTC** and matched the complete prepared definition on remote readback
+at **04:49:30 UTC**. Final native-client checks passed with isolated fixtures and
+blocked observation writes; existing browser observation storage was preserved.
 
 Facing always refers to the **pot label / front**: **N = window, E = wall,
 S = room, W = Mylar**. Known endpoints determine the clockwise-equivalent value
@@ -56,12 +62,12 @@ legacy degree-only path retains its greater-than-zero through 360° validation,
 90° default, historical values, and retry compatibility. No historical row is
 backfilled with a guessed facing.
 
-| Surface      | Appended physical columns                              | Candidate width |
-| ------------ | ------------------------------------------------------ | --------------- |
-| History      | BP `Rotation from facing`; BQ `Rotation to facing`     | A:BQ / 69       |
-| History view | Read-only projection through BQ                        | A:BQ / 69       |
-| App entries  | BH `Rotation from facing`; BI `Rotation to facing`     | A:BI / 61       |
-| App bulk     | BZ `Rotation to facing`; CA `Rotation facing snapshot` | A:CA / 79       |
+| Surface      | Appended physical columns                              | Production width |
+| ------------ | ------------------------------------------------------ | ---------------- |
+| History      | BP `Rotation from facing`; BQ `Rotation to facing`     | A:BQ / 69        |
+| History view | Read-only projection through BQ                        | A:BQ / 69        |
+| App entries  | BH `Rotation from facing`; BI `Rotation to facing`     | A:BI / 61        |
+| App bulk     | BZ `Rotation to facing`; CA `Rotation facing snapshot` | A:CA / 79        |
 
 The [guarded migration builder](./rotation-facing-migration.mjs) appends these
 fields and extends the History view formula, History filter range, and related
@@ -86,16 +92,20 @@ before writing History. Retries reuse that snapshot and reject changed round
 identity, selection, time, target, or inconsistent details. The snapshot is not a
 user-editable field or an AppSheet formula.
 
-The prepared AppSheet plan adds directional choices and rotation context to
+The AppSheet rollout adds directional choices and rotation context to
 **Log**, a target facing and per-pot explanation to **Bulk Log**, and the new
-columns to read-only history. New cardinal forms require a destination; existing
-degree-only rows retain their validation/defaults. The bridge ignores stale
+columns to read-only history. New forms require a cardinal destination and hide
+the legacy degree control; existing degree-only Rotation rows retain that control
+when no cardinal target is present, along with their validation/defaults. The
+bridge ignores stale
 legacy degree defaults when the cardinal fields are populated. AppSheet's
-prepared context withholds a default when multiple eligible rotations share the
+context withholds a default when multiple eligible rotations share the
 latest timestamp; it does not invent a tie order from the app's synchronized
-snapshot. Native formula compilation, blank-form behavior, offline sync, saved
-definition comparison, and unchanged table permissions remain rollout gates.
-See the [AppSheet candidate notes](../../docs/appsheet-companion.md#cardinal-rotation-candidate--5460).
+snapshot. Native formula compilation, isolated client form behavior, saved
+definition comparison, and unchanged table permissions were checked. Queued bridge
+saves and retries were rehearsed on the disposable workbook; no production
+observations were created to test offline replay.
+See the [AppSheet rotation notes](../../docs/appsheet-companion.md#cardinal-rotation--5460).
 
 Other phone action hints reuse the existing bootstrap History snapshot. Height
 and width keep independent dates and provenance in the current setup; Repot also
@@ -108,8 +118,81 @@ refreshing states remain explicit.
 
 Public history and tracker displays retain legacy degree output and render the
 new directions; CSV export appends BP/BQ after the unchanged first 67 headers.
-The production deployment must retain the existing logger URL and singleton
-ten-minute queue trigger. This candidate does not require artwork changes.
+The existing logger URL is preserved. This release does not change artwork or
+the singleton ten-minute queue-trigger contract.
+
+The authenticated production logger showed **Connected · Logger 5.46.0** in
+Single and Bulk modes at **390/1280 px**, in light and dark themes. Direction
+choices, unknown-origin baselines, same-facing confirmations, quarter-turn and
+per-pot bulk previews, and dated Measure/Check context passed inspection. No
+horizontal overflow, browser errors, or console errors were observed. The
+isolated checks submitted no observations and left existing browser storage
+untouched.
+
+The retained owner-only
+[final native backup](https://docs.google.com/spreadsheets/d/1vOrN308S-eiFssizpCJ8rKbCslzaVxUzGqAjKsyG8cA/edit)
+was created on November 14 at **04:08:37 UTC** and verified against fresh
+production captures and the earlier backup. The **29-request** migration ran
+once at **04:22:41 UTC**. Postwrite verification at **04:25:40 UTC** checked all
+**50,000** degree-validation rules and **204,004** appended cells, including
+their validation and affected format fields. Existing History, staging, and RO
+entered values and row order were unchanged: **2,364 unique observation IDs**,
+**1,908 request groups** including **415 multi-event groups**, **38 Saved**
+App entries, and no App bulk rows. Full metadata preserved all **70 tabs**,
+**194 charts**, **131 protections**, and relative tab order; only the planned
+widths/filter and native History/History-view banding extensions changed. Formula,
+required-anchor, and projected-ID errors were zero, with analytics **Ready**.
+
+During the schema-to-source transition, the existing **5.45.0** trigger started
+at **04:29:13 UTC** and failed closed after **37.51 seconds** with
+`Unexpected App bulk columns`. It started before the **04:29:40 UTC** source
+upload and therefore still used the old schema contract. The subsequent 5.46.0
+scheduled execution at **04:39:13 UTC** completed in **11.544 seconds**
+(**9.654 seconds** inside the instrumented handler), processed no queued single
+or bulk entries, and published
+analytics **Ready** without skipping refresh (**46,859 bytes**). Final read-only
+reconciliation at **04:44:27 UTC** rechecked all source/staging/RO cells, IDs,
+schemas, **50,000** degree rules, and **204,004** appended cells: all remained
+unchanged, with zero formula/anchor/projected-ID errors and fresh Ready analytics.
+That final pass reused the already verified full structural metadata; its cell
+and health captures were new after the successful 5.46.0 execution.
+The production trigger configuration was read back at **04:44:21 UTC**: exactly
+one `processQueuedAppSheetEntries` trigger, using Head, every ten minutes; no
+trigger change or reinstall was needed.
+
+The final candidate passed native Apps Script rehearsal on a disposable copy:
+all 16 cardinal pairs, unknown/legacy/zero turns, corrections and retries,
+per-pot mobile and AppSheet bulk snapshots, deferred overlapping rounds, action
+context, and **96/97/101-record** History spills. Original copied production
+prefixes and all retained earlier rehearsal rows remained intact. The earlier
+V1 six-minute timeout and its recovery receipts were retained as historical
+evidence; the completed V2 run alone validates this released source.
+
+The V2 benchmark used a representative copied ledger, **not 50,000 observations**.
+Analytics refresh took **7.054 seconds** with a **46,857-byte** payload. Bootstrap
+took **77.179 seconds** with **196,048 bytes** in that benchmark, versus
+**12.748 seconds** in the earlier bridge check. These observations do not establish
+a latency guarantee or full-capacity performance. The 144-refresh extrapolation
+is **16.93 minutes per day**, excluding queue saves and unrelated scripts.
+
+The exact source commit passed **2,324 logger tests in 54 files**, coverage gates
+(**99.56% statements**, **98.16% branches**, **100% functions**, **99.80% lines**),
+and **362 Chromium website/Storybook cases**. Sonar, Socket, and secret checks
+passed, and the
+[website workflow and Pages deployment](https://github.com/Nick2bad4u/Gardening/actions/runs/43552067618)
+succeeded. The
+[logger workflow](https://github.com/Nick2bad4u/Gardening/actions/runs/43552067658)
+passed its tests and coverage gates but failed its external Codecov upload because
+the repository was deactivated. The release does not claim all checks green.
+
+A fresh production audit observed **144 scheduled runs totaling 139.85 minutes**,
+including one timeout, in its displayed 24-hour filter. Account quota and daily
+trigger-runtime headroom remain unproved; adding the candidate's refresh estimate
+to the entire observed trigger budget is a conservative projection, not proof of
+available quota. The owner's current request explicitly accepted the disclosed
+Codecov and daily-runtime limitations for this exact 5.46.0 release. That
+acceptance is not a waiver for future candidates, and no workflow policy or
+freshness, backup, native-validation, or source-identity guard was weakened.
 
 ## November 13 watering feedback — 5.45.0
 
@@ -5111,7 +5194,7 @@ installable trigger is not required.
   appends relative humidity in AQ. The 5.33.0 source appends PPFD and illuminance
   in AR:AS. Source 5.35.0 appends 15 care fields in AT:BH, including canonical
   Celsius, Air/Soil target, and original temperature unit. Source 5.36.0 appends
-  BI:BO for Leaf VPD. The 5.46.0 candidate appends BP:BQ for rotation facing and
+  BI:BO for Leaf VPD. Production 5.46.0 appends BP:BQ for rotation facing and
   writes the complete A:BQ record block in one call so a failed service call cannot
   strand a request ID apart from its
   observation. Source 5.37.0 provides **50,001 History rows**, including the

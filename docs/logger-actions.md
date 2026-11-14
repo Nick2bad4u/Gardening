@@ -7,9 +7,9 @@ supported. Air, soil, and leaf measurements keep their own context.
 The [deployment record](../scripts/google-sheets/README.md) keeps the
 logger version and production details.
 
-The refresh progress, retained nutrient settings, and numbered watering badges
-below are live in **5.45.0 / immutable version 137**, deployed on November 13, 2026. Cardinal rotation and the additional recorded-action context described
-below are prepared for **5.46.0** and are not yet a verified production rollout.
+The refresh progress, retained nutrient settings, numbered watering badges,
+cardinal rotation, and recorded-action context below are live in
+**5.46.0 / immutable version 138**, deployed on November 13, 2026.
 See the deployment record for the current status and disclosed release limits.
 
 Read alongside the [watering strategy](./watering-strategy.md), [weighing strategy](./weighing-strategy.md), and [operator runbook](../scripts/google-sheets/README.md).
@@ -121,7 +121,7 @@ The single-plant form exposes these 21 event choices. Fields listed as required 
 | 🔎 Soil check | You checked soil moisture.                                                            | Requires soil moisture; stored as Check. Historical condition-only Check records remain readable and correctable. Selecting Check alone does not prove verified dryness.                        |
 | Inspect       | You inspected the plant's visible condition.                                          | Requires descriptive Plant condition. Stores Observed / Observed provenance; does not establish root-zone moisture.                                                                             |
 | 📏 Measure    | You measured or estimated plant dimensions.                                           | Requires height, width, or both. Keep unit, quality, and method explicit. Both dimensions share one Measure row.                                                                                |
-| 🔄 Rotation   | You turned the pot, or in the 5.46.0 candidate recorded its facing.                   | Production 5.45.0 records degrees. The 5.46.0 candidate adds from/to directions, an unknown-start baseline, and same-facing confirmation; see the rotation section below.                       |
+| 🔄 Rotation   | You turned the pot or recorded its facing.                                            | Records starting and new directions, calculates the turn, and supports an unknown-start baseline or same-facing confirmation; see the rotation section below.                                   |
 | Move          | You moved the pot to a different location.                                            | Requires New location; Previous location is optional. Keeps the same P-ID and pot setup.                                                                                                        |
 | Environment   | You changed light, airflow, enclosure, or heating settings.                           | Choose the aspect and enter New setting; Previous setting is optional. Describes a change, not a sensor measurement.                                                                            |
 | 🧽 Clean      | You cleaned something associated with this pot.                                       | Lightweight dated event; explain what was cleaned in Notes. No automatic treatment or weight correction follows.                                                                                |
@@ -148,11 +148,10 @@ The mobile writer also adds appropriate events from entered data: a weight adds 
 
 This means one click on Save is not always one History row. Review the event summary rather than interpreting several rows with the same save time as duplicates.
 
-## Rotation and Recorded Context — 5.46.0 Candidate
+## Rotation and Recorded Context
 
-This section describes maintained candidate behavior. The workbook migration,
-logger deployment, and AppSheet configuration still require their own verified
-rollout before these controls are production features.
+The phone logger, workbook, AppSheet forms, and public history support cardinal
+rotations. The phone logger also shows dated context for the actions below.
 
 Use the **pot label / front** as the same reference side every time. The four
 directions describe where that side faces:
@@ -200,7 +199,7 @@ and 90° default. Historical degree-only records are not backfilled with guessed
 directions. Cardinal corrections keep the same blank-baseline and zero-turn
 rules, and conflicting direction/degree values are rejected.
 
-The candidate phone logger also shows **Last recorded** context beside supported
+The phone logger also shows **Last recorded** context beside supported
 actions. These are dated references, not prefilled new observations. Height and
 width retain independent dates, quality, and method within the current setup;
 Repot context also stays within that setup. Other care references can describe
@@ -212,7 +211,7 @@ These action references describe the latest eligible records at the source read.
 They are not a reconstruction of every action at a backdated entry time. Refresh
 progress and saved/offline labels distinguish confirmed context from an older
 snapshot. Read the dates, perform the actual check or measurement, and enter the
-new observation yourself. The AppSheet candidate adds rotation-specific context;
+new observation yourself. AppSheet shows rotation-specific context;
 the broader action hints described here belong to the phone logger.
 
 ## Water, Nutrients, and Weight Are Separate
@@ -521,8 +520,8 @@ The correction dialog keeps its action buttons visible while you scroll the form
 
 Changed numeric values are checked before the correction preview is requested.
 Weights and dimensions must be positive, and flower counts must be whole numbers.
-Degree-only rotations must be greater than zero and at most 360 degrees. The
-5.46.0 candidate's cardinal rotations additionally allow a blank amount for an
+Degree-only rotations must be greater than zero and at most 360 degrees.
+Cardinal rotations additionally allow a blank amount for an
 unknown starting facing and zero for an unchanged facing. Temperature and
 calculated Leaf VPD retain their supported zero or negative values.
 
