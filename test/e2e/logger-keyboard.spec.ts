@@ -42,6 +42,24 @@ const expectActiveMode = async (
     await expect.soft(inactive).toHaveAttribute("tabindex", "-1");
 };
 
+const expectBulkFacingSelection = async (
+    page: Readonly<Page>,
+    button: Readonly<Locator>,
+    value: string
+) => {
+    await expect.soft(button).toHaveAttribute("aria-pressed", "true");
+    expect
+        .soft(
+            await page.evaluate(
+                () =>
+                    document.querySelector<HTMLSelectElement>(
+                        "#bulkRotationToFacing"
+                    )?.value
+            )
+        )
+        .toBe(value);
+};
+
 const expectPlantSelection = async (
     page: Readonly<Page>,
     id: string,
@@ -112,9 +130,17 @@ for (const width of [390, 1280]) {
                         exact: true,
                         name: "Rotation",
                     });
-                    const facing = form.getByRole("combobox", {
+                    const facing = form.getByRole("group", {
                         exact: true,
                         name: "New facing for selected plants",
+                    });
+                    const north = facing.getByRole("button", {
+                        exact: true,
+                        name: "North · window",
+                    });
+                    const east = facing.getByRole("button", {
+                        exact: true,
+                        name: "East · wall",
                     });
                     await rotation.focus();
                     await expectFocusedAfterKey(page, "Space", rotation);
@@ -128,9 +154,11 @@ for (const width of [390, 1280]) {
                             name: "Rotation entry",
                         })
                         .focus();
-                    await expectFocusedAfterKey(page, "Tab", facing);
-                    await page.keyboard.press("ArrowDown");
-                    await expect.soft(facing).toHaveValue("N");
+                    await expectFocusedAfterKey(page, "Tab", north);
+                    await expectFocusedAfterKey(page, "ArrowRight", east);
+                    await expectBulkFacingSelection(page, east, "E");
+                    await expectFocusedAfterKey(page, "ArrowUp", north);
+                    await expectBulkFacingSelection(page, north, "N");
                     await rotation.focus();
                     await expectFocusedAfterKey(page, "Enter", rotation);
                     await expect

@@ -91,6 +91,44 @@ const lastQueuedPayload = async (page: Readonly<Page>): Promise<unknown> =>
         return last.payload;
     });
 
+const facingLabels: Readonly<Record<string, string>> = {
+    E: "East · wall",
+    N: "North · window",
+    S: "South · room",
+    W: "West · Mylar",
+};
+
+const chooseCompassFacing = async (
+    form: Readonly<Locator>,
+    label: Readonly<RegExp> | string,
+    direction: string
+) => {
+    const name = facingLabels[direction];
+    if (name === undefined)
+        throw new Error(`Unsupported fixture direction: ${direction}`);
+    await form
+        .getByRole("group", { exact: true, name: label })
+        .getByRole("button", { exact: true, name })
+        .click();
+};
+
+const expectFacingModel = async (
+    page: Readonly<Page>,
+    id: string,
+    expected: string
+) => {
+    expect
+        .soft(
+            await page.evaluate(
+                (modelId) =>
+                    document.querySelector<HTMLSelectElement>(`#${modelId}`)
+                        ?.value,
+                id
+            )
+        )
+        .toBe(expected);
+};
+
 const queueFacing = async (
     page: Readonly<Page>,
     form: Readonly<Locator>,
@@ -98,8 +136,8 @@ const queueFacing = async (
     degrees: string,
     preview: string
 ) => {
-    await form.getByLabel(startingFacing, { exact: true }).selectOption("N");
-    await form.getByLabel(newFacing, { exact: true }).selectOption(to);
+    await chooseCompassFacing(form, startingFacing, "N");
+    await chooseCompassFacing(form, newFacing, to);
     await expect
         .soft(form.getByRole("status", { name: "Rotation turn preview" }))
         .toContainText(preview);
@@ -148,18 +186,14 @@ const checkBulkFacing = async (page: Readonly<Page>) => {
         .click();
     await form.getByRole("checkbox", { name: /Collection plant 1\b/v }).check();
     await form.getByRole("checkbox", { name: /Collection plant 2\b/v }).check();
-    await form
-        .getByLabel("New facing for selected plants", { exact: true })
-        .selectOption("W");
-    await form
-        .getByLabel(/Collection plant 1 — starting facing/v)
-        .selectOption("N");
-    await expect
-        .soft(form.getByLabel(/Collection plant 1 — starting facing/v))
-        .toHaveValue("N");
-    await expect
-        .soft(form.getByLabel(/Collection plant 2 — starting facing/v))
-        .toHaveValue("E");
+    await chooseCompassFacing(form, "New facing for selected plants", "W");
+    await chooseCompassFacing(
+        form,
+        /Collection plant 1 — starting facing/v,
+        "N"
+    );
+    await expectFacingModel(page, "bulkRotationFrom-P01", "N");
+    await expectFacingModel(page, "bulkRotationFrom-P02", "E");
     await form
         .getByRole("button", { exact: true, name: "Save 1 action for 2" })
         .click();
@@ -215,15 +249,11 @@ test.describe("cardinal rotation and contextual observations", () => {
                             name: rotationAction,
                         })
                         .click();
-                    await expect
-                        .soft(form.getByLabel(startingFacing, { exact: true }))
-                        .toHaveValue("N");
+                    await expectFacingModel(page, "rotationFromFacing", "N");
                     await queueFacing(page, form, "N", "0", "Same facing");
                     await queueFacing(page, form, "E", "90", "90° clockwise");
                     await queueFacing(page, form, "S", "180", "180° clockwise");
-                    await form
-                        .getByLabel(newFacing, { exact: true })
-                        .selectOption("W");
+                    await chooseCompassFacing(form, newFacing, "W");
                     await form
                         .getByRole("status", { name: "Rotation turn preview" })
                         .screenshot({
@@ -243,16 +273,10 @@ test.describe("cardinal rotation and contextual observations", () => {
                         name: "Choose plant by pot label",
                     });
                     await picker.getByRole("button", { name: /P02/v }).click();
-                    await expect
-                        .soft(form.getByLabel(startingFacing, { exact: true }))
-                        .toHaveValue("E");
-                    await expect
-                        .soft(form.getByLabel(newFacing, { exact: true }))
-                        .toHaveValue("");
+                    await expectFacingModel(page, "rotationFromFacing", "E");
+                    await expectFacingModel(page, "rotationToFacing", "");
                     await picker.getByRole("button", { name: /P03/v }).click();
-                    await form
-                        .getByLabel(newFacing, { exact: true })
-                        .selectOption("S");
+                    await chooseCompassFacing(form, newFacing, "S");
                     await form
                         .getByRole("button", {
                             exact: true,
@@ -283,16 +307,12 @@ test.describe("cardinal rotation and contextual observations", () => {
             await form
                 .getByRole("button", { exact: true, name: rotationAction })
                 .click();
-            await form.getByLabel(newFacing, { exact: true }).selectOption("W");
+            await chooseCompassFacing(form, newFacing, "W");
             await form
                 .getByLabel("Observed date", { exact: false })
                 .fill("2026-09-04");
-            await expect
-                .soft(form.getByLabel(startingFacing, { exact: true }))
-                .toHaveValue("");
-            await form
-                .getByLabel(startingFacing, { exact: true })
-                .selectOption("S");
+            await expectFacingModel(page, "rotationFromFacing", "");
+            await chooseCompassFacing(form, startingFacing, "S");
             await form
                 .getByRole("button", { exact: true, name: "Save now" })
                 .click();
