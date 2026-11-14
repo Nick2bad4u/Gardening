@@ -53,7 +53,7 @@ function countPixels(data, info) {
 describe("shared multicolor interface artwork", () => {
     it("exports every interface/category symbol as a self-contained accessible SVG", () => {
         expect.hasAssertions();
-        expect(icons).toHaveLength(104);
+        expect(icons).toHaveLength(109);
 
         const files = fs
             .readdirSync(new URL("../assets/ui-icons/", import.meta.url))
@@ -134,7 +134,7 @@ describe("shared multicolor interface artwork", () => {
             ({ name }) => !launcherIconNames.includes(name)
         );
 
-        expect(controlIcons).toHaveLength(89);
+        expect(controlIcons).toHaveLength(94);
 
         for (const icon of controlIcons) {
             const { data, info } = await sharp(

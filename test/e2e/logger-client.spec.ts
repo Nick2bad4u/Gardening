@@ -13,6 +13,8 @@ const compassUnknownName = "Unknown / not recorded";
 const compassClearName = "Clear new facing";
 const pressedAttribute = "aria-pressed";
 const bulkCareTab = "Bulk care";
+const singlePlantTabName = "Single plant";
+const gardenLinksName = "Garden links";
 const selectedPlantRegionName = "Selected plant";
 const recalculateWorkbookName = "Recalculate workbook";
 const fixtureClockTime = "2026-09-09T14:00:00Z";
@@ -385,7 +387,7 @@ const expectDisclosureDefaults = async (
 ) => {
     const links = page
         .getByRole("group")
-        .filter({ has: page.getByText("Garden links", { exact: true }) });
+        .filter({ has: page.getByText(gardenLinksName, { exact: true }) });
     await expect.soft(links).toHaveJSProperty("open", width > 860);
     await expect
         .soft(morePlantDetails(page))
@@ -420,8 +422,8 @@ const expectGardenLinksKeyboard = async (
 ) => {
     const links = page
         .getByRole("group")
-        .filter({ has: page.getByText("Garden links", { exact: true }) });
-    const toggle = page.getByText("Garden links", { exact: true });
+        .filter({ has: page.getByText(gardenLinksName, { exact: true }) });
+    const toggle = page.getByText(gardenLinksName, { exact: true });
     await toggle.focus();
     await toggle.press("Enter");
     await expect.soft(links).toHaveJSProperty("open", width <= 860);
@@ -747,6 +749,56 @@ const expectEmptyCompassArtwork = async (
         .toStrictEqual({ arrowHidden: true, unknownVisible: true });
 };
 
+const expectColoredSpriteIcons = async (scope: Readonly<Locator>) => {
+    const report = await scope.evaluate((element) => {
+        const icons = [
+            ...element.querySelectorAll<SVGSVGElement>("svg:has(use)"),
+        ].filter((icon) => icon.getBoundingClientRect().width > 0);
+        return {
+            count: icons.length,
+            problems: icons.flatMap((icon) => {
+                const use = icon.querySelector("use");
+                const reference = use?.getAttribute("href") ?? "";
+                const symbol = reference.startsWith("#")
+                    ? document.querySelector(reference)
+                    : null;
+                if (symbol?.localName !== "symbol")
+                    return [`Unresolved sprite ${reference}`];
+                const problems: string[] = [];
+                const colors = new Set(
+                    [
+                        ...symbol.querySelectorAll(
+                            "path, rect, circle, ellipse, polygon, polyline, line"
+                        ),
+                    ]
+                        .flatMap((shape) => {
+                            const style = getComputedStyle(shape);
+                            return [style.fill, style.stroke];
+                        })
+                        .filter(
+                            (paint) =>
+                                paint !== "none" && paint !== "rgba(0, 0, 0, 0)"
+                        )
+                );
+                if (colors.size < 2)
+                    problems.push(`${reference} lost its color palette`);
+                if (
+                    !icon.closest('[aria-hidden="true"]') ||
+                    icon.getAttribute("focusable") === "true" ||
+                    icon.hasAttribute("tabindex")
+                )
+                    problems.push(`${reference} is not decorative`);
+                const bounds = use?.getBBox();
+                if (!bounds || bounds.width <= 0 || bounds.height <= 0)
+                    problems.push(`${reference} has no rendered drawing`);
+                return problems;
+            }),
+        };
+    });
+    expect.soft(report.count).toBeGreaterThan(0);
+    expect.soft(report.problems).toStrictEqual([]);
+};
+
 const expectCompassDirection = async (
     compass: Readonly<Locator>,
     name: string,
@@ -757,6 +809,7 @@ const expectCompassDirection = async (
     await button.click();
     await expect.soft(button).toHaveAttribute(pressedAttribute, "true");
     await expectCompassArtwork(compass, x, y);
+    await expectColoredSpriteIcons(compass);
 };
 
 const exerciseCompassArtwork = async (
@@ -1080,9 +1133,10 @@ for (const theme of ["dark", "light"] as const) {
                 page,
             }, testInfo) => {
                 const errors: string[] = [];
-                page.on("pageerror", (error) => {
+                const recordError = (error: Readonly<Error>) => {
                     errors.push(error.message);
-                });
+                };
+                page.on("pageerror", recordError);
                 await openLogger(page, width, theme);
                 const capacity = page.getByRole("button", {
                     exact: true,
@@ -1512,8 +1566,13 @@ const expectRecalculationIcon = async (page: Readonly<Page>) => {
         .evaluate((button) => {
             const svg = button.querySelector("svg");
             const rect = svg?.getBoundingClientRect();
+            const reference = svg?.querySelector("use")?.getAttribute("href");
+            const drawing =
+                reference !== null && reference !== undefined
+                    ? document.querySelector(reference)
+                    : svg;
             return {
-                hasDrawing: Boolean(svg?.querySelector("path[d]")),
+                hasDrawing: Boolean(drawing?.querySelector("path[d]")),
                 labelVisible: Boolean(
                     button
                         .querySelector("#recalculateWorkbookLabel")
@@ -2526,7 +2585,9 @@ const expectFertilizerAlignment = async (page: Readonly<Page>) => {
     await page.getByRole("tab", { exact: true, name: bulkCareTab }).click();
     const bulkLabelsOn = await expectAlignedPicker(page, "Labels", true, true);
     const bulkTableOn = await expectAlignedPicker(page, "Table", true, true);
-    await page.getByRole("tab", { exact: true, name: "Single plant" }).click();
+    await page
+        .getByRole("tab", { exact: true, name: singlePlantTabName })
+        .click();
     await pickerMode(page, waterAgeToggleName).click();
     await page.getByRole("tab", { exact: true, name: bulkCareTab }).click();
     const bulkLabelsOff = await expectAlignedPicker(
@@ -2536,7 +2597,9 @@ const expectFertilizerAlignment = async (page: Readonly<Page>) => {
         false
     );
     const bulkTableOff = await expectAlignedPicker(page, "Table", true, false);
-    await page.getByRole("tab", { exact: true, name: "Single plant" }).click();
+    await page
+        .getByRole("tab", { exact: true, name: singlePlantTabName })
+        .click();
     return [
         singleLabelsOff,
         singleTableOff,
@@ -3069,4 +3132,232 @@ test.describe("watering age picker", { tag: "@logger" }, () => {
         await pickerMode(page, waterAgeToggleName).click();
         await expect.soft(plant).toContainText("1d");
     });
+});
+
+const expectNewControlIcons = async (page: Readonly<Page>) => {
+    const expected = {
+        bulkSaveNutrientDose: "save",
+        bulkTablePickerMode: "layout",
+        bulkUseNutrientDose: "feeding",
+        compactHistoryToggle: "history",
+        entryDraftDiscard: "trash",
+        entryDraftResume: "edit",
+        portraitClose: "close",
+        saveNutrientDose: "save",
+        tablePickerMode: "layout",
+        useNutrientDose: "feeding",
+    };
+    const controls = await page.evaluate(
+        (mapping) =>
+            Object.entries(mapping).map(([id, icon]) => {
+                const button = document.querySelector(`#${id}`);
+                const svg = button?.querySelector("svg");
+                return {
+                    decorative:
+                        svg?.getAttribute("aria-hidden") === "true" &&
+                        svg.getAttribute("focusable") === "false" &&
+                        !svg.hasAttribute("tabindex"),
+                    id,
+                    labeled: Boolean(button?.textContent.trim()),
+                    resolved:
+                        svg?.querySelector("use")?.getAttribute("href") ===
+                        `#app-icon-${icon}`,
+                };
+            }),
+        expected
+    );
+    expect.soft(controls).toStrictEqual(
+        Object.keys(expected).map((id) => ({
+            decorative: true,
+            id,
+            labeled: true,
+            resolved: true,
+        }))
+    );
+};
+
+const fullColorDraft = "Retain this full-color control draft";
+const fullColorProduct = "MSU 13-3-15";
+const fullColorNotes = (page: Readonly<Page>) =>
+    page.getByRole("textbox", { exact: true, name: "Notes" });
+const fullColorQueue = async (page: Readonly<Page>) =>
+    page.evaluate(() =>
+        document.defaultView?.localStorage.getItem(
+            "gardenLoggerObservationQueueV1"
+        )
+    );
+
+const expectNutrientControlArtwork = async (form: Readonly<Locator>) => {
+    const water = form.getByRole("button", { exact: true, name: "Water" });
+    if ((await water.getAttribute(pressedAttribute)) !== "true")
+        await water.click();
+    await form
+        .getByRole("checkbox", { exact: true, name: "Add nutrients" })
+        .check();
+    await form
+        .getByRole("combobox", { exact: true, name: "Product / mix" })
+        .selectOption(fullColorProduct);
+    await expect
+        .soft(
+            form.getByRole("button", {
+                exact: true,
+                name: "Save as usual dose",
+            })
+        )
+        .toBeVisible();
+    await expect
+        .soft(form.getByRole("button", { exact: true, name: "Use saved dose" }))
+        .toBeVisible();
+    await expectColoredSpriteIcons(form);
+};
+
+const expectColoredDraftRecovery = async (page: Readonly<Page>) => {
+    await page.reload();
+    const resume = page.getByRole("button", {
+        exact: true,
+        name: "Resume draft",
+    });
+    await expect.soft(resume).toBeVisible();
+    await expect
+        .soft(page.getByRole("button", { exact: true, name: "Discard draft" }))
+        .toBeVisible();
+    await expectColoredSpriteIcons(page.getByRole("main"));
+    await resume.press("Enter");
+    await expect.soft(fullColorNotes(page)).toHaveValue(fullColorDraft);
+    await expect
+        .soft(
+            page.getByRole("checkbox", { exact: true, name: "Add nutrients" })
+        )
+        .toBeChecked();
+    await expect
+        .soft(
+            page.getByRole("combobox", { exact: true, name: "Product / mix" })
+        )
+        .toHaveValue(fullColorProduct);
+};
+
+const expectColoredPortrait = async (page: Readonly<Page>) => {
+    const portrait = page
+        .getByRole("region", { exact: true, name: selectedPlantRegionName })
+        .getByRole("button", {
+            exact: true,
+            name: "Enlarge portrait of Collection plant 1",
+        });
+    await portrait.press("Enter");
+    const close = page.getByRole("button", {
+        exact: true,
+        name: "Close portrait",
+    });
+    await expect.soft(close).toBeVisible();
+    await expectColoredSpriteIcons(page.getByRole("dialog"));
+    await close.press("Enter");
+    await expect.soft(portrait).toBeFocused();
+};
+
+const expectColoredNavigation = async (page: Readonly<Page>) => {
+    const links = page.getByRole("group").filter({
+        has: page.getByText(gardenLinksName, { exact: true }),
+    });
+    if (!(await links.evaluate((element) => element.hasAttribute("open"))))
+        await page.getByText(gardenLinksName, { exact: true }).click();
+    await expectColoredSpriteIcons(
+        page.getByRole("navigation", { name: gardenLinksName })
+    );
+    await page
+        .getByRole("button", { exact: true, name: "Table" })
+        .press("Enter");
+    await expect
+        .soft(page.getByRole("button", { exact: true, name: "Table" }))
+        .toHaveAttribute(pressedAttribute, "true");
+    await expectColoredSpriteIcons(page.getByRole("main"));
+};
+
+const expectColoredRecalculation = async (page: Readonly<Page>) => {
+    await beginWorkbookRecalculation(page);
+    const controls = page.getByRole("group", { name: "Workbook controls" });
+    await expectColoredSpriteIcons(controls);
+    await confirmWorkbookRecalculation(page);
+    await expectColoredSpriteIcons(controls);
+    await expect.soft(fullColorNotes(page)).toHaveValue(fullColorDraft);
+};
+
+test.describe("full-color logger controls", { tag: "@logger" }, () => {
+    for (const theme of ["dark", "light"] as const) {
+        for (const width of [390, 1280]) {
+            test(`${width}px ${theme} retains artwork, names, drafts and queued payloads`, async ({
+                page,
+            }, testInfo) => {
+                const errors: string[] = [];
+                const recordError = (error: Readonly<Error>) => {
+                    errors.push(error.message);
+                };
+                page.on("pageerror", recordError);
+                await openLogger(
+                    page,
+                    width,
+                    theme,
+                    loggerBrowserFixture({ preserveQueue: true })
+                );
+                await expectNewControlIcons(page);
+                const originalQueue = await fullColorQueue(page);
+                await fullColorNotes(page).fill(fullColorDraft);
+                await expectColoredNavigation(page);
+                await expectNutrientControlArtwork(
+                    page.getByRole("form", { name: "Single plant entry" })
+                );
+                await page.screenshot({
+                    fullPage: true,
+                    path: testInfo.outputPath("full-color-single.png"),
+                });
+                expect.soft(await fullColorQueue(page)).toBe(originalQueue);
+                await expectColoredDraftRecovery(page);
+                const single = page.getByRole("tab", {
+                    exact: true,
+                    name: singlePlantTabName,
+                });
+                const bulk = page.getByRole("tab", {
+                    exact: true,
+                    name: bulkCareTab,
+                });
+                await single.focus();
+                await page.keyboard.press("ArrowRight");
+                await expect.soft(bulk).toBeFocused();
+                await page
+                    .getByRole("button", { exact: true, name: "Table" })
+                    .press("Enter");
+                await expectNutrientControlArtwork(
+                    page.getByRole("form", { name: "Bulk care entry" })
+                );
+                await page.screenshot({
+                    fullPage: true,
+                    path: testInfo.outputPath("full-color-bulk.png"),
+                });
+                await bulk.focus();
+                await page.keyboard.press("ArrowLeft");
+                await page
+                    .getByRole("button", {
+                        exact: true,
+                        name: "Compact history",
+                    })
+                    .press("Space");
+                await expectColoredSpriteIcons(
+                    page.getByRole("region", { name: "Recent History" })
+                );
+                await expectColoredPortrait(page);
+                await expectColoredRecalculation(page);
+                expect.soft(await fullColorQueue(page)).toBe(originalQueue);
+                expect
+                    .soft(
+                        await page.evaluate(
+                            () =>
+                                document.documentElement.scrollWidth <=
+                                innerWidth
+                        )
+                    )
+                    .toBe(true);
+                page.off("pageerror", recordError);
+                expect.soft(errors).toStrictEqual([]);
+            });
+        }
+    }
 });

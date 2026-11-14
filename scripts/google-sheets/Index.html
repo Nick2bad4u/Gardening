@@ -210,6 +210,10 @@
                     padding-block: 10px;
                     font-weight: 700;
                     cursor: pointer;
+
+                    & :where(.app-icon) {
+                        margin-inline-end: 6px;
+                    }
                 }
 
                 & > :where(summary:focus-visible) {
@@ -1590,6 +1594,10 @@
                     font-weight: 700;
                     color: var(--forest-2);
                     cursor: pointer;
+
+                    & :where(.app-icon) {
+                        margin-inline-end: 6px;
+                    }
                 }
 
                 & > :where(summary:focus-visible) {
@@ -2370,7 +2378,11 @@
                     }
 
                     &[data-facing=""] {
+                        display: flex;
                         grid-column: 1 / -1;
+                        gap: 8px;
+                        align-items: center;
+                        justify-content: center;
                         min-block-size: 44px;
                         margin-block-start: 4px;
                     }
@@ -2384,11 +2396,13 @@
             }
 
             .rotation-direction-icon {
-                inline-size: 22px;
-                block-size: 22px;
+                inline-size: 26px;
+                block-size: 26px;
             }
 
             .rotation-compass-pot {
+                --rotation-arrow-tip: #9fdaac;
+
                 display: grid;
                 grid-area: 2 / 2;
                 gap: 5px;
@@ -2399,6 +2413,8 @@
                 text-align: center;
 
                 [data-position="start"] & {
+                    --rotation-arrow-tip: #9bd2f5;
+
                     color: var(--info-ink);
                 }
             }
@@ -14681,6 +14697,703 @@
                 </g>
             </symbol>
 
+            <symbol
+                id="app-icon-facing-window"
+                viewBox="0 0 64 64"
+            >
+                <desc id="app-ui-facing-window-description">
+                    A cream-framed window has four blue glass panes, pale
+                    outdoor greenery, and diagonal reflections.
+                </desc>
+                <defs>
+                    <linearGradient
+                        id="app-ui-facing-window-frame"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                    >
+                        <stop
+                            offset="0"
+                            stop-color="#fff7e4"
+                        />
+                        <stop
+                            offset="0.58"
+                            stop-color="#f1e8ce"
+                        />
+                        <stop
+                            offset="1"
+                            stop-color="#c7b58d"
+                        />
+                    </linearGradient>
+                    <linearGradient
+                        id="app-ui-facing-window-glass"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                    >
+                        <stop
+                            offset="0"
+                            stop-color="#d6f1f3"
+                        />
+                        <stop
+                            offset="0.5"
+                            stop-color="#8bc4dd"
+                        />
+                        <stop
+                            offset="1"
+                            stop-color="#4b87ac"
+                        />
+                    </linearGradient>
+                    <clipPath id="app-ui-facing-window-panes">
+                        <rect
+                            x="16"
+                            y="13"
+                            width="32"
+                            height="35"
+                            rx="1"
+                        />
+                    </clipPath>
+                </defs>
+                <g
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <ellipse
+                        cx="32"
+                        cy="57"
+                        rx="23"
+                        ry="2"
+                        fill="#294d3d"
+                        opacity="0.13"
+                    />
+                    <path
+                        d="M14 10h39v43H14Z"
+                        fill="#aa9676"
+                        stroke="#6d6654"
+                        stroke-width="1.8"
+                    />
+                    <rect
+                        x="11"
+                        y="8"
+                        width="40"
+                        height="44"
+                        rx="2"
+                        fill="url(#app-ui-facing-window-frame)"
+                        stroke="#736e58"
+                        stroke-width="1.8"
+                    />
+                    <rect
+                        x="16"
+                        y="13"
+                        width="32"
+                        height="35"
+                        rx="1"
+                        fill="url(#app-ui-facing-window-glass)"
+                        stroke="#6b8d98"
+                        stroke-width="1.5"
+                    />
+                    <g clip-path="url(#app-ui-facing-window-panes)">
+                        <path
+                            d="M13 45q8-10 16-3 7-9 23-3v12H13Z"
+                            fill="#94bda0"
+                        />
+                        <path
+                            d="M17 27 29 14M18 34 36 14M36 46 48 32"
+                            fill="none"
+                            stroke="#f3ffff"
+                            stroke-width="2.2"
+                            opacity="0.7"
+                        />
+                    </g>
+                    <path
+                        d="M30 12h4v37h-4ZM15 28h34v4H15Z"
+                        fill="url(#app-ui-facing-window-frame)"
+                        stroke="#b0a584"
+                        stroke-width="0.7"
+                    />
+                    <path
+                        d="M13 10h36M13 11v37M31 14v32M17 29h30"
+                        fill="none"
+                        stroke="#fffbea"
+                        stroke-width="1.2"
+                    />
+                    <path
+                        d="M9 52h46v4H9Z"
+                        fill="url(#app-ui-facing-window-frame)"
+                        stroke="#736e58"
+                        stroke-width="1.6"
+                    />
+                    <path
+                        d="M12 53h40"
+                        fill="none"
+                        stroke="#fffbea"
+                        stroke-width="1.2"
+                    />
+                </g>
+            </symbol>
+            <symbol
+                id="app-icon-facing-wall"
+                viewBox="0 0 64 64"
+            >
+                <desc id="app-ui-facing-wall-description">
+                    A warm terracotta brick wall has staggered mortar joints, a
+                    cream plaster patch, and a shaded side edge.
+                </desc>
+                <defs>
+                    <linearGradient
+                        id="app-ui-facing-wall-brick"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                    >
+                        <stop
+                            offset="0"
+                            stop-color="#efb18b"
+                        />
+                        <stop
+                            offset="0.55"
+                            stop-color="#d78b69"
+                        />
+                        <stop
+                            offset="1"
+                            stop-color="#b46c51"
+                        />
+                    </linearGradient>
+                    <linearGradient
+                        id="app-ui-facing-wall-plaster"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                    >
+                        <stop
+                            offset="0"
+                            stop-color="#fff7e4"
+                        />
+                        <stop
+                            offset="1"
+                            stop-color="#dfd2b6"
+                        />
+                    </linearGradient>
+                </defs>
+                <g
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <ellipse
+                        cx="32"
+                        cy="57"
+                        rx="24"
+                        ry="2"
+                        fill="#294d3d"
+                        opacity="0.13"
+                    />
+                    <path
+                        d="M53 12 58 16v36l-5 3Z"
+                        fill="#a86f54"
+                        stroke="#78523e"
+                        stroke-width="1.8"
+                    />
+                    <rect
+                        x="7"
+                        y="12"
+                        width="46"
+                        height="42"
+                        rx="1.5"
+                        fill="url(#app-ui-facing-wall-brick)"
+                        stroke="#78523e"
+                        stroke-width="1.8"
+                    />
+                    <path
+                        d="M8 23h44M8 33h44M8 43h44M23 13v10M40 13v10M15 23v10M32 23v10M23 33v10M40 33v10M15 43v10M32 43v10"
+                        fill="none"
+                        stroke="#f1dec0"
+                        stroke-width="2.2"
+                    />
+                    <path
+                        d="M10 16h10M26 16h11M10 36h10M26 46h3M35 46h14"
+                        fill="none"
+                        stroke="#ffc9a2"
+                        stroke-width="1.4"
+                        opacity="0.8"
+                    />
+                    <path
+                        d="M30 13h22v24l-6-1-2-6-7 2-2-6-6-3 3-5Z"
+                        fill="url(#app-ui-facing-wall-plaster)"
+                        stroke="#bda988"
+                        stroke-width="1.2"
+                    />
+                    <path
+                        d="M34 15h15v15M38 25l4 2"
+                        fill="none"
+                        stroke="#fffbed"
+                        stroke-width="1.3"
+                    />
+                    <path
+                        d="M9 52h42M55 18v31"
+                        fill="none"
+                        stroke="#86563f"
+                        stroke-width="1.1"
+                        opacity="0.65"
+                    />
+                </g>
+            </symbol>
+            <symbol
+                id="app-icon-facing-room"
+                viewBox="0 0 64 64"
+            >
+                <desc id="app-ui-facing-room-description">
+                    A cutaway room shows cream and sage walls, a warm wooden
+                    floor, and a blue doorway in perspective.
+                </desc>
+                <defs>
+                    <linearGradient
+                        id="app-ui-facing-room-wall"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                    >
+                        <stop
+                            offset="0"
+                            stop-color="#fff7e4"
+                        />
+                        <stop
+                            offset="1"
+                            stop-color="#ded0af"
+                        />
+                    </linearGradient>
+                    <linearGradient
+                        id="app-ui-facing-room-floor"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                    >
+                        <stop
+                            offset="0"
+                            stop-color="#edc38d"
+                        />
+                        <stop
+                            offset="1"
+                            stop-color="#ba8055"
+                        />
+                    </linearGradient>
+                    <linearGradient
+                        id="app-ui-facing-room-door"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                    >
+                        <stop
+                            offset="0"
+                            stop-color="#7ba3aa"
+                        />
+                        <stop
+                            offset="1"
+                            stop-color="#365e70"
+                        />
+                    </linearGradient>
+                </defs>
+                <g
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <ellipse
+                        cx="32"
+                        cy="58"
+                        rx="23"
+                        ry="2"
+                        fill="#294d3d"
+                        opacity="0.13"
+                    />
+                    <path
+                        d="M8 20 32 8v31L8 51Z"
+                        fill="url(#app-ui-facing-room-wall)"
+                        stroke="#7a7c65"
+                        stroke-width="1.7"
+                    />
+                    <path
+                        d="m32 8 24 12v31L32 39Z"
+                        fill="#a8bfa8"
+                        stroke="#647d6b"
+                        stroke-width="1.7"
+                    />
+                    <path
+                        d="m8 51 24-12 24 12-24 8Z"
+                        fill="url(#app-ui-facing-room-floor)"
+                        stroke="#856444"
+                        stroke-width="1.7"
+                    />
+                    <path
+                        d="m18 46 24 10M27 42l24 11M20 55l24-10"
+                        fill="none"
+                        stroke="#9d744e"
+                        stroke-width="1"
+                    />
+                    <path
+                        d="M10 48 31 38M33 38l21 11"
+                        fill="none"
+                        stroke="#f5ecd7"
+                        stroke-width="2.5"
+                    />
+                    <path
+                        d="m39 23 12 6v19l-12-6Z"
+                        fill="url(#app-ui-facing-room-door)"
+                        stroke="#3e5b60"
+                        stroke-width="1.5"
+                    />
+                    <path
+                        d="M38 42V21l14 7v21"
+                        fill="none"
+                        stroke="#f3e8cd"
+                        stroke-width="2.2"
+                    />
+                    <path
+                        d="m42 27 6 3v9l-6-3Z"
+                        fill="#92b8be"
+                        opacity="0.55"
+                    />
+                    <circle
+                        cx="48"
+                        cy="41"
+                        r="1.2"
+                        fill="#f5d384"
+                    />
+                    <path
+                        d="m15 24 10-5v11l-10 5Z"
+                        fill="#d6e4c5"
+                        stroke="#a6936d"
+                        stroke-width="1.2"
+                    />
+                    <path
+                        d="m17 31 3-6 3 2"
+                        fill="none"
+                        stroke="#6b9477"
+                        stroke-width="1.5"
+                    />
+                    <path
+                        d="M10 22 30 12M34 12l20 10"
+                        fill="none"
+                        stroke="#fff9e6"
+                        stroke-width="1.2"
+                        opacity="0.8"
+                    />
+                </g>
+            </symbol>
+            <symbol
+                id="app-icon-facing-mylar"
+                viewBox="0 0 64 64"
+            >
+                <desc id="app-ui-facing-mylar-description">
+                    A silvery reflective sheet has faceted folds, blue and
+                    lavender reflections, and small bright glints.
+                </desc>
+                <defs>
+                    <linearGradient
+                        id="app-ui-facing-mylar-silver"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                    >
+                        <stop
+                            offset="0"
+                            stop-color="#e8f1ed"
+                        />
+                        <stop
+                            offset="0.27"
+                            stop-color="#a6becb"
+                        />
+                        <stop
+                            offset="0.46"
+                            stop-color="#f5faf4"
+                        />
+                        <stop
+                            offset="0.68"
+                            stop-color="#819aa9"
+                        />
+                        <stop
+                            offset="1"
+                            stop-color="#d4e4e5"
+                        />
+                    </linearGradient>
+                    <clipPath id="app-ui-facing-mylar-sheet">
+                        <path d="M13 9h36l3 4v40l-4 3H13Z" />
+                    </clipPath>
+                </defs>
+                <g
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <ellipse
+                        cx="32"
+                        cy="58"
+                        rx="23"
+                        ry="2"
+                        fill="#294d3d"
+                        opacity="0.13"
+                    />
+                    <path
+                        d="M13 9h36l3 4v40l-4 3H13Z"
+                        fill="url(#app-ui-facing-mylar-silver)"
+                        stroke="#58717e"
+                        stroke-width="1.8"
+                    />
+                    <g clip-path="url(#app-ui-facing-mylar-sheet)">
+                        <path
+                            d="m13 9 21 15L13 39Z"
+                            fill="#d3e9ef"
+                            opacity="0.85"
+                        />
+                        <path
+                            d="m34 24 18-11v28Z"
+                            fill="#9cb7cb"
+                            opacity="0.7"
+                        />
+                        <path
+                            d="m13 39 21-15 8 24Z"
+                            fill="#f6faf2"
+                            opacity="0.8"
+                        />
+                        <path
+                            d="m13 39 29 9-13 8H13Z"
+                            fill="#a89fbd"
+                            opacity="0.55"
+                        />
+                        <path
+                            d="m42 48 10-7v15H29Z"
+                            fill="#afdfd2"
+                            opacity="0.7"
+                        />
+                        <path
+                            d="m13 39 21-15 8 24 10-7M34 24l15-15"
+                            fill="none"
+                            stroke="#ffffff"
+                            stroke-width="1.1"
+                            opacity="0.85"
+                        />
+                        <path
+                            d="M17 14v17M17 45v7M47 16v15"
+                            fill="none"
+                            stroke="#f6fbf8"
+                            stroke-width="2"
+                            opacity="0.85"
+                        />
+                    </g>
+                    <path
+                        d="M49 10v42l-2 3"
+                        fill="none"
+                        stroke="#6d8794"
+                        stroke-width="1.2"
+                    />
+                    <path
+                        d="m53 6 1.5 4.5L59 12l-4.5 1.5L53 18l-1.5-4.5L47 12l4.5-1.5Z"
+                        fill="#fff4cb"
+                        stroke="#7797aa"
+                        stroke-width="1"
+                    />
+                    <path
+                        d="m8 34 1 3 3 1-3 1-1 3-1-3-3-1 3-1Z"
+                        fill="#d3f2ee"
+                        stroke="#799eaa"
+                        stroke-width="0.8"
+                    />
+                </g>
+            </symbol>
+            <symbol
+                id="app-icon-calculator"
+                viewBox="0 0 64 64"
+            >
+                <desc id="app-ui-calculator-description">
+                    A teal calculator has an amber face, a pale green display,
+                    cream number keys, and coral operation keys.
+                </desc>
+                <defs>
+                    <linearGradient
+                        id="app-ui-calculator-body"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                    >
+                        <stop
+                            offset="0"
+                            stop-color="#74b5ae"
+                        />
+                        <stop
+                            offset="1"
+                            stop-color="#326f72"
+                        />
+                    </linearGradient>
+                    <linearGradient
+                        id="app-ui-calculator-face"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                    >
+                        <stop
+                            offset="0"
+                            stop-color="#ffe2a0"
+                        />
+                        <stop
+                            offset="1"
+                            stop-color="#d8a752"
+                        />
+                    </linearGradient>
+                    <linearGradient
+                        id="app-ui-calculator-display"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                    >
+                        <stop
+                            offset="0"
+                            stop-color="#f0f7dd"
+                        />
+                        <stop
+                            offset="1"
+                            stop-color="#b8d6b7"
+                        />
+                    </linearGradient>
+                </defs>
+                <g
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <ellipse
+                        cx="32"
+                        cy="58"
+                        rx="20"
+                        ry="2"
+                        fill="#294d3d"
+                        opacity="0.13"
+                    />
+                    <rect
+                        x="15"
+                        y="9"
+                        width="36"
+                        height="47"
+                        rx="5"
+                        fill="url(#app-ui-calculator-body)"
+                        stroke="#315d60"
+                        stroke-width="1.8"
+                    />
+                    <rect
+                        x="13"
+                        y="7"
+                        width="36"
+                        height="47"
+                        rx="5"
+                        fill="url(#app-ui-calculator-face)"
+                        stroke="#6f7151"
+                        stroke-width="1.8"
+                    />
+                    <rect
+                        x="18"
+                        y="12"
+                        width="26"
+                        height="14"
+                        rx="2"
+                        fill="url(#app-ui-calculator-display)"
+                        stroke="#5f867b"
+                        stroke-width="1.6"
+                    />
+                    <path
+                        d="M20 14h22"
+                        fill="none"
+                        stroke="#fffce8"
+                        stroke-width="1.3"
+                    />
+                    <path
+                        d="M29 17h5v3h-5v3h5M37 17v3h5m0-3v6"
+                        fill="none"
+                        stroke="#476b5e"
+                        stroke-width="1.6"
+                    />
+                    <g
+                        fill="#fff4dc"
+                        stroke="#9b895f"
+                        stroke-width="1"
+                    >
+                        <rect
+                            x="18"
+                            y="31"
+                            width="7"
+                            height="5"
+                            rx="1.3"
+                        />
+                        <rect
+                            x="28"
+                            y="31"
+                            width="7"
+                            height="5"
+                            rx="1.3"
+                        />
+                        <rect
+                            x="18"
+                            y="39"
+                            width="7"
+                            height="5"
+                            rx="1.3"
+                        />
+                        <rect
+                            x="28"
+                            y="39"
+                            width="7"
+                            height="5"
+                            rx="1.3"
+                        />
+                        <rect
+                            x="18"
+                            y="47"
+                            width="17"
+                            height="4"
+                            rx="1.3"
+                        />
+                    </g>
+                    <rect
+                        x="38"
+                        y="31"
+                        width="6"
+                        height="5"
+                        rx="1.3"
+                        fill="#e7a28b"
+                        stroke="#a06d5d"
+                        stroke-width="1"
+                    />
+                    <rect
+                        x="38"
+                        y="39"
+                        width="6"
+                        height="12"
+                        rx="1.3"
+                        fill="#699d99"
+                        stroke="#466f6c"
+                        stroke-width="1"
+                    />
+                    <path
+                        d="M40 44h2M40 47h2M40 33.5h2"
+                        fill="none"
+                        stroke="#fff7e4"
+                        stroke-width="1.1"
+                    />
+                    <path
+                        d="M16 11v38M18 9h25"
+                        fill="none"
+                        stroke="#fff0c7"
+                        stroke-width="1.2"
+                        opacity="0.8"
+                    />
+                </g>
+            </symbol>
+
             <!-- GENERATED PLANT ICONS START -->
             <!-- Plant portraits load from their cached standalone SVG assets. -->
             <!-- GENERATED PLANT ICONS END -->
@@ -14801,7 +15514,16 @@
                             id="gardenLinksDisclosure"
                             class="garden-links-disclosure"
                         >
-                            <summary>Garden links</summary>
+                            <summary
+                                ><svg
+                                    viewBox="0 0 64 64"
+                                    class="app-icon app-icon--small"
+                                    aria-hidden="true"
+                                    focusable="false"
+                                >
+                                    <use href="#app-icon-menu"></use></svg
+                                >Garden links</summary
+                            >
                             <nav
                                 id="globalLinks"
                                 class="global-links"
@@ -14940,25 +15662,12 @@
                             aria-label="Recalculate workbook"
                             aria-describedby="workbookCalculationStatus"
                             ><svg
-                                viewBox="0 0 24 24"
+                                viewBox="0 0 64 64"
                                 class="app-icon app-icon--small"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
                                 aria-hidden="true"
+                                focusable="false"
                             >
-                                <rect
-                                    x="5"
-                                    y="2"
-                                    width="14"
-                                    height="20"
-                                    rx="2"
-                                ></rect>
-                                <path
-                                    d="M8 6h8M8 10h1m6 0h1M8 14h1m6 0h1M8 18h1m6 0h1"
-                                ></path></svg
+                                <use href="#app-icon-calculator"></use></svg
                             ><span id="recalculateWorkbookLabel"
                                 >Recalculate</span
                             ></button
@@ -17863,6 +18572,7 @@
             <p class="hint">Collection artwork; not identification evidence.</p>
             <form method="dialog"
                 ><button
+                    id="portraitClose"
                     class="secondary"
                     type="submit"
                     >Close portrait</button
@@ -19552,7 +20262,7 @@
 
             function showToast(message, isError = false, duration = 4200) {
                 const toast = $("toast");
-                toast.textContent = message;
+                setIconLabel(toast, isError ? "caution" : "info", message);
                 toast.classList.toggle("error", isError);
                 toast.classList.add("visible");
                 clearTimeout(showToast.timer);
@@ -22480,7 +23190,12 @@
                 const moreSummary =
                     more.querySelector(":scope > summary") ||
                     document.createElement("summary");
-                moreSummary.textContent = "More plant details";
+                setIconLabel(
+                    moreSummary,
+                    "info",
+                    "More plant details",
+                    "app-icon app-icon--small"
+                );
                 more.replaceChildren(moreSummary, meta, secondaryMetrics);
                 const activity = plant.activitySummary || {};
                 const intervalEvidence =
@@ -24115,25 +24830,13 @@
             }
 
             function createRotationDirectionIcon(facing) {
-                const paths = {
-                    N: "M4 3h16v18H4z M4 10h16 M12 3v18",
-                    E: "M3 4h18v16H3z M3 9h18 M3 15h18 M9 4v5 M15 9v6 M9 15v5",
-                    S: "M3 21V4l11-2v19 M14 7h7v14H3 M10 12h.01",
-                    W: "M5 3h14v18H5z M8 16l8-8 M8 10l3-3 M13 17l3-3",
+                const icons = {
+                    N: "facing-window",
+                    E: "facing-wall",
+                    S: "facing-room",
+                    W: "facing-mylar",
                 };
-                const svg = chartElement("svg", {
-                    class: "rotation-direction-icon",
-                    viewBox: "0 0 24 24",
-                    "aria-hidden": "true",
-                    focusable: "false",
-                    fill: "none",
-                    stroke: "currentColor",
-                    "stroke-width": 1.6,
-                    "stroke-linecap": "round",
-                    "stroke-linejoin": "round",
-                });
-                svg.append(chartElement("path", { d: paths[facing] }));
-                return svg;
+                return createIcon(icons[facing], "rotation-direction-icon");
             }
 
             function createRotationCompassDial() {
@@ -24159,13 +24862,16 @@
                     }),
                     chartElement("path", {
                         d: "M50 13 62 31H38Z",
-                        fill: "currentColor",
+                        fill: "var(--rotation-arrow-tip)",
+                        stroke: "currentColor",
+                        "stroke-width": 1.5,
+                        "stroke-linejoin": "round",
                     }),
                     chartElement("circle", {
                         cx: 50,
                         cy: 50,
                         r: 9,
-                        fill: "var(--control)",
+                        fill: "#f6dda3",
                         stroke: "currentColor",
                         "stroke-width": 3,
                     })
@@ -24234,9 +24940,13 @@
                             destination.textContent = name.split(" · ")[1];
                             button.append(destination);
                         } else {
-                            button.textContent = starting
-                                ? "Unknown / not recorded"
-                                : "Clear new facing";
+                            setIconLabel(
+                                button,
+                                starting ? "info" : "close",
+                                starting
+                                    ? "Unknown / not recorded"
+                                    : "Clear new facing"
+                            );
                         }
                         button.addEventListener("click", () => {
                             chooseCompassFacing(select, facing);
@@ -29570,6 +30280,16 @@
             );
 
             [
+                ["entryDraftResume", "edit"],
+                ["entryDraftDiscard", "trash"],
+                ["tablePickerMode", "layout"],
+                ["bulkTablePickerMode", "layout"],
+                ["saveNutrientDose", "save"],
+                ["bulkSaveNutrientDose", "save"],
+                ["useNutrientDose", "feeding"],
+                ["bulkUseNutrientDose", "feeding"],
+                ["compactHistoryToggle", "history"],
+                ["portraitClose", "close"],
                 ["correctionResume", "edit"],
                 ["correctionDiscard", "close"],
                 ["correctionDiscardEditor", "close"],

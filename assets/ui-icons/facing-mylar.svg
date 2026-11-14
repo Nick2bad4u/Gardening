@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-facing-mylar-title" aria-describedby="ui-facing-mylar-description" data-ui-icon="facing-mylar" focusable="false">
+  <title id="ui-facing-mylar-title">Facing mylar</title>
+<desc id="ui-facing-mylar-description">A silvery reflective sheet has faceted folds, blue and lavender reflections, and small bright glints.</desc>
+<defs>
+  <linearGradient id="ui-facing-mylar-silver" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0" stop-color="#e8f1ed" />
+    <stop offset="0.27" stop-color="#a6becb" />
+    <stop offset="0.46" stop-color="#f5faf4" />
+    <stop offset="0.68" stop-color="#819aa9" />
+    <stop offset="1" stop-color="#d4e4e5" />
+  </linearGradient>
+  <clipPath id="ui-facing-mylar-sheet"><path d="M13 9h36l3 4v40l-4 3H13Z" /></clipPath>
+</defs>
+<g stroke-linecap="round" stroke-linejoin="round">
+  <ellipse cx="32" cy="58" rx="23" ry="2" fill="#294d3d" opacity="0.13" />
+  <path d="M13 9h36l3 4v40l-4 3H13Z" fill="url(#ui-facing-mylar-silver)" stroke="#58717e" stroke-width="1.8" />
+  <g clip-path="url(#ui-facing-mylar-sheet)">
+    <path d="m13 9 21 15L13 39Z" fill="#d3e9ef" opacity="0.85" />
+    <path d="m34 24 18-11v28Z" fill="#9cb7cb" opacity="0.7" />
+    <path d="m13 39 21-15 8 24Z" fill="#f6faf2" opacity="0.8" />
+    <path d="m13 39 29 9-13 8H13Z" fill="#a89fbd" opacity="0.55" />
+    <path d="m42 48 10-7v15H29Z" fill="#afdfd2" opacity="0.7" />
+    <path d="m13 39 21-15 8 24 10-7M34 24l15-15" fill="none" stroke="#ffffff" stroke-width="1.1" opacity="0.85" />
+    <path d="M17 14v17M17 45v7M47 16v15" fill="none" stroke="#f6fbf8" stroke-width="2" opacity="0.85" />
+  </g>
+  <path d="M49 10v42l-2 3" fill="none" stroke="#6d8794" stroke-width="1.2" />
+  <path d="m53 6 1.5 4.5L59 12l-4.5 1.5L53 18l-1.5-4.5L47 12l4.5-1.5Z" fill="#fff4cb" stroke="#7797aa" stroke-width="1" />
+  <path d="m8 34 1 3 3 1-3 1-1 3-1-3-3-1 3-1Z" fill="#d3f2ee" stroke="#799eaa" stroke-width="0.8" />
+</g>
+</svg>

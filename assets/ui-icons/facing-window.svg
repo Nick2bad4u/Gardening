@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-facing-window-title" aria-describedby="ui-facing-window-description" data-ui-icon="facing-window" focusable="false">
+  <title id="ui-facing-window-title">Facing window</title>
+<desc id="ui-facing-window-description">A cream-framed window has four blue glass panes, pale outdoor greenery, and diagonal reflections.</desc>
+<defs>
+  <linearGradient id="ui-facing-window-frame" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0" stop-color="#fff7e4" />
+    <stop offset="0.58" stop-color="#f1e8ce" />
+    <stop offset="1" stop-color="#c7b58d" />
+  </linearGradient>
+  <linearGradient id="ui-facing-window-glass" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0" stop-color="#d6f1f3" />
+    <stop offset="0.5" stop-color="#8bc4dd" />
+    <stop offset="1" stop-color="#4b87ac" />
+  </linearGradient>
+  <clipPath id="ui-facing-window-panes"><rect x="16" y="13" width="32" height="35" rx="1" /></clipPath>
+</defs>
+<g stroke-linecap="round" stroke-linejoin="round">
+  <ellipse cx="32" cy="57" rx="23" ry="2" fill="#294d3d" opacity="0.13" />
+  <path d="M14 10h39v43H14Z" fill="#aa9676" stroke="#6d6654" stroke-width="1.8" />
+  <rect x="11" y="8" width="40" height="44" rx="2" fill="url(#ui-facing-window-frame)" stroke="#736e58" stroke-width="1.8" />
+  <rect x="16" y="13" width="32" height="35" rx="1" fill="url(#ui-facing-window-glass)" stroke="#6b8d98" stroke-width="1.5" />
+  <g clip-path="url(#ui-facing-window-panes)">
+    <path d="M13 45q8-10 16-3 7-9 23-3v12H13Z" fill="#94bda0" />
+    <path d="M17 27 29 14M18 34 36 14M36 46 48 32" fill="none" stroke="#f3ffff" stroke-width="2.2" opacity="0.7" />
+  </g>
+  <path d="M30 12h4v37h-4ZM15 28h34v4H15Z" fill="url(#ui-facing-window-frame)" stroke="#b0a584" stroke-width="0.7" />
+  <path d="M13 10h36M13 11v37M31 14v32M17 29h30" fill="none" stroke="#fffbea" stroke-width="1.2" />
+  <path d="M9 52h46v4H9Z" fill="url(#ui-facing-window-frame)" stroke="#736e58" stroke-width="1.6" />
+  <path d="M12 53h40" fill="none" stroke="#fffbea" stroke-width="1.2" />
+</g>
+</svg>

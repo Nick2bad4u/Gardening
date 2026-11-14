@@ -33,10 +33,24 @@ a descriptive title, and an associated description. The September 5 review
 covered each icon at 64 px and 16–32 px on light and dark backgrounds, correcting
 joins, clipped edges, blade pivots, handles, stems, layering, and unclear symbols.
 Every symbol is exported to
-[`assets/ui-icons/`](../../assets/ui-icons/README.md); the build also synchronizes
-the logger's inline copies with namespaced gradient IDs. This keeps the logger's
+[`assets/ui-icons/`](../../assets/ui-icons/README.md). Site artwork builds leave
+the logger unchanged; a separate explicit logger-artwork synchronization updates
+its inline copies with namespaced gradient IDs. This keeps the logger's
 controls self-contained while making each icon available as a standalone SVG.
 The field guide's add and close controls also use the shared SVG artwork.
+
+The November 14 facing controls are four original repository vector symbols:
+`icon-facing-window`, `icon-facing-wall`, `icon-facing-room`, and
+`icon-facing-mylar`. Blue glass and a cream frame, terracotta brick with plaster,
+a room interior with a doorway, and a silver sheet with colored reflections
+distinguish the four directions at control sizes. Each uses native 64-unit
+geometry, its own accessible description and local gradients, and transparent
+optical padding. These schematic orientation cues do not depict measured room
+geometry or establish plant-facing observations. No external artwork was used;
+the existing artwork rights and adapted-image attributions remain unchanged.
+The accompanying original `icon-calculator` symbol uses a teal body, amber face,
+pale green display, and cream/coral keys for workbook recalculation. Its native
+64-unit artwork follows the same self-contained export and accessibility rules.
 
 These are navigation illustrations, not botanical diagrams,
 collection-identification evidence, or licensed species-reference photographs.

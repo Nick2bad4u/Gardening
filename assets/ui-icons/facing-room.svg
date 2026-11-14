@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-labelledby="ui-facing-room-title" aria-describedby="ui-facing-room-description" data-ui-icon="facing-room" focusable="false">
+  <title id="ui-facing-room-title">Facing room</title>
+<desc id="ui-facing-room-description">A cutaway room shows cream and sage walls, a warm wooden floor, and a blue doorway in perspective.</desc>
+<defs>
+  <linearGradient id="ui-facing-room-wall" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0" stop-color="#fff7e4" />
+    <stop offset="1" stop-color="#ded0af" />
+  </linearGradient>
+  <linearGradient id="ui-facing-room-floor" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0" stop-color="#edc38d" />
+    <stop offset="1" stop-color="#ba8055" />
+  </linearGradient>
+  <linearGradient id="ui-facing-room-door" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0" stop-color="#7ba3aa" />
+    <stop offset="1" stop-color="#365e70" />
+  </linearGradient>
+</defs>
+<g stroke-linecap="round" stroke-linejoin="round">
+  <ellipse cx="32" cy="58" rx="23" ry="2" fill="#294d3d" opacity="0.13" />
+  <path d="M8 20 32 8v31L8 51Z" fill="url(#ui-facing-room-wall)" stroke="#7a7c65" stroke-width="1.7" />
+  <path d="m32 8 24 12v31L32 39Z" fill="#a8bfa8" stroke="#647d6b" stroke-width="1.7" />
+  <path d="m8 51 24-12 24 12-24 8Z" fill="url(#ui-facing-room-floor)" stroke="#856444" stroke-width="1.7" />
+  <path d="m18 46 24 10M27 42l24 11M20 55l24-10" fill="none" stroke="#9d744e" stroke-width="1" />
+  <path d="M10 48 31 38M33 38l21 11" fill="none" stroke="#f5ecd7" stroke-width="2.5" />
+  <path d="m39 23 12 6v19l-12-6Z" fill="url(#ui-facing-room-door)" stroke="#3e5b60" stroke-width="1.5" />
+  <path d="M38 42V21l14 7v21" fill="none" stroke="#f3e8cd" stroke-width="2.2" />
+  <path d="m42 27 6 3v9l-6-3Z" fill="#92b8be" opacity="0.55" />
+  <circle cx="48" cy="41" r="1.2" fill="#f5d384" />
+  <path d="m15 24 10-5v11l-10 5Z" fill="#d6e4c5" stroke="#a6936d" stroke-width="1.2" />
+  <path d="m17 31 3-6 3 2" fill="none" stroke="#6b9477" stroke-width="1.5" />
+  <path d="M10 22 30 12M34 12l20 10" fill="none" stroke="#fff9e6" stroke-width="1.2" opacity="0.8" />
+</g>
+</svg>

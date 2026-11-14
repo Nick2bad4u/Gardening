@@ -1,6 +1,6 @@
 # Shared interface icons
 
-These 103 standalone multicolor SVGs are generated from the non-portrait symbols
+These 109 standalone multicolor SVGs are generated from the non-portrait symbols
 in [the canonical sprite](../artwork/plant-icons.svg). They cover
 menus, buttons, measurement and care fields, status indicators, and generic
 plant categories. The separate collection portraits live in `../plant-icons/`.
@@ -11,7 +11,7 @@ optical padding, warm
 paper highlights, muted botanical greens, blue-gray tools, terracotta accents,
 and gentle material shading. Small controls retain simple silhouettes; a button
 icon should not carry the same density of spines or leaves as a plant portrait.
-The 83 original control icons remain transparent, multicolored, static, and self-contained. The fourteen garden and report launcher icons have opaque square backgrounds, with their foreground artwork inside the central maskable safe circle.
+The 94 control icons remain transparent, multicolored, static, and self-contained. The fifteen garden and report launcher icons have opaque square backgrounds, with their foreground artwork inside the central maskable safe circle.
 Linear and radial gradients shade materials; local `defs` and SVG2 `use`
 references repeat details such as clock ticks, sun rays, and rosette leaves.
 Clipping keeps calendar colors, photo scenes, and the day/night disc inside
@@ -24,6 +24,14 @@ connected plant stems, a complete thermometer bulb, and distinct list/queue and
 check/status symbols. All icons were reviewed at 64 px and at 16–32 px. The
 automated render check rejects empty artwork or paint inside the outer two-pixel
 border, and reference checks catch missing or duplicate local definitions.
+
+The four facing controls use distinct original illustrations: a cream-framed
+blue-glass window (`facing-window`), warm brick and plaster (`facing-wall`), a
+dimensional interior and doorway (`facing-room`), and a faceted silver reflective
+sheet (`facing-mylar`). They accompany the logger's N/window, E/wall, S/room,
+and W/Mylar labels; the illustrations are orientation cues, not room photographs.
+The original `calculator` icon uses a teal body, amber face, pale display, and
+colored keys for workbook recalculation controls.
 
 Edit the canonical symbol, then run `npm run build:artwork`. This exports
 every icon here without changing the logger. The separate explicit
