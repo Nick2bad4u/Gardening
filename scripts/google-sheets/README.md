@@ -40,6 +40,25 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## Compact logger interface — 5.47.0 candidate
+
+The maintained **5.47.0** candidate adds compact weighing check/queue clock
+badges, a separate selection outline, larger picker portraits, a shorter phone
+header with **Garden links**, and a **More plant details** disclosure. The picker
+summary explicitly describes weighing; queued weights remain unconfirmed and
+can belong to an earlier care day.
+
+Single and bulk Rotation use compass controls for N/window, E/wall, S/room,
+and W/Mylar with visible facing and turn previews. They retain the existing
+cardinal fields, unknown-start baseline, zero-turn confirmation, manual-degree
+path, draft and retry contracts. This release changes client presentation and
+the version marker; server behavior, workbook schemas, AppSheet **1.100144**,
+artwork, and the ten-minute queue schedule remain unchanged.
+
+Production remains **5.46.1 / immutable version 139** until the deployment
+receipt below is replaced with verified source, browser, workbook, and trigger
+results. No synthetic observations are submitted during verification.
+
 ## Compact watering feedback — 5.46.1
 
 Production **5.46.1 / immutable version 139** shows a water-drop or

@@ -6,6 +6,7 @@ import { loggerBrowserFixture } from "../helpers/logger-browser-fixture.mjs";
 
 const pressedAttribute = "aria-pressed";
 const bulkCareTab = "Bulk care";
+const selectedPlantRegionName = "Selected plant";
 const recalculateWorkbookName = "Recalculate workbook";
 const fixtureClockTime = "2026-09-09T14:00:00Z";
 
@@ -124,7 +125,7 @@ const expectCompactHistory = async (page: Readonly<Page>) => {
 const expectPortraitAccess = async (page: Readonly<Page>, width: number) => {
     const selected = page.getByRole("region", {
         exact: true,
-        name: "Selected plant",
+        name: selectedPlantRegionName,
     });
     const portrait = selected.getByRole("button", {
         exact: true,
@@ -251,17 +252,26 @@ const expectSeparateFormControls = async (page: Readonly<Page>) => {
         .toHaveAttribute(pressedAttribute, "false");
 };
 
+const morePlantDetails = (page: Readonly<Page>) =>
+    page
+        .getByRole("group")
+        .filter({ has: page.getByText("More plant details", { exact: true }) });
+
 const expectTerrariumContext = async (page: Readonly<Page>) => {
     await page
         .getByRole("button", {
             exact: true,
-            name: "Label #12, Mixed tropical terrarium, P38, Queued · Saved today, weight safely queued",
+            name: "Label #12, Mixed tropical terrarium, P38, Weight queued · Weighed today, weight safely queued",
         })
         .click();
     const selected = page.getByRole("region", {
         exact: true,
-        name: "Selected plant",
+        name: selectedPlantRegionName,
     });
+    const more = morePlantDetails(page);
+    if (!(await more.evaluate((element) => element.hasAttribute("open")))) {
+        await page.getByText("More plant details", { exact: true }).click();
+    }
     await expect
         .soft(selected)
         .toContainText("dimension orientation unverified");
@@ -326,6 +336,316 @@ const openLogger = async (
         .toBeVisible();
 };
 
+const cardinalLoggerFixture = () =>
+    loggerBrowserFixture().replace(
+        "window.google =",
+        `fixtureBootstrap.actionContextsAvailable = true;
+        fixtureBootstrap.plants.forEach((plant) => {
+            plant.rotationFacing = {
+                facing: "N",
+                observedAt: "2026-09-05T12:00:00.000Z",
+                observationId: "fixture-facing-" + plant.id,
+                potSetup: plant.potSetup
+            };
+        });
+        window.google =`
+    );
+
+const expectCompassModels = async (
+    page: Readonly<Page>,
+    expected: Readonly<Record<string, string>>
+) => {
+    expect
+        .soft(
+            await page.evaluate(
+                (ids) =>
+                    Object.fromEntries(
+                        ids.map((id) => [
+                            id,
+                            document.querySelector<HTMLSelectElement>(`#${id}`)
+                                ?.value,
+                        ])
+                    ),
+                Object.keys(expected)
+            )
+        )
+        .toStrictEqual(expected);
+};
+
+const expectDisclosureDefaults = async (
+    page: Readonly<Page>,
+    width: number
+) => {
+    const links = page
+        .getByRole("group")
+        .filter({ has: page.getByText("Garden links", { exact: true }) });
+    await expect.soft(links).toHaveJSProperty("open", width > 860);
+    await expect
+        .soft(morePlantDetails(page))
+        .toHaveJSProperty("open", width > 860);
+    const selected = page.getByRole("region", {
+        exact: true,
+        name: selectedPlantRegionName,
+    });
+    await expect
+        .soft(selected.getByText("430 g", { exact: true }))
+        .toBeVisible();
+    await expect
+        .soft(selected.getByText("Sep 5, 2026", { exact: true }))
+        .toBeVisible();
+};
+
+const refreshWhileFocused = async (
+    page: Readonly<Page>,
+    focused: Readonly<Locator>
+) => {
+    await focused.focus();
+    // A background refresh must not steal focus from an actively used control.
+    await page.evaluate(() =>
+        document.querySelector<HTMLButtonElement>("#refreshDataButton")?.click()
+    );
+    await expect.soft(focused).toBeFocused();
+};
+
+const expectGardenLinksKeyboard = async (
+    page: Readonly<Page>,
+    width: number
+) => {
+    const links = page
+        .getByRole("group")
+        .filter({ has: page.getByText("Garden links", { exact: true }) });
+    const toggle = page.getByText("Garden links", { exact: true });
+    await toggle.focus();
+    await toggle.press("Enter");
+    await expect.soft(links).toHaveJSProperty("open", width <= 860);
+    await expect.soft(toggle).toBeFocused();
+    await toggle.press("Space");
+    if (width <= 860) await toggle.press("Enter");
+    await refreshWhileFocused(
+        page,
+        links.getByRole("link", { exact: true, name: "Field guide" })
+    );
+    await expect.soft(links).toHaveJSProperty("open", true);
+};
+
+const expectPlantDetailsKeyboard = async (
+    page: Readonly<Page>,
+    width: number
+) => {
+    const toggle = page.getByText("More plant details", { exact: true });
+    await toggle.focus();
+    await toggle.press("Enter");
+    await expect
+        .soft(morePlantDetails(page))
+        .toHaveJSProperty("open", width <= 860);
+    await expect.soft(toggle).toBeFocused();
+    await refreshWhileFocused(page, toggle);
+    await expect
+        .soft(morePlantDetails(page))
+        .toHaveJSProperty("open", width <= 860);
+    const search = page.getByRole("searchbox", {
+        name: "Find by name, ID, or label",
+    });
+    await search.fill("no matching plant in this collection");
+    await expect.soft(morePlantDetails(page)).toHaveCount(0);
+    await search.fill("");
+    await expect
+        .soft(morePlantDetails(page))
+        .toHaveJSProperty("open", width <= 860);
+};
+
+const expectCompassKeyboard = async (page: Readonly<Page>) => {
+    const origin = page.getByRole("group", {
+        exact: true,
+        name: "Starting facing",
+    });
+    const target = page.getByRole("group", { exact: true, name: "New facing" });
+    await expect
+        .soft(
+            origin.getByRole("button", { exact: true, name: "North · window" })
+        )
+        .toHaveAttribute(pressedAttribute, "true");
+    const west = target.getByRole("button", {
+        exact: true,
+        name: "West · Mylar",
+    });
+    await west.click();
+    await expect.soft(west).toHaveAttribute(pressedAttribute, "true");
+    await west.press("ArrowRight");
+    const east = target.getByRole("button", {
+        exact: true,
+        name: "East · wall",
+    });
+    await expect.soft(east).toBeFocused();
+    await expect.soft(east).toHaveAttribute(pressedAttribute, "true");
+    await east.press("End");
+    await expect.soft(west).toBeFocused();
+    await expectCompassModels(page, { rotationToFacing: "W" });
+};
+
+const expectCompassDraft = async (page: Readonly<Page>) => {
+    const origin = page.getByRole("group", {
+        exact: true,
+        name: "Starting facing",
+    });
+    await origin
+        .getByRole("button", { exact: true, name: "Unknown / not recorded" })
+        .click();
+    const notes = page.getByRole("textbox", { exact: true, name: "Notes" });
+    await notes.fill("Unfinished compass entry");
+    await page.reload();
+    await page
+        .getByRole("button", { exact: true, name: "Resume draft" })
+        .click();
+    await expectCompassModels(page, {
+        rotationFromFacing: "",
+        rotationToFacing: "W",
+    });
+    const target = page.getByRole("group", { exact: true, name: "New facing" });
+    await expect
+        .soft(target.getByRole("button", { exact: true, name: "West · Mylar" }))
+        .toHaveAttribute(pressedAttribute, "true");
+    await expect.soft(notes).toHaveValue("Unfinished compass entry");
+};
+
+const expectCompassValidation = async (page: Readonly<Page>) => {
+    const target = page.getByRole("group", { exact: true, name: "New facing" });
+    await target
+        .getByRole("button", { exact: true, name: "Clear new facing" })
+        .click();
+    await expectCompassModels(page, { rotationToFacing: "" });
+    await page
+        .getByRole("button", { exact: true, name: "Add to queue" })
+        .click();
+    const north = target.getByRole("button", {
+        exact: true,
+        name: "North · window",
+    });
+    await expect.soft(north).toBeFocused();
+    await expect.soft(north).toHaveAttribute("aria-invalid", "true");
+    await target
+        .getByRole("button", { exact: true, name: "West · Mylar" })
+        .click();
+    await expect.soft(north).not.toHaveAttribute("aria-invalid", "true");
+};
+
+const expectBulkCompass = async (page: Readonly<Page>) => {
+    await page.getByRole("tab", { exact: true, name: bulkCareTab }).click();
+    await page.getByRole("button", { exact: true, name: "Water" }).click();
+    await page.getByRole("button", { exact: true, name: "Rotation" }).click();
+    const picker = page.getByRole("group", {
+        name: "Choose plants for bulk care",
+    });
+    await picker.getByRole("checkbox", { name: /P01/v }).check();
+    const origin = page.getByRole("group", {
+        exact: true,
+        name: "A1 · Collection plant 1 — starting facing",
+    });
+    const target = page.getByRole("group", {
+        exact: true,
+        name: "New facing for selected plants",
+    });
+    await origin
+        .getByRole("button", { exact: true, name: "South · room" })
+        .click();
+    await target
+        .getByRole("button", { exact: true, name: "East · wall" })
+        .click();
+    await expectCompassModels(page, {
+        "bulkRotationFrom-P01": "S",
+        bulkRotationToFacing: "E",
+    });
+    await picker.getByRole("checkbox", { name: /P02/v }).check();
+    await expectCompassModels(page, {
+        "bulkRotationFrom-P01": "S",
+        "bulkRotationFrom-P02": "N",
+        bulkRotationToFacing: "E",
+    });
+    await expect
+        .soft(target.getByRole("button", { exact: true, name: "East · wall" }))
+        .toHaveAttribute(pressedAttribute, "true");
+};
+
+for (const theme of ["dark", "light"] as const) {
+    for (const width of [390, 1280]) {
+        test.describe(
+            `logger polish ${theme} ${width}px`,
+            { tag: "@logger" },
+            () => {
+                test("disclosures retain primary information and keyboard state through refresh", async ({
+                    page,
+                }) => {
+                    await openLogger(page, width, theme);
+                    await expectDisclosureDefaults(page, width);
+                    await expectGardenLinksKeyboard(page, width);
+                    await expectPlantDetailsKeyboard(page, width);
+                    expect
+                        .soft(
+                            await page.evaluate(
+                                () =>
+                                    document.documentElement.scrollWidth <=
+                                    innerWidth
+                            )
+                        )
+                        .toBe(true);
+                });
+
+                test("compass keyboard selection preserves drafts and explicit unknown origins", async ({
+                    page,
+                }, testInfo) => {
+                    await openLogger(
+                        page,
+                        width,
+                        theme,
+                        cardinalLoggerFixture()
+                    );
+                    await page
+                        .getByRole("button", { exact: true, name: "Rotation" })
+                        .click();
+                    await expectCompassKeyboard(page);
+                    await expectCompassDraft(page);
+                    await expectCompassValidation(page);
+                    await page
+                        .getByRole("group", { exact: true, name: "New facing" })
+                        .screenshot({
+                            path: testInfo.outputPath("rotation-compass.png"),
+                        });
+                    expect
+                        .soft(
+                            await page.evaluate(
+                                () =>
+                                    document.documentElement.scrollWidth <=
+                                    innerWidth
+                            )
+                        )
+                        .toBe(true);
+                });
+
+                test("bulk compass keeps individual origins and destination independent", async ({
+                    page,
+                }) => {
+                    await openLogger(
+                        page,
+                        width,
+                        theme,
+                        cardinalLoggerFixture()
+                    );
+                    await expectBulkCompass(page);
+                    expect
+                        .soft(
+                            await page.evaluate(
+                                () =>
+                                    document.documentElement.scrollWidth <=
+                                    innerWidth
+                            )
+                        )
+                        .toBe(true);
+                });
+            }
+        );
+    }
+}
+
 const expectSummaryWithoutOverlap = async (
     page: Readonly<Page>,
     plantId: string,
@@ -338,12 +658,26 @@ const expectSummaryWithoutOverlap = async (
         .click();
     const selected = page.getByRole("region", {
         exact: true,
-        name: "Selected plant",
+        name: selectedPlantRegionName,
     });
     await expect.soft(selected.getByText(name, { exact: true })).toBeVisible();
     await expect
         .soft(selected.getByText(`${plantId} · ${progress}`, { exact: true }))
         .toBeVisible();
+    const expectedIcons: Readonly<Record<string, readonly string[]>> = {
+        "Weighed today": ["#app-icon-check"],
+        "Weight queued": ["#app-icon-clock"],
+        "Weight queued · Weighed today": ["#app-icon-clock", "#app-icon-check"],
+    };
+    expect
+        .soft(
+            await selected.evaluate((summary) =>
+                [...summary.querySelectorAll(":scope .plant-id svg use")].map(
+                    (icon) => icon.getAttribute("href")
+                )
+            )
+        )
+        .toStrictEqual(expectedIcons[progress]);
     await expect
         .soft(
             selected.getByRole("button", {
@@ -498,11 +832,11 @@ for (const theme of ["dark", "light"] as const) {
                     page,
                     "P05",
                     "Old Man of the Andes",
-                    "Saved today"
+                    "Weighed today"
                 );
                 const selected = page.getByRole("region", {
                     exact: true,
-                    name: "Selected plant",
+                    name: selectedPlantRegionName,
                 });
                 await selected.screenshot({
                     path: testInfo.outputPath("saved-plant-summary.png"),
@@ -511,13 +845,13 @@ for (const theme of ["dark", "light"] as const) {
                     page,
                     "P06",
                     "Eastern prickly pear cactus",
-                    "Queued"
+                    "Weight queued"
                 );
                 await expectSummaryWithoutOverlap(
                     page,
                     "P38",
                     "Mixed tropical terrarium",
-                    "Queued · Saved today"
+                    "Weight queued · Weighed today"
                 );
                 await selected.screenshot({
                     path: testInfo.outputPath("queued-plant-summary.png"),
@@ -710,20 +1044,34 @@ const expectSingleTableFilter = async (page: Readonly<Page>) => {
 
 const expectTableProgressFits = async (page: Readonly<Page>) => {
     const terrarium = tablePlant(tablePicker(page), "P38");
-    await expect.soft(terrarium).toHaveAccessibleName(/Queued · Saved today/v);
+    await terrarium.click();
+    await expect.soft(terrarium).toHaveAttribute(pressedAttribute, "true");
+    expect
+        .soft(
+            await terrarium.evaluate(
+                (button) => getComputedStyle(button).outlineStyle
+            )
+        )
+        .not.toBe("none");
+    await expect
+        .soft(terrarium)
+        .toHaveAccessibleName(/Weight queued · Weighed today/v);
     const bounds = await terrarium.evaluate((button) => {
         const rect = button.getBoundingClientRect();
-        const before = getComputedStyle(button, "::before");
-        const after = getComputedStyle(button, "::after");
+        const badges = [...button.querySelectorAll(".weighing-status-badge")];
         return {
-            badges: [before.content, after.content],
-            badgesFit: [before, after].every(
-                (style) =>
-                    Number(style.width.replace(/px$/v, "")) <=
-                        button.clientWidth &&
-                    Number(style.height.replace(/px$/v, "")) > 0 &&
-                    style.visibility === "visible"
-            ),
+            badges: badges.map((badge) => badge.getAttribute("aria-label")),
+            badgesFit: badges.every((badge) => {
+                const badgeBounds = badge.getBoundingClientRect();
+                return (
+                    badgeBounds.width > 0 &&
+                    badgeBounds.height > 0 &&
+                    badgeBounds.left >= rect.left &&
+                    badgeBounds.right <= rect.right &&
+                    badgeBounds.top >= rect.top &&
+                    badgeBounds.bottom <= rect.bottom
+                );
+            }),
             childrenFit: [...button.children].every((child) => {
                 const childRect = child.getBoundingClientRect();
                 return (
@@ -737,7 +1085,10 @@ const expectTableProgressFits = async (page: Readonly<Page>) => {
         };
     });
     expect.soft(bounds).toStrictEqual({
-        badges: ['"Saved today"', '"Queued"'],
+        badges: [
+            "Weighed today; saved to Google",
+            "Weight queued on this phone; not yet saved to Google",
+        ],
         badgesFit: true,
         childrenFit: true,
         contentsFit: true,
@@ -2305,7 +2656,7 @@ test.describe("watering age picker", { tag: "@logger" }, () => {
                 waterAgeTile(tablePicker(page), "P02")
             );
             const queued = waterAgeTile(tablePicker(page), "P06");
-            await expect.soft(queued).toHaveAccessibleName(/Queued/v);
+            await expect.soft(queued).toHaveAccessibleName(/Weight queued/v);
             await expectUnavailableAgeContrast(queued);
         });
 

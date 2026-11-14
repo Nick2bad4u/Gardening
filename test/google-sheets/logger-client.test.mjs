@@ -515,7 +515,7 @@ describe("garden logger 4 a.m. weighing day", () => {
         expect(
             queryElement(window.document, "#roundProgress", HTMLElement)
                 .textContent
-        ).toContain("1 Saved today");
+        ).toContain("1 weighed today");
         expect(
             queryElement(window.document, "#roundProgress", HTMLElement)
                 .textContent
@@ -548,7 +548,7 @@ describe("garden logger 4 a.m. weighing day", () => {
         expect(
             queryElement(window.document, "#roundProgress", HTMLElement)
                 .textContent
-        ).toContain("1 Saved today");
+        ).toContain("1 weighed today");
     });
 
     it("withholds midnight-based cached progress until a fresh read confirms the new cutoff", () => {
@@ -571,7 +571,7 @@ describe("garden logger 4 a.m. weighing day", () => {
         expect(
             queryElement(window.document, "#roundProgress", HTMLElement)
                 .textContent
-        ).toContain("Saved today unavailable");
+        ).toContain("Today's weighing count is unavailable");
     });
 });
 
@@ -799,7 +799,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
         expect(first.dataset["savedToday"]).toBe("true");
         expect(first.dataset["queuedWeighed"]).toBe("true");
         expect(first.getAttribute("aria-label")).toContain(
-            "Queued · Saved today"
+            "Weight queued · Weighed today"
         );
         expect(
             queryElements(
@@ -807,7 +807,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
                 ".round-progress-stat",
                 HTMLElement
             ).map((stat) => stat.textContent)
-        ).toStrictEqual(["1 Saved today", "2 Queued"]);
+        ).toStrictEqual(["1 weighed today", "2 queued"]);
 
         queryElement(
             window.document,
@@ -875,7 +875,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
         expect(
             queryElement(window.document, "#roundProgress", HTMLElement)
                 .textContent
-        ).toContain("Saved today unavailable");
+        ).toContain("Today's weighing count is unavailable");
 
         const button = queryElement(
             window.document,
@@ -911,7 +911,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
         expect(
             queryElement(current.window.document, "#roundProgress", HTMLElement)
                 .textContent
-        ).toContain("1 Saved today");
+        ).toContain("1 weighed today");
 
         const old = { ...bootstrap, serverTime: "" };
         const legacy = createLoggerWindow({
@@ -927,7 +927,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
         expect(
             queryElement(legacy.window.document, "#roundProgress", HTMLElement)
                 .textContent
-        ).toContain("Saved today unavailable");
+        ).toContain("Today's weighing count is unavailable");
         expect(
             queryElement(legacy.window.document, "#dataFreshness", HTMLElement)
                 .textContent
@@ -985,7 +985,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
                     ".round-progress-stat",
                     HTMLElement
                 ).map((stat) => stat.textContent)
-            ).toStrictEqual(["1 Saved today", "0 Queued"]);
+            ).toStrictEqual(["1 weighed today", "0 queued"]);
 
             const reload = createLoggerWindow({
                 online: false,
@@ -1002,7 +1002,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
                     "#roundProgress",
                     HTMLElement
                 ).textContent
-            ).toContain("1 Saved today");
+            ).toContain("1 weighed today");
         }
     );
 
@@ -1025,7 +1025,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
         expect(
             queryElement(window.document, "#roundProgress", HTMLElement)
                 .textContent
-        ).toContain("0 Saved today");
+        ).toContain("0 weighed today");
         expect(
             queryElement(window.document, "#dataFreshness", HTMLElement)
                 .textContent
@@ -1662,7 +1662,7 @@ describe("garden logger History details and current-cycle charts", () => {
         expect(
             queryElement(window.document, "#roundProgress", HTMLElement)
                 .textContent
-        ).toContain("2 Saved today");
+        ).toContain("2 weighed today");
         expect(
             queryElement(window.document, "#recentList", HTMLElement)
                 .textContent
@@ -1683,7 +1683,7 @@ describe("garden logger History details and current-cycle charts", () => {
         expect(
             queryElement(window.document, "#roundProgress", HTMLElement)
                 .textContent
-        ).toContain("2 Saved today");
+        ).toContain("2 weighed today");
         expect(
             queryElement(window.document, "#recentList", HTMLElement)
                 .textContent
@@ -8054,7 +8054,11 @@ function chooseRotation(window, to) {
         HTMLButtonElement
     );
     if (event.getAttribute("aria-pressed") !== "true") event.click();
-    changeWorkflowSelect(window, "rotationToFacing", to);
+    queryElement(
+        window.document,
+        `#rotationToFacingCompass-${to || "clear"}`,
+        HTMLButtonElement
+    ).click();
 }
 
 /** @param {Window} window @param {string} action */
@@ -8725,7 +8729,21 @@ describe("garden logger cardinal rotation and action context", () => {
             "#entryDraftResume",
             HTMLButtonElement
         ).click();
-        changeWorkflowSelect(window, "rotationToFacing", "W");
+
+        expect(
+            queryElement(
+                window.document,
+                "#rotationFromFacingCompass-N",
+                HTMLButtonElement
+            ).getAttribute("aria-pressed")
+        ).toBe("true");
+        expect(
+            queryElement(
+                window.document,
+                "#rotationToFacingCompass-W",
+                HTMLButtonElement
+            ).getAttribute("aria-pressed")
+        ).toBe("true");
 
         expect(queueCurrentEntry(window)).toMatchObject({
             rotationDegrees: "270",
@@ -13618,8 +13636,8 @@ describe("garden logger durable queue storage", () => {
                 ].map((option) => option.textContent)
             )
         ).toStrictEqual([
-            expect.stringMatching(/^Queued · Moon cactus/v),
-            expect.stringMatching(/^Queued · Yellow tower cactus/v),
+            expect.stringMatching(/^Weight queued · Moon cactus/v),
+            expect.stringMatching(/^Weight queued · Yellow tower cactus/v),
         ]);
     });
 

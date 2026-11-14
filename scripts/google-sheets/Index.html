@@ -195,8 +195,27 @@
                 z-index: 1;
                 display: flex;
                 gap: 8px;
-                justify-content: flex-end;
-                margin: -8px -8px 2px 0;
+                align-items: center;
+                justify-content: space-between;
+                margin: 0;
+            }
+
+            .garden-links-disclosure {
+                position: relative;
+                z-index: 1;
+                margin-block-start: 8px;
+
+                & > summary {
+                    min-block-size: 44px;
+                    padding-block: 10px;
+                    font-weight: 700;
+                    cursor: pointer;
+                }
+
+                & > :where(summary:focus-visible) {
+                    outline: 2px solid currentcolor;
+                    outline-offset: 2px;
+                }
             }
 
             .icon-button {
@@ -209,6 +228,10 @@
                 background: rgb(255 255 255 / 0.1);
                 border: 1px solid rgb(255 255 255 / 0.28);
                 border-radius: 13px;
+
+                .hero-tools & {
+                    flex: none;
+                }
             }
 
             .eyebrow {
@@ -226,6 +249,10 @@
                 font-size: clamp(24px, 7vi, 40px);
                 line-height: 1;
                 letter-spacing: -0.03em;
+
+                .hero-tools & {
+                    min-inline-size: 0;
+                }
             }
 
             .hero p {
@@ -449,12 +476,14 @@
             }
 
             .label-choice {
+                position: relative;
                 display: inline-flex;
                 flex-direction: column;
-                gap: 6px;
+                gap: 5px;
                 align-items: center;
                 justify-content: flex-start;
                 min-block-size: 44px;
+                padding: 8px 3px;
                 font-weight: 900;
                 color: var(--ink);
                 cursor: pointer;
@@ -463,8 +492,9 @@
                 border-radius: 11px;
 
                 & .plant-choice-icon {
-                    inline-size: 1.55rem;
-                    block-size: 1.55rem;
+                    flex: 0 0 auto;
+                    inline-size: 2rem;
+                    block-size: 2rem;
                 }
             }
 
@@ -569,19 +599,10 @@
                 overflow: visible;
                 & .label-choice {
                     flex-flow: column nowrap;
-                    gap: 2px;
+                    gap: 4px;
                     min-inline-size: 0;
-                    padding: 3px 1px;
+                    padding: 6px 2px;
                     font-size: 0.875rem;
-                }
-                & .label-choice::before,
-                & .label-choice::after {
-                    max-inline-size: 100%;
-                    overflow-wrap: anywhere;
-                }
-                & .label-choice::after {
-                    font-size: 0.625rem;
-                    white-space: nowrap;
                 }
                 & .table-picker-heading {
                     grid-column: 1 / -1;
@@ -712,40 +733,67 @@
             }
 
             .label-choice[aria-pressed="true"] {
-                color: #ffffff;
-                background: var(--forest-2);
+                color: var(--ink);
+                outline: 2px solid var(--forest-2);
+                outline-offset: 2px;
+                background: var(--leaf-soft);
                 border-color: var(--forest-2);
-                box-shadow: 0 3px 10px rgb(40 107 63 / 0.18);
             }
 
-            .label-choice.queued-weighed {
+            .label-picker .label-choice:focus-visible {
+                outline: 3px solid var(--blue);
+                outline-offset: 3px;
+            }
+
+            .weighing-status-badges {
+                position: absolute;
+                inset-block-start: 3px;
+                inset-inline-end: 3px;
+                display: grid;
+                gap: 2px;
+                pointer-events: none;
+            }
+
+            .weighing-status-badge {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                inline-size: 1rem;
+                block-size: 1rem;
+                border: 1px solid;
+                border-radius: 50%;
+
+                & .app-icon {
+                    inline-size: 0.75rem;
+                    block-size: 0.75rem;
+                }
+            }
+
+            .weighing-status-badge--saved {
                 color: #174d2b;
                 background: #d9f2df;
                 border-color: #27864b;
-                box-shadow: inset 0 0 0 1px rgb(39 134 75 / 0.18);
             }
 
-            .label-choice.queued-weighed::after {
-                order: 3;
+            .weighing-status-badge--queued {
+                color: #6b4200;
+                background: #ffedbe;
+                border-color: #b7780b;
+            }
+
+            .picker-status-legend {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px 14px;
+                margin-block: -4px 12px;
                 font-size: 0.75rem;
-                font-weight: 800;
-                content: "Queued";
-            }
+                color: var(--muted);
 
-            .label-choice.queued-weighed[aria-pressed="true"] {
-                color: #ffffff;
-                background: #27864b;
-            }
-
-            .label-choice.saved-today {
-                border-block-end: 4px solid var(--forest-2);
-            }
-
-            .label-choice.saved-today::before {
-                order: 2;
-                font-size: 0.75rem;
-                font-weight: 800;
-                content: "Saved today";
+                & > span {
+                    display: inline-flex;
+                    gap: 5px;
+                    align-items: center;
+                }
             }
 
             .workflow-toolbar {
@@ -1503,15 +1551,16 @@
                 stroke-dasharray: 8 3 2 3;
             }
 
-            :root[data-theme="dark"] .label-choice.queued-weighed {
+            :root[data-theme="dark"] .weighing-status-badge--saved {
                 color: #d9f2df;
                 background: #203e2b;
                 border-color: #73c98e;
+            }
 
-                &[aria-pressed="true"] {
-                    color: #ffffff;
-                    background: #3a9f5d;
-                }
+            :root[data-theme="dark"] .weighing-status-badge--queued {
+                color: #ffe4a6;
+                background: #4a3516;
+                border-color: #e2b454;
             }
 
             .plant-summary {
@@ -1529,6 +1578,28 @@
                 );
                 border: 1px solid var(--line);
                 border-radius: 15px;
+            }
+
+            .plant-summary-more {
+                margin-block-start: 10px;
+                border-block-start: 1px solid var(--line);
+
+                & > summary {
+                    min-block-size: 44px;
+                    padding-block: 12px;
+                    font-weight: 700;
+                    color: var(--forest-2);
+                    cursor: pointer;
+                }
+
+                & > :where(summary:focus-visible) {
+                    outline: 2px solid var(--forest-2);
+                    outline-offset: 2px;
+                }
+
+                & > :where(.plant-meta) {
+                    display: block;
+                }
             }
 
             .plant-details {
@@ -2238,6 +2309,95 @@
             .rotation-plant-row {
                 min-inline-size: 0;
                 padding-block: 8px;
+            }
+
+            .rotation-compass-fields {
+                grid-template-columns: repeat(
+                    auto-fit,
+                    [compass-start] minmax(min(100%, 240px), 1fr) [compass-end]
+                );
+            }
+
+            .rotation-compass {
+                display: grid;
+                grid-template-columns: repeat(
+                    3,
+                    [direction-start] minmax(0, 1fr) [direction-end]
+                );
+                gap: 6px;
+                inline-size: 100%;
+                max-inline-size: 340px;
+                padding-block: 8px;
+                margin-inline: auto;
+
+                & button {
+                    min-inline-size: 0;
+                    min-block-size: 52px;
+                    padding: 8px 4px;
+                    color: var(--ink);
+                    background: var(--control);
+                    border: 1px solid var(--line);
+                    border-radius: 12px;
+
+                    &[aria-pressed="true"] {
+                        font-weight: 800;
+                        color: var(--forest);
+                        background: var(--leaf-soft);
+                        border: 2px solid var(--forest-2);
+                    }
+
+                    &[data-facing="N"] {
+                        grid-area: 1 / 2;
+                    }
+
+                    &[data-facing="E"] {
+                        grid-area: 2 / 3;
+                    }
+
+                    &[data-facing="S"] {
+                        grid-area: 3 / 2;
+                    }
+
+                    &[data-facing="W"] {
+                        grid-area: 2 / 1;
+                    }
+
+                    &[data-facing=""] {
+                        grid-column: 1 / -1;
+                    }
+
+                    & span {
+                        display: block;
+                        font-size: 0.75rem;
+                    }
+                }
+            }
+
+            .rotation-compass-pot {
+                position: relative;
+                display: grid;
+                grid-area: 2 / 2;
+                align-content: center;
+                min-block-size: 76px;
+                padding: 12px 4px;
+                font-size: 0.75rem;
+                line-height: 1.375;
+                text-align: center;
+                border: 2px solid var(--line);
+                border-radius: 50%;
+
+                &::before {
+                    position: absolute;
+                    inset: -7px;
+                    content: "";
+                    border-block-start: 6px solid var(--forest-2);
+                    border-radius: 50%;
+                    transform: rotate(var(--facing-angle, 0deg));
+                }
+
+                &[data-facing=""]::before {
+                    display: none;
+                }
             }
 
             .event-stack {
@@ -3056,21 +3216,52 @@
                 .recent-card {
                     max-block-size: 420px;
                 }
+                .hero {
+                    padding: 14px 18px;
+
+                    & .eyebrow {
+                        display: none;
+                    }
+
+                    & h1 {
+                        font-size: 1.25rem;
+                        line-height: 1.25;
+                    }
+
+                    & .status-line {
+                        margin-block-start: 8px;
+                        font-size: 0.875rem;
+                    }
+                }
             }
 
             @media (width <= 520px) {
                 .metric--enclosure-context {
                     grid-column: 1 / -1;
                 }
+                .plant-summary-heading {
+                    grid-template-columns:
+                        [name-start] minmax(0, 1fr)
+                        [name-end portrait-start] minmax(0, 96px)
+                        [portrait-end];
+                }
                 .plant-name {
-                    grid-column: 1 / -1;
+                    grid-row: 1;
+                    grid-column: 1;
+                }
+
+                .plant-label-badge {
+                    grid-row: 2;
+                    grid-column: 1;
+                    justify-self: start;
                 }
 
                 .plant-summary-portrait {
-                    flex-wrap: wrap;
-                    grid-row: 3;
-                    grid-column: 1 / -1;
-                    justify-content: space-between;
+                    flex-direction: column;
+                    grid-row: 1 / 3;
+                    grid-column: 2;
+                    align-items: center;
+                    justify-content: start;
                 }
 
                 .summary-portrait {
@@ -3111,6 +3302,22 @@
                 .plant-summary {
                     gap: 10px;
                     padding: 12px;
+                }
+
+                .metrics--primary .metric {
+                    grid-template-columns:
+                        [icon-start] auto
+                        [icon-end label-start] minmax(0, 1fr) [label-end];
+                    padding: 9px;
+                    text-align: start;
+                }
+
+                .metrics--primary .metric-icon {
+                    margin-block-end: 0;
+                }
+
+                .metrics--primary :is(.metric-label, .metric-detail) {
+                    font-size: 0.875rem;
                 }
 
                 .plant-links {
@@ -3225,6 +3432,12 @@
                 padding-block-start: 16px;
                 margin-block-start: 18px;
                 border-block-start: 1px solid rgb(255 255 255 / 0.2);
+
+                .garden-links-disclosure & {
+                    padding-block-start: 0;
+                    margin-block-start: 0;
+                    border-block-start: 0;
+                }
             }
             .portrait-button {
                 display: inline-flex;
@@ -14529,7 +14742,9 @@
             <div class="app-shell">
                 <aside class="sidebar">
                     <header class="hero">
+                        <p class="eyebrow">Garden Plant Tracker</p>
                         <div class="hero-tools">
+                            <h1>Garden care logger</h1>
                             <button
                                 id="themeToggle"
                                 class="icon-button"
@@ -14547,9 +14762,9 @@
                                     ></use></svg
                             ></button>
                         </div>
-                        <p class="eyebrow">Garden Plant Tracker</p>
-                        <h1>Garden care logger</h1>
-                        <div class="status-line"
+                        <div
+                            class="status-line"
+                            role="status"
                             ><svg
                                 viewBox="0 0 64 64"
                                 class="app-icon app-icon--small"
@@ -14560,11 +14775,17 @@
                                 >Connecting to the garden log…</span
                             ></div
                         >
-                        <nav
-                            id="globalLinks"
-                            class="global-links"
-                            aria-label="Garden links"
-                        ></nav>
+                        <details
+                            id="gardenLinksDisclosure"
+                            class="garden-links-disclosure"
+                        >
+                            <summary>Garden links</summary>
+                            <nav
+                                id="globalLinks"
+                                class="global-links"
+                                aria-label="Garden links"
+                            ></nav>
+                        </details>
                     </header>
                 </aside>
 
@@ -14892,9 +15113,43 @@
                                 class="round-progress"
                                 role="status"
                                 aria-live="polite"
-                                >Saved today unavailable until Google
-                                responds.</div
+                                aria-describedby="weighingStatusLegend"
+                                >Today's weighing count is unavailable until
+                                Google responds.</div
                             >
+                            <div
+                                id="weighingStatusLegend"
+                                class="picker-status-legend"
+                            >
+                                <span>
+                                    <span
+                                        class="weighing-status-badge weighing-status-badge--saved"
+                                        aria-hidden="true"
+                                        ><svg
+                                            class="app-icon"
+                                            viewBox="0 0 64 64"
+                                        >
+                                            <use
+                                                href="#app-icon-check"
+                                            ></use></svg
+                                    ></span>
+                                    Weight saved today
+                                </span>
+                                <span>
+                                    <span
+                                        class="weighing-status-badge weighing-status-badge--queued"
+                                        aria-hidden="true"
+                                        ><svg
+                                            class="app-icon"
+                                            viewBox="0 0 64 64"
+                                        >
+                                            <use
+                                                href="#app-icon-clock"
+                                            ></use></svg
+                                    ></span>
+                                    Weight queued on this phone
+                                </span>
+                            </div>
                             <p
                                 id="plantFilterStatus"
                                 class="hint"
@@ -16005,7 +16260,7 @@
                                     >
                                     <div
                                         id="rotationFacingFields"
-                                        class="fields"
+                                        class="fields rotation-compass-fields"
                                     >
                                         <div class="field"
                                             ><label
@@ -17782,6 +18037,7 @@
                 wateringAgesPending: false,
                 waterAgesVisible: false,
                 summaryPlantId: "",
+                summaryDetailsOpen: null,
                 recentDataKey: "",
                 workflowDay: "",
                 workflowTimer: null,
@@ -19023,6 +19279,14 @@
             function renderGlobalLinks() {
                 const links = state.bootstrap.links;
                 const container = $("globalLinks");
+                const disclosure = $("gardenLinksDisclosure");
+                if (!disclosure.dataset.initialized) {
+                    disclosure.open = window.innerWidth > 860;
+                    disclosure.dataset.initialized = "true";
+                }
+                const focusedLink = container.contains(document.activeElement)
+                    ? document.activeElement?.textContent
+                    : null;
                 container.replaceChildren(
                     createLink("Field guide", links.fieldGuide, "field-guide"),
                     createLink("Plant tracker", links.tracker, "tracker"),
@@ -19031,6 +19295,11 @@
                     createLink("Photos", links.photos, "photos"),
                     createLink("Spreadsheet", links.spreadsheet, "sheets")
                 );
+                if (focusedLink) {
+                    [...container.querySelectorAll("a")]
+                        .find((link) => link.textContent === focusedLink)
+                        ?.focus({ preventScroll: true });
+                }
             }
 
             function localDateTimeValue(value) {
@@ -19126,6 +19395,11 @@
                             "#bulkPlantList input, #bulkPlantList button";
                     else if (field === "events")
                         selector = `#${prefix ? "bulkEventChips" : "eventChips"} button`;
+                    else if (
+                        field === "rotationFromFacing" ||
+                        field === "rotationToFacing"
+                    )
+                        selector = `#${careFieldId(field, prefix)}Compass button`;
                     else if (field === "observedAt") {
                         const parts = ["Date", "Time"].map((part) =>
                             $(`${careFieldId(field, prefix)}${part}`)
@@ -19233,7 +19507,8 @@
                     !previous.controls.some(
                         (control) =>
                             control === event.target ||
-                            control.contains(event.target)
+                            control.contains(event.target) ||
+                            control.dataset.rotationModel === event.target.id
                     )
                 )
                     return;
@@ -20516,11 +20791,43 @@
                 saved = savedTodayPlantIds()
             ) {
                 return [
-                    queued.has(plantId) ? "Queued" : "",
-                    saved?.has(plantId) ? "Saved today" : "",
+                    queued.has(plantId) ? "Weight queued" : "",
+                    saved?.has(plantId) ? "Weighed today" : "",
                 ]
                     .filter(Boolean)
                     .join(" · ");
+            }
+
+            function renderWeighingStatusBadges(button, saved, queued) {
+                let badges = button.querySelector(".weighing-status-badges");
+                if (!saved && !queued) {
+                    badges?.remove();
+                    return;
+                }
+                if (!badges) {
+                    badges = document.createElement("span");
+                    badges.className = "weighing-status-badges";
+                    button.append(badges);
+                }
+                badges.replaceChildren();
+                [
+                    [saved, "saved", "check", "Weighed today; saved to Google"],
+                    [
+                        queued,
+                        "queued",
+                        "clock",
+                        "Weight queued on this phone; not yet saved to Google",
+                    ],
+                ].forEach(([visible, status, icon, label]) => {
+                    if (!visible) return;
+                    const badge = document.createElement("span");
+                    badge.className = `weighing-status-badge weighing-status-badge--${status}`;
+                    badge.setAttribute("role", "img");
+                    badge.setAttribute("aria-label", label);
+                    badge.title = label;
+                    badge.append(createIcon(icon));
+                    badges.append(badge);
+                });
             }
 
             function renderRoundProgress() {
@@ -20537,12 +20844,12 @@
                     [
                         "check",
                         saved
-                            ? `${plants.filter((plant) => saved.has(plant.id)).length} Saved today`
-                            : "Saved today unavailable · refresh Google",
+                            ? `${plants.filter((plant) => saved.has(plant.id)).length} weighed today`
+                            : "Today's weighing count is unavailable · refresh Google",
                     ],
                     [
-                        "queue",
-                        `${plants.filter((plant) => queued.has(plant.id)).length} Queued`,
+                        "clock",
+                        `${plants.filter((plant) => queued.has(plant.id)).length} queued`,
                     ],
                 ].forEach(([icon, text]) => {
                     const stat = document.createElement("span");
@@ -21092,6 +21399,11 @@
                         button.dataset.savedToday = String(
                             Boolean(saved?.has(button.dataset.plantId))
                         );
+                        renderWeighingStatusBadges(
+                            button,
+                            Boolean(saved?.has(button.dataset.plantId)),
+                            weighed
+                        );
                         const plant = state.bootstrap.plants.find(
                             (candidate) =>
                                 candidate.id === button.dataset.plantId
@@ -21136,20 +21448,12 @@
                 );
                 const badge = summary.querySelector(".plant-id");
                 if (badge && selected) {
-                    const progress = plantProgressText(
+                    renderPlantSummaryProgress(
+                        badge,
                         selected.id,
-                        weighedPlantIds
+                        weighedPlantIds,
+                        saved
                     );
-                    if (progress) {
-                        setIconLabel(
-                            badge,
-                            "check",
-                            `${selected.id} · ${progress}`,
-                            "app-icon app-icon--small"
-                        );
-                    } else {
-                        badge.textContent = selected.id;
-                    }
                 }
                 renderRoundProgress();
                 if (isNotWeighedFilterActive())
@@ -21863,6 +22167,11 @@
                         button.dataset.savedToday = String(
                             Boolean(saved?.has(plant.id))
                         );
+                        renderWeighingStatusBadges(
+                            button,
+                            Boolean(saved?.has(plant.id)),
+                            weighed
+                        );
                         button.hidden =
                             (isNotWeighedFilterActive() ||
                                 state.plantPickerMode === "table") &&
@@ -22017,6 +22326,30 @@
                     showPickerName(plant, plant.id === selectedPlant()?.id);
             }
 
+            function renderPlantSummaryProgress(
+                badge,
+                plantId,
+                queued = queuedWeighedPlantIds(),
+                saved = savedTodayPlantIds()
+            ) {
+                const progress = plantProgressText(plantId, queued, saved);
+                if (!progress) {
+                    badge.textContent = plantId;
+                    return;
+                }
+                const wasSaved = saved?.has(plantId);
+                setIconLabel(
+                    badge,
+                    wasSaved ? "check" : "clock",
+                    `${plantId} · ${progress}`,
+                    "app-icon app-icon--small"
+                );
+                if (wasSaved && queued.has(plantId))
+                    badge.prepend(
+                        createIcon("clock", "app-icon app-icon--small")
+                    );
+            }
+
             function renderPlantSummary() {
                 closeHelpPanels();
                 const plant = selectedPlant();
@@ -22037,6 +22370,20 @@
                     refreshRecent();
                 const summary = $("plantSummary");
                 const details = $("plantDetails");
+                const moreDetails = summary.querySelector("#plantSummaryMore");
+                if (moreDetails) state.summaryDetailsOpen = moreDetails.open;
+                const focusedSummaryControl = summary.contains(
+                    document.activeElement
+                )
+                    ? document.activeElement
+                    : null;
+                const focusedMetricLabel = focusedSummaryControl
+                    ?.closest(".metric")
+                    ?.getAttribute("data-metric-label");
+                const restoreMoreFocus = moreDetails?.contains(
+                    focusedSummaryControl
+                );
+                moreDetails?.remove();
                 const displayTools = $("plantDisplayTools");
                 const restoreDisplayFocus = displayTools.contains(
                     document.activeElement
@@ -22091,24 +22438,28 @@
                     plant.label ? `Label ${plant.label}` : "No current label",
                     "app-icon app-icon--small"
                 );
-                identity.append(name, meta, label);
+                identity.append(name, label);
 
                 const badge = document.createElement("div");
                 badge.className = "plant-id";
-                const progress = plantProgressText(plant.id);
-                if (progress) {
-                    setIconLabel(
-                        badge,
-                        "check",
-                        `${plant.id} · ${progress}`,
-                        "app-icon app-icon--small"
-                    );
-                } else {
-                    badge.textContent = plant.id;
-                }
+                renderPlantSummaryProgress(badge, plant.id);
 
                 const metrics = document.createElement("div");
-                metrics.className = "metrics";
+                metrics.className = "metrics metrics--primary";
+                const secondaryMetrics = document.createElement("div");
+                secondaryMetrics.className = "metrics";
+                const more = moreDetails || document.createElement("details");
+                if (!moreDetails) {
+                    more.id = "plantSummaryMore";
+                    more.className = "plant-summary-more";
+                    more.open =
+                        state.summaryDetailsOpen ?? window.innerWidth > 860;
+                }
+                const moreSummary =
+                    more.querySelector(":scope > summary") ||
+                    document.createElement("summary");
+                moreSummary.textContent = "More plant details";
+                more.replaceChildren(moreSummary, meta, secondaryMetrics);
                 const activity = plant.activitySummary || {};
                 const intervalEvidence =
                     activity.waterIntervalCount > 0
@@ -22282,6 +22633,7 @@
                     }
                     const metric = document.createElement("div");
                     metric.className = "metric";
+                    metric.dataset.metricLabel = label;
                     if (
                         plant.id === "P38" &&
                         ["Last completed dry", "Current pot"].includes(label)
@@ -22326,7 +22678,9 @@
                         iconNode.remove();
                         metric.prepend(disclosure);
                     }
-                    metrics.append(metric);
+                    if (["Last water", "Latest weight"].includes(label))
+                        metrics.append(metric);
+                    else secondaryMetrics.append(metric);
                 });
                 const plantLinks = document.createElement("div");
                 plantLinks.className = "plant-links";
@@ -22349,7 +22703,7 @@
                 );
                 portraitGroup.append(portraitButton, badge);
                 heading.append(identity, portraitGroup);
-                left.append(heading, metrics);
+                left.append(heading, metrics, more);
                 summary.append(left);
                 const detailsTitle = document.createElement("h2");
                 detailsTitle.id = "plantDetailsTitle";
@@ -22422,6 +22776,20 @@
                 }
                 plantLinks.append(displayTools);
                 restoreDisplayFocus?.focus({ preventScroll: true });
+                if (restoreMoreFocus) {
+                    const metricTrigger = [...secondaryMetrics.children]
+                        .find(
+                            (metric) =>
+                                metric.getAttribute("data-metric-label") ===
+                                focusedMetricLabel
+                        )
+                        ?.querySelector("summary");
+                    (metricTrigger || moreSummary).focus({
+                        preventScroll: true,
+                    });
+                } else if (focusedSummaryControl?.closest(".portrait-button")) {
+                    portraitButton.focus({ preventScroll: true });
+                }
             }
 
             let portraitPreviewTimer;
@@ -23712,6 +24080,97 @@
                     : `${degrees}° clockwise`;
             }
 
+            function rotationPreviewText(from, to) {
+                const turn = rotationTurnText(from, to);
+                return to ? `${from || "Unknown"} → ${to} · ${turn}` : turn;
+            }
+
+            function chooseCompassFacing(select, facing) {
+                if (state.saving || select.disabled) return;
+                select.value = facing;
+                // Preserve the existing manual-origin, draft, and validation path.
+                select.dispatchEvent(new Event("change", { bubbles: true }));
+            }
+
+            function createRotationCompass(select, label, starting) {
+                const compass = document.createElement("div");
+                compass.id = `${select.id}Compass`;
+                compass.className = "rotation-compass";
+                compass.setAttribute("role", "group");
+                label.id ||= `${select.id}Label`;
+                compass.setAttribute("aria-labelledby", label.id);
+                const pot = document.createElement("span");
+                pot.className = "rotation-compass-pot";
+                compass.append(pot);
+                [...Object.entries(FACING_LABELS), ["", ""]].forEach(
+                    ([facing, name]) => {
+                        const button = document.createElement("button");
+                        button.type = "button";
+                        button.id = `${compass.id}-${facing || "clear"}`;
+                        button.dataset.facing = facing;
+                        button.dataset.rotationModel = select.id;
+                        if (facing) {
+                            button.setAttribute("aria-label", name);
+                            button.append(facing);
+                            const destination = document.createElement("span");
+                            destination.textContent = name.split(" · ")[1];
+                            button.append(destination);
+                        } else {
+                            button.textContent = starting
+                                ? "Unknown / not recorded"
+                                : "Clear new facing";
+                        }
+                        button.addEventListener("click", () => {
+                            chooseCompassFacing(select, facing);
+                        });
+                        button.addEventListener("keydown", (event) => {
+                            const direction = {
+                                ArrowUp: "N",
+                                ArrowRight: "E",
+                                ArrowDown: "S",
+                                ArrowLeft: "W",
+                                Home: "N",
+                                End: "W",
+                            }[event.key];
+                            if (!direction || state.saving || select.disabled)
+                                return;
+                            event.preventDefault();
+                            chooseCompassFacing(select, direction);
+                            $(`${compass.id}-${direction}`)?.focus();
+                        });
+                        compass.append(button);
+                    }
+                );
+                select.hidden = true;
+                select.after(compass);
+                return compass;
+            }
+
+            function renderRotationCompass(id, starting = false) {
+                const select = $(id);
+                const label = document.querySelector(`label[for="${id}"]`);
+                const compass =
+                    $(`${id}Compass`) ||
+                    createRotationCompass(select, label, starting);
+                compass.querySelectorAll("button").forEach((button) => {
+                    const facing = button.dataset.facing;
+                    const selected = facing === select.value;
+                    button.setAttribute("aria-pressed", String(selected));
+                    button.disabled = state.saving || select.disabled;
+                    button.tabIndex =
+                        !facing || selected || (!select.value && facing === "N")
+                            ? 0
+                            : -1;
+                });
+                const pot = compass.querySelector(".rotation-compass-pot");
+                pot.dataset.facing = select.value;
+                pot.style.setProperty(
+                    "--facing-angle",
+                    `${Math.max(0, Object.keys(FACING_LABELS).indexOf(select.value)) * 90}deg`
+                );
+                pot.textContent = `Pot label / front · ${starting ? "Start" : "New"}: ${select.value || (starting ? "unknown" : "not chosen")}`;
+            }
+
             function hasQueuedFacingChange(
                 plant,
                 timeId = "observedAt",
@@ -23887,10 +24346,12 @@
                     }
                 }
                 $("rotationPreview").hidden = manual;
-                $("rotationPreview").textContent = rotationTurnText(
+                $("rotationPreview").textContent = rotationPreviewText(
                     $("rotationFromFacing").value,
                     $("rotationToFacing").value
                 );
+                renderRotationCompass("rotationFromFacing", true);
+                renderRotationCompass("rotationToFacing");
             }
 
             function rotationRecordsValue(value) {
@@ -23920,6 +24381,7 @@
                 const pending = readBulkPendingSave();
                 const records = bulkRotationRecords();
                 const target = $("bulkRotationToFacing").value;
+                renderRotationCompass("bulkRotationToFacing");
                 const preview = $("bulkRotationPreview");
                 const active = document.activeElement;
                 const focusId = preview.contains(active) ? active.id : "";
@@ -24009,9 +24471,10 @@
                         });
                         const context = document.createElement("p");
                         context.className = "hint";
-                        context.textContent = `${rotationContextText(plant, "bulkObservedAt")} · ${rotationTurnText(record.rotationFromFacing, record.rotationToFacing || target)}`;
+                        context.textContent = `${rotationContextText(plant, "bulkObservedAt")} · ${rotationPreviewText(record.rotationFromFacing, record.rotationToFacing || target)}`;
                         row.append(label, select, context);
                         preview.append(row);
+                        renderRotationCompass(select.id, true);
                     });
                 $("bulkRotationState").value = JSON.stringify(nextRecords);
                 if (focusId) $(focusId)?.focus({ preventScroll: true });

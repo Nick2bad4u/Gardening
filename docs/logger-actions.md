@@ -7,10 +7,9 @@ supported. Air, soil, and leaf measurements keep their own context.
 The [deployment record](../scripts/google-sheets/README.md) keeps the
 logger version and production details.
 
-The refresh progress, retained nutrient settings, numbered watering badges,
-cardinal rotation, and recorded-action context below are live in
-**5.46.0 / immutable version 138**, deployed on November 13, 2026.
-See the deployment record for the current status and disclosed release limits.
+The guide includes the compact weighing badges, navigation disclosures, and
+visual rotation controls introduced in logger **5.47.0**. See the
+deployment record for the verified production version and release limits.
 
 Read alongside the [watering strategy](./watering-strategy.md), [weighing strategy](./weighing-strategy.md), and [operator runbook](../scripts/google-sheets/README.md).
 
@@ -58,6 +57,18 @@ Both the single-plant picker and **Bulk care** offer **List**, **Labels**, and
 **Table** views. Each picker remembers its own view on the current device.
 Switching views keeps the selected plant or bulk selection.
 
+A checkmark means **Weighed today**; an amber clock means **Weight queued** on
+this device. These badges describe weighing, not every care action. The summary
+above the picker counts plants weighed in the current care day and plants with
+an unsent weight. A queued weight can belong to an earlier day. Both badges can
+appear on the same pot, and the selection outline remains visible independently.
+The legend and accessible names spell out each symbol.
+
+On phones, **Garden links** opens the reference links beneath the title and
+connection status. The selected-plant summary keeps identity, latest weight, and
+last watering visible; **More plant details** opens setup information and
+secondary statistics. Dated action-specific context remains beside its input.
+
 **Table** places the 24 lettered pots in the same six-column, four-row arrangement
 as the [placement guide](./layouts/table-placement-research.md). The back row
 nearest the window is at the top; the front row nearest you is at the bottom.
@@ -86,16 +97,18 @@ schedule or evidence that the soil is dry.
 **No Water** means no eligible Water event is recorded. **No data** means the age
 cannot currently be confirmed after a failed refresh or when using an older
 saved plant list. During a refresh, the control says **Refreshing…**, its icon
-spins, and visible day badges say **Wait…**. The control becomes available again
-after the response or a timeout; reduced-motion settings keep its icon still.
+spins, and Label/Table day badges show a small ring; List views retain explanatory
+text. The control becomes available again after the response or a timeout;
+reduced-motion settings keep the indicators still.
 Removed and future-dated Water events do not contribute to the count.
 
-The numbered fertilizer-bottle badge counts consecutive recorded waterings
-**with nutrients**; the numbered water drop counts consecutive waterings
+The fertilizer-bottle badge counts consecutive recorded waterings
+**with nutrients**; the water drop counts consecutive waterings
 **without nutrients**. The count includes the latest watering and stops at the
 first opposite or unknown nutrient flag. Each eligible Water event counts,
 including distinct events on the same day. Other events and repots do not reset
-the permanent pot's watering history. An unknown latest flag has no badge.
+the permanent pot's watering history. A streak of one shows only the icon;
+counts of two or more appear beside it. An unknown latest flag has no badge.
 
 These badges appear in all picker views, Bulk care, and the selected-plant
 summary, even when **Days since watered** is off. The accessible label and
@@ -172,6 +185,12 @@ recorded baseline and leaves the turn amount blank. Choosing the same starting
 and final facing records **0°**, confirming direction without claiming a turn.
 Do not assume an unrecorded pot starts at North.
 
+The phone logger presents these directions as compass buttons around a pot-label
+marker. Select the checked starting direction and the new direction, then read
+the turn preview. **Unknown** leaves the start unrecorded; clearing the new
+direction prevents an accidental destination. Keyboard users can move among the
+direction buttons without changing the underlying record format.
+
 The phone logger can suggest a starting facing from the latest eligible Rotation
 in the current pot setup. Removed or superseded records and future observations
 do not establish it; corrections retain the original ledger tie order. A later
@@ -188,7 +207,7 @@ direction yourself, or leave it unknown.
 **Bulk care** uses one target facing with a separate starting facing and turn
 preview for each selected pot. Review each pot rather than assuming they all
 start alike. Queued entries and retries retain their original per-pot endpoints.
-The planned AppSheet **Bulk Log** uses the selected target and lets the bridge
+AppSheet **Bulk Log** uses the selected target and lets the bridge
 freeze each pot's recorded starting facing at the round's observation time.
 Unknown starts remain baseline records with blank amounts. Its hidden snapshot
 belongs to the bridge, not to manual form entry.
