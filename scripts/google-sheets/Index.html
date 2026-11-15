@@ -15878,7 +15878,7 @@
                                                 href="#app-icon-clock"
                                             ></use></svg
                                     ></span>
-                                    Weight queued on this phone
+                                    Observations queued on this phone
                                 </span>
                             </div>
                             <p
@@ -21229,6 +21229,12 @@
                 return [...events];
             }
 
+            function queuedPlantIds() {
+                return new Set(
+                    state.queue.map((entry) => entry.payload.plantId)
+                );
+            }
+
             function queuedWeighedPlantIds() {
                 return new Set(
                     state.queue
@@ -21519,18 +21525,18 @@
 
             function plantProgressText(
                 plantId,
-                queued = queuedWeighedPlantIds(),
+                queued = queuedPlantIds(),
                 saved = savedTodayPlantIds()
             ) {
                 return [
-                    queued.has(plantId) ? "Weight queued" : "",
+                    queued.has(plantId) ? "Queued on this phone" : "",
                     saved?.has(plantId) ? "Weighed today" : "",
                 ]
                     .filter(Boolean)
                     .join(" · ");
             }
 
-            function renderWeighingStatusBadges(button, saved, queued) {
+            function renderPlantStatusBadges(button, saved, queued) {
                 let badges = button.querySelector(".weighing-status-badges");
                 if (!saved && !queued) {
                     badges?.remove();
@@ -21548,7 +21554,7 @@
                         queued,
                         "queued",
                         "clock",
-                        "Weight queued on this phone; not yet saved to Google",
+                        "Observations queued on this phone; not yet saved to Google",
                     ],
                 ].forEach(([visible, status, icon, label]) => {
                     if (!visible) return;
@@ -21581,7 +21587,7 @@
                     ],
                     [
                         "clock",
-                        `${plants.filter((plant) => queued.has(plant.id)).length} queued`,
+                        `${state.queue.length} queued observation${state.queue.length === 1 ? "" : "s"}`,
                     ],
                 ].forEach(([icon, text]) => {
                     const stat = document.createElement("span");
@@ -21983,11 +21989,15 @@
                     state.queueSendSummary = null;
                 }
                 const weighedPlantIds = queuedWeighedPlantIds();
+                const queuedPlantCount = queuedPlantIds().size;
                 const plantCount = state.bootstrap
                     ? state.bootstrap.plants.length
                     : 0;
+                const queuedWeightCount = state.bootstrap.plants.filter(
+                    (plant) => weighedPlantIds.has(plant.id)
+                ).length;
                 const allPlantsWeighed =
-                    plantCount > 0 && weighedPlantIds.size === plantCount;
+                    plantCount > 0 && queuedWeightCount === plantCount;
                 $("queueCount").textContent = String(count);
                 $("queueCount").setAttribute(
                     "aria-label",
@@ -22001,9 +22011,20 @@
                     $("queueProgress").textContent =
                         `${state.queueSendSummary.confirmed} confirmed · ${count} still safely queued`;
                 } else {
-                    $("queueProgress").textContent = allPlantsWeighed
+                    const queueSummary = count
+                        ? `${count} observation${count === 1 ? "" : "s"} for ${queuedPlantCount} plant${queuedPlantCount === 1 ? "" : "s"} safely queued on this phone.`
+                        : "No observations queued on this phone.";
+                    const weightSummary = allPlantsWeighed
                         ? `All ${plantCount} plants have a weight safely queued on this device.`
-                        : `${weighedPlantIds.size} of ${plantCount} plants have a weight safely queued.`;
+                        : queuedWeightCount
+                          ? `Weights queued for ${queuedWeightCount} of ${plantCount} plants.`
+                          : "";
+                    $("queueProgress").textContent = [
+                        queueSummary,
+                        weightSummary,
+                    ]
+                        .filter(Boolean)
+                        .join(" ");
                 }
                 const warning = $("queueStorageWarning");
                 warning.textContent = [
@@ -22116,6 +22137,7 @@
                 weighedPlantIds = queuedWeighedPlantIds()
             ) {
                 const saved = savedTodayPlantIds();
+                const queued = queuedPlantIds();
                 document
                     .querySelectorAll(".label-choice[data-plant-id]")
                     .forEach((button) => {
@@ -22131,10 +22153,10 @@
                         button.dataset.savedToday = String(
                             Boolean(saved?.has(button.dataset.plantId))
                         );
-                        renderWeighingStatusBadges(
+                        renderPlantStatusBadges(
                             button,
                             Boolean(saved?.has(button.dataset.plantId)),
-                            weighed
+                            queued.has(button.dataset.plantId)
                         );
                         const plant = state.bootstrap.plants.find(
                             (candidate) =>
@@ -22143,12 +22165,10 @@
                         if (!plant) return;
                         const progress = plantProgressText(
                             plant.id,
-                            weighedPlantIds,
+                            queued,
                             saved
                         );
-                        const status = progress
-                            ? `, ${progress}${weighed ? ", weight safely queued" : ""}`
-                            : "";
+                        const status = progress ? `, ${progress}` : "";
                         button.title = `${plant.name} · ${plant.id}${status}`;
                         button.setAttribute(
                             "aria-label",
@@ -22165,12 +22185,12 @@
                         if (!plant) return;
                         const progress = plantProgressText(
                             plant.id,
-                            weighedPlantIds,
+                            queued,
                             saved
                         );
                         option.textContent = `${progress ? `${progress} · ` : ""}${plant.name} · ${plant.id}${plant.label ? ` · label ${plant.label}` : ""}`;
                     });
-                renderPlantChoiceList(state.filteredPlants, weighedPlantIds);
+                renderPlantChoiceList(state.filteredPlants, queued);
 
                 const summary = $("plantSummary");
                 const selected = selectedPlant();
@@ -22183,7 +22203,7 @@
                     renderPlantSummaryProgress(
                         badge,
                         selected.id,
-                        weighedPlantIds,
+                        queued,
                         saved
                     );
                 }
@@ -22513,13 +22533,13 @@
                 return image;
             }
 
-            function plantChoiceText(plant, weighed, saved) {
+            function plantChoiceText(plant, queued, saved) {
                 const text = document.createElement("span");
                 text.className = "plant-choice-text";
                 const name = document.createElement("strong");
                 const progress = plantProgressText(
                     plant.id,
-                    weighed ? new Set([plant.id]) : new Set(),
+                    queued ? new Set([plant.id]) : new Set(),
                     saved
                 );
                 name.textContent = `${progress ? `${progress} · ` : ""}${plant.name}`;
@@ -22529,7 +22549,7 @@
                 return text;
             }
 
-            function renderPlantChoiceList(plants, weighedPlantIds) {
+            function renderPlantChoiceList(plants, queued) {
                 const saved = savedTodayPlantIds();
                 const selected = plants.find(
                     (plant) => plant.id === $("plantSelect").value
@@ -22552,7 +22572,7 @@
                 }
                 const summaryText = plantChoiceText(
                     selected,
-                    weighedPlantIds.has(selected.id),
+                    queued.has(selected.id),
                     saved
                 );
                 summaryText.className = "plant-choice-summary-text";
@@ -22580,9 +22600,10 @@
                         .querySelector(".plant-choice-summary-text")
                         .replaceWith(summaryText);
                 }
+                const progress = plantProgressText(selected.id, queued, saved);
                 summary.setAttribute(
                     "aria-label",
-                    `Choose plant. Current selection: ${selected.name}, ${selected.id}${selected.label ? `, label ${selected.label}` : ""}`
+                    `Choose plant. Current selection: ${selected.name}, ${selected.id}${selected.label ? `, label ${selected.label}` : ""}${progress ? `, ${progress}` : ""}`
                 );
                 const existingButtons = new Map(
                     [...list.children].map((button) => [
@@ -22622,11 +22643,7 @@
                                 plant,
                                 "app-icon plant-choice-icon"
                             ),
-                            plantChoiceText(
-                                plant,
-                                weighedPlantIds.has(plant.id),
-                                saved
-                            )
+                            plantChoiceText(plant, queued.has(plant.id), saved)
                         );
                     } else {
                         button
@@ -22634,7 +22651,7 @@
                             .replaceWith(
                                 plantChoiceText(
                                     plant,
-                                    weighedPlantIds.has(plant.id),
+                                    queued.has(plant.id),
                                     saved
                                 )
                             );
@@ -22658,6 +22675,7 @@
             function renderPlantOptions(query = "", preferredId = "") {
                 const normalized = query.trim().toLowerCase();
                 const weighedPlantIds = queuedWeighedPlantIds();
+                const queued = queuedPlantIds();
                 const select = $("plantSelect");
                 const currentId =
                     preferredId ||
@@ -22687,18 +22705,14 @@
                 plants.forEach((plant) => {
                     const option = document.createElement("option");
                     option.value = plant.id;
-                    const progress = plantProgressText(
-                        plant.id,
-                        weighedPlantIds,
-                        saved
-                    );
+                    const progress = plantProgressText(plant.id, queued, saved);
                     option.textContent = `${progress ? `${progress} · ` : ""}${plant.name} · ${plant.id}${plant.label ? ` · label ${plant.label}` : ""}`;
                     select.append(option);
                 });
                 select.value = plants.some((plant) => plant.id === currentId)
                     ? currentId
                     : plants[0]?.id || "";
-                renderPlantChoiceList(plants, weighedPlantIds);
+                renderPlantChoiceList(plants, queued);
                 renderPlantSummary();
                 renderRoundProgress();
                 renderWaterAgeDisplays();
@@ -22847,6 +22861,7 @@
                 const picker = $("labelPicker");
                 const currentId = $("plantSelect").value;
                 const weighedPlantIds = queuedWeighedPlantIds();
+                const queued = queuedPlantIds();
                 const existingButtons = new Map(
                     [...picker.querySelectorAll("[data-plant-id]")].map(
                         (button) => [button.dataset.plantId, button]
@@ -22899,10 +22914,10 @@
                         button.dataset.savedToday = String(
                             Boolean(saved?.has(plant.id))
                         );
-                        renderWeighingStatusBadges(
+                        renderPlantStatusBadges(
                             button,
                             Boolean(saved?.has(plant.id)),
-                            weighed
+                            queued.has(plant.id)
                         );
                         button.hidden =
                             (isNotWeighedFilterActive() ||
@@ -22913,12 +22928,10 @@
                         button.disabled = state.saving;
                         const progress = plantProgressText(
                             plant.id,
-                            weighedPlantIds,
+                            queued,
                             saved
                         );
-                        const status = progress
-                            ? `, ${progress}${weighed ? ", weight safely queued" : ""}`
-                            : "";
+                        const status = progress ? `, ${progress}` : "";
                         button.title = `${plant.name} · ${plant.id}${status}`;
                         button.setAttribute(
                             "aria-label",
@@ -23061,7 +23074,7 @@
             function renderPlantSummaryProgress(
                 badge,
                 plantId,
-                queued = queuedWeighedPlantIds(),
+                queued = queuedPlantIds(),
                 saved = savedTodayPlantIds()
             ) {
                 const progress = plantProgressText(plantId, queued, saved);

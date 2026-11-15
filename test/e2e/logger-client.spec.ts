@@ -270,7 +270,7 @@ const expectTerrariumContext = async (page: Readonly<Page>) => {
     await page
         .getByRole("button", {
             exact: true,
-            name: "Label #12, Mixed tropical terrarium, P38, Weight queued · Weighed today, weight safely queued",
+            name: "Label #12, Mixed tropical terrarium, P38, Queued on this phone · Weighed today",
         })
         .click();
     const selected = page.getByRole("region", {
@@ -1004,9 +1004,12 @@ const expectSummaryWithoutOverlap = async (
         .soft(selected.getByText(`${plantId} · ${progress}`, { exact: true }))
         .toBeVisible();
     const expectedIcons: Readonly<Record<string, readonly string[]>> = {
+        "Queued on this phone": ["#app-icon-clock"],
+        "Queued on this phone · Weighed today": [
+            "#app-icon-clock",
+            "#app-icon-check",
+        ],
         "Weighed today": ["#app-icon-check"],
-        "Weight queued": ["#app-icon-clock"],
-        "Weight queued · Weighed today": ["#app-icon-clock", "#app-icon-check"],
     };
     expect
         .soft(
@@ -1185,13 +1188,13 @@ for (const theme of ["dark", "light"] as const) {
                     page,
                     "P06",
                     "Eastern prickly pear cactus",
-                    "Weight queued"
+                    "Queued on this phone"
                 );
                 await expectSummaryWithoutOverlap(
                     page,
                     "P38",
                     "Mixed tropical terrarium",
-                    "Weight queued · Weighed today"
+                    "Queued on this phone · Weighed today"
                 );
                 await selected.screenshot({
                     path: testInfo.outputPath("queued-plant-summary.png"),
@@ -1395,7 +1398,7 @@ const expectTableProgressFits = async (page: Readonly<Page>) => {
         .not.toBe("none");
     await expect
         .soft(terrarium)
-        .toHaveAccessibleName(/Weight queued · Weighed today/v);
+        .toHaveAccessibleName(/Queued on this phone · Weighed today/v);
     const bounds = await terrarium.evaluate((button) => {
         const rect = button.getBoundingClientRect();
         const badges = [...button.querySelectorAll(".weighing-status-badge")];
@@ -1427,7 +1430,7 @@ const expectTableProgressFits = async (page: Readonly<Page>) => {
     expect.soft(bounds).toStrictEqual({
         badges: [
             "Weighed today; saved to Google",
-            "Weight queued on this phone; not yet saved to Google",
+            "Observations queued on this phone; not yet saved to Google",
         ],
         badgesFit: true,
         childrenFit: true,
@@ -3005,7 +3008,9 @@ test.describe("watering age picker", { tag: "@logger" }, () => {
                 waterAgeTile(tablePicker(page), "P02")
             );
             const queued = waterAgeTile(tablePicker(page), "P06");
-            await expect.soft(queued).toHaveAccessibleName(/Weight queued/v);
+            await expect
+                .soft(queued)
+                .toHaveAccessibleName(/Queued on this phone/v);
             await expectUnavailableAgeContrast(queued);
         });
 

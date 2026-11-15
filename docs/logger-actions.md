@@ -57,12 +57,16 @@ Both the single-plant picker and **Bulk care** offer **List**, **Labels**, and
 **Table** views. Each picker remembers its own view on the current device.
 Switching views keeps the selected plant or bulk selection.
 
-A checkmark means **Weighed today**; an amber clock means **Weight queued** on
-this device. These badges describe weighing, not every care action. The summary
-above the picker counts plants weighed in the current care day and plants with
-an unsent weight. A queued weight can belong to an earlier day. Both badges can
-appear on the same pot, and the selection outline remains visible independently.
-The legend and accessible names spell out each symbol.
+A checkmark means **Weighed today**; an amber clock means **Queued on this phone**
+for any observation, including Water without a weight. The summary above the
+picker counts plants weighed in the current care day and all queued observations.
+Several queued entries for one pot count separately. The phone queue also shows
+how many distinct plants those entries cover; when weights are queued, it lists
+their plant count separately. A queued observation can belong to an earlier day.
+Both badges can appear on the same pot, and the selection outline remains visible
+independently. **Not weighed today** still considers only saved or queued weights;
+a queued Water action does not imply a weight. The legend and accessible names
+spell out each symbol.
 
 On phones, **Garden links** opens the reference links beneath the title and
 connection status. The selected-plant summary keeps identity, latest weight, and

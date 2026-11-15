@@ -799,7 +799,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
         expect(first.dataset["savedToday"]).toBe("true");
         expect(first.dataset["queuedWeighed"]).toBe("true");
         expect(first.getAttribute("aria-label")).toContain(
-            "Weight queued · Weighed today"
+            "Queued on this phone · Weighed today"
         );
         expect(
             queryElements(
@@ -807,7 +807,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
                 ".round-progress-stat",
                 HTMLElement
             ).map((stat) => stat.textContent)
-        ).toStrictEqual(["1 weighed today", "2 queued"]);
+        ).toStrictEqual(["1 weighed today", "2 queued observations"]);
 
         queryElement(
             window.document,
@@ -985,7 +985,7 @@ describe("garden logger daily progress, filtered History and measured charts", (
                     ".round-progress-stat",
                     HTMLElement
                 ).map((stat) => stat.textContent)
-            ).toStrictEqual(["1 weighed today", "0 queued"]);
+            ).toStrictEqual(["1 weighed today", "0 queued observations"]);
 
             const reload = createLoggerWindow({
                 online: false,
@@ -9770,12 +9770,14 @@ describe("garden logger observation entry and preferences", () => {
 
         expect(queuedButton.classList.contains("queued-weighed")).toBe(true);
         expect(queuedButton.getAttribute("aria-label")).toMatch(
-            /weight safely queued/v
+            /Queued on this phone/v
         );
         expect(
             queryElement(window.document, "#queueProgress", HTMLElement)
                 .textContent
-        ).toBe("1 of 2 plants have a weight safely queued.");
+        ).toBe(
+            "1 observation for 1 plant safely queued on this phone. Weights queued for 1 of 2 plants."
+        );
     });
 
     it("defaults measurements to inches, remembers the method, and shows dimensions in the queue", () => {
@@ -13624,7 +13626,9 @@ describe("garden logger durable queue storage", () => {
         expect(
             queryElement(window.document, "#queueProgress", HTMLElement)
                 .textContent
-        ).toBe("All 2 plants have a weight safely queued on this device.");
+        ).toBe(
+            "2 observations for 2 plants safely queued on this phone. All 2 plants have a weight safely queued on this device."
+        );
         expect(
             structuredClone(
                 [
@@ -13636,8 +13640,10 @@ describe("garden logger durable queue storage", () => {
                 ].map((option) => option.textContent)
             )
         ).toStrictEqual([
-            expect.stringMatching(/^Weight queued · Moon cactus/v),
-            expect.stringMatching(/^Weight queued · Yellow tower cactus/v),
+            expect.stringMatching(/^Queued on this phone · Moon cactus/v),
+            expect.stringMatching(
+                /^Queued on this phone · Yellow tower cactus/v
+            ),
         ]);
     });
 

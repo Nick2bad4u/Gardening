@@ -33,8 +33,8 @@ function createPicker() {
     return window;
 }
 
-describe("logger weighing status presentation", () => {
-    it("keeps selection, saved weight, and queued weight independently accessible", async () => {
+describe("logger plant status presentation", () => {
+    it("keeps selection, saved weight, and queued observations independently accessible", async () => {
         expect.hasAssertions();
 
         const window = createPicker();
@@ -64,7 +64,9 @@ describe("logger weighing status presentation", () => {
                     ".weighing-status-badge--queued",
                     HTMLElement
                 ).getAttribute("aria-label")
-            ).toBe("Weight queued on this phone; not yet saved to Google");
+            ).toBe(
+                "Observations queued on this phone; not yet saved to Google"
+            );
             expect(
                 tile
                     .querySelector(":scope .weighing-status-badge--saved use")
@@ -92,7 +94,15 @@ describe("logger weighing status presentation", () => {
                 '#labelPicker [data-plant-id="P38"]',
                 HTMLButtonElement
             );
-            window.eval("renderQueuedPlantIndicators(new Set())");
+            const key = "gardenLoggerObservationQueueV1";
+            window.localStorage.setItem(key, "[]");
+            window.dispatchEvent(
+                new window.StorageEvent("storage", {
+                    key,
+                    newValue: "[]",
+                    storageArea: window.localStorage,
+                })
+            );
 
             expect(
                 tile.querySelectorAll(".weighing-status-badge--queued")
@@ -109,7 +119,7 @@ describe("logger weighing status presentation", () => {
         }
     });
 
-    it("shows weighing counts and a visible saved/phone-queue legend", async () => {
+    it("shows weight and observation counts with a visible saved/phone-queue legend", async () => {
         expect.hasAssertions();
 
         const window = createPicker();
@@ -126,10 +136,12 @@ describe("logger weighing status presentation", () => {
             );
 
             expect(progress.textContent).toContain("2 weighed today");
-            expect(progress.textContent).toContain("2 queued");
+            expect(progress.textContent).toContain("2 queued observations");
             expect(progress.getAttribute("aria-describedby")).toBe(legend.id);
             expect(legend.textContent).toContain("Weight saved today");
-            expect(legend.textContent).toContain("Weight queued on this phone");
+            expect(legend.textContent).toContain(
+                "Observations queued on this phone"
+            );
             expect(legend.hidden).toBe(false);
         } finally {
             await closePicker(window);
