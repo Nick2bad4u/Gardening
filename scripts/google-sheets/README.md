@@ -1,11 +1,11 @@
 # Google Sheets observation logger
 
-Production logger **5.47.2 / immutable version 142** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.47.3 / immutable version 143** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Production **5.47.2 / immutable version 142** retains portrait revision
-**1010123212eade00**. The November 14 full-color icons, compass, interface, and compact-badge updates and November 13
+Production **5.47.3 / immutable version 143** retains portrait revision
+**1010123212eade00**. The November 15 queue-status fix, November 14 full-color icons, compass, interface, and compact-badge updates and November 13
 cardinal-rotation rollout are recorded below;
 AppSheet **1.100144** is saved and verified through native client checks. The remaining cactus and
 front-grid portraits are described below. P41's appended optional weight field
@@ -39,6 +39,67 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A111**, below the three weight/dimension charts, with an automatic status at
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
+
+## All-observation queue indicators — 5.47.3
+
+Production **5.47.3 / immutable version 143** fixes generic queue indicators that
+previously counted only weights. Water-only and other care entries now contribute
+to picker counts, plant badges, and accessible labels. Three entries for two pots
+show **3 queued observations** and **3 observations for 2 plants**. Weighing
+progress and the **Not weighed today** filter still count weights separately.
+Stored payloads, retry IDs, saving, and recovery behavior are unchanged; the server
+diff is only the version literal. Schemas, AppSheet, artwork, access, and the
+ten-minute trigger remain unchanged.
+
+The existing deployment was promoted on **November 16 at 00:27 UTC**
+(**November 15 at 19:27 EST**), preserving its URL and owner execution identity.
+Head and immutable-source readbacks matched
+[4eb4f46](https://github.com/Nick2bad4u/Gardening/commit/4eb4f4670aca9baf991ab562f00499f2ec26870d),
+including the final read at **00:33 UTC**. Local validation passed **2,329 logger
+tests** and **192 browser cases**, including Water-only queues, repeated entries
+for one pot, mixed weights, reload, removal, partial confirmation, and retry
+recovery. Lint, type, formatting, coverage thresholds, and secret checks passed.
+
+The owner explicitly approved two release exceptions: the exact
+[Codecov upload failure](https://github.com/Nick2bad4u/Gardening/actions/runs/43765954827/job/132970963659)
+reporting a deactivated repository, and unverified account-wide daily Apps Script
+trigger-runtime headroom. Seven other required hosted checks passed. The captured
+24-hour project window contained **144 completed runs**, zero failures/timeouts,
+and **6,148.687 seconds** of execution duration; it is not an account quota counter.
+
+A disposable native rehearsal verified **50,000 unique observations** across
+**39 pots**. Analytics reached **Ready** in **14.612 seconds** with a
+**3,393,730-byte** publication payload; bootstrap took **72.583 seconds** with a
+**153,464-byte** response. The fixture retained the existing helper-formula
+footprint, including blank tail helpers, so it does not establish a worst-case
+fully populated formula workbook. Before/after fixture integrity passed, and the
+temporary runner's original source and properties were restored exactly.
+
+Fresh production HTML reported **Connected · Logger 5.47.3** and the new queue
+wording at **390/1280 px in both themes** from **00:29–00:32 UTC**. Counts and
+accessible labels agreed, with no horizontal overflow. The original tab's visible
+draft, selection, and empty queue were preserved; it was not reloaded, and no
+resume/discard or observation controls were used. Theme and viewport inspection
+settings were restored. Exact browser-storage byte equality was not measured.
+The tab log API returned no warnings/errors during inspection; earliest navigation
+and separate child-target diagnostic coverage were not independently established.
+Nonempty queue behavior was tested with local fixtures, not production entries.
+
+Postdeployment captures at **00:31:10–00:31:41 UTC** preserved **2,407 unique
+observations**, **1,951 request groups**, **38 Saved App entries**, no App bulk
+rows, exact **69/69/61/79-column** headers, **757 formula anchors**, **46 validation
+anchors**, and **4,597 recent/staging entered cells**. Projected IDs matched
+History; formula and Integrity errors were zero. The comparison covered
+full-capacity identity/request/provenance/state columns and the last 31 complete
+History rows plus staging, not every older nonidentity value. Only the shared
+clock and successful analytics timestamp changed against the immediate preflight.
+
+The first postdeployment scheduled execution, **00:29:13 UTC**, completed in
+**12.656 seconds** (**10.951 seconds** inside the handler), logging **5.47.3** with
+zero queued/processed/saved entries or bulk rounds. Analytics refreshed to
+**Ready**, with **43,156 bytes** and no skipped refresh; the workbook confirmed
+the **00:29:19.651 UTC** calculation. Native inspection reconfirmed exactly one
+Head queue trigger, **Every 10 minutes**, with no settings change.
 
 ## Full-color logger icons — 5.47.2
 
