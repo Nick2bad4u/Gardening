@@ -1,11 +1,13 @@
 # Google Sheets observation logger
 
-Production logger **5.47.3 / immutable version 143** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.48.0 / immutable version 144** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Production **5.47.3 / immutable version 143** retains portrait revision
-**1010123212eade00**. The November 15 queue-status fix, November 14 full-color icons, compass, interface, and compact-badge updates and November 13
+Production **5.48.0 / immutable version 144** retains portrait revision
+**1010123212eade00**. The November 21 bulk-status and watering-focus rollout,
+November 15 queue-status fix, November 14 full-color icons, compass, interface,
+and compact-badge updates and November 13
 cardinal-rotation rollout are recorded below;
 AppSheet **1.100144** is saved and verified through native client checks. The remaining cactus and
 front-grid portraits are described below. P41's appended optional weight field
@@ -40,11 +42,9 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
-## Prepared bulk status and watering focus — 5.48.0
+## Bulk status and watering focus — 5.48.0
 
-The November 20 source update prepares **5.48.0**. Production remains
-**5.47.3 / immutable version 143**; the new source has not been uploaded or
-promoted. Bulk care now renders the existing saved-weight-today and generic
+Production **5.48.0 / immutable version 144** adds the existing saved-weight-today and generic
 queued-observation badges in Labels, Table, and List. A compact **Focus** toggle
 and editable day threshold fade recently watered plants without moving them.
 The preference is shared by single and bulk views and starts off at seven days.
@@ -58,12 +58,74 @@ payloads, retry IDs, and observation writes retain their existing behavior.
 The server change is only the version literal; schemas, manifest, artwork, and
 AppSheet configuration are unchanged.
 
-Fresh native rehearsal, runtime-headroom, trigger, and live UI verification remain
-required before production promotion. At preparation time, supported local browser
-access was unavailable, and the native fallback stopped because it could not
-verify the browser URL. Read-only source and workbook baseline checks succeeded,
-but they do not replace those remaining checks. Prior release exceptions do not
-apply to this candidate.
+The existing deployment was promoted on **November 21 at 15:59:45 UTC**
+(**10:59 EST**), preserving its URL, owner-only access, and owner execution
+identity. Head and immutable-source readbacks matched
+[a06a522](https://github.com/Nick2bad4u/Gardening/commit/a06a522794385ade4b41eae80ecf3c3301582694),
+including the final read at **16:05:30 UTC**.
+
+Hosted validation passed **2,333 logger tests**, **401 Chromium cases**, and
+**60 Storybook tests**. Server coverage was **99.56% statements**, **98.16%
+branches**, **100% functions**, and **99.8% lines**. Type, lint, formatting,
+source checks, and secret scans passed. Local fixture browser checks covered unchanged
+picker positions, badges in all bulk views, selection retention, synchronized
+thresholds after typing/blur and Enter, and both themes at desktop and 390 px.
+
+The owner explicitly approved two limitations for this exact candidate:
+the [Codecov patch status](https://app.codecov.io/gh/Nick2bad4u/Gardening/commit/a06a522794385ade4b41eae80ecf3c3301582694)
+still reported **95.00% against 98.79%** using an older comparator, and
+account-wide daily Apps Script trigger-runtime headroom remained unverified.
+All nine exact-head check runs succeeded. The actual-parent comparison showed
+identical **98.57%** coverage and zero instrumented patch lines; fresh direct
+head/parent reports retained matching coverage for all **4,922 lines**. No
+coverage target was weakened. Neither all-green CI nor verified quota headroom
+is claimed.
+
+The project window from **November 20 at 08:39:00.794 UTC** through
+**November 21 at 08:39:00.794 UTC** contained **144 completed Time-Driven
+executions**, zero failures/timeouts, and **5,703.691 seconds** (**95.0615 minutes**)
+of displayed runtime, with ten-minute spacing. The capture included an older
+boundary row and excluded the later 08:39:13 execution. This filtered project
+window is not an account quota counter.
+
+A disposable native rehearsal verified **50,000 unique observations** across
+**39 pots**, **45,827 request groups**, and **4,173 paired Water/Weigh groups**.
+Analytics reached **Ready** in **14.008 seconds** with a **3,393,733-byte**
+publication payload; bootstrap took **58.257 seconds** with a **153,464-byte**
+response. All ten fixture and four runner chunks matched before/after. The
+fixture retained its existing helper-formula footprint, including blank tail
+helpers, so this does not establish worst-case fully populated-formula
+performance or daily quota headroom. Temporary properties were cleaned up,
+and the original runner source was restored exactly at **09:37:03 UTC**.
+
+Fresh production UI inspection from **16:02–16:04 UTC** reported
+**Connected · Logger 5.48.0**. All **39 bulk plant positions** stayed fixed;
+seven-day focus dimmed **24 plants**. Table, Labels, and List were inspected,
+with no horizontal overflow at **390/1280 px in both themes**. Existing stored
+draft, queue, theme, picker preferences, and plant selection remained byte-equal;
+the only added preference was focus off at seven days. The current-time form
+clock advanced normally from 11:00 to 11:04. No observation controls were used,
+and theme/viewport inspection settings were restored. The tab log API returned
+no warnings/errors; earliest-navigation and separate child-target diagnostics
+were not independently established.
+
+The postdeployment workbook comparison at **16:05 UTC** found no changes in
+the captured data: **2,461 observations**, **2,000 request groups**, **38 Saved
+staging entries**, zero bulk rows, **757 formula anchors**, and **46 validation
+anchors**. Headers, canonical/projection identities, staging values, and captured
+tab metadata matched; analytics was **Ready**, calculated at **15:59:18 UTC**.
+This comparison covered identity/provenance columns across all 50,000 supported
+History slots, the last 31 complete History rows, staging, and existing anchors.
+It did not reread every older History cell or full chart/protection metadata.
+
+Native trigger inspection at **16:06 UTC** confirmed the unchanged single
+**Head** `processQueuedAppSheetEntries` trigger at a **ten-minute** interval.
+The postpromotion scheduled run at **16:09:13 UTC** completed successfully;
+the native execution record reported **107.199 seconds**. Its **5.48.0** logs
+reported zero queued, processed, saved, retried, or deferred entries and no
+entries requiring correction across single and bulk intake. Analytics reached **Ready** without skipping,
+with a **39,346-byte** publication payload. This successful run does not establish
+account-wide daily trigger-runtime headroom.
 
 ## All-observation queue indicators — 5.47.3
 

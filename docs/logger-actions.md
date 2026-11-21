@@ -9,9 +9,8 @@ logger version and production details.
 
 The guide includes the compact weighing badges, navigation disclosures, and
 visual rotation controls introduced in logger **5.47.0**, plus the bulk status
-badges and watering focus prepared for **5.48.0**. Those two additions are pending
-production deployment; see the deployment record for the verified production
-version and release limits.
+badges and watering focus deployed in **5.48.0**. See the deployment record for
+the verified production version and release limits.
 
 Read alongside the [watering strategy](./watering-strategy.md), [weighing strategy](./weighing-strategy.md), and [operator runbook](../scripts/google-sheets/README.md).
 
