@@ -43,7 +43,7 @@
 - Latest condition keeps event/quality/method/notes/time; photos prove no inspection. Keep feeding units/unknowns; intervals/feeding/model estimates are not schedules.
 - `Workbook calculations`: correction-aware latest weight/time A:C, shared clock E2, calendar date F2. Reuse for ages; expose Calculated as of. Calculation time differs from observation/API-read time; show absolute observations/check freshness.
 - `Watering map`: hidden, warning-protected, outside AppSheet intake. Keep v2's 12-column Ready/End/count envelope, ledger order, full capacity, and source errors. Filter Removed/future rows; retain correction order. Upgrade v1 only through guarded migration. Fertilizer: explicit Yes on latest Water. The formula is neither an observation nor a refresh clock.
-- Picker ages/streaks follow the pot across setups. Ages use workbook-timezone midnight, not the 4 a.m. weighing day. Withhold cached/failed ages/streaks; only a confirmed read from the current open page may remain visible during an online refresh. Clear that display on failure, timeout, or offline cancellation; never persist its eligibility across page loads. Retained display is not confirmed data for operational defaults or Select highlighted. Count eligible Water until opposite/unknown nutrients.
+- Ages/streaks span setups; days start at workbook midnight, not 4 a.m. During refresh retain only this page's confirmed read. Clear on failure/timeout/offline; never persist eligibility or use it for defaults/Select highlighted. Count eligible Water until opposite/unknown nutrients.
 - Refresh Dry-down models/cycle comparison/environment/recorded locations together from full History via ordinary Apps Script; keep model/correction rules. Use existing queue trigger/explicit analytics refresh, never onEdit/save critical section. Publish all four snapshots and successful metadata atomically.
 - Keep ten-minute intake; attempt analytics every scheduled run, even after manual refresh: skipping can exceed 15-minute freshness. Keep refresh leases/retries.
 - `Workbook calculations` H:K: calculated time/state/cycle plant ID/setup. Failed refreshes retain successful time/results. Cycle data/roles require Ready, matching plant/setup, valid time ≤15 minutes from shared clock. Computing retains prior status/time; mobile shows progress. Show waiting/failure; never relabel another plant's cache. Flush failure status before releasing the lease, protecting later Ready publications.
@@ -67,7 +67,7 @@
 
 - Behavior/schema: npm `test:logger`, `test:logger:coverage`, `check:logger`. Align server/client/tests/checker/AppSheet/public CSV/runbook.
 - `.gs`: npm `lint:apps-script`, `typecheck:apps-script`. Validate inline HTML/styles/tests; inspect artwork/published dependencies before deploy.
-- Before writes, add last rows/request IDs/staging schemas to inherited preflight checks.
+- Before writes, also check last rows/request IDs/staging schemas.
 - Git-ignore native snapshots. Rehearse structure on native workbook/script copies; exactly compare History/staging/RO entries/formulas/chart IDs/specs/positions/protections/relative tab order.
 - Reject snapshots >40,000,000 UTF-8 bytes. Before release verify full-scale native refresh duration/payload/daily trigger-runtime quota headroom; local timing is insufficient.
 - Drive copies include bound scripts; avoid competing functions. Never replay `sortSpecs` when extending History's BasicFilter: it re-sorts History.
