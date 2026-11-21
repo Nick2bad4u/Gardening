@@ -1,11 +1,11 @@
 # Google Sheets observation logger
 
-Production logger **5.48.0 / immutable version 144** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.48.1 / immutable version 145** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Production **5.48.0 / immutable version 144** retains portrait revision
-**1010123212eade00**. The November 21 bulk-status and watering-focus rollout,
+Production **5.48.1 / immutable version 145** retains portrait revision
+**1010123212eade00**. The November 21 watering-focus refinements and bulk-status rollout,
 November 15 queue-status fix, November 14 full-color icons, compass, interface,
 and compact-badge updates and November 13
 cardinal-rotation rollout are recorded below;
@@ -42,9 +42,9 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
-## Watering focus and refresh refinement — 5.48.1 candidate
+## Watering focus and refresh refinement — 5.48.1
 
-The **5.48.1** candidate fades recently watered picker entries even when selected.
+Production **5.48.1** fades recently watered picker entries even when selected.
 Mouse hover and keyboard focus temporarily restore contrast; touch selection
 does not leave a faded entry bright. Selection state, checkboxes, and outlines
 remain intact. Phone view controls occupy one row, with the two display filters
@@ -59,9 +59,55 @@ existing confirmation requirements. Failure, timeout, or offline cancellation
 clears retained displays. This eligibility exists only in page memory: a browser
 reload or a new page must wait for live confirmation, even with a cached roster.
 
-The server change is its version literal only. The candidate changes no workbook
+The server change is its version literal only. This release changes no workbook
 schema, calculation, manifest, artwork, AppSheet definition, or trigger contract.
-Production remains **5.48.0 / immutable version 144** pending validation and rollout.
+
+The existing deployment was promoted to **immutable version 145** on
+**November 21 at 20:44:14 UTC** (**15:44 EST**), preserving its URL, owner-only
+access, and owner execution identity. Production Head and immutable-source
+readbacks matched
+[08d699e](https://github.com/Nick2bad4u/Gardening/commit/08d699ef22f393cc08b27842a8a770b643c7111f)
+at **20:47:09 UTC**. The three uploaded files were `plant-tracker.gs`,
+`Index.html`, and `appsscript.json`.
+
+Validation passed **2,333 logger tests**, **416 local logger browser cases**,
+**404 hosted Chromium cases**, and **60 Storybook tests**. All eight checks and
+all three Codecov statuses passed for that source commit. Server coverage was
+**99.56% statements**, **98.16% branches**, **100% functions**, and **99.8%
+lines**. Type, lint, formatting, source checks, and secret scans passed.
+
+The owner explicitly approved this exact candidate with **account-wide daily
+Apps Script trigger-runtime headroom still unverified**. The earlier same-day
+50,000-observation native rehearsal described below was reused after checking
+server equivalence apart from the version literal; it was not rerun or
+retimestamped. This client refinement adds no scheduled server work. The earlier
+5.48.0 Codecov exception was not needed for this release.
+
+Live verification completed at **20:53 UTC** with **Connected · Logger 5.48.1**.
+Selected recent entries faded in both single and bulk pickers, keyboard focus
+restored contrast, and the phone controls occupied two rows with **44-pixel**
+touch targets. Watering ages and nutrient streaks stayed visible during refresh,
+while **Select highlighted** remained disabled until confirmation. Inspection
+found no horizontal overflow at **390/1280 px in both themes** and no warnings
+or errors in the tab log API. Display preferences and the viewport override were
+restored. No observations were submitted.
+
+The postdeployment workbook comparison completed at **20:58 UTC**, with zero
+changes in the captured data: **2,461 unique observations**, **2,000 request
+groups**, **38 Saved staging entries**, zero bulk rows, **757 formula anchors**,
+and **46 validation anchors**. Analytics was **Ready**, calculated at
+**20:49:22 UTC**. The comparison covered identity/provenance across all 50,000
+supported History slots, the last 31 complete History rows, staging, headers,
+formula/validation anchors, and captured tab metadata. It did not reread every
+older History cell or full chart/protection metadata; the reads were not atomic.
+
+The unchanged single **Head** `processQueuedAppSheetEntries` trigger was
+verified at a **ten-minute** interval before promotion. Its first postpromotion
+run at **20:49:13 UTC** completed in **14.171 seconds**. The **5.48.1** logs
+reported zero queued, processed, saved, retried, deferred, or correction-needed
+entries across single and bulk intake. Analytics reached **Ready** without
+skipping, publishing **39,346 bytes**. This successful run does not establish
+account-wide daily quota headroom.
 
 ## Bulk status and watering focus — 5.48.0
 

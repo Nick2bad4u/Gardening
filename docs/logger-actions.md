@@ -10,7 +10,7 @@ logger version and production details.
 The guide includes the compact weighing badges, navigation disclosures, and
 visual rotation controls introduced in logger **5.47.0**, plus the bulk status
 badges and watering focus introduced in **5.48.0**. The **5.48.1** refinements
-described below are prepared and pending logger deployment. See the deployment
+described below are live as of **November 21, 2026**. See the deployment
 record for the verified production version and release limits.
 
 Read alongside the [watering strategy](./watering-strategy.md), [weighing strategy](./weighing-strategy.md), and [operator runbook](../scripts/google-sheets/README.md).
