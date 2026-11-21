@@ -34,6 +34,122 @@ function createPicker() {
 }
 
 describe("logger plant status presentation", () => {
+    it.each([
+        "Label",
+        "List",
+        "Table",
+    ])(
+        "shows independently saved and queued indicators in the bulk %s picker",
+        async (mode) => {
+            expect.hasAssertions();
+
+            const window = createPicker();
+            try {
+                queryElement(
+                    window.document,
+                    "#bulkModeTab",
+                    HTMLButtonElement
+                ).click();
+                queryElement(
+                    window.document,
+                    `#bulk${mode}PickerMode`,
+                    HTMLButtonElement
+                ).click();
+                const tile = queryElement(
+                    window.document,
+                    '#bulkPlantList [data-bulk-plant-id="P38"]',
+                    HTMLElement
+                );
+
+                expect(
+                    queryElement(
+                        tile,
+                        ".weighing-status-badge--saved",
+                        HTMLElement
+                    ).getAttribute("aria-label")
+                ).toBe("Weighed today; saved to Google");
+                expect(
+                    queryElement(
+                        tile,
+                        ".weighing-status-badge--queued",
+                        HTMLElement
+                    ).getAttribute("aria-label")
+                ).toBe(
+                    "Observations queued on this phone; not yet saved to Google"
+                );
+
+                const key = "gardenLoggerObservationQueueV1";
+                window.localStorage.setItem(key, "[]");
+                window.dispatchEvent(
+                    new window.StorageEvent("storage", {
+                        key,
+                        newValue: "[]",
+                        storageArea: window.localStorage,
+                    })
+                );
+
+                expect(
+                    tile.querySelectorAll(".weighing-status-badge--queued")
+                ).toHaveLength(0);
+                expect(
+                    tile.querySelectorAll(".weighing-status-badge--saved")
+                ).toHaveLength(1);
+            } finally {
+                await closePicker(window);
+            }
+        }
+    );
+
+    it("rerenders bulk saved-today badges against the workbook care-day boundary while retaining queued observations", async () => {
+        expect.hasAssertions();
+
+        const window = createPicker();
+        try {
+            queryElement(
+                window.document,
+                "#bulkModeTab",
+                HTMLButtonElement
+            ).click();
+            queryElement(
+                window.document,
+                "#bulkTablePickerMode",
+                HTMLButtonElement
+            ).click();
+            const tile = queryElement(
+                window.document,
+                '#bulkPlantList [data-bulk-plant-id="P38"]',
+                HTMLButtonElement
+            );
+            vi.setSystemTime(new Date("2026-09-10T07:59:00Z"));
+            await vi.advanceTimersByTimeAsync(0);
+            queryElement(
+                window.document,
+                "#bulkLabelPickerMode",
+                HTMLButtonElement
+            ).click();
+
+            expect(
+                tile.querySelectorAll(".weighing-status-badge--saved")
+            ).toHaveLength(1);
+
+            vi.setSystemTime(new Date("2026-09-10T08:00:00Z"));
+            queryElement(
+                window.document,
+                "#bulkTablePickerMode",
+                HTMLButtonElement
+            ).click();
+
+            expect(
+                tile.querySelectorAll(".weighing-status-badge--saved")
+            ).toHaveLength(0);
+            expect(
+                tile.querySelectorAll(".weighing-status-badge--queued")
+            ).toHaveLength(1);
+        } finally {
+            await closePicker(window);
+        }
+    });
+
     it("keeps selection, saved weight, and queued observations independently accessible", async () => {
         expect.hasAssertions();
 

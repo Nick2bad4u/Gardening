@@ -8,8 +8,10 @@ The [deployment record](../scripts/google-sheets/README.md) keeps the
 logger version and production details.
 
 The guide includes the compact weighing badges, navigation disclosures, and
-visual rotation controls introduced in logger **5.47.0**. See the
-deployment record for the verified production version and release limits.
+visual rotation controls introduced in logger **5.47.0**, plus the bulk status
+badges and watering focus prepared for **5.48.0**. Those two additions are pending
+production deployment; see the deployment record for the verified production
+version and release limits.
 
 Read alongside the [watering strategy](./watering-strategy.md), [weighing strategy](./weighing-strategy.md), and [operator runbook](../scripts/google-sheets/README.md).
 
@@ -66,7 +68,9 @@ their plant count separately. A queued observation can belong to an earlier day.
 Both badges can appear on the same pot, and the selection outline remains visible
 independently. **Not weighed today** still considers only saved or queued weights;
 a queued Water action does not imply a weight. The legend and accessible names
-spell out each symbol.
+spell out each symbol. **Bulk care** shows the same saved-weight and queued
+badges in all three views; its checkmark also means a weight saved today,
+not confirmation of every kind of care action.
 
 On phones, **Garden links** opens the reference links beneath the title and
 connection status. The selected-plant summary keeps identity, latest weight, and
@@ -85,6 +89,27 @@ in the plant picker. The setting is remembered on this device and also applies t
 **Bulk care**. It keeps the current search, filters, selections, and unfinished
 entries. Labels and Table show compact counts such as `0d`, `1d`, and `12d`;
 List spells out the number of days.
+
+Use the compact **Focus** control to make older watering histories stand out.
+Set a whole number of days, then turn it on: with **7 days+**, plants last watered
+fewer than seven calendar days ago fade in place, while plants at seven days or
+more stay clear. The same setting applies to single and bulk views and is
+remembered on this device. It starts off; seven is an editable display preference,
+not a care interval.
+
+Focus keeps every plant in its existing position. The current single plant,
+selected bulk plants, and plants with no confirmed watering age stay clear.
+Hovering or using the keyboard restores a faded plant's contrast so it can still
+be selected. It keeps the existing day-badge setting and unfinished entries.
+In bulk mode, **Select highlighted** adds the clear search matches, including
+unknown ages, while retaining existing selections. Turn focus off to restore
+**Select visible** for all search matches.
+
+Focus pauses while watering history is refreshing or unconfirmed, and while
+offline. The bulk selection shortcut waits for confirmed history in this state;
+individual plant selection remains available. After reconnecting, a successful
+refresh restores focus. Elapsed watering days highlight recorded history, not
+watering readiness.
 
 Confirmed counts follow the spreadsheet's continuous color scale: green at
 0 days, yellow at 14 days, and coral at 28 days, with blended colors between

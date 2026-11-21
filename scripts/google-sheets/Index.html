@@ -446,6 +446,102 @@
                 }
             }
 
+            .watering-focus-tools {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px 10px;
+                align-items: center;
+                margin-block: 8px 12px;
+            }
+
+            .watering-focus-control {
+                display: inline-flex;
+                flex: none;
+                flex-wrap: wrap;
+                gap: 4px;
+                align-items: center;
+                max-inline-size: 100%;
+                padding-inline-end: 8px;
+                font-size: 0.875rem;
+                color: var(--muted);
+                background: var(--card-soft);
+                border: 1px solid var(--line);
+                border-radius: 10px;
+
+                & input {
+                    inline-size: 3.6rem;
+                    min-block-size: 36px;
+                    padding: 4px;
+                    font-size: 0.875rem;
+                    text-align: center;
+                    border-radius: 6px;
+                }
+
+                & input[aria-invalid="true"] {
+                    border-color: var(--danger);
+                }
+            }
+
+            .watering-focus-toggle {
+                display: inline-flex;
+                gap: 5px;
+                align-items: center;
+                min-block-size: 44px;
+                padding: 6px 8px;
+                font-size: 0.875rem;
+                font-weight: 800;
+                color: var(--muted);
+                cursor: pointer;
+                background: transparent;
+                border: 0;
+                border-radius: 9px 0 0 9px;
+
+                &[aria-pressed="true"] {
+                    color: var(--forest-2);
+                    background: var(--leaf-soft);
+                }
+
+                &:focus-visible {
+                    outline: 2px solid var(--forest-2);
+                    outline-offset: 2px;
+                }
+            }
+
+            .watering-focus-status {
+                flex: 1 1 7rem;
+                align-content: center;
+                max-inline-size: 11rem;
+                min-block-size: 2.75em;
+                margin: 0;
+                font-size: 0.75rem;
+                line-height: 1.375;
+                color: var(--muted);
+            }
+
+            .watering-focus-recent {
+                opacity: 0.32;
+                filter: saturate(0.25);
+                transition:
+                    opacity 120ms ease,
+                    filter 120ms ease;
+
+                &:hover,
+                &:focus-within {
+                    opacity: 1;
+                    filter: none;
+                }
+
+                @media (prefers-reduced-motion: reduce) {
+                    transition: none;
+                }
+
+                @media (forced-colors: active) {
+                    border-style: dashed;
+                    opacity: 1;
+                    filter: none;
+                }
+            }
+
             .label-picker {
                 display: grid;
                 grid-template-columns: repeat(
@@ -2565,6 +2661,7 @@
             }
 
             .bulk-plant {
+                position: relative;
                 display: grid;
                 grid-template-columns:
                     [primary-start] 20px [primary-end secondary-start] 32px [secondary-end tertiary-start] minmax(
@@ -2575,6 +2672,7 @@
                 gap: 10px;
                 align-items: center;
                 padding: 11px;
+                padding-inline-end: 28px;
                 cursor: pointer;
                 background: var(--control);
                 border: 1px solid var(--line);
@@ -2593,6 +2691,11 @@
                 &:focus-within {
                     outline: 2px solid var(--forest-2);
                     outline-offset: 2px;
+                }
+
+                & .weighing-status-badges {
+                    inset-block-start: 4px;
+                    inset-inline-end: 4px;
                 }
             }
 
@@ -2884,6 +2987,14 @@
                 color: var(--forest-2);
                 background: transparent;
                 border: 0;
+
+                .bulk-tools & {
+                    gap: 5px;
+                    min-block-size: 44px;
+                    padding-inline: 6px;
+                    font-size: 0.875rem;
+                    white-space: nowrap;
+                }
             }
 
             .entry-validation {
@@ -15839,6 +15950,47 @@
                                     >
                                 </div>
                             </div>
+                            <div class="watering-focus-tools">
+                                <div class="watering-focus-control">
+                                    <button
+                                        id="wateringFocusToggle"
+                                        class="watering-focus-toggle"
+                                        type="button"
+                                        aria-label="Watering focus"
+                                        aria-pressed="false"
+                                        aria-controls="labelPicker plantChoiceList"
+                                        aria-describedby="wateringFocusStatus"
+                                        title="Fade recently watered plants in place. Unknown ages and selected plants stay clear. This shows history, not watering readiness."
+                                        ><svg
+                                            viewBox="0 0 64 64"
+                                            class="app-icon app-icon--small"
+                                            aria-hidden="true"
+                                        >
+                                            <use
+                                                href="#app-icon-water"
+                                            ></use></svg
+                                        >Focus</button
+                                    >
+                                    <input
+                                        id="wateringFocusDays"
+                                        type="number"
+                                        min="1"
+                                        step="1"
+                                        value="7"
+                                        inputmode="numeric"
+                                        aria-label="Watering focus threshold in days"
+                                        aria-describedby="wateringFocusStatus"
+                                    />
+                                    <span aria-hidden="true">days+</span>
+                                </div>
+                                <p
+                                    id="wateringFocusStatus"
+                                    class="watering-focus-status"
+                                    role="status"
+                                    aria-live="polite"
+                                    >Fade recent; keep positions.</p
+                                >
+                            </div>
                             <div
                                 id="roundProgress"
                                 class="round-progress"
@@ -17513,6 +17665,80 @@
                                     >
                                 </div>
                             </div>
+                            <div class="watering-focus-tools">
+                                <div class="watering-focus-control">
+                                    <button
+                                        id="bulkWateringFocusToggle"
+                                        class="watering-focus-toggle"
+                                        type="button"
+                                        aria-label="Watering focus"
+                                        aria-pressed="false"
+                                        aria-controls="bulkPlantList"
+                                        aria-describedby="bulkWateringFocusStatus"
+                                        title="Fade recently watered plants in place. Unknown ages and selected plants stay clear. This shows history, not watering readiness."
+                                        ><svg
+                                            viewBox="0 0 64 64"
+                                            class="app-icon app-icon--small"
+                                            aria-hidden="true"
+                                        >
+                                            <use
+                                                href="#app-icon-water"
+                                            ></use></svg
+                                        >Focus</button
+                                    >
+                                    <input
+                                        id="bulkWateringFocusDays"
+                                        type="number"
+                                        min="1"
+                                        step="1"
+                                        value="7"
+                                        inputmode="numeric"
+                                        aria-label="Watering focus threshold in days"
+                                        aria-describedby="bulkWateringFocusStatus"
+                                    />
+                                    <span aria-hidden="true">days+</span>
+                                </div>
+                                <p
+                                    id="bulkWateringFocusStatus"
+                                    class="watering-focus-status"
+                                    role="status"
+                                    aria-live="polite"
+                                    >Fade recent; keep positions.</p
+                                >
+                            </div>
+                            <div
+                                id="bulkStatusLegend"
+                                class="picker-status-legend"
+                            >
+                                <span>
+                                    <span
+                                        class="weighing-status-badge weighing-status-badge--saved"
+                                        aria-hidden="true"
+                                        ><svg
+                                            class="app-icon"
+                                            viewBox="0 0 64 64"
+                                        >
+                                            <use
+                                                href="#app-icon-check"
+                                            ></use></svg
+                                    ></span>
+                                    Weight saved today
+                                </span>
+                                <span>
+                                    <span
+                                        class="weighing-status-badge weighing-status-badge--queued"
+                                        aria-hidden="true"
+                                        ><svg
+                                            class="app-icon"
+                                            viewBox="0 0 64 64"
+                                        >
+                                            <use
+                                                href="#app-icon-clock"
+                                            ></use></svg
+                                    ></span>
+                                    Observations queued on this phone
+                                </span>
+                            </div>
                             <label
                                 class="field-label"
                                 for="bulkSearch"
@@ -17569,6 +17795,7 @@
                                 class="bulk-list"
                                 role="group"
                                 aria-label="Choose plants for bulk care"
+                                aria-describedby="bulkStatusLegend"
                             ></div>
                         </section>
                         <div class="actions">
@@ -18768,6 +18995,9 @@
                 wateringAgesConfirmed: false,
                 wateringAgesPending: false,
                 waterAgesVisible: false,
+                wateringFocusEnabled: false,
+                wateringFocusDays: 7,
+                wateringFocusNeedsRefresh: false,
                 summaryPlantId: "",
                 summaryDetailsOpen: null,
                 recentDataKey: "",
@@ -18803,6 +19033,7 @@
             const PLANT_PICKER_MODE_KEY = "gardenLoggerPlantPickerModeV1";
             const BULK_PICKER_MODE_KEY = "gardenLoggerBulkPickerModeV1";
             const WATER_AGE_VISIBILITY_KEY = "gardenLoggerWaterAgesVisibleV1";
+            const WATERING_FOCUS_KEY = "gardenLoggerWateringFocusV1";
             const PHOTO_VISIBILITY_KEY = "gardenLoggerPhotosVisibleV1";
             const CHART_VISIBILITY_KEY = "gardenLoggerChartsVisibleV1";
             const RECENT_LIMIT_KEY = "gardenLoggerRecentLimitV1";
@@ -19022,6 +19253,8 @@
                 const ignored = new Set([
                     "plantSearch",
                     "bulkSearch",
+                    "wateringFocusDays",
+                    "bulkWateringFocusDays",
                     "keepEvents",
                     "advanceAfterQueue",
                     timeId,
@@ -20356,6 +20589,7 @@
                     saving || queueWritesBlocked() || !state.queue.length;
                 $("bulkSaveButton").disabled = saving;
                 $("bulkResetButton").disabled = saving;
+                renderWateringFocusControls();
                 ["", "bulk"].forEach(renderNutrientDose);
                 renderEntryDraftBanner();
                 setIconLabel(
@@ -21374,9 +21608,115 @@
                 return `rgb(${channels.join(" ")})`;
             }
 
+            function validWateringFocusDays(value) {
+                return Number.isSafeInteger(value) && value >= 1;
+            }
+
+            function restoreWateringFocus() {
+                try {
+                    const preference = JSON.parse(
+                        safeStorageGet(localStorage, WATERING_FOCUS_KEY)
+                    );
+                    if (
+                        typeof preference?.enabled === "boolean" &&
+                        validWateringFocusDays(preference.days)
+                    ) {
+                        state.wateringFocusEnabled = preference.enabled;
+                        state.wateringFocusDays = preference.days;
+                    }
+                } catch {
+                    // A display preference must never interrupt draft recovery.
+                }
+                syncWateringFocusInputs();
+            }
+
+            function syncWateringFocusInputs() {
+                ["wateringFocusDays", "bulkWateringFocusDays"].forEach((id) => {
+                    $(id).value = String(state.wateringFocusDays);
+                    $(id).removeAttribute("aria-invalid");
+                    $(id).setCustomValidity("");
+                });
+            }
+
+            function persistWateringFocus() {
+                safeStorageSet(
+                    localStorage,
+                    WATERING_FOCUS_KEY,
+                    JSON.stringify({
+                        enabled: state.wateringFocusEnabled,
+                        days: state.wateringFocusDays,
+                    })
+                );
+            }
+
+            function wateringFocusDay() {
+                return browserIsOnline() &&
+                    !state.wateringAgesPending &&
+                    !state.wateringFocusNeedsRefresh
+                    ? wateringCalendarDay()
+                    : "";
+            }
+
+            function isRecentForWateringFocus(plant, today) {
+                if (!state.wateringFocusEnabled || !today) return false;
+                const age = wateringAge(plant, today);
+                return (
+                    Number.isInteger(age.days) &&
+                    age.days < state.wateringFocusDays
+                );
+            }
+
+            function renderWateringFocusControls() {
+                const enabled = state.wateringFocusEnabled;
+                const available = Boolean(wateringFocusDay());
+                ["wateringFocus", "bulkWateringFocus"].forEach((prefix) => {
+                    const input = $(`${prefix}Days`);
+                    const toggle = $(`${prefix}Toggle`);
+                    toggle.setAttribute("aria-pressed", String(enabled));
+                    toggle.setAttribute(
+                        "aria-busy",
+                        String(enabled && state.wateringAgesPending)
+                    );
+                    $(`${prefix}Status`).textContent =
+                        input.getAttribute("aria-invalid") === "true"
+                            ? `Use whole days; still using ${state.wateringFocusDays}.`
+                            : !enabled
+                              ? "Fade recent; keep positions."
+                              : !browserIsOnline()
+                                ? "Offline; focus paused."
+                                : state.wateringAgesPending
+                                  ? "Refreshing watering history…"
+                                  : !available
+                                    ? "Refresh to apply focus."
+                                    : "Recent plants fade in place.";
+                });
+                setIconLabel(
+                    $("bulkSelectVisible"),
+                    "check",
+                    enabled ? "Select highlighted" : "Select visible"
+                );
+                $("bulkSelectVisible").disabled =
+                    state.saving || (enabled && !available);
+            }
+
+            function changeWateringFocusDays(input) {
+                const days = Number(input.value);
+                if (!validWateringFocusDays(days)) {
+                    input.setAttribute("aria-invalid", "true");
+                    input.setCustomValidity("Enter 1 or more whole days.");
+                    renderWateringFocusControls();
+                    return;
+                }
+                state.wateringFocusDays = days;
+                syncWateringFocusInputs();
+                persistWateringFocus();
+                renderWaterAgeDisplays();
+            }
+
             function renderWaterAgeDisplays() {
                 if (!state.bootstrap) return;
                 const today = wateringCalendarDay();
+                const focusDay = wateringFocusDay();
                 const plants = new Map(
                     state.bootstrap.plants.map((plant) => [plant.id, plant])
                 );
@@ -21441,6 +21781,20 @@
                             }
                         } else badge?.remove();
                         element.classList.toggle("has-water-age", shown);
+                        const selected = element.dataset.bulkPlantId
+                            ? state.bulkSelected.has(plant.id)
+                            : plant.id === $("plantSelect").value;
+                        const faded =
+                            element.id !== "plantChoiceSummary" &&
+                            !selected &&
+                            isRecentForWateringFocus(plant, focusDay);
+                        element.classList.toggle(
+                            "watering-focus-recent",
+                            faded
+                        );
+                        const bulkMeta = element.querySelector(".bulk-meta");
+                        if (bulkMeta)
+                            bulkMeta.textContent = `${plant.id}${plant.label ? ` · ${plant.label}` : ""}${shown ? "" : ` · ${age.text}`}`;
                         const nutrientStatus = plant.lastWateredNutrientsUsed;
                         const streakCount =
                             plant.lastWateredNutrientStreakCount;
@@ -21491,21 +21845,36 @@
                         );
                         const previous = element.dataset.waterAgeSuffix || "";
                         const details = [
-                            shown ? age.text : "",
+                            shown || (state.wateringFocusEnabled && focusDay)
+                                ? age.text
+                                : "",
                             streakText,
+                            faded ? "Faded by watering focus" : "",
                         ].filter(Boolean);
                         const suffix = details.length
                             ? `, ${details.join(", ")}`
                             : "";
-                        ["aria-label", "title"].forEach((attribute) => {
-                            let value = element.getAttribute(attribute);
-                            if (!value) return;
-                            if (previous && value.endsWith(previous))
-                                value = value.slice(0, -previous.length);
-                            element.setAttribute(attribute, value + suffix);
-                        });
+                        [element, element.querySelector("input")].forEach(
+                            (target) => {
+                                if (!target) return;
+                                ["aria-label", "title"].forEach((attribute) => {
+                                    let value = target.getAttribute(attribute);
+                                    if (!value) return;
+                                    if (previous && value.endsWith(previous))
+                                        value = value.slice(
+                                            0,
+                                            -previous.length
+                                        );
+                                    target.setAttribute(
+                                        attribute,
+                                        value + suffix
+                                    );
+                                });
+                            }
+                        );
                         element.dataset.waterAgeSuffix = suffix;
                     });
+                renderWateringFocusControls();
             }
 
             function isNotWeighedFilterActive() {
@@ -22213,6 +22582,7 @@
                         $("plantSearch").value,
                         $("plantSelect").value
                     );
+                renderBulkPlantIndicators();
                 renderWaterAgeDisplays();
             }
 
@@ -27507,6 +27877,41 @@
                 name.textContent = `${state.bulkSelected.has(plant.id) ? "Selected" : "Not selected"}: ${plant.name} · ${plant.label || plant.id}`;
             }
 
+            function renderBulkPlantIndicators() {
+                if (!state.bootstrap) return;
+                const saved = savedTodayPlantIds();
+                const queued = queuedPlantIds();
+                const plants = new Map(
+                    state.bootstrap.plants.map((plant) => [plant.id, plant])
+                );
+                $("bulkPlantList")
+                    .querySelectorAll("[data-bulk-plant-id]")
+                    .forEach((element) => {
+                        const plant = plants.get(element.dataset.bulkPlantId);
+                        if (!plant) return;
+                        const weighed = Boolean(saved?.has(plant.id));
+                        element.classList.toggle("saved-today", weighed);
+                        element.dataset.savedToday = String(weighed);
+                        renderPlantStatusBadges(
+                            element,
+                            weighed,
+                            queued.has(plant.id)
+                        );
+                        const progress = plantProgressText(
+                            plant.id,
+                            queued,
+                            saved
+                        );
+                        const status = progress ? `, ${progress}` : "";
+                        const label = `${plant.label ? `Label ${plant.label}, ` : ""}${plant.name}, ${plant.id}${status}`;
+                        element.title = `${plant.name} · ${plant.id}${status}`;
+                        element.setAttribute("aria-label", label);
+                        element
+                            .querySelector("input")
+                            ?.setAttribute("aria-label", label);
+                    });
+            }
+
             function renderBulkPlants(query = "") {
                 const normalized = query.trim().toLowerCase();
                 const plants = state.bootstrap.plants.filter((plant) =>
@@ -27639,7 +28044,7 @@
                         element.querySelector(".bulk-name").textContent =
                             plant.name;
                         element.querySelector(".bulk-meta").textContent =
-                            `${plant.id}${plant.label ? ` · ${plant.label}` : ""} · ${plant.daysSinceWater === "" ? "no water age" : `${plant.daysSinceWater} days`}`;
+                            `${plant.id}${plant.label ? ` · ${plant.label}` : ""}`;
                     }
                     const ordered = list.querySelectorAll(
                         "[data-bulk-plant-id]"
@@ -27666,6 +28071,7 @@
                     list.append(empty);
                 }
                 renderBulkCount();
+                renderBulkPlantIndicators();
                 renderWaterAgeDisplays();
             }
 
@@ -29260,6 +29666,7 @@
                 const selectedPlantId = $("plantSelect").value;
                 state.bootstrapReceivedAt = Date.now();
                 state.wateringAgesConfirmed = true;
+                state.wateringFocusNeedsRefresh = false;
                 state.bootstrap = bootstrap;
                 applyWorkbookCalculationMetadata(bootstrap.workbookCalculation);
                 renderEventOptions();
@@ -29630,6 +30037,8 @@
                     state.bootstrap = bootstrap;
                     state.bootstrapReceivedAt = Date.now();
                     state.wateringAgesConfirmed = !fromCache;
+                    state.wateringFocusNeedsRefresh = fromCache;
+                    restoreWateringFocus();
                     state.waterAgesVisible =
                         safeStorageGet(
                             localStorage,
@@ -29764,6 +30173,21 @@
                     state.waterAgesVisible ? "shown" : "hidden"
                 );
                 renderWaterAgeDisplays();
+            });
+            ["wateringFocus", "bulkWateringFocus"].forEach((prefix) => {
+                $(`${prefix}Toggle`).addEventListener("click", () => {
+                    state.wateringFocusEnabled = !state.wateringFocusEnabled;
+                    persistWateringFocus();
+                    renderWaterAgeDisplays();
+                });
+                $(`${prefix}Days`).addEventListener("change", (event) =>
+                    changeWateringFocusDays(event.target)
+                );
+                $(`${prefix}Days`).addEventListener("keydown", (event) => {
+                    if (event.key !== "Enter") return;
+                    event.preventDefault();
+                    changeWateringFocusDays(event.currentTarget);
+                });
             });
             $("notWeighedToday").addEventListener("click", () => {
                 $("notWeighedToday").setAttribute(
@@ -30124,9 +30548,11 @@
                 setBulkPickerMode("table")
             );
             $("bulkSelectVisible").addEventListener("click", () => {
-                state.bulkFilteredPlants.forEach((plant) =>
-                    state.bulkSelected.add(plant.id)
-                );
+                const today = wateringFocusDay();
+                if (state.wateringFocusEnabled && !today) return;
+                state.bulkFilteredPlants
+                    .filter((plant) => !isRecentForWateringFocus(plant, today))
+                    .forEach((plant) => state.bulkSelected.add(plant.id));
                 renderBulkPlants($("bulkSearch").value);
             });
             $("bulkClear").addEventListener("click", () => {
@@ -30234,12 +30660,15 @@
                 }
             });
             window.addEventListener("online", () => {
+                renderWaterAgeDisplays();
                 refreshNutrientPreferences(true);
                 showToast("Connection restored. Checking saved work…");
                 scheduleInterruptedWorkCheck(100);
             });
             window.addEventListener("offline", () => {
                 nutrientSync.confirmed = false;
+                state.wateringFocusNeedsRefresh = true;
+                renderWaterAgeDisplays();
                 renderRotationEntry();
                 renderBulkRotationEntry();
                 renderActionContexts();

@@ -40,6 +40,31 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## Prepared bulk status and watering focus — 5.48.0
+
+The November 20 source update prepares **5.48.0**. Production remains
+**5.47.3 / immutable version 143**; the new source has not been uploaded or
+promoted. Bulk care now renders the existing saved-weight-today and generic
+queued-observation badges in Labels, Table, and List. A compact **Focus** toggle
+and editable day threshold fade recently watered plants without moving them.
+The preference is shared by single and bulk views and starts off at seven days.
+Selected plants and unknown ages stay clear; hovering or keyboard focus restores
+contrast. **Select highlighted** retains manual selections and adds eligible
+search matches. The threshold is a display preference, not a watering interval.
+
+Cached, refreshing, failed, and offline history pause focus and its bulk selection
+shortcut until a fresh confirmed read. Day-badge visibility, drafts, queued
+payloads, retry IDs, and observation writes retain their existing behavior.
+The server change is only the version literal; schemas, manifest, artwork, and
+AppSheet configuration are unchanged.
+
+Fresh native rehearsal, runtime-headroom, trigger, and live UI verification remain
+required before production promotion. At preparation time, supported local browser
+access was unavailable, and the native fallback stopped because it could not
+verify the browser URL. Read-only source and workbook baseline checks succeeded,
+but they do not replace those remaining checks. Prior release exceptions do not
+apply to this candidate.
+
 ## All-observation queue indicators — 5.47.3
 
 Production **5.47.3 / immutable version 143** fixes generic queue indicators that
