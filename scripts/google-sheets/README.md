@@ -42,6 +42,27 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## Watering focus and refresh refinement — 5.48.1 candidate
+
+The **5.48.1** candidate fades recently watered picker entries even when selected.
+Mouse hover and keyboard focus temporarily restore contrast; touch selection
+does not leave a faded entry bright. Selection state, checkboxes, and outlines
+remain intact. Phone view controls occupy one row, with the two display filters
+side by side beneath them. The Focus control uses smaller text and spacing while
+preserving 44-pixel touch targets.
+
+Once this open page receives a successful live bootstrap, watering ages,
+nutrient streaks, and focus fading remain visible during an in-app refresh.
+The refresh indicator stays active, and **Select highlighted** remains disabled
+until a confirmed response. Rotation defaults and action context keep their
+existing confirmation requirements. Failure, timeout, or offline cancellation
+clears retained displays. This eligibility exists only in page memory: a browser
+reload or a new page must wait for live confirmation, even with a cached roster.
+
+The server change is its version literal only. The candidate changes no workbook
+schema, calculation, manifest, artwork, AppSheet definition, or trigger contract.
+Production remains **5.48.0 / immutable version 144** pending validation and rollout.
+
 ## Bulk status and watering focus — 5.48.0
 
 Production **5.48.0 / immutable version 144** adds the existing saved-weight-today and generic

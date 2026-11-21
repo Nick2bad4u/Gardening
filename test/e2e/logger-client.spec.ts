@@ -2325,10 +2325,10 @@ const expectBulkWaterAgeRefresh = async (page: Readonly<Page>) => {
     const bulk = waterAgeTile(tablePicker(page, true), "P02");
     await bulk.click();
     await refreshLogger(page);
-    await expect.soft(bulk).toHaveAccessibleName(/Refreshing watering days/v);
+    await expect.soft(bulk).toHaveAccessibleName(/1 day since watered/v);
     await expect
         .soft(bulk.getByRole("img", { name: "Refreshing watering days…" }))
-        .toBeVisible();
+        .toHaveCount(0);
     await confirmWaterAgeRefresh(page);
     await expect.soft(bulk).toContainText("1d");
     await expect.soft(bulk).toHaveAttribute(pressedAttribute, "true");
@@ -2738,7 +2738,7 @@ test.describe("latest-water fertilizer badge", { tag: "@logger" }, () => {
     };
     for (const theme of ["dark", "light"] as const) {
         for (const width of [390, 1280]) {
-            test(`${width}px ${theme} identifies fertilizer across pickers and withholds unconfirmed refreshes`, async ({
+            test(`${width}px ${theme} retains confirmed fertilizer while refreshing and withholds failed refreshes`, async ({
                 page,
             }, testInfo) => {
                 const fixture = wateringAgeFixture().replace(
@@ -2787,8 +2787,12 @@ test.describe("latest-water fertilizer badge", { tag: "@logger" }, () => {
                 });
                 await refreshLogger(page);
                 await expect
-                    .soft(page.getByRole("img", { name: badgeLabel }))
-                    .toHaveCount(0);
+                    .soft(
+                        tablePicker(page, true).getByRole("img", {
+                            name: badgeLabel,
+                        })
+                    )
+                    .toBeVisible();
                 await confirmWaterAgeRefresh(page, true);
                 await expect
                     .soft(page.getByRole("img", { name: badgeLabel }))
@@ -2913,9 +2917,7 @@ test.describe("watering age picker", { tag: "@logger" }, () => {
             await expectRefreshProgress(page, true);
             await expect
                 .soft(waterAgeTile(tablePicker(page), "P02"))
-                .toHaveAccessibleName(/Refreshing watering days/v);
-            await expectCompactWateringProgress(page, false);
-            await expectCompactWateringProgress(page, true);
+                .toHaveAccessibleName(/1 day since watered/v);
             await tablePicker(page).screenshot({
                 path: testInfo.outputPath("watering-pending.png"),
                 style: ".actions { visibility: hidden !important; }",
@@ -2933,6 +2935,8 @@ test.describe("watering age picker", { tag: "@logger" }, () => {
                 .soft(waterAgeTile(tablePicker(page), "P02"))
                 .toContainText("No data");
             await refreshLogger(page);
+            await expectCompactWateringProgress(page, false);
+            await expectCompactWateringProgress(page, true);
             await confirmWaterAgeRefresh(page);
             await expectRefreshProgress(page, false);
             await expect
@@ -2990,13 +2994,9 @@ test.describe("watering age picker", { tag: "@logger" }, () => {
                 { color: neutralColor, days: "unknown" },
                 { color: neutralColor, days: "unknown" },
             ]);
+            const confirmedColors = await readColors();
             await refreshLogger(page);
-            expect.soft(await readColors()).toStrictEqual(
-                Array.from({ length: 8 }, () => ({
-                    color: neutralColor,
-                    days: "unknown",
-                }))
-            );
+            expect.soft(await readColors()).toStrictEqual(confirmedColors);
             await confirmWaterAgeRefresh(page, true);
             expect.soft(await readColors()).toStrictEqual(
                 Array.from({ length: 8 }, () => ({
@@ -3067,7 +3067,7 @@ test.describe("watering age picker", { tag: "@logger" }, () => {
         });
     }
 
-    test("default refresh uses one RPC and withholds unconfirmed watering ages", async ({
+    test("default refresh uses one RPC and retains confirmed ages until a failed reply", async ({
         page,
     }) => {
         await openLogger(page, 390, "light", wateringAgeFixture());
@@ -3075,9 +3075,7 @@ test.describe("watering age picker", { tag: "@logger" }, () => {
         await pickerMode(page, waterAgeToggleName).click();
         const plant = waterAgeTile(tablePicker(page), "P02");
         await refreshLogger(page);
-        await expect
-            .soft(plant)
-            .toHaveAccessibleName(/Refreshing watering days/v);
+        await expect.soft(plant).toHaveAccessibleName(/1 day since watered/v);
         await expectWaterAgeCalls(page, "2", undefined);
         await confirmWaterAgeRefresh(page, true);
         await expect.soft(plant).toContainText("No data");

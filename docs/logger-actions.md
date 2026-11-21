@@ -9,8 +9,9 @@ logger version and production details.
 
 The guide includes the compact weighing badges, navigation disclosures, and
 visual rotation controls introduced in logger **5.47.0**, plus the bulk status
-badges and watering focus deployed in **5.48.0**. See the deployment record for
-the verified production version and release limits.
+badges and watering focus introduced in **5.48.0**. The **5.48.1** refinements
+described below are prepared and pending logger deployment. See the deployment
+record for the verified production version and release limits.
 
 Read alongside the [watering strategy](./watering-strategy.md), [weighing strategy](./weighing-strategy.md), and [operator runbook](../scripts/google-sheets/README.md).
 
@@ -96,19 +97,23 @@ more stay clear. The same setting applies to single and bulk views and is
 remembered on this device. It starts off; seven is an editable display preference,
 not a care interval.
 
-Focus keeps every plant in its existing position. The current single plant,
-selected bulk plants, and plants with no confirmed watering age stay clear.
-Hovering or using the keyboard restores a faded plant's contrast so it can still
-be selected. It keeps the existing day-badge setting and unfinished entries.
+Focus keeps every plant in its existing position. Recently watered plants fade
+even when selected; their selection outline or checkbox remains in place.
+Plants with no confirmed watering age stay clear. Hovering with a mouse or
+using the keyboard restores a faded plant's contrast so it can still be selected.
+Tapping a plant does not leave it bright. The selected-plant form summary stays
+legible. Focus keeps the existing day-badge setting and unfinished entries.
 In bulk mode, **Select highlighted** adds the clear search matches, including
 unknown ages, while retaining existing selections. Turn focus off to restore
 **Select visible** for all search matches.
 
-Focus pauses while watering history is refreshing or unconfirmed, and while
-offline. The bulk selection shortcut waits for confirmed history in this state;
-individual plant selection remains available. After reconnecting, a successful
-refresh restores focus. Elapsed watering days highlight recorded history, not
-watering readiness.
+After a successful live load, focus retains that watering display during an
+in-app refresh. The status still says **Refreshing watering history…**, and
+**Select highlighted** waits for the response; individual selection remains
+available. Failure, timeout, or going offline clears the retained display and
+pauses focus. A successful refresh restores it. Reloading or reopening the page
+also requires a fresh live response. Elapsed watering days highlight recorded
+history, not watering readiness.
 
 Confirmed counts follow the spreadsheet's continuous color scale: green at
 0 days, yellow at 14 days, and coral at 28 days, with blended colors between
@@ -124,9 +129,11 @@ schedule or evidence that the soil is dry.
 
 **No Water** means no eligible Water event is recorded. **No data** means the age
 cannot currently be confirmed after a failed refresh or when using an older
-saved plant list. During a refresh, the control says **Refreshing…**, its icon
-spins, and Label/Table day badges show a small ring; List views retain explanatory
-text. The control becomes available again after the response or a timeout;
+saved plant list. During a refresh, the control says **Refreshing…** and its icon
+spins. After a successful load in the current open page, the last confirmed
+days and nutrient streaks stay visible until the response arrives. Before that
+first response, Label/Table day badges show a small ring and List views retain
+explanatory text. The control becomes available again after the response or a timeout;
 reduced-motion settings keep the indicators still.
 Removed and future-dated Water events do not contribute to the count.
 
@@ -140,8 +147,10 @@ counts of two or more appear beside it. An unknown latest flag has no badge.
 
 These badges appear in all picker views, Bulk care, and the selected-plant
 summary, even when **Days since watered** is off. The accessible label and
-hover text spell out the count and nutrient choice. Cached, refreshing, or
-failed reads hide them until current data confirms the latest events. A streak
+hover text spell out the count and nutrient choice. A refresh may retain the
+current page's confirmed streaks as described above. Cached startup data,
+failed reads, and cancelled refreshes hide them until a live response confirms
+the latest events. A streak
 describes recorded history; it is not a feeding recommendation.
 
 The grid describes the maintained arrangement. Recording a Move does not assign

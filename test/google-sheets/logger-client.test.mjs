@@ -5656,7 +5656,7 @@ describe("garden logger watering nutrient streak badges", () => {
         }
     );
 
-    it("removes badges during pending and failed refreshes and reflects the new last Water", () => {
+    it("retains confirmed ages and streaks during refresh, withholds failures and reflects the new last Water", () => {
         expect.hasAssertions();
 
         const data = fertilizedBootstrap();
@@ -5668,6 +5668,18 @@ describe("garden logger watering nutrient streak badges", () => {
 
         expect(badgeCount(window)).toBeGreaterThan(0);
 
+        const ageSelector = '#labelPicker [data-plant-id="P01"] .water-age';
+        const confirmedAge = queryElement(
+            window.document,
+            ageSelector,
+            HTMLElement
+        ).textContent;
+        const confirmedSummaryAge = queryElement(
+            window.document,
+            "#plantChoiceSummary .water-age",
+            HTMLElement
+        ).textContent;
+
         /**
          * @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebAppBootstrap">
          *     | undefined}
@@ -5678,9 +5690,9 @@ describe("garden logger watering nutrient streak badges", () => {
         };
         refreshWorkflow(window);
 
-        expect(badgeCount(window)).toBe(0);
+        expect(badgeCount(window)).toBeGreaterThan(0);
         expect(
-            window.document.querySelectorAll(".watering-streak")
+            window.document.querySelectorAll(".water-age.is-loading")
         ).toHaveLength(0);
         expect(
             queryElement(
@@ -5688,14 +5700,35 @@ describe("garden logger watering nutrient streak badges", () => {
                 '#labelPicker [data-plant-id="P01"] .water-age',
                 HTMLElement
             ).textContent
-        ).toBe("Refreshing watering days…");
+        ).toBe(confirmedAge);
         expect(
             queryElement(
                 window.document,
                 "#plantChoiceSummary .water-age",
                 HTMLElement
             ).textContent
-        ).toBe("Refreshing watering days…");
+        ).toBe(confirmedSummaryAge);
+
+        click(window, "#tablePickerMode");
+        click(window, "#bulkModeTab");
+        for (const mode of [
+            "#bulkLabelPickerMode",
+            "#bulkTablePickerMode",
+            "#bulkListPickerMode",
+        ]) {
+            click(window, mode);
+
+            expect(
+                queryElement(
+                    window.document,
+                    '#bulkPlantList [data-bulk-plant-id="P01"] .watering-streak',
+                    HTMLElement
+                ).getAttribute("aria-label")
+            ).toBe(badgeLabel);
+            expect(
+                window.document.querySelectorAll(".water-age.is-loading")
+            ).toHaveLength(0);
+        }
 
         required(handlers).failure({ message: "Fixture unavailable" });
 
@@ -5712,6 +5745,12 @@ describe("garden logger watering nutrient streak badges", () => {
         ).toBe("No data");
 
         refreshWorkflow(window);
+
+        expect(badgeCount(window)).toBe(0);
+        expect(
+            queryElement(window.document, ageSelector, HTMLElement).textContent
+        ).toBe("Refreshing watering days…");
+
         required(handlers).success(data);
 
         expect(badgeCount(window)).toBeGreaterThan(0);
@@ -5721,12 +5760,16 @@ describe("garden logger watering nutrient streak badges", () => {
             ...data,
             plants: data.plants.map((plant) => ({
                 ...plant,
+                lastWateredDayKey: "2026-09-06",
                 lastWateredNutrientStreakCount: 1,
                 lastWateredNutrientsUsed: "No",
             })),
         });
 
         expect(badgeCount(window)).toBe(0);
+        expect(
+            queryElement(window.document, ageSelector, HTMLElement).textContent
+        ).toBe("0d");
         expect(
             queryElement(
                 window.document,
@@ -5761,10 +5804,18 @@ describe("garden logger watering nutrient streak badges", () => {
                     bootstrap: data,
                     savedAt: Date.now(),
                 }),
+                gardenLoggerWaterAgesVisibleV1: "shown",
             },
         });
 
         expect(badgeCount(window)).toBe(0);
+        expect(
+            queryElement(
+                window.document,
+                "#plantChoiceSummary .water-age",
+                HTMLElement
+            ).textContent
+        ).toBe("Refreshing watering days…");
 
         required(handlers).success(data);
 
@@ -5825,7 +5876,7 @@ describe("garden logger watering nutrient streak badges", () => {
         ).toHaveLength(0);
     });
 
-    it("replaces pending watering ages with unavailable after refresh timeout", () => {
+    it("retains confirmed watering ages while pending then withholds them after refresh timeout", () => {
         expect.hasAssertions();
 
         vi.useFakeTimers();
@@ -5834,6 +5885,11 @@ describe("garden logger watering nutrient streak badges", () => {
             storage: { gardenLoggerWaterAgesVisibleV1: "shown" },
         });
         click(window, "#labelPickerMode");
+        const confirmedAge = queryElement(
+            window.document,
+            '#labelPicker [data-plant-id="P01"] .water-age',
+            HTMLElement
+        ).textContent;
         behaviors.getWebAppBootstrap = () => undefined;
         refreshWorkflow(window);
 
@@ -5843,10 +5899,10 @@ describe("garden logger watering nutrient streak badges", () => {
                 '#labelPicker [data-plant-id="P01"] .water-age',
                 HTMLElement
             ).textContent
-        ).toBe("Refreshing watering days…");
+        ).toBe(confirmedAge);
         expect(
-            window.document.querySelectorAll(".watering-streak")
-        ).toHaveLength(0);
+            window.document.querySelectorAll(".watering-streak").length
+        ).toBeGreaterThan(0);
 
         vi.advanceTimersByTime(120_000);
 
@@ -13362,7 +13418,24 @@ describe("garden logger activity metrics and guidance", () => {
     it("keeps the newest saved plant summary and an in-progress weight when refreshes arrive out of order", () => {
         expect.hasAssertions();
 
-        const { behaviors, window } = createLoggerWindow();
+        /** @type {import("../logger-fixtures.d.ts").Bootstrap} */
+        const wateringBootstrap = {
+            ...bootstrap,
+            plants: bootstrap.plants.map((plant) => ({
+                ...plant,
+                lastWateredDayKey: "2026-08-14",
+                lastWateredNutrientStreakCount: 2,
+                lastWateredNutrientsUsed: "Yes",
+            })),
+            timeZone: "America/New_York",
+            wateringAgesAvailable: true,
+        };
+        const { behaviors, window } = createLoggerWindow({
+            bootstrapData: wateringBootstrap,
+            storage: { gardenLoggerWaterAgesVisibleV1: "shown" },
+        });
+        const ageSelector = "#plantChoiceSummary .water-age";
+        const streakSelector = "#plantChoiceSummary .watering-streak";
         /** @type {import("../logger-fixtures.d.ts").ScriptHandlers<"getWebAppBootstrap">[]} */
         const pending = [];
         behaviors.getWebAppBootstrap = (handlers) => {
@@ -13373,6 +13446,18 @@ describe("garden logger activity metrics and guidance", () => {
         };
         confirmSummarySave(window, "single");
         confirmSummarySave(window, "single");
+
+        expect(
+            queryElement(window.document, ageSelector, HTMLElement).textContent
+        ).toBe("1 day since watered");
+        expect(
+            queryElement(
+                window.document,
+                streakSelector,
+                HTMLElement
+            ).getAttribute("aria-label")
+        ).toBe("2 waterings in a row with nutrients");
+
         const weight = queryElement(
             window.document,
             "#weight",
@@ -13383,10 +13468,10 @@ describe("garden logger activity metrics and guidance", () => {
         expect(pending).toHaveLength(2);
 
         required(pending[1]).success({
-            ...bootstrap,
+            ...wateringBootstrap,
             plants: [
                 {
-                    ...required(bootstrap.plants[0]),
+                    ...required(wateringBootstrap.plants[0]),
                     activitySummary: {
                         averageDryDownGramsPerDay: "",
                         averageWaterIntervalDays: 10,
@@ -13399,10 +13484,24 @@ describe("garden logger activity metrics and guidance", () => {
                         totalWeights: 5,
                         waterIntervalCount: 2,
                     },
+                    lastWateredDayKey: "2026-08-15",
+                    lastWateredNutrientStreakCount: 1,
+                    lastWateredNutrientsUsed: "No",
                 },
             ],
         });
-        required(pending[0]).success(bootstrap);
+        required(pending[0]).success(wateringBootstrap);
+
+        expect(
+            queryElement(window.document, ageSelector, HTMLElement).textContent
+        ).toBe("0 days since watered");
+        expect(
+            queryElement(
+                window.document,
+                streakSelector,
+                HTMLElement
+            ).getAttribute("aria-label")
+        ).toBe("1 watering in a row without nutrients");
 
         expect(
             queryElements(

@@ -449,9 +449,9 @@
             .watering-focus-tools {
                 display: flex;
                 flex-wrap: wrap;
-                gap: 6px 10px;
+                gap: 4px 8px;
                 align-items: center;
-                margin-block: 8px 12px;
+                margin-block: 4px 8px;
             }
 
             .watering-focus-control {
@@ -461,17 +461,17 @@
                 gap: 4px;
                 align-items: center;
                 max-inline-size: 100%;
-                padding-inline-end: 8px;
-                font-size: 0.875rem;
+                padding-inline-end: 6px;
+                font-size: 0.75rem;
                 color: var(--muted);
                 background: var(--card-soft);
                 border: 1px solid var(--line);
-                border-radius: 10px;
+                border-radius: 8px;
 
                 & input {
-                    inline-size: 3.6rem;
-                    min-block-size: 36px;
-                    padding: 4px;
+                    inline-size: 3rem;
+                    min-block-size: 44px;
+                    padding: 3px;
                     font-size: 0.875rem;
                     text-align: center;
                     border-radius: 6px;
@@ -484,17 +484,17 @@
 
             .watering-focus-toggle {
                 display: inline-flex;
-                gap: 5px;
+                gap: 4px;
                 align-items: center;
                 min-block-size: 44px;
-                padding: 6px 8px;
-                font-size: 0.875rem;
+                padding: 4px 6px;
+                font-size: 0.75rem;
                 font-weight: 800;
                 color: var(--muted);
                 cursor: pointer;
                 background: transparent;
                 border: 0;
-                border-radius: 9px 0 0 9px;
+                border-radius: 7px 0 0 7px;
 
                 &[aria-pressed="true"] {
                     color: var(--forest-2);
@@ -508,10 +508,8 @@
             }
 
             .watering-focus-status {
-                flex: 1 1 7rem;
+                flex: 1 1 6rem;
                 align-content: center;
-                max-inline-size: 11rem;
-                min-block-size: 2.75em;
                 margin: 0;
                 font-size: 0.75rem;
                 line-height: 1.375;
@@ -525,10 +523,19 @@
                     opacity 120ms ease,
                     filter 120ms ease;
 
-                &:hover,
-                &:focus-within {
+                &:focus-visible,
+                &:has(:focus-visible) {
                     opacity: 1;
                     filter: none;
+                }
+
+                @media (hover: hover) and (pointer: fine) {
+                    &:hover,
+                    &:focus-visible,
+                    &:has(:focus-visible) {
+                        opacity: 1;
+                        filter: none;
+                    }
                 }
 
                 @media (prefers-reduced-motion: reduce) {
@@ -3428,18 +3435,19 @@
 
                 .picker-modes--plant {
                     grid-template-columns: repeat(
-                        3,
+                        6,
                         [mode-start] minmax(0, 1fr) [mode-end]
                     );
                     inline-size: 100%;
+                    & .picker-mode {
+                        grid-column: span 2;
+                        gap: 4px;
+                        padding-inline: 4px;
+                        font-size: 0.75rem;
+                    }
                     & .picker-mode--unweighed,
                     & .picker-mode--water-age {
-                        grid-column: 1 / -1;
-                    }
-                    & .picker-mode {
-                        gap: 4px;
-                        padding-inline: 5px;
-                        font-size: 0.875rem;
+                        grid-column: span 3;
                     }
                 }
 
@@ -15960,7 +15968,7 @@
                                         aria-pressed="false"
                                         aria-controls="labelPicker plantChoiceList"
                                         aria-describedby="wateringFocusStatus"
-                                        title="Fade recently watered plants in place. Unknown ages and selected plants stay clear. This shows history, not watering readiness."
+                                        title="Fade recently watered plants in place, including selected plants. Unknown ages stay clear. This shows history, not watering readiness."
                                         ><svg
                                             viewBox="0 0 64 64"
                                             class="app-icon app-icon--small"
@@ -17675,7 +17683,7 @@
                                         aria-pressed="false"
                                         aria-controls="bulkPlantList"
                                         aria-describedby="bulkWateringFocusStatus"
-                                        title="Fade recently watered plants in place. Unknown ages and selected plants stay clear. This shows history, not watering readiness."
+                                        title="Fade recently watered plants in place, including selected plants. Unknown ages stay clear. This shows history, not watering readiness."
                                         ><svg
                                             viewBox="0 0 64 64"
                                             class="app-icon app-icon--small"
@@ -18994,6 +19002,7 @@
                 bootstrapReceivedAt: 0,
                 wateringAgesConfirmed: false,
                 wateringAgesPending: false,
+                wateringAgesRetainedDuringRefresh: false,
                 waterAgesVisible: false,
                 wateringFocusEnabled: false,
                 wateringFocusDays: 7,
@@ -21524,7 +21533,12 @@
 
             function wateringCalendarDay() {
                 if (
-                    !state.wateringAgesConfirmed ||
+                    (!state.wateringAgesConfirmed &&
+                        !(
+                            state.wateringAgesPending &&
+                            state.wateringAgesRetainedDuringRefresh &&
+                            browserIsOnline()
+                        )) ||
                     state.bootstrap?.wateringAgesAvailable !== true ||
                     !state.bootstrap.timeZone
                 )
@@ -21554,7 +21568,10 @@
             }
 
             function wateringAge(plant, today) {
-                if (state.wateringAgesPending)
+                if (
+                    state.wateringAgesPending &&
+                    !state.wateringAgesRetainedDuringRefresh
+                )
                     return {
                         short: "",
                         text: "Refreshing watering days…",
@@ -21651,7 +21668,8 @@
 
             function wateringFocusDay() {
                 return browserIsOnline() &&
-                    !state.wateringAgesPending &&
+                    (!state.wateringAgesPending ||
+                        state.wateringAgesRetainedDuringRefresh) &&
                     !state.wateringFocusNeedsRefresh
                     ? wateringCalendarDay()
                     : "";
@@ -21696,7 +21714,8 @@
                     enabled ? "Select highlighted" : "Select visible"
                 );
                 $("bulkSelectVisible").disabled =
-                    state.saving || (enabled && !available);
+                    state.saving ||
+                    (enabled && (!available || state.wateringAgesPending));
             }
 
             function changeWateringFocusDays(input) {
@@ -21717,6 +21736,9 @@
                 if (!state.bootstrap) return;
                 const today = wateringCalendarDay();
                 const focusDay = wateringFocusDay();
+                const loading =
+                    state.wateringAgesPending &&
+                    !state.wateringAgesRetainedDuringRefresh;
                 const plants = new Map(
                     state.bootstrap.plants.map((plant) => [plant.id, plant])
                 );
@@ -21747,11 +21769,8 @@
                         }
                         const age = wateringAge(plant, today);
                         if (shown) {
-                            badge.classList.toggle(
-                                "is-loading",
-                                state.wateringAgesPending
-                            );
-                            if (state.wateringAgesPending) {
+                            badge.classList.toggle("is-loading", loading);
+                            if (loading) {
                                 const spinner = document.createElement("span");
                                 spinner.className = "spinner";
                                 spinner.setAttribute("aria-hidden", "true");
@@ -21781,12 +21800,8 @@
                             }
                         } else badge?.remove();
                         element.classList.toggle("has-water-age", shown);
-                        const selected = element.dataset.bulkPlantId
-                            ? state.bulkSelected.has(plant.id)
-                            : plant.id === $("plantSelect").value;
                         const faded =
                             element.id !== "plantChoiceSummary" &&
-                            !selected &&
                             isRecentForWateringFocus(plant, focusDay);
                         element.classList.toggle(
                             "watering-focus-recent",
@@ -29852,6 +29867,7 @@
 
             function setBootstrapRefreshPending(pending) {
                 state.wateringAgesPending = pending;
+                if (!pending) state.wateringAgesRetainedDuringRefresh = false;
                 const button = $("refreshDataButton");
                 button.disabled = pending;
                 button.setAttribute("aria-busy", String(pending));
@@ -29871,6 +29887,12 @@
             }
 
             function refreshCachedBootstrap({ updateHistory = true } = {}) {
+                // Only this page's confirmed read may remain visible in flight.
+                // Operational defaults still require a new confirmed response.
+                state.wateringAgesRetainedDuringRefresh =
+                    browserIsOnline() &&
+                    !state.wateringFocusNeedsRefresh &&
+                    Boolean(wateringCalendarDay());
                 state.wateringAgesConfirmed = false;
                 clearBootstrapRefreshTimer();
                 const attemptId = ++state.bootstrapRefreshAttempt;
@@ -30037,6 +30059,7 @@
                     state.bootstrap = bootstrap;
                     state.bootstrapReceivedAt = Date.now();
                     state.wateringAgesConfirmed = !fromCache;
+                    state.wateringAgesRetainedDuringRefresh = false;
                     state.wateringFocusNeedsRefresh = fromCache;
                     restoreWateringFocus();
                     state.waterAgesVisible =
@@ -30549,7 +30572,11 @@
             );
             $("bulkSelectVisible").addEventListener("click", () => {
                 const today = wateringFocusDay();
-                if (state.wateringFocusEnabled && !today) return;
+                if (
+                    state.wateringFocusEnabled &&
+                    (!today || state.wateringAgesPending)
+                )
+                    return;
                 state.bulkFilteredPlants
                     .filter((plant) => !isRecentForWateringFocus(plant, today))
                     .forEach((plant) => state.bulkSelected.add(plant.id));

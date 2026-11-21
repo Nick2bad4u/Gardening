@@ -120,11 +120,56 @@ const setFocusDays = async (page: Readonly<Page>, days: string) => {
     await focusDays(page).press("Tab");
 };
 const opacity = (element: Readonly<Locator>) =>
-    element.evaluate((node) => Number(getComputedStyle(node).opacity));
+    element.evaluate((node) =>
+        Number(
+            getComputedStyle(node.closest("[data-bulk-plant-id]") ?? node)
+                .opacity
+        )
+    );
 const expectFaded = async (element: Readonly<Locator>, isFaded: boolean) => {
     await expect.soft(element).toBeVisible();
     if (isFaded) await expect.poll(() => opacity(element)).toBeLessThan(1);
     else await expect.poll(() => opacity(element)).toBe(1);
+};
+const expectPointerSelection = async (
+    page: Readonly<Page>,
+    control: Readonly<Locator>,
+    isMobile: boolean,
+    isCheckbox = false
+) => {
+    if (isMobile) await control.tap();
+    else await control.click();
+    await page.mouse.move(0, 0);
+    if (isCheckbox) await expect.soft(control).toBeChecked();
+    else await expect.soft(control).toHaveAttribute(pressedAttribute, "true");
+    await expectFaded(control, true);
+};
+const expectDesktopHover = async (
+    page: Readonly<Page>,
+    control: Readonly<Locator>,
+    isMobile: boolean
+) => {
+    if (isMobile) return;
+    await control.hover();
+    await expectFaded(control, false);
+    await page.mouse.move(0, 0);
+    await expectFaded(control, true);
+};
+const bulkControl = (list: Readonly<Locator>, mode: string) =>
+    mode === "List"
+        ? list.getByRole("checkbox", { name: /P02/v })
+        : plant(list, "P02");
+const expectKeyboardReveal = async (
+    page: Readonly<Page>,
+    control: Readonly<Locator>
+) => {
+    await control.focus();
+    await page.keyboard.press("Tab");
+    await page.keyboard.press("Shift+Tab");
+    await expect.soft(control).toBeFocused();
+    await expectFaded(control, false);
+    await page.keyboard.press("Tab");
+    await expectFaded(control, true);
 };
 const pickerPositions = (list: Readonly<Locator>) =>
     list.evaluate((root) =>
@@ -182,11 +227,8 @@ const selectedBulkIds = (list: Readonly<Locator>) =>
             )
     );
 
-const expectThresholdStates = async (
-    list: Readonly<Locator>,
-    isBulk = false
-) => {
-    await expectFaded(plant(list, "P01"), isBulk);
+const expectThresholdStates = async (list: Readonly<Locator>) => {
+    await expectFaded(plant(list, "P01"), true);
     await expectFaded(plant(list, "P02"), true);
     await expectFaded(plant(list, "P03"), false);
     await expectFaded(plant(list, "P04"), false);
@@ -209,7 +251,7 @@ const expectFocusLayout = async (
     const before = await pickerPositions(list);
     await focusToggle(page).click();
     await page.mouse.move(0, 0);
-    await expectThresholdStates(list, isBulk);
+    await expectThresholdStates(list);
     expect.soft(await pickerPositions(list)).toStrictEqual(before);
     await focusToggle(page).click();
     await expectFaded(plant(list, "P02"), false);
@@ -310,6 +352,12 @@ test.describe("logger watering focus", { tag: "@logger" }, () => {
                 const originalQueue = await queueBytes(page);
                 await expectFocusLayout(page, "Labels");
                 await expectFocusLayout(page, "Table");
+                await focusToggle(page).scrollIntoViewIfNeeded();
+                await page.screenshot({
+                    path: testInfo.outputPath(
+                        "single-watering-focus-controls.png"
+                    ),
+                });
                 await switchToBulk(page);
                 await expectFocusLayout(page, "Labels", true);
                 await expectFocusLayout(page, "Table", true);
@@ -385,7 +433,7 @@ test.describe("logger watering focus", { tag: "@logger" }, () => {
         await focusToggle(page).click();
         await page.mouse.move(0, 0);
         await focusToggle(page).focus();
-        await expectFaded(plant(list, "P02"), false);
+        await expectFaded(plant(list, "P02"), true);
         await expectFaded(plant(list, "P08"), true);
         const select = page.getByRole("button", {
             exact: true,
@@ -412,7 +460,7 @@ test.describe("logger watering focus", { tag: "@logger" }, () => {
         await expect
             .soft(plant(list, "P03"))
             .toHaveAttribute(pressedAttribute, "true");
-        await expectFaded(plant(list, "P03"), false);
+        await expectFaded(plant(list, "P03"), true);
         await focusToggle(page).click();
         await expect
             .soft(plant(list, "P02"))
@@ -445,7 +493,7 @@ test.describe("logger watering focus", { tag: "@logger" }, () => {
         await focusToggle(page).click();
         await focusDays(page).fill("10");
         await focusDays(page).press("Enter");
-        await expectFaded(plant(picker(page), "P02"), false);
+        await expectFaded(plant(picker(page), "P02"), true);
         await expectFaded(plant(picker(page), "P03"), true);
         await chooseMode(page, "Labels");
         await expect.soft(weight).toHaveValue("444");
@@ -468,7 +516,8 @@ test.describe("logger watering focus", { tag: "@logger" }, () => {
             .toHaveAttribute(pressedAttribute, "true");
     });
 
-    test("faded plants remain keyboard and pointer accessible in list and tile views", async ({
+    test("single list and table selections fade after pointer use and reveal for keyboard focus", async ({
+        isMobile,
         page,
     }) => {
         await openFocusFixture(page, 1280);
@@ -480,30 +529,57 @@ test.describe("logger watering focus", { tag: "@logger" }, () => {
             .filter({ hasText: "P02" });
         await page.mouse.move(0, 0);
         await expectFaded(option, true);
-        await option.focus();
+        await page.keyboard.press("ArrowDown");
+        await page.keyboard.press("ArrowDown");
+        await expect.soft(option).toBeFocused();
         await expectFaded(option, false);
         await page.keyboard.press("Enter");
         await expect
             .soft(page.getByLabel(/^Choose plant\. Current selection:/v))
             .toContainText("P02");
+        await page.getByLabel(/^Choose plant\. Current selection:/v).click();
+        await page.mouse.move(0, 0);
+        await expectFaded(option, true);
+        await option.click();
         await chooseMode(page, "Table");
         const recent = plant(picker(page), "P08");
-        await recent.hover();
-        await expectFaded(recent, false);
+        await expectPointerSelection(page, recent, isMobile);
+        await expectDesktopHover(page, recent, isMobile);
         await focusToggle(page).focus();
         await page.mouse.move(0, 0);
         await expectFaded(recent, true);
-        await switchToBulk(page);
-        await chooseMode(page, "List");
-        const checkbox = picker(page, true).getByRole("checkbox", {
-            name: /P08/v,
-        });
-        await checkbox.focus();
-        await page.keyboard.press("Space");
-        await expect.soft(checkbox).toBeChecked();
+        await expectKeyboardReveal(page, recent);
     });
 
-    test("refresh pending, failure and offline states reveal plants and suspend bulk auto-selection", async ({
+    for (const mode of [
+        "Labels",
+        "List",
+        "Table",
+    ] as const) {
+        test(`selected recent plants in bulk ${mode} fade after pointer use and reveal for keyboard focus`, async ({
+            isMobile,
+            page,
+        }) => {
+            await openFocusFixture(page);
+            const originalQueue = await queueBytes(page);
+            await switchToBulk(page);
+            await chooseMode(page, mode);
+            await focusToggle(page).click();
+            const list = picker(page, true);
+            const control = bulkControl(list, mode);
+            await expectPointerSelection(
+                page,
+                control,
+                isMobile,
+                mode === "List"
+            );
+            await expectDesktopHover(page, control, isMobile);
+            await expectKeyboardReveal(page, control);
+            expect.soft(await queueBytes(page)).toBe(originalQueue);
+        });
+    }
+
+    test("refresh retains confirmed focus while failure and offline reveal plants and suspend bulk auto-selection", async ({
         context,
         page,
     }) => {
@@ -514,12 +590,14 @@ test.describe("logger watering focus", { tag: "@logger" }, () => {
         const recent = plant(picker(page, true), "P02");
         await expectFaded(recent, true);
         await refresh(page);
-        await expectFaded(recent, false);
+        await expectFaded(recent, true);
         const select = page.getByRole("button", {
             exact: true,
             name: "Select highlighted",
         });
-        await expectBulkSuspended(page);
+        await expect.soft(select).toBeDisabled();
+        await chooseMode(page, "Labels");
+        await expectFaded(recent, true);
         await recent.click();
         await expect.soft(recent).toHaveAttribute(pressedAttribute, "true");
         await finishRefresh(page, true);
