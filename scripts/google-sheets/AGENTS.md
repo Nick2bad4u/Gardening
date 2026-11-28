@@ -69,7 +69,7 @@
 - `.gs`: npm `lint:apps-script`, `typecheck:apps-script`. Validate inline HTML/styles/tests; inspect artwork/published dependencies before deploy.
 - Before writes, also check last rows/request IDs/staging schemas.
 - Git-ignore native snapshots. Rehearse structure on native workbook/script copies; exactly compare History/staging/RO entries/formulas/chart IDs/specs/positions/protections/relative tab order.
-- Reject snapshots >40,000,000 UTF-8 bytes. Before release verify full-scale native refresh duration/payload/daily trigger-runtime quota headroom; local timing is insufficient.
+- Reject snapshots >40,000,000 UTF-8 bytes. Before release verify full-scale native refresh duration and payload; local timing is insufficient.
 - Drive copies include bound scripts; avoid competing functions. Never replay `sortSpecs` when extending History's BasicFilter: it re-sorts History.
 - New columns inherit validation; replace only new-range rules.
 - Run `installGardenLogger()`/`installAppSheetIntake()` only after source/tests agree.

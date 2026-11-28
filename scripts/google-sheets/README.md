@@ -1,10 +1,10 @@
 # Google Sheets observation logger
 
-Production logger **5.48.1 / immutable version 145** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
+Production logger **5.48.2 / immutable version 146** supports **39 container allocations**, using IDs `P01`–`P32` and `P35`–`P41`, and **50,000 History observation slots**. The October 28 acquisition and October 29 promotion add P41 / #15 Alpine Spires. Earlier dated receipts retain the setup, intake, capacity, schema, and deployment history. The tracker keeps the physical pot label (`A1`, `F3`, `#2`, and so on) as a
 separate value. That prevents a repot or label change from breaking a plant's
 history.
 
-Production **5.48.1 / immutable version 145** retains portrait revision
+Production **5.48.2 / immutable version 146** retains portrait revision
 **1010123212eade00**. The November 21 watering-focus refinements and bulk-status rollout,
 November 15 queue-status fix, November 14 full-color icons, compass, interface,
 and compact-badge updates and November 13
@@ -65,13 +65,71 @@ captured user-entered History values/formulas, staging, Baselines, Plant tracker
 and RO-refill values/formulas matched their pre-save capture. This comparison
 did not claim a full chart, formatting, or protection audit.
 
-The **5.48.2 source candidate** exchanges the two positions in both logger
+Production **5.48.2** exchanges the two positions in both logger
 Table pickers. The server change is its version literal only; the manifest,
 artwork, workbook schema, analytics logic, AppSheet definition, and trigger
 contract are unchanged. The website's current watering maps derive the new
 positions from the maintained placement grid. November 11 raster illustrations
-remain explicitly dated pre-swap references. Production promotion and final
-live verification are pending and must be recorded after they succeed.
+remain explicitly dated pre-swap references.
+
+The existing deployment was promoted to **immutable version 146** on
+**November 28**, with successful fresh verification at **07:23:10 UTC**
+(**02:23 EST**). Production Head and all three immutable files exactly match
+[be6165e](https://github.com/Nick2bad4u/Gardening/commit/be6165e5f3b3094b96faec65adc727a67f37339f)
+after newline normalization. The same phone URL, owner-only access, and owner
+execution identity remain. The immediate post-update API reads briefly returned
+version 145; the single promotion request was not repeated. A later read and
+the authenticated live logger independently confirmed version 146 / 5.48.2.
+
+Before promotion, a fresh native rehearsal exercised this candidate against
+**50,000 observations**, **45,827 request groups**, and **39 pots**. Analytics
+completed in **12.199 seconds**, publishing **3,393,733 bytes**; bootstrap took
+**92.506 seconds** and returned **153,464 bytes**, with all 50,000 slots used.
+The complete captured History inputs, helper formulas, staging, RO entries,
+runner data, and runner properties matched before and after. All **36 native
+receipts** passed; temporary properties were removed, zero rehearsal triggers
+remained, and the original four-file runner was restored with exact source
+readback at **03:14:00 UTC**. This proves the observed fixture behavior, not
+worst-case performance for every possible populated workbook.
+
+The source commit passed all eight hosted checks and three Codecov statuses,
+including **2,333 logger tests**, **404 Chromium cases**, and **60 Storybook
+tests**. The website deployment and public watering/placement maps were verified
+at **03:04:56 UTC**. Local source, build, type, lint, formatting, and targeted
+browser checks also passed. Exact-commit and hosted secret scans passed; the
+broader local directory scan separately reported pre-existing ignored private
+diagnostic findings outside the tracked and published artifacts.
+
+Authenticated checks at **07:22 UTC** confirmed **Connected · Logger 5.48.2**
+and the new positions in both single and bulk Table pickers at **390/1280 px
+in both themes**. No horizontal overflow or browser-console warnings/errors
+were found; keyboard navigation remained available. The original single-plant
+mode, dark theme, and browser viewport were restored, and no observations were
+submitted during verification.
+
+The postdeployment workbook comparison at **07:24:54 UTC** preserved **2,534
+unique observations**, **2,073 request groups**, **38 Saved staging entries**,
+zero bulk rows, **1,318 Baselines formulas**, and **79 current-location formulas**.
+Fourteen of fifteen captured packets matched exactly; the analytics packet
+changed only its shared clock and calculated timestamp. Headers, complete
+50,000-slot identity columns, recent full History rows, staging through row
+1,000, captured tracker/RO values, formula/validation anchors, and tab metadata
+were preserved. These bounded, non-atomic reads did not reread every historical
+value or full chart/protection/formatting property.
+
+The unchanged single **Head** `processQueuedAppSheetEntries` trigger retained
+its **ten-minute** interval. Its first postpromotion run started at
+**07:29:13 UTC** and completed in **35.6 seconds**. The **5.48.2** log reported
+zero queued, processed, saved, retried, deferred, or correction-needed entries
+across single and bulk intake; analytics reached **Ready** without skipping and
+published **36,640 bytes**. The live page's `doGet` and `getWebAppBootstrap`
+executions also completed successfully. No installer or trigger replacement ran.
+
+On **November 28**, the owner approved this deployment and removed the standing
+requirement to prove account-wide daily Apps Script trigger-runtime quota
+headroom before releases. The native duration/payload checks, 40,000,000-byte
+guard, backups, integrity comparisons, and trigger/live-deployment checks remain.
+Earlier dated quota assessments below remain historical release evidence.
 
 ## Watering focus and refresh refinement — 5.48.1
 
@@ -2604,9 +2662,8 @@ historical migration planners at their original explicit bounds.
 
 The publisher rejects an encoded snapshot request above **40,000,000 UTF-8
 bytes** before publication. Verify representative full-scale native refresh
-duration, payload size, and daily trigger-runtime quota consumption before
-release; passing local calculation tests or staying below the payload guard
-does not establish native runtime or daily quota headroom.
+duration and payload size before release; passing local calculation tests or
+staying below the payload guard does not establish native runtime.
 
 The mobile capacity line becomes **History · 4% used**, with exact counts and
 last-refresh context retained in its tooltip and screen-reader label.
