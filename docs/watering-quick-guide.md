@@ -108,7 +108,7 @@ The collection is trialing dilute feeding at each otherwise-needed watering for 
 | Established, healthy, actively growing ordinary cacti and succulents | **0.50 g MSU 13-3-15**                           |
 | Established, healthy, actively growing foliage plants                | **1/8 US tsp Foliage-Pro 9-3-6 (about 0.62 mL)** |
 
-Check for an existing fertilizer charge first. Use one complete fertilizer per batch and plain RO when feeding is unsuitable or uncertain. P19 rehab, P24 Sempervivum, P28/P35/P36 leaf-cycle plants, and P38 terrarium retain their [separate feeding rules](./equipment/msu-fertilizer-schedule.md). P15's yellowing is under assessment; extra fertilizer is not a confirmed treatment.
+Check for an existing fertilizer charge first. Use one complete fertilizer per batch and plain RO when feeding is unsuitable or uncertain. P19 rehab, P24 Sempervivum, P28/P35/P36 leaf-cycle plants, and P38 terrarium retain their [separate feeding rules](./equipment/msu-fertilizer-schedule.md). P15's yellowing is under assessment; extra fertilizer is not a confirmed treatment. The owner confirmed its November 27 [position exchange with B3](./layouts/table-placement-research.md); moving the pots does not reset their watering references or establish that either needs water.
 
 Allow normal drainage and discard runoff. Choose plain water or a corrective flush from plant condition and evidence of buildup, not a fixed watering count. The [nutrient guide](./equipment/msu-fertilizer-schedule.md#plain-water-and-salt-management) explains the distinction. Feeding never advances watering readiness.
 

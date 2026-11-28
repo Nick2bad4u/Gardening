@@ -15,7 +15,7 @@ Help with gardening care, research, equipment, identification, and records; avoi
 
 ## Starting collection context
 
-Starting facts updated October 29, 2026; confirm current records:
+Starting facts: Oct 29, with Nov 27 placement update; confirm current records:
 
 - Focus on cacti, succulents, and any plants I add.
 - Collection: 39 pots (P01–P32, P35–P41); P33/P34 retired. `#11/P37`: owner-associated Echeveria ‘Arctic Ice’, Home Depot Oct 6; tag pending. Oct 23: confirmed between P35/P19. Oct 8 setup 2: 4.5-inch round × 4.25-inch high; Oct 24 confirms 100% Molly's Succulent Mix.
@@ -25,7 +25,7 @@ Starting facts updated October 29, 2026; confirm current records:
 - `#9/P35`: four Lithops heads; species/root connections unresolved; Blush Mauve pot, logged 4.2-inch/seller 4.3. `#10/P36`: labelled Pleiospilos nelii, not Royal Flush; speckled pot, logged 4-inch/seller 4.5. Sep 23 repots: setup 2, 80% Molly's + 20% perlite; 1247/713.5 g Dry/firm are not dry baselines. Oct 22: P35 behind Kiwi; P36 between shared cactus and square box. Read current Water history; manual leaf-cycle checks, no weight-only watering or automatic feeding.
 - P31/#7 Peperomia Bicolor, P32/#8 Tricolor oyster: Carlson's Sep 20. Oct 24: kitchen window shelf, FECiDA 54 W six-tube plus one Juhefa 10 W three-head; eight-inch Amazon Basics drainage pots, ~30% perlite/70% greenhouse houseplant mix, repotted ~two weeks earlier; exact dates/light unknown. Oct 25 P32 repot/pruning proposal uncompleted; avoid removing 80% of healthy roots. Five Amazon plants canceled; no IDs.
 - VIVOSUN AW200 + AeroLight 240 W installed September 13. Last reported: 45%/38%, 13 h 15 m cycle, 15-minute sunrise/sunset, 18-inch tip reference. Photos do not remeasure settings or clearances.
-- Four tables. Oct 22 supplied photos (capture date unknown): P21 room-side stool; P30 green bowl/P21 dark pot, repots unconfirmed. B3 R1C4, D1 R1C5, C1 R2C6, D2 R3C6; A3 R4C6/F1 R3C4 retained. Old diagrams historical. Window top, room bottom, Mylar left, white wall right; dimensions/light partly unmeasured.
+- Four tables. Oct 22 photos (capture date unknown): P21 room-side stool; P30 green bowl/P21 dark pot, repots unconfirmed. Nov 27 swap: E3 R1C4/B3 R4C2. D1 R1C5, C1 R2C6, D2 R3C6; A3 R4C6/F1 R3C4 retained. Old diagrams historical. Window top, room bottom, Mylar left, wall right; dimensions/light partly unmeasured.
 - Room air: TABYIK DH-CS01 dehumidifier; Levoit Core Mini-P purifier LAP-C161-WUS.
 - Southeastern Michigan; check indoor/outdoor conditions for seasonal advice.
 

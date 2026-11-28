@@ -36,12 +36,12 @@ club-shaped fruit.
 
 ## Care in this collection
 
-| Topic               | Practical approach                                                                                                                                                                                                                                                                                |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Grow-light position | **Photo-matched R4C2 · Bright.** September 15, 2026 photo reference: six-column/four-row front grid, facing the window. Back row of small pots. Check for shade from the neighboring Kiwi or shared cactus planter. See the [current placement guide](../../layouts/table-placement-research.md). |
-| Water               | Soak, drain, and allow the 4-inch pot to dry completely; keep the crown dry when the room is cool.                                                                                                                                                                                                |
-| Pot and mix         | Keep the current pot until the body or roots crowd it; do not bury the lower tubercles.                                                                                                                                                                                                           |
-| Fruit               | Leave attached fruit until it loosens naturally unless rot or pests appear around it.                                                                                                                                                                                                             |
+| Topic               | Practical approach                                                                                                                                                                                                                                                                                                                                          |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Grow-light position | **R1C4 · Bright.** Owner-confirmed November 27, 2026 swap with B3 / P06 Indigo Wave, from the previous R4C2 slot. Front row, fourth column, facing the window. This is a light-position trial for the reported yellowing; gentler exposure and improvement remain unverified. See the [current placement guide](../../layouts/table-placement-research.md). |
+| Water               | Soak, drain, and allow the 4-inch pot to dry completely; keep the crown dry when the room is cool.                                                                                                                                                                                                                                                          |
+| Pot and mix         | Keep the current pot until the body or roots crowd it; do not bury the lower tubercles.                                                                                                                                                                                                                                                                     |
+| Fruit               | Leave attached fruit until it loosens naturally unless rot or pests appear around it.                                                                                                                                                                                                                                                                       |
 
 ## Rotation, propagation, and watch points
 
@@ -54,6 +54,7 @@ club-shaped fruit.
 
 ## Sources
 
+- Owner confirmation, November 27, 2026: completed E3 / P15 and B3 / P06 position exchange, placing E3 at R1C4 and B3 at R4C2. Exact move time, new light readings, and changes to rotation, risers, watering, feeding, or pot setup were not supplied.
 - [Kew Plants of the World Online: _Mammillaria mammillaris_](https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:134797-1)
 - [GBIF Backbone Taxonomy: _Mammillaria mammillaris_](https://www.gbif.org/species/5626105)
 - [LLIFLE: _Mammillaria mammillaris_ description and distribution](https://llifle.com/Encyclopedia/CACTI/Family/Cactaceae/7413/Mammillaria_mammillaris)

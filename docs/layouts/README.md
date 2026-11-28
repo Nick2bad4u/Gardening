@@ -1,8 +1,10 @@
 # Grow-spot diagrams
 
-Last updated: 2026-11-04
+Last updated: 2026-11-27
 
 The [Table Placement Guide](./table-placement-research.md) records the **four wooden tables** and the placement evidence supplied **October 22, 2026**; photo capture date is unrecorded. The front retains **six columns × four rows**, with four updated cells. The rear group includes P35 Lithops behind Kiwi and P36 split rock between the shared cactus and square box. P21 Money Tree is on a room-side stool, and P38 Terrarium is on the desk to the right; the owner confirmed October 23 that P37 Arctic Ice is the pale rosette in the grey/blue pot between P35 and P19 at the back center-left. The working 26 × 32-inch block is photo-inferred before gaps. The view puts **north window top, room bottom, Mylar left and white wall right**. The former round-glass and September windowsill arrangements are historical.
+
+**November 27 owner-confirmed swap:** **E3 / P15 Woolly nipple is now at R1C4**, the front row's fourth column, and **B3 / P06 Indigo Wave is now at R4C2**, the back row's second column, facing the window. This begins the light-position trial while P15's yellowing remains under assessment. Actual exposure at either plant's growing surface is unmeasured; the move does not establish the cause or improvement. Permanent labels, tracker IDs, pot setups, and watering references stay unchanged. No new watering, feeding, rotation, riser, or light-setting change was reported.
 
 **October 24 owner update:** P31 / #7 Peperomia Bicolor and P32 / #8 Tricolor oyster plant are on a **kitchen window shelf** with the **FECiDA 54 W six-tube light plus one Juhefa 10 W three-head fixture**. Their completed repots and kitchen move were about two weeks before October 24, with exact dates and times unrecorded. The current medium is approximately **30% perlite + 70% greenhouse houseplant mix**, an owner estimate, in the previously selected Amazon Basics eight-inch drainage pots. Kitchen window orientation, leaf-height light, fixture settings, and internal pot dimensions are unmeasured.
 
@@ -10,7 +12,7 @@ The [Table Placement Guide](./table-placement-research.md) records the **four wo
 
 The guide combines the current written grid with **historical September diagrams**, an earlier estimated relative-light map, and a [historical blank phone-reading sheet](./table-placement-research.md#compare-the-plan-with-a-phone-meter). The old diagrams show 29 table positions and a windowsill position; they predate the later front-cell changes, rear additions, Money Tree stool, and terrarium desk. Do not use those old positions as the current layout. The [full review](../two-light-placement-review.md) preserves species evidence and explains why front corners, low rosettes and rear shadows should be compared.
 
-The [illustrated views](./table-placement-research.md#illustrated-views) retain four historical September botanical charts in the requested style. Their diagrams predate the October 22 placement evidence. The original diagrams remain available, along with a transparent-background export of the reference light map. Plant portraits are illustrations, not new identification evidence or measurements.
+The [illustrated views](./table-placement-research.md#illustrated-views) retain the November 11 botanical charts and older September diagrams as dated references. Both sets predate the November 27 E3/B3 swap; use the current written grid and watering map for those two positions. The original diagrams remain available, along with a transparent-background export of the reference light map. Plant portraits are illustrations, not new identification evidence or measurements.
 
 The [installed AW200 + AeroLight 240 W](../equipment/aw200-and-aerolight-240w.md) retain their last reported 45% / 38%, shared 13 h 15 m total cycle including 15 m sunrise and 15 m sunset, and 18-inch tip reference. The new photos do not remeasure fixture centers or clearances. The room-facing end stays open without the two-foot reflector.
 
@@ -86,7 +88,7 @@ second-table expansion, weekly adjustments and rotations, manual
 temperature/RH readings, natural daylight context, and September seasonal
 timer.
 
-The [current placement page](https://nick2bad4u.github.io/Gardening/setup/placement/) uses the October 22 placement evidence for its watering image and written grid; September diagrams remain visibly historical. Open the [historical layout tool](https://nick2bad4u.github.io/Gardening/setup/archive/layout/) for the earlier room, height, fan, camera, and riser diagrams.
+The [current placement page](https://nick2bad4u.github.io/Gardening/setup/placement/) uses the October 22 placement evidence and November 27 E3/B3 confirmation for its watering image and written grid; earlier illustrations remain visibly historical. Open the [historical layout tool](https://nick2bad4u.github.io/Gardening/setup/archive/layout/) for the earlier room, height, fan, camera, and riser diagrams.
 The historical tool's views are tabbed and its theme choice is shared with the website. Hover,
 tap, or keyboard-focus any plant marker to reveal its common and botanical
 names, inventory record, label status, origin, placement, identification

@@ -42,6 +42,37 @@ Each **P01–P32 and P35–P38** page in that snapshot also has a **Time between
 **A109**. The bars show whole days between watering dates, with the later date
 under each bar. See the [watering-interval chart guide](INSIGHTS-CHARTS.md#time-between-waterings).
 
+## November 27 E3/B3 position swap — 5.48.2
+
+The owner confirmed exchanging **E3 / P15 Woolly nipple** and **B3 / P06
+Indigo Wave** on November 27. Facing the window, P15 is now **R1C4**, the
+front row's fourth column; P06 is **R4C2**, the back row's second column.
+Permanent IDs, pot labels, setup 2, watering references, and facing history
+remain unchanged. The move begins a light-position trial; it does not establish
+new light readings or explain P15's yellowing.
+
+A [native workbook backup](https://docs.google.com/spreadsheets/d/1z3LxL_g6u6U0PP9N35YozAr9fYFm5nf8sRZ_rKLPI5g/edit)
+preceded two ordinary single-plant Move saves through production **5.48.1 /
+immutable 145**. Both entries use November 27 with **00:00 as a date-only
+placeholder**; their notes explicitly state that the actual move time was not
+reported. No other event was submitted.
+
+Readback at **02:23:38 UTC November 28** found exactly those two new Move rows
+at **History 2534–2535**, with distinct request/observation IDs and the expected
+previous/new locations in AW:AX. History increased from **2,532 to 2,534
+observations**, all IDs unique, across **2,073 request groups**. All previously
+captured user-entered History values/formulas, staging, Baselines, Plant tracker,
+and RO-refill values/formulas matched their pre-save capture. This comparison
+did not claim a full chart, formatting, or protection audit.
+
+The **5.48.2 source candidate** exchanges the two positions in both logger
+Table pickers. The server change is its version literal only; the manifest,
+artwork, workbook schema, analytics logic, AppSheet definition, and trigger
+contract are unchanged. The website's current watering maps derive the new
+positions from the maintained placement grid. November 11 raster illustrations
+remain explicitly dated pre-swap references. Production promotion and final
+live verification are pending and must be recorded after they succeed.
+
 ## Watering focus and refresh refinement — 5.48.1
 
 Production **5.48.1** fades recently watered picker entries even when selected.

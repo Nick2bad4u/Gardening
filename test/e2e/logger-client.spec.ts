@@ -1238,7 +1238,7 @@ for (const theme of ["dark", "light"] as const) {
 const tableRows = [
     [
         "P04",
-        "P15",
+        "P06",
         "P23",
         "P26",
         "P18",
@@ -1264,7 +1264,7 @@ const tableRows = [
         "P12",
         "P14",
         "P27",
-        "P06",
+        "P15",
         "P10",
         "P17",
     ],

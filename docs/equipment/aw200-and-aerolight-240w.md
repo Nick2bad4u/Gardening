@@ -1,6 +1,6 @@
 # AW200 + AeroLight 240 W — Installed Horizontal Pair
 
-The **AW200 + AeroLight 240 W** pair was installed September 13, 2026. The current display uses four wooden tables; the [placement guide](../layouts/table-placement-research.md) shows the pot positions, including the later A3/F1 exchange.
+The **AW200 + AeroLight 240 W** pair was installed September 13, 2026. The current display uses four wooden tables; the [placement guide](../layouts/table-placement-research.md) shows the pot positions, including the A3/F1 exchange and the owner-confirmed November 27 E3/B3 swap.
 
 The last reported settings are **AW200 45%** and **AeroLight 240 W 38%**, **Veg mode on both**, an **18-inch (45.7 cm) LED-to-plant-tip reference**, and **13 h 15 m total daily cycle** including **15 minutes of sunrise and 15 minutes of sunset**. Individual plant clearances and exact fixture centers still need measuring.
 
@@ -62,7 +62,7 @@ For a useful follow-up, measure A3 and F1 at their own heights after the exchang
 can measure PPFD; a consistent lux reading can reveal relative bright and dim
 spots, but do not apply an old AW200SE lux conversion to these mixed spectra.
 
-Keep low rosettes and split rock clearly lit without assigning the strongest exposure to all of them. Raindrops uses bright light rather than a maximum-intensity priority. The [placement review](../two-light-placement-review.md) explains the current grid, approximate light comparison, and limits of edge, overlap and height assumptions. Any future fixture-height adjustment affects neighboring plants as well as the tallest tip.
+Keep low rosettes and split rock clearly lit without assigning the strongest exposure to all of them. Raindrops uses bright light rather than a maximum-intensity priority. The [historical placement review](../two-light-placement-review.md) explains the earlier grid, approximate light comparison, and limits of edge, overlap and height assumptions. Use the [current placement guide](../layouts/table-placement-research.md) for the November 27 positions. Any future fixture-height adjustment affects neighboring plants as well as the tallest tip.
 
 The [new-model manual][new-manual] requires the growing space to stay **below
 86°F (30°C)** during operation. Recheck room temperature with both fixtures

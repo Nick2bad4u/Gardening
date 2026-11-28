@@ -2,6 +2,8 @@
 
 ## Current scope
 
+**November 27 owner-confirmed swap:** **E3 / P15 Woolly nipple is now at R1C4**, the front row's fourth column, and **B3 / P06 Indigo Wave is now at R4C2**, the back row's second column, facing the window. This begins the light-position trial while P15's yellowing remains under assessment. Actual exposure at either plant's growing surface is unmeasured; the move does not establish the cause or improvement. Permanent labels, tracker IDs, pot setups, and watering references stay unchanged. No new watering, feeding, rotation, riser, or light-setting change was reported.
+
 The collection has **39 tracked containers**. Owner photographs supplied **October 22, 2026** update the recorded arrangement; the capture date was not supplied. The front display still has 24 small pots in six columns and four rows. P35 / #9 Lithops is at the rear left behind Kiwi, and P36 / #10 split rock is at the rear center-right between the shared cactus and square succulent box. P21 / #3 Money Tree is on a stool on the room side of the display; P38 / #12 Terrarium is on the desk to the right. The owner confirmed October 23 that the pale rosette in the grey/blue pot at the back center-left is P37 / #11 Arctic Ice, between P35 Lithops and P19 shared cactus.
 
 **October 24 owner update:** P31 / #7 Peperomia Bicolor and P32 / #8 Tricolor oyster plant are on a **kitchen window shelf** with the **FECiDA 54 W six-tube light plus one Juhefa 10 W three-head fixture**. Their completed repots and kitchen move were about two weeks before October 24, with exact dates and times unrecorded. The current medium is approximately **30% perlite + 70% greenhouse houseplant mix**, an owner estimate, in the previously selected Amazon Basics eight-inch drainage pots. Kitchen window orientation, leaf-height light, fixture settings, and internal pot dimensions are unmeasured.
@@ -61,7 +63,7 @@ The living-room plan does not establish its temperature, humidity, airflow, or d
 
 The owner added **two new 16 × 13-inch wooden tables** and rearranged the display on **September 15, 2026**. The supplied photos show **24 small pots in six columns × four rows at the room end**, with the six larger or shared containers behind them toward the window. This replaces the previous two-table and round-glass placement plan.
 
-**The September 16 windowsill arrangement is historical.** It had 29 containers on wood and P21 Money Tree separately on the north windowsill. Photographs supplied October 22 instead show Money Tree on a room-side stool, P35/P36 added to the rear group, and four changed front cells: **B3 / P06 at R1C4, D1 / P10 at R1C5, C1 / P07 at R2C6, and D2 / P11 at R3C6**. The other front cells, including the previously confirmed A3/F1 exchange, remain as recorded. Kiwi remains at the rear left. The owner confirmed October 23 that the pale rosette in the grey/blue pot at the back center-left is P37 / #11 Arctic Ice, between P35 Lithops and P19 shared cactus.
+**The September 16 windowsill arrangement is historical.** It had 29 containers on wood and P21 Money Tree separately on the north windowsill. Photographs supplied October 22 instead show Money Tree on a room-side stool, P35/P36 added to the rear group, and four changed front cells: **B3 / P06 at R1C4, D1 / P10 at R1C5, C1 / P07 at R2C6, and D2 / P11 at R3C6**. At that time, the other front cells, including the previously confirmed A3/F1 exchange, retained their recorded positions. The November 27 E3/B3 exchange supersedes B3's photographed slot. Kiwi remains at the rear left. The owner confirmed October 23 that the pale rosette in the grey/blue pot at the back center-left is P37 / #11 Arctic Ice, between P35 Lithops and P19 shared cactus.
 
 The working footprint is **four tables in a 2 × 2 block, nominally 26 inches across × 32 inches toward the window**, excluding gaps and rails. That orientation is inferred from the photographs, not a new tape measurement. The former round glass table is no longer in use. The new tables' height has not been measured; the earlier pair was 18 inches high.
 
@@ -75,12 +77,13 @@ The owner supplied **48 lux-derived estimated PPFD readings at individual plant 
 
 Across the **whole mapped rectangle, including the intentionally unlit far edge**, the app estimates range from **145 to 677 µmol·m⁻²·s⁻¹**. Its **13-hour DLI calculation** ranges from **6.8 to 31.7 mol·m⁻²·day⁻¹**. These are approximate phone/lux-sensor/app conversions, not calibrated PAR measurements or species thresholds. Height, shadows, and spectrum affect the comparison; the extrema do not describe every occupied pot or prove that the whole display has too little or too much light. The actual program remains **13 h 15 m total, including 15 m sunrise and 15 m sunset**; the app's 13-hour DLI output is not a measured daily light integral through those ramps.
 
-**A3 Serpent Cactus and F1 Hook-spined Pincushion exchanged positions** after this comparison. That comparison did not establish the later October 22 arrangement. The written grid and November 11 illustrations below include the four later front-cell changes; Money Tree is now recorded on a room-side stool. The historical September drawings predate both updates. Different-height plants do not inherit the previous occupant's light reading, and the comparison did not measure the windowsill.
+**A3 Serpent Cactus and F1 Hook-spined Pincushion exchanged positions** after this comparison. That comparison did not establish the later October 22 arrangement. The November 11 illustrations include the four later October front-cell changes; the written grid also includes the owner-confirmed November 27 E3/B3 exchange. Money Tree is now recorded on a room-side stool. The historical September drawings predate these placement updates. Different-height plants do not inherit the previous occupant's light reading, and the comparison did not measure the windowsill.
 
 ## Illustrated Views
 
-These illustrations were refreshed **November 11, 2026** from the recorded
-October and November placements. They include **all 39 tracked containers**:
+These **November 11, 2026 illustrations predate the November 27 E3/B3 swap**.
+They retain the recorded October and early-November placements and include
+**all 39 tracked containers**:
 24 front pots, eight rear-table pots, Money Tree on its room-side stool,
 Terrarium on the right-hand desk, two kitchen window-shelf plants, and three
 room-side shelf plants. The front grid includes the A3/F1 exchange and four
@@ -90,18 +93,20 @@ rock, and P37 Arctic Ice.
 The illustration date is not a new observation. The sources are photographs
 supplied October 22 (capture date unknown), the October 23 Arctic Ice
 identification, the October 24 kitchen report, and the November 4 room-side
-shelf report. **Use the written grid and position records below.** Plant forms,
+shelf report. They still show **B3 at R1C4 and E3 at R4C2**, now historical.
+**Use the current watering map, written grid, and position records for the
+completed swap.** Plant forms,
 sizes, spacing, and shelf order are schematic; the exact within-shelf order
 of P39/P40/P41 remains unrecorded. The light illustration is a qualitative
 comparison aid, not measured exposure or a plot of the 48 app readings.
 
 ### Illustrated Whole Display
 
-![Illustrated current collection with 24 front pots, eight rear pots, Money Tree on its room-side stool, Terrarium on the right-hand desk, and the kitchen and room-side shelf plants](../../assets/layouts/2026-11-11-illustrated/combined-plan-illustrated.png)
+![November 11 collection illustration before the E3/B3 swap, with 24 front pots, eight rear pots, Money Tree stool, Terrarium desk, and shelf plants](../../assets/layouts/2026-11-11-illustrated/combined-plan-illustrated.png)
 
 ### Illustrated Front Pots
 
-![Illustrated 24-pot front grid with six columns and four rows, including the A3 and F1 exchange and the four October 22 position updates](../../assets/layouts/2026-11-11-illustrated/front-pots-illustrated.png)
+![November 11 six-column four-row front grid, including A3/F1 and October 22 updates but predating the E3/B3 swap](../../assets/layouts/2026-11-11-illustrated/front-pots-illustrated.png)
 
 ### Illustrated Rear Pots and Nearby Plants
 
@@ -109,7 +114,7 @@ comparison aid, not measured exposure or a plot of the 48 app readings.
 
 ### Illustrated Relative Light
 
-![Illustrated relative-light hypothesis for the current four-table collection with separate stool, desk, kitchen shelf, and room-side shelf locations whose leaf-level exposure remains unmeasured](../../assets/layouts/2026-11-11-illustrated/relative-light-illustrated.png)
+![November 11 relative-light hypothesis before the E3/B3 swap, with separate stool, desk, and shelf locations whose leaf-level exposure remains unmeasured](../../assets/layouts/2026-11-11-illustrated/relative-light-illustrated.png)
 
 The [November 11 illustration notes and limits](../../assets/layouts/2026-11-11-illustrated/image-prompts.md)
 record the source evidence and generation prompts. The **historical September 16
@@ -124,8 +129,9 @@ also remain historical downloads.
 
 ## Reading the Light Map
 
-The November 11 map updates the recorded plant locations while retaining a
-**qualitative light hypothesis**. For the 48 app-derived readings, use the
+The November 11 illustration retains the pre-swap positions and a
+**qualitative light hypothesis**. The comparison areas below use the current
+November 27 grid. For the 48 app-derived readings, use the
 measurement summary above; those values are not plotted on this illustration.
 The stool, desk, and shelf groups need separate leaf-level comparisons; their
 placement on the page does not establish fixture coverage. Two panels can light
@@ -135,20 +141,20 @@ Exact fixture alignment over it is not established by the photographs.
 | Area                       | Working Expectation                                                                         | What to Compare                                                                                            |
 | -------------------------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | Interior small-pot area    | Clear exposure is plausible where the lamps overlap the display; no precise peak is assumed | C2, B2, H1, H2 and G3 at a common height, then their actual growing surfaces                               |
-| Front corners, D3 and F2   | Plausibly gentler than nearby interior positions, still potentially bright                  | Both corners against front-center G1/B3 and the middle of the display                                      |
+| Front corners, D3 and F2   | Plausibly gentler than nearby interior positions, still potentially bright                  | Both corners against front-center G1/E3 and the middle of the display                                      |
 | Mylar and white-wall sides | Reflections may reduce edge falloff; neither side is guaranteed dim                         | Left and right readings at matching depth and height                                                       |
-| Back row of small pots     | Large rear plants may cast local shadows, independent of fixture coverage                   | B1, E3, G2, H3, F3 and A3; especially beneath trailing stems                                               |
+| Back row of small pots     | Large rear plants may cast local shadows, independent of fixture coverage                   | B1, B3, G2, H3, F3 and A3; especially beneath trailing stems                                               |
 | Rear containers            | Mixed heights and foliage matter more than a simple front/back gradient                     | Tall #1 tips, low #2 rosette, #4 canopy and low #5/#6                                                      |
 | Room-side stool, #3        | Separate height and exposure; outside the historical table heatmap                          | Actual upper and lower leaf exposure, time and support height; do not reuse the old windowsill assumptions |
 | Fixture join               | Spill may fill a small gap; no dark stripe or hottest stripe is assumed                     | A short comparison across the actual join after locating it                                                |
 
-The current position record and refreshed illustrations supersede the historical
-windowsill position for #3 and include the A3/F1 exchange. The following
-comparison questions record the earlier reasoning; they are not additional
-move recommendations. The strongest placement question is whether **B3 Indigo
-Wave at the front** has sufficient clear light and whether **H1 Coconut Crystal
-in the interior** is shaded. Do not automatically exchange them: they have
-different heights and both need useful exposure. D3 and F2 occupy opposite
+The current position record supersedes the historical windowsill position for
+#3 and includes both the A3/F1 and E3/B3 exchanges. Earlier reasoning questioned
+B3's front-row exposure and H1 Coconut Crystal's interior shade; B3 is now at
+R4C2 after the November 27 swap with E3. Compare B3's raised growing points
+and E3's crown at their new positions rather than assuming the move increased
+or reduced either plant's exposure. H1's shading question remains separate;
+these questions do not recommend another automatic exchange. D3 and F2 occupy opposite
 front corners, rather than the two left corners of the old drawing. Their
 benefit is an inference to test.
 
@@ -158,42 +164,42 @@ Six nominal 4-inch rims span about 24 inches across the nominal 26-inch front wi
 
 ![Historical September arrangement before the later placement changes, with 29 pots on four wooden tables and #3 Money Tree on a separate north windowsill](../../assets/layouts/2026-09-15-four-tables/combined-plan.png)
 
-Positions below are **matched visually from the owner's photographs supplied October 22**, retaining the earlier A3/F1 exchange and adding the four front-cell changes and nearby-pot locations described above. Check the label-to-slot transcription against the physical pots when using the grid.
+Positions below combine **the owner's photographs supplied October 22** with **the owner-confirmed November 27 E3/B3 swap**, retaining the earlier A3/F1 exchange and nearby-pot locations described above. Check the label-to-slot transcription against the physical pots when using the grid.
 
 ## Front Tables: Six Columns, Four Rows
 
 ![Historical September six-column four-row layout, before A3/F1 and the four October 22 front-cell updates](../../assets/layouts/2026-09-15-four-tables/front-pots.png)
 
-Columns run **left/Mylar → right/white wall**. Rows run **front/room → back/window**, so **row 4 is above row 1 in the overhead image**. These are the retained photo-grid coordinates, updated for the confirmed A3/F1 exchange and the four changes visible in the photographs supplied October 22. They replace the old 4-column × 6-row coordinates; identical R/C text does not imply an unchanged position. They do not assign coordinates to the owner's separate 48-reading map.
+Columns run **left/Mylar → right/white wall**. Rows run **front/room → back/window**, so **row 4 is above row 1 in the overhead image**. These are the retained photo-grid coordinates, updated for the confirmed A3/F1 exchange, the four changes visible in the photographs supplied October 22, and the November 27 E3/B3 exchange. They replace the old 4-column × 6-row coordinates; identical R/C text does not imply an unchanged position. They do not assign coordinates to the owner's separate 48-reading map.
 
 | Row                  | C1 · Mylar           | C2                        | C3                   | C4                          | C5                    | C6 · White Wall |
 | -------------------- | -------------------- | ------------------------- | -------------------- | --------------------------- | --------------------- | --------------- |
-| 1 · Room edge        | D3 · Ming Thing      | E2 · Peanut Hybrid        | G1 · Black Widow     | B3 · Indigo Wave            | D1 · Dragon's Egg     | F2 · Boobie     |
+| 1 · Room edge        | D3 · Ming Thing      | E2 · Peanut Hybrid        | G1 · Black Widow     | E3 · Woolly Nipple          | D1 · Dragon's Egg     | F2 · Boobie     |
 | 2                    | A2 · Feather Cactus  | B2 · Old Man of the Andes | H2 · Raindrops       | G3 · Royal Flush            | C3 · Monk's Hood      | C1 · Giant Chin |
 | 3                    | A1 · Variegated Moon | E1 · Dwarf Old Man        | H1 · Coconut Crystal | F1 · Hook-Spined Pincushion | C2 · Rainbow Hedgehog | D2 · Domino     |
-| 4 · Toward rear pots | B1 · Grass-Blade     | E3 · Woolly Nipple        | G2 · Paper Spine     | H3 · Eve's Needle           | F3 · Yellow Tower     | A3 · Serpent    |
+| 4 · Toward rear pots | B1 · Grass-Blade     | B3 · Indigo Wave          | G2 · Paper Spine     | H3 · Eve's Needle           | F3 · Yellow Tower     | A3 · Serpent    |
 
 ## Light Priorities
 
 These overlapping priorities cover the 30 previously established containers, not the full current inventory. They describe plant needs, not measured intensity bands; the later additions retain their own profile guidance. A High plant can be overexposed and a Bright plant may tolerate sun. The [full plant-by-plant review](../two-light-placement-review.md) retains the species evidence and identification limits.
 
-| Priority        | Pots                                                                   | Practical Meaning                                                                                                  |
-| --------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| **High · 7**    | B2, B3, C2, E1, G2, H1, H3                                             | Preserve clear strong light; compare low H1 and front-row B3 rather than declaring every center best               |
-| **Bright · 18** | A1, A2, A3, B1, C1, C3, D1, D2, E2, E3, F1, F3, G1, G3, H2; #4, #5, #6 | Useful bright exposure while avoiding excessive peaks; this is not a shade designation                             |
-| **Gentler · 3** | D3, F2, #3                                                             | A bright position with less intense exposure when demonstrated; no assumption that an edge is automatically gentle |
-| **Mixed · 2**   | #1, #2                                                                 | Consider each living component at its height while retaining one tracked container                                 |
+| Priority        | Pots                                                                   | Practical Meaning                                                                                                       |
+| --------------- | ---------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **High · 7**    | B2, B3, C2, E1, G2, H1, H3                                             | Preserve clear strong light; compare low H1 and B3 at its raised growing points rather than declaring every center best |
+| **Bright · 18** | A1, A2, A3, B1, C1, C3, D1, D2, E2, E3, F1, F3, G1, G3, H2; #4, #5, #6 | Useful bright exposure while avoiding excessive peaks; this is not a shade designation                                  |
+| **Gentler · 3** | D3, F2, #3                                                             | A bright position with less intense exposure when demonstrated; no assumption that an edge is automatically gentle      |
+| **Mixed · 2**   | #1, #2                                                                 | Consider each living component at its height while retaining one tracked container                                      |
 
 ## Every Small Pot
 
-| Label | Plant and Retained Identification                                                                                                       | Photo-Matched Spot and Light Priority                                                                                                                                                         |
+| Label | Plant and Retained Identification                                                                                                       | Recorded Spot and Light Priority                                                                                                                                                              |
 | ----- | --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | A1    | [Variegated moon cactus](../plants/starter/gymnocalycium-mihanovichii-variegated.md) · _Gymnocalycium mihanovichii_                     | **R3C1 · Bright.** Left shoulder between Feather and Grass-Blade. Preserve useful light for this rooted, chlorophyll-bearing variegated selection.                                            |
 | A2    | [Feather cactus](../plants/starter/mammillaria-plumosa.md) · _Mammillaria plumosa_                                                      | **R2C1 · Bright.** Left shoulder; its white covering does not mean it requires the strongest exposure.                                                                                        |
 | A3    | [Serpent cactus](../plants/starter/nyctocereus-serpentinus.md) · _Nyctocereus serpentinus_                                              | **R4C6 · Bright.** Owner-confirmed exchange into F1's former slot. Compare its own stem-height exposure; the previous occupant's reading does not establish this taller plant's new exposure. |
 | B1    | [Grass-blade cactus](../plants/starter/stenocactus-phyllacanthus.md) · _Stenocactus phyllacanthus_                                      | **R4C1 · Bright.** Preserve clear bright exposure; a photo position is not a measured light level.                                                                                            |
 | B2    | [Old Man of the Andes](../plants/starter/oreocereus-trollii.md) · _Oreocereus trollii_                                                  | **R2C2 · High.** Interior-left position with clear exposure at its growing tip; do not compare only tabletop light.                                                                           |
-| B3    | [Indigo Wave](../plants/starter/myrtillocactus-geometrizans-indigo-wave.md) · _Myrtillocactus geometrizans_ 'Indigo Wave'               | **R1C4 · High.** Front row near the right. Keep clear exposure at its raised growing points.                                                                                                  |
+| B3    | [Indigo Wave](../plants/starter/myrtillocactus-geometrizans-indigo-wave.md) · _Myrtillocactus geometrizans_ 'Indigo Wave'               | **R4C2 · High.** Owner-confirmed November 27 swap from R1C4 into E3's former slot. Compare its raised growing points and nearby rear-pot shadows; exposure is unmeasured.                     |
 | C1    | [Giant chin](../plants/starter/gymnocalycium-saglionis.md) · _Gymnocalycium saglionis_                                                  | **R2C6 · Bright.** Preserve clear bright exposure; a photo position is not a measured light level.                                                                                            |
 | C2    | [Rainbow hedgehog](../plants/starter/echinocereus-rigidissimus-rubispinus.md) · _Echinocereus rigidissimus_ subsp. _rubispinus_         | **R3C5 · High.** Interior-right stronger-light priority. Keep a clear overhead path rather than assuming this cell is the maximum.                                                            |
 | C3    | [Monk's hood](../plants/starter/astrophytum-ornatum.md) · _Astrophytum ornatum_                                                         | **R2C5 · Bright.** Preserve clear bright exposure; a photo position is not a measured light level.                                                                                            |
@@ -202,7 +208,7 @@ These overlapping priorities cover the 30 previously established containers, not
 | D3    | [Ming Thing](../plants/starter/cereus-forbesii-ming-thing.md) · _Cereus forbesii_ 'Ming Thing'                                          | **R1C1 · Gentler.** Front-left, where a gentler edge is plausible. Mylar can still return substantial light; this is not shade.                                                               |
 | E1    | [Dwarf old man](../plants/cacti/espostoa-melanostele-nana.md) · _Espostoa_ sp., likely _E. melanostele_ subsp. _nana_                   | **R3C2 · High.** Interior-left tall white cactus; retain the qualified Espostoa identification and avoid shading H1.                                                                          |
 | E2    | [Peanut hybrid](../plants/cacti/chamaelobivia-hybrid.md) · _Echinopsis_ hybrid, Chamaelobivia Group                                     | **R1C2 · Bright.** Front row, second from the Mylar. Unknown hybrid parentage limits exact exposure claims.                                                                                   |
-| E3    | [Woolly nipple](../plants/cacti/mammillaria-mammillaris.md) · probable _Mammillaria mammillaris_                                        | **R4C2 · Bright.** Back row of small pots. Preserve the probable Mammillaria identification and check shadow from Kiwi or #1.                                                                 |
+| E3    | [Woolly nipple](../plants/cacti/mammillaria-mammillaris.md) · probable _Mammillaria mammillaris_                                        | **R1C4 · Bright.** Owner-confirmed November 27 swap from R4C2 into B3's former slot. Yellowing remains under assessment; a gentler exposure is intended but unmeasured.                       |
 | F1    | [Hook-spined pincushion](../plants/cacti/mammillaria-rekoi.md) · _Mammillaria_ cf. _rekoi_                                              | **R3C4 · Bright.** Now in A3's former slot. Compare its own growing surface; the previous occupant's reading does not establish this shorter plant's new exposure.                            |
 | F2    | [Boobie cactus](../plants/cacti/myrtillocactus-geometrizans-fukurokuryuzinboku.md) · _Myrtillocactus geometrizans_ 'Fukurokuryuzinboku' | **R1C6 · Gentler.** Front-right corner. Compare its actual tip exposure before calling this gentler; small pot size does not prove juvenile age.                                              |
 | F3    | [Yellow tower](../plants/cacti/parodia-leninghausii.md) · _Parodia leninghausii_                                                        | **R4C5 · Bright.** Back-right taller cactus; compare its tip separately from nearby plants at their actual heights.                                                                           |
@@ -252,8 +258,8 @@ The [blank reading sheet](../../assets/layouts/2026-09-15-four-tables/relative-r
 1. Use both fixtures at their usual steady settings, outside the sunrise/sunset ramps. Record which light is on which side, each spectrum mode, and the actual fixture positions. Keep blinds and daylight consistent, ideally with little daylight contribution.
 2. Use the same phone, app, upward sensor orientation and any diffuser required by that app. Avoid shading it with your body. Let readings settle and repeat several positions; clipping or erratic values invalidate a ranking.
 3. First compare the currently recorded table positions at **one recorded common horizontal height**, clear of obstructions where practical. Do not mix this pass with readings at different tip heights. Repeat **R2C3** before, during and after the pass to check drift.
-4. Make a separate pass at actual growing-surface heights for D3, F2, A1, B3, C2, H1, H2, G3 and the recorded rear pots, including P35/P36. For #1 compare the pale column, green column and trailing stems separately; for #2 compare low rosette and taller foliage. Record the height with each reading. Separately measure #3 at its actual leaves above the room-side stool; record support height and daylight/blinds. Record the terrarium's leaf-level exposure separately from external-glass readings. Do not fold this different-height, mixed-daylight reading into the common-height table ranking.
-5. Compare corners, interior and rear shadows. If values repeat within a small range, preserve spacing instead of chasing small differences. The earlier completed comparison led only to the confirmed A3/F1 exchange. The October 22 photographs document later placement differences without new settings or light measurements; a future comparison should answer a specific remaining question rather than trigger another automatic reshuffle.
+4. Make a separate pass at actual growing-surface heights for D3, F2, A1, B3, E3, C2, H1, H2, G3 and the recorded rear pots, including P35/P36. For #1 compare the pale column, green column and trailing stems separately; for #2 compare low rosette and taller foliage. Record the height with each reading. Separately measure #3 at its actual leaves above the room-side stool; record support height and daylight/blinds. Record the terrarium's leaf-level exposure separately from external-glass readings. Do not fold this different-height, mixed-daylight reading into the common-height table ranking.
+5. Compare corners, interior and rear shadows. If values repeat within a small range, preserve spacing instead of chasing small differences. The earlier completed comparison led only to the confirmed A3/F1 exchange. The October 22 photographs and November 27 E3/B3 confirmation document later moves without new settings or light measurements; a future comparison should answer a specific remaining question rather than trigger another automatic reshuffle.
 
 Lux measures illuminance, not lumens. Lux-to-PPFD conversion depends on spectrum; with two potentially different spectra, even a repeatable lux ratio is only an approximate relative comparison of plant-useful light. Do not invent a conversion factor or treat uniformity as proof that absolute intensity is suitable. See [Apogee's spectrum-dependent examples](https://www.apogeeinstruments.com/conversion-ppfd-to-lux/) and [University of Minnesota Extension](https://extension.umn.edu/garden-and-home/yard-and-garden/gardening-in-minnesota/lighting-for-indoor-plants).
 
@@ -262,6 +268,8 @@ Lux measures illuminance, not lumens. Lux-to-PPFD conversion depends on spectrum
 This is a physical placement change, not a repot or watering event. **Keep the existing pot setups, wet/dry references and learned cycles.** Observe changed drying through useful weights; moving pots alone does not justify watering or weighing every pot daily. Money tree, Royal Flush, seasonal Kiwi and shared-container restrictions still apply.
 
 ## Sources
+
+- **Owner confirmation, November 27, 2026:** completed E3 / P15 Woolly nipple and B3 / P06 Indigo Wave position exchange: E3 from R4C2 to R1C4, B3 from R1C4 to R4C2. Exact move time and new light readings were not supplied. This is a light-position trial while P15's yellowing remains under assessment, not evidence of a diagnosed deficiency, recovery, watering, feeding, repot, rotation, or changed riser/fixture setting.
 
 - **Owner clarification, October 24, 2026:** P31/P32 completed repots and kitchen window-shelf move about two weeks earlier; approximately 30% perlite / 70% greenhouse houseplant mix; installed 54 W six-head and 10 W three-head fixtures. P39/P40 future shelf position beside P38 and October 25 repots are plans. P38 current reported light about 6,000–7,000 lux has no supplied measurement position. P37 current mix is pure Molly's Succulent Mix without added perlite.
 

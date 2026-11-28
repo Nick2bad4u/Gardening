@@ -14,7 +14,7 @@ const source = await readFile(
 const containers = await getContainers();
 
 describe("watering placement source", () => {
-    it("maps every current container once and preserves the photographed front-grid swaps", async () => {
+    it("maps every current container once and preserves the photographed and owner-confirmed swaps", async () => {
         expect.hasAssertions();
 
         const placements = await getWateringPlacements();
@@ -39,7 +39,7 @@ describe("watering placement source", () => {
             "P12",
             "P14",
             "P27",
-            "P06",
+            "P15",
             "P10",
             "P17",
             "P02",
@@ -55,7 +55,7 @@ describe("watering placement source", () => {
             "P08",
             "P11",
             "P04",
-            "P15",
+            "P06",
             "P23",
             "P26",
             "P18",
@@ -72,6 +72,18 @@ describe("watering placement source", () => {
             position: "R3C4",
             x: 566,
             y: 856,
+        });
+        expect(placements.find(({ id }) => id === "P15")).toMatchObject({
+            label: "E3",
+            position: "R1C4",
+            x: 566,
+            y: 1108,
+        });
+        expect(placements.find(({ id }) => id === "P06")).toMatchObject({
+            label: "B3",
+            position: "R4C2",
+            x: 302,
+            y: 730,
         });
 
         for (const container of containers) {
