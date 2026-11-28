@@ -33,7 +33,7 @@ and apply balanced fertilizer once every two months. The black
 [reverse](../../../assets/nursery-labels/pachira-livetrends-back-clean-crop.png)
 identifies LiveTrends as the supplier brand.
 
-The tag gives general seller guidance. For this pot, combine root-ball moisture, weight trends, and room conditions with the collection's low-dose MSU schedule.
+The tag gives general seller guidance. For this pot, combine root-ball moisture, weight trends, and room conditions with the current [Foliage-Pro trial](../../equipment/msu-fertilizer-schedule.md#foliage-pro-starting-plan): **1/8 US tsp/US gal** at each otherwise-needed watering when established, healthy and actively growing, after checking the existing fertilizer charge. Use plain RO when feeding is unsuitable; keep Foliage-Pro separate from MSU.
 
 ## Origin, form, and publication
 

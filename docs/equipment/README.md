@@ -37,8 +37,8 @@
   placement, sensor-driven use, and maintenance for the TABYIK DH-CS01 and
   Levoit Core Mini-P
 - [MSU 13-3-15 fertilizer schedule](./msu-fertilizer-schedule.md) — the
-  collection-specific RO-water dose, completed August 26 plain Beauchamp's RO
-  cycle and August 27 Wet-weight baseline, mixing steps, alternating cactus
-  schedule, and separate rules for the other plants
+  collection trial of dilute MSU and Foliage-Pro at eligible ready waterings,
+  mixing steps, plain-water decisions, plant-specific exceptions, and retained
+  historical observations
 
 Start with the [setup overview](../setup.md) for the room arrangement and current operating record; use these guides for model specifications and practical operation.

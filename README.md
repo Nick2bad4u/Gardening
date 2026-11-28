@@ -72,8 +72,8 @@ P38 / #12 is the [Terrarium container](https://nick2bad4u.github.io/Gardening/co
   placement and use of the TABYIK DH-CS01 dehumidifier and Levoit Core Mini-P
   air purifier
 - [MSU 13-3-15 fertilizer schedule](docs/equipment/msu-fertilizer-schedule.md) —
-  gram-based RO-water mixing, the post-repot plain-water baseline, alternating
-  cactus feeds, and separate starting rules for the other plants
+  dilute MSU and Foliage-Pro recipes for eligible ready waterings, plain-water
+  decisions, mixing steps, and plant-specific exceptions
 - [Historical grow-spot diagrams](https://nick2bad4u.github.io/Gardening/setup/archive/layout/) — tabbed room,
   two wooden-table, round-table, height, paired-fan, camera, and riser views with
   one consistent room-facing orientation

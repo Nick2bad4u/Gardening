@@ -84,7 +84,9 @@ The owner purchased **P31 / #7 [Peperomia Bicolor](./plants/houseplants/peperomi
 
 Check these as houseplants, without waiting for a cactus-style whole-pot dry plateau. Peperomia should partially dry between waterings without prolonged drought; for the oyster plant, check the upper 1–2 inches once the actual pot/root-ball depth is known. Check the current pot drainage and inspect below a dry surface before watering. A weight or model date is supporting evidence only. Inspect the new plants for pests and keep oyster-plant sap away from skin and chewing pets. Their profiles cite the species care guidance.
 
-**September 27 clarification and feeding plan:** the owner confirms both had just been watered at their September 20 pickup; exact times and nursery fertilizer use are unknown. Their next otherwise-ready watering should use plain RO. Once settled, drying normally and showing healthy new growth, the [Foliage-Pro plan](./equipment/msu-fertilizer-schedule.md#september-27-foliage-pro-starting-plan) starts **SUPERthrive Foliage-Pro 9-3-6 at 1/4 tsp/US gal**, at most every second actual ready watering, with plain RO between and whenever feeding remains unsuitable. Check known nursery or replacement-mix fertilizer before starting. This is a recommendation, not a completed feed, and adds no dedicated weighing or daily inspection requirement.
+**September 27 clarification:** the owner confirmed both had just been watered at their September 20 pickup; exact times and nursery fertilizer use remain unknown.
+
+**November 27 feeding trial:** once established, drying normally and showing healthy new growth, use the current [Foliage-Pro plan](./equipment/msu-fertilizer-schedule.md#foliage-pro-starting-plan): **SUPERthrive Foliage-Pro 9-3-6 at 1/8 US tsp/US gal** at each otherwise-needed watering while feeding is appropriate. Check the existing nursery or replacement-mix fertilizer charge first; use plain RO when eligibility is uncertain or the plant is stressed or resting. This replaces the former alternate-feed recommendation. It records a care plan, not a completed feed, and adds no dedicated weighing or daily inspection requirement.
 
 The current owner-estimated **30% perlite + 70% greenhouse houseplant mix** supersedes the earlier greenhouse/Molly's blend proposal. Check the actual root zone and drainage rather than relying on the historical nursery setup. No new watering references or exact repot timestamp are inferred from “about two weeks ago.”
 
@@ -490,7 +492,7 @@ setup-2 pots (`P01`–`P18`) received plain Beauchamp's RO water with
 first-cycle observations, but they are not 30–60-minute drainage weights; keep
 the actual interval visible when comparing this cycle with later wet baselines.
 The intensive first-cycle comparison and former daily-report weighing cadence are historical.
-Use the [MSU 13-3-15 fertilizer schedule](./equipment/msu-fertilizer-schedule.md) to assess feeding alongside healthy active growth and a normal dry-down.
+The November 27 [nutrient trial](./equipment/msu-fertilizer-schedule.md) uses **0.50 g MSU/US gal** at each otherwise-ready watering for eligible established cacti and ordinary succulents. Healthy active growth and a normal dry-down remain prerequisites; stressed plants need individual assessment. Use condition-led plain water rather than a fixed feed/plain-water alternation.
 
 - Judge dryness below the rocky top layer, not from the appearance of the rocks.
 - A normal watering should soak the mix rather than only wetting the surface.

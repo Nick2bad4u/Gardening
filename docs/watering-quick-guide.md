@@ -2,7 +2,7 @@
 
 When to water, when to wait, and why: a short reference for this collection, grouped by similar needs.
 
-Reviewed September 23, 2026; new houseplants and collection index updated October 28. These are starting strategies for established plants, not a calendar. Fresh repots and unhealthy roots need an individual check. The [detailed strategy](./watering-strategy.md) explains scale and report rules; the [plant index below](#find-every-plant-in-its-group) shows every pot's group.
+Reviewed September 23, 2026; new houseplants and collection index updated October 28; nutrient guidance updated November 27. These are starting strategies for established plants, not a calendar. Fresh repots and unhealthy roots need an individual check. The [detailed strategy](./watering-strategy.md) explains scale and report rules; the [plant index below](#find-every-plant-in-its-group) shows every pot's group.
 
 ## Choose the right drying target
 
@@ -97,7 +97,20 @@ Group planting works without exact synchronization. If one group repeatedly need
 
 Check dry medium, current-leaf firmness, and leaf replacement together; inspect the new inner pair when visible. A temporarily visible old pair can be normal. Persistent extra pairs can reflect excess watering, but neither leaf count nor a wrinkled outer pair decides the next drink. When watering is supported, wet the root zone and drain; let it dry before reassessing. Do not copy a fixed Lithops calendar onto split rock. [SANBI's species account](https://pza.sanbi.org/pleiospilos-nelii)
 
-Keep both split rocks and the Lithops outside automatic cactus feeding alternation. A dry reference, plateau, or date alone never authorizes their watering.
+Keep both split rocks and the Lithops outside automatic cactus feeding routines. A dry reference, plateau, or date alone never authorizes their watering.
+
+## Choose nutrients after checking readiness
+
+The collection is trialing dilute feeding at each otherwise-needed watering for eligible plants:
+
+| Eligible group                                                       | Starting recipe per US gallon of RO              |
+| -------------------------------------------------------------------- | ------------------------------------------------ |
+| Established, healthy, actively growing ordinary cacti and succulents | **0.50 g MSU 13-3-15**                           |
+| Established, healthy, actively growing foliage plants                | **1/8 US tsp Foliage-Pro 9-3-6 (about 0.62 mL)** |
+
+Check for an existing fertilizer charge first. Use one complete fertilizer per batch and plain RO when feeding is unsuitable or uncertain. P19 rehab, P24 Sempervivum, P28/P35/P36 leaf-cycle plants, and P38 terrarium retain their [separate feeding rules](./equipment/msu-fertilizer-schedule.md). P15's yellowing is under assessment; extra fertilizer is not a confirmed treatment.
+
+Allow normal drainage and discard runoff. Choose plain water or a corrective flush from plant condition and evidence of buildup, not a fixed watering count. The [nutrient guide](./equipment/msu-fertilizer-schedule.md#plain-water-and-salt-management) explains the distinction. Feeding never advances watering readiness.
 
 ## How to apply water and use the report
 
