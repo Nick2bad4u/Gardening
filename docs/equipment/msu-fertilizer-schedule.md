@@ -9,10 +9,14 @@ and suitable for feeding. The recipes are collection starting points for RO
 water, the actual growing media, and indoor lights; they are not measured
 nutrient requirements or treatments for unexplained yellowing.
 
-| Eligible group                                                       | Working dilution per US gallon of RO              | When to use it                                                                               |
-| -------------------------------------------------------------------- | ------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| Established ordinary cacti and succulents with healthy active growth | **0.50 g MSU**                                    | At each otherwise-ready watering while feeding remains suitable; apply the exceptions below. |
-| Established foliage houseplants with healthy active growth           | **1/8 US tsp Foliage-Pro, approximately 0.62 mL** | At each otherwise-needed watering after checking existing fertilizer charge and root health. |
+For **established, healthy, actively growing plants**, use the matching recipe
+at each otherwise-needed watering while feeding remains suitable. Check the
+existing fertilizer charge and apply the plant exceptions below.
+
+| Plant group                   | Mix per US gallon of RO                    |
+| ----------------------------- | ------------------------------------------ |
+| Ordinary cacti and succulents | **0.50 g MSU**                             |
+| Foliage houseplants           | **1/8 US tsp Foliage-Pro (about 0.62 mL)** |
 
 This replaces the old default feed/plain-water alternation. Use plain RO when
 feeding is unsuitable; there is no automatic fourth- or sixth-watering flush.
